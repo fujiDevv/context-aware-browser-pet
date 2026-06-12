@@ -764,10 +764,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } else if (message.type === 'sync-pet-state') {
     if (document.visibilityState === 'visible' && !document.hasFocus() && !movement.isDragging) {
       movement.syncState(message.state);
-      if (message.state.emotion && message.state.emotion !== emotion.current) {
-        emotion.current = message.state.emotion;
-        loadPet(message.state.emotion);
-      }
     }
   }
   return false;
@@ -792,10 +788,6 @@ document.addEventListener('visibilitychange', () => {
     safeSendMessage({ type: 'get-pet-state' }, (state: SharedPetState | undefined) => {
       if (state) {
         movement.syncState(state);
-        if (state.emotion && state.emotion !== emotion.current) {
-          emotion.current = state.emotion;
-          loadPet(state.emotion);
-        }
       }
     });
   }
@@ -812,8 +804,7 @@ syncInterval = setInterval(() => {
         y: movement.y,
         state: movement.state,
         direction: movement.direction,
-        paused: movement.paused,
-        emotion: emotion.current
+        paused: movement.paused
       }
     });
   }
@@ -840,14 +831,8 @@ async function init(): Promise<void> {
   safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
     if (sharedState && sharedState.y !== 0) {
       movement.syncState(sharedState);
-      const startEmotion = sharedState.emotion || 'happy';
-      emotion.current = startEmotion;
-      loadPet(startEmotion);
-    } else {
-      const startEmotion = 'happy';
-      emotion.current = startEmotion;
-      loadPet(startEmotion);
     }
+    updateEmotion();
     
     if (isPetHidden()) {
       hidePet();
