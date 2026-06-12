@@ -1,6 +1,8 @@
-# 🐾 Clawd — User Guide
+# 🐾 Clawd: The Context-Aware Browser Pet — User Guide
 
 > Your context-aware browser pet companion.
+> 
+> *Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
 ---
 

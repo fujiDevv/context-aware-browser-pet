@@ -1,6 +1,8 @@
-# Context-Aware Browser Pet Extension
+# Clawd: The Context-Aware Browser Pet
 
-An interactive, context-aware browser mascot pet extension built using the [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) SVG library, migrated to TypeScript. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
+An interactive, context-aware browser mascot pet companion extension built using the [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) SVG library, migrated to TypeScript. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
+
+*Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
 <p align="center">
   <img src="assets/clawd-cool.svg" alt="Browser Pet Logo" width="128" height="128" />
