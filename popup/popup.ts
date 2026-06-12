@@ -52,6 +52,47 @@ async function init(): Promise<void> {
   };
   setupToyDrags();
 
+  // ── Sound Board Preview setup ─────────────────────────────────────────────
+  const setupSoundPreview = () => {
+    const previewButtons = document.querySelectorAll('.sound-preview-btn');
+    previewButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const soundType = btn.getAttribute('data-sound');
+        if (soundType) {
+          const volume = Number(settingsEl.volumeSlider.value) / 100;
+          playPreviewSound(soundType, volume);
+        }
+      });
+    });
+  };
+
+  async function playPreviewSound(type: string, volume: number): Promise<void> {
+    const sounds: Record<string, string> = {
+      greeting: 'greeting.mp3',
+      levelUp: 'level-up.mp3',
+      petting: 'petting-love.mp3',
+      sad: 'sad-crying.mp3',
+      shoo: 'shoo-run.mp3',
+      sleeping: 'sleeping.mp3',
+      thinking: 'thinking-coding-work.mp3',
+      feeding: 'feeding-celebrating.mp3'
+    };
+
+    const filename = sounds[type];
+    if (!filename) return;
+
+    try {
+      const soundUrl = chrome.runtime.getURL(`assets/${filename}`);
+      const audio = new Audio(soundUrl);
+      audio.volume = volume;
+      await audio.play();
+    } catch (e) {
+      console.warn("Failed to play sound preview:", e);
+    }
+  }
+
+  setupSoundPreview();
+
   // ── 1. Load Stats and Settings ──────────────────────────────────────────
   const data = await chrome.storage.local.get(['pet-stats', 'pet-settings']);
   

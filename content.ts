@@ -211,6 +211,79 @@ style.textContent = `
     0% { filter: hue-rotate(0deg) drop-shadow(0px 0px 8px rgba(236, 72, 153, 0.8)) !important; }
     100% { filter: hue-rotate(360deg) drop-shadow(0px 0px 8px rgba(236, 72, 153, 0.8)) !important; }
   }
+
+  /* ── Level-Up Achievement Banner CSS ── */
+  .pet-levelup-banner {
+    position: fixed;
+    top: -160px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(16px);
+    border: 2px solid #fbbf24;
+    box-shadow: 0 10px 30px -5px rgba(251, 191, 36, 0.35), 0 8px 16px -6px rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+    padding: 16px;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    z-index: 2147483647;
+    pointer-events: auto;
+    transition: top 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .pet-levelup-banner.show {
+    top: 24px;
+    opacity: 1;
+  }
+  .pet-levelup-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .pet-levelup-badge {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 3px 8px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .pet-levelup-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fbbf24;
+  }
+  .pet-levelup-details {
+    font-size: 11px;
+    line-height: 1.4;
+    color: #94a3b8;
+  }
+  .pet-levelup-unlocked {
+    margin-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 8px;
+    font-size: 11px;
+    color: #38bdf8;
+    font-weight: 600;
+  }
+  .pet-levelup-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .pet-levelup-close:hover {
+    color: #f1f5f9;
+  }
 `;
 document.head.appendChild(style);
 
@@ -251,6 +324,66 @@ function showBubble(text: string, duration = 3000): void {
   bubbleTimeout = setTimeout(() => {
     bubble.classList.remove('show');
   }, duration);
+}
+
+function showLevelUpBanner(level: number): void {
+  const petName = currentSettings.name || 'Clawd';
+  
+  const existing = document.getElementById('browser-pet-levelup');
+  if (existing) existing.remove();
+
+  const banner = document.createElement('div');
+  banner.id = 'browser-pet-levelup';
+  banner.className = 'pet-levelup-banner';
+
+  let unlockedText = "";
+  if (level === 3) {
+    unlockedText = "🔓 Unlocked: Coding, Typing, Dancing, Cool, Love, Celebrating, Mindblown emotes!";
+  } else if (level === 5) {
+    unlockedText = "🔓 Unlocked: Blue Detective Aura, Ninja, Wizard, Astronaut, Debugger emotes!";
+  } else if (level === 8) {
+    unlockedText = "🔓 Unlocked: Rocket, Pirate, Juggling, Gaming emotes!";
+  } else if (level === 10) {
+    unlockedText = "🔓 Unlocked: Magic Purple Aura, Ultimate Pet Status (All emotes unlocked)!";
+  } else if (level === 15) {
+    unlockedText = "🔓 Unlocked: Neon Rainbow Costume Shader!";
+  } else {
+    unlockedText = "⭐ XP Boosted! Keep leveling to unlock new costume shaders & emotes!";
+  }
+
+  banner.innerHTML = `
+    <button class="pet-levelup-close" id="btn-close-levelup">×</button>
+    <div class="pet-levelup-header">
+      <span class="pet-levelup-badge">LVL ${level}</span>
+      <span class="pet-levelup-title">Level Up Achievement!</span>
+    </div>
+    <div class="pet-levelup-details">
+      Congratulations! <strong>${petName}</strong> has grown stronger. Stats and attributes have been upgraded!
+    </div>
+    <div class="pet-levelup-unlocked">
+      ${unlockedText}
+    </div>
+  `;
+
+  document.body.appendChild(banner);
+
+  const closeBtn = banner.querySelector('#btn-close-levelup');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      banner.classList.remove('show');
+      setTimeout(() => banner.remove(), 400);
+    });
+  }
+
+  banner.getBoundingClientRect();
+  banner.classList.add('show');
+
+  setTimeout(() => {
+    if (document.body.contains(banner)) {
+      banner.classList.remove('show');
+      setTimeout(() => banner.remove(), 600);
+    }
+  }, 7000);
 }
 
 async function updateEmotion(): Promise<void> {
@@ -530,8 +663,7 @@ chrome.runtime.onMessage.addListener((message) => {
 
 window.addEventListener('pet-level-up', (e: Event) => {
   const customEvent = e as CustomEvent<{ level: number }>;
-  const petName = currentSettings.name || 'Clawd';
-  showBubble(`Level UP! ${petName} is now level ${customEvent.detail.level}! 🎉`, 5000);
+  showLevelUpBanner(customEvent.detail.level);
   loadPet('celebrating');
   playSound('levelUp');
   isTemporarilyInteracting = true;
