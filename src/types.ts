@@ -24,6 +24,7 @@ export interface PetSettings {
   apiKey: string;
   name?: string;
   costume?: 'none' | 'detective' | 'wizard' | 'party';
+  persona?: 'default' | 'sarcastic' | 'encouraging' | 'poetic' | 'snarky';
 }
 
 export interface SharedPetState {

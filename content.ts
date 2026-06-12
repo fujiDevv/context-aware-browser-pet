@@ -265,11 +265,14 @@ async function updateEmotion(): Promise<void> {
   }
 
   let nextEmotion = 'happy';
+  let aiComment: string | undefined = undefined;
 
   if (currentSettings.aiMode && currentSettings.apiKey && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
       const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
-      nextEmotion = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey);
+      const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default');
+      nextEmotion = result.emotion;
+      aiComment = result.comment;
       hasEvaluatedPageAi = true;
     } else {
       nextEmotion = await emotion.evaluate(context);
@@ -278,11 +281,15 @@ async function updateEmotion(): Promise<void> {
     nextEmotion = await emotion.evaluate(context);
   }
 
-  if (nextEmotion !== emotion.current || !petImg.src) {
+  if (nextEmotion !== emotion.current || aiComment || !petImg.src) {
     emotion.current = nextEmotion;
     loadPet(nextEmotion);
     
-    triggerContextDialogue(nextEmotion);
+    if (aiComment) {
+      showBubble(aiComment);
+    } else {
+      triggerContextDialogue(nextEmotion);
+    }
 
     if (nextEmotion === 'waving' || nextEmotion === 'yoga') {
       playSound('greeting');

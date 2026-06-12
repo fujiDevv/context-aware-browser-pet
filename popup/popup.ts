@@ -31,7 +31,9 @@ async function init(): Promise<void> {
     costumeSelect: document.getElementById('costume-select') as HTMLSelectElement,
     optDetective: document.getElementById('opt-detective') as HTMLOptionElement,
     optWizard: document.getElementById('opt-wizard') as HTMLOptionElement,
-    optParty: document.getElementById('opt-party') as HTMLOptionElement
+    optParty: document.getElementById('opt-party') as HTMLOptionElement,
+    apiPersonaContainer: document.getElementById('api-persona-container') as HTMLElement,
+    personaSelect: document.getElementById('persona-select') as HTMLSelectElement
   };
 
   // ── Drag-and-Drop Toy setup ──────────────────────────────────────────────
@@ -116,8 +118,10 @@ async function init(): Promise<void> {
     const enabled = target.checked;
     if (enabled) {
       settingsEl.apiKeyContainer.classList.remove('hidden');
+      settingsEl.apiPersonaContainer.classList.remove('hidden');
     } else {
       settingsEl.apiKeyContainer.classList.add('hidden');
+      settingsEl.apiPersonaContainer.classList.add('hidden');
     }
     saveSettings();
   });
@@ -133,6 +137,10 @@ async function init(): Promise<void> {
   });
 
   settingsEl.costumeSelect.addEventListener('change', () => {
+    saveSettings();
+  });
+
+  settingsEl.personaSelect.addEventListener('change', () => {
     saveSettings();
   });
 
@@ -158,7 +166,8 @@ async function init(): Promise<void> {
         aiMode: settingsEl.aiToggle.checked,
         apiKey: settingsEl.apiKeyInput.value.trim(),
         name: settingsEl.nameInput.value.trim() || 'Clawd',
-        costume: settingsEl.costumeSelect.value
+        costume: settingsEl.costumeSelect.value,
+        persona: settingsEl.personaSelect.value
       }
     });
   }
@@ -247,8 +256,10 @@ async function init(): Promise<void> {
     settingsEl.aiToggle.checked = aiMode;
     if (aiMode) {
       settingsEl.apiKeyContainer.classList.remove('hidden');
+      settingsEl.apiPersonaContainer.classList.remove('hidden');
     } else {
       settingsEl.apiKeyContainer.classList.add('hidden');
+      settingsEl.apiPersonaContainer.classList.add('hidden');
     }
 
     // API Key
@@ -261,6 +272,9 @@ async function init(): Promise<void> {
 
     // Costume
     settingsEl.costumeSelect.value = settings.costume ?? 'none';
+
+    // Persona
+    settingsEl.personaSelect.value = settings.persona ?? 'default';
   }
 }
 

@@ -55,10 +55,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'get-ai-emotion') {
-    const { pageTitle, metaDescription, apiKey } = message;
+    const { pageTitle, metaDescription, apiKey, persona } = message;
     
-    fetchAiEmotion(pageTitle, metaDescription, apiKey)
-      .then((emotion) => sendResponse({ success: true, emotion }))
+    fetchAiEmotion(pageTitle, metaDescription, apiKey, persona || 'default')
+      .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment }))
       .catch((err) => {
         console.error('Error fetching AI emotion in background:', err);
         sendResponse({ success: false, error: err.message });
@@ -68,20 +68,41 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-async function fetchAiEmotion(pageTitle: string, metaDescription: string | undefined, apiKey: string): Promise<string> {
+async function fetchAiEmotion(
+  pageTitle: string,
+  metaDescription: string | undefined,
+  apiKey: string,
+  persona: string
+): Promise<{ emotion: string; comment?: string }> {
   const PET_EMOTIONS = [
     'happy', 'sad', 'angry', 'working-thinking', 'sleeping', 'coding', 'dancing',
     'cool', 'love', 'celebrating', 'mindblown', 'shrug', 'crying', 'waving',
     'working-wizard', 'ninja', 'working-typing', 'working-debugger', 'working-building', 'working-juggling',
+    'eating', 'reading', 'yoga'
   ];
 
-  const prompt = `You are deciding which emotion a small cute browser mascot should display.
-Given the webpage info below, select the single best emotion from this list: ${PET_EMOTIONS.join(', ')}.
+  const personas: Record<string, string> = {
+    default: "You are Clawd, a helpful and friendly browser pet mascot. You are happy to browse the web with the user.",
+    sarcastic: "You are Clawd, a highly sarcastic, dry-witted browser pet mascot. You make witty, slightly cynical comments about the pages the user is visiting.",
+    encouraging: "You are Clawd, a highly encouraging, positive browser pet mascot. You make sweet, cheerful, and motivating remarks.",
+    poetic: "You are Clawd, a poetic browser pet mascot. You write short, whimsical 1-line rhymes about the pages the user is visiting.",
+    snarky: "You are Clawd, a snarky, sassy browser pet mascot. You make sassy, humorous, and sharp remarks about the web pages."
+  };
 
-Page Title: ${pageTitle}
-Page Description: ${metaDescription || '(none)'}
+  const personaInstruction = personas[persona] || personas.default;
 
-Reply with ONLY the emotion name (in lowercase), nothing else.`;
+  const systemPrompt = `${personaInstruction}
+You decide which emotion to display and what short comment to make.
+You MUST respond with a valid JSON object matching this schema, and nothing else:
+{
+  "emotion": "one of the allowed emotions",
+  "comment": "your short comment about the page"
+}
+
+Allowed emotions: ${PET_EMOTIONS.join(', ')}`;
+
+  const prompt = `Page Title: ${pageTitle}
+Page Description: ${metaDescription || '(none)'}`;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -94,7 +115,8 @@ Reply with ONLY the emotion name (in lowercase), nothing else.`;
       },
       body: JSON.stringify({
         model: 'claude-3-haiku-20240307',
-        max_tokens: 10,
+        max_tokens: 150,
+        system: systemPrompt,
         messages: [{ role: 'user', content: prompt }],
       }),
     });
@@ -105,19 +127,39 @@ Reply with ONLY the emotion name (in lowercase), nothing else.`;
     }
 
     const data = await response.json();
-    const resultText = data?.content?.[0]?.text?.trim().toLowerCase();
-    
-    if (PET_EMOTIONS.includes(resultText)) {
-      return resultText;
-    }
-    
-    for (const em of PET_EMOTIONS) {
-      if (resultText && resultText.includes(em)) {
-        return em;
+    const resultText = data?.content?.[0]?.text?.trim();
+
+    let parsed: { emotion: string; comment?: string } = { emotion: 'happy' };
+    if (resultText) {
+      const start = resultText.indexOf('{');
+      const end = resultText.lastIndexOf('}');
+      if (start !== -1 && end !== -1) {
+        try {
+          parsed = JSON.parse(resultText.substring(start, end + 1));
+        } catch (e) {
+          console.warn("Failed to parse JSON response from Claude:", e);
+          for (const em of PET_EMOTIONS) {
+            if (resultText.toLowerCase().includes(em)) {
+              parsed.emotion = em;
+              break;
+            }
+          }
+        }
+      } else {
+        for (const em of PET_EMOTIONS) {
+          if (resultText.toLowerCase().includes(em)) {
+            parsed.emotion = em;
+            break;
+          }
+        }
       }
     }
-    
-    return 'happy';
+
+    if (!PET_EMOTIONS.includes(parsed.emotion)) {
+      parsed.emotion = 'happy';
+    }
+
+    return parsed;
   } catch (error) {
     console.error('Claude API call failed:', error);
     throw error;

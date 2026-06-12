@@ -1,26 +1,28 @@
 export async function getAiEmotion(
   pageTitle: string,
   metaDescription: string | undefined,
-  apiKey: string
-): Promise<string> {
+  apiKey: string,
+  persona: string
+): Promise<{ emotion: string; comment?: string }> {
   return new Promise((resolve) => {
     chrome.runtime.sendMessage({
       type: 'get-ai-emotion',
       pageTitle,
       metaDescription,
-      apiKey
-    }, (response: { success: boolean; emotion?: string; error?: string } | undefined) => {
+      apiKey,
+      persona
+    }, (response: { success: boolean; emotion?: string; comment?: string; error?: string } | undefined) => {
       if (chrome.runtime.lastError) {
         console.warn('AI mood analysis communication error:', chrome.runtime.lastError.message);
-        resolve('happy');
+        resolve({ emotion: 'happy' });
         return;
       }
       
       if (response && response.success && response.emotion) {
-        resolve(response.emotion);
+        resolve({ emotion: response.emotion, comment: response.comment });
       } else {
         console.warn('AI mood analysis API failure:', response ? response.error : 'Unknown error');
-        resolve('happy');
+        resolve({ emotion: 'happy' });
       }
     });
   });

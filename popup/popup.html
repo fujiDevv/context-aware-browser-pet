@@ -186,6 +186,21 @@
           <button id="btn-toggle-key" class="icon-btn" type="button">👁️</button>
         </div>
       </div>
+
+      <!-- AI Persona Section (visible when AI toggle is checked) -->
+      <div id="api-persona-container" class="setting-row hidden">
+        <div class="setting-desc">
+          <span class="setting-title">AI Persona</span>
+          <span class="setting-subtitle">Tweak Clawd's commentary tone</span>
+        </div>
+        <select id="persona-select" class="custom-select">
+          <option value="default">Default (Friendly)</option>
+          <option value="sarcastic">Sarcastic</option>
+          <option value="encouraging">Encouraging</option>
+          <option value="poetic">Poetic</option>
+          <option value="snarky">Snarky</option>
+        </select>
+      </div>
     </section>
   </div>
   <script src="popup.js"></script>
