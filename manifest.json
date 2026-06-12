@@ -25,6 +25,17 @@
       ],
       "run_at": "document_idle",
       "all_frames": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "main_world.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": false
     }
   ],
   "action": {

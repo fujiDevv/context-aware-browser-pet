@@ -22,28 +22,8 @@ export class TriggerDetector {
     this._mouseX = window.innerWidth / 2;
     this._lastMouseMove = Date.now();
 
-    this._injectErrorWatcher();
     this._bindEvents();
     this._watchVideo();
-  }
-
-  _injectErrorWatcher(): void {
-    try {
-      const code = `
-        window.addEventListener('error', (event) => {
-          window.postMessage({ type: 'PET_PAGE_ERROR', message: event.message }, '*');
-        });
-        window.addEventListener('unhandledrejection', (event) => {
-          window.postMessage({ type: 'PET_PAGE_ERROR', message: event.reason?.message || 'Unhandled rejection' }, '*');
-        });
-      `;
-      const script = document.createElement('script');
-      script.textContent = code;
-      (document.head || document.documentElement).appendChild(script);
-      script.remove();
-    } catch (e) {
-      console.warn("Failed to inject pet error watcher script:", e);
-    }
   }
 
   snapshot(): TriggerSnapshot {
