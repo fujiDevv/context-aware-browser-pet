@@ -1,6 +1,6 @@
 # Clawd: The Context-Aware Browser Pet
 
-An interactive, context-aware browser mascot pet companion extension built using the [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) SVG library, migrated to TypeScript. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
+An open-source, interactive, context-aware browser mascot pet companion extension built using the [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) SVG library, migrated to TypeScript. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
 
 *Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
@@ -106,7 +106,7 @@ context-aware-browser-pet/
 * **Right Click**: "Shoo" the mascot away. Teleports it to a random coordinate along the bottom screen edge.
 * **Click & Drag**: Drag the mascot to reposition it or attach it to a specific wall edge.
 * **Drag-and-Drop Toys**: Drag toys (Ball ⚽, Fish 🐟, Laser 🔴, Yarn 🧶, Duck 🦆, Box 📦) out from the popup UI onto the page. Supports dropping multiple toys at once to queue Clawd's play interactions.
-* **Settings & Triggers**: Click to switch between Mascot, Stats, and Settings tabs. Customize your pet's name, size, speed, and volume, toggle active emotions/aura shaders, and check the built-in Daily Schedule & Triggers guide.
+* **Settings & Triggers**: Click to switch between Mascot, Stats, and Settings tabs. Customize your pet's name, size, speed, and volume, toggle active emotions/aura shaders, toggle the **Daily Schedule & Triggers** switch (or turn it off to let Clawd enter **Autonomous Mode** to decide his own emotes, exploration paths, and webpage analysis commentary), and check the built-in Daily Schedule & Triggers guide.
 * **AI Mood Mode**: Toggle AI Mode in the settings, input your Anthropic API Key, and the pet will periodically evaluate the webpage description using Claude to select a matching emotional expression!
 
 ---

@@ -106,6 +106,7 @@ async function init(): Promise<void> {
     speedSlider: document.getElementById('speed-slider') as HTMLInputElement,
     speedVal: document.getElementById('speed-val') as HTMLElement,
     soundToggle: document.getElementById('sound-toggle') as HTMLInputElement,
+    scheduleToggle: document.getElementById('schedule-toggle') as HTMLInputElement,
     volumeContainer: document.getElementById('volume-container') as HTMLElement,
     volumeSlider: document.getElementById('volume-slider') as HTMLInputElement,
     volumeVal: document.getElementById('volume-val') as HTMLElement,
@@ -325,6 +326,10 @@ async function init(): Promise<void> {
     saveSettings();
   });
 
+  settingsEl.scheduleToggle.addEventListener('change', () => {
+    saveSettings();
+  });
+
   settingsEl.soundToggle.addEventListener('change', (e) => {
     const target = e.target as HTMLInputElement;
     const enabled = target.checked;
@@ -399,7 +404,8 @@ async function init(): Promise<void> {
         costume: settingsEl.costumeSelect.value,
         persona: settingsEl.personaSelect.value,
         blockedDomains: blockedDomains,
-        disabledEmotions: disabledEmotions
+        disabledEmotions: disabledEmotions,
+        scheduleEnabled: settingsEl.scheduleToggle.checked
       }
     });
   }
@@ -629,6 +635,10 @@ async function init(): Promise<void> {
     const speed = settings.speed ?? 1.2;
     settingsEl.speedSlider.value = String(Math.round(speed * 10));
     settingsEl.speedVal.textContent = `${speed.toFixed(1)}x`;
+
+    // Schedule Enabled
+    const scheduleEnabled = settings.scheduleEnabled ?? true;
+    settingsEl.scheduleToggle.checked = scheduleEnabled;
 
     // Sound Toggle & Volume
     const soundEnabled = settings.soundEnabled ?? true;

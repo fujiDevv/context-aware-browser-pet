@@ -326,7 +326,7 @@ const bubble = document.createElement('div');
 bubble.className = 'pet-speech-bubble';
 container.appendChild(bubble);
 
-let currentSettings: PetSettings = { size: 64, speed: 1.2, aiMode: false, apiKey: '', soundEnabled: true, soundVolume: 0.5 };
+let currentSettings: PetSettings = { size: 64, speed: 1.2, aiMode: false, apiKey: '', soundEnabled: true, soundVolume: 0.5, scheduleEnabled: true };
 let hasEvaluatedPageAi = false;
 let isTemporarilyInteracting = false;
 let interactionTimeout: any = null;
@@ -445,16 +445,19 @@ async function updateEmotion(): Promise<void> {
   if (isTemporarilyInteracting) return;
 
   const context = triggers.snapshot();
+  const scheduleEnabled = currentSettings.scheduleEnabled !== false;
   
-  const siteCategory = emotion._classifySite(context.hostname);
-  if (siteCategory !== 'default') {
-    personality.recordSiteVisit(siteCategory);
+  if (scheduleEnabled) {
+    const siteCategory = emotion._classifySite(context.hostname);
+    if (siteCategory !== 'default') {
+      personality.recordSiteVisit(siteCategory);
+    }
   }
 
   let nextEmotion = 'happy';
   let aiComment: string | undefined = undefined;
 
-  if (currentSettings.aiMode && currentSettings.apiKey && !context.lastHttpError && context.idleSeconds < 60) {
+  if (scheduleEnabled && currentSettings.aiMode && currentSettings.apiKey && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
       const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
       const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default');
@@ -462,10 +465,10 @@ async function updateEmotion(): Promise<void> {
       aiComment = result.comment;
       hasEvaluatedPageAi = true;
     } else {
-      nextEmotion = await emotion.evaluate(context);
+      nextEmotion = await emotion.evaluate(context, scheduleEnabled);
     }
   } else {
-    nextEmotion = await emotion.evaluate(context);
+    nextEmotion = await emotion.evaluate(context, scheduleEnabled);
   }
 
   if (nextEmotion !== emotion.current || aiComment || !petImg.src) {
@@ -491,6 +494,63 @@ async function updateEmotion(): Promise<void> {
 }
 
 function triggerContextDialogue(mood: string): void {
+  const scheduleEnabled = currentSettings.scheduleEnabled !== false;
+
+  if (!scheduleEnabled) {
+    const autonomousDialogs: Record<string, string[]> = {
+      'studying': [
+        "Analyzing this page... looks super interesting! 🧐",
+        "Let me inspect this webpage structure... 🔍",
+        "Reading the content... learning new things! 📚"
+      ],
+      'working-thinking': [
+        "Hmm, let me think about how to interact with this page... 🤔",
+        "Deciding my next move on this browser... 🧠",
+        "Pondering the secrets of the DOM... 💭"
+      ],
+      'working-debugger': [
+        "Scanning for bugs on this site! 🔍",
+        "Analyzing JavaScript console errors... looks clean! 💻",
+        "Let's see what's happening under the hood here! ⚙️"
+      ],
+      'happy': [
+        "Just chilling on your browser! 😊",
+        "I decided to take a little stroll! 🐾",
+        "Hope you are having a great browsing session! 🌟"
+      ],
+      'sleeping': [
+        "Decided to take a quick nap. Wake me up if you need me! 💤",
+        "Zzz... dreaming of clean code... 💤"
+      ],
+      'dancing': [
+        "Let's do a little dance! 💃",
+        "Grooving to the rhythm of the internet! 🎵"
+      ],
+      'yoga': [
+        "Time for some stretching! 🧘‍♂️",
+        "Balancing my energy... 🧘‍♀️"
+      ],
+      'eating': [
+        "Decided to grab a snack while you browse! 🍖",
+        "Nom nom nom... browser energy! 🍕"
+      ],
+      'coding': [
+        "Let's write a browser automation script! 💻",
+        "Decided to build a tiny feature! 🚀"
+      ],
+      'working-typing': [
+        "Typing up some neat ideas! ⌨️",
+        "Writing a blog post about this website... 📝"
+      ]
+    };
+
+    if (autonomousDialogs[mood]) {
+      const options = autonomousDialogs[mood];
+      showBubble(options[Math.floor(Math.random() * options.length)]);
+      return;
+    }
+  }
+
   const dialogs: Record<string, string> = {
     '404': "Whoops! This page doesn't exist (404)!",
     '500': "Ouch! The server is broken (500)!",
@@ -531,13 +591,31 @@ petImg.addEventListener('dblclick', (e) => {
   triggerInteraction('feed', 'celebrating', 2500, "Yum! That was delicious! 🍖");
 });
 
-petImg.addEventListener('contextmenu', (e) => {
+let lastShooTime = 0;
+function handleShoo(e: Event) {
   e.preventDefault();
   e.stopPropagation();
+
+  const now = Date.now();
+  if (now - lastShooTime < 500) return;
+  lastShooTime = now;
+
+  // Cancel any active WAAPI animations (like hover scale) so the flip transform applies correctly
+  try {
+    petImg.getAnimations().forEach(anim => anim.cancel());
+  } catch (err) {}
+
   personality.recordInteraction('shoo');
   movement.shoo();
   showBubble("Okay, okay, moving! 🏃‍♂️");
   playSound('shoo');
+}
+
+petImg.addEventListener('contextmenu', handleShoo);
+petImg.addEventListener('mousedown', (e) => {
+  if (e.button === 2) {
+    handleShoo(e);
+  }
 });
 
 function triggerInteraction(action: string, temporaryMood: string, duration: number, message: string): void {
@@ -794,6 +872,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } else if (message.type === 'feed') {
     triggerInteraction('feed', 'celebrating', 2500, "Nom nom nom! 🍖");
   } else if (message.type === 'shoo') {
+    try {
+      petImg.getAnimations().forEach(anim => anim.cancel());
+    } catch (err) {}
     personality.recordInteraction('shoo');
     movement.shoo();
     showBubble("Running away! 🏃‍♂️");
@@ -884,10 +965,40 @@ async function init(): Promise<void> {
       updateEmotion();
 
       const context = triggers.snapshot();
-      if (context.idleSeconds >= 10 && Math.random() < 0.15 && !isTemporarilyInteracting) {
-        movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-        const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
-        showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);
+      const scheduleEnabled = currentSettings.scheduleEnabled !== false;
+
+      if (!scheduleEnabled) {
+        if (Math.random() < 0.15 && !isTemporarilyInteracting) {
+          const decisions = [
+            () => {
+              movement.shoo();
+              showBubble("Let's go explore this side! 🏃‍♂️");
+            },
+            () => {
+              movement.chaseCursor(context.mouseX - currentSettings.size / 2);
+              showBubble("I'm following you! 👀");
+            },
+            () => {
+              const pageTitle = document.title || 'this page';
+              const truncatedTitle = pageTitle.length > 25 ? pageTitle.substring(0, 22) + '...' : pageTitle;
+              showBubble(`Analyzing "${truncatedTitle}"... looks cool! 🧐`);
+              loadPet('working-thinking');
+              isTemporarilyInteracting = true;
+              setTimeout(() => {
+                isTemporarilyInteracting = false;
+                loadPet(emotion.current);
+              }, 2500);
+            }
+          ];
+          const chosenDecision = decisions[Math.floor(Math.random() * decisions.length)];
+          chosenDecision();
+        }
+      } else {
+        if (context.idleSeconds >= 10 && Math.random() < 0.15 && !isTemporarilyInteracting) {
+          movement.chaseCursor(context.mouseX - currentSettings.size / 2);
+          const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
+          showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);
+        }
       }
     }
   }, 10_000);

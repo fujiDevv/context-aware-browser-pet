@@ -10,8 +10,8 @@ export class EmotionEngine {
     this.current = 'happy';
   }
 
-  async evaluate(ctx: TriggerSnapshot): Promise<string> {
-    let emotion = await this._determineEmotion(ctx);
+  async evaluate(ctx: TriggerSnapshot, scheduleEnabled: boolean = true): Promise<string> {
+    let emotion = await this._determineEmotion(ctx, scheduleEnabled);
 
     const isHttpError = ['404', '500', '403', '429'].includes(emotion);
 
@@ -23,7 +23,26 @@ export class EmotionEngine {
     return emotion;
   }
 
-  async _determineEmotion(ctx: TriggerSnapshot): Promise<string> {
+  async _determineEmotion(ctx: TriggerSnapshot, scheduleEnabled: boolean = true): Promise<string> {
+    if (!scheduleEnabled) {
+      const allEmotions = [
+        'happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug', 'reading', 'yoga',
+        'eating', 'coding', 'working-typing', 'dancing', 'cool', 'love', 'celebrating', 'mindblown', 'ninja',
+        'working-wizard', 'astronaut', 'working-debugger', 'working-building', 'rocket', 'pirate',
+        'working-juggling', 'gaming', 'battery-low', 'christmas', 'winter', 'halloween', 'summer',
+        'ice-cream', 'surfing', 'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee',
+        'mail', 'notification', 'flexing', 'lifting', 'singing', 'music', 'dj'
+      ];
+      
+      const unlocked = allEmotions.filter(e => this.personality.isEmotionUnlocked(e));
+      if (unlocked.length > 0) {
+        const timeHash = Math.floor(Date.now() / 60000);
+        const index = timeHash % unlocked.length;
+        return unlocked[index];
+      }
+      return this.personality.defaultEmotion();
+    }
+
     if (ctx.lastHttpError === 404) return '404';
     if (ctx.lastHttpError === 500) return '500';
     if (ctx.lastHttpError === 403) return '403';

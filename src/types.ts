@@ -30,6 +30,7 @@ export interface PetSettings {
   persona?: 'default' | 'sarcastic' | 'encouraging' | 'poetic' | 'snarky';
   blockedDomains?: string[];
   disabledEmotions?: string[];
+  scheduleEnabled?: boolean;
 }
 
 export interface SharedPetState {

@@ -59,7 +59,7 @@
 
 ## What is Clawd?
 
-Clawd is a tiny animated mascot that lives at the bottom of your browser window. He walks around, reacts to what you're doing online, and changes his expression and outfit depending on the website you're visiting, the time of day, and even the season.
+Clawd is an open-source, context-aware browser mascot that lives at the bottom of your browser window. He walks around, reacts to what you're doing online, and changes his expression and outfit depending on the website you're visiting, the time of day, and even the season.
 
 He's not just for looks — Clawd is a virtual pet with stats, levels, unlockable costumes, and over **140 unique animations**. Pet him, feed him, play with him, or just let him keep you company while you browse.
 
@@ -231,6 +231,14 @@ Clawd changes his expression and animation based on the page context of your act
 - **Late Night (10:00 PM – 6:00 AM)**: Clawd falls asleep (`sleeping` 💤) and slows his movement speed by 50%.
 - **Morning (6:00 AM – 9:00 AM)**: Performs morning stretches (`yoga` 🧘).
 
+### Autonomous Mode (Toggle Off)
+
+If you turn off the **Daily Schedule & Triggers** toggle in settings, Clawd enters Autonomous Mode. In this state, he:
+- Bypasses all contextual checks (site categories, console errors, HTTP errors, typing, video playing, and sleep schedules).
+- Autonomously decides which emotions to express based on a time hash (switching up his mood once per minute).
+- Periodically decides to explore different parts of your browser window or chase your cursor.
+- Displays custom speech bubbles and commentary about analyzing the pages you browse.
+
 > **Daily Schedule & Triggers Guide**: You can check the full schedule of daily routines (Late Night sleep, Morning yoga, Idle actions, Page diagnostics) anytime inside the **📊 Stats** tab of the popup panel.
 
 ### Seasonal & Holiday Themes
@@ -333,6 +341,7 @@ Click the extension icon to open the controls. The controls are organized into t
 
 ### ⚙️ Settings Tab
 - **Active Emotions**: Toggle check boxes to allow/disallow specific unlocked emotions.
+- **Daily Schedule & Triggers**: Toggle off to put Clawd in Autonomous Mode, letting him choose his own emotes, move around, and analyze pages on his own terms.
 - **Sound Board**: Click buttons to preview chiptune sounds (greeting, feed, level-up, shoo, etc.).
 - **Visibility**: Toggle options to hide Clawd on the current tab or block him entirely on the active domain.
 - **Pet Name**: Give your pet a custom name (up to 12 characters).

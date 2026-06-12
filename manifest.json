@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Browser Pet",
+  "name": "Clawd: The Context-Aware Browser Pet",
   "version": "1.0.0",
-  "description": "A context-aware clawd-pet that crawls your browser.",
+  "description": "An interactive, context-aware browser mascot pet companion.",
   "permissions": [
     "storage",
     "tabs",
