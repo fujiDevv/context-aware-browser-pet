@@ -623,7 +623,7 @@ function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
 
   const toyEl = document.createElement('div');
   toyEl.className = 'browser-pet-toy';
-  const emojis: Record<string, string> = { ball: '⚽', fish: '🐟', laser: '🔴' };
+  const emojis: Record<string, string> = { ball: '⚽', fish: '🐟', laser: '🔴', yarn: '🧶', duck: '🦆', box: '📦' };
   toyEl.textContent = emojis[toyType] || '🧸';
   toyEl.style.position = 'fixed';
   toyEl.style.left = `${dropX - 15}px`;
@@ -658,7 +658,10 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
   const dialogs: Record<string, string> = {
     ball: `Wow! A ball! Roll roll roll! ⚽`,
     fish: `Yum! That fish was delicious! 🐟`,
-    laser: `Got the red dot! Rawr! 🔴`
+    laser: `Got the red dot! Rawr! 🔴`,
+    yarn: `Ooh, a ball of yarn! Unraveling time! 🧶`,
+    duck: `Squeak squeak! Squeaky toy ducky! 🦆`,
+    box: `If it fits, I sits! Best box ever! 📦`
   };
 
   showBubble(dialogs[toyType] || "Yay, a toy! 🎉");

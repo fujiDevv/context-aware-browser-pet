@@ -124,7 +124,7 @@ async function init(): Promise<void> {
 
   // ── Drag-and-Drop Toy setup ──────────────────────────────────────────────
   const setupToyDrags = () => {
-    ['ball', 'fish', 'laser'].forEach((toy) => {
+    ['ball', 'fish', 'laser', 'yarn', 'duck', 'box'].forEach((toy) => {
       const el = document.getElementById(`toy-${toy}`);
       if (el) {
         el.addEventListener('dragstart', (e) => {

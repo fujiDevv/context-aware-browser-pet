@@ -479,9 +479,9 @@ input:checked+.toggle-slider:before {
 }
 
 .toys-container {
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
   margin-top: 8px;
 }
 
