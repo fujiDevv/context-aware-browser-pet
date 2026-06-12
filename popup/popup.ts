@@ -1,6 +1,7 @@
 import { PetStats, PetSettings } from '../src/types';
 
 async function init(): Promise<void> {
+  let blockedDomains: string[] = [];
   const statsEl = {
     level: document.getElementById('pet-level') as HTMLElement,
     xpText: document.getElementById('xp-text') as HTMLElement,
@@ -11,6 +12,10 @@ async function init(): Promise<void> {
     energyBar: document.getElementById('bar-energy') as HTMLElement,
     curiosityText: document.getElementById('txt-curiosity') as HTMLElement,
     curiosityBar: document.getElementById('bar-curiosity') as HTMLElement,
+    focusText: document.getElementById('txt-focus') as HTMLElement,
+    focusBar: document.getElementById('bar-focus') as HTMLElement,
+    leisureText: document.getElementById('txt-leisure') as HTMLElement,
+    leisureBar: document.getElementById('bar-leisure') as HTMLElement,
     preview: document.getElementById('pet-preview') as HTMLImageElement
   };
 
@@ -98,6 +103,76 @@ async function init(): Promise<void> {
   
   updateUIStats(data['pet-stats']);
   applySettings(data['pet-settings']);
+
+  // ── Visibility Setup ───────────────────────────────────────────────────
+  const tabHideToggle = document.getElementById('tab-hide-toggle') as HTMLInputElement;
+  const siteHideToggle = document.getElementById('site-hide-toggle') as HTMLInputElement;
+  const siteSubtitle = document.getElementById('site-visibility-subtitle') as HTMLElement;
+  
+  let currentTabId: number | undefined = undefined;
+  let currentHostname = '';
+
+  chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+    if (tab && tab.id) {
+      currentTabId = tab.id;
+      
+      if (tab.url) {
+        try {
+          const url = new URL(tab.url);
+          currentHostname = url.hostname;
+          if (currentHostname) {
+            siteSubtitle.textContent = `Disable Clawd on ${currentHostname}`;
+            siteHideToggle.checked = blockedDomains.includes(currentHostname);
+            siteHideToggle.disabled = false;
+          } else {
+            siteHideToggle.disabled = true;
+          }
+        } catch (e) {
+          siteHideToggle.disabled = true;
+        }
+      } else {
+        siteHideToggle.disabled = true;
+      }
+
+      chrome.tabs.sendMessage(tab.id, { type: 'get-tab-visibility' }, (response) => {
+        if (chrome.runtime.lastError) {
+          // Content script not loaded (e.g. chrome:// page or extension disabled)
+          tabHideToggle.disabled = true;
+          siteHideToggle.disabled = true;
+          return;
+        }
+        if (response && typeof response.isHidden === 'boolean') {
+          tabHideToggle.checked = response.isHidden;
+          tabHideToggle.disabled = false;
+        }
+      });
+    } else {
+      tabHideToggle.disabled = true;
+      siteHideToggle.disabled = true;
+    }
+  });
+
+  tabHideToggle.addEventListener('change', () => {
+    if (currentTabId !== undefined) {
+      chrome.tabs.sendMessage(currentTabId, {
+        type: 'toggle-tab-visibility',
+        hide: tabHideToggle.checked
+      }).catch(() => {});
+    }
+  });
+
+  siteHideToggle.addEventListener('change', () => {
+    if (currentHostname) {
+      if (siteHideToggle.checked) {
+        if (!blockedDomains.includes(currentHostname)) {
+          blockedDomains.push(currentHostname);
+        }
+      } else {
+        blockedDomains = blockedDomains.filter(d => d !== currentHostname);
+      }
+      saveSettings();
+    }
+  });
 
   // ── 2. Listen for Real-Time Stats Updates (e.g. from active page walking) ──
   chrome.storage.onChanged.addListener((changes) => {
@@ -208,7 +283,8 @@ async function init(): Promise<void> {
         apiKey: settingsEl.apiKeyInput.value.trim(),
         name: settingsEl.nameInput.value.trim() || 'Clawd',
         costume: settingsEl.costumeSelect.value,
-        persona: settingsEl.personaSelect.value
+        persona: settingsEl.personaSelect.value,
+        blockedDomains: blockedDomains
       }
     });
   }
@@ -255,11 +331,17 @@ async function init(): Promise<void> {
     statsEl.curiosityText.textContent = `${stats.curiosity}%`;
     statsEl.curiosityBar.style.width = `${stats.curiosity}%`;
 
+    statsEl.focusText.textContent = `${stats.focus ?? 50}%`;
+    statsEl.focusBar.style.width = `${stats.focus ?? 50}%`;
+
+    statsEl.leisureText.textContent = `${stats.leisure ?? 50}%`;
+    statsEl.leisureBar.style.width = `${stats.leisure ?? 50}%`;
+
     // Preview Image Avatar Reaction
     let previewMood = 'happy';
     if (stats.happiness >= 80) previewMood = 'happy';
     else if (stats.happiness >= 50) previewMood = 'waving';
-    else if (stats.happiness >= 20) previewMood = 'sad';
+    else if (stats.happiness >= 25) previewMood = 'sad';
     else previewMood = 'crying';
     
     statsEl.preview.src = `../assets/pets/clawd-${previewMood}.svg`;
@@ -316,6 +398,9 @@ async function init(): Promise<void> {
 
     // Persona
     settingsEl.personaSelect.value = settings.persona ?? 'default';
+
+    // Blocked Domains
+    blockedDomains = settings.blockedDomains || [];
   }
 }
 

@@ -17,10 +17,14 @@
   --pink-bar: linear-gradient(90deg, #ec4899, #f43f5e);
   --yellow-bar: linear-gradient(90deg, #eab308, #f59e0b);
   --blue-bar: linear-gradient(90deg, #3b82f6, #06b6d4);
+  --green-bar: linear-gradient(90deg, #10b981, #059669);
+  --indigo-bar: linear-gradient(90deg, #6366f1, #4f46e5);
 
   --glow-pink: rgba(236, 72, 153, 0.25);
   --glow-yellow: rgba(234, 179, 8, 0.2);
   --glow-blue: rgba(59, 130, 246, 0.2);
+  --glow-green: rgba(16, 185, 129, 0.2);
+  --glow-indigo: rgba(99, 102, 241, 0.2);
 }
 
 * {
@@ -232,6 +236,16 @@ h2 {
   box-shadow: 0 0 6px var(--glow-blue);
 }
 
+.fill-green {
+  background: var(--green-bar);
+  box-shadow: 0 0 6px var(--glow-green);
+}
+
+.fill-indigo {
+  background: var(--indigo-bar);
+  box-shadow: 0 0 6px var(--glow-indigo);
+}
+
 /* ── Interaction Buttons ─────────────────────────────────────────────────── */
 .actions-section {
   display: flex;
@@ -286,6 +300,10 @@ h2 {
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 14px 16px;
+}
+
+.visibility-section {
+  margin-bottom: 20px;
 }
 
 .setting-row {

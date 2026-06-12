@@ -18,12 +18,13 @@ An interactive, context-aware browser mascot pet extension built using the [claw
 
 ## Key Features
 
-* **Advanced Edge-Crawling Engine**: 5-state viewport movement tracking (top, bottom, left, right edges) with direction-flipping, 90-degree rotations, throwing physics, and edge snapping.
+* **Advanced Edge-Crawling Engine**: 5-state viewport movement tracking (top, bottom, left, right edges) with direction-flipping, 90-degree rotations, throwing physics, and edge snapping powered by a custom zero-dependency spring physics engine.
 * **Granular Context Triggers**: Monitors active typing velocity, scroll depth, form submissions, and active HTML5 media play/pause states.
 * **Console Error Watcher**: Detects runtime JS errors and unhandled promise rejections, triggering debug animations and panic reactions.
-* **Domain-Specific Animations**: Displays custom SVGs mapping to site context (popcorn/eating for media, book/reading for docs/Wikipedia, laptop/coding for dev sites).
-* **Virtual Pet Mechanics**: Leveling progression with XP rewards, custom naming, time-decay variables (energy, happiness, curiosity), and interactive toy drag-and-drop.
+* **Domain-Specific Animations**: Displays custom SVGs mapping to site context (popcorn/eating/music/singing/dj for media, book/reading/studying for docs/Wikipedia, laptop/coding/debugger/building for dev sites, money/gift for shopping, mail/notification for webmail, flexing/lifting/yoga for fitness sites).
+* **Virtual Pet Mechanics**: Leveling progression with XP rewards, custom naming, time-decay variables (energy, happiness, curiosity, focus, leisure), and interactive toy drag-and-drop.
 * **Milestone Shader Upgrades**: Unlocks hardware-accelerated CSS shader glows (Detective Blue, Magic Purple, Rainbow Neon) based on pet level milestones.
+* **Seasonal & Calendar Themes**: Automatically changes pet outfits and behaviors for seasonal periods (Halloween pumpkins in October, Christmas wear in December, surfing in Summer).
 * **Cross-Tab Synchronization**: Syncs pet coordinates and current emotional states across background-managed tabs and side-by-side windows.
 * **CSP-Bypassing AI Service**: Service-worker proxy for Anthropic API calls ensuring compliance with page CSP and CORS headers.
 * **Clean Context Lifecycles**: Automatic cleanup of orphaned DOM elements and active loop intervals upon extension updates or reloads.
@@ -45,6 +46,7 @@ context-aware-browser-pet/
 │   ├── triggers.ts        # User interaction monitors (scroll, typing, video)
 │   ├── emotion.ts         # Evaluates context snapshots and determines locks/fallbacks
 │   ├── personality.ts     # XP leveling thresholds, stats modifiers, and state saves
+│   ├── animate.ts         # Zero-dependency spring physics and WAAPI keyframe helper
 │   └── ai.ts              # Delegates Claude API queries to the background worker
 ├── popup/
 │   ├── popup.html         # Controller layout for sliders, badges, and stats

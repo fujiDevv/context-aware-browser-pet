@@ -71,6 +71,28 @@
           <div id="bar-curiosity" class="progress-fill fill-blue" style="width: 60%"></div>
         </div>
       </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <span class="stat-icon">💻</span>
+          <span class="stat-name">Focus</span>
+          <span id="txt-focus" class="stat-val">50%</span>
+        </div>
+        <div class="progress-track">
+          <div id="bar-focus" class="progress-fill fill-green" style="width: 50%"></div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-info">
+          <span class="stat-icon">🍿</span>
+          <span class="stat-name">Leisure</span>
+          <span id="txt-leisure" class="stat-val">50%</span>
+        </div>
+        <div class="progress-track">
+          <div id="bar-leisure" class="progress-fill fill-indigo" style="width: 50%"></div>
+        </div>
+      </div>
     </section>
 
     <!-- Interactivity Actions -->
@@ -118,6 +140,33 @@
         <button class="sound-preview-btn" data-sound="sad">😢 Sad</button>
         <button class="sound-preview-btn" data-sound="thinking">💡 Thinking</button>
         <button class="sound-preview-btn" data-sound="sleeping">💤 Sleeping</button>
+      </div>
+    </section>
+
+    <!-- Visibility Control -->
+    <section class="settings-section visibility-section">
+      <h2>Visibility</h2>
+      
+      <div class="setting-row toggle-row">
+        <div class="setting-desc">
+          <span class="setting-title">Hide on this Tab</span>
+          <span class="setting-subtitle">Temporarily hide Clawd on this tab</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="tab-hide-toggle" disabled>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row toggle-row">
+        <div class="setting-desc">
+          <span class="setting-title">Hide on this Site</span>
+          <span class="setting-subtitle" id="site-visibility-subtitle">Disable Clawd on this domain</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="site-hide-toggle" disabled>
+          <span class="toggle-slider"></span>
+        </label>
       </div>
     </section>
 

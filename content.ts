@@ -4,6 +4,7 @@ import { TriggerDetector } from './src/triggers';
 import { PersonalitySystem } from './src/personality';
 import { getAiEmotion } from './src/ai';
 import { PetSettings, SharedPetState } from './src/types';
+import { springAnimate, keyframeAnimate } from './src/animate';
 
 let syncInterval: any = null;
 let emotionInterval: any = null;
@@ -139,7 +140,6 @@ style.textContent = `
     user-select: none;
     bottom: 0px;
     left: 200px;
-    transition: left 0.1s linear, top 0.1s linear;
   }
   #browser-pet-img {
     pointer-events: auto;
@@ -308,6 +308,27 @@ let isTemporarilyInteracting = false;
 let interactionTimeout: any = null;
 let bubbleTimeout: any = null;
 
+let isCurrentlyHidden = false;
+
+function isPetHidden(): boolean {
+  const isBlockedDomain = currentSettings.blockedDomains?.includes(window.location.hostname);
+  const isHiddenInTab = sessionStorage.getItem('pet-hidden-in-tab') === 'true';
+  return !!(isBlockedDomain || isHiddenInTab);
+}
+
+function hidePet(): void {
+  isCurrentlyHidden = true;
+  container.style.display = 'none';
+  movement.stop();
+  bubble.classList.remove('show');
+}
+
+function showPet(): void {
+  isCurrentlyHidden = false;
+  container.style.display = 'block';
+  movement.start();
+}
+
 const triggers = new TriggerDetector();
 const personality = new PersonalitySystem(() => {});
 const emotion = new EmotionEngine(personality);
@@ -391,6 +412,7 @@ function showLevelUpBanner(level: number): void {
 
 async function updateEmotion(): Promise<void> {
   if (!checkContextOrCleanup()) return;
+  if (isPetHidden()) return;
   if (isTemporarilyInteracting) return;
 
   const context = triggers.snapshot();
@@ -499,8 +521,26 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
 
   if (action === 'pet') {
     playSound('petting');
+    // squash and stretch petting bounce (native WAAPI)
+    petImg.animate([
+      { transform: 'scale(1) rotate(0deg)' },
+      { transform: 'scale(0.8) rotate(-8deg)' },
+      { transform: 'scale(1.25) rotate(8deg)' },
+      { transform: 'scale(0.95) rotate(-4deg)' },
+      { transform: 'scale(1.05) rotate(4deg)' },
+      { transform: 'scale(1) rotate(0deg)' }
+    ], { duration: 600, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   } else if (action === 'feed') {
     playSound('feeding');
+    // bounce scale feeding reaction (native WAAPI)
+    petImg.animate([
+      { transform: 'scale(1)' },
+      { transform: 'scale(1.3)' },
+      { transform: 'scale(0.85)' },
+      { transform: 'scale(1.15)' },
+      { transform: 'scale(0.95)' },
+      { transform: 'scale(1)' }
+    ], { duration: 650, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   }
   
   interactionTimeout = setTimeout(() => {
@@ -508,6 +548,26 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
     loadPet(emotion.current);
   }, duration);
 }
+
+// Hover reactions (native WAAPI spring-like keyframes)
+petImg.addEventListener('mouseenter', () => {
+  if (isPetHidden()) return;
+  petImg.animate([
+    { transform: 'scale(1) rotate(0deg)' },
+    { transform: 'scale(1.2) rotate(6deg)' },
+    { transform: 'scale(1.12) rotate(4deg)' },
+    { transform: 'scale(1.15) rotate(5deg)' }
+  ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
+});
+
+petImg.addEventListener('mouseleave', () => {
+  if (isPetHidden()) return;
+  petImg.animate([
+    { transform: 'scale(1.15) rotate(5deg)' },
+    { transform: 'scale(0.97) rotate(-1deg)' },
+    { transform: 'scale(1) rotate(0deg)' }
+  ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
+});
 
 function applyCostume(): void {
   // Clean up any old hat element that might have been loaded
@@ -542,13 +602,16 @@ function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
   toyEl.style.fontSize = '24px';
   toyEl.style.pointerEvents = 'none';
   toyEl.style.zIndex = '2147483646';
-  toyEl.style.transition = 'top 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19)';
   document.body.appendChild(toyEl);
 
-  // Force reflow and animate fall
-  toyEl.getBoundingClientRect();
   const floorY = window.innerHeight - 32;
-  toyEl.style.top = `${floorY}px`;
+  // Fall with gravity-like bounce (manual spring)
+  springAnimate(toyEl, {
+    top: `${floorY}px`
+  }, {
+    stiffness: 150,
+    damping: 10
+  });
 
   movement.setToyTarget(dropX - currentSettings.size / 2, toyEl, toyType, () => {
     playWithToy(toyType, toyEl);
@@ -558,9 +621,10 @@ function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
 function playWithToy(toyType: string, toyEl: HTMLElement): void {
   isTemporarilyInteracting = true;
 
-  toyEl.style.opacity = '0';
-  toyEl.style.transition = 'opacity 0.3s ease';
-  setTimeout(() => toyEl.remove(), 300);
+  keyframeAnimate(toyEl, [
+    { opacity: '1' },
+    { opacity: '0' }
+  ], { duration: 0.35 }).then(() => toyEl.remove());
 
   const dialogs: Record<string, string> = {
     ball: `Wow! A ball! Roll roll roll! ⚽`,
@@ -576,9 +640,25 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
   if (toyType === 'fish') {
     playSound('feeding');
     personality.recordInteraction('feed');
+    // Squash/stretch and hop reaction (native WAAPI)
+    petImg.animate([
+      { transform: 'scale(1) translateY(0)' },
+      { transform: 'scale(1.4) translateY(-20px)' },
+      { transform: 'scale(0.9) translateY(0)' },
+      { transform: 'scale(1.2) translateY(-5px)' },
+      { transform: 'scale(1) translateY(0)' }
+    ], { duration: 600, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   } else {
     playSound('petting');
     personality.recordInteraction('pet');
+    // Playful jump reaction (native WAAPI)
+    petImg.animate([
+      { transform: 'scale(1) translateY(0)' },
+      { transform: 'scale(1.25) translateY(-35px)' },
+      { transform: 'scale(0.85) translateY(5px)' },
+      { transform: 'scale(1.15) translateY(-10px)' },
+      { transform: 'scale(1) translateY(0)' }
+    ], { duration: 800, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   }
 
   setTimeout(() => {
@@ -630,12 +710,40 @@ chrome.storage.onChanged.addListener((changes) => {
       if (changes['pet-settings'].oldValue?.aiMode !== newSettings.aiMode) {
         hasEvaluatedPageAi = false;
       }
+      if (isPetHidden()) {
+        hidePet();
+      } else {
+        showPet();
+      }
     }
   }
 });
 
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (!checkContextOrCleanup()) return;
+
+  if (message.type === 'get-tab-visibility') {
+    const isHidden = sessionStorage.getItem('pet-hidden-in-tab') === 'true';
+    sendResponse({ isHidden });
+    return false;
+  }
+
+  if (message.type === 'toggle-tab-visibility') {
+    const hide = message.hide;
+    sessionStorage.setItem('pet-hidden-in-tab', hide ? 'true' : 'false');
+    if (isPetHidden()) {
+      hidePet();
+    } else {
+      showPet();
+    }
+    sendResponse({ success: true, isHidden: hide });
+    return false;
+  }
+
+  if (isPetHidden()) {
+    return false;
+  }
+
   if (message.type === 'pet') {
     triggerInteraction('pet', 'love', 2000, "Love it! ❤️");
   } else if (message.type === 'feed') {
@@ -662,6 +770,7 @@ chrome.runtime.onMessage.addListener((message) => {
       }
     }
   }
+  return false;
 });
 
 window.addEventListener('pet-level-up', (e: Event) => {
@@ -678,6 +787,7 @@ window.addEventListener('pet-level-up', (e: Event) => {
 
 document.addEventListener('visibilitychange', () => {
   if (!checkContextOrCleanup()) return;
+  if (isPetHidden()) return;
   if (document.visibilityState === 'visible') {
     safeSendMessage({ type: 'get-pet-state' }, (state: SharedPetState | undefined) => {
       if (state) {
@@ -693,6 +803,7 @@ document.addEventListener('visibilitychange', () => {
 
 syncInterval = setInterval(() => {
   if (!checkContextOrCleanup()) return;
+  if (isPetHidden()) return;
   if (document.visibilityState === 'visible' && document.hasFocus() && !movement.isDragging) {
     safeSendMessage({
       type: 'update-pet-state',
@@ -715,10 +826,16 @@ async function init(): Promise<void> {
   if (!checkContextOrCleanup()) return;
 
   window.addEventListener('pet-console-error', () => {
-    if (checkContextOrCleanup()) {
+    if (checkContextOrCleanup() && !isPetHidden()) {
       updateEmotion();
     }
   });
+
+  if (isPetHidden()) {
+    hidePet();
+  } else {
+    showPet();
+  }
 
   safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
     if (sharedState && sharedState.y !== 0) {
@@ -731,14 +848,19 @@ async function init(): Promise<void> {
       emotion.current = startEmotion;
       loadPet(startEmotion);
     }
-    movement.start();
-    const petName = currentSettings.name || 'Clawd';
-    showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
-    playSound('greeting');
+    
+    if (isPetHidden()) {
+      hidePet();
+    } else {
+      movement.start();
+      const petName = currentSettings.name || 'Clawd';
+      showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
+      playSound('greeting');
+    }
   });
   
   emotionInterval = setInterval(() => {
-    if (checkContextOrCleanup()) {
+    if (checkContextOrCleanup() && !isPetHidden()) {
       updateEmotion();
 
       const context = triggers.snapshot();

@@ -7,6 +7,8 @@ export interface PetStats {
   happiness: number;
   energy: number;
   curiosity: number;
+  focus: number;
+  leisure: number;
   totalPets: number;
   totalFeeds: number;
   level: number;
@@ -25,6 +27,7 @@ export interface PetSettings {
   name?: string;
   costume?: 'none' | 'detective' | 'wizard' | 'party';
   persona?: 'default' | 'sarcastic' | 'encouraging' | 'poetic' | 'snarky';
+  blockedDomains?: string[];
 }
 
 export interface SharedPetState {

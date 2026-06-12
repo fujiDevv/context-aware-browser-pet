@@ -1,4 +1,5 @@
 import { SharedPetState } from './types';
+import { springAnimate, SpringAnimation } from './animate';
 
 export class MovementEngine {
   el: HTMLElement;
@@ -14,6 +15,7 @@ export class MovementEngine {
   _raf: number | null;
   toyTarget: { x: number; element: HTMLElement; type: string; onReach: () => void } | null = null;
   cursorTargetX: number | null = null;
+  _posAnimation: SpringAnimation | null = null;
 
   constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number } = {}) {
     this.el = el;
@@ -47,15 +49,44 @@ export class MovementEngine {
     }
   }
 
+  _stopPosAnimation(): void {
+    if (this._posAnimation) {
+      try {
+        this._posAnimation.stop();
+      } catch (e) {}
+      this._posAnimation = null;
+    }
+  }
+
   shoo(): void {
+    this._stopPosAnimation();
+
     const W = window.innerWidth - this.size;
     const H = window.innerHeight - this.size;
     this.x = Math.random() * W;
     this.y = H;
     this.state = 'walk-bottom';
     this.direction = Math.random() < 0.5 ? 1 : -1;
-    this.paused = false;
-    this._apply();
+    this.paused = true;
+
+    // Smoothly spring to the new location
+    this._posAnimation = springAnimate(this.el, {
+      left: `${this.x}px`,
+      top: `${this.y}px`
+    }, {
+      stiffness: 120,
+      damping: 12
+    });
+
+    this._posAnimation.then(() => {
+      this.paused = false;
+    });
+
+    const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
+    const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
+    if (img) {
+      img.style.transform = `${flip} rotate(0deg)`;
+    }
   }
 
   updateSettings(settings: { size?: number; speed?: number }): void {
@@ -79,8 +110,8 @@ export class MovementEngine {
   _tick(): void {
     if (!this.paused) {
       this._step();
+      this._apply();
     }
-    this._apply();
     this._raf = requestAnimationFrame(() => this._tick());
   }
 
@@ -132,12 +163,14 @@ export class MovementEngine {
   }
 
   setToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
+    this._stopPosAnimation();
     this.toyTarget = { x, element, type, onReach };
     this.cursorTargetX = null; // Clear cursor chase if a toy is dropped
     this.paused = false; // Resume if pet is currently paused
   }
 
   chaseCursor(x: number): void {
+    this._stopPosAnimation();
     this.cursorTargetX = x;
     this.paused = false; // Resume if pet is currently paused
   }
@@ -256,6 +289,8 @@ export class MovementEngine {
   }
 
   _applyDragStyle(): void {
+    this._stopPosAnimation();
+
     this.el.style.left = `${this.x}px`;
     this.el.style.top = `${this.y}px`;
     this.el.style.bottom = 'auto';
@@ -267,9 +302,12 @@ export class MovementEngine {
   }
 
   _snapToNearestEdge(): void {
+    this._stopPosAnimation();
+
     const W = window.innerWidth - this.size;
+    const H = window.innerHeight - this.size;
     
-    this.y = window.innerHeight - this.size;
+    this.y = H;
     this.state = 'walk-bottom';
     
     if (this.x >= W / 2) {
@@ -278,13 +316,35 @@ export class MovementEngine {
       this.direction = 1;
     }
     
-    this.paused = false;
-    this._apply();
+    this.paused = true;
+    
+    // Spring snap to the bottom floor
+    this._posAnimation = springAnimate(this.el, {
+      left: `${this.x}px`,
+      top: `${this.y}px`
+    }, {
+      stiffness: 250,
+      damping: 16
+    });
+
+    this._posAnimation.then(() => {
+      this.paused = false;
+    });
+
+    const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
+    const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
+    if (img) {
+      img.style.transform = `${flip} rotate(0deg)`;
+      img.style.width = `${this.size}px`;
+      img.style.height = `${this.size}px`;
+    }
   }
 
   syncState(state: Partial<SharedPetState>): void {
     if (this.isDragging) return;
     
+    this._stopPosAnimation();
+
     const W = window.innerWidth - this.size;
     
     this.x = Math.max(0, Math.min(state.x ?? this.x, W));
