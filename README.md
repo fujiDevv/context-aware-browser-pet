@@ -18,19 +18,15 @@ An interactive, context-aware browser mascot pet extension built using the [claw
 
 ## Key Features
 
-* **5-State Movement Engine**: The pet crawls seamlessly along the left, right, top, and bottom edges of the viewport. It flips horizontally depending on direction and rotates 90 degrees on vertical walls.
-* **Interactive Mouse Dragging**: Click and drag the pet to throw it anywhere on the page! Upon release, it automatically snaps to the nearest viewport boundary and restarts its crawling loops.
-* **Real-time Tab & Window Sync**: Active coordinates and state are coordinated through the background worker. If you switch tabs, the pet snaps to the exact same position, maintaining visual persistence. Side-by-side windows sync coordinates in real-time.
-* **Granular Context Triggers**: Reacts dynamically to:
-  * Rolling typing velocity ("Heavy Typing" state)
-  * Scroll depth percentages
-  * Active HTML5 video playback (cool/dancing reactions)
-  * Form submissions (celebrating reaction)
-  * Main frame HTTP errors (404, 500, 403, 429 status code captures)
-* **Personality & Leveling System**: Earn XP points by petting, feeding, and browsing. Leveling up unlocks higher tier mascot status animations (ninja, wizard, astronaut, rocket). Stats are stored securely in `chrome.storage.local`.
-* **Glassmorphic UI Control Panel**: A premium dark-theme popup UI offering manual action buttons (Pet, Feed, Shoo), settings sliders (size, speed), and API integrations.
-* **Secure Background AI Mode**: Securely routes Anthropic Claude API requests through the background service worker to bypass page Content Security Policies (CSP) and CORS locks on target domains.
-* **Context Invalidation Protections**: Prevents console error spam upon extension reloads. Orphaned scripts automatically clear intervals, halt requestAnimationFrame ticks, and remove their DOM elements from the web pages.
+* **Advanced Edge-Crawling Engine**: 5-state viewport movement tracking (top, bottom, left, right edges) with direction-flipping, 90-degree rotations, throwing physics, and edge snapping.
+* **Granular Context Triggers**: Monitors active typing velocity, scroll depth, form submissions, and active HTML5 media play/pause states.
+* **Console Error Watcher**: Detects runtime JS errors and unhandled promise rejections, triggering debug animations and panic reactions.
+* **Domain-Specific Animations**: Displays custom SVGs mapping to site context (popcorn/eating for media, book/reading for docs/Wikipedia, laptop/coding for dev sites).
+* **Virtual Pet Mechanics**: Leveling progression with XP rewards, custom naming, time-decay variables (energy, happiness, curiosity), and interactive toy drag-and-drop.
+* **Milestone Shader Upgrades**: Unlocks hardware-accelerated CSS shader glows (Detective Blue, Magic Purple, Rainbow Neon) based on pet level milestones.
+* **Cross-Tab Synchronization**: Syncs pet coordinates and current emotional states across background-managed tabs and side-by-side windows.
+* **CSP-Bypassing AI Service**: Service-worker proxy for Anthropic API calls ensuring compliance with page CSP and CORS headers.
+* **Clean Context Lifecycles**: Automatic cleanup of orphaned DOM elements and active loop intervals upon extension updates or reloads.
 
 ---
 
@@ -104,7 +100,8 @@ context-aware-browser-pet/
 * **Double Click**: "Feed" the mascot to raise its Energy. Displays the `celebrating` mood.
 * **Right Click**: "Shoo" the mascot away. Teleports it to a random coordinate along the bottom screen edge.
 * **Click & Drag**: Drag the mascot to reposition it or attach it to a specific wall edge.
-* **Popup Slider**: Dynamically adjust the size and movement speed. The pet updates instantly without refreshing.
+* **Drag-and-Drop Toys**: Drag toys (Ball ⚽, Fish 🐟, Laser 🔴) out from popup UI onto the page.
+* **Settings Panel**: Name your pet, adjust speed and size sliders, select costume shader rewards (unlocked at Level 5/10/15), and toggle chiptune audio volume.
 * **AI Mood Mode**: Toggle AI Mode in the settings, input your Anthropic API Key, and the pet will periodically evaluate the webpage description using Claude to select a matching emotional expression!
 
 ---
