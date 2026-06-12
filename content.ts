@@ -63,11 +63,35 @@ async function playSound(type: string): Promise<void> {
     return;
   }
 
-  if (resumePromise) {
+  // Prevent autoplay warnings by skipping sound play if user hasn't interacted with the page yet
+  if (typeof navigator !== 'undefined' && navigator.userActivation && !navigator.userActivation.hasBeenActive) {
+    return;
+  }
+
+  // Ensure AudioContext is instantiated
+  if (!audioCtx) {
+    try {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      audioCtx = new AudioContextClass();
+    } catch (err) {
+      console.warn("Failed to create AudioContext:", err);
+      return;
+    }
+  }
+
+  // Try to resume if suspended (works if called during a user interaction)
+  if (audioCtx.state === 'suspended') {
+    try {
+      await audioCtx.resume();
+    } catch (err) {}
+  }
+
+  // Fall back to awaiting the window-level resume promise if available
+  if (audioCtx.state === 'suspended' && resumePromise) {
     await resumePromise;
   }
 
-  if (!audioCtx || audioCtx.state === 'suspended') {
+  if (audioCtx.state === 'suspended') {
     return;
   }
 
@@ -339,6 +363,11 @@ const movement = new MovementEngine(container, {
 
 async function loadPet(name: string): Promise<void> {
   petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${name}.svg`);
+  try {
+    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+      chrome.storage.local.set({ 'pet-mood': name }).catch(() => {});
+    }
+  } catch (e) {}
 }
 
 function showBubble(text: string, duration = 3000): void {
@@ -688,6 +717,7 @@ async function loadAndApplySettings(): Promise<void> {
   const saved = await chrome.storage.local.get('pet-settings');
   if (saved['pet-settings']) {
     currentSettings = { ...currentSettings, ...saved['pet-settings'] };
+    personality.disabledEmotions = currentSettings.disabledEmotions || [];
     movement.updateSettings({
       size: currentSettings.size,
       speed: currentSettings.speed
@@ -702,6 +732,7 @@ chrome.storage.onChanged.addListener((changes) => {
     const newSettings = changes['pet-settings'].newValue;
     if (newSettings) {
       currentSettings = { ...currentSettings, ...newSettings };
+      personality.disabledEmotions = currentSettings.disabledEmotions || [];
       movement.updateSettings({
         size: currentSettings.size,
         speed: currentSettings.speed
@@ -714,6 +745,23 @@ chrome.storage.onChanged.addListener((changes) => {
         hidePet();
       } else {
         showPet();
+      }
+    }
+  }
+  if (changes['pet-stats']) {
+    const newStats = changes['pet-stats'].newValue;
+    const oldStats = changes['pet-stats'].oldValue;
+    if (newStats) {
+      const oldLevel = oldStats ? oldStats.level : 1;
+      if (document.visibilityState === 'visible' && !isPetHidden() && newStats.level > oldLevel) {
+        showLevelUpBanner(newStats.level);
+        loadPet('celebrating');
+        playSound('levelUp');
+        isTemporarilyInteracting = true;
+        setTimeout(() => {
+          isTemporarilyInteracting = false;
+          loadPet(emotion.current);
+        }, 3000);
       }
     }
   }
@@ -769,17 +817,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   return false;
 });
 
-window.addEventListener('pet-level-up', (e: Event) => {
-  const customEvent = e as CustomEvent<{ level: number }>;
-  showLevelUpBanner(customEvent.detail.level);
-  loadPet('celebrating');
-  playSound('levelUp');
-  isTemporarilyInteracting = true;
-  setTimeout(() => {
-    isTemporarilyInteracting = false;
-    loadPet(emotion.current);
-  }, 3000);
-});
+
 
 document.addEventListener('visibilitychange', () => {
   if (!checkContextOrCleanup()) return;

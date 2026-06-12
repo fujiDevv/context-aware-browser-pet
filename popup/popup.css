@@ -34,7 +34,7 @@
 }
 
 body {
-  width: 340px;
+  width: 380px;
   background-color: var(--bg-color);
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-primary);
@@ -608,4 +608,390 @@ input:checked+.toggle-slider:before {
 
 .sound-preview-btn:active {
   transform: scale(0.97);
+}
+
+/* ── Active Emotions Section ── */
+.emotions-section {
+  margin-bottom: 20px;
+}
+
+.section-help {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.emotions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-height: 160px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.emotions-grid::-webkit-scrollbar {
+  width: 4px;
+}
+.emotions-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 2px;
+}
+.emotions-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+}
+.emotions-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.emotion-checkbox-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.emotion-checkbox-card:hover {
+  background: rgba(99, 102, 241, 0.06);
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
+}
+
+.emotion-checkbox-card:active {
+  transform: scale(0.95);
+}
+
+.emotion-checkbox-card.checked {
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.2);
+}
+
+.emotion-checkbox-card input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.emotion-checkbox-emoji {
+  font-size: 20px;
+}
+
+.emotion-checkbox-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+.emotion-checkbox-card.checked .emotion-checkbox-label {
+  color: #ffffff;
+}
+
+/* ── Header Badges & Mood Status ── */
+.header-badges {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.mood-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(236, 72, 153, 0.12);
+  border: 1px solid rgba(236, 72, 153, 0.25);
+  padding: 3px 10px;
+  border-radius: 20px;
+  width: fit-content;
+  font-size: 10px;
+  font-weight: 700;
+  color: #f472b6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 8px rgba(236, 72, 153, 0.15);
+}
+
+#mood-emoji {
+  font-size: 12px;
+}
+
+/* ── Dashboard Layout & Tabs ── */
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-top: 10px;
+}
+
+/* Custom Content Scrollbars */
+.dashboard-content::-webkit-scrollbar {
+  width: 4px;
+}
+.dashboard-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 2px;
+}
+.dashboard-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+}
+.dashboard-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.4);
+}
+
+.tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tab-pane.hidden {
+  display: none !important;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tab-btn.active {
+  color: #ffffff;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.15);
+}
+
+/* ── Analytics Grid ── */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.analytics-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  transition: border-color 0.2s ease;
+}
+
+.analytics-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.analytics-val {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffffff, #a5b4fc);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.analytics-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ── Browsing Interests Categories ── */
+.categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.category-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.category-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.category-pct {
+  color: var(--text-secondary);
+  font-size: 10px;
+}
+
+.category-bar-wrapper {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.category-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease-out;
+}
+
+/* ── Activity Timeline ── */
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 160px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.timeline-list::-webkit-scrollbar {
+  width: 3px;
+}
+.timeline-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.timeline-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.01);
+  border-left: 2px solid rgba(99, 102, 241, 0.4);
+  border-radius: 0 8px 8px 0;
+  font-size: 11px;
+}
+
+.timeline-icon {
+  font-size: 13px;
+}
+
+.timeline-content {
+  flex: 1;
+  color: var(--text-primary);
+  font-weight: 550;
+}
+
+.timeline-time {
+  color: var(--text-secondary);
+  font-size: 9px;
+}
+
+/* ── Emotion Trigger Guide Section ── */
+.triggers-section {
+  margin-bottom: 20px;
+}
+
+.triggers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.trigger-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+}
+
+.trigger-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  min-width: 90px;
+  text-align: center;
+}
+
+.time-badge {
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+}
+
+.idle-badge {
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  color: #fde047;
+}
+
+.web-badge {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+.error-badge {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.trigger-label {
+  color: var(--text-primary);
+  font-weight: 550;
+  line-height: 1.4;
 }

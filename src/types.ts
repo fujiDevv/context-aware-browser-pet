@@ -14,6 +14,7 @@ export interface PetStats {
   level: number;
   xp: number;
   moodHistory: MoodHistoryItem[];
+  siteCategoryCounts?: Record<string, number>;
   lastUpdateTime?: number;
 }
 
@@ -28,6 +29,7 @@ export interface PetSettings {
   costume?: 'none' | 'detective' | 'wizard' | 'party';
   persona?: 'default' | 'sarcastic' | 'encouraging' | 'poetic' | 'snarky';
   blockedDomains?: string[];
+  disabledEmotions?: string[];
 }
 
 export interface SharedPetState {

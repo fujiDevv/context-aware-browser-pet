@@ -1,7 +1,84 @@
 import { PetStats, PetSettings } from '../src/types';
 
+const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> = {
+  'happy': { name: 'Happy', emoji: '😊' },
+  'sad': { name: 'Sad', emoji: '😢' },
+  'angry': { name: 'Angry', emoji: '😠' },
+  'crying': { name: 'Crying', emoji: '😭' },
+  'waving': { name: 'Waving', emoji: '👋' },
+  'sleeping': { name: 'Sleeping', emoji: '💤' },
+  'working-thinking': { name: 'Thinking', emoji: '🤔' },
+  'shrug': { name: 'Shrug', emoji: '🤷' },
+  'reading': { name: 'Reading', emoji: '📖' },
+  'yoga': { name: 'Yoga', emoji: '🧘' },
+  'eating': { name: 'Eating', emoji: '🍕' },
+  'coding': { name: 'Coding', emoji: '💻' },
+  'working-typing': { name: 'Typing', emoji: '⌨️' },
+  'dancing': { name: 'Dancing', emoji: '💃' },
+  'cool': { name: 'Cool', emoji: '😎' },
+  'love': { name: 'Love', emoji: '❤️' },
+  'celebrating': { name: 'Celebrating', emoji: '🎉' },
+  'mindblown': { name: 'Mindblown', emoji: '🤯' },
+  'ninja': { name: 'Ninja', emoji: '🥷' },
+  'working-wizard': { name: 'Wizard', emoji: '🧙' },
+  'astronaut': { name: 'Astronaut', emoji: '🧑‍🚀' },
+  'working-debugger': { name: 'Debugger', emoji: '🔍' },
+  'working-building': { name: 'Building', emoji: '🧱' },
+  'rocket': { name: 'Rocket', emoji: '🚀' },
+  'pirate': { name: 'Pirate', emoji: '🏴‍☠️' },
+  'working-juggling': { name: 'Juggling', emoji: '🤹' },
+  'gaming': { name: 'Gaming', emoji: '🎮' },
+  'battery-low': { name: 'Low Battery', emoji: '🪫' },
+  'christmas': { name: 'Christmas', emoji: '🎄' },
+  'winter': { name: 'Winter', emoji: '❄️' },
+  'halloween': { name: 'Halloween', emoji: '🎃' },
+  'summer': { name: 'Summer', emoji: '☀️' },
+  'ice-cream': { name: 'Ice Cream', emoji: '🍦' },
+  'surfing': { name: 'Surfing', emoji: '🏄' },
+  'skateboard': { name: 'Skateboard', emoji: '🛹' },
+  'telescope': { name: 'Telescope', emoji: '🔭' },
+  'meditating': { name: 'Meditating', emoji: '🧘' },
+  'working-rubber-duck': { name: 'Rubber Duck', emoji: '🦆' },
+  'coffee': { name: 'Coffee', emoji: '☕' },
+  'mail': { name: 'Mail', emoji: '✉️' },
+  'notification': { name: 'Notification', emoji: '🔔' },
+  'flexing': { name: 'Flexing', emoji: '💪' },
+  'lifting': { name: 'Lifting', emoji: '🏋️' },
+  'singing': { name: 'Singing', emoji: '🎤' },
+  'music': { name: 'Music', emoji: '🎵' },
+  'dj': { name: 'DJ', emoji: '🎧' }
+};
+
+function getAvailableEmotions(level: number): string[] {
+  const freePass = [
+    'happy', 'sad', 'waving', 'sleeping', 'eating',
+    'battery-low', 'christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing', 'skateboard',
+    'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'mail', 'notification', 'flexing',
+    'lifting', 'singing', 'music', 'dj'
+  ];
+
+  const level1 = ['happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug', 'reading', 'yoga', 'eating'];
+  const level3 = [...level1, 'coding', 'working-typing', 'dancing', 'cool', 'love', 'celebrating', 'mindblown'];
+  const level5 = [...level3, 'ninja', 'working-wizard', 'astronaut', 'working-debugger', 'working-building'];
+  const level8 = [...level5, 'rocket', 'pirate', 'working-juggling', 'gaming'];
+
+  const allEmotions = new Set<string>();
+  freePass.forEach(e => allEmotions.add(e));
+
+  const levelSet = level >= 10 ? null : (level >= 8 ? level8 : (level >= 5 ? level5 : (level >= 3 ? level3 : level1)));
+  if (levelSet) {
+    levelSet.forEach(e => allEmotions.add(e));
+  } else {
+    level8.forEach(e => allEmotions.add(e));
+  }
+
+  return Array.from(allEmotions);
+}
+
 async function init(): Promise<void> {
   let blockedDomains: string[] = [];
+  let disabledEmotions: string[] = [];
+  let lastRenderedLevel = -1;
   const statsEl = {
     level: document.getElementById('pet-level') as HTMLElement,
     xpText: document.getElementById('xp-text') as HTMLElement,
@@ -16,7 +93,11 @@ async function init(): Promise<void> {
     focusBar: document.getElementById('bar-focus') as HTMLElement,
     leisureText: document.getElementById('txt-leisure') as HTMLElement,
     leisureBar: document.getElementById('bar-leisure') as HTMLElement,
-    preview: document.getElementById('pet-preview') as HTMLImageElement
+    preview: document.getElementById('pet-preview') as HTMLImageElement,
+    valTotalPets: document.getElementById('val-total-pets') as HTMLElement,
+    valTotalFeeds: document.getElementById('val-total-feeds') as HTMLElement,
+    categoriesList: document.getElementById('categories-list') as HTMLElement,
+    timelineList: document.getElementById('timeline-list') as HTMLElement
   };
 
   const settingsEl = {
@@ -56,6 +137,35 @@ async function init(): Promise<void> {
     });
   };
   setupToyDrags();
+
+  // ── Tab Switching setup ──────────────────────────────────────────────────
+  const setupTabSwitching = () => {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.getAttribute('data-tab');
+        if (!targetTab) return;
+
+        // Update active class on buttons
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Toggle visibility of panels
+        tabPanes.forEach((pane) => {
+          if (pane.id === `tab-${targetTab}`) {
+            pane.classList.remove('hidden');
+            pane.classList.add('active');
+          } else {
+            pane.classList.add('hidden');
+            pane.classList.remove('active');
+          }
+        });
+      });
+    });
+  };
+  setupTabSwitching();
 
   // ── Sound Board Preview setup ─────────────────────────────────────────────
   const setupSoundPreview = () => {
@@ -99,10 +209,11 @@ async function init(): Promise<void> {
   setupSoundPreview();
 
   // ── 1. Load Stats and Settings ──────────────────────────────────────────
-  const data = await chrome.storage.local.get(['pet-stats', 'pet-settings']);
+  const data = await chrome.storage.local.get(['pet-stats', 'pet-settings', 'pet-mood']);
   
-  updateUIStats(data['pet-stats']);
   applySettings(data['pet-settings']);
+  updateUIStats(data['pet-stats']);
+  updateUIMood(data['pet-mood'] || 'happy');
 
   // ── Visibility Setup ───────────────────────────────────────────────────
   const tabHideToggle = document.getElementById('tab-hide-toggle') as HTMLInputElement;
@@ -178,6 +289,9 @@ async function init(): Promise<void> {
   chrome.storage.onChanged.addListener((changes) => {
     if (changes['pet-stats']) {
       updateUIStats(changes['pet-stats'].newValue);
+    }
+    if (changes['pet-mood']) {
+      updateUIMood(changes['pet-mood'].newValue);
     }
   });
 
@@ -284,8 +398,57 @@ async function init(): Promise<void> {
         name: settingsEl.nameInput.value.trim() || 'Clawd',
         costume: settingsEl.costumeSelect.value,
         persona: settingsEl.personaSelect.value,
-        blockedDomains: blockedDomains
+        blockedDomains: blockedDomains,
+        disabledEmotions: disabledEmotions
       }
+    });
+  }
+
+
+
+  function renderEmotionsGrid(level: number): void {
+    const gridEl = document.getElementById('emotions-grid');
+    if (!gridEl) return;
+
+    gridEl.innerHTML = '';
+
+    const availableEmotions = getAvailableEmotions(level);
+
+    availableEmotions.forEach((emotion) => {
+      const meta = EMOTIONS_METADATA[emotion] || { name: emotion, emoji: '🐾' };
+      const isDisabled = disabledEmotions.includes(emotion);
+
+      const card = document.createElement('label');
+      card.className = `emotion-checkbox-card${!isDisabled ? ' checked' : ''}`;
+      
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = !isDisabled;
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+          card.classList.add('checked');
+          disabledEmotions = disabledEmotions.filter(e => e !== emotion);
+        } else {
+          card.classList.remove('checked');
+          if (!disabledEmotions.includes(emotion)) {
+            disabledEmotions.push(emotion);
+          }
+        }
+        saveSettings();
+      });
+
+      const emojiSpan = document.createElement('span');
+      emojiSpan.className = 'emotion-checkbox-emoji';
+      emojiSpan.textContent = meta.emoji;
+
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'emotion-checkbox-label';
+      labelSpan.textContent = meta.name;
+
+      card.appendChild(checkbox);
+      card.appendChild(emojiSpan);
+      card.appendChild(labelSpan);
+      gridEl.appendChild(card);
     });
   }
 
@@ -345,6 +508,117 @@ async function init(): Promise<void> {
     else previewMood = 'crying';
     
     statsEl.preview.src = `../assets/pets/clawd-${previewMood}.svg`;
+
+    // Analytics Counter Mapping
+    if (statsEl.valTotalPets) {
+      statsEl.valTotalPets.textContent = String(stats.totalPets || 0);
+    }
+    if (statsEl.valTotalFeeds) {
+      statsEl.valTotalFeeds.textContent = String(stats.totalFeeds || 0);
+    }
+
+    // Dynamic Browsing Interests Category Rendering
+    if (statsEl.categoriesList) {
+      statsEl.categoriesList.innerHTML = '';
+      const counts = stats.siteCategoryCounts || {};
+      const totalVisits = Object.values(counts).reduce((a, b) => a + b, 0);
+
+      const CATEGORY_METADATA: Record<string, { name: string; emoji: string; colorClass: string }> = {
+        code: { name: 'Coding', emoji: '🖥️', colorClass: 'fill-blue' },
+        social: { name: 'Social', emoji: '💬', colorClass: 'fill-pink' },
+        gaming: { name: 'Gaming', emoji: '🎮', colorClass: 'fill-yellow' },
+        news: { name: 'News', emoji: '📰', colorClass: 'fill-green' },
+        shopping: { name: 'Shopping', emoji: '🛍️', colorClass: 'fill-indigo' },
+        docs: { name: 'Documentation', emoji: '📄', colorClass: 'fill-blue' },
+        mail: { name: 'Email', emoji: '✉️', colorClass: 'fill-green' },
+        fitness: { name: 'Fitness', emoji: '🏋️', colorClass: 'fill-pink' }
+      };
+
+      if (totalVisits === 0) {
+        const placeholder = document.createElement('p');
+        placeholder.style.fontSize = '10px';
+        placeholder.style.color = 'var(--text-secondary)';
+        placeholder.style.fontStyle = 'italic';
+        placeholder.textContent = 'No sites visited yet. Browse around!';
+        statsEl.categoriesList.appendChild(placeholder);
+      } else {
+        Object.entries(counts)
+          .sort((a, b) => b[1] - a[1])
+          .forEach(([cat, val]) => {
+            const meta = CATEGORY_METADATA[cat] || { name: cat, emoji: '🌐', colorClass: 'fill-blue' };
+            const percentage = Math.round((val / totalVisits) * 100);
+
+            const row = document.createElement('div');
+            row.className = 'category-row';
+            row.innerHTML = `
+              <div class="category-meta">
+                <span>${meta.emoji} ${meta.name}</span>
+                <span class="category-pct">${val} (${percentage}%)</span>
+              </div>
+              <div class="category-bar-wrapper">
+                <div class="category-bar ${meta.colorClass}" style="width: ${percentage}%"></div>
+              </div>
+            `;
+            statsEl.categoriesList.appendChild(row);
+          });
+      }
+    }
+
+    // Dynamic Recent Activity Timeline Rendering
+    if (statsEl.timelineList) {
+      statsEl.timelineList.innerHTML = '';
+      const history = stats.moodHistory || [];
+
+      const EVENT_FORMATTERS: Record<string, { label: string; emoji: string }> = {
+        pet: { label: 'You petted Clawd', emoji: '🫶' },
+        feed: { label: 'You fed Clawd', emoji: '🍖' },
+        shoo: { label: 'Shooed Clawd away', emoji: '🏃‍♂️' },
+        'visit-code': { label: 'Browsed Coding pages', emoji: '🖥️' },
+        'visit-social': { label: 'Browsed Social media', emoji: '💬' },
+        'visit-gaming': { label: 'Browsed Gaming sites', emoji: '🎮' },
+        'visit-news': { label: 'Browsed News pages', emoji: '📰' },
+        'visit-shopping': { label: 'Browsed Shopping sites', emoji: '🛍️' },
+        'visit-docs': { label: 'Browsed Documentation', emoji: '📄' },
+        'visit-mail': { label: 'Checked Email', emoji: '✉️' },
+        'visit-fitness': { label: 'Browsed Fitness sites', emoji: '🏋️' }
+      };
+
+      if (history.length === 0) {
+        const placeholder = document.createElement('p');
+        placeholder.style.fontSize = '10px';
+        placeholder.style.color = 'var(--text-secondary)';
+        placeholder.style.fontStyle = 'italic';
+        placeholder.textContent = 'No recent activity recorded.';
+        statsEl.timelineList.appendChild(placeholder);
+      } else {
+        history.slice(0, 10).forEach((item) => {
+          const fmt = EVENT_FORMATTERS[item.action] || { label: item.action, emoji: '🐾' };
+          const timelineItem = document.createElement('div');
+          timelineItem.className = 'timeline-item';
+          timelineItem.innerHTML = `
+            <span class="timeline-icon">${fmt.emoji}</span>
+            <span class="timeline-content">${fmt.label}</span>
+            <span class="timeline-time">${item.time}</span>
+          `;
+          statsEl.timelineList.appendChild(timelineItem);
+        });
+      }
+    }
+
+    if (stats.level !== lastRenderedLevel) {
+      renderEmotionsGrid(stats.level);
+      lastRenderedLevel = stats.level;
+    }
+  }
+
+  function updateUIMood(mood: string): void {
+    const moodEmojiEl = document.getElementById('mood-emoji');
+    const moodTextEl = document.getElementById('mood-text');
+    if (!moodEmojiEl || !moodTextEl) return;
+
+    const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
+    moodEmojiEl.textContent = meta.emoji;
+    moodTextEl.textContent = meta.name;
   }
 
   // ── Helper: Populate Settings ─────────────────────────────────────────────
@@ -401,6 +675,9 @@ async function init(): Promise<void> {
 
     // Blocked Domains
     blockedDomains = settings.blockedDomains || [];
+
+    // Disabled Emotions
+    disabledEmotions = settings.disabledEmotions || [];
   }
 }
 

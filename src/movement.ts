@@ -13,6 +13,7 @@ export class MovementEngine {
   isDragging: boolean;
   wasDragged: boolean;
   _raf: number | null;
+  hasFallen: boolean;
   toyTarget: { x: number; element: HTMLElement; type: string; onReach: () => void } | null = null;
   cursorTargetX: number | null = null;
   _posAnimation: SpringAnimation | null = null;
@@ -31,14 +32,42 @@ export class MovementEngine {
     this.paused = false;
     this.isDragging = false;
     this.wasDragged = false;
+    this.hasFallen = false;
     this._raf = null;
     
     this._setupDrag();
   }
 
   start(): void {
-    if (!this._raf) {
-      this._tick();
+    if (!this.hasFallen) {
+      this.hasFallen = true;
+      const targetY = window.innerHeight - this.size;
+      this.y = -this.size;
+      this.paused = true;
+      this.state = 'falling';
+      this._apply();
+
+      this._posAnimation = springAnimate(this.el, {
+        left: `${this.x}px`,
+        top: `${targetY}px`
+      }, {
+        stiffness: 180,
+        damping: 15,
+        mass: 1.2
+      });
+
+      this._posAnimation.then(() => {
+        this.y = targetY;
+        this.paused = false;
+        this.state = 'walk-bottom';
+        if (!this._raf) {
+          this._tick();
+        }
+      });
+    } else {
+      if (!this._raf) {
+        this._tick();
+      }
     }
   }
 
@@ -344,6 +373,7 @@ export class MovementEngine {
     if (this.isDragging) return;
     
     this._stopPosAnimation();
+    this.hasFallen = true;
 
     const W = window.innerWidth - this.size;
     

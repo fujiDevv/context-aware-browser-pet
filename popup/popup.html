@@ -3,269 +3,369 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browser Pet Controls</title>
+  <title>Browser Pet Dashboard</title>
   <link rel="stylesheet" href="popup.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="popup-container">
-    <!-- Header with Mascot Preview -->
-    <header class="header">
-      <div class="avatar-container">
-        <div class="avatar-glow"></div>
-        <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Pet Preview">
-      </div>
-      <div class="header-info">
-        <h1 id="pet-name">Clawd</h1>
-        <div class="level-badge">
-          <span class="level-label">LVL</span>
-          <span id="pet-level" class="level-num">1</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- XP Progress Bar -->
-    <div class="xp-section">
-      <div class="xp-header">
-        <span>Experience</span>
-        <span id="xp-text">0 / 100 XP</span>
-      </div>
-      <div class="progress-track xp-track">
-        <div id="bar-xp" class="progress-fill xp-fill" style="width: 0%"></div>
-      </div>
+    <!-- Tab Navigation Header -->
+    <div class="tab-navigation">
+      <button class="tab-btn active" id="btn-tab-mascot" data-tab="mascot">🐾 Mascot</button>
+      <button class="tab-btn" id="btn-tab-analytics" data-tab="analytics">📊 Stats</button>
+      <button class="tab-btn" id="btn-tab-settings" data-tab="settings">⚙️ Settings</button>
     </div>
 
-    <!-- Core Pet Stats -->
-    <section class="stats-section">
-      <h2>Mascot Stats</h2>
+    <!-- Scrollable content area -->
+    <div class="dashboard-content">
       
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-icon">🫶</span>
-          <span class="stat-name">Happiness</span>
-          <span id="txt-happiness" class="stat-val">50%</span>
+      <!-- Tab 1: Mascot -->
+      <div id="tab-mascot" class="tab-pane active">
+        <!-- Header with Mascot Preview -->
+        <header class="header">
+          <div class="avatar-container">
+            <div class="avatar-glow"></div>
+            <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Pet Preview">
+          </div>
+          <div class="header-info">
+            <h1 id="pet-name">Clawd</h1>
+            <div class="header-badges">
+              <div class="level-badge">
+                <span class="level-label">LVL</span>
+                <span id="pet-level" class="level-num">1</span>
+              </div>
+              <div class="mood-badge" id="pet-mood">
+                <span id="mood-emoji">😊</span>
+                <span id="mood-text">Happy</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- XP Progress Bar -->
+        <div class="xp-section">
+          <div class="xp-header">
+            <span>Experience</span>
+            <span id="xp-text">0 / 100 XP</span>
+          </div>
+          <div class="progress-track xp-track">
+            <div id="bar-xp" class="progress-fill xp-fill" style="width: 0%"></div>
+          </div>
         </div>
-        <div class="progress-track">
-          <div id="bar-happiness" class="progress-fill fill-pink" style="width: 50%"></div>
-        </div>
+
+        <!-- Core Pet Stats -->
+        <section class="stats-section">
+          <h2>Mascot Stats</h2>
+          
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-icon">🫶</span>
+              <span class="stat-name">Happiness</span>
+              <span id="txt-happiness" class="stat-val">50%</span>
+            </div>
+            <div class="progress-track">
+              <div id="bar-happiness" class="progress-fill fill-pink" style="width: 50%"></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-icon">🍖</span>
+              <span class="stat-name">Energy</span>
+              <span id="txt-energy" class="stat-val">80%</span>
+            </div>
+            <div class="progress-track">
+              <div id="bar-energy" class="progress-fill fill-yellow" style="width: 80%"></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-icon">🧐</span>
+              <span class="stat-name">Curiosity</span>
+              <span id="txt-curiosity" class="stat-val">60%</span>
+            </div>
+            <div class="progress-track">
+              <div id="bar-curiosity" class="progress-fill fill-blue" style="width: 60%"></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-icon">💻</span>
+              <span class="stat-name">Focus</span>
+              <span id="txt-focus" class="stat-val">50%</span>
+            </div>
+            <div class="progress-track">
+              <div id="bar-focus" class="progress-fill fill-green" style="width: 50%"></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-icon">🍿</span>
+              <span class="stat-name">Leisure</span>
+              <span id="txt-leisure" class="stat-val">50%</span>
+            </div>
+            <div class="progress-track">
+              <div id="bar-leisure" class="progress-fill fill-indigo" style="width: 50%"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Interactivity Actions -->
+        <section class="actions-section">
+          <button id="btn-pet" class="action-btn pet-btn">
+            <span class="btn-emoji">🫶</span> Pet
+          </button>
+          <button id="btn-feed" class="action-btn feed-btn">
+            <span class="btn-emoji">🍖</span> Feed
+          </button>
+          <button id="btn-shoo" class="action-btn shoo-btn">
+            <span class="btn-emoji">👋</span> Shoo
+          </button>
+        </section>
+
+        <!-- Interactive Toys Drawer -->
+        <section class="toys-section">
+          <h2>Interactive Toys</h2>
+          <div class="toys-container">
+            <div class="toy-item" draggable="true" id="toy-ball" data-toy="ball">
+              <span class="toy-emoji">⚽</span>
+              <span class="toy-label">Ball</span>
+            </div>
+            <div class="toy-item" draggable="true" id="toy-fish" data-toy="fish">
+              <span class="toy-emoji">🐟</span>
+              <span class="toy-label">Fish</span>
+            </div>
+            <div class="toy-item" draggable="true" id="toy-laser" data-toy="laser">
+              <span class="toy-emoji">🔴</span>
+              <span class="toy-label">Laser</span>
+            </div>
+          </div>
+          <p class="toy-help">Drag a toy onto the webpage to play!</p>
+        </section>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-icon">🍖</span>
-          <span class="stat-name">Energy</span>
-          <span id="txt-energy" class="stat-val">80%</span>
-        </div>
-        <div class="progress-track">
-          <div id="bar-energy" class="progress-fill fill-yellow" style="width: 80%"></div>
-        </div>
+      <!-- Tab 2: Stats & Analytics -->
+      <div id="tab-analytics" class="tab-pane hidden">
+        <!-- Mascot Analytics Summary -->
+        <section class="settings-section analytics-section">
+          <h2>Clawd's Analytics</h2>
+          <div class="analytics-grid">
+            <div class="analytics-card">
+              <span class="analytics-val" id="val-total-pets">0</span>
+              <span class="analytics-label">Total Pets 🫶</span>
+            </div>
+            <div class="analytics-card">
+              <span class="analytics-val" id="val-total-feeds">0</span>
+              <span class="analytics-label">Total Feeds 🍖</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Browsing Interests meter -->
+        <section class="settings-section interests-section">
+          <h2>Browsing Interests</h2>
+          <p class="section-help">Web categories Clawd has analyzed:</p>
+          <div id="categories-list" class="categories-list">
+            <!-- Dynamically generated in popup.ts -->
+          </div>
+        </section>
+
+        <!-- Recent Activity timeline -->
+        <section class="settings-section timeline-section">
+          <h2>Recent Activity</h2>
+          <div id="timeline-list" class="timeline-list">
+            <!-- Dynamically generated from stats.moodHistory -->
+          </div>
+        </section>
+
+        <!-- Daily Schedule & Triggers -->
+        <section class="settings-section triggers-section">
+          <h2>Daily Schedule & Triggers</h2>
+          <p class="section-help">How Clawd reacts to your daily habits and environment:</p>
+          <div class="triggers-list">
+            <div class="trigger-item-row">
+              <span class="trigger-badge time-badge">10 PM - 6 AM</span>
+              <span class="trigger-label">💤 Sleeping (Late Night)</span>
+            </div>
+            <div class="trigger-item-row">
+              <span class="trigger-badge time-badge">6 AM - 9 AM</span>
+              <span class="trigger-label">🧘 Yoga (Morning Routine)</span>
+            </div>
+            <div class="trigger-item-row">
+              <span class="trigger-badge idle-badge">Idle &gt; 45s</span>
+              <span class="trigger-label">🛹 Random Activity (napping, skateboarding, etc.)</span>
+            </div>
+            <div class="trigger-item-row">
+              <span class="trigger-badge idle-badge">Idle &gt; 5m</span>
+              <span class="trigger-label">💤 Falls Asleep</span>
+            </div>
+            <div class="trigger-item-row">
+              <span class="trigger-badge web-badge">Web Category</span>
+              <span class="trigger-label">💻 Coding, 🎮 Gaming, 🍿 Videos (Eating), 🎧 Music, etc.</span>
+            </div>
+            <div class="trigger-item-row">
+              <span class="trigger-badge error-badge">Console Error</span>
+              <span class="trigger-label">🔍 Debugger Mode</span>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-icon">🧐</span>
-          <span class="stat-name">Curiosity</span>
-          <span id="txt-curiosity" class="stat-val">60%</span>
-        </div>
-        <div class="progress-track">
-          <div id="bar-curiosity" class="progress-fill fill-blue" style="width: 60%"></div>
-        </div>
+      <!-- Tab 3: Settings -->
+      <div id="tab-settings" class="tab-pane hidden">
+        <!-- Active Emotions Settings -->
+        <section class="settings-section emotions-section">
+          <h2>Active Emotions</h2>
+          <p class="section-help">Toggle which unlocked emotions Clawd can express:</p>
+          <div id="emotions-grid" class="emotions-grid">
+            <!-- Will be dynamically generated in popup.ts based on unlocked level -->
+          </div>
+        </section>
+
+        <!-- Sound Board Drawer -->
+        <section class="soundboard-section">
+          <h2>Sound Board</h2>
+          <div class="soundboard-container">
+            <button class="sound-preview-btn" data-sound="greeting">👋 Greeting</button>
+            <button class="sound-preview-btn" data-sound="petting">🫶 Petting</button>
+            <button class="sound-preview-btn" data-sound="feeding">🍖 Feeding</button>
+            <button class="sound-preview-btn" data-sound="levelUp">🎉 Level Up</button>
+            <button class="sound-preview-btn" data-sound="shoo">🏃‍♂️ Shoo</button>
+            <button class="sound-preview-btn" data-sound="sad">😢 Sad</button>
+            <button class="sound-preview-btn" data-sound="thinking">💡 Thinking</button>
+            <button class="sound-preview-btn" data-sound="sleeping">💤 Sleeping</button>
+          </div>
+        </section>
+
+        <!-- Visibility Control -->
+        <section class="settings-section visibility-section">
+          <h2>Visibility</h2>
+          
+          <div class="setting-row toggle-row">
+            <div class="setting-desc">
+              <span class="setting-title">Hide on this Tab</span>
+              <span class="setting-subtitle">Temporarily hide Clawd on this tab</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="tab-hide-toggle" disabled>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row toggle-row">
+            <div class="setting-desc">
+              <span class="setting-title">Hide on this Site</span>
+              <span class="setting-subtitle" id="site-visibility-subtitle">Disable Clawd on this domain</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="site-hide-toggle" disabled>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Settings & Customisation -->
+        <section class="settings-section">
+          <h2>Settings</h2>
+
+          <div class="setting-row">
+            <div class="setting-desc">
+              <span class="setting-title">Pet Name</span>
+            </div>
+            <input type="text" id="pet-name-input" placeholder="Clawd" class="custom-input" maxlength="12">
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-desc">
+              <span class="setting-title">Pet Glow Effect</span>
+              <span class="setting-subtitle">Unlock glows at LVL 5, 10, 15</span>
+            </div>
+            <select id="costume-select" class="custom-select">
+              <option value="none">None</option>
+              <option value="detective" id="opt-detective" disabled>🕵️ Blue Detective Aura (LVL 5)</option>
+              <option value="wizard" id="opt-wizard" disabled>🧙 Magic Purple Aura (LVL 10)</option>
+              <option value="party" id="opt-party" disabled>🎉 Neon Rainbow Shader (LVL 15)</option>
+            </select>
+          </div>
+          
+          <div class="setting-row">
+            <div class="setting-desc">
+              <span class="setting-title">Pet Size</span>
+              <span id="size-val" class="setting-val-badge">64px</span>
+            </div>
+            <input type="range" id="size-slider" min="48" max="128" value="64" class="custom-slider">
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-desc">
+              <span class="setting-title">Movement Speed</span>
+              <span id="speed-val" class="setting-val-badge">1.2x</span>
+            </div>
+            <input type="range" id="speed-slider" min="1" max="50" value="12" class="custom-slider">
+          </div>
+
+          <!-- Sound Settings -->
+          <div class="setting-row toggle-row">
+            <div class="setting-desc">
+              <span class="setting-title">Sound Effects</span>
+              <span class="setting-subtitle">Toggle retro chiptunes</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="sound-toggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div id="volume-container" class="setting-row">
+            <div class="setting-desc">
+              <span class="setting-title">Volume</span>
+              <span id="volume-val" class="setting-val-badge">50%</span>
+            </div>
+            <input type="range" id="volume-slider" min="0" max="100" value="50" class="custom-slider">
+          </div>
+
+          <!-- AI Mood Toggle -->
+          <div class="setting-row toggle-row">
+            <div class="setting-desc">
+              <span class="setting-title">AI Mood Analysis</span>
+              <span class="setting-subtitle">Read pages to pick matching moods</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="ai-toggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Secure API Key Section (visible when AI toggle is checked) -->
+          <div id="api-key-container" class="setting-row api-key-row hidden">
+            <span class="setting-title">Anthropic API Key</span>
+            <div class="api-key-input-wrapper">
+              <input type="password" id="api-key-input" placeholder="sk-ant-...">
+              <button id="btn-toggle-key" class="icon-btn" type="button">👁️</button>
+            </div>
+          </div>
+
+          <!-- AI Persona Section (visible when AI toggle is checked) -->
+          <div id="api-persona-container" class="setting-row hidden">
+            <div class="setting-desc">
+              <span class="setting-title">AI Persona</span>
+              <span class="setting-subtitle">Tweak Clawd's commentary tone</span>
+            </div>
+            <select id="persona-select" class="custom-select">
+              <option value="default">Default (Friendly)</option>
+              <option value="sarcastic">Sarcastic</option>
+              <option value="encouraging">Encouraging</option>
+              <option value="poetic">Poetic</option>
+              <option value="snarky">Snarky</option>
+            </select>
+          </div>
+        </section>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-icon">💻</span>
-          <span class="stat-name">Focus</span>
-          <span id="txt-focus" class="stat-val">50%</span>
-        </div>
-        <div class="progress-track">
-          <div id="bar-focus" class="progress-fill fill-green" style="width: 50%"></div>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-icon">🍿</span>
-          <span class="stat-name">Leisure</span>
-          <span id="txt-leisure" class="stat-val">50%</span>
-        </div>
-        <div class="progress-track">
-          <div id="bar-leisure" class="progress-fill fill-indigo" style="width: 50%"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Interactivity Actions -->
-    <section class="actions-section">
-      <button id="btn-pet" class="action-btn pet-btn">
-        <span class="btn-emoji">🫶</span> Pet
-      </button>
-      <button id="btn-feed" class="action-btn feed-btn">
-        <span class="btn-emoji">🍖</span> Feed
-      </button>
-      <button id="btn-shoo" class="action-btn shoo-btn">
-        <span class="btn-emoji">👋</span> Shoo
-      </button>
-    </section>
-
-    <!-- Interactive Toys Drawer -->
-    <section class="toys-section">
-      <h2>Interactive Toys</h2>
-      <div class="toys-container">
-        <div class="toy-item" draggable="true" id="toy-ball" data-toy="ball">
-          <span class="toy-emoji">⚽</span>
-          <span class="toy-label">Ball</span>
-        </div>
-        <div class="toy-item" draggable="true" id="toy-fish" data-toy="fish">
-          <span class="toy-emoji">🐟</span>
-          <span class="toy-label">Fish</span>
-        </div>
-        <div class="toy-item" draggable="true" id="toy-laser" data-toy="laser">
-          <span class="toy-emoji">🔴</span>
-          <span class="toy-label">Laser</span>
-        </div>
-      </div>
-      <p class="toy-help">Drag a toy onto the webpage to play!</p>
-    </section>
-
-    <!-- Sound Board Drawer -->
-    <section class="soundboard-section">
-      <h2>Sound Board</h2>
-      <div class="soundboard-container">
-        <button class="sound-preview-btn" data-sound="greeting">👋 Greeting</button>
-        <button class="sound-preview-btn" data-sound="petting">🫶 Petting</button>
-        <button class="sound-preview-btn" data-sound="feeding">🍖 Feeding</button>
-        <button class="sound-preview-btn" data-sound="levelUp">🎉 Level Up</button>
-        <button class="sound-preview-btn" data-sound="shoo">🏃‍♂️ Shoo</button>
-        <button class="sound-preview-btn" data-sound="sad">😢 Sad</button>
-        <button class="sound-preview-btn" data-sound="thinking">💡 Thinking</button>
-        <button class="sound-preview-btn" data-sound="sleeping">💤 Sleeping</button>
-      </div>
-    </section>
-
-    <!-- Visibility Control -->
-    <section class="settings-section visibility-section">
-      <h2>Visibility</h2>
-      
-      <div class="setting-row toggle-row">
-        <div class="setting-desc">
-          <span class="setting-title">Hide on this Tab</span>
-          <span class="setting-subtitle">Temporarily hide Clawd on this tab</span>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="tab-hide-toggle" disabled>
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-
-      <div class="setting-row toggle-row">
-        <div class="setting-desc">
-          <span class="setting-title">Hide on this Site</span>
-          <span class="setting-subtitle" id="site-visibility-subtitle">Disable Clawd on this domain</span>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="site-hide-toggle" disabled>
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-    </section>
-
-    <!-- Settings & Customisation -->
-    <section class="settings-section">
-      <h2>Settings</h2>
-
-      <div class="setting-row">
-        <div class="setting-desc">
-          <span class="setting-title">Pet Name</span>
-        </div>
-        <input type="text" id="pet-name-input" placeholder="Clawd" class="custom-input" maxlength="12">
-      </div>
-
-      <div class="setting-row">
-        <div class="setting-desc">
-          <span class="setting-title">Pet Glow Effect</span>
-          <span class="setting-subtitle">Unlock glows at LVL 5, 10, 15</span>
-        </div>
-        <select id="costume-select" class="custom-select">
-          <option value="none">None</option>
-          <option value="detective" id="opt-detective" disabled>🕵️ Blue Detective Aura (LVL 5)</option>
-          <option value="wizard" id="opt-wizard" disabled>🧙 Magic Purple Aura (LVL 10)</option>
-          <option value="party" id="opt-party" disabled>🎉 Neon Rainbow Shader (LVL 15)</option>
-        </select>
-      </div>
-      
-      <div class="setting-row">
-        <div class="setting-desc">
-          <span class="setting-title">Pet Size</span>
-          <span id="size-val" class="setting-val-badge">64px</span>
-        </div>
-        <input type="range" id="size-slider" min="48" max="128" value="64" class="custom-slider">
-      </div>
-
-      <div class="setting-row">
-        <div class="setting-desc">
-          <span class="setting-title">Movement Speed</span>
-          <span id="speed-val" class="setting-val-badge">1.2x</span>
-        </div>
-        <input type="range" id="speed-slider" min="1" max="50" value="12" class="custom-slider">
-      </div>
-
-      <!-- Sound Settings -->
-      <div class="setting-row toggle-row">
-        <div class="setting-desc">
-          <span class="setting-title">Sound Effects</span>
-          <span class="setting-subtitle">Toggle retro chiptunes</span>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="sound-toggle" checked>
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-
-      <div id="volume-container" class="setting-row">
-        <div class="setting-desc">
-          <span class="setting-title">Volume</span>
-          <span id="volume-val" class="setting-val-badge">50%</span>
-        </div>
-        <input type="range" id="volume-slider" min="0" max="100" value="50" class="custom-slider">
-      </div>
-
-      <!-- AI Mood Toggle -->
-      <div class="setting-row toggle-row">
-        <div class="setting-desc">
-          <span class="setting-title">AI Mood Analysis</span>
-          <span class="setting-subtitle">Read pages to pick matching moods</span>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="ai-toggle">
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-
-      <!-- Secure API Key Section (visible when AI toggle is checked) -->
-      <div id="api-key-container" class="setting-row api-key-row hidden">
-        <span class="setting-title">Anthropic API Key</span>
-        <div class="api-key-input-wrapper">
-          <input type="password" id="api-key-input" placeholder="sk-ant-...">
-          <button id="btn-toggle-key" class="icon-btn" type="button">👁️</button>
-        </div>
-      </div>
-
-      <!-- AI Persona Section (visible when AI toggle is checked) -->
-      <div id="api-persona-container" class="setting-row hidden">
-        <div class="setting-desc">
-          <span class="setting-title">AI Persona</span>
-          <span class="setting-subtitle">Tweak Clawd's commentary tone</span>
-        </div>
-        <select id="persona-select" class="custom-select">
-          <option value="default">Default (Friendly)</option>
-          <option value="sarcastic">Sarcastic</option>
-          <option value="encouraging">Encouraging</option>
-          <option value="poetic">Poetic</option>
-          <option value="snarky">Snarky</option>
-        </select>
-      </div>
-    </section>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>

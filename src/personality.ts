@@ -11,12 +11,14 @@ const DEFAULT_STATS: PetStats = {
   level: 1,
   xp: 0,
   moodHistory: [],
+  siteCategoryCounts: {}
 };
 
 export class PersonalitySystem {
   stats: PetStats;
   onStatsChange?: (stats: PetStats) => void;
   isLoaded: Promise<PetStats>;
+  disabledEmotions: string[] = [];
   private _decayInterval: any = null;
 
   constructor(onStatsChange?: (stats: PetStats) => void) {
@@ -28,6 +30,17 @@ export class PersonalitySystem {
       this._decayInterval = setInterval(() => {
         this._periodicDecay();
       }, 60_000); // Check decay every 1 minute
+    }
+
+    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
+      chrome.storage.onChanged.addListener((changes) => {
+        if (changes['pet-stats']) {
+          const newVal = changes['pet-stats'].newValue;
+          if (newVal) {
+            this.stats = newVal;
+          }
+        }
+      });
     }
   }
 
@@ -156,6 +169,14 @@ export class PersonalitySystem {
       this.stats.energy = Math.max(0, this.stats.energy - 2);
       this._addXp(4);
     }
+
+    // Record category analytics
+    if (!this.stats.siteCategoryCounts) {
+      this.stats.siteCategoryCounts = {};
+    }
+    this.stats.siteCategoryCounts[category] = (this.stats.siteCategoryCounts[category] || 0) + 1;
+    this._recordMoodEvent('visit-' + category);
+
     await this._save();
   }
 
@@ -171,6 +192,9 @@ export class PersonalitySystem {
   }
 
   isEmotionUnlocked(emotion: string): boolean {
+    if (this.disabledEmotions && this.disabledEmotions.includes(emotion)) {
+      return false;
+    }
     const lvl = this.stats.level;
 
     // Allow cosmetic/seasonal/situational custom actions to be loaded always so user can enjoy all SVGs
@@ -201,7 +225,6 @@ export class PersonalitySystem {
       this.stats.xp -= xpNeeded;
       this.stats.level++;
       xpNeeded = this.stats.level * 100;
-      this._triggerLevelUpNotification();
     }
   }
 
@@ -211,10 +234,5 @@ export class PersonalitySystem {
     if (this.stats.moodHistory.length > 20) {
       this.stats.moodHistory.pop();
     }
-  }
-
-  _triggerLevelUpNotification(): void {
-    const event = new CustomEvent('pet-level-up', { detail: { level: this.stats.level } });
-    window.dispatchEvent(event);
   }
 }
