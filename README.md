@@ -22,7 +22,8 @@ An interactive, context-aware browser mascot pet extension built using the [claw
 * **Granular Context Triggers**: Monitors active typing velocity, scroll depth, form submissions, and active HTML5 media play/pause states.
 * **Console Error Watcher**: Detects runtime JS errors and unhandled promise rejections, triggering debug animations and panic reactions.
 * **Domain-Specific Animations**: Displays custom SVGs mapping to site context (popcorn/eating/music/singing/dj for media, book/reading/studying for docs/Wikipedia, laptop/coding/debugger/building for dev sites, money/gift for shopping, mail/notification for webmail, flexing/lifting/yoga for fitness sites).
-* **Virtual Pet Mechanics**: Leveling progression with XP rewards, custom naming, time-decay variables (energy, happiness, curiosity, focus, leisure), and interactive toy drag-and-drop.
+* **Virtual Pet Mechanics**: Leveling progression with XP rewards, custom naming, time-decay variables (energy, happiness, curiosity, focus, leisure), and interactive toy drag-and-drop (Ball, Fish, Laser, Yarn, Duck, and Box).
+* **Compact Tabbed Dashboard**: Redesigned extension popup interface into a space-efficient single-column layout (380px wide) featuring tabbed sections (🐾 Mascot, 📊 Stats, ⚙️ Settings) and a Daily Schedule & Triggers guide.
 * **Milestone Shader Upgrades**: Unlocks hardware-accelerated CSS shader glows (Detective Blue, Magic Purple, Rainbow Neon) based on pet level milestones.
 * **Seasonal & Calendar Themes**: Automatically changes pet outfits and behaviors for seasonal periods (Halloween pumpkins in October, Christmas wear in December, surfing in Summer).
 * **Cross-Tab Synchronization**: Syncs pet coordinates and current emotional states across background-managed tabs and side-by-side windows.
@@ -102,8 +103,8 @@ context-aware-browser-pet/
 * **Double Click**: "Feed" the mascot to raise its Energy. Displays the `celebrating` mood.
 * **Right Click**: "Shoo" the mascot away. Teleports it to a random coordinate along the bottom screen edge.
 * **Click & Drag**: Drag the mascot to reposition it or attach it to a specific wall edge.
-* **Drag-and-Drop Toys**: Drag toys (Ball ⚽, Fish 🐟, Laser 🔴) out from popup UI onto the page.
-* **Settings Panel**: Name your pet, adjust speed and size sliders, select costume shader rewards (unlocked at Level 5/10/15), and toggle chiptune audio volume.
+* **Drag-and-Drop Toys**: Drag toys (Ball ⚽, Fish 🐟, Laser 🔴, Yarn 🧶, Duck 🦆, Box 📦) out from the popup UI onto the page. Supports dropping multiple toys at once to queue Clawd's play interactions.
+* **Settings & Triggers**: Click to switch between Mascot, Stats, and Settings tabs. Customize your pet's name, size, speed, and volume, toggle active emotions/aura shaders, and check the built-in Daily Schedule & Triggers guide.
 * **AI Mood Mode**: Toggle AI Mode in the settings, input your Anthropic API Key, and the pet will periodically evaluate the webpage description using Claude to select a matching emotional expression!
 
 ---

@@ -229,6 +229,8 @@ Clawd changes his expression and animation based on the page context of your act
 - **Late Night (10:00 PM – 6:00 AM)**: Clawd falls asleep (`sleeping` 💤) and slows his movement speed by 50%.
 - **Morning (6:00 AM – 9:00 AM)**: Performs morning stretches (`yoga` 🧘).
 
+> **Daily Schedule & Triggers Guide**: You can check the full schedule of daily routines (Late Night sleep, Morning yoga, Idle actions, Page diagnostics) anytime inside the **📊 Stats** tab of the popup panel.
+
 ### Seasonal & Holiday Themes
 
 Clawd adjusts his appearance automatically based on the calendar month:
@@ -273,13 +275,18 @@ If a JavaScript runtime error or unhandled promise rejection occurs on the webpa
 
 ## Interactive Toys
 
-Open the popup panel and drag a toy from the **Interactive Toys** drawer onto the page to play:
+Open the popup panel (under the **🐾 Mascot** tab) and drag a toy from the **Interactive Toys** drawer onto the page to play:
 
 - **Ball ⚽**: Clawd chases it, does a happy dance, and says *"Wow! A ball! Roll roll roll! ⚽"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
 - **Fish 🐟**: Clawd chases it and says *"Yum! That fish was delicious! 🐟"*. Acts as a Feeding interaction (+15 XP, +10 Energy, +2 Happiness).
 - **Laser 🔴**: Clawd chases it and says *"Got the red dot! Rawr! 🔴"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
+- **Yarn 🧶**: Clawd chases it and says *"Ooh, a ball of yarn! Unraveling time! 🧶"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
+- **Duck 🦆**: Clawd chases it and says *"Squeak squeak! Squeaky toy ducky! 🦆"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
+- **Box 📦**: Clawd chases it and says *"If it fits, I sits! Best box ever! 📦"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
 
-*The toys fall to the bottom of the page using spring-gravity physics. Once Clawd reaches the toy, he plays with it, and it fades away.*
+### Drop Multiple Toys (Queued Play)
+You can drop multiple toys onto the webpage at the same time. The toys will drop and rest on the page floor using spring-gravity physics, and Clawd will chase and play with them in the order they were dropped.
+- **Dragging Clawd** or clicking **Shoo** in the popup panel will immediately clear all active toys on the screen and empty the queue.
 
 ---
 
@@ -309,13 +316,27 @@ Permanently blocks Clawd on the current website domain (e.g. `google.com`). Claw
 
 ## Settings & Customization
 
-Click the extension icon to open the controls:
-- **Pet Name**: Give Clawd a custom name (up to 12 characters).
-- **Pet Size**: Slider from **48px** to **128px**.
-- **Movement Speed**: Slider from **0.1x** to **5.0x**.
-- **Sound Effects**: Toggle retro chiptune sounds.
-- **Volume**: Slider from **0%** to **100%**.
-- **Sound Board**: Preview the greeting, petting, feeding, level-up, shoo, sad, thinking, and sleeping sound effects directly.
+Click the extension icon to open the controls. The controls are organized into three responsive tabs:
+
+### 🐾 Mascot Tab
+- **Stats progress bars**: Track happiness, energy, curiosity, focus, and leisure.
+- **Interactions**: Pet, Feed, and Shoo buttons.
+- **Interactive Toys**: Drag 6 different toys (ball, fish, laser, yarn, duck, box) onto the page.
+
+### 📊 Stats Tab
+- **Mascot Analytics**: View total petting and feeding statistics.
+- **Browsing Interests**: Check the distribution of websites analyzed.
+- **Recent Activity**: Scroll the activity log of events.
+- **Daily Schedule & Triggers**: Reference Clawd's reactions schedule.
+
+### ⚙️ Settings Tab
+- **Active Emotions**: Toggle check boxes to allow/disallow specific unlocked emotions.
+- **Sound Board**: Click buttons to preview chiptune sounds (greeting, feed, level-up, shoo, etc.).
+- **Visibility**: Toggle options to hide Clawd on the current tab or block him entirely on the active domain.
+- **Pet Name**: Give your pet a custom name (up to 12 characters).
+- **Pet Glow Effect**: Select costume auras unlocked at LVL 5, 10, and 15.
+- **Sliders**: Adjust size (48px - 128px), movement speed (0.1x - 5.0x), and volume.
+- **AI Mood Analysis**: Input your Anthropic API Key and select your Claude commentary persona.
 
 ---
 
