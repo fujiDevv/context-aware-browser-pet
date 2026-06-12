@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .wave-body {
+        transform-origin: 7.5px 15px;
+        animation: wave-idle 2s infinite ease-in-out;
+      }
+      .wave-shadow {
+        transform-origin: 7.5px 15.5px;
+        animation: wave-shadow 2s infinite ease-in-out;
+      }
+      .wave-arm {
+        transform-origin: 13px 9px;
+        animation: arm-wave 0.4s infinite alternate ease-in-out;
+      }
+      .wave-eyes {
+        transform-origin: 7.5px 8px;
+        animation: wave-blink 3s infinite;
+      }
+      @keyframes wave-idle {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-1px); }
+      }
+      @keyframes wave-shadow {
+        0%, 100% { transform: scaleX(1); opacity: 0.5; }
+        50% { transform: scaleX(0.9); opacity: 0.4; }
+      }
+      @keyframes arm-wave {
+        0% { transform: rotate(-30deg); }
+        100% { transform: rotate(-70deg); }
+      }
+      @keyframes wave-blink {
+        0%, 43%, 57%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(0.1); }
+      }
+    </style>
+  </defs>
+  <rect class="wave-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="wave-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <g class="wave-arm">
+        <rect x="13" y="7" width="2" height="2"/>
+      </g>
+    </g>
+    <g class="wave-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/>
+      <rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

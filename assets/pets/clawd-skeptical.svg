@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .skp-body { transform-origin: 7.5px 15px; animation: skp-tilt 4s infinite ease-in-out; }
+      .skp-brow { transform-origin: 10.5px 6.5px; animation: skp-raise 3s infinite ease-in-out; }
+      .skp-foot { transform-origin: top center; transform-box: fill-box; animation: skp-tap 0.6s infinite ease-in-out; }
+      @keyframes skp-tilt { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(1.5deg); } }
+      @keyframes skp-raise { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.7px); } }
+      @keyframes skp-tap { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-22deg); } }
+    </style>
+  </defs>
+
+  <rect x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+
+  <g class="skp-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect class="skp-foot" x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+    </g>
+
+    <!-- half-lidded side-eye -->
+    <g fill="#000">
+      <rect x="4" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/>
+    </g>
+    <!-- flat brow + raised, cocked brow -->
+    <rect x="3" y="8" width="2" height="1" fill="#000"/>
+    <g class="skp-brow"><rect x="9" y="7" width="3" height="1" fill="#000"/></g>
+    <!-- unimpressed flat mouth -->
+    <rect x="6" y="10" width="3" height="1" fill="#000" opacity="0.7"/>
+
+    <!-- arms folded across the chest -->
+    <rect x="2" y="11" width="9" height="2" fill="#CF7B61"/>
+    <rect x="2" y="11" width="2" height="1" fill="#C9745A"/>
+    <rect x="9" y="11" width="2" height="1" fill="#C9745A"/>
+    <rect x="6" y="11" width="1" height="2" fill="#A85B45"/>
+  </g>
+</svg>

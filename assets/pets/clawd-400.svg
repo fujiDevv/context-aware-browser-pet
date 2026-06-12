@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e400-body { transform-origin: 7.5px 15px; animation: e400-shake 2s infinite ease-in-out; }
+      .e400-shadow { animation: e400-s 2s infinite; }
+      .e400-eyes { transform-origin: 7.5px 9px; animation: e400-blink 3s infinite; }
+      .e400-text { animation: e400-flash 1.5s infinite; }
+      @keyframes e400-shake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-2deg); } 75% { transform: rotate(2deg); } }
+      @keyframes e400-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes e400-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes e400-flash { 0%, 60% { opacity: 1; } 30% { opacity: 0.4; } }
+    </style>
+  </defs>
+  <rect class="e400-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- 400 text -->
+  <g class="e400-text" fill="#FF8800">
+    <!-- 4 -->
+    <rect x="2" y="-3" width="1" height="3"/><rect x="2" y="0" width="3" height="1"/><rect x="4" y="-3" width="1" height="5"/>
+    <!-- 0 -->
+    <rect x="6" y="-3" width="3" height="1"/><rect x="6" y="1" width="3" height="1"/><rect x="6" y="-3" width="1" height="5"/><rect x="8" y="-3" width="1" height="5"/>
+    <!-- 0 -->
+    <rect x="10" y="-3" width="3" height="1"/><rect x="10" y="1" width="3" height="1"/><rect x="10" y="-3" width="1" height="5"/><rect x="12" y="-3" width="1" height="5"/>
+  </g>
+  <g class="e400-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Confused eyes -->
+    <g class="e400-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+    <!-- ? above head would be nice but keep it simple -->
+  </g>
+</svg>

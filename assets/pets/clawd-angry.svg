@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .angry-body { transform-origin: 7.5px 15px; animation: angry-shake 0.15s infinite alternate; }
+      .angry-shadow { animation: angry-s 0.15s infinite; }
+      .steam1 { animation: steam-up 1s infinite ease-out; }
+      .steam2 { animation: steam-up 1s infinite ease-out 0.5s; }
+      @keyframes angry-shake { 0% { transform: translateX(-0.5px); } 100% { transform: translateX(0.5px); } }
+      @keyframes angry-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes steam-up { 0% { opacity: 0.7; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-4px); } }
+    </style>
+  </defs>
+  <rect class="angry-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g fill="#FF4444" opacity="0.6">
+    <rect class="steam1" x="3" y="2" width="1" height="2"/><rect class="steam1" x="4" y="1" width="1" height="1"/>
+    <rect class="steam2" x="12" y="2" width="1" height="2"/><rect class="steam2" x="11" y="1" width="1" height="1"/>
+  </g>
+  <g class="angry-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="4" y="7" width="1" height="1"/><rect x="5" y="8" width="2" height="1"/>
+      <rect x="12" y="7" width="1" height="1"/><rect x="10" y="8" width="2" height="1"/>
+      <rect x="5" y="9" width="1" height="2"/><rect x="11" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

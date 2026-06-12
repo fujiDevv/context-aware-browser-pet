@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e401-body { transform-origin: 7.5px 15px; animation: e401-stand 3s infinite ease-in-out; }
+      .e401-shadow { animation: e401-s 3s infinite; }
+      .e401-eyes { transform-origin: 7.5px 9px; animation: e401-blink 3s infinite; }
+      .e401-text { animation: e401-flash 1.5s infinite; }
+      @keyframes e401-stand { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+      @keyframes e401-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes e401-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes e401-flash { 0%, 60% { opacity: 1; } 30% { opacity: 0.4; } }
+    </style>
+  </defs>
+  <rect class="e401-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- 401 text -->
+  <g class="e401-text" fill="#FF4444">
+    <rect x="2" y="-3" width="1" height="3"/><rect x="2" y="0" width="3" height="1"/><rect x="4" y="-3" width="1" height="5"/>
+    <rect x="6" y="-3" width="3" height="1"/><rect x="6" y="1" width="3" height="1"/><rect x="6" y="-3" width="1" height="5"/><rect x="8" y="-3" width="1" height="5"/>
+    <rect x="11" y="-3" width="1" height="5"/>
+  </g>
+  <g class="e401-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Narrowed suspicious eyes -->
+    <g class="e401-eyes" fill="#000">
+      <rect x="4" y="9" width="2" height="1"/><rect x="10" y="9" width="2" height="1"/>
+    </g>
+  </g>
+</svg>

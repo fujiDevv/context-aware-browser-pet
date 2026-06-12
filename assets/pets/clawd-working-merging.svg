@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .mrg-body { transform-origin: 7.5px 15px; animation: mrg-nod 2.5s infinite ease-in-out; }
+      .mrg-shadow { opacity: 0.5; }
+      .mrg-branch1 { animation: mrg-converge1 3s infinite ease-in-out; }
+      .mrg-branch2 { animation: mrg-converge2 3s infinite ease-in-out; }
+      .mrg-dot { animation: mrg-pulse 1.5s infinite ease-in-out; }
+      @keyframes mrg-nod { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(-1deg); } 60% { transform: rotate(1deg); } }
+      @keyframes mrg-converge1 { 0% { transform: translate(-2px, -2px); opacity: 0.5; } 50% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(-2px, -2px); opacity: 0.5; } }
+      @keyframes mrg-converge2 { 0% { transform: translate(2px, -2px); opacity: 0.5; } 50% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(2px, -2px); opacity: 0.5; } }
+      @keyframes mrg-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    </style>
+  </defs>
+  <rect class="mrg-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- Merge branches -->
+  <g class="mrg-branch1">
+    <rect x="-8" y="-4" width="5" height="1" fill="#4CAF50"/>
+    <rect x="-4" y="-3" width="3" height="1" fill="#4CAF50"/>
+    <rect x="-2" y="-2" width="2" height="1" fill="#4CAF50"/>
+  </g>
+  <g class="mrg-branch2">
+    <rect x="-8" y="2" width="5" height="1" fill="#2196F3"/>
+    <rect x="-4" y="1" width="3" height="1" fill="#2196F3"/>
+    <rect x="-2" y="0" width="2" height="1" fill="#2196F3"/>
+  </g>
+  <!-- Merge point -->
+  <g class="mrg-dot">
+    <rect x="-1" y="-1" width="2" height="2" fill="#9C27B0"/>
+  </g>
+  <!-- Merged line -->
+  <rect x="0" y="-1" width="1" height="2" fill="#9C27B0" opacity="0.7"/>
+  <g class="mrg-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Focused eyes -->
+    <g fill="#000">
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

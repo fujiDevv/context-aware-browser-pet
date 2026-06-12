@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .rev-body { transform-origin: 7.5px 15px; animation: rev-lean 3s infinite ease-in-out; }
+      .rev-shadow { animation: rev-s 3s infinite; }
+      .rev-glass { animation: rev-move 3s infinite ease-in-out; }
+      @keyframes rev-lean { 0%, 100% { transform: rotate(0deg) translateX(0); } 50% { transform: rotate(2deg) translateX(1px); } }
+      @keyframes rev-s { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.4; } }
+      @keyframes rev-move { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(1px, -1px); } }
+    </style>
+  </defs>
+  <rect class="rev-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="rev-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Narrowed/focused eyes -->
+    <g fill="#000">
+      <rect x="5" y="9" width="2" height="1"/><rect x="9" y="9" width="2" height="1"/>
+    </g>
+  </g>
+  <!-- Magnifying glass -->
+  <g class="rev-glass">
+    <g fill="none" stroke="#888" stroke-width="0.8">
+      <rect x="16" y="4" width="5" height="5" rx="2.5"/>
+    </g>
+    <g fill="#888">
+      <rect x="15" y="9" width="1" height="3" transform="rotate(-30 15 9)"/>
+      <rect x="14" y="11" width="1" height="2" transform="rotate(-30 14 11)"/>
+    </g>
+    <!-- Glass shine -->
+    <rect x="17" y="5" width="1" height="1" fill="#fff" opacity="0.5"/>
+  </g>
+</svg>

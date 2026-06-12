@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .spr-body { transform-origin: 7.5px 15px; animation: spr-sway 3s infinite ease-in-out; }
+      .butterfly { animation: butterfly-path 4s infinite ease-in-out; }
+      .flower1 { animation: flower-grow 2s ease-out forwards; }
+      .flower2 { animation: flower-grow 2s ease-out 0.5s forwards; }
+      @keyframes spr-sway { 0%, 100% { transform: rotate(-0.5deg); } 50% { transform: rotate(0.5deg); } }
+      @keyframes butterfly-path { 0% { transform: translate(0,0); } 25% { transform: translate(3px,-3px); } 50% { transform: translate(6px,0); } 75% { transform: translate(3px,3px); } 100% { transform: translate(0,0); } }
+      @keyframes flower-grow { 0% { transform: scaleY(0); opacity: 0; } 100% { transform: scaleY(1); opacity: 1; } }
+    </style>
+  </defs>
+  <rect x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- flowers -->
+  <g class="flower1" style="transform-origin: -3px 16px;">
+    <rect x="-3" y="12" width="1" height="4" fill="#44AA00"/>
+    <rect x="-4" y="11" width="1" height="1" fill="#FF6699"/><rect x="-2" y="11" width="1" height="1" fill="#FF6699"/>
+    <rect x="-3" y="10" width="1" height="1" fill="#FF6699"/><rect x="-3" y="12" width="1" height="1" fill="#FF6699"/>
+    <rect x="-3" y="11" width="1" height="1" fill="#FFDD00"/>
+  </g>
+  <g class="flower2" style="transform-origin: 17px 16px;">
+    <rect x="17" y="12" width="1" height="4" fill="#44AA00"/>
+    <rect x="16" y="11" width="1" height="1" fill="#AABB44"/><rect x="18" y="11" width="1" height="1" fill="#AABB44"/>
+    <rect x="17" y="10" width="1" height="1" fill="#AABB44"/><rect x="17" y="12" width="1" height="1" fill="#AABB44"/>
+    <rect x="17" y="11" width="1" height="1" fill="#FFDD00"/>
+  </g>
+  <!-- butterfly -->
+  <g class="butterfly">
+    <rect x="-6" y="-2" width="1" height="1" fill="#AA44FF"/><rect x="-4" y="-2" width="1" height="1" fill="#AA44FF"/>
+    <rect x="-6" y="-1" width="1" height="1" fill="#CC66FF"/><rect x="-4" y="-1" width="1" height="1" fill="#CC66FF"/>
+    <rect x="-5" y="-2" width="1" height="2" fill="#000"/>
+  </g>
+  <g class="spr-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <!-- happy eyes -->
+      <rect x="5" y="9" width="2" height="1"/><rect x="4" y="8" width="1" height="1"/>
+      <rect x="10" y="9" width="2" height="1"/><rect x="12" y="8" width="1" height="1"/>
+    </g>
+  </g>
+</svg>

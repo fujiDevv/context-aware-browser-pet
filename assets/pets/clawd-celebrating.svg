@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .cele-body {
+        transform-origin: 7.5px 15px;
+        animation: cele-jump 0.8s infinite ease-in-out;
+      }
+      .cele-shadow {
+        transform-origin: 7.5px 15.5px;
+        animation: cele-shadow 0.8s infinite ease-in-out;
+      }
+      .cele-arm-l {
+        transform-origin: 1px 10px;
+        animation: cele-arm-l 0.8s infinite ease-in-out;
+      }
+      .cele-arm-r {
+        transform-origin: 14px 10px;
+        animation: cele-arm-r 0.8s infinite ease-in-out;
+      }
+      .cele-eyes {
+        transform-origin: 7.5px 9px;
+        animation: cele-blink 2s infinite;
+      }
+      .confetti1 { animation: conf-fall-1 1.5s infinite linear; }
+      .confetti2 { animation: conf-fall-2 1.8s infinite linear 0.3s; }
+      .confetti3 { animation: conf-fall-3 1.6s infinite linear 0.6s; }
+      .confetti4 { animation: conf-fall-4 1.4s infinite linear 0.9s; }
+      .confetti5 { animation: conf-fall-5 1.7s infinite linear 0.2s; }
+      .confetti6 { animation: conf-fall-6 1.5s infinite linear 0.5s; }
+      @keyframes cele-jump {
+        0%, 100% { transform: translateY(0) scaleY(1); }
+        15% { transform: translateY(0) scaleY(0.85); }
+        40% { transform: translateY(-8px) scaleY(1.05); }
+        50% { transform: translateY(-10px) scaleY(1); }
+        60% { transform: translateY(-8px) scaleY(1.05); }
+        80% { transform: translateY(0) scaleY(0.85); }
+      }
+      @keyframes cele-shadow {
+        0%, 100% { transform: scaleX(1); opacity: 0.5; }
+        50% { transform: scaleX(0.5); opacity: 0.2; }
+      }
+      @keyframes cele-arm-l {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(60deg); }
+      }
+      @keyframes cele-arm-r {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(-60deg); }
+      }
+      @keyframes cele-blink {
+        0%, 46%, 54%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(0.1); }
+      }
+      @keyframes conf-fall-1 {
+        0% { transform: translate(0, -10px) rotate(0deg); opacity: 1; }
+        100% { transform: translate(3px, 16px) rotate(360deg); opacity: 0; }
+      }
+      @keyframes conf-fall-2 {
+        0% { transform: translate(0, -8px) rotate(0deg); opacity: 1; }
+        100% { transform: translate(-2px, 16px) rotate(-270deg); opacity: 0; }
+      }
+      @keyframes conf-fall-3 {
+        0% { transform: translate(0, -10px) rotate(0deg); opacity: 1; }
+        100% { transform: translate(2px, 16px) rotate(180deg); opacity: 0; }
+      }
+      @keyframes conf-fall-4 {
+        0% { transform: translate(0, -6px) rotate(0deg); opacity: 1; }
+        100% { transform: translate(-3px, 16px) rotate(300deg); opacity: 0; }
+      }
+      @keyframes conf-fall-5 {
+        0% { transform: translate(0, -9px) rotate(0deg); opacity: 1; }
+        100% { transform: translate(1px, 16px) rotate(-200deg); opacity: 0; }
+      }
+      @keyframes conf-fall-6 {
+        0% { transform: translate(0, -7px) rotate(0deg); opacity: 1; }
+        100% { transform: translate(-1px, 16px) rotate(250deg); opacity: 0; }
+      }
+    </style>
+  </defs>
+  <rect class="cele-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <rect class="confetti1" x="-1" y="-5" width="1" height="1" fill="#FF4444"/>
+  <rect class="confetti2" x="4" y="-5" width="1" height="1" fill="#FFD700"/>
+  <rect class="confetti3" x="8" y="-5" width="1" height="1" fill="#44FF44"/>
+  <rect class="confetti4" x="12" y="-5" width="1" height="1" fill="#4488FF"/>
+  <rect class="confetti5" x="15" y="-5" width="1" height="1" fill="#FF44FF"/>
+  <rect class="confetti6" x="1" y="-5" width="1" height="1" fill="#FF8800"/>
+  <g class="cele-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <g class="cele-arm-l"><rect x="0" y="9" width="2" height="2"/></g>
+      <g class="cele-arm-r"><rect x="13" y="9" width="2" height="2"/></g>
+    </g>
+    <g class="cele-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/>
+      <rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

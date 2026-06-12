@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .music-body { transform-origin: 7.5px 15px; animation: music-groove 0.6s infinite ease-in-out; }
+      .music-shadow { transform-origin: 7.5px 15.5px; animation: music-shadow 0.6s infinite ease-in-out; }
+      .music-eyes { transform-origin: 7.5px 9px; animation: music-blink 3s infinite; }
+      .headphone { animation: headphone-bob 0.6s infinite ease-in-out; }
+      .note1 { animation: note-float 1.5s infinite ease-out; }
+      .note2 { animation: note-float 1.5s infinite ease-out 0.5s; }
+      .note3 { animation: note-float 1.5s infinite ease-out 1s; }
+      @keyframes music-groove { 0%, 100% { transform: rotate(0deg) translateY(0); } 25% { transform: rotate(-4deg) translateY(-1px); } 75% { transform: rotate(4deg) translateY(-1px); } }
+      @keyframes music-shadow { 0%, 100% { transform: scaleX(1); opacity: 0.5; } 50% { transform: scaleX(0.9); opacity: 0.4; } }
+      @keyframes music-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes headphone-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes note-float { 0% { opacity: 0.8; transform: translate(0, 0) scale(0.6); } 100% { opacity: 0; transform: translate(2px, -7px) scale(1); } }
+    </style>
+  </defs>
+  <rect class="music-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Floating notes -->
+  <g fill="#FFD700">
+    <g class="note1"><rect x="15" y="2" width="1" height="3"/><rect x="16" y="1" width="1" height="2"/></g>
+    <g class="note2"><rect x="-2" y="0" width="1" height="3"/><rect x="-1" y="-1" width="1" height="2"/></g>
+    <g class="note3"><rect x="8" y="-3" width="1" height="3"/><rect x="9" y="-4" width="1" height="2"/></g>
+  </g>
+  <g class="music-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Headphones -->
+    <g class="headphone">
+      <rect x="1" y="5" width="13" height="1" fill="#333"/>
+      <rect x="0" y="6" width="2" height="3" fill="#333"/>
+      <rect x="13" y="6" width="2" height="3" fill="#333"/>
+      <rect x="0" y="7" width="2" height="2" fill="#555"/>
+      <rect x="13" y="7" width="2" height="2" fill="#555"/>
+    </g>
+    <g class="music-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/>
+      <rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

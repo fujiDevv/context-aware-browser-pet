@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e504-body { transform-origin: 7.5px 15px; animation: e504-idle 2s infinite ease-in-out; }
+      .e504-shadow { opacity: 0.5; }
+      .e504-text { animation: e504-flash 2s infinite; }
+      .e504-foot { transform-origin: 11px 15px; animation: e504-tap 0.6s infinite; }
+      .e504-sand { animation: e504-fall 2s infinite linear; }
+      @keyframes e504-idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+      @keyframes e504-flash { 0%, 70% { opacity: 1; } 35% { opacity: 0.3; } }
+      @keyframes e504-tap { 0%, 50% { transform: translateY(0); } 25% { transform: translateY(-1px); } }
+      @keyframes e504-fall { 0% { transform: translateY(-3px); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(3px); opacity: 0; } }
+    </style>
+  </defs>
+  <rect class="e504-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- 504 text above -->
+  <g class="e504-text" fill="#DD3333">
+    <!-- 5 -->
+    <rect x="2" y="-3" width="3" height="1"/><rect x="2" y="-2" width="1" height="1"/>
+    <rect x="2" y="-1" width="3" height="1"/><rect x="4" y="0" width="1" height="1"/>
+    <rect x="2" y="1" width="3" height="1"/>
+    <!-- 0 -->
+    <rect x="6" y="-3" width="3" height="1"/><rect x="6" y="1" width="3" height="1"/>
+    <rect x="6" y="-3" width="1" height="5"/><rect x="8" y="-3" width="1" height="5"/>
+    <!-- 4 -->
+    <rect x="10" y="-3" width="1" height="3"/><rect x="10" y="-1" width="3" height="1"/>
+    <rect x="12" y="-3" width="1" height="5"/>
+  </g>
+  <!-- Hourglass -->
+  <g style="transform: translate(18px, 2px);">
+    <rect x="0" y="0" width="5" height="1" fill="#AA8833"/>
+    <rect x="0" y="10" width="5" height="1" fill="#AA8833"/>
+    <rect x="0" y="0" width="1" height="11" fill="#AA8833"/>
+    <rect x="4" y="0" width="1" height="11" fill="#AA8833"/>
+    <rect x="1" y="1" width="3" height="2" fill="#DDB855"/>
+    <rect class="e504-sand" x="2" y="4" width="1" height="2" fill="#DDB855"/>
+    <rect x="1" y="8" width="3" height="2" fill="#DDB855"/>
+  </g>
+  <g class="e504-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <g class="e504-foot"><rect x="11" y="13" width="1" height="2"/></g>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Impatient eyes looking at hourglass -->
+    <g fill="#000">
+      <rect x="6" y="8" width="1" height="2"/><rect x="11" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

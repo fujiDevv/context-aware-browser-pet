@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .pair-body { transform-origin: 7.5px 15px; animation: pair-bob 2s infinite ease-in-out; }
+      .pair-buddy { transform-origin: 22px 15px; animation: pair-bob2 2s infinite ease-in-out; }
+      .pair-shadow { opacity: 0.5; }
+      .pair-screen { animation: pair-glow 1.5s infinite alternate; }
+      @keyframes pair-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes pair-bob2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes pair-glow { 0% { fill: #3AF; } 100% { fill: #5CF; } }
+    </style>
+  </defs>
+  <rect class="pair-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <rect class="pair-shadow" x="18" y="15" width="7" height="1" fill="#000"/>
+  <!-- Shared screen -->
+  <rect x="5" y="-4" width="10" height="6" fill="#555"/>
+  <rect class="pair-screen" x="6" y="-3" width="8" height="4" fill="#3AF"/>
+  <!-- Code lines on screen -->
+  <rect x="7" y="-2" width="4" height="1" fill="#FFF" opacity="0.6"/>
+  <rect x="7" y="0" width="3" height="1" fill="#FFF" opacity="0.4"/>
+  <!-- Main character -->
+  <g class="pair-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+  </g>
+  <!-- Buddy character (smaller) -->
+  <g class="pair-buddy">
+    <g fill="#C77A5E">
+      <rect x="19" y="13" width="1" height="2"/><rect x="20" y="13" width="1" height="2"/>
+      <rect x="23" y="13" width="1" height="2"/><rect x="24" y="13" width="1" height="2"/>
+      <rect x="18" y="8" width="8" height="5"/>
+      <rect x="16" y="10" width="2" height="2"/><rect x="26" y="10" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="20" y="10" width="1" height="2"/><rect x="24" y="10" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

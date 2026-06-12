@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs><style>
+    .swim-body { transform-origin: 7.5px 10px; animation: swim-bob 1.5s ease-in-out infinite; }
+    .swim-shadow { opacity: 0; }
+    .swim-wave1 { animation: swim-wave 1.5s ease-in-out infinite; }
+    .swim-wave2 { animation: swim-wave 1.5s ease-in-out 0.3s infinite; }
+    .swim-wave3 { animation: swim-wave 1.5s ease-in-out 0.6s infinite; }
+    @keyframes swim-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+    @keyframes swim-wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+  </style></defs>
+  <rect class="swim-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0"/>
+  <g class="swim-body">
+    <g fill="#DE886D">
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Goggles -->
+    <rect x="4" y="7" width="3" height="2" fill="#3498DB" opacity="0.6"/>
+    <rect x="9" y="7" width="3" height="2" fill="#3498DB" opacity="0.6"/>
+    <rect x="7" y="7.5" width="2" height="1" fill="#3498DB" opacity="0.4"/>
+    <g fill="#000">
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+  </g>
+  <!-- Water waves covering legs -->
+  <rect class="swim-wave1" x="-5" y="12" width="25" height="2" fill="#3498DB" opacity="0.6"/>
+  <rect class="swim-wave2" x="-7" y="13" width="29" height="2" fill="#2980B9" opacity="0.5"/>
+  <rect class="swim-wave3" x="-6" y="14" width="27" height="3" fill="#2471A3" opacity="0.7"/>
+</svg>

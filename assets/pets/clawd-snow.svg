@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .snow-body { transform-origin: 7.5px 15px; animation: snow-shiver 0.3s infinite alternate ease-in-out; }
+      .snow-shadow { animation: snow-s 0.3s infinite; }
+      .snow-eyes { transform-origin: 7.5px 9px; animation: snow-blink 3s infinite; }
+      .flake1 { animation: flake-fall 2s infinite linear; }
+      .flake2 { animation: flake-fall 2s infinite linear 0.4s; }
+      .flake3 { animation: flake-fall 2s infinite linear 0.8s; }
+      .flake4 { animation: flake-fall 2s infinite linear 1.2s; }
+      .flake5 { animation: flake-fall 2s infinite linear 1.6s; }
+      @keyframes snow-shiver { 0% { transform: translateX(-0.3px); } 100% { transform: translateX(0.3px); } }
+      @keyframes snow-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes snow-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes flake-fall { 0% { transform: translate(0, -12px); opacity: 0.8; } 100% { transform: translate(-2px, 18px); opacity: 0; } }
+    </style>
+  </defs>
+  <rect class="snow-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Snowflakes -->
+  <rect class="flake1" x="-3" y="-5" width="1" height="1" fill="#FFF" opacity="0.7"/>
+  <rect class="flake2" x="5" y="-3" width="1" height="1" fill="#FFF" opacity="0.7"/>
+  <rect class="flake3" x="12" y="-6" width="1" height="1" fill="#FFF" opacity="0.7"/>
+  <rect class="flake4" x="18" y="-4" width="1" height="1" fill="#FFF" opacity="0.7"/>
+  <rect class="flake5" x="1" y="-7" width="1" height="1" fill="#FFF" opacity="0.7"/>
+  <!-- Snow on ground -->
+  <rect x="-15" y="15" width="45" height="5" fill="#E8E8E8" opacity="0.3"/>
+  <g class="snow-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Scarf -->
+    <rect x="2" y="12" width="11" height="1" fill="#FF4444"/>
+    <rect x="12" y="12" width="2" height="3" fill="#FF4444"/>
+    <!-- Beanie -->
+    <rect x="3" y="4" width="9" height="2" fill="#4488FF"/>
+    <rect x="4" y="3" width="7" height="2" fill="#4488FF"/>
+    <rect x="6" y="2" width="3" height="1" fill="#4488FF"/>
+    <g class="snow-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

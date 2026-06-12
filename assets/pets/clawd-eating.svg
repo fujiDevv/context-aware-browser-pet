@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .eat-body { transform-origin: 7.5px 15px; animation: eat-chew 0.6s infinite ease-in-out; }
+      .eat-shadow { animation: eat-s 0.6s infinite; }
+      .eat-eyes { transform-origin: 7.5px 9px; animation: eat-blink 3s infinite; }
+      .crumb1 { animation: crumb-fall 1s infinite ease-out 0.2s; }
+      .crumb2 { animation: crumb-fall 1s infinite ease-out 0.6s; }
+      @keyframes eat-chew { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.97); } }
+      @keyframes eat-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes eat-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes crumb-fall { 0% { opacity: 0.8; transform: translate(0,0); } 100% { opacity: 0; transform: translate(1px, 5px); } }
+    </style>
+  </defs>
+  <rect class="eat-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <rect class="crumb1" x="12" y="11" width="1" height="1" fill="#C4873B"/>
+  <rect class="crumb2" x="14" y="10" width="1" height="1" fill="#C4873B"/>
+  <g class="eat-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Pizza slice -->
+    <rect x="13" y="8" width="3" height="2" fill="#FFD700"/>
+    <rect x="14" y="7" width="2" height="1" fill="#FF4444"/>
+    <g class="eat-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

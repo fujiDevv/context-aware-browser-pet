@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .mtg-body { transform-origin: 7.5px 15px; animation: mtg-idle 2s infinite ease-in-out; }
+      .mtg-shadow { opacity: 0.5; }
+      .mtg-mouth { animation: mtg-talk 0.6s infinite; }
+      .mtg-reddot { animation: mtg-blink 2s infinite; }
+      @keyframes mtg-idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+      @keyframes mtg-talk { 0%, 40% { height: 1; } 50%, 90% { height: 2; } }
+      @keyframes mtg-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0.2; } }
+    </style>
+  </defs>
+  <rect class="mtg-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- Video call frame -->
+  <rect x="-2" y="-1" width="19" height="18" fill="none" stroke="#555" stroke-width="1"/>
+  <!-- Camera bar -->
+  <rect x="-2" y="-3" width="19" height="2" fill="#444"/>
+  <!-- Camera dot -->
+  <g class="mtg-reddot">
+    <rect x="7" y="-2" width="2" height="1" fill="#F00"/>
+  </g>
+  <!-- Camera lens -->
+  <rect x="7.5" y="-2.5" width="1" height="0.5" fill="#222"/>
+  <g class="mtg-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Eyes -->
+    <g fill="#000">
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+    <!-- Talking mouth -->
+    <g class="mtg-mouth">
+      <rect x="7" y="11" width="2" height="1" fill="#000"/>
+    </g>
+  </g>
+</svg>

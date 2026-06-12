@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e404-body { transform-origin: 7.5px 15px; animation: e404-look 4s infinite ease-in-out; }
+      .e404-shadow { animation: e404-s 4s infinite; }
+      .e404-eyes { animation: e404-search 4s infinite ease-in-out; }
+      .e404-blink { transform-origin: 7.5px 9px; animation: e404-bl 3s infinite; }
+      .e404-text { animation: e404-flash 2s infinite; }
+      .e404-q { animation: e404-float 2s infinite ease-in-out; }
+      @keyframes e404-look { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+      @keyframes e404-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes e404-search { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(2px); } 75% { transform: translateX(-2px); } }
+      @keyframes e404-bl { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes e404-flash { 0%, 70% { opacity: 1; } 35% { opacity: 0.3; } }
+      @keyframes e404-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+    </style>
+  </defs>
+  <rect class="e404-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- 404 text -->
+  <g class="e404-text" fill="#FF4444">
+    <!-- 4 -->
+    <rect x="2" y="-3" width="1" height="3"/><rect x="2" y="0" width="3" height="1"/><rect x="4" y="-3" width="1" height="5"/>
+    <!-- 0 -->
+    <rect x="6" y="-3" width="3" height="1"/><rect x="6" y="1" width="3" height="1"/><rect x="6" y="-3" width="1" height="5"/><rect x="8" y="-3" width="1" height="5"/>
+    <!-- 4 -->
+    <rect x="10" y="-3" width="1" height="3"/><rect x="10" y="0" width="3" height="1"/><rect x="12" y="-3" width="1" height="5"/>
+  </g>
+  <!-- ? floating -->
+  <g class="e404-q" fill="#888">
+    <rect x="17" y="3" width="3" height="1"/><rect x="19" y="4" width="1" height="1"/>
+    <rect x="18" y="5" width="1" height="1"/><rect x="18" y="7" width="1" height="1"/>
+  </g>
+  <g class="e404-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g class="e404-eyes">
+      <g class="e404-blink" fill="#000">
+        <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

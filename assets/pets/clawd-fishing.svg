@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .fish-body { transform-origin: 7.5px 15px; animation: fish-wait 4s infinite ease-in-out; }
+      .fish-shadow { animation: fish-s 4s infinite; }
+      .fish-eyes { transform-origin: 7.5px 9px; animation: fish-blink 5s infinite; }
+      .fish-line { animation: line-bob 2s infinite ease-in-out; }
+      .fish-float { animation: float-bob 2s infinite ease-in-out; }
+      @keyframes fish-wait { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-1deg); } }
+      @keyframes fish-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes fish-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes line-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(1px); } }
+      @keyframes float-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+    </style>
+  </defs>
+  <rect class="fish-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Water -->
+  <rect x="-15" y="14" width="45" height="6" fill="#1a5276" opacity="0.4"/>
+  <!-- Fishing rod -->
+  <g class="fish-line">
+    <rect x="14" y="4" width="1" height="1" fill="#8B4513"/>
+    <rect x="15" y="3" width="1" height="1" fill="#8B4513"/>
+    <rect x="16" y="2" width="1" height="1" fill="#8B4513"/>
+    <rect x="17" y="3" width="1" height="10" fill="#AAA" opacity="0.5"/>
+    <rect class="fish-float" x="16" y="13" width="2" height="1" fill="#FF4444"/>
+  </g>
+  <g class="fish-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g class="fish-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

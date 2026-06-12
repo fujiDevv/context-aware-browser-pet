@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .scare-body { transform-origin: 7.5px 15px; animation: scare-tremble 0.15s infinite alternate; }
+      .scare-shadow { animation: scare-s 0.15s infinite; }
+      .sweat1 { animation: sweat-d 1.2s infinite ease-in 0.3s; }
+      .sweat2 { animation: sweat-d 1.2s infinite ease-in 0.8s; }
+      @keyframes scare-tremble { 0% { transform: translate(-0.5px, 0); } 100% { transform: translate(0.5px, 0); } }
+      @keyframes scare-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes sweat-d { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(4px); } }
+    </style>
+  </defs>
+  <rect class="scare-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Sweat -->
+  <rect class="sweat1" x="1" y="7" width="1" height="1" fill="#40C4FF"/>
+  <rect class="sweat2" x="14" y="6" width="1" height="1" fill="#40C4FF"/>
+  <g class="scare-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="10" width="2" height="2"/><rect x="13" y="10" width="2" height="2"/>
+    </g>
+    <!-- Big scared eyes -->
+    <g fill="#000">
+      <rect x="3" y="7" width="3" height="3"/><rect x="10" y="7" width="3" height="3"/>
+    </g>
+    <g fill="#FFF">
+      <rect x="4" y="8" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/>
+    </g>
+  </g>
+</svg>

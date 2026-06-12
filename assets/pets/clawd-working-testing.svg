@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .tst-body { transform-origin: 7.5px 15px; animation: tst-idle 2s infinite ease-in-out; }
+      .tst-shadow { opacity: 0.5; }
+      .tst-check1 { animation: tst-pop1 3s infinite ease-in-out; }
+      .tst-check2 { animation: tst-pop2 3s infinite ease-in-out; }
+      .tst-x1 { animation: tst-pop3 3s infinite ease-in-out; }
+      .tst-check3 { animation: tst-pop4 3s infinite ease-in-out; }
+      @keyframes tst-idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes tst-pop1 { 0%, 10% { opacity: 0; } 15%, 85% { opacity: 1; } 90%, 100% { opacity: 0; } }
+      @keyframes tst-pop2 { 0%, 20% { opacity: 0; } 25%, 75% { opacity: 1; } 80%, 100% { opacity: 0; } }
+      @keyframes tst-pop3 { 0%, 30% { opacity: 0; } 35%, 65% { opacity: 1; } 70%, 100% { opacity: 0; } }
+      @keyframes tst-pop4 { 0%, 40% { opacity: 0; } 45%, 55% { opacity: 1; } 60%, 100% { opacity: 0; } }
+    </style>
+  </defs>
+  <rect class="tst-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- Checkmarks and X marks -->
+  <g class="tst-check1" fill="#4CAF50">
+    <rect x="-6" y="-3" width="1" height="1"/><rect x="-5" y="-2" width="1" height="1"/>
+    <rect x="-4" y="-3" width="1" height="1"/><rect x="-3" y="-4" width="1" height="1"/>
+  </g>
+  <g class="tst-x1" fill="#F44336">
+    <rect x="18" y="-2" width="1" height="1"/><rect x="20" y="-2" width="1" height="1"/>
+    <rect x="19" y="-1" width="1" height="1"/>
+    <rect x="18" y="0" width="1" height="1"/><rect x="20" y="0" width="1" height="1"/>
+  </g>
+  <g class="tst-check2" fill="#4CAF50">
+    <rect x="17" y="5" width="1" height="1"/><rect x="18" y="6" width="1" height="1"/>
+    <rect x="19" y="5" width="1" height="1"/><rect x="20" y="4" width="1" height="1"/>
+  </g>
+  <g class="tst-check3" fill="#4CAF50">
+    <rect x="-7" y="5" width="1" height="1"/><rect x="-6" y="6" width="1" height="1"/>
+    <rect x="-5" y="5" width="1" height="1"/><rect x="-4" y="4" width="1" height="1"/>
+  </g>
+  <g class="tst-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Thoughtful eyes (looking up) -->
+    <g fill="#000">
+      <rect x="5" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e201-body { transform-origin: 7.5px 15px; animation: e201-idle 2s infinite ease-in-out; }
+      .e201-shadow { opacity: 0.5; }
+      .e201-text { animation: e201-flash 2s infinite; }
+      .e201-sparkle1 { animation: e201-sp 1.5s infinite; }
+      .e201-sparkle2 { animation: e201-sp 1.5s infinite 0.3s; }
+      .e201-sparkle3 { animation: e201-sp 1.5s infinite 0.6s; }
+      .e201-sparkle4 { animation: e201-sp 1.5s infinite 0.9s; }
+      @keyframes e201-idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes e201-flash { 0%, 70% { opacity: 1; } 35% { opacity: 0.3; } }
+      @keyframes e201-sp { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1); } }
+    </style>
+  </defs>
+  <rect class="e201-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- 201 text above -->
+  <g class="e201-text" fill="#4488FF">
+    <!-- 2 -->
+    <rect x="2" y="-3" width="2" height="1"/><rect x="3" y="-2" width="1" height="1"/>
+    <rect x="2" y="-1" width="2" height="1"/><rect x="2" y="0" width="1" height="1"/>
+    <rect x="2" y="1" width="2" height="1"/>
+    <!-- 0 -->
+    <rect x="5" y="-3" width="3" height="1"/><rect x="5" y="1" width="3" height="1"/>
+    <rect x="5" y="-3" width="1" height="5"/><rect x="7" y="-3" width="1" height="5"/>
+    <!-- 1 -->
+    <rect x="10" y="-3" width="1" height="5"/><rect x="9" y="-2" width="1" height="1"/>
+    <rect x="9" y="1" width="3" height="1"/>
+  </g>
+  <!-- Sparkles -->
+  <g class="e201-sparkle1" fill="#FFD700">
+    <rect x="-3" y="2" width="1" height="3"/><rect x="-4" y="3" width="3" height="1"/>
+  </g>
+  <g class="e201-sparkle2" fill="#FFD700">
+    <rect x="17" y="-2" width="1" height="3"/><rect x="16" y="-1" width="3" height="1"/>
+  </g>
+  <g class="e201-sparkle3" fill="#FFD700">
+    <rect x="-5" y="-5" width="1" height="3"/><rect x="-6" y="-4" width="3" height="1"/>
+  </g>
+  <g class="e201-sparkle4" fill="#FFD700">
+    <rect x="19" y="6" width="1" height="3"/><rect x="18" y="7" width="3" height="1"/>
+  </g>
+  <g class="e201-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

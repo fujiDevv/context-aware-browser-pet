@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .fly-body { transform-origin: 7.5px 10px; animation: fly-soar 2s infinite ease-in-out; }
+      .fly-shadow { transform-origin: 7.5px 15.5px; animation: fly-shadow 2s infinite ease-in-out; }
+      .fly-eyes { transform-origin: 7.5px 9px; animation: fly-blink 3s infinite; }
+      .cloud1 { animation: cloud-pass 3s infinite linear; }
+      .cloud2 { animation: cloud-pass 3s infinite linear 1.5s; }
+      .cape { animation: cape-flutter 0.4s infinite alternate ease-in-out; }
+      @keyframes fly-soar { 0%, 100% { transform: translateY(-3px) rotate(5deg); } 50% { transform: translateY(-6px) rotate(5deg); } }
+      @keyframes fly-shadow { 0%, 100% { transform: scaleX(0.5); opacity: 0.2; } 50% { transform: scaleX(0.3); opacity: 0.1; } }
+      @keyframes fly-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes cloud-pass { 0% { transform: translateX(20px); opacity: 0; } 20% { opacity: 0.4; } 80% { opacity: 0.4; } 100% { transform: translateX(-20px); opacity: 0; } }
+      @keyframes cape-flutter { 0% { transform: rotate(5deg); } 100% { transform: rotate(15deg); } }
+    </style>
+  </defs>
+  <rect class="fly-shadow" x="5" y="15" width="5" height="1" fill="#000" opacity="0.2"/>
+  <!-- Clouds -->
+  <g fill="#FFF" opacity="0.3">
+    <g class="cloud1"><rect x="0" y="12" width="4" height="2"/><rect x="1" y="11" width="2" height="1"/></g>
+    <g class="cloud2"><rect x="10" y="14" width="3" height="1"/><rect x="11" y="13" width="2" height="1"/></g>
+  </g>
+  <g class="fly-body">
+    <!-- Cape -->
+    <g class="cape"><rect x="-1" y="8" width="3" height="5" fill="#FF4444"/><rect x="-2" y="10" width="2" height="4" fill="#FF4444"/></g>
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="13" y="7" width="2" height="2"/><rect x="0" y="7" width="2" height="2"/>
+    </g>
+    <g class="fly-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

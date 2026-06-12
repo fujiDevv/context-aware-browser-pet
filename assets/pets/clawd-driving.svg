@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs><style>
+    .drive-all { transform-origin: 7.5px 12px; animation: drive-move 2s ease-in-out infinite; }
+    .drive-shadow { animation: drive-s 2s ease-in-out infinite; }
+    .drive-wheel { animation: drive-spin 0.5s linear infinite; }
+    @keyframes drive-move { 0%, 100% { transform: translateX(-1px); } 50% { transform: translateX(1px); } }
+    @keyframes drive-s { 0%, 100% { opacity: 0.5; transform: translateX(-1px); } 50% { opacity: 0.45; transform: translateX(1px); } }
+    @keyframes drive-spin { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+  </style></defs>
+  <rect class="drive-shadow" x="0" y="17" width="15" height="1" fill="#000" opacity="0.5"/>
+  <g class="drive-all">
+    <!-- Car body -->
+    <rect x="-1" y="11" width="17" height="5" fill="#E74C3C"/>
+    <rect x="0" y="9" width="15" height="2" fill="#C0392B"/>
+    <!-- Windshield -->
+    <rect x="1" y="9.5" width="4" height="1.5" fill="#85C1E9" opacity="0.7"/>
+    <rect x="10" y="9.5" width="4" height="1.5" fill="#85C1E9" opacity="0.7"/>
+    <!-- Wheels -->
+    <rect class="drive-wheel" x="1" y="16" width="3" height="2" rx="1" fill="#222"/>
+    <rect class="drive-wheel" x="11" y="16" width="3" height="2" rx="1" fill="#222"/>
+    <!-- Character upper body visible -->
+    <g fill="#DE886D">
+      <rect x="2" y="6" width="11" height="4"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

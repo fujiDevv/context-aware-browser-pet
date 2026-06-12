@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .peek-body { transform-origin: 7.5px 20px; animation: peek-up 4s infinite ease-in-out; }
+      .peek-eyes { animation: peek-look 4s infinite ease-in-out; }
+      .peek-blink { transform-origin: 7.5px 9px; animation: peek-blink-anim 3s infinite; }
+      @keyframes peek-up {
+        0%, 100% { transform: translateY(8px); }
+        20%, 80% { transform: translateY(0); }
+      }
+      @keyframes peek-look {
+        0%, 20%, 100% { transform: translateX(0); }
+        35% { transform: translateX(3px); }
+        50% { transform: translateX(0); }
+        65% { transform: translateX(-3px); }
+        80% { transform: translateX(0); }
+      }
+      @keyframes peek-blink-anim { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+    </style>
+  </defs>
+  <rect x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Edge to peek from -->
+  <rect x="-15" y="13" width="45" height="12" fill="#222"/>
+  <rect x="-15" y="13" width="45" height="1" fill="#444"/>
+  <g class="peek-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g class="peek-eyes">
+      <g class="peek-blink" fill="#000">
+        <rect x="4" y="8" width="1" height="2"/>
+        <rect x="10" y="8" width="1" height="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .grumpy-body { transform-origin: 7.5px 15px; animation: grumpy-breathe 3s infinite ease-in-out; }
+      .grumpy-shadow { animation: grumpy-s 3s infinite ease-in-out; }
+      @keyframes grumpy-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.02); } }
+      @keyframes grumpy-s { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.45; } }
+    </style>
+  </defs>
+  <rect class="grumpy-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="grumpy-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <!-- arms crossed in front -->
+      <rect x="4" y="10" width="3" height="2"/>
+      <rect x="8" y="10" width="3" height="2"/>
+    </g>
+    <g fill="#000">
+      <!-- furrowed brows -->
+      <rect x="4" y="7" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/>
+      <rect x="12" y="7" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/>
+      <!-- eyes -->
+      <rect x="5" y="9" width="1" height="2"/>
+      <rect x="11" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

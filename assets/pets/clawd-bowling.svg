@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs><style>
+    .bowl-body { transform-origin: 7.5px 15px; animation: bowl-throw 2s ease-in-out infinite; }
+    .bowl-shadow { animation: bowl-s 2s ease-in-out infinite; }
+    .bowl-ball { animation: bowl-roll 2s ease-in-out infinite; }
+    .bowl-pins { animation: bowl-fall 2s ease-in-out infinite; }
+    @keyframes bowl-throw { 0%, 40% { transform: rotate(0deg); } 50% { transform: rotate(-5deg); } 60%, 100% { transform: rotate(0deg); } }
+    @keyframes bowl-s { 0%, 100% { opacity: 0.5; } }
+    @keyframes bowl-roll { 0%, 40% { transform: translateX(0); opacity: 1; } 80%, 100% { transform: translateX(12px); opacity: 1; } }
+    @keyframes bowl-fall { 0%, 70% { transform: rotate(0deg); opacity: 1; } 80% { transform: rotate(10deg); opacity: 0.8; } 90%, 100% { transform: rotate(0deg); opacity: 1; } }
+  </style></defs>
+  <rect class="bowl-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Bowling ball -->
+  <g class="bowl-ball">
+    <rect x="-3" y="13" width="3" height="3" rx="1" fill="#222"/>
+    <rect x="-2" y="13" width="1" height="1" fill="#444"/>
+  </g>
+  <!-- Pins -->
+  <g class="bowl-pins">
+    <rect x="20" y="12" width="1" height="3" fill="#F5F5F5"/>
+    <rect x="20" y="11" width="1" height="1" fill="#E74C3C"/>
+    <rect x="22" y="12" width="1" height="3" fill="#F5F5F5"/>
+    <rect x="22" y="11" width="1" height="1" fill="#E74C3C"/>
+    <rect x="24" y="12" width="1" height="3" fill="#F5F5F5"/>
+    <rect x="24" y="11" width="1" height="1" fill="#E74C3C"/>
+  </g>
+  <g class="bowl-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

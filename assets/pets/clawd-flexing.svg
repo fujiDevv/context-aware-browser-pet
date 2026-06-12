@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .flex-body { transform-origin: 7.5px 15px; animation: flex-pose 2s infinite ease-in-out; }
+      .flex-shadow { animation: flex-s 2s infinite; }
+      .flex-eyes { transform-origin: 7.5px 9px; animation: flex-blink 3s infinite; }
+      .flex-arm-l { transform-origin: 1px 10px; animation: flex-l 2s infinite ease-in-out; }
+      .flex-arm-r { transform-origin: 14px 10px; animation: flex-r 2s infinite ease-in-out; }
+      .flex-sparkle { animation: flex-shine 1s infinite ease-in-out; }
+      @keyframes flex-pose { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.03); } }
+      @keyframes flex-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes flex-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes flex-l { 0%, 100% { transform: rotate(60deg); } 50% { transform: rotate(70deg); } }
+      @keyframes flex-r { 0%, 100% { transform: rotate(-60deg); } 50% { transform: rotate(-70deg); } }
+      @keyframes flex-shine { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+    </style>
+  </defs>
+  <rect class="flex-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <rect class="flex-sparkle" x="-2" y="5" width="1" height="1" fill="#FFD700"/>
+  <rect class="flex-sparkle" x="16" y="5" width="1" height="1" fill="#FFD700"/>
+  <g class="flex-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <g class="flex-arm-l"><rect x="0" y="9" width="2" height="2"/><rect x="-1" y="7" width="2" height="2"/></g>
+      <g class="flex-arm-r"><rect x="13" y="9" width="2" height="2"/><rect x="14" y="7" width="2" height="2"/></g>
+    </g>
+    <g class="flex-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

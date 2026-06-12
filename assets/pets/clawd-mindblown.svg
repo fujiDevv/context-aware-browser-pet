@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .mind-body { transform-origin: 7.5px 15px; animation: mind-jolt 0.5s infinite ease-out; }
+      .mind-shadow { animation: mind-s 0.5s infinite; }
+      .particle1 { animation: mind-explode 1s infinite ease-out; }
+      .particle2 { animation: mind-explode 1s infinite ease-out 0.2s; }
+      .particle3 { animation: mind-explode 1s infinite ease-out 0.4s; }
+      .particle4 { animation: mind-explode 1s infinite ease-out 0.6s; }
+      @keyframes mind-jolt { 0%, 100% { transform: translateY(0); } 20% { transform: translateY(-2px); } }
+      @keyframes mind-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes mind-explode { 0% { opacity: 0.8; transform: translate(0, 0) scale(1); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3); } }
+    </style>
+  </defs>
+  <rect class="mind-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g fill="#FFD700">
+    <rect class="particle1" x="3" y="-2" width="1" height="1" style="--dx:-4px;--dy:-4px"/>
+    <rect class="particle2" x="11" y="-2" width="1" height="1" style="--dx:4px;--dy:-4px"/>
+    <rect class="particle3" x="7" y="-4" width="1" height="1" style="--dx:0px;--dy:-5px"/>
+    <rect class="particle4" x="1" y="0" width="1" height="1" style="--dx:-5px;--dy:-2px"/>
+  </g>
+  <g class="mind-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="7" width="2" height="2"/><rect x="13" y="7" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="3" y="7" width="3" height="3"/><rect x="10" y="7" width="3" height="3"/>
+    </g>
+    <g fill="#FFF">
+      <rect x="4" y="8" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/>
+    </g>
+  </g>
+</svg>

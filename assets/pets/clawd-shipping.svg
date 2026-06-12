@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .ship-body { transform-origin: 7.5px 15px; animation: ship-walk 0.5s infinite ease-in-out; }
+      .ship-shadow { transform-origin: 7.5px 15.5px; animation: ship-shadow 0.5s infinite ease-in-out; }
+      .ship-leg-l { transform-origin: 4px 13px; animation: ship-leg-l 0.5s infinite ease-in-out; }
+      .ship-leg-r { transform-origin: 10px 13px; animation: ship-leg-r 0.5s infinite ease-in-out; }
+      .ship-eyes { transform-origin: 7.5px 9px; animation: ship-blink 3s infinite; }
+      .box-bounce { animation: box-bob 0.5s infinite ease-in-out; }
+      @keyframes ship-walk { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes ship-shadow { 0%, 100% { transform: scaleX(1); opacity: 0.5; } 50% { transform: scaleX(0.85); opacity: 0.4; } }
+      @keyframes ship-leg-l { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+      @keyframes ship-leg-r { 0%, 100% { transform: rotate(10deg); } 50% { transform: rotate(-10deg); } }
+      @keyframes ship-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes box-bob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-2px) rotate(2deg); } }
+    </style>
+  </defs>
+  <rect class="ship-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Package box on top -->
+  <g class="box-bounce">
+    <rect x="3" y="-1" width="9" height="7" fill="#C4873B"/>
+    <rect x="6.5" y="-1" width="2" height="7" fill="#A06B2E"/>
+    <rect x="3" y="2" width="9" height="1" fill="#A06B2E"/>
+  </g>
+  <g class="ship-body">
+    <g fill="#DE886D">
+      <g class="ship-leg-l">
+        <rect x="3" y="13" width="1" height="2"/>
+        <rect x="5" y="13" width="1" height="2"/>
+      </g>
+      <g class="ship-leg-r">
+        <rect x="9" y="13" width="1" height="2"/>
+        <rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="7" width="2" height="2"/>
+      <rect x="13" y="7" width="2" height="2"/>
+    </g>
+    <g class="ship-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/>
+      <rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

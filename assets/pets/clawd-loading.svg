@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .load-body {
+        transform-origin: 7.5px 15px;
+        animation: load-sway 2s infinite ease-in-out;
+      }
+      .load-shadow {
+        transform-origin: 7.5px 15.5px;
+        animation: load-shadow 2s infinite ease-in-out;
+      }
+      .load-eyes {
+        transform-origin: 7.5px 9px;
+        animation: load-blink 3s infinite;
+      }
+      .orb1 { animation: orb-orbit 1.5s infinite linear; }
+      .orb2 { animation: orb-orbit 1.5s infinite linear 0.5s; }
+      .orb3 { animation: orb-orbit 1.5s infinite linear 1s; }
+      @keyframes load-sway {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(-2deg); }
+        75% { transform: rotate(2deg); }
+      }
+      @keyframes load-shadow {
+        0%, 100% { transform: scaleX(1); opacity: 0.5; }
+        50% { transform: scaleX(0.9); opacity: 0.4; }
+      }
+      @keyframes load-blink {
+        0%, 43%, 57%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(0.1); }
+      }
+      @keyframes orb-orbit {
+        0% { opacity: 1; transform: scale(1); }
+        33% { opacity: 0.5; transform: scale(0.6); }
+        66% { opacity: 0.3; transform: scale(0.4); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+    </style>
+  </defs>
+  <rect class="load-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Loading dots above head -->
+  <rect class="orb1" x="4" y="1" width="2" height="2" fill="#0082FC"/>
+  <rect class="orb2" x="8" y="0" width="2" height="2" fill="#0082FC"/>
+  <rect class="orb3" x="12" y="1" width="2" height="2" fill="#0082FC"/>
+  <g class="load-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Eyes looking up at dots -->
+    <g class="load-eyes" fill="#000">
+      <rect x="5" y="7" width="1" height="2"/>
+      <rect x="11" y="7" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

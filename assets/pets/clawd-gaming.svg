@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .game-body { transform-origin: 7.5px 15px; animation: game-lean 0.8s infinite ease-in-out; }
+      .game-shadow { animation: game-shadow 0.8s infinite ease-in-out; }
+      .game-eyes { animation: game-focus 1.5s infinite ease-in-out; }
+      .game-blink { transform-origin: 7.5px 9px; animation: game-blink-anim 4s infinite; }
+      .screen-glow { animation: screen-flash 2s infinite; }
+      @keyframes game-lean { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+      @keyframes game-shadow { 0%, 100% { opacity: 0.5; } }
+      @keyframes game-focus { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(1px); } 70% { transform: translateX(-1px); } }
+      @keyframes game-blink-anim { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes screen-flash { 0%, 50% { fill: #00FF00; } 25% { fill: #FF4444; } 75% { fill: #4488FF; } }
+    </style>
+  </defs>
+  <rect class="game-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Game controller -->
+  <g>
+    <rect x="4" y="12" width="7" height="3" fill="#444"/>
+    <rect x="3" y="13" width="2" height="1" fill="#444"/>
+    <rect x="10" y="13" width="2" height="1" fill="#444"/>
+    <!-- D-pad -->
+    <rect x="4.5" y="13" width="0.5" height="1" fill="#222"/>
+    <rect x="4" y="13.25" width="1.5" height="0.5" fill="#222"/>
+    <!-- Buttons -->
+    <rect x="9" y="12.5" width="0.5" height="0.5" fill="#FF4444"/>
+    <rect x="10" y="13" width="0.5" height="0.5" fill="#4488FF"/>
+  </g>
+  <!-- Screen glow on face -->
+  <rect class="screen-glow" x="4" y="8" width="7" height="3" fill="#00FF00" opacity="0.1"/>
+  <g class="game-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="10" width="2" height="2"/>
+      <rect x="13" y="10" width="2" height="2"/>
+    </g>
+    <g class="game-eyes">
+      <g class="game-blink" fill="#000">
+        <rect x="4" y="8" width="1" height="2"/>
+        <rect x="10" y="8" width="1" height="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

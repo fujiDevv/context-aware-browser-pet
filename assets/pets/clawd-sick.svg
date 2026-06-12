@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .sick-body { transform-origin: 7.5px 15px; animation: sick-wobble 3s infinite ease-in-out; }
+      .sick-shadow { animation: sick-s 3s infinite; }
+      @keyframes sick-wobble { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-2deg); } 75% { transform: rotate(2deg); } }
+      @keyframes sick-s { 0%, 100% { opacity: 0.5; } }
+    </style>
+  </defs>
+  <rect class="sick-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="sick-body">
+    <g fill="#C8A090">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="10" width="2" height="2"/><rect x="13" y="10" width="2" height="2"/>
+    </g>
+    <!-- Thermometer -->
+    <rect x="14" y="8" width="1" height="4" fill="#FFF"/>
+    <rect x="14" y="8" width="1" height="2" fill="#FF4444"/>
+    <rect x="13.5" y="11.5" width="2" height="2" fill="#FF4444" rx="1"/>
+    <!-- Dizzy eyes -->
+    <g fill="#000">
+      <rect x="4" y="8" width="1" height="1"/><rect x="5" y="9" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="3" y="9" width="1" height="1"/>
+      <rect x="10" y="8" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/>
+    </g>
+    <!-- Green tint -->
+    <rect x="3" y="10" width="2" height="2" fill="#88CC88" opacity="0.3"/>
+    <rect x="11" y="10" width="2" height="2" fill="#88CC88" opacity="0.3"/>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .paint-body { transform-origin: 7.5px 15px; animation: paint-sway 3s infinite ease-in-out; }
+      .paint-shadow { animation: paint-s 3s infinite; }
+      .paint-arm { transform-origin: 14px 10px; animation: paint-stroke 1.5s infinite ease-in-out; }
+      .paint-eyes { transform-origin: 7.5px 9px; animation: paint-blink 4s infinite; }
+      .splat1 { animation: splat 2s infinite ease-out; }
+      .splat2 { animation: splat 2s infinite ease-out 0.7s; }
+      @keyframes paint-sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } }
+      @keyframes paint-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes paint-stroke { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-30deg); } }
+      @keyframes paint-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes splat { 0% { opacity: 0.8; transform: scale(0.5); } 100% { opacity: 0; transform: scale(1.5); } }
+    </style>
+  </defs>
+  <rect class="paint-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Canvas -->
+  <rect x="16" y="4" width="6" height="8" fill="#FFF"/>
+  <rect x="16" y="4" width="6" height="1" fill="#AAA"/>
+  <rect class="splat1" x="17" y="6" width="2" height="2" fill="#FF4444"/>
+  <rect class="splat2" x="19" y="8" width="2" height="2" fill="#4488FF"/>
+  <g class="paint-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <g class="paint-arm"><rect x="13" y="9" width="2" height="2"/></g>
+    </g>
+    <!-- Brush in hand -->
+    <g class="paint-arm"><rect x="15" y="8" width="1" height="3" fill="#8B4513"/><rect x="15" y="7" width="1" height="1" fill="#FF4444"/></g>
+    <g class="paint-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .tool-body { transform-origin: 7.5px 15px; animation: tool-bob 2s infinite ease-in-out; }
+      .tool-gear { transform-origin: 6px -5px; animation: tool-spin 4s infinite linear; }
+      .tool-arm { transform-origin: 14px 10px; animation: tool-turn 1.2s infinite ease-in-out; }
+      @keyframes tool-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.6px); } }
+      @keyframes tool-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes tool-turn { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-18deg); } }
+    </style>
+  </defs>
+
+  <rect x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+
+  <!-- rotating gear overhead -->
+  <g class="tool-gear">
+    <g fill="#90A4AE">
+      <rect x="4.5" y="-6.5" width="3" height="3"/>
+      <rect x="5.5" y="-7.5" width="1" height="1"/><rect x="5.5" y="-3.5" width="1" height="1"/>
+      <rect x="3.5" y="-5.5" width="1" height="1"/><rect x="7.5" y="-5.5" width="1" height="1"/>
+      <rect x="4" y="-7" width="1" height="1"/><rect x="7" y="-7" width="1" height="1"/>
+      <rect x="4" y="-4" width="1" height="1"/><rect x="7" y="-4" width="1" height="1"/>
+    </g>
+    <rect x="5.5" y="-5.5" width="1" height="1" fill="#CFD8DC"/>
+  </g>
+
+  <g class="tool-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+
+    <!-- right arm raised, turning a wrench -->
+    <g class="tool-arm">
+      <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+      <g fill="#78909C">
+        <rect x="14" y="5" width="1" height="4"/>
+        <rect x="13" y="4" width="3" height="1"/>
+        <rect x="13" y="3" width="1" height="1"/>
+        <rect x="15" y="3" width="1" height="1"/>
+      </g>
+      <rect x="14" y="4" width="1" height="1" fill="#CFD8DC"/>
+    </g>
+  </g>
+</svg>

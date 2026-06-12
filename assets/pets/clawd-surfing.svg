@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .surf-body { transform-origin: 7.5px 13px; animation: surf-balance 1s infinite ease-in-out; }
+      .surf-shadow { animation: surf-s 1s infinite; }
+      .surf-eyes { transform-origin: 7.5px 9px; animation: surf-blink 3s infinite; }
+      .wave-move { animation: wave-roll 2s infinite linear; }
+      @keyframes surf-balance { 0%, 100% { transform: rotate(-3deg) translateY(0); } 50% { transform: rotate(3deg) translateY(-1px); } }
+      @keyframes surf-s { 0%, 100% { opacity: 0.3; } }
+      @keyframes surf-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes wave-roll { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
+    </style>
+  </defs>
+  <!-- Ocean -->
+  <rect x="-15" y="14" width="45" height="6" fill="#1a5276" opacity="0.5"/>
+  <!-- Waves -->
+  <g class="wave-move" fill="#40C4FF" opacity="0.3">
+    <rect x="-10" y="13" width="4" height="1"/><rect x="0" y="14" width="3" height="1"/>
+    <rect x="8" y="13" width="4" height="1"/><rect x="18" y="14" width="3" height="1"/>
+    <rect x="25" y="13" width="4" height="1"/>
+  </g>
+  <!-- Surfboard -->
+  <rect x="1" y="13" width="13" height="1" fill="#FFD700"/>
+  <rect x="0" y="13" width="2" height="1" fill="#FF8800"/>
+  <rect x="12" y="13" width="2" height="1" fill="#FF8800"/>
+  <g class="surf-body">
+    <g fill="#DE886D">
+      <rect x="4" y="11" width="1" height="2"/><rect x="6" y="11" width="1" height="2"/>
+      <rect x="8" y="11" width="1" height="2"/><rect x="10" y="11" width="1" height="2"/>
+      <rect x="2" y="4" width="11" height="7"/>
+      <rect x="0" y="7" width="2" height="2"/><rect x="13" y="7" width="2" height="2"/>
+    </g>
+    <g class="surf-eyes" fill="#000">
+      <rect x="4" y="6" width="1" height="2"/><rect x="10" y="6" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

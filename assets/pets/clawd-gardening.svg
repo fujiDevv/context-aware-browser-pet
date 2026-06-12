@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .garden-body { transform-origin: 7.5px 15px; animation: garden-sway 3s infinite ease-in-out; }
+      .garden-shadow { animation: garden-s 3s infinite; }
+      .garden-eyes { transform-origin: 7.5px 9px; animation: garden-blink 4s infinite; }
+      .plant-grow { animation: grow-up 4s infinite ease-in-out; transform-origin: 17px 15px; }
+      .water-drop { animation: water-fall 1s infinite ease-in; }
+      @keyframes garden-sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-2deg); } }
+      @keyframes garden-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes garden-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes grow-up { 0%, 100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }
+      @keyframes water-fall { 0% { opacity: 0.7; transform: translateY(0); } 100% { opacity: 0; transform: translateY(3px); } }
+    </style>
+  </defs>
+  <rect class="garden-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Pot and plant -->
+  <rect x="15" y="13" width="5" height="3" fill="#C4873B"/>
+  <rect x="14" y="13" width="7" height="1" fill="#A0522D"/>
+  <g class="plant-grow">
+    <rect x="17" y="8" width="1" height="5" fill="#44AA44"/>
+    <rect x="15" y="9" width="2" height="2" fill="#44CC44"/>
+    <rect x="18" y="7" width="2" height="2" fill="#44CC44"/>
+    <rect x="16" y="6" width="2" height="2" fill="#44CC44"/>
+  </g>
+  <!-- Watering can drops -->
+  <rect class="water-drop" x="13" y="11" width="1" height="1" fill="#40C4FF"/>
+  <g class="garden-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Watering can -->
+    <rect x="13" y="9" width="3" height="2" fill="#4488FF"/>
+    <rect x="13" y="10" width="1" height="2" fill="#4488FF"/>
+    <g class="garden-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .det-body { transform-origin: 7.5px 15px; animation: det-lean 3s infinite ease-in-out; }
+      .det-shadow { animation: det-s 3s infinite; }
+      .det-eyes { animation: det-scan 3s infinite ease-in-out; }
+      .det-blink { transform-origin: 7.5px 9px; animation: det-blink-anim 4s infinite; }
+      .det-arm { transform-origin: 14px 10px; animation: det-mag 3s infinite ease-in-out; }
+      @keyframes det-lean { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(3deg); } }
+      @keyframes det-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes det-scan { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(2px); } 70% { transform: translateX(-2px); } }
+      @keyframes det-blink-anim { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes det-mag { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg) translateX(2px); } }
+    </style>
+  </defs>
+  <rect class="det-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="det-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <g class="det-arm"><rect x="13" y="9" width="2" height="2"/></g>
+    </g>
+    <!-- Magnifying glass -->
+    <g class="det-arm">
+      <rect x="15" y="10" width="1" height="3" fill="#8B4513"/>
+      <rect x="15" y="7" width="3" height="3" fill="none" stroke="#AAA" stroke-width="0.8"/>
+      <rect x="15.5" y="7.5" width="2" height="2" fill="#88DDFF" opacity="0.3"/>
+    </g>
+    <!-- Hat -->
+    <rect x="1" y="4" width="13" height="2" fill="#8B4513"/>
+    <rect x="3" y="2" width="9" height="2" fill="#A0522D"/>
+    <g class="det-eyes">
+      <g class="det-blink" fill="#000">
+        <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

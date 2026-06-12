@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .mail-body { transform-origin: 7.5px 15px; animation: mail-stand 2s infinite ease-in-out; }
+      .mail-shadow { animation: mail-s 2s infinite; }
+      .mail-eyes { transform-origin: 7.5px 9px; animation: mail-blink 3s infinite; }
+      .mail-env { animation: mail-float 2s infinite ease-in-out; }
+      @keyframes mail-stand { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+      @keyframes mail-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes mail-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes mail-float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-2px) rotate(5deg); } }
+    </style>
+  </defs>
+  <rect class="mail-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Envelope -->
+  <g class="mail-env">
+    <rect x="14" y="6" width="6" height="4" fill="#FFF"/>
+    <rect x="14" y="6" width="1" height="1" fill="#DDD"/><rect x="19" y="6" width="1" height="1" fill="#DDD"/>
+    <rect x="15" y="7" width="1" height="1" fill="#DDD"/><rect x="18" y="7" width="1" height="1" fill="#DDD"/>
+    <rect x="16" y="8" width="2" height="1" fill="#DDD"/>
+    <!-- New badge -->
+    <rect x="18" y="5" width="2" height="2" fill="#FF4444"/>
+  </g>
+  <g class="mail-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g class="mail-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

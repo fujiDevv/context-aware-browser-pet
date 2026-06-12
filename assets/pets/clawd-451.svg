@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e451-body { transform-origin: 7.5px 15px; animation: e451-idle 3s infinite ease-in-out; }
+      .e451-shadow { opacity: 0.5; }
+      .e451-text { animation: e451-flash 2s infinite; }
+      .e451-flame1 { animation: e451-burn1 0.4s infinite alternate; }
+      .e451-flame2 { animation: e451-burn2 0.3s infinite alternate; }
+      .e451-flame3 { animation: e451-burn3 0.5s infinite alternate; }
+      .e451-gavel { transform-origin: 18px 10px; animation: e451-bang 1.5s infinite ease-in-out; }
+      @keyframes e451-idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+      @keyframes e451-flash { 0%, 70% { opacity: 1; } 35% { opacity: 0.3; } }
+      @keyframes e451-burn1 { 0% { transform: translateY(0); opacity: 0.8; } 100% { transform: translateY(-1px); opacity: 1; } }
+      @keyframes e451-burn2 { 0% { transform: translateY(0); opacity: 0.6; } 100% { transform: translateY(-2px); opacity: 1; } }
+      @keyframes e451-burn3 { 0% { transform: translateY(0); opacity: 0.7; } 100% { transform: translateY(-1px); opacity: 0.9; } }
+      @keyframes e451-bang { 0%, 60% { transform: rotate(0deg); } 70% { transform: rotate(-20deg); } 80% { transform: rotate(0deg); } }
+    </style>
+  </defs>
+  <rect class="e451-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- 451 text above -->
+  <g class="e451-text" fill="#AA2222">
+    <!-- 4 -->
+    <rect x="2" y="-3" width="1" height="3"/><rect x="2" y="-1" width="3" height="1"/>
+    <rect x="4" y="-3" width="1" height="5"/>
+    <!-- 5 -->
+    <rect x="6" y="-3" width="3" height="1"/><rect x="6" y="-2" width="1" height="1"/>
+    <rect x="6" y="-1" width="3" height="1"/><rect x="8" y="0" width="1" height="1"/>
+    <rect x="6" y="1" width="3" height="1"/>
+    <!-- 1 -->
+    <rect x="11" y="-3" width="1" height="5"/><rect x="10" y="-2" width="1" height="1"/>
+    <rect x="10" y="1" width="3" height="1"/>
+  </g>
+  <!-- Flames below -->
+  <g>
+    <rect class="e451-flame1" x="2" y="14" width="2" height="2" fill="#F80"/>
+    <rect class="e451-flame2" x="5" y="13" width="2" height="3" fill="#F40"/>
+    <rect class="e451-flame3" x="8" y="14" width="2" height="2" fill="#F80"/>
+    <rect class="e451-flame1" x="11" y="13" width="2" height="3" fill="#FA0"/>
+    <rect class="e451-flame2" x="4" y="12" width="1" height="2" fill="#FF0"/>
+    <rect class="e451-flame3" x="9" y="12" width="1" height="2" fill="#FF0"/>
+  </g>
+  <!-- Gavel -->
+  <g class="e451-gavel">
+    <rect x="17" y="4" width="4" height="2" fill="#8B4513"/>
+    <rect x="18" y="6" width="1" height="5" fill="#A0522D"/>
+  </g>
+  <g class="e451-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Stern eyes with eyebrows -->
+    <g fill="#000">
+      <rect x="4" y="7" width="2" height="1"/><rect x="10" y="7" width="2" height="1"/>
+      <rect x="5" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

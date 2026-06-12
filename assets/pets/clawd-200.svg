@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e200-body { transform-origin: 7.5px 15px; animation: e200-bounce 1.5s infinite ease-in-out; }
+      .e200-shadow { opacity: 0.5; }
+      .e200-text { animation: e200-flash 2s infinite; }
+      .e200-check { animation: e200-float 2s infinite ease-in-out; }
+      @keyframes e200-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+      @keyframes e200-flash { 0%, 70% { opacity: 1; } 35% { opacity: 0.3; } }
+      @keyframes e200-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+    </style>
+  </defs>
+  <rect class="e200-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- 200 text above -->
+  <g class="e200-text" fill="#22CC44">
+    <!-- 2 -->
+    <rect x="2" y="-3" width="2" height="1"/><rect x="3" y="-2" width="1" height="1"/>
+    <rect x="2" y="-1" width="2" height="1"/><rect x="2" y="0" width="1" height="1"/>
+    <rect x="2" y="1" width="2" height="1"/>
+    <!-- 0 -->
+    <rect x="5" y="-3" width="3" height="1"/><rect x="5" y="1" width="3" height="1"/>
+    <rect x="5" y="-3" width="1" height="5"/><rect x="7" y="-3" width="1" height="5"/>
+    <!-- 0 -->
+    <rect x="9" y="-3" width="3" height="1"/><rect x="9" y="1" width="3" height="1"/>
+    <rect x="9" y="-3" width="1" height="5"/><rect x="11" y="-3" width="1" height="5"/>
+  </g>
+  <!-- Checkmark -->
+  <g class="e200-check" fill="#22CC44">
+    <rect x="17" y="3" width="1" height="1"/><rect x="18" y="4" width="1" height="1"/>
+    <rect x="19" y="3" width="1" height="1"/><rect x="20" y="2" width="1" height="1"/>
+    <rect x="21" y="1" width="1" height="1"/>
+  </g>
+  <g class="e200-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <!-- Left arm normal, right arm raised (thumbs up) -->
+      <rect x="0" y="9" width="2" height="2"/>
+      <rect x="13" y="6" width="2" height="2"/>
+      <rect x="14" y="4" width="1" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

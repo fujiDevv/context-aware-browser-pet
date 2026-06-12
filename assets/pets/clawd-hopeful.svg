@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .hopeful-body { transform-origin: 7.5px 15px; animation: hopeful-float 2s infinite ease-in-out; }
+      .hopeful-shadow { animation: hopeful-s 2s infinite ease-in-out; }
+      .sparkle1 { animation: sparkle-twinkle 1.5s infinite ease-in-out; }
+      .sparkle2 { animation: sparkle-twinkle 1.5s infinite ease-in-out 0.5s; }
+      .sparkle3 { animation: sparkle-twinkle 1.5s infinite ease-in-out 1s; }
+      @keyframes hopeful-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+      @keyframes hopeful-s { 0%, 100% { opacity: 0.5; transform: scaleX(1); } 50% { opacity: 0.3; transform: scaleX(0.85); } }
+      @keyframes sparkle-twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1); } }
+    </style>
+  </defs>
+  <rect class="hopeful-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g fill="#FFD700">
+    <g class="sparkle1">
+      <rect x="3" y="2" width="1" height="3"/><rect x="2" y="3" width="3" height="1"/>
+    </g>
+    <g class="sparkle2">
+      <rect x="11" y="0" width="1" height="3"/><rect x="10" y="1" width="3" height="1"/>
+    </g>
+    <g class="sparkle3">
+      <rect x="7" y="1" width="1" height="2"/><rect x="6" y="2" width="3" height="1"/>
+    </g>
+  </g>
+  <g class="hopeful-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- star eyes (cross/plus pattern in gold) -->
+    <g fill="#FFD700">
+      <rect x="5" y="8" width="1" height="3"/><rect x="4" y="9" width="3" height="1"/>
+      <rect x="10" y="8" width="1" height="3"/><rect x="9" y="9" width="3" height="1"/>
+    </g>
+  </g>
+</svg>

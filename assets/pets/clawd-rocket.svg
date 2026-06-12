@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .rocket-body {
+        transform-origin: 7.5px 15px;
+        animation: rocket-fly 1.5s infinite ease-in-out;
+      }
+      .rocket-shadow {
+        transform-origin: 7.5px 15.5px;
+        animation: rocket-shadow 1.5s infinite ease-in-out;
+      }
+      .flame1 { animation: flame-flicker 0.15s infinite alternate; }
+      .flame2 { animation: flame-flicker 0.15s infinite alternate-reverse; }
+      .star1 { animation: star-twinkle 1s infinite ease-in-out; }
+      .star2 { animation: star-twinkle 1s infinite ease-in-out 0.3s; }
+      .star3 { animation: star-twinkle 1s infinite ease-in-out 0.6s; }
+      .rocket-eyes {
+        transform-origin: 7.5px 9px;
+        animation: rocket-blink 2.5s infinite;
+      }
+      @keyframes rocket-fly {
+        0%, 100% { transform: translateY(0) rotate(-2deg); }
+        50% { transform: translateY(-4px) rotate(2deg); }
+      }
+      @keyframes rocket-shadow {
+        0%, 100% { transform: scaleX(1); opacity: 0.5; }
+        50% { transform: scaleX(0.4); opacity: 0.1; }
+      }
+      @keyframes flame-flicker {
+        0% { opacity: 1; transform: scaleY(1); }
+        100% { opacity: 0.6; transform: scaleY(0.7); }
+      }
+      @keyframes star-twinkle {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 1; }
+      }
+      @keyframes rocket-blink {
+        0%, 43%, 57%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(0.1); }
+      }
+    </style>
+  </defs>
+  <rect class="rocket-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Stars -->
+  <rect class="star1" x="0" y="-3" width="1" height="1" fill="#FFF" opacity="0.5"/>
+  <rect class="star2" x="14" y="-5" width="1" height="1" fill="#FFF" opacity="0.5"/>
+  <rect class="star3" x="8" y="-6" width="1" height="1" fill="#FFF" opacity="0.5"/>
+  <g class="rocket-body">
+    <!-- Flames under feet -->
+    <rect class="flame1" x="3" y="15" width="2" height="2" fill="#FF4400"/>
+    <rect class="flame2" x="4" y="16" width="1" height="2" fill="#FFAA00"/>
+    <rect class="flame1" x="10" y="15" width="2" height="2" fill="#FF4400"/>
+    <rect class="flame2" x="10" y="16" width="1" height="2" fill="#FFAA00"/>
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="7" width="2" height="2"/>
+      <rect x="13" y="7" width="2" height="2"/>
+    </g>
+    <g class="rocket-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/>
+      <rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .win-body { transform-origin: 7.5px 15px; animation: win-shiver 0.1s infinite alternate; }
+      .wsnow1 { animation: wsnow-fall 3s infinite linear; }
+      .wsnow2 { animation: wsnow-fall 3s infinite linear 0.7s; }
+      .wsnow3 { animation: wsnow-fall 3s infinite linear 1.4s; }
+      .wsnow4 { animation: wsnow-fall 3s infinite linear 2.1s; }
+      .breath { animation: breath-puff 2s infinite ease-out; }
+      @keyframes win-shiver { 0% { transform: translateX(-0.3px); } 100% { transform: translateX(0.3px); } }
+      @keyframes wsnow-fall { 0% { transform: translateY(-14px); opacity: 1; } 100% { transform: translateY(20px); opacity: 0; } }
+      @keyframes breath-puff { 0% { opacity: 0; transform: translate(0,0) scale(0.5); } 20% { opacity: 0.6; } 100% { opacity: 0; transform: translate(3px, -2px) scale(1.5); } }
+    </style>
+  </defs>
+  <rect x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- snowflakes -->
+  <rect class="wsnow1" x="-6" y="-3" width="1" height="1" fill="#FFF"/>
+  <rect class="wsnow2" x="3" y="-7" width="1" height="1" fill="#FFF"/>
+  <rect class="wsnow3" x="12" y="-5" width="1" height="1" fill="#FFF"/>
+  <rect class="wsnow4" x="19" y="-9" width="1" height="1" fill="#FFF"/>
+  <!-- breath cloud -->
+  <g class="breath" fill="#FFF" opacity="0">
+    <rect x="14" y="10" width="2" height="1"/><rect x="15" y="9" width="1" height="1"/>
+  </g>
+  <g class="win-body">
+    <!-- earmuffs -->
+    <rect x="1" y="6" width="1" height="2" fill="#4488CC"/>
+    <rect x="13" y="6" width="1" height="2" fill="#4488CC"/>
+    <rect x="3" y="5" width="9" height="1" fill="#4488CC"/>
+    <!-- scarf -->
+    <rect x="3" y="12" width="9" height="1" fill="#4488CC"/>
+    <rect x="2" y="13" width="2" height="2" fill="#4488CC"/>
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <!-- normal eyes -->
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

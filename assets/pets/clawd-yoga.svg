@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .yoga-body { transform-origin: 7.5px 15px; animation: yoga-breathe 4s infinite ease-in-out; }
+      .yoga-shadow { animation: yoga-s 4s infinite ease-in-out; }
+      @keyframes yoga-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.03) translateY(-1px); } }
+      @keyframes yoga-s { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.45; } }
+    </style>
+  </defs>
+  <rect class="yoga-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="yoga-body">
+    <g fill="#DE886D">
+      <!-- One leg standing -->
+      <rect x="6" y="13" width="1" height="2"/><rect x="8" y="13" width="1" height="2"/>
+      <!-- Other leg bent -->
+      <rect x="3" y="10" width="1" height="2"/><rect x="4" y="11" width="1" height="1"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <!-- Arms up in tree pose -->
+      <rect x="0" y="5" width="2" height="3"/><rect x="13" y="5" width="2" height="3"/>
+      <rect x="1" y="3" width="2" height="2"/><rect x="12" y="3" width="2" height="2"/>
+    </g>
+    <!-- Serene closed eyes -->
+    <g fill="#000">
+      <rect x="4" y="9" width="2" height="1"/><rect x="10" y="9" width="2" height="1"/>
+    </g>
+  </g>
+</svg>

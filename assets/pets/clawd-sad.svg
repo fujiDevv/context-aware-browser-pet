@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .sad-body { transform-origin: 7.5px 15px; animation: sad-droop 3s infinite ease-in-out; }
+      .sad-shadow { opacity: 0.5; }
+      .sad-tear1 { animation: sad-fall 2s infinite ease-in; }
+      .sad-tear2 { animation: sad-fall 2s infinite ease-in 1s; }
+      @keyframes sad-droop { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(1px) rotate(-1deg); } }
+      @keyframes sad-fall { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(6px); opacity: 0; } }
+    </style>
+  </defs>
+  <rect class="sad-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- Rain cloud above -->
+  <g fill="#666" opacity="0.3">
+    <rect x="3" y="-3" width="9" height="2"/>
+    <rect x="2" y="-2" width="2" height="1"/><rect x="11" y="-2" width="2" height="1"/>
+  </g>
+  <g class="sad-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <!-- Arms hanging down -->
+      <rect x="0" y="10" width="2" height="3"/><rect x="13" y="10" width="2" height="3"/>
+    </g>
+    <!-- Sad eyes (droopy, looking down) -->
+    <g fill="#000">
+      <rect x="4" y="8" width="1" height="1"/><rect x="5" y="9" width="1" height="2"/>
+      <rect x="11" y="8" width="1" height="1"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+    <!-- Tears -->
+    <rect class="sad-tear1" x="6" y="11" width="1" height="1" fill="#5599DD"/>
+    <rect class="sad-tear2" x="9" y="11" width="1" height="1" fill="#5599DD"/>
+    <!-- Frown -->
+    <g fill="#000" opacity="0.6">
+      <rect x="6" y="12" width="3" height="1"/>
+      <rect x="5" y="12" width="1" height="1"/><rect x="9" y="12" width="1" height="1"/>
+    </g>
+  </g>
+</svg>

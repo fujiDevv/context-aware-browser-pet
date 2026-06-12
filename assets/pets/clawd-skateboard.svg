@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .skate-body { transform-origin: 7.5px 13px; animation: skate-ride 0.5s infinite ease-in-out; }
+      .skate-shadow { transform-origin: 7.5px 17px; animation: skate-shadow 0.5s infinite ease-in-out; }
+      .skate-eyes { transform-origin: 7.5px 9px; animation: skate-blink 3s infinite; }
+      .board { animation: board-roll 0.5s infinite ease-in-out; }
+      .wind1 { animation: wind-pass 0.8s infinite linear; }
+      .wind2 { animation: wind-pass 0.8s infinite linear 0.3s; }
+      @keyframes skate-ride { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-1px) rotate(-2deg); } }
+      @keyframes skate-shadow { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.4; } }
+      @keyframes skate-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes board-roll { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes wind-pass { 0% { opacity: 0; transform: translateX(0); } 30% { opacity: 0.5; } 100% { opacity: 0; transform: translateX(-8px); } }
+    </style>
+  </defs>
+  <rect class="skate-shadow" x="1" y="17" width="13" height="1" fill="#000" opacity="0.5"/>
+  <!-- Wind lines -->
+  <rect class="wind1" x="16" y="9" width="3" height="1" fill="#888" opacity="0.3"/>
+  <rect class="wind2" x="17" y="12" width="2" height="1" fill="#888" opacity="0.3"/>
+  <!-- Skateboard -->
+  <g class="board">
+    <rect x="1" y="15" width="13" height="1" fill="#8B4513"/>
+    <rect x="0" y="15" width="2" height="1" fill="#A0522D"/>
+    <rect x="12" y="15" width="2" height="1" fill="#A0522D"/>
+    <rect x="3" y="16" width="2" height="1" fill="#444"/>
+    <rect x="10" y="16" width="2" height="1" fill="#444"/>
+  </g>
+  <g class="skate-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g class="skate-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

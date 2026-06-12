@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .chg-body { transform-origin: 7.5px 15px; animation: chg-perk 3s infinite ease-in-out; }
+      .chg-shadow { animation: chg-s 3s infinite; }
+      .chg-eyes { transform-origin: 7.5px 9px; animation: chg-blink 3s infinite; }
+      .chg-fill { animation: chg-progress 3s infinite linear; }
+      @keyframes chg-perk { 0% { transform: scaleY(0.95) translateY(1px); } 100% { transform: scaleY(1) translateY(0); } }
+      @keyframes chg-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes chg-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes chg-progress { 0% { width: 0; } 100% { width: 6px; } }
+    </style>
+  </defs>
+  <rect class="chg-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Battery icon -->
+  <g>
+    <rect x="4" y="-1" width="7" height="4" fill="none" stroke="#44CC44" stroke-width="0.5"/>
+    <rect x="11" y="0" width="1" height="2" fill="#44CC44"/>
+    <rect class="chg-fill" x="4.5" y="-0.5" width="0" height="3" fill="#44CC44"/>
+  </g>
+  <g class="chg-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="10" width="2" height="2"/><rect x="13" y="10" width="2" height="2"/>
+    </g>
+    <!-- Eyes opening up as charging -->
+    <g class="chg-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

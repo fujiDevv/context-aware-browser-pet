@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e402-text { animation: e402-flash 2s infinite; }
+      .e402-body { transform-origin: 7.5px 15px; animation: e402-sad 3s infinite ease-in-out; }
+      .e402-wallet { transform-origin: 7.5px 11px; animation: e402-shake 0.7s infinite ease-in-out; }
+      .e402-moth { animation: e402-flutter 3s infinite ease-in-out; }
+      @keyframes e402-flash { 0%, 70% { opacity: 1; } 35% { opacity: 0.35; } }
+      @keyframes e402-sad { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+      @keyframes e402-shake { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+      @keyframes e402-flutter { 0% { transform: translate(0, 0); opacity: 1; } 75% { opacity: 1; } 100% { transform: translate(9px, -13px); opacity: 0; } }
+    </style>
+  </defs>
+
+  <rect x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+
+  <!-- 402 -->
+  <g class="e402-text" fill="#F9A825">
+    <rect x="2" y="-3" width="1" height="3"/><rect x="2" y="0" width="3" height="1"/><rect x="4" y="-3" width="1" height="5"/>
+    <rect x="6" y="-3" width="3" height="1"/><rect x="6" y="1" width="3" height="1"/><rect x="6" y="-3" width="1" height="5"/><rect x="8" y="-3" width="1" height="5"/>
+    <rect x="10" y="-3" width="3" height="1"/><rect x="12" y="-3" width="1" height="2"/><rect x="10" y="-1" width="3" height="1"/><rect x="10" y="0" width="1" height="1"/><rect x="10" y="1" width="3" height="1"/>
+  </g>
+
+  <g class="e402-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- broke and downcast -->
+    <g fill="#000"><rect x="4" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/></g>
+    <!-- empty wallet, turned upside down -->
+    <g class="e402-wallet">
+      <rect x="4" y="9" width="7" height="1" fill="#8D6E63"/>
+      <rect x="4" y="10" width="7" height="2" fill="#795548"/>
+      <rect x="5" y="10" width="5" height="1" fill="#4E342E"/>
+      <rect x="9" y="11" width="1" height="1" fill="#FFB300"/>
+      <rect x="4" y="12" width="7" height="1" fill="#5D4037"/>
+    </g>
+  </g>
+
+  <!-- the last moth flies away -->
+  <g class="e402-moth" fill="#B0BEC5">
+    <rect x="7" y="9" width="1" height="1"/>
+    <rect x="6" y="9" width="1" height="1" opacity="0.8"/><rect x="8" y="9" width="1" height="1" opacity="0.8"/>
+  </g>
+</svg>

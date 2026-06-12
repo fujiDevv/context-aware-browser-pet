@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .shrug-body { transform-origin: 7.5px 15px; animation: shrug-up 2s infinite ease-in-out; }
+      .shrug-shadow { animation: shrug-s 2s infinite; }
+      .shrug-arms { animation: shrug-lift 2s infinite ease-in-out; }
+      .shrug-eyes { transform-origin: 7.5px 9px; animation: shrug-blink 3s infinite; }
+      @keyframes shrug-up { 0%, 100% { transform: translateY(0); } 40%, 60% { transform: translateY(-1px); } }
+      @keyframes shrug-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes shrug-lift { 0%, 100% { transform: translateY(0); } 40%, 60% { transform: translateY(-2px); } }
+      @keyframes shrug-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+    </style>
+  </defs>
+  <rect class="shrug-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Question marks -->
+  <g fill="#888" opacity="0.5">
+    <rect x="-2" y="5" width="1" height="1"/><rect x="-1" y="4" width="1" height="1"/><rect x="-2" y="3" width="2" height="1"/><rect x="-2" y="7" width="1" height="1"/>
+    <rect x="16" y="5" width="1" height="1"/><rect x="17" y="4" width="1" height="1"/><rect x="16" y="3" width="2" height="1"/><rect x="16" y="7" width="1" height="1"/>
+  </g>
+  <g class="shrug-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+    </g>
+    <g class="shrug-arms" fill="#DE886D">
+      <rect x="-1" y="8" width="3" height="2"/><rect x="13" y="8" width="3" height="2"/>
+    </g>
+    <g class="shrug-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

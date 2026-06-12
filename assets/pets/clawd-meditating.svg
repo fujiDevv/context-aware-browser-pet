@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .zen-body {
+        transform-origin: 7.5px 15px;
+        animation: zen-float 4s infinite ease-in-out;
+      }
+      .zen-shadow {
+        transform-origin: 7.5px 15.5px;
+        animation: zen-shadow 4s infinite ease-in-out;
+      }
+      .aura1 { animation: aura-pulse 3s infinite ease-in-out; }
+      .aura2 { animation: aura-pulse 3s infinite ease-in-out 1s; }
+      .aura3 { animation: aura-pulse 3s infinite ease-in-out 2s; }
+      @keyframes zen-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+      }
+      @keyframes zen-shadow {
+        0%, 100% { transform: scaleX(1); opacity: 0.5; }
+        50% { transform: scaleX(0.5); opacity: 0.15; }
+      }
+      @keyframes aura-pulse {
+        0%, 100% { opacity: 0; transform: scale(0.8); }
+        50% { opacity: 0.25; transform: scale(1.2); }
+      }
+    </style>
+  </defs>
+  <rect class="zen-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Aura glow -->
+  <rect class="aura1" x="1" y="5" width="13" height="10" fill="#88DDFF" opacity="0"/>
+  <rect class="aura2" x="0" y="4" width="15" height="12" fill="#88DDFF" opacity="0"/>
+  <rect class="aura3" x="-1" y="3" width="17" height="14" fill="#88DDFF" opacity="0"/>
+  <g class="zen-body">
+    <g fill="#DE886D">
+      <!-- Legs crossed -->
+      <rect x="2" y="13" width="4" height="1"/>
+      <rect x="9" y="13" width="4" height="1"/>
+      <rect x="3" y="14" width="9" height="1"/>
+      <!-- Torso -->
+      <rect x="2" y="6" width="11" height="7"/>
+      <!-- Arms resting on knees -->
+      <rect x="1" y="11" width="2" height="2"/>
+      <rect x="12" y="11" width="2" height="2"/>
+    </g>
+    <!-- Serene closed eyes -->
+    <g fill="#000">
+      <rect x="4" y="9" width="2" height="1"/>
+      <rect x="10" y="9" width="2" height="1"/>
+    </g>
+  </g>
+</svg>

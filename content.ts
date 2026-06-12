@@ -5,8 +5,6 @@ import { PersonalitySystem } from './src/personality';
 import { getAiEmotion } from './src/ai';
 import { PetSettings, SharedPetState } from './src/types';
 
-const CDN = 'https://cdn.jsdelivr.net/gh/abderrahimghazali/clawd-pet@main/public/pets';
-
 let syncInterval: any = null;
 let emotionInterval: any = null;
 
@@ -217,7 +215,7 @@ const movement = new MovementEngine(container, {
 });
 
 async function loadPet(name: string): Promise<void> {
-  petImg.src = `${CDN}/clawd-${name}.svg`;
+  petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${name}.svg`);
 }
 
 function showBubble(text: string, duration = 3000): void {

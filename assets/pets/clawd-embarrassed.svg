@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .embarrassed-body { transform-origin: 7.5px 15px; animation: embarrassed-fidget 1.5s infinite ease-in-out; }
+      .embarrassed-shadow { animation: embarrassed-s 1.5s infinite ease-in-out; }
+      @keyframes embarrassed-fidget { 0%, 100% { transform: translateX(0) rotate(0deg); } 25% { transform: translateX(-0.3px) rotate(-1deg); } 75% { transform: translateX(0.3px) rotate(1deg); } }
+      @keyframes embarrassed-s { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.4; } }
+    </style>
+  </defs>
+  <rect class="embarrassed-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="embarrassed-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#FF9999" opacity="0.7">
+      <rect x="3" y="10" width="2" height="1"/>
+      <rect x="11" y="10" width="2" height="1"/>
+    </g>
+    <g fill="#000">
+      <rect x="4" y="9" width="1" height="2"/>
+      <rect x="9" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

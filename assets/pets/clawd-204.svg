@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e204-body { transform-origin: 7.5px 15px; animation: e204-idle 3s infinite ease-in-out; }
+      .e204-shadow { opacity: 0.5; }
+      .e204-text { animation: e204-flash 2s infinite; }
+      @keyframes e204-idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+      @keyframes e204-flash { 0%, 70% { opacity: 1; } 35% { opacity: 0.3; } }
+    </style>
+  </defs>
+  <rect class="e204-shadow" x="3" y="15" width="9" height="1" fill="#000"/>
+  <!-- 204 text above -->
+  <g class="e204-text" fill="#888888">
+    <!-- 2 -->
+    <rect x="2" y="-3" width="2" height="1"/><rect x="3" y="-2" width="1" height="1"/>
+    <rect x="2" y="-1" width="2" height="1"/><rect x="2" y="0" width="1" height="1"/>
+    <rect x="2" y="1" width="2" height="1"/>
+    <!-- 0 -->
+    <rect x="5" y="-3" width="3" height="1"/><rect x="5" y="1" width="3" height="1"/>
+    <rect x="5" y="-3" width="1" height="5"/><rect x="7" y="-3" width="1" height="5"/>
+    <!-- 4 -->
+    <rect x="9" y="-3" width="1" height="3"/><rect x="9" y="-1" width="3" height="1"/>
+    <rect x="11" y="-3" width="1" height="5"/>
+  </g>
+  <g class="e204-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <!-- Arms out (shrug) -->
+      <rect x="-2" y="8" width="4" height="2"/>
+      <rect x="13" y="8" width="4" height="2"/>
+      <rect x="-3" y="7" width="2" height="1"/>
+      <rect x="16" y="7" width="2" height="1"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+    <!-- Neutral mouth -->
+    <rect x="7" y="11" width="2" height="0.5" fill="#000" opacity="0.5"/>
+  </g>
+</svg>

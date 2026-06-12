@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .jealous-body { transform-origin: 7.5px 15px; animation: jealous-lean 2.5s infinite ease-in-out; }
+      .jealous-shadow { animation: jealous-s 2.5s infinite ease-in-out; }
+      @keyframes jealous-lean { 0%, 100% { transform: translateX(0) rotate(0deg); } 50% { transform: translateX(0.5px) rotate(2deg); } }
+      @keyframes jealous-s { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.45; } }
+    </style>
+  </defs>
+  <rect class="jealous-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="jealous-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <!-- arms behind back (hidden, just shorter stubs) -->
+      <rect x="1" y="9" width="1" height="2"/><rect x="13" y="9" width="1" height="2"/>
+    </g>
+    <!-- green cheek tint -->
+    <g fill="#90EE90" opacity="0.5">
+      <rect x="3" y="10" width="2" height="1"/>
+      <rect x="11" y="10" width="2" height="1"/>
+    </g>
+    <g fill="#000">
+      <!-- eyes shifted to the right (sideways glance) -->
+      <rect x="6" y="9" width="1" height="2"/>
+      <rect x="11" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

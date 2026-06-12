@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .aut-body { transform-origin: 7.5px 15px; animation: aut-idle 3s infinite ease-in-out; }
+      .leaf1 { animation: leaf-fall 3.5s infinite ease-in-out; }
+      .leaf2 { animation: leaf-fall 3.5s infinite ease-in-out 0.8s; }
+      .leaf3 { animation: leaf-fall 3.5s infinite ease-in-out 1.6s; }
+      .leaf4 { animation: leaf-fall 3.5s infinite ease-in-out 2.4s; }
+      @keyframes aut-idle { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(0.5deg); } }
+      @keyframes leaf-fall { 0% { transform: translate(0, -14px) rotate(0deg); opacity: 1; } 50% { transform: translate(3px, 3px) rotate(90deg); opacity: 0.8; } 100% { transform: translate(-1px, 18px) rotate(180deg); opacity: 0; } }
+    </style>
+  </defs>
+  <rect x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- falling leaves -->
+  <g class="leaf1"><rect x="-4" y="0" width="2" height="1" fill="#DD7700"/><rect x="-3" y="-1" width="1" height="1" fill="#DD7700"/></g>
+  <g class="leaf2"><rect x="4" y="0" width="2" height="1" fill="#CC3300"/><rect x="5" y="-1" width="1" height="1" fill="#CC3300"/></g>
+  <g class="leaf3"><rect x="14" y="0" width="2" height="1" fill="#DDAA00"/><rect x="15" y="-1" width="1" height="1" fill="#DDAA00"/></g>
+  <g class="leaf4"><rect x="19" y="0" width="2" height="1" fill="#DD7700"/><rect x="20" y="-1" width="1" height="1" fill="#DD7700"/></g>
+  <g class="aut-body">
+    <!-- scarf -->
+    <rect x="3" y="12" width="9" height="1" fill="#CC3300"/>
+    <rect x="12" y="12" width="1" height="3" fill="#CC3300"/>
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <!-- looking up eyes -->
+      <rect x="5" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+      <rect x="5" y="8" width="2" height="1"/><rect x="10" y="8" width="2" height="1"/>
+    </g>
+  </g>
+</svg>

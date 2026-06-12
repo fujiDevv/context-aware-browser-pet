@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .clap-body { transform-origin: 7.5px 15px; animation: clap-bob 0.4s infinite ease-in-out; }
+      .clap-shadow { animation: clap-s 0.4s infinite; }
+      .clap-eyes { transform-origin: 7.5px 9px; animation: clap-blink 3s infinite; }
+      .clap-arm-l { transform-origin: 1px 10px; animation: clap-l 0.4s infinite ease-in-out; }
+      .clap-arm-r { transform-origin: 14px 10px; animation: clap-r 0.4s infinite ease-in-out; }
+      .clap-spark { animation: clap-flash 0.4s infinite; }
+      @keyframes clap-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes clap-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes clap-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes clap-l { 0%, 100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
+      @keyframes clap-r { 0%, 100% { transform: rotate(20deg); } 50% { transform: rotate(-20deg); } }
+      @keyframes clap-flash { 0%, 40% { opacity: 0; } 50% { opacity: 1; } 60%, 100% { opacity: 0; } }
+    </style>
+  </defs>
+  <rect class="clap-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Clap sparks -->
+  <g class="clap-spark" fill="#FFD700">
+    <rect x="6" y="7" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/>
+  </g>
+  <g class="clap-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <g class="clap-arm-l"><rect x="0" y="9" width="2" height="2"/></g>
+      <g class="clap-arm-r"><rect x="13" y="9" width="2" height="2"/></g>
+    </g>
+    <g class="clap-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

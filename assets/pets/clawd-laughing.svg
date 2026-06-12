@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .lol-body { transform-origin: 7.5px 15px; animation: lol-bounce 0.4s infinite ease-in-out; }
+      .lol-shadow { transform-origin: 7.5px 15.5px; animation: lol-shadow 0.4s infinite ease-in-out; }
+      .tear-lol { animation: lol-tear 1s infinite ease-in; }
+      @keyframes lol-bounce { 0%, 100% { transform: translateY(0) rotate(0deg); } 25% { transform: translateY(-2px) rotate(-3deg); } 75% { transform: translateY(-2px) rotate(3deg); } }
+      @keyframes lol-shadow { 0%, 100% { transform: scaleX(1); opacity: 0.5; } 50% { transform: scaleX(0.8); opacity: 0.3; } }
+      @keyframes lol-tear { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(3px); } }
+    </style>
+  </defs>
+  <rect class="lol-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g class="lol-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="4" y="9" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/>
+      <rect x="10" y="9" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/><rect x="12" y="9" width="1" height="1"/>
+    </g>
+    <rect class="tear-lol" x="3" y="9" width="1" height="1" fill="#40C4FF"/>
+  </g>
+</svg>

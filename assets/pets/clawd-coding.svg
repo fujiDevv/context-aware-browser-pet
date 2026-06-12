@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .code-body {
+        transform-origin: 7.5px 15px;
+        animation: code-lean 4s infinite ease-in-out;
+      }
+      .code-shadow { transform-origin: 7.5px 15.5px; animation: code-shadow 4s infinite ease-in-out; }
+      .code-eyes { animation: code-scan 2s infinite ease-in-out; }
+      .code-blink { transform-origin: 7.5px 9px; animation: code-blink-anim 3s infinite; }
+      .code-arm-r { transform-origin: 14px 10px; animation: code-type 0.3s infinite alternate ease-in-out; }
+      .bracket1 { animation: bracket-float 3s infinite ease-out; }
+      .bracket2 { animation: bracket-float 3s infinite ease-out 1s; }
+      .bracket3 { animation: bracket-float 3s infinite ease-out 2s; }
+      @keyframes code-lean { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(3deg); } }
+      @keyframes code-shadow { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.45; } }
+      @keyframes code-scan { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(2px); } }
+      @keyframes code-blink-anim { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes code-type { 0% { transform: rotate(0deg); } 100% { transform: rotate(-10deg); } }
+      @keyframes bracket-float { 0% { opacity: 0.8; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-6px); } }
+    </style>
+  </defs>
+  <rect class="code-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Floating code symbols -->
+  <g fill="#0082FC" opacity="0.7">
+    <rect class="bracket1" x="-2" y="0" width="1" height="1"/><rect class="bracket1" x="-2" y="1" width="1" height="1"/><rect class="bracket1" x="-1" y="2" width="1" height="1"/>
+    <rect class="bracket2" x="16" y="-1" width="1" height="1"/><rect class="bracket2" x="17" y="0" width="1" height="1"/><rect class="bracket2" x="16" y="1" width="1" height="1"/>
+    <rect class="bracket3" x="7" y="-3" width="1" height="1"/><rect class="bracket3" x="8" y="-2" width="1" height="1"/>
+  </g>
+  <!-- Laptop -->
+  <rect x="13" y="11" width="6" height="4" fill="#333"/>
+  <rect x="13.5" y="11.5" width="5" height="3" fill="#1a1a2e"/>
+  <rect x="14" y="12" width="1" height="0.5" fill="#0082FC"/><rect x="14" y="13" width="2" height="0.5" fill="#44FF44"/>
+  <rect x="12" y="15" width="8" height="1" fill="#444"/>
+  <g class="code-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <g class="code-arm-r"><rect x="13" y="9" width="2" height="2"/></g>
+    </g>
+    <g class="code-eyes">
+      <g class="code-blink" fill="#000">
+        <rect x="4" y="8" width="1" height="2"/>
+        <rect x="10" y="8" width="1" height="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .umb-body { transform-origin: 7.5px 15px; animation: umb-sway 3s infinite ease-in-out; }
+      .umb-shadow { animation: umb-s 3s infinite; }
+      .umb-eyes { transform-origin: 7.5px 9px; animation: umb-blink 4s infinite; }
+      .rain1 { animation: rain-fall 0.6s infinite linear; }
+      .rain2 { animation: rain-fall 0.6s infinite linear 0.15s; }
+      .rain3 { animation: rain-fall 0.6s infinite linear 0.3s; }
+      .rain4 { animation: rain-fall 0.6s infinite linear 0.45s; }
+      @keyframes umb-sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-2deg); } }
+      @keyframes umb-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes umb-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes rain-fall { 0% { transform: translateY(-15px); opacity: 0.6; } 100% { transform: translateY(20px); opacity: 0; } }
+    </style>
+  </defs>
+  <rect class="umb-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Rain -->
+  <rect class="rain1" x="-5" y="-5" width="1" height="2" fill="#40C4FF" opacity="0.4"/>
+  <rect class="rain2" x="0" y="-3" width="1" height="2" fill="#40C4FF" opacity="0.4"/>
+  <rect class="rain3" x="17" y="-4" width="1" height="2" fill="#40C4FF" opacity="0.4"/>
+  <rect class="rain4" x="22" y="-6" width="1" height="2" fill="#40C4FF" opacity="0.4"/>
+  <g class="umb-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="7" width="2" height="2"/>
+    </g>
+    <!-- Umbrella -->
+    <rect x="14" y="7" width="1" height="8" fill="#555"/>
+    <rect x="8" y="0" width="12" height="1" fill="#FF4444"/>
+    <rect x="9" y="-1" width="10" height="2" fill="#FF4444"/>
+    <rect x="10" y="-2" width="8" height="2" fill="#FF4444"/>
+    <g class="umb-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

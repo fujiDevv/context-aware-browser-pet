@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .sec-body { transform-origin: 7.5px 15px; animation: sec-stand 3s infinite ease-in-out; }
+      .sec-shadow { animation: sec-shadow 3s infinite ease-in-out; }
+      .sec-eyes { animation: sec-scan 4s infinite ease-in-out; }
+      .sec-blink { transform-origin: 7.5px 9px; animation: sec-blink-anim 3s infinite; }
+      .shield-pulse { animation: shield-glow 2s infinite ease-in-out; }
+      .scan-line { animation: scan-sweep 3s infinite linear; }
+      @keyframes sec-stand { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+      @keyframes sec-shadow { 0%, 100% { opacity: 0.5; } }
+      @keyframes sec-scan { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(2px); } 75% { transform: translateX(-2px); } }
+      @keyframes sec-blink-anim { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes shield-glow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+      @keyframes scan-sweep { 0% { transform: translateX(-8px); opacity: 0; } 20% { opacity: 0.3; } 80% { opacity: 0.3; } 100% { transform: translateX(22px); opacity: 0; } }
+    </style>
+  </defs>
+  <rect class="sec-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Scan line -->
+  <rect class="scan-line" x="0" y="4" width="2" height="12" fill="#00FF88" opacity="0"/>
+  <!-- Shield -->
+  <g class="shield-pulse">
+    <rect x="-4" y="6" width="5" height="6" fill="#0082FC" opacity="0.8"/>
+    <rect x="-3" y="5" width="3" height="1" fill="#0082FC" opacity="0.8"/>
+    <rect x="-3" y="12" width="3" height="1" fill="#0082FC" opacity="0.8"/>
+    <rect x="-2" y="13" width="1" height="1" fill="#0082FC" opacity="0.8"/>
+    <!-- Checkmark on shield -->
+    <rect x="-3" y="9" width="1" height="1" fill="#FFF"/>
+    <rect x="-2" y="10" width="1" height="1" fill="#FFF"/>
+    <rect x="-1" y="8" width="1" height="1" fill="#FFF"/>
+    <rect x="0" y="7" width="1" height="1" fill="#FFF"/>
+  </g>
+  <g class="sec-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g class="sec-eyes">
+      <g class="sec-blink" fill="#000">
+        <rect x="4" y="8" width="1" height="2"/>
+        <rect x="10" y="8" width="1" height="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

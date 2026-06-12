@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .fire-body { transform-origin: 7.5px 15px; animation: fire-stand 0.8s infinite ease-in-out; }
+      .fire-shadow { animation: fire-s 0.8s infinite; }
+      .fire-eyes { transform-origin: 7.5px 9px; animation: fire-blink 3s infinite; }
+      .flame-a { animation: flame-dance 0.2s infinite alternate; }
+      .flame-b { animation: flame-dance 0.2s infinite alternate-reverse; }
+      .flame-c { animation: flame-dance 0.3s infinite alternate 0.1s; }
+      @keyframes fire-stand { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+      @keyframes fire-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes fire-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes flame-dance { 0% { transform: scaleY(1) translateY(0); opacity: 0.9; } 100% { transform: scaleY(1.3) translateY(-1px); opacity: 0.7; } }
+    </style>
+  </defs>
+  <rect class="fire-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Flames surrounding -->
+  <g>
+    <rect class="flame-a" x="0" y="3" width="2" height="4" fill="#FF4400"/><rect class="flame-b" x="1" y="1" width="1" height="3" fill="#FFAA00"/>
+    <rect class="flame-b" x="13" y="3" width="2" height="4" fill="#FF4400"/><rect class="flame-a" x="13" y="1" width="1" height="3" fill="#FFAA00"/>
+    <rect class="flame-c" x="4" y="0" width="2" height="3" fill="#FF4400"/><rect class="flame-a" x="5" y="-1" width="1" height="2" fill="#FFAA00"/>
+    <rect class="flame-c" x="9" y="0" width="2" height="3" fill="#FF4400"/><rect class="flame-b" x="9" y="-1" width="1" height="2" fill="#FFAA00"/>
+  </g>
+  <g class="fire-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g class="fire-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

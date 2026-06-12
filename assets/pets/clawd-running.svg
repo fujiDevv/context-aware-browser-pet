@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .run-body {
+        transform-origin: 7.5px 15px;
+        animation: run-bounce 0.3s infinite ease-in-out;
+      }
+      .run-shadow {
+        transform-origin: 7.5px 15.5px;
+        animation: run-shadow 0.3s infinite ease-in-out;
+      }
+      .leg-l {
+        transform-origin: 4px 13px;
+        animation: run-leg-l 0.3s infinite ease-in-out;
+      }
+      .leg-r {
+        transform-origin: 10px 13px;
+        animation: run-leg-r 0.3s infinite ease-in-out;
+      }
+      .run-arm-l {
+        transform-origin: 1px 10px;
+        animation: run-arm-l 0.3s infinite ease-in-out;
+      }
+      .run-arm-r {
+        transform-origin: 14px 10px;
+        animation: run-arm-r 0.3s infinite ease-in-out;
+      }
+      .dust1 { animation: dust-puff 0.6s infinite ease-out; }
+      .dust2 { animation: dust-puff 0.6s infinite ease-out 0.2s; }
+      .dust3 { animation: dust-puff 0.6s infinite ease-out 0.4s; }
+      .run-eyes {
+        transform-origin: 7.5px 9px;
+        animation: run-blink 2s infinite;
+      }
+      @keyframes run-bounce {
+        0%, 100% { transform: translateY(0) rotate(5deg); }
+        50% { transform: translateY(-2px) rotate(5deg); }
+      }
+      @keyframes run-shadow {
+        0%, 100% { transform: scaleX(1); opacity: 0.5; }
+        50% { transform: scaleX(0.7); opacity: 0.3; }
+      }
+      @keyframes run-leg-l {
+        0%, 100% { transform: rotate(-20deg); }
+        50% { transform: rotate(20deg); }
+      }
+      @keyframes run-leg-r {
+        0%, 100% { transform: rotate(20deg); }
+        50% { transform: rotate(-20deg); }
+      }
+      @keyframes run-arm-l {
+        0%, 100% { transform: rotate(15deg); }
+        50% { transform: rotate(-15deg); }
+      }
+      @keyframes run-arm-r {
+        0%, 100% { transform: rotate(-15deg); }
+        50% { transform: rotate(15deg); }
+      }
+      @keyframes dust-puff {
+        0% { opacity: 0.6; transform: translate(0, 0) scale(1); }
+        100% { opacity: 0; transform: translate(-4px, -1px) scale(0.3); }
+      }
+      @keyframes run-blink {
+        0%, 43%, 57%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(0.1); }
+      }
+    </style>
+  </defs>
+  <rect class="run-shadow" x="4" y="15" width="8" height="1" fill="#000" opacity="0.5"/>
+  <!-- Dust clouds -->
+  <g fill="#888">
+    <rect class="dust1" x="14" y="13" width="2" height="1"/>
+    <rect class="dust2" x="15" y="12" width="1" height="1"/>
+    <rect class="dust3" x="16" y="13" width="1" height="1"/>
+  </g>
+  <g class="run-body">
+    <g fill="#DE886D">
+      <g class="leg-l">
+        <rect x="3" y="13" width="1" height="2"/>
+        <rect x="5" y="13" width="1" height="2"/>
+      </g>
+      <g class="leg-r">
+        <rect x="9" y="13" width="1" height="2"/>
+        <rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7"/>
+      <g class="run-arm-l"><rect x="0" y="9" width="2" height="2"/></g>
+      <g class="run-arm-r"><rect x="13" y="9" width="2" height="2"/></g>
+    </g>
+    <g class="run-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/>
+      <rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

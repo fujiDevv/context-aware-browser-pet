@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs><style>
+    .drum-body { transform-origin: 7.5px 15px; animation: drum-bounce 0.3s ease-in-out infinite; }
+    .drum-shadow { animation: drum-s 0.3s ease-in-out infinite; }
+    .drum-left { transform-origin: 1px 9px; animation: drum-larm 0.6s ease-in-out infinite; }
+    .drum-right { transform-origin: 14px 9px; animation: drum-rarm 0.6s ease-in-out 0.3s infinite; }
+    @keyframes drum-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+    @keyframes drum-s { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.4; } }
+    @keyframes drum-larm { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } }
+    @keyframes drum-rarm { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(15deg); } }
+  </style></defs>
+  <rect class="drum-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Drum -->
+  <rect x="3" y="14" width="9" height="3" fill="#C0392B"/>
+  <rect x="3" y="14" width="9" height="1" fill="#F5DEB3"/>
+  <rect x="4" y="15" width="1" height="2" fill="#8B4513"/>
+  <rect x="10" y="15" width="1" height="2" fill="#8B4513"/>
+  <g class="drum-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+    </g>
+    <!-- Left arm + drumstick -->
+    <g class="drum-left">
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <rect x="-1" y="8" width="1" height="3" fill="#8B4513"/>
+    </g>
+    <!-- Right arm + drumstick -->
+    <g class="drum-right">
+      <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+      <rect x="15" y="8" width="1" height="3" fill="#8B4513"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .dance-body { transform-origin: 7.5px 15px; animation: dance-move 0.5s infinite ease-in-out; }
+      .dance-shadow { transform-origin: 7.5px 15.5px; animation: dance-shadow 0.5s infinite ease-in-out; }
+      .dance-eyes { transform-origin: 7.5px 9px; animation: dance-blink 3s infinite; }
+      .dance-arm-l { transform-origin: 1px 10px; animation: dance-al 0.5s infinite ease-in-out; }
+      .dance-arm-r { transform-origin: 14px 10px; animation: dance-ar 0.5s infinite ease-in-out; }
+      .dance-leg-l { transform-origin: 4px 13px; animation: dance-ll 0.5s infinite ease-in-out; }
+      .dance-leg-r { transform-origin: 10px 13px; animation: dance-lr 0.5s infinite ease-in-out; }
+      .disco1 { animation: disco 0.8s infinite; }
+      .disco2 { animation: disco 0.8s infinite 0.2s; }
+      .disco3 { animation: disco 0.8s infinite 0.4s; }
+      @keyframes dance-move { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-2px) rotate(3deg); } }
+      @keyframes dance-shadow { 0%, 100% { transform: scaleX(1); opacity: 0.5; } 50% { transform: scaleX(0.8); opacity: 0.3; } }
+      @keyframes dance-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes dance-al { 0%, 100% { transform: rotate(-40deg); } 50% { transform: rotate(40deg); } }
+      @keyframes dance-ar { 0%, 100% { transform: rotate(40deg); } 50% { transform: rotate(-40deg); } }
+      @keyframes dance-ll { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+      @keyframes dance-lr { 0%, 100% { transform: rotate(10deg); } 50% { transform: rotate(-10deg); } }
+      @keyframes disco { 0%, 100% { fill: #FF4444; } 33% { fill: #44FF44; } 66% { fill: #4488FF; } }
+    </style>
+  </defs>
+  <rect class="dance-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <rect class="disco1" x="-2" y="-3" width="1" height="1" fill="#FF4444"/>
+  <rect class="disco2" x="16" y="-1" width="1" height="1" fill="#44FF44"/>
+  <rect class="disco3" x="7" y="-5" width="1" height="1" fill="#4488FF"/>
+  <g class="dance-body">
+    <g fill="#DE886D">
+      <g class="dance-leg-l"><rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/></g>
+      <g class="dance-leg-r"><rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/></g>
+      <rect x="2" y="6" width="11" height="7"/>
+      <g class="dance-arm-l"><rect x="0" y="9" width="2" height="2"/></g>
+      <g class="dance-arm-r"><rect x="13" y="9" width="2" height="2"/></g>
+    </g>
+    <g class="dance-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

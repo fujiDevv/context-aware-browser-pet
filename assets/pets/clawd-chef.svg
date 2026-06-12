@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .chef-body { transform-origin: 7.5px 15px; animation: chef-stir 1s infinite ease-in-out; }
+      .chef-shadow { animation: chef-s 1s infinite; }
+      .chef-eyes { transform-origin: 7.5px 9px; animation: chef-blink 3s infinite; }
+      .chef-arm { transform-origin: 14px 10px; animation: chef-mix 0.5s infinite alternate ease-in-out; }
+      .steam-a { animation: chef-steam 1.5s infinite ease-out; }
+      .steam-b { animation: chef-steam 1.5s infinite ease-out 0.5s; }
+      @keyframes chef-stir { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(1deg); } }
+      @keyframes chef-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes chef-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes chef-mix { 0% { transform: rotate(-5deg); } 100% { transform: rotate(5deg); } }
+      @keyframes chef-steam { 0% { opacity: 0.5; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-4px); } }
+    </style>
+  </defs>
+  <rect class="chef-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Pot -->
+  <rect x="14" y="11" width="5" height="4" fill="#888"/>
+  <rect x="13" y="11" width="7" height="1" fill="#AAA"/>
+  <g fill="#AAA" opacity="0.4">
+    <rect class="steam-a" x="15" y="8" width="1" height="2"/>
+    <rect class="steam-b" x="17" y="7" width="1" height="2"/>
+  </g>
+  <g class="chef-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <g class="chef-arm"><rect x="13" y="9" width="2" height="2"/></g>
+    </g>
+    <!-- Chef hat -->
+    <rect x="3" y="3" width="9" height="3" fill="#FFF"/>
+    <rect x="4" y="1" width="7" height="3" fill="#FFF"/>
+    <rect x="5" y="0" width="5" height="2" fill="#FFF"/>
+    <g class="chef-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs><style>
+    .camp-body { transform-origin: 7.5px 15px; animation: camp-sway 3s ease-in-out infinite; }
+    .camp-shadow { animation: camp-s 3s ease-in-out infinite; }
+    .camp-fire { animation: camp-flicker 0.3s infinite alternate; }
+    .camp-fire2 { animation: camp-flicker2 0.25s infinite alternate; }
+    @keyframes camp-sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(1deg); } }
+    @keyframes camp-s { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.45; } }
+    @keyframes camp-flicker { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-0.5px); opacity: 0.7; } }
+    @keyframes camp-flicker2 { 0% { transform: translateY(0); opacity: 0.8; } 100% { transform: translateY(-1px); opacity: 1; } }
+  </style></defs>
+  <rect class="camp-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Tent -->
+  <rect x="-12" y="14" width="7" height="1" fill="#2ECC71"/>
+  <rect x="-11" y="13" width="5" height="1" fill="#2ECC71"/>
+  <rect x="-10" y="12" width="3" height="1" fill="#27AE60"/>
+  <rect x="-9" y="11" width="1" height="1" fill="#27AE60"/>
+  <rect x="-9" y="14" width="1" height="1" fill="#1A5" opacity="0.5"/>
+  <!-- Campfire -->
+  <rect x="17" y="14" width="3" height="1" fill="#8B4513"/>
+  <rect class="camp-fire" x="18" y="12" width="1" height="2" fill="#E74C3C"/>
+  <rect class="camp-fire2" x="17" y="11" width="1" height="2" fill="#F39C12"/>
+  <rect class="camp-fire" x="19" y="11" width="1" height="2" fill="#F39C12"/>
+  <rect class="camp-fire2" x="18" y="10" width="1" height="1" fill="#E67E22"/>
+  <g class="camp-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="9" width="1" height="2"/><rect x="10" y="9" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .lift-body {
+        transform-origin: 7.5px 15px;
+        animation: lift-press 2s infinite ease-in-out;
+      }
+      .lift-shadow {
+        transform-origin: 7.5px 15.5px;
+        animation: lift-shadow 2s infinite ease-in-out;
+      }
+      .barbell {
+        animation: barbell-lift 2s infinite ease-in-out;
+      }
+      .lift-arms {
+        animation: arms-lift 2s infinite ease-in-out;
+      }
+      .sweat1 { animation: sweat-drop 1.5s infinite ease-in 0.5s; }
+      .sweat2 { animation: sweat-drop 1.5s infinite ease-in 1s; }
+      .lift-eyes {
+        transform-origin: 7.5px 9px;
+        animation: lift-strain 2s infinite ease-in-out;
+      }
+      @keyframes lift-press {
+        0%, 100% { transform: scaleY(1); }
+        30% { transform: scaleY(0.92); }
+        50% { transform: scaleY(1.02); }
+      }
+      @keyframes lift-shadow {
+        0%, 100% { transform: scaleX(1); opacity: 0.5; }
+        30% { transform: scaleX(1.1); opacity: 0.6; }
+        50% { transform: scaleX(0.9); opacity: 0.4; }
+      }
+      @keyframes barbell-lift {
+        0%, 100% { transform: translateY(3px); }
+        50% { transform: translateY(-3px); }
+      }
+      @keyframes arms-lift {
+        0%, 100% { transform: translateY(2px); }
+        50% { transform: translateY(-2px); }
+      }
+      @keyframes sweat-drop {
+        0% { opacity: 0; transform: translate(0, 0); }
+        30% { opacity: 0.8; }
+        100% { opacity: 0; transform: translate(1px, 4px); }
+      }
+      @keyframes lift-strain {
+        0%, 100% { transform: scaleY(1); }
+        30%, 50% { transform: scaleY(0.5); }
+      }
+    </style>
+  </defs>
+  <rect class="lift-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Sweat drops -->
+  <rect class="sweat1" x="14" y="5" width="1" height="1" fill="#40C4FF"/>
+  <rect class="sweat2" x="0" y="6" width="1" height="1" fill="#40C4FF"/>
+  <!-- Barbell -->
+  <g class="barbell">
+    <rect x="-1" y="-2" width="3" height="4" fill="#888"/>
+    <rect x="13" y="-2" width="3" height="4" fill="#888"/>
+    <rect x="2" y="-1" width="11" height="2" fill="#AAA"/>
+  </g>
+  <g class="lift-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+    </g>
+    <!-- Arms lifting up -->
+    <g class="lift-arms" fill="#DE886D">
+      <rect x="0" y="5" width="2" height="3"/>
+      <rect x="13" y="5" width="2" height="3"/>
+    </g>
+    <!-- Strained squinting eyes -->
+    <g class="lift-eyes" fill="#000">
+      <rect x="4" y="8" width="2" height="1"/>
+      <rect x="10" y="8" width="2" height="1"/>
+    </g>
+  </g>
+</svg>

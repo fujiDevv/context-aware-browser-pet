@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .trophy-body { transform-origin: 7.5px 15px; animation: trophy-jump 1s infinite ease-in-out; }
+      .trophy-shadow { transform-origin: 7.5px 15.5px; animation: trophy-shadow 1s infinite ease-in-out; }
+      .trophy-eyes { transform-origin: 7.5px 9px; animation: trophy-blink 3s infinite; }
+      .trophy-cup { animation: trophy-bob 1s infinite ease-in-out; }
+      .trophy-shine { animation: trophy-glint 2s infinite ease-in-out; }
+      @keyframes trophy-jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+      @keyframes trophy-shadow { 0%, 100% { transform: scaleX(1); opacity: 0.5; } 50% { transform: scaleX(0.7); opacity: 0.3; } }
+      @keyframes trophy-blink { 0%, 46%, 54%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.1); } }
+      @keyframes trophy-bob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-4px) rotate(-5deg); } }
+      @keyframes trophy-glint { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+    </style>
+  </defs>
+  <rect class="trophy-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Trophy above head -->
+  <g class="trophy-cup">
+    <rect x="5" y="-3" width="5" height="4" fill="#FFD700"/>
+    <rect x="4" y="-3" width="1" height="3" fill="#FFD700"/>
+    <rect x="10" y="-3" width="1" height="3" fill="#FFD700"/>
+    <rect x="6" y="1" width="3" height="1" fill="#FFD700"/>
+    <rect x="7" y="2" width="1" height="1" fill="#FFD700"/>
+    <rect x="6" y="3" width="3" height="1" fill="#888"/>
+    <rect class="trophy-shine" x="6" y="-2" width="1" height="1" fill="#FFF"/>
+  </g>
+  <g class="trophy-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="7" width="2" height="2"/><rect x="13" y="7" width="2" height="2"/>
+    </g>
+    <g class="trophy-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

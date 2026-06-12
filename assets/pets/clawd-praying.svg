@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .pray-body { transform-origin: 7.5px 15px; animation: pray-bow 3s infinite ease-in-out; }
+      .pray-shadow { animation: pray-s 3s infinite; }
+      .pray-sparkle1 { animation: pray-sp 2s infinite ease-in-out; }
+      .pray-sparkle2 { animation: pray-sp 2s infinite ease-in-out 0.7s; }
+      @keyframes pray-bow { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(3deg) translateY(1px); } }
+      @keyframes pray-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes pray-sp { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.8; } }
+    </style>
+  </defs>
+  <rect class="pray-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <rect class="pray-sparkle1" x="-2" y="3" width="1" height="1" fill="#FFD700"/>
+  <rect class="pray-sparkle2" x="16" y="2" width="1" height="1" fill="#FFD700"/>
+  <g class="pray-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <!-- Hands together -->
+      <rect x="5" y="10" width="2" height="3"/><rect x="8" y="10" width="2" height="3"/>
+    </g>
+    <!-- Closed eyes -->
+    <g fill="#000">
+      <rect x="4" y="9" width="2" height="1"/><rect x="10" y="9" width="2" height="1"/>
+    </g>
+  </g>
+</svg>

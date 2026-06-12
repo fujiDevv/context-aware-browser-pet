@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .coffee-body {
+        transform-origin: 7.5px 15px;
+        animation: coffee-sip 3s infinite ease-in-out;
+      }
+      .coffee-shadow {
+        transform-origin: 7.5px 15.5px;
+        animation: coffee-shadow 3s infinite ease-in-out;
+      }
+      .steam1 { animation: steam-a 2s infinite ease-out; }
+      .steam2 { animation: steam-b 2s infinite ease-out 0.7s; }
+      .steam3 { animation: steam-c 2s infinite ease-out 1.4s; }
+      .coffee-eyes {
+        transform-origin: 7.5px 9px;
+        animation: coffee-blink 4s infinite;
+      }
+      @keyframes coffee-sip {
+        0%, 70%, 100% { transform: translateY(0); }
+        35% { transform: translateY(-1px); }
+      }
+      @keyframes coffee-shadow {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 0.4; }
+      }
+      @keyframes steam-a {
+        0% { opacity: 0.6; transform: translate(0, 0); }
+        100% { opacity: 0; transform: translate(-1px, -5px); }
+      }
+      @keyframes steam-b {
+        0% { opacity: 0.6; transform: translate(0, 0); }
+        100% { opacity: 0; transform: translate(1px, -5px); }
+      }
+      @keyframes steam-c {
+        0% { opacity: 0.6; transform: translate(0, 0); }
+        100% { opacity: 0; transform: translate(0, -5px); }
+      }
+      @keyframes coffee-blink {
+        0%, 60%, 68%, 100% { transform: scaleY(1); }
+        64% { transform: scaleY(0.1); }
+      }
+    </style>
+  </defs>
+  <rect class="coffee-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- Steam -->
+  <g fill="#AAAAAA" opacity="0.5">
+    <rect class="steam1" x="14" y="5" width="1" height="2"/>
+    <rect class="steam2" x="15" y="4" width="1" height="2"/>
+    <rect class="steam3" x="16" y="5" width="1" height="2"/>
+  </g>
+  <g class="coffee-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/>
+      <rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Coffee mug held by right arm -->
+    <g fill="#FFFFFF">
+      <rect x="14" y="8" width="3" height="4"/>
+      <rect x="17" y="9" width="1" height="2"/>
+    </g>
+    <g fill="#6B3E26">
+      <rect x="14.5" y="8.5" width="2" height="1.5"/>
+    </g>
+    <g class="coffee-eyes" fill="#000">
+      <rect x="4" y="8" width="1" height="2"/>
+      <rect x="10" y="8" width="1" height="2"/>
+    </g>
+  </g>
+</svg>

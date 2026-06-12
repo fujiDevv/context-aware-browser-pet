@@ -1,7 +1,5 @@
 import { PetStats, PetSettings } from '../src/types';
 
-const CDN = 'https://cdn.jsdelivr.net/gh/abderrahimghazali/clawd-pet@main/public/pets';
-
 async function init(): Promise<void> {
   const statsEl = {
     level: document.getElementById('pet-level') as HTMLElement,
@@ -159,7 +157,7 @@ async function init(): Promise<void> {
     else if (stats.happiness >= 20) previewMood = 'sad';
     else previewMood = 'crying';
     
-    statsEl.preview.src = `${CDN}/clawd-${previewMood}.svg`;
+    statsEl.preview.src = `../assets/pets/clawd-${previewMood}.svg`;
   }
 
   // ── Helper: Populate Settings ─────────────────────────────────────────────

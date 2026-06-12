@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .surprised-body { transform-origin: 7.5px 15px; animation: surprised-bounce 0.6s infinite ease-in-out; }
+      .surprised-shadow { animation: surprised-s 0.6s infinite ease-in-out; }
+      .exclaim1 { animation: exclaim-pop 0.8s infinite ease-out; }
+      .exclaim2 { animation: exclaim-pop 0.8s infinite ease-out 0.4s; }
+      @keyframes surprised-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+      @keyframes surprised-s { 0%, 100% { opacity: 0.5; transform: scaleX(1); } 50% { opacity: 0.3; transform: scaleX(0.9); } }
+      @keyframes exclaim-pop { 0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); } 30%, 70% { opacity: 1; transform: translateY(-1px) scale(1); } }
+    </style>
+  </defs>
+  <rect class="surprised-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <g fill="#FFD700" opacity="0.9">
+    <rect class="exclaim1" x="4" y="1" width="1" height="3"/>
+    <rect class="exclaim1" x="4" y="5" width="1" height="1"/>
+    <rect class="exclaim2" x="10" y="0" width="1" height="3"/>
+    <rect class="exclaim2" x="10" y="4" width="1" height="1"/>
+  </g>
+  <g class="surprised-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <g fill="#000">
+      <rect x="5" y="8" width="2" height="2"/>
+      <rect x="10" y="8" width="2" height="2"/>
+      <rect x="7" y="11" width="1" height="1"/>
+    </g>
+  </g>
+</svg>

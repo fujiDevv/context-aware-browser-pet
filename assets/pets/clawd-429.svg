@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      .e429-body { transform-origin: 7.5px 15px; animation: e429-dizzy 0.5s infinite ease-in-out; }
+      .e429-shadow { animation: e429-s 0.5s infinite; }
+      .e429-text { animation: e429-flash 0.5s infinite; }
+      @keyframes e429-dizzy { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+      @keyframes e429-s { 0%, 100% { opacity: 0.5; } }
+      @keyframes e429-flash { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
+    </style>
+  </defs>
+  <rect class="e429-shadow" x="3" y="15" width="9" height="1" fill="#000" opacity="0.5"/>
+  <!-- 429 text -->
+  <g class="e429-text" fill="#FF8800">
+    <!-- 4 -->
+    <rect x="2" y="-3" width="1" height="3"/><rect x="2" y="0" width="3" height="1"/><rect x="4" y="-3" width="1" height="5"/>
+    <!-- 2 -->
+    <rect x="6" y="-3" width="3" height="1"/><rect x="8" y="-2" width="1" height="1"/><rect x="6" y="-1" width="3" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="6" y="1" width="3" height="1"/>
+    <!-- 9 -->
+    <rect x="10" y="-3" width="3" height="1"/><rect x="10" y="-1" width="3" height="1"/><rect x="10" y="-3" width="1" height="3"/><rect x="12" y="-3" width="1" height="5"/><rect x="10" y="1" width="3" height="1"/>
+  </g>
+  <g class="e429-body">
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      <rect x="2" y="6" width="11" height="7"/>
+      <rect x="0" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/>
+    </g>
+    <!-- Spiral dizzy eyes -->
+    <g fill="#000">
+      <rect x="4" y="8" width="1" height="1"/><rect x="5" y="9" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="3" y="9" width="1" height="1"/>
+      <rect x="10" y="8" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/>
+    </g>
+  </g>
+</svg>
