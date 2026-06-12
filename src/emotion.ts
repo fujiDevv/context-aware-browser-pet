@@ -28,6 +28,12 @@ export class EmotionEngine {
     if (ctx.lastHttpError === 500) return '500';
     if (ctx.lastHttpError === 403) return '403';
     if (ctx.lastHttpError === 429) return '429';
+    if (ctx.hasConsoleError) return 'working-debugger';
+
+    // Time of day reactions
+    const hour = new Date().getHours();
+    if (hour >= 22 || hour < 6) return 'sleeping';
+    if (hour >= 6 && hour < 9) return 'yoga';
 
     if (ctx.idleSeconds > 300) return 'sleeping';
     if (ctx.idleSeconds > 60) return 'working-thinking';
@@ -41,7 +47,7 @@ export class EmotionEngine {
     if (category === 'gaming') return 'gaming';
     if (category === 'news') return 'working-thinking';
     if (category === 'shopping') return 'mindblown';
-    if (category === 'docs') return 'working-wizard';
+    if (category === 'docs') return 'reading';
 
     return this.personality.defaultEmotion();
   }
@@ -53,7 +59,7 @@ export class EmotionEngine {
       gaming: ['twitch.tv', 'store.steampowered.com', 'itch.io', 'roblox.com'],
       news: ['bbc.com', 'cnn.com', 'nytimes.com', 'theguardian.com', 'reuters.com', 'apnews.com'],
       shopping: ['amazon.com', 'ebay.com', 'shopify.com', 'etsy.com'],
-      docs: ['notion.so', 'confluence.atlassian.com', 'docs.google.com', 'obsidian.md'],
+      docs: ['notion.so', 'confluence.atlassian.com', 'docs.google.com', 'obsidian.md', 'wikipedia.org'],
     };
 
     for (const [category, hosts] of Object.entries(rules)) {
@@ -70,13 +76,13 @@ export class EmotionEngine {
       return 'working-debugger';
     }
     if (ctx.isTypingHeavy) return 'coding';
-    return 'working-wizard';
+    return 'coding';
   }
 
   _mediaEmotion(ctx: TriggerSnapshot): string {
     const host = ctx.hostname.toLowerCase();
     if (host.includes('youtube') || host.includes('netflix') || host.includes('vimeo')) {
-      return 'cool';
+      return 'eating';
     }
     if (host.includes('spotify') || host.includes('soundcloud') || host.includes('music')) {
       return 'dancing';
@@ -93,6 +99,9 @@ export class EmotionEngine {
       love: 'happy',
       celebrating: 'happy',
       mindblown: 'working-thinking',
+      eating: 'happy',
+      reading: 'working-thinking',
+      yoga: 'happy',
 
       ninja: 'happy',
       'working-wizard': 'working-thinking',

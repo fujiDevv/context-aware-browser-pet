@@ -185,6 +185,32 @@ style.textContent = `
     display: block;
     width: 0;
   }
+
+  /* ── Costume Glows & Shaders ── */
+  .costume-detective {
+    filter: drop-shadow(0px 0px 6px rgba(59, 130, 246, 0.75)) !important;
+    animation: detective-pulse 2s infinite alternate ease-in-out;
+  }
+  .costume-wizard {
+    filter: drop-shadow(0px 0px 8px rgba(139, 92, 246, 0.85)) drop-shadow(0px 0px 2px rgba(139, 92, 246, 0.4)) !important;
+    animation: wizard-float 3s infinite alternate ease-in-out;
+  }
+  .costume-party {
+    animation: party-rainbow 5s infinite linear;
+  }
+
+  @keyframes detective-pulse {
+    0% { filter: drop-shadow(0px 0px 4px rgba(59, 130, 246, 0.5)) !important; }
+    100% { filter: drop-shadow(0px 0px 10px rgba(59, 130, 246, 0.95)) !important; }
+  }
+  @keyframes wizard-float {
+    0% { filter: drop-shadow(0px 0px 5px rgba(139, 92, 246, 0.6)) !important; }
+    100% { filter: drop-shadow(0px 0px 14px rgba(167, 139, 250, 0.95)) !important; }
+  }
+  @keyframes party-rainbow {
+    0% { filter: hue-rotate(0deg) drop-shadow(0px 0px 8px rgba(236, 72, 153, 0.8)) !important; }
+    100% { filter: hue-rotate(360deg) drop-shadow(0px 0px 8px rgba(236, 72, 153, 0.8)) !important; }
+  }
 `;
 document.head.appendChild(style);
 
@@ -258,13 +284,13 @@ async function updateEmotion(): Promise<void> {
     
     triggerContextDialogue(nextEmotion);
 
-    if (nextEmotion === 'waving') {
+    if (nextEmotion === 'waving' || nextEmotion === 'yoga') {
       playSound('greeting');
     } else if (['sad', 'crying'].includes(nextEmotion)) {
       playSound('sad');
     } else if (nextEmotion === 'sleeping') {
       playSound('sleeping');
-    } else if (['working-thinking', 'coding', 'working-typing'].includes(nextEmotion)) {
+    } else if (['working-thinking', 'coding', 'working-typing', 'reading', 'working-debugger'].includes(nextEmotion)) {
       playSound('thinking');
     }
   }
@@ -285,9 +311,11 @@ function triggerContextDialogue(mood: string): void {
     'gaming': "Game time! Let's play! 🎮",
     'mindblown': "Oh wow! Look at those items! 😮",
     'working-wizard': "Exploring the docs... 🧙‍♂️",
-    'working-debugger': "Finding those sneaky bugs! 🐛",
+    'working-debugger': Math.random() < 0.5 ? "Oh no! Something crashed! 💥" : "Found a bug! Let me debug! 🔍",
     'crying': "I'm so sad... please pet me! 😢",
-    'sad': "Feeling a bit down... 🥺"
+    'sad': "Feeling a bit down... 🥺",
+    'reading': Math.random() < 0.5 ? "Reading is fun! 📚" : "So much knowledge here! 📖",
+    'yoga': Math.random() < 0.5 ? "Time for some morning stretches! 🧘‍♂️" : "Inhale, exhale... stretch! 🧘‍♀️"
   };
 
   if (dialogs[mood]) {
@@ -339,22 +367,19 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
 }
 
 function applyCostume(): void {
-  const existingHat = container.querySelector('#browser-pet-hat') as HTMLImageElement | null;
-  if (!currentSettings.costume || currentSettings.costume === 'none') {
-    if (existingHat) {
-      existingHat.remove();
-    }
-    return;
+  // Clean up any old hat element that might have been loaded
+  const existingHat = container.querySelector('#browser-pet-hat');
+  if (existingHat) {
+    existingHat.remove();
   }
 
-  let hat = existingHat;
-  if (!hat) {
-    hat = document.createElement('img');
-    hat.id = 'browser-pet-hat';
-    container.appendChild(hat);
+  // Remove previous costume class styles
+  petImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
+
+  // Apply new costume class if active
+  if (currentSettings.costume && currentSettings.costume !== 'none') {
+    petImg.classList.add(`costume-${currentSettings.costume}`);
   }
-  hat.src = chrome.runtime.getURL(`assets/pets/hat-${currentSettings.costume}.svg`);
-  movement._apply();
 }
 
 function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
@@ -482,6 +507,7 @@ chrome.runtime.onMessage.addListener((message) => {
     updateEmotion();
   } else if (message.type === 'navigation') {
     triggers.clearHttpError();
+    triggers.clearConsoleError();
     hasEvaluatedPageAi = false;
     updateEmotion();
   } else if (message.type === 'sync-pet-state') {
@@ -546,6 +572,12 @@ async function init(): Promise<void> {
   
   if (!checkContextOrCleanup()) return;
 
+  window.addEventListener('pet-console-error', () => {
+    if (checkContextOrCleanup()) {
+      updateEmotion();
+    }
+  });
+
   safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
     if (sharedState && sharedState.y !== 0) {
       movement.syncState(sharedState);
@@ -566,6 +598,13 @@ async function init(): Promise<void> {
   emotionInterval = setInterval(() => {
     if (checkContextOrCleanup()) {
       updateEmotion();
+
+      const context = triggers.snapshot();
+      if (context.idleSeconds >= 10 && Math.random() < 0.15 && !isTemporarilyInteracting) {
+        movement.chaseCursor(context.mouseX - currentSettings.size / 2);
+        const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
+        showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);
+      }
     }
   }, 10_000);
 }

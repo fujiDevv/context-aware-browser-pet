@@ -44,4 +44,7 @@ export interface TriggerSnapshot {
   isFormSubmitting: boolean;
   lastHttpError: number | null;
   scrollDepth: number;
+  hasConsoleError: boolean;
+  mouseX: number;
+  isCursorActive: boolean;
 }

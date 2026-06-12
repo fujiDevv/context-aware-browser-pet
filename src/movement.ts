@@ -13,6 +13,7 @@ export class MovementEngine {
   wasDragged: boolean;
   _raf: number | null;
   toyTarget: { x: number; element: HTMLElement; type: string; onReach: () => void } | null = null;
+  cursorTargetX: number | null = null;
 
   constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number } = {}) {
     this.el = el;
@@ -89,19 +90,32 @@ export class MovementEngine {
 
     this.y = H;
 
+    const hour = new Date().getHours();
+    const isNight = hour >= 22 || hour < 6;
+    const currentSpeed = isNight ? this.speed * 0.5 : this.speed;
+
     if (this.toyTarget) {
       const targetX = this.toyTarget.x;
-      if (Math.abs(this.x - targetX) <= Math.max(this.speed, 2)) {
+      if (Math.abs(this.x - targetX) <= Math.max(currentSpeed, 2)) {
         this.x = targetX;
         const callback = this.toyTarget.onReach;
         this.toyTarget = null;
         callback();
       } else {
         this.direction = targetX > this.x ? 1 : -1;
-        this.x += this.speed * this.direction;
+        this.x += currentSpeed * this.direction;
+      }
+    } else if (this.cursorTargetX !== null) {
+      const targetX = this.cursorTargetX;
+      if (Math.abs(this.x - targetX) <= Math.max(currentSpeed, 2)) {
+        this.x = targetX;
+        this.cursorTargetX = null;
+      } else {
+        this.direction = targetX > this.x ? 1 : -1;
+        this.x += currentSpeed * this.direction;
       }
     } else {
-      this.x += this.speed * this.direction;
+      this.x += currentSpeed * this.direction;
 
       if (this.x >= W) {
         this.x = W;
@@ -119,6 +133,12 @@ export class MovementEngine {
 
   setToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
     this.toyTarget = { x, element, type, onReach };
+    this.cursorTargetX = null; // Clear cursor chase if a toy is dropped
+    this.paused = false; // Resume if pet is currently paused
+  }
+
+  chaseCursor(x: number): void {
+    this.cursorTargetX = x;
     this.paused = false; // Resume if pet is currently paused
   }
 
@@ -143,18 +163,6 @@ export class MovementEngine {
       img.style.transform = `${flip} ${rotate}`;
       img.style.width = `${this.size}px`;
       img.style.height = `${this.size}px`;
-    }
-
-    const hat = this.el.querySelector('#browser-pet-hat') as HTMLImageElement | null;
-    if (hat) {
-      hat.style.transform = `${flip} ${rotate}`;
-      hat.style.width = `${this.size}px`;
-      hat.style.height = `${this.size}px`;
-      hat.style.position = 'absolute';
-      hat.style.top = '0';
-      hat.style.left = '0';
-      hat.style.pointerEvents = 'none';
-      hat.style.zIndex = '2';
     }
   }
 
@@ -255,11 +263,6 @@ export class MovementEngine {
     const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
       img.style.transform = 'scaleX(1) rotate(0deg)';
-    }
-
-    const hat = this.el.querySelector('#browser-pet-hat') as HTMLImageElement | null;
-    if (hat) {
-      hat.style.transform = 'scaleX(1) rotate(0deg)';
     }
   }
 

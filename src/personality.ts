@@ -156,7 +156,7 @@ export class PersonalitySystem {
   isEmotionUnlocked(emotion: string): boolean {
     const lvl = this.stats.level;
     
-    const level1 = ['happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug'];
+    const level1 = ['happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug', 'reading', 'yoga', 'eating'];
     const level3 = [...level1, 'coding', 'working-typing', 'dancing', 'cool', 'love', 'celebrating', 'mindblown'];
     const level5 = [...level3, 'ninja', 'working-wizard', 'astronaut', 'working-debugger', 'working-building'];
     const level8 = [...level5, 'rocket', 'pirate', 'working-juggling', 'gaming'];

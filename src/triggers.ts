@@ -7,6 +7,9 @@ export class TriggerDetector {
   _lastError: number | null;
   _isVideo: boolean;
   _isSubmitting: boolean;
+  _hasConsoleError: boolean;
+  _mouseX: number;
+  _lastMouseMove: number;
 
   constructor() {
     this._lastInput = Date.now();
@@ -15,9 +18,32 @@ export class TriggerDetector {
     this._lastError = null;
     this._isVideo = false;
     this._isSubmitting = false;
+    this._hasConsoleError = false;
+    this._mouseX = window.innerWidth / 2;
+    this._lastMouseMove = Date.now();
 
+    this._injectErrorWatcher();
     this._bindEvents();
     this._watchVideo();
+  }
+
+  _injectErrorWatcher(): void {
+    try {
+      const code = `
+        window.addEventListener('error', (event) => {
+          window.postMessage({ type: 'PET_PAGE_ERROR', message: event.message }, '*');
+        });
+        window.addEventListener('unhandledrejection', (event) => {
+          window.postMessage({ type: 'PET_PAGE_ERROR', message: event.reason?.message || 'Unhandled rejection' }, '*');
+        });
+      `;
+      const script = document.createElement('script');
+      script.textContent = code;
+      (document.head || document.documentElement).appendChild(script);
+      script.remove();
+    } catch (e) {
+      console.warn("Failed to inject pet error watcher script:", e);
+    }
   }
 
   snapshot(): TriggerSnapshot {
@@ -30,6 +56,9 @@ export class TriggerDetector {
       isFormSubmitting: this._isSubmitting,
       lastHttpError:    this._lastError,
       scrollDepth:      this._scrollDepth(),
+      hasConsoleError:  this._hasConsoleError,
+      mouseX:           this._mouseX,
+      isCursorActive:   (Date.now() - this._lastMouseMove) < 5000,
     };
   }
 
@@ -46,12 +75,21 @@ export class TriggerDetector {
     this._lastError = null;
   }
 
+  clearConsoleError(): void {
+    this._hasConsoleError = false;
+  }
+
   _bindEvents(): void {
     const resetIdle = () => {
       this._lastInput = Date.now();
     };
     
-    document.addEventListener('mousemove', resetIdle, { passive: true });
+    document.addEventListener('mousemove', (e: MouseEvent) => {
+      resetIdle();
+      this._mouseX = e.clientX;
+      this._lastMouseMove = Date.now();
+    }, { passive: true });
+
     document.addEventListener('keydown', resetIdle, { passive: true });
     document.addEventListener('scroll', resetIdle, { passive: true });
     document.addEventListener('click', resetIdle, { passive: true });
@@ -70,6 +108,18 @@ export class TriggerDetector {
         this._isSubmitting = false;
       }, 3000);
     }, { passive: true });
+
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'PET_PAGE_ERROR') {
+        this._hasConsoleError = true;
+        window.dispatchEvent(new CustomEvent('pet-console-error'));
+      }
+    });
+
+    window.addEventListener('error', () => {
+      this._hasConsoleError = true;
+      window.dispatchEvent(new CustomEvent('pet-console-error'));
+    });
   }
 
   _watchVideo(): void {
