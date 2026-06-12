@@ -41,11 +41,15 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "128": "assets/pet.svg"
+      "16": "assets/pet16.png",
+      "48": "assets/pet48.png",
+      "128": "assets/pet128.png"
     }
   },
   "icons": {
-    "128": "assets/pet.svg"
+    "16": "assets/pet16.png",
+    "48": "assets/pet48.png",
+    "128": "assets/pet128.png"
   },
   "web_accessible_resources": [
     {

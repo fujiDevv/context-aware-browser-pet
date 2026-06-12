@@ -619,6 +619,7 @@ async function init(): Promise<void> {
     const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
     moodEmojiEl.textContent = meta.emoji;
     moodTextEl.textContent = meta.name;
+
   }
 
   // ── Helper: Populate Settings ─────────────────────────────────────────────

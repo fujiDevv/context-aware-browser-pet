@@ -59,32 +59,48 @@ h2 {
 /* ── Header Area ────────────────────────────────────────────────────────── */
 .header {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.header-profile {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 16px;
-  margin-bottom: 16px;
-  background: var(--panel-bg);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 12px 16px;
+  width: 100%;
 }
 
 .avatar-container {
   position: relative;
-  width: 52px;
-  height: 52px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  padding: 6px;
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
 }
 
 .avatar-glow {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 120%;
+  height: 120%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
   animation: pulse-glow 3s infinite alternate;
+  z-index: 0;
 }
 
 #pet-preview {
@@ -93,26 +109,28 @@ h2 {
   object-fit: contain;
   image-rendering: pixelated;
   z-index: 1;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 #pet-preview:hover {
-  transform: scale(1.15) rotate(5deg);
+  transform: scale(1.2) rotate(8deg);
 }
 
 .header-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 #pet-name {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin: 0;
 }
 
 .level-badge {
@@ -124,6 +142,14 @@ h2 {
   padding: 2px 8px;
   border-radius: 20px;
   width: fit-content;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.level-badge:hover {
+  transform: translateY(-1px);
+  border-color: rgba(99, 102, 241, 0.5);
+  background: rgba(99, 102, 241, 0.22);
 }
 
 .level-label {
@@ -994,4 +1020,12 @@ input:checked+.toggle-slider:before {
   color: var(--text-primary);
   font-weight: 550;
   line-height: 1.4;
+}
+
+.header .xp-section {
+  width: 100%;
+  margin-top: 14px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 12px;
 }

@@ -23,35 +23,37 @@
       <div id="tab-mascot" class="tab-pane active">
         <!-- Header with Mascot Preview -->
         <header class="header">
-          <div class="avatar-container">
-            <div class="avatar-glow"></div>
-            <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Pet Preview">
-          </div>
-          <div class="header-info">
-            <h1 id="pet-name">Clawd</h1>
-            <div class="header-badges">
-              <div class="level-badge">
-                <span class="level-label">LVL</span>
-                <span id="pet-level" class="level-num">1</span>
-              </div>
-              <div class="mood-badge" id="pet-mood">
-                <span id="mood-emoji">😊</span>
-                <span id="mood-text">Happy</span>
+          <div class="header-profile">
+            <div class="avatar-container">
+              <div class="avatar-glow"></div>
+              <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Pet Preview">
+            </div>
+            <div class="header-info">
+              <h1 id="pet-name">Clawd</h1>
+              <div class="header-badges">
+                <div class="level-badge">
+                  <span class="level-label">LVL</span>
+                  <span id="pet-level" class="level-num">1</span>
+                </div>
+                <div class="mood-badge" id="pet-mood">
+                  <span id="mood-emoji">😊</span>
+                  <span id="mood-text">Happy</span>
+                </div>
               </div>
             </div>
           </div>
-        </header>
 
-        <!-- XP Progress Bar -->
-        <div class="xp-section">
-          <div class="xp-header">
-            <span>Experience</span>
-            <span id="xp-text">0 / 100 XP</span>
+          <!-- Integrated XP Progress Bar -->
+          <div class="xp-section">
+            <div class="xp-header">
+              <span>Experience</span>
+              <span id="xp-text">0 / 100 XP</span>
+            </div>
+            <div class="progress-track xp-track">
+              <div id="bar-xp" class="progress-fill xp-fill" style="width: 0%"></div>
+            </div>
           </div>
-          <div class="progress-track xp-track">
-            <div id="bar-xp" class="progress-fill xp-fill" style="width: 0%"></div>
-          </div>
-        </div>
+        </header>
 
         <!-- Core Pet Stats -->
         <section class="stats-section">
