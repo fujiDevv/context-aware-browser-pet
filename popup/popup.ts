@@ -26,8 +26,29 @@ async function init(): Promise<void> {
     aiToggle: document.getElementById('ai-toggle') as HTMLInputElement,
     apiKeyContainer: document.getElementById('api-key-container') as HTMLElement,
     apiKeyInput: document.getElementById('api-key-input') as HTMLInputElement,
-    btnToggleKey: document.getElementById('btn-toggle-key') as HTMLElement
+    btnToggleKey: document.getElementById('btn-toggle-key') as HTMLElement,
+    nameInput: document.getElementById('pet-name-input') as HTMLInputElement,
+    costumeSelect: document.getElementById('costume-select') as HTMLSelectElement,
+    optDetective: document.getElementById('opt-detective') as HTMLOptionElement,
+    optWizard: document.getElementById('opt-wizard') as HTMLOptionElement,
+    optParty: document.getElementById('opt-party') as HTMLOptionElement
   };
+
+  // ── Drag-and-Drop Toy setup ──────────────────────────────────────────────
+  const setupToyDrags = () => {
+    ['ball', 'fish', 'laser'].forEach((toy) => {
+      const el = document.getElementById(`toy-${toy}`);
+      if (el) {
+        el.addEventListener('dragstart', (e) => {
+          if (e.dataTransfer) {
+            e.dataTransfer.setData('text/plain', `toy-${toy}`);
+            e.dataTransfer.effectAllowed = 'copy';
+          }
+        });
+      }
+    });
+  };
+  setupToyDrags();
 
   // ── 1. Load Stats and Settings ──────────────────────────────────────────
   const data = await chrome.storage.local.get(['pet-stats', 'pet-settings']);
@@ -105,6 +126,16 @@ async function init(): Promise<void> {
     saveSettings();
   });
 
+  settingsEl.nameInput.addEventListener('input', () => {
+    const name = settingsEl.nameInput.value.trim() || 'Clawd';
+    (document.getElementById('pet-name') as HTMLElement).textContent = name;
+    saveSettings();
+  });
+
+  settingsEl.costumeSelect.addEventListener('change', () => {
+    saveSettings();
+  });
+
   // Toggle API Key password visibility
   settingsEl.btnToggleKey.addEventListener('click', () => {
     if (settingsEl.apiKeyInput.type === 'password') {
@@ -125,7 +156,9 @@ async function init(): Promise<void> {
         soundEnabled: settingsEl.soundToggle.checked,
         soundVolume: Number(settingsEl.volumeSlider.value) / 100,
         aiMode: settingsEl.aiToggle.checked,
-        apiKey: settingsEl.apiKeyInput.value.trim()
+        apiKey: settingsEl.apiKeyInput.value.trim(),
+        name: settingsEl.nameInput.value.trim() || 'Clawd',
+        costume: settingsEl.costumeSelect.value
       }
     });
   }
@@ -139,6 +172,28 @@ async function init(): Promise<void> {
     const xpNeeded = stats.level * 100;
     statsEl.xpText.textContent = `${stats.xp} / ${xpNeeded} XP`;
     statsEl.xpBar.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
+
+    // Unlock costume selections based on level
+    settingsEl.optDetective.disabled = stats.level < 5;
+    if (stats.level < 5) {
+      settingsEl.optDetective.textContent = '🕵️ Detective Hat (Locked - LVL 5)';
+    } else {
+      settingsEl.optDetective.textContent = '🕵️ Detective Hat';
+    }
+
+    settingsEl.optWizard.disabled = stats.level < 10;
+    if (stats.level < 10) {
+      settingsEl.optWizard.textContent = '🧙 Wizard Hat (Locked - LVL 10)';
+    } else {
+      settingsEl.optWizard.textContent = '🧙 Wizard Hat';
+    }
+
+    settingsEl.optParty.disabled = stats.level < 15;
+    if (stats.level < 15) {
+      settingsEl.optParty.textContent = '🎉 Party Cone (Locked - LVL 15)';
+    } else {
+      settingsEl.optParty.textContent = '🎉 Party Cone';
+    }
 
     // Core attributes
     statsEl.happinessText.textContent = `${stats.happiness}%`;
@@ -198,6 +253,14 @@ async function init(): Promise<void> {
 
     // API Key
     settingsEl.apiKeyInput.value = settings.apiKey ?? '';
+
+    // Name
+    const name = settings.name ?? 'Clawd';
+    settingsEl.nameInput.value = name;
+    (document.getElementById('pet-name') as HTMLElement).textContent = name;
+
+    // Costume
+    settingsEl.costumeSelect.value = settings.costume ?? 'none';
   }
 }
 

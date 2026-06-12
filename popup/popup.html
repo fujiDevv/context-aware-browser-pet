@@ -86,9 +86,49 @@
       </button>
     </section>
 
+    <!-- Interactive Toys Drawer -->
+    <section class="toys-section">
+      <h2>Interactive Toys</h2>
+      <div class="toys-container">
+        <div class="toy-item" draggable="true" id="toy-ball" data-toy="ball">
+          <span class="toy-emoji">⚽</span>
+          <span class="toy-label">Ball</span>
+        </div>
+        <div class="toy-item" draggable="true" id="toy-fish" data-toy="fish">
+          <span class="toy-emoji">🐟</span>
+          <span class="toy-label">Fish</span>
+        </div>
+        <div class="toy-item" draggable="true" id="toy-laser" data-toy="laser">
+          <span class="toy-emoji">🔴</span>
+          <span class="toy-label">Laser</span>
+        </div>
+      </div>
+      <p class="toy-help">Drag a toy onto the webpage to play!</p>
+    </section>
+
     <!-- Settings & Customisation -->
     <section class="settings-section">
       <h2>Settings</h2>
+
+      <div class="setting-row">
+        <div class="setting-desc">
+          <span class="setting-title">Pet Name</span>
+        </div>
+        <input type="text" id="pet-name-input" placeholder="Clawd" class="custom-input" maxlength="12">
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-desc">
+          <span class="setting-title">Pet Costume</span>
+          <span class="setting-subtitle">Unlock hats at LVL 5, 10, 15</span>
+        </div>
+        <select id="costume-select" class="custom-select">
+          <option value="none">None</option>
+          <option value="detective" id="opt-detective" disabled>🕵️ Detective Hat (LVL 5)</option>
+          <option value="wizard" id="opt-wizard" disabled>🧙 Wizard Hat (LVL 10)</option>
+          <option value="party" id="opt-party" disabled>🎉 Party Cone (LVL 15)</option>
+        </select>
+      </div>
       
       <div class="setting-row">
         <div class="setting-desc">

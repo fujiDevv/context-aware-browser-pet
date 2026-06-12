@@ -338,6 +338,104 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
   }, duration);
 }
 
+function applyCostume(): void {
+  const existingHat = container.querySelector('#browser-pet-hat') as HTMLImageElement | null;
+  if (!currentSettings.costume || currentSettings.costume === 'none') {
+    if (existingHat) {
+      existingHat.remove();
+    }
+    return;
+  }
+
+  let hat = existingHat;
+  if (!hat) {
+    hat = document.createElement('img');
+    hat.id = 'browser-pet-hat';
+    container.appendChild(hat);
+  }
+  hat.src = chrome.runtime.getURL(`assets/pets/hat-${currentSettings.costume}.svg`);
+  movement._apply();
+}
+
+function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
+  if (movement.toyTarget) {
+    try {
+      movement.toyTarget.element.remove();
+    } catch (e) {}
+  }
+
+  const toyEl = document.createElement('div');
+  toyEl.className = 'browser-pet-toy';
+  const emojis: Record<string, string> = { ball: '⚽', fish: '🐟', laser: '🔴' };
+  toyEl.textContent = emojis[toyType] || '🧸';
+  toyEl.style.position = 'fixed';
+  toyEl.style.left = `${dropX - 15}px`;
+  toyEl.style.top = `${dropY - 15}px`;
+  toyEl.style.fontSize = '24px';
+  toyEl.style.pointerEvents = 'none';
+  toyEl.style.zIndex = '2147483646';
+  toyEl.style.transition = 'top 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19)';
+  document.body.appendChild(toyEl);
+
+  // Force reflow and animate fall
+  toyEl.getBoundingClientRect();
+  const floorY = window.innerHeight - 32;
+  toyEl.style.top = `${floorY}px`;
+
+  movement.setToyTarget(dropX - currentSettings.size / 2, toyEl, toyType, () => {
+    playWithToy(toyType, toyEl);
+  });
+}
+
+function playWithToy(toyType: string, toyEl: HTMLElement): void {
+  isTemporarilyInteracting = true;
+
+  toyEl.style.opacity = '0';
+  toyEl.style.transition = 'opacity 0.3s ease';
+  setTimeout(() => toyEl.remove(), 300);
+
+  const dialogs: Record<string, string> = {
+    ball: `Wow! A ball! Roll roll roll! ⚽`,
+    fish: `Yum! That fish was delicious! 🐟`,
+    laser: `Got the red dot! Rawr! 🔴`
+  };
+
+  showBubble(dialogs[toyType] || "Yay, a toy! 🎉");
+  
+  const playMood = toyType === 'fish' ? 'celebrating' : 'dancing';
+  loadPet(playMood);
+
+  if (toyType === 'fish') {
+    playSound('feeding');
+    personality.recordInteraction('feed');
+  } else {
+    playSound('petting');
+    personality.recordInteraction('pet');
+  }
+
+  setTimeout(() => {
+    isTemporarilyInteracting = false;
+    loadPet(emotion.current);
+  }, 2000);
+}
+
+// Window Drag and Drop Listeners for Toys
+window.addEventListener('dragover', (e: DragEvent) => {
+  if (e.dataTransfer && e.dataTransfer.types.includes('text/plain')) {
+    e.preventDefault();
+  }
+});
+
+window.addEventListener('drop', (e: DragEvent) => {
+  if (!e.dataTransfer) return;
+  const data = e.dataTransfer.getData('text/plain');
+  if (data && data.startsWith('toy-')) {
+    e.preventDefault();
+    const toyType = data.substring(4);
+    handleToyDrop(e.clientX, e.clientY, toyType);
+  }
+});
+
 async function loadAndApplySettings(): Promise<void> {
   const saved = await chrome.storage.local.get('pet-settings');
   if (saved['pet-settings']) {
@@ -346,6 +444,7 @@ async function loadAndApplySettings(): Promise<void> {
       size: currentSettings.size,
       speed: currentSettings.speed
     });
+    applyCostume();
   }
 }
 
@@ -359,6 +458,7 @@ chrome.storage.onChanged.addListener((changes) => {
         size: currentSettings.size,
         speed: currentSettings.speed
       });
+      applyCostume();
       if (changes['pet-settings'].oldValue?.aiMode !== newSettings.aiMode) {
         hasEvaluatedPageAi = false;
       }
@@ -397,7 +497,8 @@ chrome.runtime.onMessage.addListener((message) => {
 
 window.addEventListener('pet-level-up', (e: Event) => {
   const customEvent = e as CustomEvent<{ level: number }>;
-  showBubble(`Level UP! I'm now level ${customEvent.detail.level}! 🎉`, 5000);
+  const petName = currentSettings.name || 'Clawd';
+  showBubble(`Level UP! ${petName} is now level ${customEvent.detail.level}! 🎉`, 5000);
   loadPet('celebrating');
   playSound('levelUp');
   isTemporarilyInteracting = true;
@@ -457,7 +558,8 @@ async function init(): Promise<void> {
       loadPet(startEmotion);
     }
     movement.start();
-    showBubble("Hello! Let's browse together! 🐾");
+    const petName = currentSettings.name || 'Clawd';
+    showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
     playSound('greeting');
   });
   

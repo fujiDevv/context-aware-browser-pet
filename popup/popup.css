@@ -450,6 +450,92 @@ input:checked+.toggle-slider:before {
   display: none !important;
 }
 
+/* ── Toys Section ───────────────────────────────────────────────────────── */
+.toys-section {
+  margin-bottom: 20px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 12px 16px;
+}
+
+.toys-container {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.toy-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  cursor: grab;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.toy-item:hover {
+  background: rgba(99, 102, 241, 0.06);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+}
+
+.toy-item:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.toy-emoji {
+  font-size: 20px;
+}
+
+.toy-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.toy-help {
+  font-size: 9px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── Custom Form Inputs ──────────────────────────────────────────────────── */
+.custom-input, .custom-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-input:focus, .custom-select:focus {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 6px rgba(99, 102, 241, 0.15);
+}
+
+.custom-select option {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+
 /* ── Keyframe Animations ──────────────────────────────────────────────────── */
 @keyframes pulse-glow {
   0% {

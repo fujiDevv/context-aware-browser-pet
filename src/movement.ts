@@ -12,6 +12,7 @@ export class MovementEngine {
   isDragging: boolean;
   wasDragged: boolean;
   _raf: number | null;
+  toyTarget: { x: number; element: HTMLElement; type: string; onReach: () => void } | null = null;
 
   constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number } = {}) {
     this.el = el;
@@ -88,19 +89,37 @@ export class MovementEngine {
 
     this.y = H;
 
-    this.x += this.speed * this.direction;
+    if (this.toyTarget) {
+      const targetX = this.toyTarget.x;
+      if (Math.abs(this.x - targetX) <= Math.max(this.speed, 2)) {
+        this.x = targetX;
+        const callback = this.toyTarget.onReach;
+        this.toyTarget = null;
+        callback();
+      } else {
+        this.direction = targetX > this.x ? 1 : -1;
+        this.x += this.speed * this.direction;
+      }
+    } else {
+      this.x += this.speed * this.direction;
 
-    if (this.x >= W) {
-      this.x = W;
-      this.direction = -1;
-    } else if (this.x <= 0) {
-      this.x = 0;
-      this.direction = 1;
-    }
+      if (this.x >= W) {
+        this.x = W;
+        this.direction = -1;
+      } else if (this.x <= 0) {
+        this.x = 0;
+        this.direction = 1;
+      }
 
-    if (Math.random() < 0.0005) {
-      this._idlePause();
+      if (Math.random() < 0.0005) {
+        this._idlePause();
+      }
     }
+  }
+
+  setToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
+    this.toyTarget = { x, element, type, onReach };
+    this.paused = false; // Resume if pet is currently paused
   }
 
   _idlePause(): void {
@@ -119,11 +138,23 @@ export class MovementEngine {
     this.el.style.top = `${this.y}px`;
     this.el.style.bottom = 'auto';
     
-    const img = this.el.querySelector('img');
+    const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
       img.style.transform = `${flip} ${rotate}`;
       img.style.width = `${this.size}px`;
       img.style.height = `${this.size}px`;
+    }
+
+    const hat = this.el.querySelector('#browser-pet-hat') as HTMLImageElement | null;
+    if (hat) {
+      hat.style.transform = `${flip} ${rotate}`;
+      hat.style.width = `${this.size}px`;
+      hat.style.height = `${this.size}px`;
+      hat.style.position = 'absolute';
+      hat.style.top = '0';
+      hat.style.left = '0';
+      hat.style.pointerEvents = 'none';
+      hat.style.zIndex = '2';
     }
   }
 
@@ -221,9 +252,14 @@ export class MovementEngine {
     this.el.style.top = `${this.y}px`;
     this.el.style.bottom = 'auto';
     
-    const img = this.el.querySelector('img');
+    const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
       img.style.transform = 'scaleX(1) rotate(0deg)';
+    }
+
+    const hat = this.el.querySelector('#browser-pet-hat') as HTMLImageElement | null;
+    if (hat) {
+      hat.style.transform = 'scaleX(1) rotate(0deg)';
     }
   }
 

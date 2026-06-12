@@ -15,11 +15,42 @@ export class PersonalitySystem {
   stats: PetStats;
   onStatsChange?: (stats: PetStats) => void;
   isLoaded: Promise<PetStats>;
+  private _decayInterval: any = null;
 
   constructor(onStatsChange?: (stats: PetStats) => void) {
     this.stats = { ...DEFAULT_STATS };
     this.onStatsChange = onStatsChange;
     this.isLoaded = this._load();
+
+    if (typeof window !== 'undefined') {
+      this._decayInterval = setInterval(() => {
+        this._periodicDecay();
+      }, 60_000); // Check decay every 1 minute
+    }
+  }
+
+  _applyDecay(): void {
+    const lastUpdate = this.stats.lastUpdateTime || Date.now();
+    const elapsedMs = Date.now() - lastUpdate;
+    const elapsedSeconds = Math.max(0, elapsedMs / 1000);
+
+    // Decay rates per second:
+    // Happiness: -4 points per hour (~0.0011/sec)
+    // Energy: -7 points per hour (~0.0019/sec)
+    // Curiosity: -2 points per hour (~0.0005/sec)
+    const happinessDecay = elapsedSeconds * 0.0011;
+    const energyDecay = elapsedSeconds * 0.0019;
+    const curiosityDecay = elapsedSeconds * 0.0005;
+
+    this.stats.happiness = Math.max(0, Math.round(this.stats.happiness - happinessDecay));
+    this.stats.energy = Math.max(0, Math.round(this.stats.energy - energyDecay));
+    this.stats.curiosity = Math.max(0, Math.round(this.stats.curiosity - curiosityDecay));
+  }
+
+  async _periodicDecay(): Promise<void> {
+    await this.isLoaded;
+    this._applyDecay();
+    await this._save();
   }
 
   async _load(): Promise<PetStats> {
@@ -31,9 +62,11 @@ export class PersonalitySystem {
       if (saved['pet-stats']) {
         this.stats = { ...DEFAULT_STATS, ...saved['pet-stats'] };
       }
-      if (this.onStatsChange) {
-        this.onStatsChange(this.stats);
-      }
+      
+      this._applyDecay();
+      this.stats.lastUpdateTime = Date.now();
+      await this._save();
+
       return this.stats;
     } catch (e: any) {
       if (e.message && e.message.includes('context invalidated')) {
@@ -49,6 +82,7 @@ export class PersonalitySystem {
       if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
         return;
       }
+      this.stats.lastUpdateTime = Date.now();
       await chrome.storage.local.set({ 'pet-stats': this.stats });
       if (this.onStatsChange) {
         this.onStatsChange(this.stats);

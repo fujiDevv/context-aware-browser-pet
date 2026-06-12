@@ -12,6 +12,7 @@ export interface PetStats {
   level: number;
   xp: number;
   moodHistory: MoodHistoryItem[];
+  lastUpdateTime?: number;
 }
 
 export interface PetSettings {
@@ -21,6 +22,8 @@ export interface PetSettings {
   soundVolume: number;
   aiMode: boolean;
   apiKey: string;
+  name?: string;
+  costume?: 'none' | 'detective' | 'wizard' | 'party';
 }
 
 export interface SharedPetState {
