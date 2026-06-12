@@ -378,10 +378,10 @@ async function init(): Promise<void> {
   settingsEl.btnToggleKey.addEventListener('click', () => {
     if (settingsEl.apiKeyInput.type === 'password') {
       settingsEl.apiKeyInput.type = 'text';
-      settingsEl.btnToggleKey.textContent = '🙈';
+      settingsEl.btnToggleKey.textContent = 'Hide';
     } else {
       settingsEl.apiKeyInput.type = 'password';
-      settingsEl.btnToggleKey.textContent = '👁️';
+      settingsEl.btnToggleKey.textContent = 'Show';
     }
   });
 
@@ -437,16 +437,11 @@ async function init(): Promise<void> {
         saveSettings();
       });
 
-      const emojiSpan = document.createElement('span');
-      emojiSpan.className = 'emotion-checkbox-emoji';
-      emojiSpan.textContent = meta.emoji;
-
       const labelSpan = document.createElement('span');
       labelSpan.className = 'emotion-checkbox-label';
       labelSpan.textContent = meta.name;
 
       card.appendChild(checkbox);
-      card.appendChild(emojiSpan);
       card.appendChild(labelSpan);
       gridEl.appendChild(card);
     });
@@ -465,23 +460,23 @@ async function init(): Promise<void> {
     // Unlock costume selections based on level
     settingsEl.optDetective.disabled = stats.level < 5;
     if (stats.level < 5) {
-      settingsEl.optDetective.textContent = '🕵️ Blue Detective Aura (Locked - LVL 5)';
+      settingsEl.optDetective.textContent = 'Blue Detective Aura (Locked - LVL 5)';
     } else {
-      settingsEl.optDetective.textContent = '🕵️ Blue Detective Aura';
+      settingsEl.optDetective.textContent = 'Blue Detective Aura';
     }
 
     settingsEl.optWizard.disabled = stats.level < 10;
     if (stats.level < 10) {
-      settingsEl.optWizard.textContent = '🧙 Magic Purple Aura (Locked - LVL 10)';
+      settingsEl.optWizard.textContent = 'Magic Purple Aura (Locked - LVL 10)';
     } else {
-      settingsEl.optWizard.textContent = '🧙 Magic Purple Aura';
+      settingsEl.optWizard.textContent = 'Magic Purple Aura';
     }
 
     settingsEl.optParty.disabled = stats.level < 15;
     if (stats.level < 15) {
-      settingsEl.optParty.textContent = '🎉 Neon Rainbow Shader (Locked - LVL 15)';
+      settingsEl.optParty.textContent = 'Neon Rainbow Shader (Locked - LVL 15)';
     } else {
-      settingsEl.optParty.textContent = '🎉 Neon Rainbow Shader';
+      settingsEl.optParty.textContent = 'Neon Rainbow Shader';
     }
 
     // Core attributes
@@ -523,15 +518,15 @@ async function init(): Promise<void> {
       const counts = stats.siteCategoryCounts || {};
       const totalVisits = Object.values(counts).reduce((a, b) => a + b, 0);
 
-      const CATEGORY_METADATA: Record<string, { name: string; emoji: string; colorClass: string }> = {
-        code: { name: 'Coding', emoji: '🖥️', colorClass: 'fill-blue' },
-        social: { name: 'Social', emoji: '💬', colorClass: 'fill-pink' },
-        gaming: { name: 'Gaming', emoji: '🎮', colorClass: 'fill-yellow' },
-        news: { name: 'News', emoji: '📰', colorClass: 'fill-green' },
-        shopping: { name: 'Shopping', emoji: '🛍️', colorClass: 'fill-indigo' },
-        docs: { name: 'Documentation', emoji: '📄', colorClass: 'fill-blue' },
-        mail: { name: 'Email', emoji: '✉️', colorClass: 'fill-green' },
-        fitness: { name: 'Fitness', emoji: '🏋️', colorClass: 'fill-pink' }
+      const CATEGORY_METADATA: Record<string, { name: string; colorClass: string }> = {
+        code: { name: 'Coding', colorClass: 'fill-blue' },
+        social: { name: 'Social', colorClass: 'fill-pink' },
+        gaming: { name: 'Gaming', colorClass: 'fill-yellow' },
+        news: { name: 'News', colorClass: 'fill-green' },
+        shopping: { name: 'Shopping', colorClass: 'fill-indigo' },
+        docs: { name: 'Documentation', colorClass: 'fill-blue' },
+        mail: { name: 'Email', colorClass: 'fill-green' },
+        fitness: { name: 'Fitness', colorClass: 'fill-pink' }
       };
 
       if (totalVisits === 0) {
@@ -545,14 +540,14 @@ async function init(): Promise<void> {
         Object.entries(counts)
           .sort((a, b) => b[1] - a[1])
           .forEach(([cat, val]) => {
-            const meta = CATEGORY_METADATA[cat] || { name: cat, emoji: '🌐', colorClass: 'fill-blue' };
+            const meta = CATEGORY_METADATA[cat] || { name: cat, colorClass: 'fill-blue' };
             const percentage = Math.round((val / totalVisits) * 100);
 
             const row = document.createElement('div');
             row.className = 'category-row';
             row.innerHTML = `
               <div class="category-meta">
-                <span>${meta.emoji} ${meta.name}</span>
+                <span>${meta.name}</span>
                 <span class="category-pct">${val} (${percentage}%)</span>
               </div>
               <div class="category-bar-wrapper">
@@ -569,18 +564,18 @@ async function init(): Promise<void> {
       statsEl.timelineList.innerHTML = '';
       const history = stats.moodHistory || [];
 
-      const EVENT_FORMATTERS: Record<string, { label: string; emoji: string }> = {
-        pet: { label: 'You petted Clawd', emoji: '🫶' },
-        feed: { label: 'You fed Clawd', emoji: '🍖' },
-        shoo: { label: 'Shooed Clawd away', emoji: '🏃‍♂️' },
-        'visit-code': { label: 'Browsed Coding pages', emoji: '🖥️' },
-        'visit-social': { label: 'Browsed Social media', emoji: '💬' },
-        'visit-gaming': { label: 'Browsed Gaming sites', emoji: '🎮' },
-        'visit-news': { label: 'Browsed News pages', emoji: '📰' },
-        'visit-shopping': { label: 'Browsed Shopping sites', emoji: '🛍️' },
-        'visit-docs': { label: 'Browsed Documentation', emoji: '📄' },
-        'visit-mail': { label: 'Checked Email', emoji: '✉️' },
-        'visit-fitness': { label: 'Browsed Fitness sites', emoji: '🏋️' }
+      const EVENT_FORMATTERS: Record<string, { label: string }> = {
+        pet: { label: 'You petted Clawd' },
+        feed: { label: 'You fed Clawd' },
+        shoo: { label: 'Shooed Clawd away' },
+        'visit-code': { label: 'Browsed Coding pages' },
+        'visit-social': { label: 'Browsed Social media' },
+        'visit-gaming': { label: 'Browsed Gaming sites' },
+        'visit-news': { label: 'Browsed News pages' },
+        'visit-shopping': { label: 'Browsed Shopping sites' },
+        'visit-docs': { label: 'Browsed Documentation' },
+        'visit-mail': { label: 'Checked Email' },
+        'visit-fitness': { label: 'Browsed Fitness sites' }
       };
 
       if (history.length === 0) {
@@ -592,11 +587,10 @@ async function init(): Promise<void> {
         statsEl.timelineList.appendChild(placeholder);
       } else {
         history.slice(0, 10).forEach((item) => {
-          const fmt = EVENT_FORMATTERS[item.action] || { label: item.action, emoji: '🐾' };
+          const fmt = EVENT_FORMATTERS[item.action] || { label: item.action };
           const timelineItem = document.createElement('div');
           timelineItem.className = 'timeline-item';
           timelineItem.innerHTML = `
-            <span class="timeline-icon">${fmt.emoji}</span>
             <span class="timeline-content">${fmt.label}</span>
             <span class="timeline-time">${item.time}</span>
           `;
