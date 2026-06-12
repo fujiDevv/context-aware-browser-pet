@@ -176,23 +176,23 @@ async function init(): Promise<void> {
     // Unlock costume selections based on level
     settingsEl.optDetective.disabled = stats.level < 5;
     if (stats.level < 5) {
-      settingsEl.optDetective.textContent = '🕵️ Detective Hat (Locked - LVL 5)';
+      settingsEl.optDetective.textContent = '🕵️ Blue Detective Aura (Locked - LVL 5)';
     } else {
-      settingsEl.optDetective.textContent = '🕵️ Detective Hat';
+      settingsEl.optDetective.textContent = '🕵️ Blue Detective Aura';
     }
 
     settingsEl.optWizard.disabled = stats.level < 10;
     if (stats.level < 10) {
-      settingsEl.optWizard.textContent = '🧙 Wizard Hat (Locked - LVL 10)';
+      settingsEl.optWizard.textContent = '🧙 Magic Purple Aura (Locked - LVL 10)';
     } else {
-      settingsEl.optWizard.textContent = '🧙 Wizard Hat';
+      settingsEl.optWizard.textContent = '🧙 Magic Purple Aura';
     }
 
     settingsEl.optParty.disabled = stats.level < 15;
     if (stats.level < 15) {
-      settingsEl.optParty.textContent = '🎉 Party Cone (Locked - LVL 15)';
+      settingsEl.optParty.textContent = '🎉 Neon Rainbow Shader (Locked - LVL 15)';
     } else {
-      settingsEl.optParty.textContent = '🎉 Party Cone';
+      settingsEl.optParty.textContent = '🎉 Neon Rainbow Shader';
     }
 
     // Core attributes
