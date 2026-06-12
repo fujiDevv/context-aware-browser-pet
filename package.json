@@ -1,0 +1,16 @@
+{
+  "name": "browser-pet-extension",
+  "version": "1.0.0",
+  "description": "Context-aware browser pet extension using clawd-pet SVGs.",
+  "type": "module",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "build": "mkdir -p dist assets && esbuild content.ts --bundle --outfile=dist/content.js --format=iife --legal-comments=none && esbuild background.ts --bundle --outfile=dist/background.js --format=iife --legal-comments=none && esbuild popup/popup.ts --bundle --outfile=dist/popup/popup.js --format=iife --legal-comments=none && cp manifest.json dist/ && cp -r assets dist/ && mkdir -p dist/popup && cp popup/popup.html popup/popup.css dist/popup/",
+    "watch": "esbuild content.ts --bundle --outfile=dist/content.js --format=iife --legal-comments=none --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "^5.4.5",
+    "@types/chrome": "^0.0.268"
+  }
+}
