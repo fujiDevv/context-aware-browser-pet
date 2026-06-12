@@ -12,8 +12,11 @@ let audioCtx: AudioContext | null = null;
 let resumePromise: Promise<void> | null = null;
 
 function unlockAudio(e?: Event): void {
-  if (e && !e.isTrusted) return;
-  if (typeof navigator !== 'undefined' && navigator.userActivation && !navigator.userActivation.hasBeenActive) {
+  if (e) {
+    if (!e.isTrusted) return;
+    if (e.type === 'click' && (e as MouseEvent).button !== 0) return;
+  }
+  if (typeof navigator !== 'undefined' && navigator.userActivation && !navigator.userActivation.isActive) {
     return;
   }
   try {
@@ -31,16 +34,14 @@ function unlockAudio(e?: Event): void {
     } else {
       cleanUpListeners();
     }
-  } catch (e) {}
+  } catch (err) {}
 }
 
 function cleanUpListeners(): void {
   window.removeEventListener('click', unlockAudio, { capture: true });
-  window.removeEventListener('keydown', unlockAudio, { capture: true });
 }
 
 window.addEventListener('click', unlockAudio, { capture: true, passive: true });
-window.addEventListener('keydown', unlockAudio, { capture: true, passive: true });
 
 async function playSound(type: string): Promise<void> {
   const sounds: Record<string, string> = {
