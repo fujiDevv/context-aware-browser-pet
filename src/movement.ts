@@ -14,7 +14,7 @@ export class MovementEngine {
   wasDragged: boolean;
   _raf: number | null;
   hasFallen: boolean;
-  toyTarget: { x: number; element: HTMLElement; type: string; onReach: () => void } | null = null;
+  toyTargets: { x: number; element: HTMLElement; type: string; onReach: () => void }[] = [];
   cursorTargetX: number | null = null;
   _posAnimation: SpringAnimation | null = null;
 
@@ -89,6 +89,7 @@ export class MovementEngine {
 
   shoo(): void {
     this._stopPosAnimation();
+    this.clearToyTargets();
 
     const W = window.innerWidth - this.size;
     const H = window.innerHeight - this.size;
@@ -154,13 +155,13 @@ export class MovementEngine {
     const isNight = hour >= 22 || hour < 6;
     const currentSpeed = isNight ? this.speed * 0.5 : this.speed;
 
-    if (this.toyTarget) {
-      const targetX = this.toyTarget.x;
+    if (this.toyTargets.length > 0) {
+      const currentTarget = this.toyTargets[0];
+      const targetX = currentTarget.x;
       if (Math.abs(this.x - targetX) <= Math.max(currentSpeed, 2)) {
         this.x = targetX;
-        const callback = this.toyTarget.onReach;
-        this.toyTarget = null;
-        callback();
+        this.toyTargets.shift();
+        currentTarget.onReach();
       } else {
         this.direction = targetX > this.x ? 1 : -1;
         this.x += currentSpeed * this.direction;
@@ -191,11 +192,26 @@ export class MovementEngine {
     }
   }
 
-  setToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
+  addToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
     this._stopPosAnimation();
-    this.toyTarget = { x, element, type, onReach };
+    this.toyTargets.push({ x, element, type, onReach });
     this.cursorTargetX = null; // Clear cursor chase if a toy is dropped
     this.paused = false; // Resume if pet is currently paused
+  }
+
+  setToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
+    this._stopPosAnimation();
+    this.clearToyTargets();
+    this.addToyTarget(x, element, type, onReach);
+  }
+
+  clearToyTargets(): void {
+    this.toyTargets.forEach((target) => {
+      try {
+        target.element.remove();
+      } catch (e) {}
+    });
+    this.toyTargets = [];
   }
 
   chaseCursor(x: number): void {
@@ -240,6 +256,7 @@ export class MovementEngine {
     const onMouseDown = (e: MouseEvent) => {
       if (e.button !== 0) return;
       
+      this.clearToyTargets();
       this.isDragging = true;
       this.wasDragged = false;
       hasMoved = false;

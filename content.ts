@@ -615,12 +615,6 @@ function applyCostume(): void {
 }
 
 function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
-  if (movement.toyTarget) {
-    try {
-      movement.toyTarget.element.remove();
-    } catch (e) {}
-  }
-
   const toyEl = document.createElement('div');
   toyEl.className = 'browser-pet-toy';
   const emojis: Record<string, string> = { ball: '⚽', fish: '🐟', laser: '🔴', yarn: '🧶', duck: '🦆', box: '📦' };
@@ -642,7 +636,7 @@ function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
     damping: 10
   });
 
-  movement.setToyTarget(dropX - currentSettings.size / 2, toyEl, toyType, () => {
+  movement.addToyTarget(dropX - currentSettings.size / 2, toyEl, toyType, () => {
     playWithToy(toyType, toyEl);
   });
 }
