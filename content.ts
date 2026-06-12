@@ -11,7 +11,11 @@ let emotionInterval: any = null;
 let audioCtx: AudioContext | null = null;
 let resumePromise: Promise<void> | null = null;
 
-function unlockAudio(): void {
+function unlockAudio(e?: Event): void {
+  if (e && !e.isTrusted) return;
+  if (typeof navigator !== 'undefined' && navigator.userActivation && !navigator.userActivation.hasBeenActive) {
+    return;
+  }
   try {
     if (!audioCtx) {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -33,12 +37,10 @@ function unlockAudio(): void {
 function cleanUpListeners(): void {
   window.removeEventListener('click', unlockAudio, { capture: true });
   window.removeEventListener('keydown', unlockAudio, { capture: true });
-  window.removeEventListener('touchstart', unlockAudio, { capture: true });
 }
 
 window.addEventListener('click', unlockAudio, { capture: true, passive: true });
 window.addEventListener('keydown', unlockAudio, { capture: true, passive: true });
-window.addEventListener('touchstart', unlockAudio, { capture: true, passive: true });
 
 async function playSound(type: string): Promise<void> {
   const sounds: Record<string, string> = {
