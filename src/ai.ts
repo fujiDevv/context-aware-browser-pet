@@ -3,7 +3,8 @@ export async function getAiEmotion(
   metaDescription: string | undefined,
   apiKey: string,
   persona: string,
-  statsContext?: string
+  statsContext?: string,
+  sentimentSensitivity?: number
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   try {
     const response = await new Promise<any>((resolve, reject) => {
@@ -13,7 +14,8 @@ export async function getAiEmotion(
           pageTitle,
           metaDescription,
           persona,
-          statsContext
+          statsContext,
+          sentimentSensitivity
         },
         (res) => {
           if (chrome.runtime.lastError) {

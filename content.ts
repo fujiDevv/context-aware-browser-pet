@@ -549,17 +549,29 @@ async function updateEmotion(): Promise<void> {
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
   } else if (scheduleEnabled && currentSettings.aiMode && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
-      const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
-      const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
-      const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default', statsContext);
-      nextEmotion = result.emotion;
-      aiComment = result.comment;
-      currentAiCategory = result.category;
-      currentAiSentiment = result.sentiment;
-      hasEvaluatedPageAi = true;
+      const storedTime = await chrome.storage.local.get('last-ai-comment-time');
+      const lastCommentTime = storedTime['last-ai-comment-time'] || 0;
+      const freqSec = currentSettings.commentFrequency ?? 60;
+      const now = Date.now();
       
-      if (scheduleEnabled && currentAiCategory) {
-        personality.recordSiteVisit(currentAiCategory, currentAiSentiment);
+      if (now - lastCommentTime >= freqSec * 1000) {
+        await chrome.storage.local.set({ 'last-ai-comment-time': now });
+        
+        const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
+        const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
+        const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity);
+        nextEmotion = result.emotion;
+        aiComment = result.comment;
+        currentAiCategory = result.category;
+        currentAiSentiment = result.sentiment;
+        hasEvaluatedPageAi = true;
+        
+        if (scheduleEnabled && currentAiCategory) {
+          personality.recordSiteVisit(currentAiCategory, currentAiSentiment);
+        }
+      } else {
+        hasEvaluatedPageAi = true; // Prevent spamming within same page session
+        nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
       }
     } else {
       nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);

@@ -3,6 +3,13 @@ export interface MoodHistoryItem {
   time: string;
 }
 
+export interface DailyMoodRecord {
+  date: string;
+  happiness: number;
+  energy: number;
+  count: number;
+}
+
 export interface PetStats {
   happiness: number;
   energy: number;
@@ -18,6 +25,8 @@ export interface PetStats {
   lastUpdateTime?: number;
   prestige?: number;
   lastHabitDecayTime?: number;
+  siteCategoryHistory?: Record<string, Record<string, number>>;
+  dailyMoodHistory?: DailyMoodRecord[];
 }
 
 export interface DomainReaction {
@@ -50,6 +59,8 @@ export interface PetSettings {
   focusStartHour?: number;
   focusEndHour?: number;
   domainReactions?: DomainReaction[];
+  sentimentSensitivity?: number;
+  commentFrequency?: number;
 }
 
 export interface SharedPetState {

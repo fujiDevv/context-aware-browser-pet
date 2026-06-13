@@ -262,6 +262,24 @@
             </div>
           </div>
 
+          <!-- Interests History Chart -->
+          <div class="analytics-card chart-card" style="grid-column: 1 / -1;">
+            <h2>Interests History (Last 7 Days)</h2>
+            <p class="section-subtitle">Category breakdown over the last 7 days.</p>
+            <div id="interests-history-chart" class="category-chart-list" style="margin-top: 16px;">
+              <!-- Dynamically populated rows -->
+            </div>
+          </div>
+
+          <!-- Mood Over Time Chart -->
+          <div class="analytics-card chart-card" style="grid-column: 1 / -1;">
+            <h2>Mood Over Time</h2>
+            <p class="section-subtitle">Average daily Happiness and Energy.</p>
+            <div id="mood-history-chart" style="margin-top: 16px; display: flex; justify-content: center; width: 100%; min-height: 250px;">
+              <!-- SVG dynamically generated -->
+            </div>
+          </div>
+
           <!-- Counter Card -->
           <div class="analytics-card count-card">
             <h2>Lifetime Metrics</h2>
@@ -359,6 +377,22 @@
                     <input type="checkbox" id="ai-toggle">
                     <span class="switch-slider"></span>
                   </label>
+                </div>
+
+                <div class="form-group hidden" id="ai-tuning-container" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; width: 100%;">
+                  <h4 style="margin-bottom: 12px; color: var(--text-color);">Local AI Fine-Tuning</h4>
+                  
+                  <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="ai-sensitivity-slider">Sentiment Sensitivity (<span id="ai-sensitivity-val">50%</span>)</label>
+                    <input type="range" id="ai-sensitivity-slider" min="0" max="100" value="50" class="slider">
+                    <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Adjusts how easily the Local AI registers page sentiment.</p>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="ai-frequency-slider">Comment Frequency (<span id="ai-frequency-val">60s</span>)</label>
+                    <input type="range" id="ai-frequency-slider" min="15" max="600" step="15" value="60" class="slider">
+                    <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often Clawd makes AI-derived observations.</p>
+                  </div>
                 </div>
               </div>
 

@@ -105,7 +105,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'get-local-ai-emotion') {
-    const { pageTitle, metaDescription, persona, statsContext } = message;
+    const { pageTitle, metaDescription, persona, statsContext, sentimentSensitivity } = message;
     const tabUrl = sender.tab?.url || '';
 
     setupOffscreen()
@@ -117,6 +117,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             metaDescription,
             persona,
             statsContext,
+            sentimentSensitivity,
             url: tabUrl
           },
           (res) => {

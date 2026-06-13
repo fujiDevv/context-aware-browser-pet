@@ -111,6 +111,13 @@ const volumeContainer = document.getElementById('volume-container') as HTMLEleme
 const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
 const volumeVal = document.getElementById('volume-val') as HTMLElement;
 
+// AI Tuning
+const aiTuningContainer = document.getElementById('ai-tuning-container') as HTMLElement;
+const aiSensitivitySlider = document.getElementById('ai-sensitivity-slider') as HTMLInputElement;
+const aiSensitivityVal = document.getElementById('ai-sensitivity-val') as HTMLElement;
+const aiFrequencySlider = document.getElementById('ai-frequency-slider') as HTMLInputElement;
+const aiFrequencyVal = document.getElementById('ai-frequency-val') as HTMLElement;
+
 // Sleep/Wake & Focus Planner Inputs
 const sleepStartSelect = document.getElementById('sleep-start-select') as HTMLSelectElement;
 const sleepEndSelect = document.getElementById('sleep-end-select') as HTMLSelectElement;
@@ -255,8 +262,23 @@ async function init() {
   });
 
   aiToggle.addEventListener('change', () => {
+    if (aiToggle.checked) {
+      aiTuningContainer.classList.remove('hidden');
+    } else {
+      aiTuningContainer.classList.add('hidden');
+    }
     saveSettings();
     updateLocalAiStatus();
+  });
+
+  aiSensitivitySlider.addEventListener('input', () => {
+    aiSensitivityVal.textContent = `${aiSensitivitySlider.value}%`;
+    saveSettings();
+  });
+
+  aiFrequencySlider.addEventListener('input', () => {
+    aiFrequencyVal.textContent = `${aiFrequencySlider.value}s`;
+    saveSettings();
   });
 
   scheduleToggle.addEventListener('change', saveSettings);
@@ -529,6 +551,7 @@ function updateUIStats(stats: PetStats | undefined): void {
 
   // Interest breakdown
   renderCategoriesChart(stats.siteCategoryCounts);
+  renderAnalyticsCharts(stats);
 
   // Timeline list
   renderTimeline(stats.moodHistory);
@@ -678,6 +701,18 @@ function applySettings(settings: PetSettings | undefined) {
   volumeVal.textContent = `${Math.round(volume * 100)}%`;
 
   aiToggle.checked = activeSettings.aiMode ?? false;
+  if (aiToggle.checked) {
+    aiTuningContainer.classList.remove('hidden');
+  } else {
+    aiTuningContainer.classList.add('hidden');
+  }
+
+  aiSensitivitySlider.value = String(activeSettings.sentimentSensitivity ?? 50);
+  aiSensitivityVal.textContent = `${aiSensitivitySlider.value}%`;
+
+  aiFrequencySlider.value = String(activeSettings.commentFrequency ?? 60);
+  aiFrequencyVal.textContent = `${aiFrequencySlider.value}s`;
+
   scheduleToggle.checked = activeSettings.scheduleEnabled ?? true;
   seasonalToggle.checked = activeSettings.seasonalEnabled ?? true;
 
@@ -718,7 +753,9 @@ function saveSettings() {
       focusActive: focusActiveToggle.checked,
       focusStartHour: focusStartSelect.value !== '' ? Number(focusStartSelect.value) : undefined,
       focusEndHour: focusEndSelect.value !== '' ? Number(focusEndSelect.value) : undefined,
-      domainReactions: domainReactions
+      domainReactions: domainReactions,
+      sentimentSensitivity: Number(aiSensitivitySlider.value),
+      commentFrequency: Number(aiFrequencySlider.value)
     }
   });
 }
@@ -1090,6 +1127,102 @@ function populateHourSelects() {
       select.appendChild(opt);
     }
   });
+}
+
+function renderAnalyticsCharts(stats: any) {
+  // 1. Render Interests History Bar Chart (Last 7 Days)
+  const historyChartContainer = document.getElementById('interests-history-chart');
+  if (historyChartContainer) {
+    historyChartContainer.innerHTML = '';
+    const history = stats.siteCategoryHistory || {};
+    // Sum up categories over the last 7 days
+    const categoryTotals: Record<string, number> = {};
+    for (const date in history) {
+      for (const cat in history[date]) {
+        categoryTotals[cat] = (categoryTotals[cat] || 0) + history[date][cat];
+      }
+    }
+    
+    const entries = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1]);
+    const maxVal = entries.length ? entries[0][1] : 0;
+    
+    if (entries.length === 0) {
+      historyChartContainer.innerHTML = '<div class="empty-msg" style="color: var(--text-muted); padding: 12px 0;">No history data found for the last 7 days.</div>';
+    } else {
+      entries.forEach(([category, count]) => {
+        const pct = Math.round((count / maxVal) * 100);
+        const row = document.createElement('div');
+        row.className = 'category-row';
+        row.innerHTML = `
+          <div class="category-name">${category} <span class="category-count">${count}</span></div>
+          <div class="category-bar-track">
+            <div class="category-bar-fill" style="width: ${pct}%;"></div>
+          </div>
+        `;
+        historyChartContainer.appendChild(row);
+      });
+    }
+  }
+
+  // 2. Render Mood Over Time SVG Line Chart
+  const moodChartContainer = document.getElementById('mood-history-chart');
+  if (moodChartContainer) {
+    const dailyMoods = stats.dailyMoodHistory || [];
+    if (dailyMoods.length < 2) {
+      moodChartContainer.innerHTML = '<div class="empty-msg" style="align-self: center; color: var(--text-muted);">Not enough daily data to chart. Check back tomorrow!</div>';
+      return;
+    }
+
+    // Sort by date ascending
+    const sortedMoods = [...dailyMoods].sort((a: any, b: any) => a.date.localeCompare(b.date));
+    
+    const width = 500;
+    const height = 200;
+    const padding = 25; // increased padding to fit labels
+    const chartWidth = width - padding * 2;
+    const chartHeight = height - padding * 2;
+    
+    // X axis steps
+    const stepX = chartWidth / (Math.max(1, sortedMoods.length - 1));
+    
+    let happinessPoints = '';
+    let energyPoints = '';
+    
+    sortedMoods.forEach((record: any, index: number) => {
+      const x = padding + index * stepX;
+      // y is inverted (100 is at top)
+      const yHappiness = padding + chartHeight - (record.happiness / 100) * chartHeight;
+      const yEnergy = padding + chartHeight - (record.energy / 100) * chartHeight;
+      
+      happinessPoints += `${x},${yHappiness} `;
+      energyPoints += `${x},${yEnergy} `;
+    });
+    
+    moodChartContainer.innerHTML = `
+      <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" style="max-width: 100%;">
+        <!-- Grid lines -->
+        <line x1="${padding}" y1="${padding}" x2="${width - padding}" y2="${padding}" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4" />
+        <line x1="${padding}" y1="${padding + chartHeight / 2}" x2="${width - padding}" y2="${padding + chartHeight / 2}" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4" />
+        <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4" />
+        
+        <!-- Y Axis Labels -->
+        <text x="${padding - 5}" y="${padding + 4}" fill="var(--text-muted)" font-size="10" text-anchor="end">100</text>
+        <text x="${padding - 5}" y="${padding + chartHeight / 2 + 4}" fill="var(--text-muted)" font-size="10" text-anchor="end">50</text>
+        <text x="${padding - 5}" y="${height - padding + 4}" fill="var(--text-muted)" font-size="10" text-anchor="end">0</text>
+        
+        <!-- Lines -->
+        <polyline points="${happinessPoints}" fill="none" stroke="var(--pink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${energyPoints}" fill="none" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        
+        <!-- Legend -->
+        <rect x="${width - padding - 85}" y="5" width="80" height="35" rx="4" fill="var(--bg-card)" opacity="0.8" />
+        <circle cx="${width - padding - 75}" cy="15" r="4" fill="var(--pink)" />
+        <text x="${width - padding - 65}" y="19" fill="var(--text-color)" font-size="10">Happiness</text>
+        <circle cx="${width - padding - 75}" cy="31" r="4" fill="var(--yellow)" />
+        <text x="${width - padding - 65}" y="35" fill="var(--text-color)" font-size="10">Energy</text>
+      </svg>
+    `;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);

@@ -103,7 +103,30 @@ export class PersonalitySystem {
     await this.isLoaded;
     this._applyDecay();
     this._applyHabitDecay();
+    this._recordDailyMood();
     await this._save();
+  }
+
+  _recordDailyMood(): void {
+    const today = new Date().toISOString().split('T')[0];
+    if (!this.stats.dailyMoodHistory) {
+      this.stats.dailyMoodHistory = [];
+    }
+    
+    let record = this.stats.dailyMoodHistory.find(r => r.date === today);
+    if (!record) {
+      record = { date: today, happiness: this.stats.happiness, energy: this.stats.energy, count: 1 };
+      this.stats.dailyMoodHistory.push(record);
+    } else {
+      record.happiness = Math.round((record.happiness * record.count + this.stats.happiness) / (record.count + 1));
+      record.energy = Math.round((record.energy * record.count + this.stats.energy) / (record.count + 1));
+      record.count++;
+    }
+
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const cutoffDate = sevenDaysAgo.toISOString().split('T')[0];
+    this.stats.dailyMoodHistory = this.stats.dailyMoodHistory.filter(r => r.date >= cutoffDate);
   }
 
   async _load(): Promise<PetStats> {
@@ -232,6 +255,27 @@ export class PersonalitySystem {
       this.stats.siteCategoryCounts = {};
     }
     this.stats.siteCategoryCounts[category] = (this.stats.siteCategoryCounts[category] || 0) + 1;
+    
+    // Record 7-day history
+    if (!this.stats.siteCategoryHistory) {
+      this.stats.siteCategoryHistory = {};
+    }
+    const today = new Date().toISOString().split('T')[0];
+    if (!this.stats.siteCategoryHistory[today]) {
+      this.stats.siteCategoryHistory[today] = {};
+    }
+    this.stats.siteCategoryHistory[today][category] = (this.stats.siteCategoryHistory[today][category] || 0) + 1;
+    
+    // Prune history older than 7 days
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const cutoffDate = sevenDaysAgo.toISOString().split('T')[0];
+    for (const dateKey in this.stats.siteCategoryHistory) {
+      if (dateKey < cutoffDate) {
+        delete this.stats.siteCategoryHistory[dateKey];
+      }
+    }
+
     this._recordMoodEvent('visit-' + category);
 
     await this._save();

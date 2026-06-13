@@ -624,7 +624,8 @@ async function getLocalAiEmotion(
   metaDescription: string | undefined,
   url: string,
   persona: string,
-  statsContext?: string
+  statsContext?: string,
+  sentimentSensitivity: number = 50
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   if (modelLoadingState === 'loading' || modelLoadingState === 'idle') {
     return {
@@ -670,7 +671,10 @@ async function getLocalAiEmotion(
     if (results && results.length > 0) {
       const topResult = results[0];
       score = topResult.score;
-      if (score > 0.65) {
+      // Default sensitivity is 50, which maps to a threshold of ~0.65
+      // 0 sensitivity = 0.90 threshold, 100 sensitivity = 0.50 threshold
+      const threshold = 0.90 - (sentimentSensitivity / 100) * 0.40;
+      if (score > threshold) {
         sentiment = topResult.label as 'POSITIVE' | 'NEGATIVE';
       }
     }
@@ -695,9 +699,9 @@ async function getLocalAiEmotion(
 // Set up Chrome runtime message listener in the offscreen document
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'run-local-ai-inference') {
-    const { pageTitle, metaDescription, persona, statsContext, url } = message;
+    const { pageTitle, metaDescription, persona, statsContext, sentimentSensitivity, url } = message;
     
-    getLocalAiEmotion(pageTitle, metaDescription, url, persona || 'default', statsContext)
+    getLocalAiEmotion(pageTitle, metaDescription, url, persona || 'default', statsContext, sentimentSensitivity)
       .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment, category: result.category, sentiment: result.sentiment }))
       .catch((err) => {
         console.error('Error in local AI emotion processing:', err);
