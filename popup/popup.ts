@@ -235,6 +235,68 @@ async function init(): Promise<void> {
     });
   }
 
+  const btnExport = document.getElementById('btn-export');
+  if (btnExport) {
+    btnExport.addEventListener('click', async () => {
+      const data = await chrome.storage.local.get(['pet-stats', 'pet-settings']);
+      const exportData = {
+        version: 'v1.1.0',
+        stats: data['pet-stats'] || {},
+        settings: data['pet-settings'] || {}
+      };
+      
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      const petName = exportData.settings.name || 'clawd';
+      a.download = `${petName.toLowerCase()}-profile.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  const btnImport = document.getElementById('btn-import');
+  const fileImport = document.getElementById('file-import') as HTMLInputElement;
+  if (btnImport && fileImport) {
+    btnImport.addEventListener('click', () => {
+      fileImport.click();
+    });
+
+    fileImport.addEventListener('change', (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        try {
+          const imported = JSON.parse(event.target?.result as string);
+          if (imported.stats && imported.settings) {
+            const confirmed = confirm("Are you sure you want to import this profile? This will overwrite your current settings, levels, and stats.");
+            if (!confirmed) return;
+
+            await chrome.storage.local.set({
+              'pet-stats': imported.stats,
+              'pet-settings': imported.settings
+            });
+
+            alert("Profile imported successfully! Reloading...");
+            window.location.reload();
+          } else {
+            alert("Invalid profile file format. The file must contain stats and settings.");
+          }
+        } catch (err) {
+          alert("Failed to parse JSON file.");
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
+
   const tabHideToggle = document.getElementById('tab-hide-toggle') as HTMLInputElement;
   const siteHideToggle = document.getElementById('site-hide-toggle') as HTMLInputElement;
   const siteSubtitle = document.getElementById('site-visibility-subtitle') as HTMLElement;

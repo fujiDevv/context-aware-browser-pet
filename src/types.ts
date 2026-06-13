@@ -17,6 +17,7 @@ export interface PetStats {
   siteCategoryCounts?: Record<string, number>;
   lastUpdateTime?: number;
   prestige?: number;
+  lastHabitDecayTime?: number;
 }
 
 export interface PetSettings {

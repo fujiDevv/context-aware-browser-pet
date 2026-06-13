@@ -12,7 +12,8 @@ const DEFAULT_STATS: PetStats = {
   xp: 0,
   moodHistory: [],
   siteCategoryCounts: {},
-  prestige: 0
+  prestige: 0,
+  lastHabitDecayTime: 0
 };
 
 export class PersonalitySystem {
@@ -66,9 +67,42 @@ export class PersonalitySystem {
     this.stats.leisure = Math.max(15, Math.round(this.stats.leisure - leisureDecay));
   }
 
+  _applyHabitDecay(): void {
+    const now = Date.now();
+    if (!this.stats.lastHabitDecayTime) {
+      this.stats.lastHabitDecayTime = now;
+      return;
+    }
+
+    const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+    const elapsed = now - this.stats.lastHabitDecayTime;
+
+    if (elapsed >= sevenDaysMs) {
+      const weeksElapsed = Math.floor(elapsed / sevenDaysMs);
+      
+      if (this.stats.siteCategoryCounts) {
+        const decayFactor = Math.pow(0.95, weeksElapsed);
+        
+        for (const category in this.stats.siteCategoryCounts) {
+          if (Object.prototype.hasOwnProperty.call(this.stats.siteCategoryCounts, category)) {
+            const decayedVal = this.stats.siteCategoryCounts[category] * decayFactor;
+            if (decayedVal < 0.1) {
+              delete this.stats.siteCategoryCounts[category];
+            } else {
+              this.stats.siteCategoryCounts[category] = decayedVal;
+            }
+          }
+        }
+      }
+      
+      this.stats.lastHabitDecayTime += weeksElapsed * sevenDaysMs;
+    }
+  }
+
   async _periodicDecay(): Promise<void> {
     await this.isLoaded;
     this._applyDecay();
+    this._applyHabitDecay();
     await this._save();
   }
 
@@ -83,6 +117,7 @@ export class PersonalitySystem {
       }
 
       this._applyDecay();
+      this._applyHabitDecay();
       this.stats.lastUpdateTime = Date.now();
       await this._save();
 
