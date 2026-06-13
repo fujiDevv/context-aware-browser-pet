@@ -1023,20 +1023,26 @@ async function init(): Promise<void> {
     showPet();
   }
 
-  safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
-    if (sharedState && sharedState.y !== 0) {
-      movement.syncState(sharedState);
+  safeSendMessage({ type: 'get-tab-http-error' }, (response: { errorCode?: number } | undefined) => {
+    if (response && response.errorCode) {
+      triggers.setHttpError(response.errorCode);
     }
-    updateEmotion();
-    
-    if (isPetHidden()) {
-      hidePet();
-    } else {
-      movement.start();
-      const petName = currentSettings.name || 'Clawd';
-      showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
-      playSound('greeting');
-    }
+
+    safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
+      if (sharedState && sharedState.y !== 0) {
+        movement.syncState(sharedState);
+      }
+      updateEmotion();
+      
+      if (isPetHidden()) {
+        hidePet();
+      } else {
+        movement.start();
+        const petName = currentSettings.name || 'Clawd';
+        showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
+        playSound('greeting');
+      }
+    });
   });
   
   emotionInterval = setInterval(() => {

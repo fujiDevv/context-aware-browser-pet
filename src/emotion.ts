@@ -212,7 +212,8 @@ export class EmotionEngine {
       rocket: 'happy',
       pirate: 'sad',
       'working-juggling': 'happy',
-      gaming: 'happy'
+      gaming: 'happy',
+      money: 'happy'
     };
 
     return fallbacks[emotion] || this.personality.defaultEmotion();

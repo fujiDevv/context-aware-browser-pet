@@ -9,10 +9,8 @@ let sharedPetState: SharedPetState = {
   emotion: 'happy'
 };
 
-/**
- * Opens the onboarding page in a new tab on first install.
- * Passes the extension version as a query parameter for display.
- */
+const tabHttpErrors: Record<number, number> = {};
+
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install' || details.reason === 'update') {
     const version = chrome.runtime.getManifest().version;
@@ -25,6 +23,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 chrome.webRequest.onCompleted.addListener(
   (details) => {
     if (details.statusCode >= 400 && details.frameId === 0) {
+      tabHttpErrors[details.tabId] = details.statusCode;
       chrome.tabs.sendMessage(details.tabId, {
         type: 'http-error',
         code: details.statusCode,
@@ -35,6 +34,16 @@ chrome.webRequest.onCompleted.addListener(
   { urls: ['<all_urls>'], types: ['main_frame'] }
 );
 
+chrome.tabs.onRemoved.addListener((tabId) => {
+  delete tabHttpErrors[tabId];
+});
+
+chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+  if (details.frameId === 0) {
+    delete tabHttpErrors[details.tabId];
+  }
+});
+
 chrome.webNavigation.onCommitted.addListener((details) => {
   if (details.frameId === 0) {
     chrome.tabs.sendMessage(details.tabId, { type: 'navigation' }).catch(() => {
@@ -43,6 +52,13 @@ chrome.webNavigation.onCommitted.addListener((details) => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'get-tab-http-error') {
+    const tabId = sender.tab?.id;
+    const errorCode = tabId ? tabHttpErrors[tabId] : undefined;
+    sendResponse({ errorCode });
+    return false;
+  }
+
   if (message.type === 'get-pet-state') {
     sendResponse(sharedPetState);
     return false;
@@ -50,7 +66,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'update-pet-state') {
     sharedPetState = { ...sharedPetState, ...message.state };
-    
+
     chrome.tabs.query({}, (tabs) => {
       tabs.forEach((tab) => {
         if (sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
@@ -62,21 +78,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
       });
     });
-    
+
     sendResponse({ success: true });
     return false;
   }
 
   if (message.type === 'get-ai-emotion') {
     const { pageTitle, metaDescription, apiKey, persona, statsContext } = message;
-    
+
     fetchAiEmotion(pageTitle, metaDescription, apiKey, persona || 'default', statsContext)
       .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment }))
       .catch((err) => {
         console.error('Error fetching AI emotion in background:', err);
         sendResponse({ success: false, error: err.message });
       });
-      
+
     return true;
   }
 });

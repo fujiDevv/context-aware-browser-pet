@@ -236,7 +236,8 @@ export class PersonalitySystem {
     const freePassEmotions = [
       'battery-low', 'christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing', 'skateboard',
       'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'mail', 'notification', 'flexing',
-      'lifting', 'singing', 'music', 'dj', 'eating', 'studying', 'crying', 'sad', 'happy', 'waving', 'sleeping'
+      'lifting', 'singing', 'music', 'dj', 'eating', 'studying', 'crying', 'sad', 'happy', 'waving', 'sleeping',
+      'money'
     ];
     if (freePassEmotions.includes(emotion)) return true;
 
