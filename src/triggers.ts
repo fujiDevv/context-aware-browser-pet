@@ -59,68 +59,85 @@ export class TriggerDetector {
     this._hasConsoleError = false;
   }
 
-  _bindEvents(): void {
-    const resetIdle = () => {
-      this._lastInput = Date.now();
-    };
-    
-    document.addEventListener('mousemove', (e: MouseEvent) => {
-      resetIdle();
-      this._mouseX = e.clientX;
-      this._lastMouseMove = Date.now();
-    }, { passive: true });
+  private _resetIdle = (): void => {
+    this._lastInput = Date.now();
+  };
 
-    document.addEventListener('keydown', resetIdle, { passive: true });
-    document.addEventListener('scroll', resetIdle, { passive: true });
-    document.addEventListener('click', resetIdle, { passive: true });
+  private _onMouseMove = (e: MouseEvent): void => {
+    this._resetIdle();
+    this._mouseX = e.clientX;
+    this._lastMouseMove = Date.now();
+  };
 
-    document.addEventListener('keydown', () => {
-      this._keyCount++;
-      clearTimeout(this._keyTimer);
-      this._keyTimer = setTimeout(() => {
-        this._keyCount = 0;
-      }, 5000);
-    }, { passive: true });
+  private _onKeyDown = (): void => {
+    this._resetIdle();
+  };
 
-    document.addEventListener('submit', () => {
-      this._isSubmitting = true;
-      setTimeout(() => {
-        this._isSubmitting = false;
-      }, 3000);
-    }, { passive: true });
+  private _onScroll = (): void => {
+    this._resetIdle();
+  };
 
-    window.addEventListener('message', (event) => {
-      if (event.data && event.data.type === 'PET_PAGE_ERROR') {
-        this._hasConsoleError = true;
-        window.dispatchEvent(new CustomEvent('pet-console-error'));
-      }
-    });
+  private _onClick = (): void => {
+    this._resetIdle();
+  };
 
-    window.addEventListener('error', () => {
+  private _onKeyDownHeavy = (): void => {
+    this._keyCount++;
+    clearTimeout(this._keyTimer);
+    this._keyTimer = setTimeout(() => {
+      this._keyCount = 0;
+    }, 5000);
+  };
+
+  private _onSubmit = (): void => {
+    this._isSubmitting = true;
+    setTimeout(() => {
+      this._isSubmitting = false;
+    }, 3000);
+  };
+
+  private _onMessage = (event: MessageEvent): void => {
+    if (event.data && event.data.type === 'PET_PAGE_ERROR') {
       this._hasConsoleError = true;
       window.dispatchEvent(new CustomEvent('pet-console-error'));
+    }
+  };
+
+  private _onError = (): void => {
+    this._hasConsoleError = true;
+    window.dispatchEvent(new CustomEvent('pet-console-error'));
+  };
+
+  private _updateVideoState = (e?: Event): void => {
+    const target = e?.target as HTMLVideoElement;
+    if (target && target.tagName === 'VIDEO') {
+      if (e?.type === 'play' || e?.type === 'playing') {
+        this._isVideo = true;
+        return;
+      }
+    }
+    const videos = document.querySelectorAll('video');
+    this._isVideo = Array.from(videos).some(video => {
+      return !video.paused && !video.ended && video.readyState > 2;
     });
+  };
+
+  _bindEvents(): void {
+    document.addEventListener('mousemove', this._onMouseMove, { passive: true });
+    document.addEventListener('keydown', this._onKeyDown, { passive: true });
+    document.addEventListener('scroll', this._onScroll, { passive: true });
+    document.addEventListener('click', this._onClick, { passive: true });
+    document.addEventListener('keydown', this._onKeyDownHeavy, { passive: true });
+    document.addEventListener('submit', this._onSubmit, { passive: true });
+    window.addEventListener('message', this._onMessage as any);
+    window.addEventListener('error', this._onError);
   }
 
   _watchVideo(): void {
-    const updateVideoState = (e?: Event) => {
-      const target = e?.target as HTMLVideoElement;
-      if (target && target.tagName === 'VIDEO') {
-        if (e?.type === 'play' || e?.type === 'playing') {
-          this._isVideo = true;
-          return;
-        }
-      }
-      const videos = document.querySelectorAll('video');
-      this._isVideo = Array.from(videos).some(video => {
-        return !video.paused && !video.ended && video.readyState > 2;
-      });
-    };
-    
-    document.addEventListener('play', updateVideoState, true);
-    document.addEventListener('playing', updateVideoState, true);
-    document.addEventListener('pause', updateVideoState, true);
-    document.addEventListener('ended', updateVideoState, true);
+    document.addEventListener('play', this._updateVideoState, true);
+    document.addEventListener('playing', this._updateVideoState, true);
+    document.addEventListener('pause', this._updateVideoState, true);
+    document.addEventListener('ended', this._updateVideoState, true);
   }
 
   _scrollDepth(): number {
@@ -128,5 +145,23 @@ export class TriggerDetector {
     const totalHeight = doc.scrollHeight - window.innerHeight;
     if (totalHeight <= 0) return 0;
     return doc.scrollTop / totalHeight;
+  }
+
+  cleanup(): void {
+    document.removeEventListener('mousemove', this._onMouseMove);
+    document.removeEventListener('keydown', this._onKeyDown);
+    document.removeEventListener('scroll', this._onScroll);
+    document.removeEventListener('click', this._onClick);
+    document.removeEventListener('keydown', this._onKeyDownHeavy);
+    document.removeEventListener('submit', this._onSubmit);
+    window.removeEventListener('message', this._onMessage as any);
+    window.removeEventListener('error', this._onError);
+
+    document.removeEventListener('play', this._updateVideoState, true);
+    document.removeEventListener('playing', this._updateVideoState, true);
+    document.removeEventListener('pause', this._updateVideoState, true);
+    document.removeEventListener('ended', this._updateVideoState, true);
+
+    clearTimeout(this._keyTimer);
   }
 }

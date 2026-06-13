@@ -119,10 +119,43 @@ async function playSound(type: string): Promise<void> {
 function cleanupOrphanedScript(): void {
   clearInterval(syncInterval);
   clearInterval(emotionInterval);
-  movement.stop();
+  
+  try {
+    movement.stop();
+  } catch (e) {}
+
+  try {
+    triggers.cleanup();
+  } catch (e) {}
+
+  // Remove window and document listeners
+  window.removeEventListener('click', unlockAudio, { capture: true });
+  window.removeEventListener('dragover', handleDragOver);
+  window.removeEventListener('drop', handleDrop);
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+  window.removeEventListener('pet-console-error', handleConsoleError);
+
+  // Remove chrome API listeners
+  try {
+    chrome.storage.onChanged.removeListener(handleStorageChanged);
+  } catch (e) {}
+
+  try {
+    chrome.runtime.onMessage.removeListener(handleRuntimeMessage);
+  } catch (e) {}
+
+  // Remove petImg listeners explicitly
+  try {
+    petImg.removeEventListener('contextmenu', handleContextMenu);
+    petImg.removeEventListener('mousedown', handleMouseDown);
+    petImg.removeEventListener('mouseenter', handleMouseEnter);
+    petImg.removeEventListener('mouseleave', handleMouseLeave);
+  } catch (e) {}
+
   try {
     container.remove();
   } catch (e) {}
+  
   console.log("Browser Pet: Old extension context invalidated. Injected mascot cleaned up.");
 }
 
@@ -690,13 +723,6 @@ function handleShoo(e: Event) {
   playSound('shoo');
 }
 
-petImg.addEventListener('contextmenu', handleShoo);
-petImg.addEventListener('mousedown', (e) => {
-  if (e.button === 2) {
-    handleShoo(e);
-  }
-});
-
 function triggerInteraction(action: string, temporaryMood: string, duration: number, message: string): void {
   isTemporarilyInteracting = true;
   clearTimeout(interactionTimeout);
@@ -735,8 +761,17 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
   }, duration);
 }
 
-// Hover reactions (native WAAPI spring-like keyframes)
-petImg.addEventListener('mouseenter', () => {
+function handleContextMenu(e: MouseEvent) {
+  handleShoo(e);
+}
+
+function handleMouseDown(e: MouseEvent) {
+  if (e.button === 2) {
+    handleShoo(e);
+  }
+}
+
+function handleMouseEnter() {
   if (isPetHidden()) return;
   petImg.animate([
     { transform: 'scale(1) rotate(0deg)' },
@@ -744,16 +779,21 @@ petImg.addEventListener('mouseenter', () => {
     { transform: 'scale(1.12) rotate(4deg)' },
     { transform: 'scale(1.15) rotate(5deg)' }
   ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
-});
+}
 
-petImg.addEventListener('mouseleave', () => {
+function handleMouseLeave() {
   if (isPetHidden()) return;
   petImg.animate([
     { transform: 'scale(1.15) rotate(5deg)' },
     { transform: 'scale(0.97) rotate(-1deg)' },
     { transform: 'scale(1) rotate(0deg)' }
   ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
-});
+}
+
+petImg.addEventListener('contextmenu', handleContextMenu);
+petImg.addEventListener('mousedown', handleMouseDown);
+petImg.addEventListener('mouseenter', handleMouseEnter);
+petImg.addEventListener('mouseleave', handleMouseLeave);
 
 function applyCostume(): void {
   // Clean up any old hat element that might have been loaded
@@ -850,14 +890,13 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
   }, 2000);
 }
 
-// Window Drag and Drop Listeners for Toys
-window.addEventListener('dragover', (e: DragEvent) => {
+function handleDragOver(e: DragEvent) {
   if (e.dataTransfer && e.dataTransfer.types.includes('text/plain')) {
     e.preventDefault();
   }
-});
+}
 
-window.addEventListener('drop', (e: DragEvent) => {
+function handleDrop(e: DragEvent) {
   if (!e.dataTransfer) return;
   const data = e.dataTransfer.getData('text/plain');
   if (data && data.startsWith('toy-')) {
@@ -865,7 +904,11 @@ window.addEventListener('drop', (e: DragEvent) => {
     const toyType = data.substring(4);
     handleToyDrop(e.clientX, e.clientY, toyType);
   }
-});
+}
+
+// Window Drag and Drop Listeners for Toys
+window.addEventListener('dragover', handleDragOver);
+window.addEventListener('drop', handleDrop);
 
 async function loadAndApplySettings(): Promise<void> {
   const saved = await chrome.storage.local.get('pet-settings');
@@ -880,7 +923,7 @@ async function loadAndApplySettings(): Promise<void> {
   }
 }
 
-chrome.storage.onChanged.addListener((changes) => {
+function handleStorageChanged(changes: Record<string, chrome.storage.StorageChange>) {
   if (!checkContextOrCleanup()) return;
   if (changes['pet-settings']) {
     const newSettings = changes['pet-settings'].newValue;
@@ -919,9 +962,11 @@ chrome.storage.onChanged.addListener((changes) => {
       }
     }
   }
-});
+}
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.storage.onChanged.addListener(handleStorageChanged);
+
+function handleRuntimeMessage(message: any, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) {
   if (!checkContextOrCleanup()) return;
 
   if (message.type === 'get-tab-visibility') {
@@ -972,21 +1017,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
   }
   return false;
-});
+}
+
+chrome.runtime.onMessage.addListener(handleRuntimeMessage);
 
 
 
-document.addEventListener('visibilitychange', () => {
+function handleVisibilityChange() {
   if (!checkContextOrCleanup()) return;
   if (isPetHidden()) return;
   if (document.visibilityState === 'visible') {
+    movement.resumeTick();
     safeSendMessage({ type: 'get-pet-state' }, (state: SharedPetState | undefined) => {
       if (state) {
         movement.syncState(state);
       }
     });
   }
-});
+}
+
+document.addEventListener('visibilitychange', handleVisibilityChange);
 
 syncInterval = setInterval(() => {
   if (!checkContextOrCleanup()) return;
@@ -1005,17 +1055,19 @@ syncInterval = setInterval(() => {
   }
 }, 150);
 
+function handleConsoleError() {
+  if (checkContextOrCleanup() && !isPetHidden()) {
+    updateEmotion();
+  }
+}
+
 async function init(): Promise<void> {
   await loadAndApplySettings();
   await personality.isLoaded;
   
   if (!checkContextOrCleanup()) return;
 
-  window.addEventListener('pet-console-error', () => {
-    if (checkContextOrCleanup() && !isPetHidden()) {
-      updateEmotion();
-    }
-  });
+  window.addEventListener('pet-console-error', handleConsoleError);
 
   if (isPetHidden()) {
     hidePet();

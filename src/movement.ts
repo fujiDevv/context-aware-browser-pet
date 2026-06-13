@@ -2,7 +2,7 @@ import { SharedPetState } from './types';
 import { springAnimate, SpringAnimation } from './animate';
 
 export class MovementEngine {
-  el: HTMLElement;
+  elRef: WeakRef<HTMLElement>;
   state: string;
   size: number;
   speed: number;
@@ -21,12 +21,12 @@ export class MovementEngine {
   wasDragged: boolean;
   _raf: number | null;
   hasFallen: boolean;
-  toyTargets: { x: number; element: HTMLElement; type: string; onReach: () => void }[] = [];
+  toyTargets: { x: number; elementRef: WeakRef<HTMLElement>; type: string; onReach: () => void }[] = [];
   cursorTargetX: number | null = null;
   _posAnimation: SpringAnimation | null = null;
 
   constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number } = {}) {
-    this.el = el;
+    this.elRef = new WeakRef(el);
     this.state = 'walk-bottom';
     
     this.size = initialSettings.size || 64;
@@ -45,7 +45,14 @@ export class MovementEngine {
     this._setupDrag();
   }
 
+  get el(): HTMLElement | null {
+    return this.elRef.deref() || null;
+  }
+
   start(): void {
+    const el = this.el;
+    if (!el) return;
+
     if (!this.hasFallen) {
       this.hasFallen = true;
       const targetY = window.innerHeight - this.size;
@@ -54,7 +61,7 @@ export class MovementEngine {
       this.state = 'falling';
       this._apply();
 
-      this._posAnimation = springAnimate(this.el, {
+      this._posAnimation = springAnimate(el, {
         '--pet-x': `${this.x}px`,
         '--pet-y': `${targetY}px`
       }, {
@@ -90,6 +97,9 @@ export class MovementEngine {
   }
 
   shoo(): void {
+    const el = this.el;
+    if (!el) return;
+
     this._stopPosAnimation();
     this.clearToyTargets();
 
@@ -102,7 +112,7 @@ export class MovementEngine {
     this.paused = true;
 
     // Smoothly spring to the new location
-    this._posAnimation = springAnimate(this.el, {
+    this._posAnimation = springAnimate(el, {
       '--pet-x': `${this.x}px`,
       '--pet-y': `${this.y}px`
     }, {
@@ -115,7 +125,7 @@ export class MovementEngine {
     });
 
     const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
-    const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
+    const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
       img.style.transform = `${flip} rotate(0deg)`;
     }
@@ -125,11 +135,14 @@ export class MovementEngine {
     if (settings.speed !== undefined) {
       this.speed = settings.speed;
     }
+    const el = this.el;
     if (settings.size !== undefined) {
       this.size = settings.size;
       
-      this.el.style.width = `${this.size}px`;
-      this.el.style.height = `${this.size}px`;
+      if (el) {
+        el.style.width = `${this.size}px`;
+        el.style.height = `${this.size}px`;
+      }
       
       const W = window.innerWidth - this.size;
       const H = window.innerHeight - this.size;
@@ -140,13 +153,24 @@ export class MovementEngine {
   }
 
   _tick(): void {
-    if (this._paused) {
+    if (this._paused || (typeof document !== 'undefined' && document.visibilityState === 'hidden')) {
+      this._raf = null;
+      return;
+    }
+    const el = this.el;
+    if (!el) {
       this._raf = null;
       return;
     }
     this._step();
     this._apply();
     this._raf = requestAnimationFrame(() => this._tick());
+  }
+
+  resumeTick(): void {
+    if (!this._raf && !this._paused && this.hasFallen) {
+      this._tick();
+    }
   }
 
   _step(): void {
@@ -198,7 +222,7 @@ export class MovementEngine {
 
   addToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
     this._stopPosAnimation();
-    this.toyTargets.push({ x, element, type, onReach });
+    this.toyTargets.push({ x, elementRef: new WeakRef(element), type, onReach });
     this.cursorTargetX = null; // Clear cursor chase if a toy is dropped
     this.paused = false; // Resume if pet is currently paused
   }
@@ -211,9 +235,12 @@ export class MovementEngine {
 
   clearToyTargets(): void {
     this.toyTargets.forEach((target) => {
-      try {
-        target.element.remove();
-      } catch (e) {}
+      const element = target.elementRef.deref();
+      if (element) {
+        try {
+          element.remove();
+        } catch (e) {}
+      }
     });
     this.toyTargets = [];
   }
@@ -233,17 +260,20 @@ export class MovementEngine {
   }
 
   _apply(): void {
+    const el = this.el;
+    if (!el) return;
+
     const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
     const rotate = 'rotate(0deg)';
 
-    this.el.style.setProperty('--pet-x', `${this.x}px`);
-    this.el.style.setProperty('--pet-y', `${this.y}px`);
-    this.el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
-    this.el.style.left = '0px';
-    this.el.style.top = '0px';
-    this.el.style.bottom = 'auto';
+    el.style.setProperty('--pet-x', `${this.x}px`);
+    el.style.setProperty('--pet-y', `${this.y}px`);
+    el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
+    el.style.left = '0px';
+    el.style.top = '0px';
+    el.style.bottom = 'auto';
     
-    const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
+    const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
       img.style.transform = `${flip} ${rotate}`;
       img.style.width = `${this.size}px`;
@@ -252,7 +282,10 @@ export class MovementEngine {
   }
 
   _setupDrag(): void {
-    const img = this.el.querySelector('img');
+    const el = this.el;
+    if (!el) return;
+
+    const img = el.querySelector('img');
     if (!img) return;
 
     let startX = 0, startY = 0;
@@ -342,22 +375,28 @@ export class MovementEngine {
   }
 
   _applyDragStyle(): void {
+    const el = this.el;
+    if (!el) return;
+
     this._stopPosAnimation();
 
-    this.el.style.setProperty('--pet-x', `${this.x}px`);
-    this.el.style.setProperty('--pet-y', `${this.y}px`);
-    this.el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
-    this.el.style.left = '0px';
-    this.el.style.top = '0px';
-    this.el.style.bottom = 'auto';
+    el.style.setProperty('--pet-x', `${this.x}px`);
+    el.style.setProperty('--pet-y', `${this.y}px`);
+    el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
+    el.style.left = '0px';
+    el.style.top = '0px';
+    el.style.bottom = 'auto';
     
-    const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
+    const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
       img.style.transform = 'scaleX(1) rotate(0deg)';
     }
   }
 
   _snapToNearestEdge(): void {
+    const el = this.el;
+    if (!el) return;
+
     this._stopPosAnimation();
 
     const W = window.innerWidth - this.size;
@@ -375,7 +414,7 @@ export class MovementEngine {
     this.paused = true;
     
     // Spring snap to the bottom floor
-    this._posAnimation = springAnimate(this.el, {
+    this._posAnimation = springAnimate(el, {
       '--pet-x': `${this.x}px`,
       '--pet-y': `${this.y}px`
     }, {
@@ -388,7 +427,7 @@ export class MovementEngine {
     });
 
     const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
-    const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
+    const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
       img.style.transform = `${flip} rotate(0deg)`;
       img.style.width = `${this.size}px`;
