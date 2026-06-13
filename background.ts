@@ -14,10 +14,10 @@ let sharedPetState: SharedPetState = {
  * Passes the extension version as a query parameter for display.
  */
 chrome.runtime.onInstalled.addListener((details) => {
-  if (details.reason === 'install') {
+  if (details.reason === 'install' || details.reason === 'update') {
     const version = chrome.runtime.getManifest().version;
     chrome.tabs.create({
-      url: `onboarding/onboarding.html?version=v${version}&reason=install`
+      url: `onboarding/onboarding.html?version=v${version}&reason=${details.reason}`
     });
   }
 });
