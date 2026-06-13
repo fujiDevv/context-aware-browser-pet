@@ -1076,6 +1076,11 @@ async function init(): Promise<void> {
   
   if (!checkContextOrCleanup()) return;
 
+  // Load initial mood to prevent blank image
+  const savedMood = (await chrome.storage.local.get('pet-mood').catch(() => ({}))) as Record<string, any>;
+  const initialMood = savedMood['pet-mood'] || 'happy';
+  await loadPet(initialMood);
+
   window.addEventListener('pet-console-error', handleConsoleError);
 
   if (isPetHidden()) {

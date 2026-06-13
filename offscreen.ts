@@ -615,6 +615,19 @@ async function getLocalAiEmotion(
   persona: string,
   statsContext?: string
 ): Promise<{ emotion: string; comment?: string }> {
+  if (modelLoadingState === 'loading' || modelLoadingState === 'idle') {
+    return {
+      emotion: 'working-thinking',
+      comment: `Downloading my local AI model... (${modelDownloadProgress}%) 🧠`
+    };
+  }
+  if (modelLoadingState === 'error') {
+    return {
+      emotion: 'sad',
+      comment: 'Failed to load local AI model. Please check the background console.'
+    };
+  }
+
   // Parse stats from statsContext
   let happiness = 50;
   let energy = 50;

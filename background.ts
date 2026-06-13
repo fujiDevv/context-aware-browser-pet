@@ -12,6 +12,27 @@ let sharedPetState: SharedPetState = {
 const tabHttpErrors: Record<number, number> = {};
 
 chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    // Initialize default settings with local AI disabled (off by default)
+    chrome.storage.local.set({
+      'pet-settings': {
+        size: 64,
+        speed: 1.2,
+        soundEnabled: true,
+        soundVolume: 0.5,
+        aiMode: false,
+        apiKey: '',
+        name: 'Clawd',
+        costume: 'none',
+        persona: 'default',
+        blockedDomains: [],
+        disabledEmotions: [],
+        scheduleEnabled: true,
+        seasonalEnabled: true
+      }
+    }).catch(() => {});
+  }
+
   if (details.reason === 'install' || details.reason === 'update') {
     const version = chrome.runtime.getManifest().version;
     chrome.tabs.create({
