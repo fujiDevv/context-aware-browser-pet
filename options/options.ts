@@ -170,9 +170,22 @@ async function init() {
   updateLocalAiStatus();
 
   // Interaction buttons
-  document.getElementById('btn-pet')?.addEventListener('click', () => handlePlaygroundAction('pet', 'love', 'petting', 'Purrrr... ❤️'));
-  document.getElementById('btn-feed')?.addEventListener('click', () => handlePlaygroundAction('feed', 'celebrating', 'feeding', 'Yummy! 🍖'));
-  document.getElementById('btn-shoo')?.addEventListener('click', () => handlePlaygroundAction('shoo', 'running', 'shoo', 'Running away! 🏃‍♂️'));
+  const btnPet = document.getElementById('btn-pet') as HTMLButtonElement;
+  const btnFeed = document.getElementById('btn-feed') as HTMLButtonElement;
+  const btnShoo = document.getElementById('btn-shoo') as HTMLButtonElement;
+
+  btnPet?.addEventListener('click', () => {
+    if (btnPet.hasAttribute('disabled')) return;
+    handlePlaygroundAction(btnPet, 'pet', 'love', 'petting', 'Purrrr... ❤️');
+  });
+  btnFeed?.addEventListener('click', () => {
+    if (btnFeed.hasAttribute('disabled')) return;
+    handlePlaygroundAction(btnFeed, 'feed', 'celebrating', 'feeding', 'Yummy! 🍖');
+  });
+  btnShoo?.addEventListener('click', () => {
+    if (btnShoo.hasAttribute('disabled')) return;
+    handlePlaygroundAction(btnShoo, 'shoo', 'running', 'shoo', 'Running away! 🏃‍♂️');
+  });
 
   // Setting bindings
   nameInput.addEventListener('input', () => {
@@ -293,11 +306,16 @@ async function init() {
 }
 
 // Handler for playground interaction buttons
-async function handlePlaygroundAction(action: string, temporaryMood: string, soundName: string, textBubble: string) {
+async function handlePlaygroundAction(btn: HTMLButtonElement, action: string, temporaryMood: string, soundName: string, textBubble: string) {
   if (soundToggle.checked) {
     const vol = Number(volumeSlider.value) / 100;
     playPreviewSound(soundName, vol);
   }
+
+  // Disable button to prevent spam/abuse
+  btn.setAttribute('disabled', 'true');
+  const originalText = btn.textContent || '';
+  btn.textContent = 'Wait...';
 
   // Update visual mood preview temporarily
   previewImg.src = `../assets/pets/clawd-${temporaryMood}.svg`;
@@ -308,10 +326,12 @@ async function handlePlaygroundAction(action: string, temporaryMood: string, sou
   // Trigger stat updates on PersonalitySystem
   await personality.recordInteraction(action);
 
-  // Return to normal mood after 3 seconds
+  // Return to normal mood and re-enable button after 3 seconds
   setTimeout(async () => {
     const currentMood = await chrome.storage.local.get('pet-mood');
     updateUIMood(currentMood['pet-mood'] || 'happy');
+    btn.removeAttribute('disabled');
+    btn.textContent = originalText;
   }, 3000);
 }
 
