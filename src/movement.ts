@@ -29,7 +29,7 @@ export class MovementEngine {
     this.elRef = new WeakRef(el);
     this.state = 'walk-bottom';
     
-    this.size = initialSettings.size || 64;
+    this.size = initialSettings.size || 100;
     this.speed = initialSettings.speed || 1.2;
     
     this.x = Math.random() * (window.innerWidth - this.size);

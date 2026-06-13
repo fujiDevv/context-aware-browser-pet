@@ -580,7 +580,7 @@ function renderTimeline(history: any[] | undefined) {
 
 function applySettings(settings: PetSettings | undefined) {
   const defaults: PetSettings = {
-    size: 48,
+    size: 100,
     speed: 1.0,
     soundEnabled: true,
     soundVolume: 0.8,
@@ -598,7 +598,7 @@ function applySettings(settings: PetSettings | undefined) {
   nameInput.value = activeSettings.name || 'Clawd';
   petNameEl.textContent = nameInput.value;
 
-  const size = activeSettings.size ?? 48;
+  const size = activeSettings.size ?? 100;
   sizeSlider.value = String(size);
   sizeVal.textContent = `${size}px`;
 

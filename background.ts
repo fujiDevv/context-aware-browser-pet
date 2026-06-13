@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener((details) => {
     // Initialize default settings with local AI disabled (off by default)
     chrome.storage.local.set({
       'pet-settings': {
-        size: 64,
+        size: 100,
         speed: 1.2,
         soundEnabled: true,
         soundVolume: 0.5,
