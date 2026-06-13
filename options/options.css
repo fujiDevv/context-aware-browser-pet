@@ -396,7 +396,7 @@ body::after {
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
   animation: petIdle 4s infinite ease-in-out;
   transition: transform 0.2s ease;
-  position: absolute; /* Set to absolute for sandbox physics tracking */
+  position: relative;
 }
 
 #pet-preview:hover {

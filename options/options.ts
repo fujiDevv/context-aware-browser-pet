@@ -196,26 +196,19 @@ async function init() {
   const btnFeed = document.getElementById('btn-feed') as HTMLButtonElement;
   const btnShoo = document.getElementById('btn-shoo') as HTMLButtonElement;
 
-  initSandboxPhysics();
-
   btnPet?.addEventListener('click', () => {
     if (btnPet.hasAttribute('disabled')) return;
-    spawnFloatingHearts();
-    triggerSandboxAction('pet', 'love', 'petting', 'Purrrr... ❤️');
+    triggerPetAction('pet', 'love', 'petting', 'Purrrr... ❤️');
   });
   
   btnFeed?.addEventListener('click', () => {
     if (btnFeed.hasAttribute('disabled')) return;
-    const stage = document.getElementById('playground-stage');
-    if (stage) {
-      spawnToy('fish', Math.random() * (stage.clientWidth - 40) + 20, 20);
-    }
+    triggerPetAction('feed', 'eating', 'feeding', 'Munch munch! 🍕');
   });
   
   btnShoo?.addEventListener('click', () => {
     if (btnShoo.hasAttribute('disabled')) return;
-    clawdVx = clawdX > (document.getElementById('playground-stage')?.clientWidth || 400) / 2 ? -25 : 25;
-    triggerSandboxAction('shoo', 'running', 'shoo', 'Running away! 🏃‍♂️');
+    triggerPetAction('shoo', 'cool', 'shoo', 'Shoo! 🏃‍♂️');
   });
 
   // Setting bindings
@@ -362,242 +355,7 @@ async function init() {
   });
 }
 
-// Sandbox Physics State
-interface SandboxToy {
-  el: HTMLElement;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  type: string;
-}
-
-let activeToyType = 'ball';
-const TOY_EMOJIS: Record<string, string> = {
-  ball: '⚽', fish: '🐟', laser: '🔴', yarn: '🧶', duck: '🦆', box: '📦'
-};
-let toys: SandboxToy[] = [];
-let physicsLoopActive = false;
-let clawdX = 0;
-let clawdY = 0;
-let clawdVx = 0;
-
-function initSandboxPhysics() {
-  const stage = document.getElementById('playground-stage');
-  if (!stage) return;
-
-  // Center Clawd initially
-  clawdX = stage.clientWidth / 2;
-  clawdY = stage.clientHeight - 45; // 45 is half of 90px pet height
-  updateClawdPosition();
-
-  // Toolbar toy selection
-  const toyBtns = document.querySelectorAll('.toy-btn');
-  toyBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toyBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeToyType = btn.getAttribute('data-toy') || 'ball';
-    });
-  });
-
-  // Spawn toy on stage click
-  stage.addEventListener('click', (e) => {
-    // Ignore clicks on toolbar or buttons
-    if ((e.target as HTMLElement).closest('.sandbox-toolbar') || (e.target as HTMLElement).closest('.interact-btn')) return;
-
-    const rect = stage.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickY = e.clientY - rect.top;
-
-    spawnToy(activeToyType, clickX, clickY);
-  });
-
-  if (!physicsLoopActive) {
-    physicsLoopActive = true;
-    requestAnimationFrame(sandboxPhysicsTick);
-  }
-}
-
-function spawnToy(type: string, x: number, y: number, vx = 0, vy = 0) {
-  const stage = document.getElementById('playground-stage');
-  if (!stage) return;
-
-  const el = document.createElement('div');
-  el.className = 'sandbox-toy';
-  el.textContent = TOY_EMOJIS[type] || '⚽';
-  stage.appendChild(el);
-
-  const newToy: SandboxToy = {
-    el,
-    x,
-    y,
-    vx: vx || (Math.random() * 4 - 2),
-    vy: vy || (Math.random() * -5 - 2),
-    radius: 12,
-    type
-  };
-
-  toys.push(newToy);
-}
-
-function sandboxPhysicsTick() {
-  const stage = document.getElementById('playground-stage');
-  if (!stage) return;
-
-  const width = stage.clientWidth;
-  const height = stage.clientHeight;
-  const gravity = 0.4;
-  const friction = 0.98;
-  const restitution = 0.7;
-
-  // Update Toys
-  for (let i = toys.length - 1; i >= 0; i--) {
-    const t = toys[i];
-    
-    // Laser dots don't have gravity, they just stay where clicked and fade
-    if (t.type === 'laser') {
-      t.vx = 0;
-      t.vy = 0;
-      // Shrink and remove
-      if (!t.el.style.opacity) t.el.style.opacity = '1';
-      t.el.style.opacity = String(parseFloat(t.el.style.opacity) - 0.01);
-      if (parseFloat(t.el.style.opacity) <= 0) {
-        t.el.remove();
-        toys.splice(i, 1);
-        continue;
-      }
-    } else {
-      t.vy += gravity;
-      t.vx *= friction;
-      t.vy *= friction;
-
-      t.x += t.vx;
-      t.y += t.vy;
-
-      // Floor collision
-      if (t.y + t.radius > height) {
-        t.y = height - t.radius;
-        t.vy *= -restitution;
-        t.vx *= 0.95; // extra ground friction
-      }
-      // Wall collision
-      if (t.x - t.radius < 0) {
-        t.x = t.radius;
-        t.vx *= -restitution;
-      } else if (t.x + t.radius > width) {
-        t.x = width - t.radius;
-        t.vx *= -restitution;
-      }
-    }
-
-    t.el.style.transform = `translate(${t.x - 12}px, ${t.y - 12}px)`;
-
-    // Check collision with Clawd
-    const dx = clawdX - t.x;
-    const dy = clawdY - t.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist < 45 + t.radius) {
-      // Consume toy
-      t.el.style.transform += ' scale(0)';
-      t.el.style.opacity = '0';
-      setTimeout(() => t.el.remove(), 300);
-      toys.splice(i, 1);
-      
-      handleToyConsume(t.type);
-    }
-  }
-
-  // Update Clawd Chasing
-  if (toys.length > 0) {
-    // Find closest toy
-    let closest = toys[0];
-    let minDist = Infinity;
-    for (const t of toys) {
-      const dist = Math.abs(clawdX - t.x);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = t;
-      }
-    }
-
-    const chaseSpeed = 3 * (Number(speedSlider.value) / 10 || 1);
-    if (clawdX < closest.x - 10) {
-      clawdVx = chaseSpeed;
-      previewImg.style.transform = 'scaleX(1)';
-    } else if (clawdX > closest.x + 10) {
-      clawdVx = -chaseSpeed;
-      previewImg.style.transform = 'scaleX(-1)';
-    } else {
-      clawdVx *= 0.8; // slow down
-    }
-  } else {
-    // Idle friction
-    clawdVx *= 0.9;
-  }
-
-  // Apply Clawd Velocity
-  clawdX += clawdVx;
-
-  // Boundary check
-  if (clawdX < 45) {
-    clawdX = 45;
-    clawdVx *= -0.5;
-  } else if (clawdX > width - 45) {
-    clawdX = width - 45;
-    clawdVx *= -0.5;
-  }
-
-  updateClawdPosition();
-
-  if (physicsLoopActive) {
-    requestAnimationFrame(sandboxPhysicsTick);
-  }
-}
-
-function updateClawdPosition() {
-  previewImg.style.left = `${clawdX - 45}px`; // 90px width
-  previewImg.style.top = `${clawdY - 45}px`; // 90px height
-}
-
-async function handleToyConsume(type: string) {
-  let tempMood = 'celebrating';
-  let message = '';
-  let sound = 'petting';
-
-  switch (type) {
-    case 'ball': message = "Goal! ⚽"; sound = 'petting'; break;
-    case 'fish': message = "Yummy fish! 🐟"; sound = 'feeding'; break;
-    case 'laser': message = "Got the red dot! 🔴"; sound = 'petting'; break;
-    case 'yarn': message = "Purrrr... 🧶"; sound = 'petting'; break;
-    case 'duck': message = "Quack! 🦆"; sound = 'thinking'; break;
-    case 'box': message = "If it fits, I sits! 📦"; tempMood = 'sleeping'; sound = 'sleeping'; break;
-  }
-
-  triggerSandboxAction('play', tempMood, sound, message);
-}
-
-function spawnFloatingHearts() {
-  const stage = document.getElementById('playground-stage');
-  if (!stage) return;
-  for (let i = 0; i < 3; i++) {
-    const heart = document.createElement('div');
-    heart.className = 'sandbox-toy';
-    heart.textContent = '❤️';
-    stage.appendChild(heart);
-    
-    // animate manually using WAAPI
-    heart.animate([
-      { transform: `translate(${clawdX - 12 + (Math.random() * 40 - 20)}px, ${clawdY - 20}px) scale(0.5)`, opacity: 1 },
-      { transform: `translate(${clawdX - 12 + (Math.random() * 60 - 30)}px, ${clawdY - 80}px) scale(1.5)`, opacity: 0 }
-    ], { duration: 1000 + Math.random() * 500, easing: 'ease-out' }).onfinish = () => heart.remove();
-  }
-}
-
-async function triggerSandboxAction(action: string, temporaryMood: string, soundName: string, textBubble: string) {
+async function triggerPetAction(action: string, temporaryMood: string, soundName: string, textBubble: string) {
   if (soundToggle.checked) {
     const vol = Number(volumeSlider.value) / 100;
     playPreviewSound(soundName, vol);
