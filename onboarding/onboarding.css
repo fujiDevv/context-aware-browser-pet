@@ -14,6 +14,8 @@
   --dot-inactive: #cbd5e1;
   --dot-active: var(--accent);
   --transition-slide: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --noise-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.87 0 0 0 0 0.53 0 0 0 0 0.43 0.09 0 0 0 0' in='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 * {
@@ -22,7 +24,8 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -35,6 +38,21 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+}
+
+/* Grainy noise texture overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturation' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  mix-blend-mode: multiply;
 }
 
 .onboarding-container {
@@ -50,6 +68,7 @@ body {
   overflow: hidden;
   border-radius: 28px;
   background: var(--card-bg);
+  background-image: var(--noise-grain);
   border: 1px solid var(--card-border);
 }
 
@@ -145,6 +164,7 @@ body {
   padding: 24px 16px 20px;
   border-radius: 20px;
   background: #ffffff;
+  background-image: var(--noise-grain);
   border: 1px solid var(--card-border);
   transition: transform 0.3s ease, border-color 0.3s ease;
 }
@@ -208,6 +228,7 @@ body {
   padding: 14px 18px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.6);
+  background-image: var(--noise-grain);
   border: 1px solid var(--card-border);
   text-align: left;
   transition: transform 0.25s ease, border-color 0.25s ease;
@@ -249,11 +270,12 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 40px 32px;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom-left-radius: 28px;
-  border-bottom-right-radius: 28px;
+  /* background-image: var(--noise-grain); */
+  /* background: var(--noise-grain); */
+  /* backdrop-filter: blur(20px); */
+  /* -webkit-backdrop-filter: blur(20px); */
+  /* border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px; */
 }
 
 .step-dots {
@@ -351,19 +373,45 @@ body {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 @keyframes celebrate {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-8px) rotate(-3deg); }
-  75% { transform: translateY(-8px) rotate(3deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-8px) rotate(-3deg);
+  }
+
+  75% {
+    transform: translateY(-8px) rotate(3deg);
+  }
 }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
 }
 
 @media (max-width: 600px) {

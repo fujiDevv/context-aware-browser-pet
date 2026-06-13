@@ -4,22 +4,24 @@
   --accent-light: #e8917a;
   --accent-bg: rgba(199, 93, 63, 0.08);
   --accent-border: rgba(199, 93, 63, 0.25);
-  
+
   --text-primary: #1e293b;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
-  
+
   --border-color: #e2e8f0;
   --bg-hover: #f8fafc;
 
   --xp-color: #10b981;
   --xp-bg: rgba(16, 185, 129, 0.08);
-  
+
   --pink-bar: #ec4899;
   --yellow-bar: #eab308;
   --blue-bar: #3b82f6;
   --green-bar: #10b981;
   --indigo-bar: #6366f1;
+
+  --noise-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.87 0 0 0 0 0.53 0 0 0 0 0.43 0.09 0 0 0 0' in='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 * {
@@ -36,6 +38,20 @@ body {
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-primary);
   user-select: none;
+}
+
+/* Grainy noise texture overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.08;
 }
 
 .popup-container {
@@ -126,9 +142,11 @@ h2 {
 .dashboard-content::-webkit-scrollbar {
   width: 4px;
 }
+
 .dashboard-content::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .dashboard-content::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 2px;
@@ -149,7 +167,8 @@ h2 {
   flex-direction: column;
   gap: 12px;
   margin-bottom: 4px;
-  background: #faf5f2; 
+  background: #faf5f2;
+  background-image: var(--noise-grain);
   border: 1px solid var(--accent-border);
   border-radius: 16px;
   padding: 16px;
@@ -178,7 +197,7 @@ h2 {
 }
 
 .avatar-glow {
-  display: none; 
+  display: none;
 }
 
 #pet-preview {
@@ -293,6 +312,7 @@ h2 {
 
 .stat-card {
   background: var(--bg-hover);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 10px 12px;
@@ -330,11 +350,25 @@ h2 {
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.fill-pink { background: var(--pink-bar); }
-.fill-yellow { background: var(--yellow-bar); }
-.fill-blue { background: var(--blue-bar); }
-.fill-green { background: var(--green-bar); }
-.fill-indigo { background: var(--indigo-bar); }
+.fill-pink {
+  background: var(--pink-bar);
+}
+
+.fill-yellow {
+  background: var(--yellow-bar);
+}
+
+.fill-blue {
+  background: var(--blue-bar);
+}
+
+.fill-green {
+  background: var(--green-bar);
+}
+
+.fill-indigo {
+  background: var(--indigo-bar);
+}
 
 .actions-section {
   display: flex;
@@ -388,6 +422,7 @@ h2 {
 .toys-section {
   margin-bottom: 4px;
   background: var(--bg-hover);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 12px 16px;
@@ -452,6 +487,7 @@ h2 {
   align-items: center;
   justify-content: center;
   background: var(--bg-hover);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 10px;
@@ -522,9 +558,11 @@ h2 {
 .timeline-list::-webkit-scrollbar {
   width: 3px;
 }
+
 .timeline-list::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .timeline-list::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 2px;
@@ -626,6 +664,7 @@ h2 {
 
 .settings-section {
   background: #ffffff;
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 14px 16px;
@@ -745,11 +784,11 @@ h2 {
   border-radius: 50%;
 }
 
-input:checked + .toggle-slider {
+input:checked+.toggle-slider {
   background-color: var(--accent);
 }
 
-input:checked + .toggle-slider:before {
+input:checked+.toggle-slider:before {
   transform: translateX(18px);
 }
 
@@ -798,7 +837,8 @@ input:checked + .toggle-slider:before {
   display: none !important;
 }
 
-.custom-input, .custom-select {
+.custom-input,
+.custom-select {
   width: 100%;
   padding: 8px 12px;
   background: var(--bg-hover);
@@ -812,7 +852,8 @@ input:checked + .toggle-slider:before {
   transition: border-color 0.2s ease;
 }
 
-.custom-input:focus, .custom-select:focus {
+.custom-input:focus,
+.custom-select:focus {
   border-color: var(--accent-border);
 }
 
@@ -880,9 +921,11 @@ input:checked + .toggle-slider:before {
 .emotions-grid::-webkit-scrollbar {
   width: 4px;
 }
+
 .emotions-grid::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .emotions-grid::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 2px;
@@ -1078,6 +1121,7 @@ input:checked + .toggle-slider:before {
   background: rgba(156, 163, 175, 0.05);
   color: var(--text-secondary);
 }
+
 .ai-status-badge.status-checking .status-dot {
   background-color: #9ca3af;
   box-shadow: 0 0 6px rgba(156, 163, 175, 0.5);
@@ -1089,6 +1133,7 @@ input:checked + .toggle-slider:before {
   background: rgba(34, 197, 94, 0.08);
   color: #22c55e;
 }
+
 .ai-status-badge.status-ready .status-dot {
   background-color: #22c55e;
   box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
@@ -1099,6 +1144,7 @@ input:checked + .toggle-slider:before {
   background: rgba(234, 179, 8, 0.08);
   color: #eab308;
 }
+
 .ai-status-badge.status-downloading .status-dot {
   background-color: #eab308;
   box-shadow: 0 0 8px rgba(234, 179, 8, 0.8);
@@ -1110,16 +1156,20 @@ input:checked + .toggle-slider:before {
   background: rgba(239, 68, 68, 0.08);
   color: #ef4444;
 }
+
 .ai-status-badge.status-unsupported .status-dot {
   background-color: #ef4444;
   box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
 }
 
 @keyframes statusPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.6;
     transform: scale(0.9);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.1);

@@ -26,6 +26,8 @@
 
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s ease;
+
+  --noise-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.87 0 0 0 0 0.53 0 0 0 0 0.43 0.09 0 0 0 0' in='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 * {
@@ -43,6 +45,24 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Grainy noise texture overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  /* Optimized SVG with grayscale saturation and a lighter footprint */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturation' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  /* Opacity controls the 'strength' of the grain. 0.04 - 0.07 is the sweet spot for modern UI */
+  opacity: 0.05;
+  /* Blends the grain beautifully over light/dark layouts without clipping contrast */
+  mix-blend-mode: multiply;
 }
 
 /* Scrollbars */
@@ -72,6 +92,7 @@ body {
   max-width: 1100px;
   max-height: 800px;
   background-color: var(--bg-primary);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
@@ -226,6 +247,7 @@ body {
 .playground-card,
 .info-card {
   background-color: var(--bg-card);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 20px;
@@ -430,6 +452,7 @@ body {
 .habits-card,
 .ai-status-card {
   background-color: var(--bg-hover);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 14px;
@@ -547,6 +570,7 @@ body {
 
 .schedule-item {
   background-color: var(--bg-card);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 14px;
@@ -587,6 +611,7 @@ body {
 
 .gauge-card {
   background-color: var(--bg-card);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 16px;
@@ -659,6 +684,7 @@ body {
 
 .analytics-card {
   background-color: var(--bg-card);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 20px;
@@ -744,6 +770,7 @@ body {
 
 .counter-box {
   background-color: var(--bg-hover);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 16px;
@@ -771,6 +798,7 @@ body {
 /* PAGE: History Logs */
 .logs-card {
   background-color: var(--bg-card);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 20px;
