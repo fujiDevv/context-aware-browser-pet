@@ -501,14 +501,7 @@ async function init(): Promise<void> {
     statsEl.leisureText.textContent = `${stats.leisure ?? 50}%`;
     statsEl.leisureBar.style.width = `${stats.leisure ?? 50}%`;
 
-    // Preview Image Avatar Reaction
-    let previewMood = 'happy';
-    if (stats.happiness >= 80) previewMood = 'happy';
-    else if (stats.happiness >= 50) previewMood = 'waving';
-    else if (stats.happiness >= 25) previewMood = 'sad';
-    else previewMood = 'crying';
-    
-    statsEl.preview.src = `../assets/pets/clawd-${previewMood}.svg`;
+    // Preview Image Avatar Reaction is handled in updateUIMood dynamically to show the active state!
 
     // Analytics Counter Mapping
     if (statsEl.valTotalPets) {
@@ -620,6 +613,10 @@ async function init(): Promise<void> {
     moodEmojiEl.textContent = meta.emoji;
     moodTextEl.textContent = meta.name;
 
+    // Update the pet preview image dynamically to match the current active mood!
+    if (statsEl && statsEl.preview) {
+      statsEl.preview.src = `../assets/pets/clawd-${mood}.svg`;
+    }
   }
 
   // ── Helper: Populate Settings ─────────────────────────────────────────────

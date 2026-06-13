@@ -242,22 +242,21 @@ style.textContent = `
   /* ── Level-Up Achievement Banner CSS ── */
   .pet-levelup-banner {
     position: fixed;
-    top: -160px;
+    top: -180px;
     left: 50%;
     transform: translateX(-50%);
     width: 320px;
-    background: rgba(15, 23, 42, 0.96);
-    backdrop-filter: blur(16px);
-    border: 2px solid #fbbf24;
-    box-shadow: 0 10px 30px -5px rgba(251, 191, 36, 0.35), 0 8px 16px -6px rgba(0, 0, 0, 0.5);
-    border-radius: 16px;
+    background: #ffffff;
+    border: 2px solid #1e293b;
+    border-radius: 12px;
     padding: 16px;
-    color: #f8fafc;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1e293b;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     z-index: 2147483647;
     pointer-events: auto;
     transition: top 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
     opacity: 0;
+    box-shadow: none;
   }
   .pet-levelup-banner.show {
     top: 24px;
@@ -270,31 +269,32 @@ style.textContent = `
     margin-bottom: 8px;
   }
   .pet-levelup-badge {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    color: #0f172a;
-    font-weight: 800;
-    font-size: 13px;
+    background: rgba(199, 93, 63, 0.08);
+    color: #C75D3F;
+    border: 1px solid rgba(199, 93, 63, 0.25);
+    font-weight: 700;
+    font-size: 11px;
     padding: 3px 8px;
-    border-radius: 8px;
+    border-radius: 6px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
   .pet-levelup-title {
     font-size: 14px;
     font-weight: 700;
-    color: #fbbf24;
+    color: #1e293b;
   }
   .pet-levelup-details {
-    font-size: 11px;
-    line-height: 1.4;
-    color: #94a3b8;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #475569;
   }
   .pet-levelup-unlocked {
-    margin-top: 8px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 8px;
+    margin-top: 10px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 10px;
     font-size: 11px;
-    color: #38bdf8;
+    color: #C75D3F;
     font-weight: 600;
   }
   .pet-levelup-close {
@@ -303,13 +303,15 @@ style.textContent = `
     right: 12px;
     background: transparent;
     border: none;
-    color: #64748b;
+    color: #94a3b8;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1;
+    font-weight: 400;
+    transition: color 0.2s ease;
   }
   .pet-levelup-close:hover {
-    color: #f1f5f9;
+    color: #1e293b;
   }
 `;
 document.head.appendChild(style);

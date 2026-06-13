@@ -134,9 +134,9 @@ h2 {
   flex-direction: column;
   gap: 12px;
   margin-bottom: 4px;
-  background: var(--bg-hover);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
+  background: #faf5f2; /* Warm minimal cream matching Clawd's branding */
+  border: 1px solid var(--accent-border);
+  border-radius: 16px;
   padding: 16px;
 }
 
@@ -247,7 +247,7 @@ h2 {
 .xp-section {
   margin-top: 14px;
   margin-bottom: 0;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--accent-border);
   padding-top: 12px;
 }
 
