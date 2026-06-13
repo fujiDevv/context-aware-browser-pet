@@ -939,3 +939,77 @@ input:checked + .toggle-slider:before {
   border-color: rgba(236, 72, 153, 0.2);
   color: #db2777;
 }
+
+.prestige-promo-card {
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.08) 0%, rgba(245, 158, 11, 0.03) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.prestige-card-title {
+  font-weight: 700;
+  color: #d97706;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.prestige-promo-card p {
+  font-size: 10px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0 0 10px 0;
+}
+
+.prestige-btn {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 8px 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.25);
+  transition: all 0.2s ease;
+}
+
+.prestige-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+}
+
+.prestige-btn:active {
+  transform: translateY(0);
+}
+
+.prestige-badge {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  box-shadow: 0 1px 3px rgba(217, 119, 6, 0.25);
+}
+
+.prestige-star {
+  color: #fff;
+  font-size: 9px;
+  line-height: 1;
+}
+
+.prestige-level-num {
+  font-size: 9px;
+  line-height: 1;
+}

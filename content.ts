@@ -494,11 +494,15 @@ async function updateEmotion(): Promise<void> {
   let aiComment: string | undefined = undefined;
 
   const trait = personality.getDominantTrait();
+  const prestige = personality.stats.prestige || 0;
   const baseSpeed = currentSettings.speed || 1.2;
   const energyFactor = Math.max(0.4, Math.min(1.2, personality.stats.energy / 100));
   let traitFactor = 1.0;
-  if (trait === 'gamer') traitFactor = 1.35;
-  else if (trait === 'developer') traitFactor = 0.85;
+  if (trait === 'gamer') {
+    traitFactor = 1.35 + (prestige * 0.15);
+  } else if (trait === 'developer') {
+    traitFactor = 0.85 / (1 + prestige * 0.1);
+  }
 
   movement.updateSettings({
     speed: baseSpeed * energyFactor * traitFactor

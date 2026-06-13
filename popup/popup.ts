@@ -46,15 +46,19 @@ const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> = {
   'lifting': { name: 'Lifting', emoji: '🏋️' },
   'singing': { name: 'Singing', emoji: '🎤' },
   'music': { name: 'Music', emoji: '🎵' },
-  'dj': { name: 'DJ', emoji: '🎧' }
+  'dj': { name: 'DJ', emoji: '🎧' },
+  'money': { name: 'Money', emoji: '💰' }
 };
 
-function getAvailableEmotions(level: number): string[] {
+function getAvailableEmotions(level: number, prestige = 0): string[] {
+  if (prestige > 0) {
+    return Object.keys(EMOTIONS_METADATA);
+  }
   const freePass = [
     'happy', 'sad', 'waving', 'sleeping', 'eating',
     'battery-low', 'christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing', 'skateboard',
     'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'mail', 'notification', 'flexing',
-    'lifting', 'singing', 'music', 'dj'
+    'lifting', 'singing', 'music', 'dj', 'money'
   ];
 
   const level1 = ['happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug', 'reading', 'yoga', 'eating'];
@@ -79,6 +83,7 @@ async function init(): Promise<void> {
   let blockedDomains: string[] = [];
   let disabledEmotions: string[] = [];
   let lastRenderedLevel = -1;
+  let lastRenderedPrestige = -1;
   const statsEl = {
     level: document.getElementById('pet-level') as HTMLElement,
     xpText: document.getElementById('xp-text') as HTMLElement,
@@ -210,6 +215,25 @@ async function init(): Promise<void> {
   applySettings(data['pet-settings']);
   updateUIStats(data['pet-stats']);
   updateUIMood(data['pet-mood'] || 'happy');
+
+  const btnPrestige = document.getElementById('btn-prestige');
+  if (btnPrestige) {
+    btnPrestige.addEventListener('click', async () => {
+      const confirmed = confirm("Are you sure you want to rebirth Clawd? This resets his level to 1, but increases his prestige rank. You'll unlock permanent rewards!");
+      if (!confirmed) return;
+      
+      const savedStats = await chrome.storage.local.get('pet-stats');
+      const stats = savedStats['pet-stats'] || {};
+      if (stats.level >= 50) {
+        stats.prestige = (stats.prestige || 0) + 1;
+        stats.level = 1;
+        stats.xp = 0;
+        
+        await chrome.storage.local.set({ 'pet-stats': stats });
+        alert(`Clawd has reborn! He is now Prestige ${stats.prestige}! 🎉`);
+      }
+    });
+  }
 
   const tabHideToggle = document.getElementById('tab-hide-toggle') as HTMLInputElement;
   const siteHideToggle = document.getElementById('site-hide-toggle') as HTMLInputElement;
@@ -423,13 +447,13 @@ async function init(): Promise<void> {
     });
   }
 
-  function renderEmotionsGrid(level: number): void {
+  function renderEmotionsGrid(level: number, prestige: number): void {
     const gridEl = document.getElementById('emotions-grid');
     if (!gridEl) return;
 
     gridEl.innerHTML = '';
 
-    const availableEmotions = getAvailableEmotions(level);
+    const availableEmotions = getAvailableEmotions(level, prestige);
 
     availableEmotions.forEach((emotion) => {
       const meta = EMOTIONS_METADATA[emotion] || { name: emotion, emoji: '🐾' };
@@ -504,6 +528,27 @@ function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 
       traitBadge.className = `trait-badge trait-${trait}`;
     }
 
+    const hasPrestige = stats.prestige && stats.prestige > 0;
+    const prestigeBadge = document.getElementById('prestige-badge');
+    const prestigeLevelEl = document.getElementById('prestige-level');
+    if (prestigeBadge && prestigeLevelEl) {
+      if (hasPrestige) {
+        prestigeLevelEl.textContent = String(stats.prestige);
+        prestigeBadge.classList.remove('hidden');
+      } else {
+        prestigeBadge.classList.add('hidden');
+      }
+    }
+
+    const prestigeCard = document.getElementById('prestige-card');
+    if (prestigeCard) {
+      if (stats.level >= 50) {
+        prestigeCard.classList.remove('hidden');
+      } else {
+        prestigeCard.classList.add('hidden');
+      }
+    }
+
     const lblHabitTrait = document.getElementById('lbl-habit-trait') as HTMLElement;
     const lblHabitSpeed = document.getElementById('lbl-habit-speed') as HTMLElement;
     const lblHabitBehavior = document.getElementById('lbl-habit-behavior') as HTMLElement;
@@ -513,9 +558,13 @@ function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 
       
       const baseSpeed = 1.0;
       const energyFactor = Math.max(0.4, Math.min(1.2, stats.energy / 100));
+      const prestige = stats.prestige || 0;
       let traitFactor = 1.0;
-      if (trait === 'gamer') traitFactor = 1.35;
-      else if (trait === 'developer') traitFactor = 0.85;
+      if (trait === 'gamer') {
+        traitFactor = 1.35 + (prestige * 0.15);
+      } else if (trait === 'developer') {
+        traitFactor = 0.85 / (1 + prestige * 0.1);
+      }
       const speedMod = baseSpeed * energyFactor * traitFactor;
       
       let speedDesc = 'Normal';
@@ -536,26 +585,26 @@ function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 
     }
 
     statsEl.level.textContent = String(stats.level);
-    const xpNeeded = stats.level * 100;
+    const xpNeeded = Math.floor(Math.pow(stats.level, 1.5) * 150);
     statsEl.xpText.textContent = `${stats.xp} / ${xpNeeded} XP`;
     statsEl.xpBar.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
 
-    settingsEl.optDetective.disabled = stats.level < 5;
-    if (stats.level < 5) {
+    settingsEl.optDetective.disabled = stats.level < 5 && !hasPrestige;
+    if (stats.level < 5 && !hasPrestige) {
       settingsEl.optDetective.textContent = 'Blue Detective Aura (Locked - LVL 5)';
     } else {
       settingsEl.optDetective.textContent = 'Blue Detective Aura';
     }
 
-    settingsEl.optWizard.disabled = stats.level < 10;
-    if (stats.level < 10) {
+    settingsEl.optWizard.disabled = stats.level < 10 && !hasPrestige;
+    if (stats.level < 10 && !hasPrestige) {
       settingsEl.optWizard.textContent = 'Magic Purple Aura (Locked - LVL 10)';
     } else {
       settingsEl.optWizard.textContent = 'Magic Purple Aura';
     }
 
-    settingsEl.optParty.disabled = stats.level < 15;
-    if (stats.level < 15) {
+    settingsEl.optParty.disabled = stats.level < 15 && !hasPrestige;
+    if (stats.level < 15 && !hasPrestige) {
       settingsEl.optParty.textContent = 'Neon Rainbow Shader (Locked - LVL 15)';
     } else {
       settingsEl.optParty.textContent = 'Neon Rainbow Shader';
@@ -668,9 +717,10 @@ function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 
       }
     }
 
-    if (stats.level !== lastRenderedLevel) {
-      renderEmotionsGrid(stats.level);
+    if (stats.level !== lastRenderedLevel || (stats.prestige || 0) !== lastRenderedPrestige) {
+      renderEmotionsGrid(stats.level, stats.prestige || 0);
       lastRenderedLevel = stats.level;
+      lastRenderedPrestige = stats.prestige || 0;
     }
   }
 

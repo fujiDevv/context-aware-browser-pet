@@ -11,7 +11,8 @@ const DEFAULT_STATS: PetStats = {
   level: 1,
   xp: 0,
   moodHistory: [],
-  siteCategoryCounts: {}
+  siteCategoryCounts: {},
+  prestige: 0
 };
 
 export class PersonalitySystem {
@@ -47,7 +48,8 @@ export class PersonalitySystem {
   _applyDecay(): void {
     const lastUpdate = this.stats.lastUpdateTime || Date.now();
     const elapsedMs = Date.now() - lastUpdate;
-    const elapsedSeconds = Math.max(0, elapsedMs / 1000);
+    // Limit offline decay calculation to max 24 hours (86,400 seconds)
+    const elapsedSeconds = Math.max(0, Math.min(86400, elapsedMs / 1000));
 
     // Decay rates per second
     const happinessDecay = elapsedSeconds * 0.0011;
@@ -56,11 +58,12 @@ export class PersonalitySystem {
     const focusDecay = elapsedSeconds * 0.0015;
     const leisureDecay = elapsedSeconds * 0.0015;
 
-    this.stats.happiness = Math.max(0, Math.round(this.stats.happiness - happinessDecay));
-    this.stats.energy = Math.max(0, Math.round(this.stats.energy - energyDecay));
-    this.stats.curiosity = Math.max(0, Math.round(this.stats.curiosity - curiosityDecay));
-    this.stats.focus = Math.max(0, Math.round(this.stats.focus - focusDecay));
-    this.stats.leisure = Math.max(0, Math.round(this.stats.leisure - leisureDecay));
+    // Clamp stats at 15% floor so Clawd is never fully depleted/unusable offline
+    this.stats.happiness = Math.max(15, Math.round(this.stats.happiness - happinessDecay));
+    this.stats.energy = Math.max(15, Math.round(this.stats.energy - energyDecay));
+    this.stats.curiosity = Math.max(15, Math.round(this.stats.curiosity - curiosityDecay));
+    this.stats.focus = Math.max(15, Math.round(this.stats.focus - focusDecay));
+    this.stats.leisure = Math.max(15, Math.round(this.stats.leisure - leisureDecay));
   }
 
   async _periodicDecay(): Promise<void> {
@@ -231,6 +234,8 @@ export class PersonalitySystem {
       return false;
     }
     const lvl = this.stats.level;
+    const hasPrestige = this.stats.prestige && this.stats.prestige > 0;
+    if (hasPrestige) return true; // Rebirth permanently unlocks all emotes!
 
     // Allow cosmetic/seasonal/situational custom actions to be loaded always so user can enjoy all SVGs
     const freePassEmotions = [
@@ -255,12 +260,12 @@ export class PersonalitySystem {
 
   _addXp(amount: number): void {
     this.stats.xp += amount;
-    let xpNeeded = this.stats.level * 100;
+    let xpNeeded = Math.floor(Math.pow(this.stats.level, 1.5) * 150);
 
     while (this.stats.xp >= xpNeeded) {
       this.stats.xp -= xpNeeded;
       this.stats.level++;
-      xpNeeded = this.stats.level * 100;
+      xpNeeded = Math.floor(Math.pow(this.stats.level, 1.5) * 150);
     }
   }
 

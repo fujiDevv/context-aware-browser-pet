@@ -16,6 +16,7 @@ export interface PetStats {
   moodHistory: MoodHistoryItem[];
   siteCategoryCounts?: Record<string, number>;
   lastUpdateTime?: number;
+  prestige?: number;
 }
 
 export interface PetSettings {
