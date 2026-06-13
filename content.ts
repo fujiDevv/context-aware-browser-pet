@@ -170,6 +170,7 @@ style.textContent = `
     cursor: pointer;
     image-rendering: pixelated;
     transition: filter 0.2s ease;
+    will-change: transform, filter;
   }
   #browser-pet-img:hover {
     filter: drop-shadow(0px 2px 8px rgba(255, 105, 180, 0.4));

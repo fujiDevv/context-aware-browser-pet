@@ -103,14 +103,24 @@ export class TriggerDetector {
   }
 
   _watchVideo(): void {
-    const checkVideoState = () => {
+    const updateVideoState = (e?: Event) => {
+      const target = e?.target as HTMLVideoElement;
+      if (target && target.tagName === 'VIDEO') {
+        if (e?.type === 'play' || e?.type === 'playing') {
+          this._isVideo = true;
+          return;
+        }
+      }
       const videos = document.querySelectorAll('video');
       this._isVideo = Array.from(videos).some(video => {
         return !video.paused && !video.ended && video.readyState > 2;
       });
     };
     
-    setInterval(checkVideoState, 2000);
+    document.addEventListener('play', updateVideoState, true);
+    document.addEventListener('playing', updateVideoState, true);
+    document.addEventListener('pause', updateVideoState, true);
+    document.addEventListener('ended', updateVideoState, true);
   }
 
   _scrollDepth(): number {

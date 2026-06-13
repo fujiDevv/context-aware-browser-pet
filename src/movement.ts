@@ -9,7 +9,14 @@ export class MovementEngine {
   x: number;
   y: number;
   direction: number;
-  paused: boolean;
+  _paused: boolean;
+  get paused(): boolean { return this._paused; }
+  set paused(value: boolean) {
+    this._paused = value;
+    if (!value && !this._raf && this.hasFallen) {
+      this._tick();
+    }
+  }
   isDragging: boolean;
   wasDragged: boolean;
   _raf: number | null;
@@ -29,7 +36,7 @@ export class MovementEngine {
     this.y = window.innerHeight - this.size;
     this.direction = 1;
     
-    this.paused = false;
+    this._paused = false;
     this.isDragging = false;
     this.wasDragged = false;
     this.hasFallen = false;
@@ -58,16 +65,11 @@ export class MovementEngine {
 
       this._posAnimation.then(() => {
         this.y = targetY;
-        this.paused = false;
         this.state = 'walk-bottom';
-        if (!this._raf) {
-          this._tick();
-        }
+        this.paused = false;
       });
     } else {
-      if (!this._raf) {
-        this._tick();
-      }
+      this.paused = false;
     }
   }
 
@@ -138,10 +140,12 @@ export class MovementEngine {
   }
 
   _tick(): void {
-    if (!this.paused) {
-      this._step();
-      this._apply();
+    if (this._paused) {
+      this._raf = null;
+      return;
     }
+    this._step();
+    this._apply();
     this._raf = requestAnimationFrame(() => this._tick());
   }
 
