@@ -402,11 +402,14 @@
             </label>
           </div>
 
-          <div id="api-key-container" class="setting-row api-key-row hidden">
-            <span class="setting-title">Anthropic API Key</span>
-            <div class="api-key-input-wrapper">
-              <input type="password" id="api-key-input" placeholder="sk-ant-...">
-              <button id="btn-toggle-key" class="icon-btn" type="button" style="font-size: 10px; font-weight: 500;">Show</button>
+          <div id="ai-status-container" class="setting-row hidden">
+            <div class="setting-desc">
+              <span class="setting-title">On-Device AI Status</span>
+              <span class="setting-subtitle" id="ai-status-subtitle">Checking Gemini Nano availability</span>
+            </div>
+            <div id="ai-status-badge" class="ai-status-badge status-checking">
+              <span class="status-dot"></span>
+              <span id="ai-status-text">Checking...</span>
             </div>
           </div>
 

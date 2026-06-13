@@ -83,119 +83,107 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return false;
   }
 
-  if (message.type === 'get-ai-emotion') {
-    const { pageTitle, metaDescription, apiKey, persona, statsContext } = message;
+  if (message.type === 'get-local-ai-emotion') {
+    const { pageTitle, metaDescription, persona, statsContext } = message;
+    const tabUrl = sender.tab?.url || '';
 
-    fetchAiEmotion(pageTitle, metaDescription, apiKey, persona || 'default', statsContext)
-      .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment }))
+    setupOffscreen()
+      .then(() => {
+        chrome.runtime.sendMessage(
+          {
+            type: 'run-local-ai-inference',
+            pageTitle,
+            metaDescription,
+            persona,
+            statsContext,
+            url: tabUrl
+          },
+          (res) => {
+            if (chrome.runtime.lastError) {
+              sendResponse({ success: false, error: chrome.runtime.lastError.message });
+            } else {
+              sendResponse(res);
+            }
+          }
+        );
+      })
       .catch((err) => {
-        console.error('Error fetching AI emotion in background:', err);
+        console.error('Failed to setup offscreen context for emotion:', err);
         sendResponse({ success: false, error: err.message });
       });
 
     return true;
   }
+
+  if (message.type === 'check-local-ai-status') {
+    setupOffscreen()
+      .then(() => {
+        chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (res) => {
+          if (chrome.runtime.lastError) {
+            sendResponse({ success: false, error: chrome.runtime.lastError.message });
+          } else {
+            sendResponse(res);
+          }
+        });
+      })
+      .catch((err) => {
+        console.error('Failed to setup offscreen context for status:', err);
+        sendResponse({ success: false, error: err.message });
+      });
+
+    return true;
+  }
+
+  if (message.type === 'update-ai-progress') {
+    chrome.storage.local.set({
+      modelLoadingState: message.state,
+      modelDownloadProgress: message.progress
+    }).catch(() => {});
+    return false;
+  }
 });
 
-async function fetchAiEmotion(
-  pageTitle: string,
-  metaDescription: string | undefined,
-  apiKey: string,
-  persona: string,
-  statsContext?: string
-): Promise<{ emotion: string; comment?: string }> {
-  const PET_EMOTIONS = [
-    'happy', 'sad', 'angry', 'working-thinking', 'sleeping', 'coding', 'dancing',
-    'cool', 'love', 'celebrating', 'mindblown', 'shrug', 'crying', 'waving',
-    'working-wizard', 'ninja', 'working-typing', 'working-debugger', 'working-building', 'working-juggling',
-    'eating', 'reading', 'yoga'
-  ];
-
-  const personas: Record<string, string> = {
-    default: "You are Clawd, a helpful and friendly browser pet mascot. You are happy to browse the web with the user.",
-    sarcastic: "You are Clawd, a highly sarcastic, dry-witted browser pet mascot. You make witty, slightly cynical comments about the pages the user is visiting.",
-    encouraging: "You are Clawd, a highly encouraging, positive browser pet mascot. You make sweet, cheerful, and motivating remarks.",
-    poetic: "You are Clawd, a poetic browser pet mascot. You write short, whimsical 1-line rhymes about the pages the user is visiting.",
-    snarky: "You are Clawd, a snarky, sassy browser pet mascot. You make sassy, humorous, and sharp remarks about the web pages."
-  };
-
-  const personaInstruction = personas[persona] || personas.default;
-
-  let systemPrompt = `${personaInstruction}
-You decide which emotion to display and what short comment to make.
-You MUST respond with a valid JSON object matching this schema, and nothing else:
-{
-  "emotion": "one of the allowed emotions",
-  "comment": "your short comment about the page"
-}
-
-Allowed emotions: ${PET_EMOTIONS.join(', ')}`;
-
-  if (statsContext) {
-    systemPrompt += `\n\nClawd's current stats & personality trait context is: ${statsContext}. Adjust your choice of emotion and the tone of your commentary to match these stats (e.g. if he has low energy, Clawd's comment should sound sleepy/tired; if he's highly focused, his comment should be short and productivity-oriented; if he is a 'developer', he might make geeky coding references).`;
+let creatingOffscreen: Promise<void> | null = null;
+async function setupOffscreen(): Promise<void> {
+  const contexts = await (chrome.runtime as any).getContexts?.({
+    contextTypes: ['OFFSCREEN_DOCUMENT']
+  });
+  if (contexts && contexts.length > 0) {
+    return;
   }
 
-  const prompt = `Page Title: ${pageTitle}
-Page Description: ${metaDescription || '(none)'}`;
+  if (creatingOffscreen) {
+    await creatingOffscreen;
+    return;
+  }
+
+  creatingOffscreen = chrome.offscreen.createDocument({
+    url: 'offscreen.html',
+    reasons: [chrome.offscreen.Reason.DOM_PARSER],
+    justification: 'Run local machine learning models for pet behavior analysis'
+  });
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'dangerously-allow-browser': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-3-haiku-20240307',
-        max_tokens: 150,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`API returned error ${response.status}: ${errorText}`);
-    }
-
-    const data = await response.json();
-    const resultText = data?.content?.[0]?.text?.trim();
-
-    let parsed: { emotion: string; comment?: string } = { emotion: 'happy' };
-    if (resultText) {
-      const start = resultText.indexOf('{');
-      const end = resultText.lastIndexOf('}');
-      if (start !== -1 && end !== -1) {
-        try {
-          parsed = JSON.parse(resultText.substring(start, end + 1));
-        } catch (e) {
-          console.warn("Failed to parse JSON response from Claude:", e);
-          for (const em of PET_EMOTIONS) {
-            if (resultText.toLowerCase().includes(em)) {
-              parsed.emotion = em;
-              break;
-            }
-          }
-        }
-      } else {
-        for (const em of PET_EMOTIONS) {
-          if (resultText.toLowerCase().includes(em)) {
-            parsed.emotion = em;
-            break;
-          }
-        }
-      }
-    }
-
-    if (!PET_EMOTIONS.includes(parsed.emotion)) {
-      parsed.emotion = 'happy';
-    }
-
-    return parsed;
-  } catch (error) {
-    console.error('Claude API call failed:', error);
-    throw error;
+    await creatingOffscreen;
+  } finally {
+    creatingOffscreen = null;
   }
 }
+
+// Pre-load the offscreen document (which pre-loads the classifier) if AI Mode is enabled
+chrome.storage.local.get('pet-settings', (data) => {
+  const settings = data['pet-settings'] || {};
+  if (settings.aiMode) {
+    setupOffscreen().catch(() => {});
+  }
+});
+
+// Watch for settings changes to boot offscreen context in real time
+chrome.storage.onChanged.addListener((changes) => {
+  if (changes['pet-settings']) {
+    const settings = changes['pet-settings'].newValue || {};
+    if (settings.aiMode) {
+      setupOffscreen().catch(() => {});
+    }
+  }
+});

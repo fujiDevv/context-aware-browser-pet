@@ -5,27 +5,35 @@ export async function getAiEmotion(
   persona: string,
   statsContext?: string
 ): Promise<{ emotion: string; comment?: string }> {
-  return new Promise((resolve) => {
-    chrome.runtime.sendMessage({
-      type: 'get-ai-emotion',
-      pageTitle,
-      metaDescription,
-      apiKey,
-      persona,
-      statsContext
-    }, (response: { success: boolean; emotion?: string; comment?: string; error?: string } | undefined) => {
-      if (chrome.runtime.lastError) {
-        console.warn('AI mood analysis communication error:', chrome.runtime.lastError.message);
-        resolve({ emotion: 'happy' });
-        return;
-      }
-      
-      if (response && response.success && response.emotion) {
-        resolve({ emotion: response.emotion, comment: response.comment });
-      } else {
-        console.warn('AI mood analysis API failure:', response ? response.error : 'Unknown error');
-        resolve({ emotion: 'happy' });
-      }
+  try {
+    const response = await new Promise<any>((resolve, reject) => {
+      chrome.runtime.sendMessage(
+        {
+          type: 'get-local-ai-emotion',
+          pageTitle,
+          metaDescription,
+          persona,
+          statsContext
+        },
+        (res) => {
+          if (chrome.runtime.lastError) {
+            reject(new Error(chrome.runtime.lastError.message));
+          } else if (res && res.success) {
+            resolve(res);
+          } else {
+            reject(new Error(res?.error || 'Unknown error'));
+          }
+        }
+      );
     });
-  });
+
+    return {
+      emotion: response.emotion || 'happy',
+      comment: response.comment
+    };
+  } catch (error) {
+    console.warn('[Clawd Local AI] Inference failed, falling back to happy:', error);
+    return { emotion: 'happy' };
+  }
 }
+

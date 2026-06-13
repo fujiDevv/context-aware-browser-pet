@@ -84,6 +84,71 @@ async function init(): Promise<void> {
   let disabledEmotions: string[] = [];
   let lastRenderedLevel = -1;
   let lastRenderedPrestige = -1;
+
+  async function updateLocalAiStatus(): Promise<void> {
+    const statusBadge = document.getElementById('ai-status-badge') as HTMLElement;
+    const statusText = document.getElementById('ai-status-text') as HTMLElement;
+    const statusSubtitle = document.getElementById('ai-status-subtitle') as HTMLElement;
+
+    if (!statusBadge || !statusText) return;
+
+    statusBadge.className = 'ai-status-badge status-checking';
+    statusText.textContent = 'Checking...';
+    if (statusSubtitle) {
+      statusSubtitle.textContent = 'Querying local model status...';
+    }
+
+    if (typeof chrome === 'undefined' || !chrome.runtime) {
+      statusBadge.className = 'ai-status-badge status-unsupported';
+      statusText.textContent = 'Unsupported';
+      if (statusSubtitle) {
+        statusSubtitle.textContent = 'Chrome extension context unavailable';
+      }
+      return;
+    }
+
+    chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: any) => {
+      statusBadge.className = 'ai-status-badge';
+
+      if (chrome.runtime.lastError || !response || !response.success) {
+        console.warn('Local AI status query failed:', chrome.runtime.lastError?.message);
+        statusBadge.classList.add('status-unsupported');
+        statusText.textContent = 'Offline';
+        if (statusSubtitle) {
+          statusSubtitle.textContent = 'Failed to connect to background AI layer';
+        }
+        return;
+      }
+
+      const { state, progress } = response;
+      if (state === 'ready') {
+        statusBadge.classList.add('status-ready');
+        statusText.textContent = 'Ready';
+        if (statusSubtitle) {
+          statusSubtitle.textContent = 'Local DistilBERT model active and running';
+        }
+      } else if (state === 'loading') {
+        statusBadge.classList.add('status-downloading');
+        statusText.textContent = `Downloading (${progress}%)`;
+        if (statusSubtitle) {
+          statusSubtitle.textContent = 'Downloading model weights (~67MB) to IndexedDB';
+        }
+      } else if (state === 'error') {
+        statusBadge.classList.add('status-unsupported');
+        statusText.textContent = 'Error';
+        if (statusSubtitle) {
+          statusSubtitle.textContent = 'Failed to load model. Check background console.';
+        }
+      } else {
+        statusBadge.classList.add('status-checking');
+        statusText.textContent = 'Inactive';
+        if (statusSubtitle) {
+          statusSubtitle.textContent = 'Turn on Local AI Mode to initialize the model';
+        }
+      }
+    });
+  }
+
   const statsEl = {
     level: document.getElementById('pet-level') as HTMLElement,
     xpText: document.getElementById('xp-text') as HTMLElement,
@@ -117,9 +182,7 @@ async function init(): Promise<void> {
     volumeSlider: document.getElementById('volume-slider') as HTMLInputElement,
     volumeVal: document.getElementById('volume-val') as HTMLElement,
     aiToggle: document.getElementById('ai-toggle') as HTMLInputElement,
-    apiKeyContainer: document.getElementById('api-key-container') as HTMLElement,
-    apiKeyInput: document.getElementById('api-key-input') as HTMLInputElement,
-    btnToggleKey: document.getElementById('btn-toggle-key') as HTMLElement,
+    aiStatusContainer: document.getElementById('ai-status-container') as HTMLElement,
     nameInput: document.getElementById('pet-name-input') as HTMLInputElement,
     costumeSelect: document.getElementById('costume-select') as HTMLSelectElement,
     optDetective: document.getElementById('opt-detective') as HTMLOptionElement,
@@ -373,6 +436,9 @@ async function init(): Promise<void> {
     if (changes['pet-mood']) {
       updateUIMood(changes['pet-mood'].newValue);
     }
+    if (changes['modelLoadingState'] || changes['modelDownloadProgress'] || changes['pet-settings']) {
+      updateLocalAiStatus().catch(() => {});
+    }
   });
 
   const sendToActiveTab = (type: string) => {
@@ -452,16 +518,13 @@ async function init(): Promise<void> {
     const target = e.target as HTMLInputElement;
     const enabled = target.checked;
     if (enabled) {
-      settingsEl.apiKeyContainer.classList.remove('hidden');
+      settingsEl.aiStatusContainer.classList.remove('hidden');
       settingsEl.apiPersonaContainer.classList.remove('hidden');
+      updateLocalAiStatus();
     } else {
-      settingsEl.apiKeyContainer.classList.add('hidden');
+      settingsEl.aiStatusContainer.classList.add('hidden');
       settingsEl.apiPersonaContainer.classList.add('hidden');
     }
-    saveSettings();
-  });
-
-  settingsEl.apiKeyInput.addEventListener('input', () => {
     saveSettings();
   });
 
@@ -479,16 +542,6 @@ async function init(): Promise<void> {
     saveSettings();
   });
 
-  settingsEl.btnToggleKey.addEventListener('click', () => {
-    if (settingsEl.apiKeyInput.type === 'password') {
-      settingsEl.apiKeyInput.type = 'text';
-      settingsEl.btnToggleKey.textContent = 'Hide';
-    } else {
-      settingsEl.apiKeyInput.type = 'password';
-      settingsEl.btnToggleKey.textContent = 'Show';
-    }
-  });
-
   function saveSettings(): void {
     chrome.storage.local.set({
       'pet-settings': {
@@ -497,7 +550,7 @@ async function init(): Promise<void> {
         soundEnabled: settingsEl.soundToggle.checked,
         soundVolume: Number(settingsEl.volumeSlider.value) / 100,
         aiMode: settingsEl.aiToggle.checked,
-        apiKey: settingsEl.apiKeyInput.value.trim(),
+        apiKey: '',
         name: settingsEl.nameInput.value.trim() || 'Clawd',
         costume: settingsEl.costumeSelect.value,
         persona: settingsEl.personaSelect.value,
@@ -832,14 +885,13 @@ function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 
     const aiMode = settings.aiMode ?? false;
     settingsEl.aiToggle.checked = aiMode;
     if (aiMode) {
-      settingsEl.apiKeyContainer.classList.remove('hidden');
+      settingsEl.aiStatusContainer.classList.remove('hidden');
       settingsEl.apiPersonaContainer.classList.remove('hidden');
+      updateLocalAiStatus();
     } else {
-      settingsEl.apiKeyContainer.classList.add('hidden');
+      settingsEl.aiStatusContainer.classList.add('hidden');
       settingsEl.apiPersonaContainer.classList.add('hidden');
     }
-
-    settingsEl.apiKeyInput.value = settings.apiKey ?? '';
 
     const name = settings.name ?? 'Clawd';
     settingsEl.nameInput.value = name;

@@ -7,7 +7,8 @@
     "storage",
     "tabs",
     "webNavigation",
-    "webRequest"
+    "webRequest",
+    "offscreen"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -24,17 +25,6 @@
         "content.js"
       ],
       "run_at": "document_idle",
-      "all_frames": false
-    },
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "main_world.js"
-      ],
-      "world": "MAIN",
-      "run_at": "document_start",
       "all_frames": false
     }
   ],
@@ -55,7 +45,8 @@
     {
       "resources": [
         "assets/*",
-        "onboarding/*"
+        "onboarding/*",
+        "wasm/*"
       ],
       "matches": [
         "<all_urls>"
@@ -63,6 +54,6 @@
     }
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
   }
 }

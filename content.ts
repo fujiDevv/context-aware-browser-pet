@@ -508,7 +508,7 @@ async function updateEmotion(): Promise<void> {
     speed: baseSpeed * energyFactor * traitFactor
   });
 
-  if (scheduleEnabled && currentSettings.aiMode && currentSettings.apiKey && !context.lastHttpError && context.idleSeconds < 60) {
+  if (scheduleEnabled && currentSettings.aiMode && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
       const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
       const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
@@ -1019,6 +1019,11 @@ function handleRuntimeMessage(message: any, sender: chrome.runtime.MessageSender
     if (document.visibilityState === 'visible' && !document.hasFocus() && !movement.isDragging) {
       movement.syncState(message.state);
     }
+  } else if (message.type === 'check-tab-ai-availability') {
+    checkTabAiAvailability()
+      .then((availability) => sendResponse({ success: true, availability }))
+      .catch((err) => sendResponse({ success: false, error: err.message }));
+    return true;
   }
   return false;
 }
@@ -1143,6 +1148,30 @@ async function init(): Promise<void> {
       }
     }
   }, 3000);
+}
+
+async function checkTabAiAvailability(): Promise<'readily' | 'after-download' | 'no'> {
+  try {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (res) => {
+        if (chrome.runtime.lastError || !res || !res.success) {
+          resolve('no');
+        } else {
+          const state = res.state;
+          if (state === 'ready') {
+            resolve('readily');
+          } else if (state === 'loading') {
+            resolve('after-download');
+          } else {
+            resolve('no');
+          }
+        }
+      });
+    });
+  } catch (err) {
+    console.error('[Clawd AI] Failed to check local AI availability:', err);
+    return 'no';
+  }
 }
 
 init();

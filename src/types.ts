@@ -58,3 +58,24 @@ export interface TriggerSnapshot {
   mouseX: number;
   isCursorActive: boolean;
 }
+
+declare global {
+  interface AILanguageModelSession {
+    prompt(input: string): Promise<string>;
+    destroy(): Promise<void>;
+  }
+
+  interface AILanguageModel {
+    availability(): Promise<'readily' | 'after-download' | 'no'>;
+    create(options?: {
+      systemPrompt?: string;
+      temperature?: number;
+      topK?: number;
+    }): Promise<AILanguageModelSession>;
+  }
+
+  const ai: {
+    languageModel?: AILanguageModel;
+    assistant?: AILanguageModel;
+  };
+}

@@ -10,5 +10,5 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": ["src/**/*", "content.ts", "background.ts", "popup/popup.ts"]
+  "include": ["src/**/*", "content.ts", "background.ts", "popup/popup.ts", "offscreen.ts"]
 }
