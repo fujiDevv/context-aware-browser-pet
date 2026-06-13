@@ -172,9 +172,28 @@ export class PersonalitySystem {
     await this._save();
   }
 
-  async recordSiteVisit(category: string): Promise<void> {
+  async recordSiteVisit(category: string, sentiment?: string): Promise<void> {
     await this.isLoaded;
-    if (category === 'code') {
+
+    // Apply Local AI Sentiment Modifiers
+    if (sentiment === 'POSITIVE') {
+      this.stats.happiness = Math.min(100, this.stats.happiness + 2);
+      this.stats.energy = Math.min(100, this.stats.energy + 1);
+      this._addXp(2);
+    } else if (sentiment === 'NEGATIVE') {
+      if (category === 'code' || category === 'coding' || category === 'docs') {
+        this.stats.happiness = Math.max(0, this.stats.happiness - 2);
+        this.stats.focus = Math.min(100, this.stats.focus + 2);
+      } else if (category === 'social') {
+        this.stats.happiness = Math.max(0, this.stats.happiness - 5);
+        this.stats.energy = Math.max(0, this.stats.energy - 2);
+      } else {
+        this.stats.happiness = Math.max(0, this.stats.happiness - 1);
+        this.stats.energy = Math.max(0, this.stats.energy - 1);
+      }
+    }
+
+    if (category === 'code' || category === 'coding') {
       this.stats.curiosity = Math.min(100, this.stats.curiosity + 3);
       this.stats.focus = Math.min(100, this.stats.focus + 6);
       this.stats.leisure = Math.max(0, this.stats.leisure - 2);
@@ -221,7 +240,7 @@ export class PersonalitySystem {
   getDominantTrait(): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
     const counts = this.stats.siteCategoryCounts || {};
     
-    const developerScore = (counts['code'] || 0) + (counts['docs'] || 0);
+    const developerScore = (counts['code'] || 0) + (counts['coding'] || 0) + (counts['docs'] || 0);
     const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0);
     const scholarScore = counts['news'] || 0;
     const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0);

@@ -173,6 +173,17 @@ function detectPageCategory(url: string, title: string): string {
     return 'search';
   }
 
+  // Enhanced Title Keyword Matching for category overrides (on general domains)
+  const devKeywords = ['programming', 'tutorial', 'code', 'rust', 'python', 'javascript', 'typescript', 'java', 'c++', 'html', 'css', 'git', 'compiler', 'api'];
+  const scholarKeywords = ['news', 'article', 'science', 'research', 'history', 'wikipedia', 'study', 'journal', 'daily'];
+  const gamingKeywords = ['game', 'play', 'arcade', 'retro', 'nintendo', 'playstation', 'xbox', 'steam'];
+  const shoppingKeywords = ['buy', 'shop', 'store', 'checkout', 'price', 'deal', 'discount'];
+
+  if (devKeywords.some(kw => titleLower.includes(kw))) return 'coding';
+  if (scholarKeywords.some(kw => titleLower.includes(kw))) return 'reading';
+  if (gamingKeywords.some(kw => titleLower.includes(kw))) return 'gaming';
+  if (shoppingKeywords.some(kw => titleLower.includes(kw))) return 'shopping';
+
   return 'general';
 }
 
@@ -614,7 +625,7 @@ async function getLocalAiEmotion(
   url: string,
   persona: string,
   statsContext?: string
-): Promise<{ emotion: string; comment?: string }> {
+): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   if (modelLoadingState === 'loading' || modelLoadingState === 'idle') {
     return {
       emotion: 'working-thinking',
@@ -678,7 +689,7 @@ async function getLocalAiEmotion(
   const commentList = sentimentComments.length > 0 ? sentimentComments : categoryComments.NEUTRAL;
   const comment = commentList[Math.floor(Math.random() * commentList.length)];
 
-  return { emotion, comment };
+  return { emotion, comment, category, sentiment };
 }
 
 // Set up Chrome runtime message listener in the offscreen document
@@ -687,7 +698,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { pageTitle, metaDescription, persona, statsContext, url } = message;
     
     getLocalAiEmotion(pageTitle, metaDescription, url, persona || 'default', statsContext)
-      .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment }))
+      .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment, category: result.category, sentiment: result.sentiment }))
       .catch((err) => {
         console.error('Error in local AI emotion processing:', err);
         sendResponse({ success: false, error: err.message });

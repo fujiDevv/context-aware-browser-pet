@@ -4,7 +4,7 @@ export async function getAiEmotion(
   apiKey: string,
   persona: string,
   statsContext?: string
-): Promise<{ emotion: string; comment?: string }> {
+): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   try {
     const response = await new Promise<any>((resolve, reject) => {
       chrome.runtime.sendMessage(
@@ -29,7 +29,9 @@ export async function getAiEmotion(
 
     return {
       emotion: response.emotion || 'happy',
-      comment: response.comment
+      comment: response.comment,
+      category: response.category,
+      sentiment: response.sentiment
     };
   } catch (error) {
     console.warn('[Clawd Local AI] Inference failed, falling back to happy:', error);

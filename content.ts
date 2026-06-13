@@ -364,6 +364,8 @@ container.appendChild(bubble);
 
 let currentSettings: PetSettings = { size: 64, speed: 1.2, aiMode: false, apiKey: '', soundEnabled: true, soundVolume: 0.5, scheduleEnabled: true };
 let hasEvaluatedPageAi = false;
+let currentAiCategory: string | undefined = undefined;
+let currentAiSentiment: string | undefined = undefined;
 let isTemporarilyInteracting = false;
 let interactionTimeout: any = null;
 let bubbleTimeout: any = null;
@@ -483,11 +485,13 @@ async function updateEmotion(): Promise<void> {
   const context = triggers.snapshot();
   const scheduleEnabled = currentSettings.scheduleEnabled !== false;
   
-  if (scheduleEnabled) {
+  if (scheduleEnabled && !currentSettings.aiMode) {
     const siteCategory = emotion._classifySite(context.hostname);
     if (siteCategory !== 'default') {
       personality.recordSiteVisit(siteCategory);
     }
+  } else if (scheduleEnabled && currentSettings.aiMode && currentAiCategory) {
+    personality.recordSiteVisit(currentAiCategory, currentAiSentiment);
   }
 
   let nextEmotion = 'happy';
@@ -515,7 +519,13 @@ async function updateEmotion(): Promise<void> {
       const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default', statsContext);
       nextEmotion = result.emotion;
       aiComment = result.comment;
+      currentAiCategory = result.category;
+      currentAiSentiment = result.sentiment;
       hasEvaluatedPageAi = true;
+      
+      if (scheduleEnabled && currentAiCategory) {
+        personality.recordSiteVisit(currentAiCategory, currentAiSentiment);
+      }
     } else {
       nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false);
     }
@@ -1014,6 +1024,8 @@ function handleRuntimeMessage(message: any, sender: chrome.runtime.MessageSender
     triggers.clearHttpError();
     triggers.clearConsoleError();
     hasEvaluatedPageAi = false;
+    currentAiCategory = undefined;
+    currentAiSentiment = undefined;
     updateEmotion();
   } else if (message.type === 'sync-pet-state') {
     if (document.visibilityState === 'visible' && !document.hasFocus() && !movement.isDragging) {
