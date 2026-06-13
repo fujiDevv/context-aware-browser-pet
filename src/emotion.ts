@@ -10,8 +10,8 @@ export class EmotionEngine {
     this.current = 'happy';
   }
 
-  async evaluate(ctx: TriggerSnapshot, scheduleEnabled: boolean = true): Promise<string> {
-    let emotion = await this._determineEmotion(ctx, scheduleEnabled);
+  async evaluate(ctx: TriggerSnapshot, scheduleEnabled: boolean = true, seasonalEnabled: boolean = true): Promise<string> {
+    let emotion = await this._determineEmotion(ctx, scheduleEnabled, seasonalEnabled);
 
     const isHttpError = ['404', '500', '403', '429'].includes(emotion);
 
@@ -23,17 +23,22 @@ export class EmotionEngine {
     return emotion;
   }
 
-  async _determineEmotion(ctx: TriggerSnapshot, scheduleEnabled: boolean = true): Promise<string> {
+  async _determineEmotion(ctx: TriggerSnapshot, scheduleEnabled: boolean = true, seasonalEnabled: boolean = true): Promise<string> {
     if (!scheduleEnabled) {
-      const allEmotions = [
+      let allEmotions = [
         'happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug', 'reading', 'yoga',
         'eating', 'coding', 'working-typing', 'dancing', 'cool', 'love', 'celebrating', 'mindblown', 'ninja',
-        'working-wizard', 'astronaut', 'working-debugger', 'working-building', 'rocket', 'pirate',
-        'working-juggling', 'gaming', 'battery-low', 'christmas', 'winter', 'halloween', 'summer',
-        'ice-cream', 'surfing', 'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee',
-        'mail', 'notification', 'flexing', 'lifting', 'singing', 'music', 'dj'
+        'working-wizard', 'astronaut', 'working-debugger', 'working-building', 'rocket', 'pirate', 'working-juggling',
+        'gaming', 'battery-low', 'christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing',
+        'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'mail', 'notification',
+        'flexing', 'lifting', 'singing', 'music', 'dj'
       ];
-      
+
+      if (!seasonalEnabled) {
+        const seasonalPool = ['christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing'];
+        allEmotions = allEmotions.filter(e => !seasonalPool.includes(e));
+      }
+
       const unlocked = allEmotions.filter(e => this.personality.isEmotionUnlocked(e));
       if (unlocked.length > 0) {
         const timeHash = Math.floor(Date.now() / 60000);
@@ -49,36 +54,12 @@ export class EmotionEngine {
     if (ctx.lastHttpError === 429) return '429';
     if (ctx.hasConsoleError) return 'working-debugger';
 
-    // 1. Time of day reactions
-    const hour = new Date().getHours();
-    if (hour >= 22 || hour < 6) return 'sleeping';
-    if (hour >= 6 && hour < 9) return 'yoga';
-
-    // 2. Idle State Dynamic Choices
-    if (ctx.idleSeconds > 300) return 'sleeping';
-    if (ctx.idleSeconds > 45) {
-      // Pick a random entertaining idle action instead of just staring
-      const idleChoices = ['sleeping', 'working-thinking', 'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'yawning'];
-      const hash = Math.floor((ctx.idleSeconds + new Date().getMinutes()) % idleChoices.length);
-      return idleChoices[hash];
-    }
-
-    // 3. Seasonal / Calendar Events
-    const month = new Date().getMonth(); // 0 = Jan, 11 = Dec
-    if (month === 9) return 'halloween'; // October
-    if (month === 11) return 'christmas'; // December
-    if (month >= 5 && month <= 7) {
-      // Summer months
-      const summerChoices = ['summer', 'surfing', 'ice-cream'];
-      return summerChoices[Math.floor(new Date().getMinutes() % summerChoices.length)];
-    }
-
-    // 4. Activity Indicators
+    // 1. High Priority Activity Indicators
     if (ctx.isVideoPlaying) return this._mediaEmotion(ctx);
     if (ctx.isTypingHeavy) return 'working-typing';
     if (ctx.isFormSubmitting) return 'celebrating';
 
-    // 5. Site Classification Custom Matches
+    // 2. Site Classification Custom Matches
     const category = this._classifySite(ctx.hostname);
     if (category === 'code') return this._codeEmotion(ctx);
     if (category === 'social') return 'love';
@@ -87,9 +68,37 @@ export class EmotionEngine {
     if (category === 'shopping') return 'money';
     if (category === 'docs') return 'studying';
     if (category === 'mail') return 'mail';
+    if (category === 'ai') return 'mindblown';
+    if (category === 'streaming') return 'eating';
+    if (category === 'finance') return 'money';
     if (category === 'fitness') {
       const fitChoices = ['flexing', 'lifting', 'yoga'];
       return fitChoices[Math.floor(new Date().getMinutes() % fitChoices.length)];
+    }
+
+    // 3. Idle State Dynamic Choices
+    if (ctx.idleSeconds > 300) return 'sleeping';
+    if (ctx.idleSeconds > 45) {
+      const idleChoices = ['sleeping', 'working-thinking', 'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'yawning'];
+      const hash = Math.floor((ctx.idleSeconds + new Date().getMinutes()) % idleChoices.length);
+      return idleChoices[hash];
+    }
+
+    // 4. Time of day reactions
+    const hour = new Date().getHours();
+    if (hour >= 22 || hour < 6) return 'sleeping';
+    if (hour >= 6 && hour < 9) return 'yoga';
+
+    // 5. Seasonal / Calendar Events (Low Priority Fallback)
+    if (seasonalEnabled) {
+      const month = new Date().getMonth(); // 0 = Jan, 11 = Dec
+      if (month === 9) return 'halloween'; // October
+      if (month === 11) return 'christmas'; // December
+      if (month >= 5 && month <= 7) {
+        // Summer months
+        const summerChoices = ['summer', 'surfing', 'ice-cream'];
+        return summerChoices[Math.floor(new Date().getMinutes() % summerChoices.length)];
+      }
     }
 
     return this.personality.defaultEmotion();
@@ -97,14 +106,56 @@ export class EmotionEngine {
 
   _classifySite(hostname: string): string {
     const rules: Record<string, string[]> = {
-      code: ['github.com', 'stackoverflow.com', 'codepen.io', 'replit.com', 'gitlab.com', 'bitbucket.org', 'npmjs.com'],
-      social: ['twitter.com', 'x.com', 'instagram.com', 'reddit.com', 'facebook.com', 'tiktok.com', 'threads.net'],
-      gaming: ['twitch.tv', 'store.steampowered.com', 'itch.io', 'roblox.com'],
-      news: ['bbc.com', 'cnn.com', 'nytimes.com', 'theguardian.com', 'reuters.com', 'apnews.com'],
-      shopping: ['amazon.com', 'ebay.com', 'shopify.com', 'etsy.com'],
-      docs: ['notion.so', 'confluence.atlassian.com', 'docs.google.com', 'obsidian.md', 'wikipedia.org'],
-      mail: ['mail.google.com', 'outlook.live.com', 'mail.yahoo.com'],
-      fitness: ['strava.com', 'bodybuilding.com', 'fitbit.com', 'myfitnesspal.com']
+      code: [
+        'github.com', 'stackoverflow.com', 'codepen.io', 'replit.com', 'gitlab.com',
+        'bitbucket.org', 'npmjs.com', 'leetcode.com', 'hackerrank.com', 'w3schools.com',
+        'developer.mozilla.org', 'dev.to', 'medium.com', 'hashnode.dev', 'gist.github.com'
+      ],
+      social: [
+        'twitter.com', 'x.com', 'instagram.com', 'reddit.com', 'facebook.com',
+        'tiktok.com', 'threads.net', 'linkedin.com', 'pinterest.com', 'tumblr.com',
+        'snapchat.com', 'discord.com', 'whatsapp.com', 't.me', 'telegram.org'
+      ],
+      gaming: [
+        'twitch.tv', 'store.steampowered.com', 'itch.io', 'roblox.com', 'epicgames.com',
+        'gog.com', 'ign.com', 'gamespot.com', 'nexusmods.com', 'discordapp.com',
+        'playstation.com', 'xbox.com', 'nintendo.com', 'minecraft.net'
+      ],
+      news: [
+        'bbc.com', 'bbc.co.uk', 'cnn.com', 'nytimes.com', 'theguardian.com', 'reuters.com',
+        'apnews.com', 'bloomberg.com', 'forbes.com', 'wsj.com', 'ft.com', 'cnbc.com',
+        'huffpost.com', 'aljazeera.com', 'techcrunch.com', 'theverge.com', 'wired.com'
+      ],
+      shopping: [
+        'amazon.com', 'ebay.com', 'shopify.com', 'etsy.com', 'aliexpress.com',
+        'target.com', 'walmart.com', 'bestbuy.com', 'craigslist.org', 'temu.com',
+        'shein.com', 'ikea.com', 'apple.com/shop'
+      ],
+      docs: [
+        'notion.so', 'confluence.atlassian.com', 'docs.google.com', 'obsidian.md',
+        'wikipedia.org', 'miro.com', 'figma.com', 'clickup.com', 'monday.com',
+        'asana.com', 'trello.com', 'linear.app', 'airtable.com'
+      ],
+      mail: [
+        'mail.google.com', 'outlook.live.com', 'mail.yahoo.com', 'proton.me',
+        'protonmail.com', 'icloud.com', 'zoho.com/mail'
+      ],
+      fitness: [
+        'strava.com', 'bodybuilding.com', 'fitbit.com', 'myfitnesspal.com',
+        'garmin.com', 'nike.com', 'trainingpeaks.com', 'alltrails.com', 'peloton.com'
+      ],
+      ai: [
+        'chatgpt.com', 'openai.com', 'claude.ai', 'anthropic.com', 'gemini.google.com',
+        'perplexity.ai', 'huggingface.co', 'midjourney.com', 'v0.dev'
+      ],
+      streaming: [
+        'youtube.com', 'youtu.be', 'netflix.com', 'spotify.com', 'hulu.com',
+        'disneyplus.com', 'hbo.com', 'max.com', 'vimeo.com', 'soundcloud.com'
+      ],
+      finance: [
+        'stripe.com', 'paypal.com', 'chase.com', 'bankofamerica.com', 'wellsfargo.com',
+        'coinbase.com', 'binance.com', 'fidelity.com', 'vanguard.com', 'mint.com'
+      ]
     };
 
     for (const [category, hosts] of Object.entries(rules)) {

@@ -468,10 +468,10 @@ async function updateEmotion(): Promise<void> {
       aiComment = result.comment;
       hasEvaluatedPageAi = true;
     } else {
-      nextEmotion = await emotion.evaluate(context, scheduleEnabled);
+      nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false);
     }
   } else {
-    nextEmotion = await emotion.evaluate(context, scheduleEnabled);
+    nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false);
   }
 
   if (nextEmotion !== emotion.current || aiComment || !petImg.src) {
@@ -1004,7 +1004,7 @@ async function init(): Promise<void> {
         }
       }
     }
-  }, 10_000);
+  }, 3000);
 }
 
 init();

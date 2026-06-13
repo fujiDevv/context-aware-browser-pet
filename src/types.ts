@@ -31,6 +31,7 @@ export interface PetSettings {
   blockedDomains?: string[];
   disabledEmotions?: string[];
   scheduleEnabled?: boolean;
+  seasonalEnabled?: boolean;
 }
 
 export interface SharedPetState {

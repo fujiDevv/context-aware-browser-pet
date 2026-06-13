@@ -107,6 +107,7 @@ async function init(): Promise<void> {
     speedVal: document.getElementById('speed-val') as HTMLElement,
     soundToggle: document.getElementById('sound-toggle') as HTMLInputElement,
     scheduleToggle: document.getElementById('schedule-toggle') as HTMLInputElement,
+    seasonalToggle: document.getElementById('seasonal-toggle') as HTMLInputElement,
     volumeContainer: document.getElementById('volume-container') as HTMLElement,
     volumeSlider: document.getElementById('volume-slider') as HTMLInputElement,
     volumeVal: document.getElementById('volume-val') as HTMLElement,
@@ -339,6 +340,10 @@ async function init(): Promise<void> {
     saveSettings();
   });
 
+  settingsEl.seasonalToggle.addEventListener('change', () => {
+    saveSettings();
+  });
+
   settingsEl.soundToggle.addEventListener('change', (e) => {
     const target = e.target as HTMLInputElement;
     const enabled = target.checked;
@@ -412,7 +417,8 @@ async function init(): Promise<void> {
         persona: settingsEl.personaSelect.value,
         blockedDomains: blockedDomains,
         disabledEmotions: disabledEmotions,
-        scheduleEnabled: settingsEl.scheduleToggle.checked
+        scheduleEnabled: settingsEl.scheduleToggle.checked,
+        seasonalEnabled: settingsEl.seasonalToggle.checked
       }
     });
   }
@@ -627,6 +633,9 @@ async function init(): Promise<void> {
 
     const scheduleEnabled = settings.scheduleEnabled ?? true;
     settingsEl.scheduleToggle.checked = scheduleEnabled;
+
+    const seasonalEnabled = settings.seasonalEnabled ?? true;
+    settingsEl.seasonalToggle.checked = seasonalEnabled;
 
     const soundEnabled = settings.soundEnabled ?? true;
     settingsEl.soundToggle.checked = soundEnabled;

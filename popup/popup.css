@@ -588,6 +588,12 @@ h2 {
   color: #b91c1c;
 }
 
+.season-badge {
+  background: rgba(236, 72, 153, 0.08);
+  border: 1px solid rgba(236, 72, 153, 0.2);
+  color: #db2777;
+}
+
 .trigger-label {
   color: var(--text-primary);
   font-weight: 550;
