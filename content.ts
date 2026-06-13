@@ -534,7 +534,18 @@ async function updateEmotion(): Promise<void> {
     }
   }
 
-  if (isFocusActive) {
+  let customReaction = undefined;
+  if (currentSettings.domainReactions) {
+    const currentDomain = window.location.hostname.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
+    customReaction = currentSettings.domainReactions.find(r => r.domain === currentDomain);
+  }
+
+  if (customReaction && !isFocusActive) {
+    nextEmotion = customReaction.emotion;
+    if (customReaction.dialogue) {
+      aiComment = customReaction.dialogue;
+    }
+  } else if (isFocusActive) {
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
   } else if (scheduleEnabled && currentSettings.aiMode && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
@@ -567,7 +578,9 @@ async function updateEmotion(): Promise<void> {
       triggerContextDialogue(nextEmotion);
     }
 
-    if (nextEmotion === 'waving' || nextEmotion === 'yoga') {
+    if (customReaction && customReaction.sound && customReaction.sound !== 'none' && !isFocusActive) {
+      playSound(customReaction.sound);
+    } else if (nextEmotion === 'waving' || nextEmotion === 'yoga') {
       playSound('greeting');
     } else if (['sad', 'crying'].includes(nextEmotion)) {
       playSound('sad');

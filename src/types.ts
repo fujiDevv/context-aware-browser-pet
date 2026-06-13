@@ -20,6 +20,14 @@ export interface PetStats {
   lastHabitDecayTime?: number;
 }
 
+export interface DomainReaction {
+  id: string;
+  domain: string;
+  emotion: string;
+  dialogue?: string;
+  sound?: string;
+}
+
 export interface PetSettings {
   size: number;
   speed: number;
@@ -41,6 +49,7 @@ export interface PetSettings {
   focusActive?: boolean;
   focusStartHour?: number;
   focusEndHour?: number;
+  domainReactions?: DomainReaction[];
 }
 
 export interface SharedPetState {

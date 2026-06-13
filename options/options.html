@@ -60,10 +60,24 @@
         <div class="sanctuary-layout">
           <!-- Playground Container -->
           <div class="playground-card">
-            <div class="playground-stage">
+            <div class="playground-stage" id="playground-stage">
               <div class="stage-bg-grid"></div>
+              
+              <!-- Sandbox Toolbar Overlay -->
+              <div class="sandbox-toolbar" id="sandbox-toolbar">
+                <button class="toy-btn active" data-toy="ball">⚽</button>
+                <button class="toy-btn" data-toy="fish">🐟</button>
+                <button class="toy-btn" data-toy="laser">🔴</button>
+                <button class="toy-btn" data-toy="yarn">🧶</button>
+                <button class="toy-btn" data-toy="duck">🦆</button>
+                <button class="toy-btn" data-toy="box">📦</button>
+              </div>
+
               <div class="pet-glow-orb" id="pet-orb"></div>
               <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Clawd">
+              
+              <!-- Floating text/bubbles container for sandbox -->
+              <div id="sandbox-speech-bubble" class="pet-speech-bubble"></div>
             </div>
 
             <div class="playground-interactions">
@@ -392,6 +406,85 @@
               <h2>Costume & Aura Wardrobe</h2>
               <div class="wardrobe-grid" id="wardrobe-grid">
                 <!-- Cards will be populated dynamically by options.ts -->
+              </div>
+            </div>
+
+            <!-- Domain Reaction Dictionary Card -->
+            <div class="settings-reactions-card">
+              <h2>Domain Reaction Dictionary</h2>
+              <p class="section-subtitle">Map specific website domains to custom mascot behaviors, comments, and sound effects:</p>
+
+              <!-- Add Rule Form -->
+              <div class="reaction-form">
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label for="reaction-domain-input">Website Domain</label>
+                    <input type="text" id="reaction-domain-input" class="form-control" placeholder="e.g. stackoverflow.com">
+                  </div>
+                  <div class="form-group col">
+                    <label for="reaction-emotion-select">Mascot Emotion</label>
+                    <select id="reaction-emotion-select" class="form-control">
+                      <option value="happy">Happy 😊</option>
+                      <option value="sad">Sad 😢</option>
+                      <option value="sleeping">Sleeping 💤</option>
+                      <option value="working-thinking">Thinking 🤔</option>
+                      <option value="reading">Reading 📖</option>
+                      <option value="eating">Eating 🍕</option>
+                      <option value="coding">Coding 💻</option>
+                      <option value="working-typing">Typing ⌨️</option>
+                      <option value="dancing">Dancing 💃</option>
+                      <option value="cool">Cool 😎</option>
+                      <option value="love">Love ❤️</option>
+                      <option value="celebrating">Celebrating 🎉</option>
+                      <option value="mindblown">Mindblown 🤯</option>
+                      <option value="ninja">Ninja 🥷</option>
+                      <option value="working-wizard">Wizard 🧙</option>
+                      <option value="astronaut">Astronaut 🧑‍🚀</option>
+                      <option value="working-debugger">Debugger 🔍</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row" style="margin-top: 8px;">
+                  <div class="form-group col">
+                    <label for="reaction-dialogue-input">Speech Dialogue (Optional)</label>
+                    <input type="text" id="reaction-dialogue-input" class="form-control" placeholder="e.g. Let's fix this bug! 🐛">
+                  </div>
+                  <div class="form-group col">
+                    <label for="reaction-sound-select">Sound FX (Optional)</label>
+                    <select id="reaction-sound-select" class="form-control">
+                      <option value="none">None</option>
+                      <option value="greeting">Greeting</option>
+                      <option value="levelUp">Level Up</option>
+                      <option value="petting">Petting</option>
+                      <option value="sad">Crying</option>
+                      <option value="sleeping">Sleeping</option>
+                      <option value="thinking">Thinking</option>
+                      <option value="feeding">Feeding</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-primary" id="btn-add-reaction" style="margin-top: 12px; width: 100%;">Add Reaction Rule</button>
+              </div>
+
+              <!-- Rule List/Table -->
+              <div class="reactions-list-container" style="margin-top: 20px;">
+                <table class="reactions-table">
+                  <thead>
+                    <tr>
+                      <th>Domain</th>
+                      <th>Emotion</th>
+                      <th>Dialogue</th>
+                      <th>Sound</th>
+                      <th style="width: 60px; text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reactions-tbody">
+                    <!-- Rule rows populated dynamically -->
+                  </tbody>
+                </table>
+                <div class="empty-blocklist" id="empty-reactions-msg" style="display: none; padding: 12px; text-align: center;">
+                  No custom domain reactions set.
+                </div>
               </div>
             </div>
           </div>

@@ -299,6 +299,96 @@ body::after {
   background-size: 16px 16px;
 }
 
+/* Sandbox Physics Elements */
+.sandbox-toolbar {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  z-index: 20;
+}
+
+.toy-btn {
+  background: transparent;
+  border: 2px solid transparent;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.toy-btn:hover {
+  transform: scale(1.15);
+}
+
+.toy-btn.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.sandbox-toy {
+  position: absolute;
+  font-size: 24px;
+  user-select: none;
+  pointer-events: none;
+  z-index: 15;
+  transition: transform 0.1s linear, opacity 0.3s ease;
+}
+
+#sandbox-speech-bubble {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(8px);
+  color: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 30;
+}
+
+#sandbox-speech-bubble.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+#sandbox-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0;
+  border-style: solid;
+  border-color: rgba(15, 23, 42, 0.92) transparent;
+  display: block;
+  width: 0;
+}
+
 #pet-preview {
   width: 90px;
   height: 90px;
@@ -306,11 +396,13 @@ body::after {
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
   animation: petIdle 4s infinite ease-in-out;
   transition: transform 0.2s ease;
+  position: absolute; /* Set to absolute for sandbox physics tracking */
 }
 
 #pet-preview:hover {
   transform: scale(1.1) rotate(2deg);
 }
+
 
 @keyframes petIdle {
 
@@ -875,7 +967,8 @@ body::after {
 
 .settings-main-card,
 .settings-blocklist-card,
-.settings-wardrobe-card {
+.settings-wardrobe-card,
+.settings-reactions-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 16px;
@@ -884,7 +977,8 @@ body::after {
 
 .settings-main-card h2,
 .settings-blocklist-card h2,
-.settings-wardrobe-card h2 {
+.settings-wardrobe-card h2,
+.settings-reactions-card h2 {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -1499,6 +1593,50 @@ input:checked+.switch-slider:before {
 }
 
 .focus-info strong {
+  margin-bottom: 6px;
   font-size: 12px;
   color: var(--text-primary);
+}
+
+/* Domain Reaction Dictionary Styles */
+.reaction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.reactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.reactions-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.reactions-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reactions-table tr:last-child td {
+  border-bottom: none;
 }
