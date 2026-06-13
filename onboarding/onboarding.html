@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Clawd!</title>
+  <link rel="stylesheet" href="onboarding.css">
+  <link rel="icon" type="image/png" href="../assets/pet48.png">
+</head>
+<body>
+
+  <div class="onboarding-container">
+    <div class="steps-viewport">
+
+      <div class="steps-track" id="steps-track">
+
+        <!-- Step 1: Welcome -->
+        <div class="step" id="step-1">
+          <div class="mascot-hero">
+            <img src="../assets/pets/clawd-waving.svg" alt="Clawd waving hello">
+          </div>
+          <h1 class="step-title">
+            Welcome to <span class="brand">Clawd!</span>
+          </h1>
+          <p class="step-subtitle">
+            Your new context-aware AI browser companion is ready to go.
+            Clawd lives in your browser, reacts to the pages you visit,
+            and keeps you company while you work.
+          </p>
+          <div class="version-badge">
+            <span class="dot"></span>
+            v1.0.0 — Successfully Installed
+          </div>
+        </div>
+
+        <!-- Step 2: Features -->
+        <div class="step" id="step-2">
+          <h1 class="step-title">What <span class="brand">Clawd</span> Can Do</h1>
+          <p class="step-subtitle">
+            Here's a quick look at your new browser pet's abilities.
+          </p>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <img src="../assets/pets/clawd-working-thinking.svg" alt="Context Awareness">
+              </div>
+              <h3>Context Awareness</h3>
+              <p>Reacts to HTTP status codes, page content, and your browsing behavior.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <img src="../assets/pets/clawd-coding.svg" alt="AI Reactions">
+              </div>
+              <h3>AI Reactions</h3>
+              <p>Uses AI to analyze pages and respond with unique emotions and comments.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <img src="../assets/pets/clawd-celebrating.svg" alt="XP & Leveling">
+              </div>
+              <h3>XP & Leveling</h3>
+              <p>Earn experience through interactions and watch Clawd level up over time.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <img src="../assets/pets/clawd-cool.svg" alt="Personality Modes">
+              </div>
+              <h3>Personality Modes</h3>
+              <p>Switch between Friendly, Sarcastic, Encouraging, Poetic, and Snarky.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Get Started -->
+        <div class="step" id="step-3">
+          <div class="cta-mascot">
+            <img src="../assets/pets/clawd-happy.svg" alt="Clawd celebrating">
+          </div>
+          <h1 class="step-title">You're All Set!</h1>
+          <p class="step-subtitle">
+            Clawd is already roaming around your browser. Here are a few tips to get started:
+          </p>
+          <div class="tip-cards">
+            <div class="tip-card">
+              <span class="tip-number">1</span>
+              <span class="tip-text"><strong>Pin the extension</strong> to your toolbar for quick access to the dashboard.</span>
+            </div>
+            <div class="tip-card">
+              <span class="tip-number">2</span>
+              <span class="tip-text"><strong>Click the icon</strong> to view Clawd's stats, mood, and settings.</span>
+            </div>
+            <div class="tip-card">
+              <span class="tip-number">3</span>
+              <span class="tip-text"><strong>Pet, feed, or shoo</strong> Clawd by interacting with him on any page.</span>
+            </div>
+          </div>
+          <a href="https://clawd-pet.vercel.app/docs" target="_blank" rel="noopener noreferrer" class="docs-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Read the Full Docs
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Navigation Controls -->
+      <div class="nav-controls">
+        <button class="nav-btn hidden" id="btn-back">
+          <span class="arrow">←</span> Back
+        </button>
+        <div class="step-dots" id="step-dots">
+          <button class="step-dot active" data-step="0"></button>
+          <button class="step-dot" data-step="1"></button>
+          <button class="step-dot" data-step="2"></button>
+        </div>
+        <button class="nav-btn primary" id="btn-next">
+          Next <span class="arrow">→</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="onboarding.js"></script>
+</body>
+</html>

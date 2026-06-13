@@ -9,6 +9,19 @@ let sharedPetState: SharedPetState = {
   emotion: 'happy'
 };
 
+/**
+ * Opens the onboarding page in a new tab on first install.
+ * Passes the extension version as a query parameter for display.
+ */
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    const version = chrome.runtime.getManifest().version;
+    chrome.tabs.create({
+      url: `onboarding/onboarding.html?version=v${version}&reason=install`
+    });
+  }
+});
+
 chrome.webRequest.onCompleted.addListener(
   (details) => {
     if (details.statusCode >= 400 && details.frameId === 0) {

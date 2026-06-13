@@ -1,0 +1,432 @@
+/*
+ * Clawd Onboarding Page Styles
+ * White glassmorphic design matching the main Clawd site.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap');
+
+:root {
+  --accent: #C75D3F;
+  --accent-light: #e8917a;
+  --accent-bg: rgba(199, 93, 63, 0.08);
+  --accent-border: rgba(199, 93, 63, 0.25);
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --card-shadow: none;
+  --dot-inactive: #cbd5e1;
+  --dot-active: var(--accent);
+  --transition-slide: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ── Onboarding Container ─────────────────────────────────────────────── */
+.onboarding-container {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* ── Steps Viewport ───────────────────────────────────────────────────── */
+.steps-viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.steps-track {
+  display: flex;
+  transition: transform var(--transition-slide);
+  will-change: transform;
+}
+
+.step {
+  min-width: 100%;
+  flex-shrink: 0;
+  padding: 48px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ── Step 1: Welcome ──────────────────────────────────────────────────── */
+.mascot-hero {
+  width: 140px;
+  height: 140px;
+  margin-bottom: 28px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.mascot-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.step-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.step-title .brand {
+  color: var(--accent);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+
+.step-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: 8px;
+}
+
+.version-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 12px;
+}
+
+.version-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── Step 2: Features ─────────────────────────────────────────────────── */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 540px;
+  margin-top: 8px;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px 20px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid var(--card-border);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-border);
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.feature-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.feature-card h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.feature-card p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ── Step 3: Get Started ──────────────────────────────────────────────── */
+.cta-mascot {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
+  animation: celebrate 2s ease-in-out infinite;
+}
+
+.cta-mascot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tip-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.tip-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--card-border);
+  text-align: left;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.tip-card:hover {
+  transform: translateX(4px);
+  border-color: var(--accent-border);
+}
+
+.tip-number {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tip-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.tip-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ── Navigation Controls ──────────────────────────────────────────────── */
+.nav-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px 32px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
+}
+
+.step-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dot-inactive);
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  padding: 0;
+}
+
+.step-dot.active {
+  background: var(--dot-active);
+  width: 28px;
+  border-radius: 5px;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  background: white;
+  color: var(--text-secondary);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.nav-btn:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.nav-btn.primary {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.nav-btn.primary:hover {
+  background: var(--accent-light);
+  border-color: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+.nav-btn.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.nav-btn .arrow {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* ── Docs link on final step ──────────────────────────────────────────── */
+.docs-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.88rem;
+  transition: all 0.25s ease;
+}
+
+.docs-link:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.docs-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Animations ───────────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes celebrate {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(-3deg); }
+  75% { transform: translateY(-8px) rotate(3deg); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ── Background decoration ────────────────────────────────────────────── */
+
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .onboarding-container {
+    padding: 12px;
+  }
+
+  .step {
+    padding: 32px 20px 24px;
+  }
+
+  .step-title {
+    font-size: 1.6rem;
+  }
+
+  .step-subtitle {
+    font-size: 0.92rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .feature-card {
+    flex-direction: row;
+    text-align: left;
+    padding: 16px;
+  }
+
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .mascot-hero {
+    width: 100px;
+    height: 100px;
+  }
+
+  .nav-controls {
+    padding: 0 20px 24px;
+  }
+
+  .nav-btn {
+    padding: 8px 16px;
+    font-size: 0.82rem;
+  }
+}

@@ -54,7 +54,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "assets/*"
+        "assets/*",
+        "onboarding/*"
       ],
       "matches": [
         "<all_urls>"
