@@ -52,8 +52,9 @@
     - [Setting Up](#setting-up)
     - [AI Personas](#ai-personas)
 13. [Cross-Tab Behavior (Hybrid Sync)](#cross-tab-behavior-hybrid-sync)
-14. [Frequently Asked Questions](#frequently-asked-questions)
-15. [Contributing](#contributing)
+14. [Security & Privacy](#security--privacy)
+15. [Frequently Asked Questions](#frequently-asked-questions)
+16. [Contributing](#contributing)
 
 ---
 
@@ -379,6 +380,23 @@ When you visit a page, the extension sends the **page title** and **meta descrip
 Clawd runs on a **hybrid synchronization** system:
 - **Physical Coordinates Sync**: Clawd's horizontal position (`x` coordinate), direction, and movement states are synchronized in real-time across all tabs. Clawd is in the exact same spot when you switch between tabs.
 - **Emotional States stay Local**: Each tab evaluates its own page context. Clawd will be coding on GitHub, eating popcorn on YouTube, and reading documentation on Wikipedia — maintaining his local context reactions on each tab.
+
+---
+
+## Security & Privacy
+
+Clawd is built with privacy in mind.
+
+### Local Evaluation
+All contextual parsing, idle detection, and scrolling evaluations happen entirely on your device. Clawd does not send your web browsing history, active URLs, or keystrokes to any third-party servers.
+
+### AI Mode Privacy
+If you opt into the **AI Mood Analysis** feature:
+- Only the **Page Title** and **Meta Description** of your active tab are sent to the Claude API. It does not scan or transmit paragraph text, forms, or personal data on the page.
+- Your Anthropic API Key is stored directly and securely on your local machine using Chrome's native `storage.local` API.
+
+### Permissions
+The extension requests only the permissions necessary to render the pet (`activeTab`), communicate with the Claude API via background workers, and save your settings (`storage`).
 
 ---
 

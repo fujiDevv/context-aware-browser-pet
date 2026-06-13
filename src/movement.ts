@@ -48,8 +48,8 @@ export class MovementEngine {
       this._apply();
 
       this._posAnimation = springAnimate(this.el, {
-        left: `${this.x}px`,
-        top: `${targetY}px`
+        '--pet-x': `${this.x}px`,
+        '--pet-y': `${targetY}px`
       }, {
         stiffness: 180,
         damping: 15,
@@ -101,8 +101,8 @@ export class MovementEngine {
 
     // Smoothly spring to the new location
     this._posAnimation = springAnimate(this.el, {
-      left: `${this.x}px`,
-      top: `${this.y}px`
+      '--pet-x': `${this.x}px`,
+      '--pet-y': `${this.y}px`
     }, {
       stiffness: 120,
       damping: 12
@@ -232,8 +232,11 @@ export class MovementEngine {
     const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
     const rotate = 'rotate(0deg)';
 
-    this.el.style.left = `${this.x}px`;
-    this.el.style.top = `${this.y}px`;
+    this.el.style.setProperty('--pet-x', `${this.x}px`);
+    this.el.style.setProperty('--pet-y', `${this.y}px`);
+    this.el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
+    this.el.style.left = '0px';
+    this.el.style.top = '0px';
     this.el.style.bottom = 'auto';
     
     const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
@@ -337,8 +340,11 @@ export class MovementEngine {
   _applyDragStyle(): void {
     this._stopPosAnimation();
 
-    this.el.style.left = `${this.x}px`;
-    this.el.style.top = `${this.y}px`;
+    this.el.style.setProperty('--pet-x', `${this.x}px`);
+    this.el.style.setProperty('--pet-y', `${this.y}px`);
+    this.el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
+    this.el.style.left = '0px';
+    this.el.style.top = '0px';
     this.el.style.bottom = 'auto';
     
     const img = this.el.querySelector('#browser-pet-img') as HTMLImageElement | null;
@@ -366,8 +372,8 @@ export class MovementEngine {
     
     // Spring snap to the bottom floor
     this._posAnimation = springAnimate(this.el, {
-      left: `${this.x}px`,
-      top: `${this.y}px`
+      '--pet-x': `${this.x}px`,
+      '--pet-y': `${this.y}px`
     }, {
       stiffness: 250,
       damping: 16

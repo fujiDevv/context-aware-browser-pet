@@ -111,6 +111,15 @@ context-aware-browser-pet/
 
 ---
 
+## Security & Privacy
+
+* **Local Evaluation**: All website context evaluations, DOM parsing, and activity tracking happen entirely locally on your machine.
+* **No Telemetry**: Clawd does not collect, track, or transmit your browsing history or personal data to external servers.
+* **Secure API Storage**: If you choose to use the optional AI Mood Analysis feature, your Anthropic API Key is stored securely and locally using Chrome's `storage.local`.
+* **Minimal Scope**: The AI proxy only sends the `page title` and `meta description` to Anthropic. It does *not* read or send the body contents or sensitive DOM elements of the pages you visit.
+
+---
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
