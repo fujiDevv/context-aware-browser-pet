@@ -1,68 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browser Pet Dashboard</title>
+  <title>Browser Pet Controller</title>
   <link rel="stylesheet" href="popup.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <div class="popup-container">
-    
-    <div class="tab-navigation">
-      <button class="tab-btn active" id="btn-tab-mascot" data-tab="mascot">Mascot</button>
-      <button class="tab-btn" id="btn-tab-analytics" data-tab="analytics">Stats</button>
-      <button class="tab-btn" id="btn-tab-settings" data-tab="settings">Settings</button>
-      <button class="dashboard-btn" id="btn-open-dashboard" title="Open Full Dashboard">📊</button>
-    </div>
+
+    <header class="header">
+      <div class="header-profile">
+        <div class="avatar-container">
+          <div class="avatar-glow"></div>
+          <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Pet Preview">
+        </div>
+        <div class="header-info">
+          <h1 id="pet-name">Clawd</h1>
+          <div class="header-badges">
+            <div class="level-badge">
+              <span class="level-label">LVL</span>
+              <span id="pet-level" class="level-num">1</span>
+            </div>
+            <div id="prestige-badge" class="prestige-badge hidden" title="Prestige Rank">
+              <span class="prestige-star">★</span>
+              <span id="prestige-level" class="prestige-level-num">0</span>
+            </div>
+            <div class="mood-badge" id="pet-mood">
+              <span id="mood-emoji"></span>
+              <span id="mood-text">Happy</span>
+            </div>
+            <div id="pet-trait" class="trait-badge">
+              <span id="trait-text">Normal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="xp-section">
+        <div class="xp-header">
+          <span>Experience</span>
+          <span id="xp-text">0 / 100 XP</span>
+        </div>
+        <div class="progress-track xp-track">
+          <div id="bar-xp" class="progress-fill xp-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </header>
 
     <div class="dashboard-content">
+      <div class="tab-pane active">
 
-      <div id="tab-mascot" class="tab-pane active">
-        
-        <header class="header">
-          <div class="header-profile">
-            <div class="avatar-container">
-              <div class="avatar-glow"></div>
-              <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Pet Preview">
-            </div>
-            <div class="header-info">
-              <h1 id="pet-name">Clawd</h1>
-              <div class="header-badges">
-                <div class="level-badge">
-                  <span class="level-label">LVL</span>
-                  <span id="pet-level" class="level-num">1</span>
-                </div>
-                <div id="prestige-badge" class="prestige-badge hidden" title="Prestige Rank">
-                  <span class="prestige-star">★</span>
-                  <span id="prestige-level" class="prestige-level-num">0</span>
-                </div>
-                <div class="mood-badge" id="pet-mood">
-                  <span id="mood-emoji"></span>
-                  <span id="mood-text">Happy</span>
-                </div>
-                <div id="pet-trait" class="trait-badge">
-                  <span id="trait-text">Normal</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="xp-section">
-            <div class="xp-header">
-              <span>Experience</span>
-              <span id="xp-text">0 / 100 XP</span>
-            </div>
-            <div class="progress-track xp-track">
-              <div id="bar-xp" class="progress-fill xp-fill" style="width: 0%"></div>
-            </div>
-          </div>
-        </header>
-
+        <!-- Quick Stats -->
         <section class="stats-section">
           <h2>Mascot Stats</h2>
-          
+
           <div class="stat-card">
             <div class="stat-info">
               <span class="stat-name">Happiness</span>
@@ -114,41 +109,14 @@
           </div>
         </section>
 
-        <section class="stats-section" id="habits-section">
-          <h2>Adaptive Habits</h2>
-          <div class="stat-card" style="margin-bottom: 0;">
-            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11px;">
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-secondary); font-weight: 500;">Learned Trait:</span>
-                <span id="lbl-habit-trait" style="font-weight: 600; text-transform: uppercase;">Normal</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-secondary); font-weight: 500;">Speed Modifier:</span>
-                <span id="lbl-habit-speed" style="font-weight: 600;">1.00x</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-secondary); font-weight: 500;">Default Behavior:</span>
-                <span id="lbl-habit-behavior" style="font-weight: 600;">Standard</span>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="prestige-promo-card hidden" id="prestige-card">
-          <div class="prestige-card-content">
-            <div class="prestige-card-title">
-              <span class="prestige-star">★</span> Clawd is Ready to Prestige! <span class="prestige-star">★</span>
-            </div>
-            <p>Clawd has reached Level 50! Reset level to 1 to unlock permanent cosmetics & higher trait bonuses.</p>
-            <button id="btn-prestige" class="prestige-btn">Rebirth Clawd</button>
-          </div>
-        </section>
-
+        <!-- Actions -->
         <section class="actions-section">
           <button id="btn-pet" class="action-btn pet-btn">Pet</button>
           <button id="btn-feed" class="action-btn feed-btn">Feed</button>
           <button id="btn-shoo" class="action-btn shoo-btn">Shoo</button>
         </section>
 
+        <!-- Interactive Toys -->
         <section class="toys-section">
           <h2>Interactive Toys</h2>
           <div class="toys-container">
@@ -179,117 +147,11 @@
           </div>
           <p class="toy-help">Drag a toy onto the webpage to play!</p>
         </section>
-      </div>
 
-      <div id="tab-analytics" class="tab-pane hidden">
-        
-        <section class="settings-section analytics-section">
-          <h2>Clawd's Analytics</h2>
-          <div class="analytics-grid">
-            <div class="analytics-card">
-              <span class="analytics-val" id="val-total-pets">0</span>
-              <span class="analytics-label">Total Pets</span>
-            </div>
-            <div class="analytics-card">
-              <span class="analytics-val" id="val-total-feeds">0</span>
-              <span class="analytics-label">Total Feeds</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="settings-section interests-section">
-          <h2>Browsing Interests</h2>
-          <p class="section-help">Web categories Clawd has analyzed:</p>
-          <div id="categories-list" class="categories-list">
-            
-          </div>
-        </section>
-
-        <section class="settings-section timeline-section">
-          <h2>Recent Activity</h2>
-          <div id="timeline-list" class="timeline-list">
-            
-          </div>
-        </section>
-
-        <section class="settings-section triggers-section">
-          <h2>Daily Schedule & Triggers</h2>
-          <p class="section-help">How Clawd reacts to your daily habits and environment:</p>
-          <div class="triggers-list">
-            <div class="trigger-item-row">
-              <span class="trigger-badge time-badge">10 PM - 6 AM</span>
-              <span class="trigger-label">Sleeping (Late Night)</span>
-            </div>
-            <div class="trigger-item-row">
-              <span class="trigger-badge time-badge">6 AM - 9 AM</span>
-              <span class="trigger-label">Yoga (Morning Routine)</span>
-            </div>
-            <div class="trigger-item-row">
-              <span class="trigger-badge idle-badge">Idle &gt; 45s</span>
-              <span class="trigger-label">Random Activity (napping, skateboarding, etc.)</span>
-            </div>
-            <div class="trigger-item-row">
-              <span class="trigger-badge idle-badge">Idle &gt; 5m</span>
-              <span class="trigger-label">Falls Asleep</span>
-            </div>
-            <div class="trigger-item-row">
-              <span class="trigger-badge web-badge">Web Category</span>
-              <span class="trigger-label">Coding, Gaming, Videos (Eating), Music, etc.</span>
-            </div>
-            <div class="trigger-item-row">
-              <span class="trigger-badge error-badge">Console Error</span>
-              <span class="trigger-label">Debugger Mode</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="settings-section seasonal-section">
-          <h2>Seasonal Calendar Events</h2>
-          <p class="section-help">Special holiday animations Clawd can express throughout the year:</p>
-          <div class="triggers-list">
-            <div class="trigger-item-row">
-              <span class="trigger-badge season-badge">Summer</span>
-              <span class="trigger-label">June – August: Summer, Surfing, Ice Cream</span>
-            </div>
-            <div class="trigger-item-row">
-              <span class="trigger-badge season-badge">Halloween</span>
-              <span class="trigger-label">October: Spooky animations</span>
-            </div>
-            <div class="trigger-item-row">
-              <span class="trigger-badge season-badge">Christmas</span>
-              <span class="trigger-label">December: Festive holiday animations</span>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div id="tab-settings" class="tab-pane hidden">
-        
-        <section class="settings-section emotions-section">
-          <h2>Active Emotions</h2>
-          <p class="section-help">Toggle which unlocked emotions Clawd can express:</p>
-          <div id="emotions-grid" class="emotions-grid">
-            
-          </div>
-        </section>
-
-        <section class="soundboard-section">
-          <h2>Sound Board</h2>
-          <div class="soundboard-container">
-            <button class="sound-preview-btn" data-sound="greeting">Greeting</button>
-            <button class="sound-preview-btn" data-sound="petting">Petting</button>
-            <button class="sound-preview-btn" data-sound="feeding">Feeding</button>
-            <button class="sound-preview-btn" data-sound="levelUp">Level Up</button>
-            <button class="sound-preview-btn" data-sound="shoo">Shoo</button>
-            <button class="sound-preview-btn" data-sound="sad">Sad</button>
-            <button class="sound-preview-btn" data-sound="thinking">Thinking</button>
-            <button class="sound-preview-btn" data-sound="sleeping">Sleeping</button>
-          </div>
-        </section>
-
-        <section class="settings-section visibility-section">
+        <!-- Visibility Control -->
+        <section class="settings-section visibility-section" style="margin-top: 10px;">
           <h2>Visibility</h2>
-          
+
           <div class="setting-row toggle-row">
             <div class="setting-desc">
               <span class="setting-title">Hide on this Tab</span>
@@ -313,154 +175,15 @@
           </div>
         </section>
 
-        <section class="settings-section">
-          <h2>Settings</h2>
-
-          <div class="setting-row">
-            <div class="setting-desc">
-              <span class="setting-title">Pet Name</span>
-            </div>
-            <input type="text" id="pet-name-input" placeholder="Clawd" class="custom-input" maxlength="12">
-          </div>
-
-          <div class="setting-row">
-            <div class="setting-desc">
-              <span class="setting-title">Pet Glow Effect</span>
-              <span class="setting-subtitle">Unlock glows at LVL 5, 10, 15</span>
-            </div>
-            <select id="costume-select" class="custom-select">
-              <option value="none">None</option>
-              <option value="detective" id="opt-detective" disabled>Blue Detective Aura (LVL 5)</option>
-              <option value="wizard" id="opt-wizard" disabled>Magic Purple Aura (LVL 10)</option>
-              <option value="party" id="opt-party" disabled>Neon Rainbow Shader (LVL 15)</option>
-            </select>
-          </div>
-          
-          <div class="setting-row">
-            <div class="setting-desc">
-              <span class="setting-title">Pet Size</span>
-              <span id="size-val" class="setting-val-badge">64px</span>
-            </div>
-            <input type="range" id="size-slider" min="48" max="128" value="64" class="custom-slider">
-          </div>
-
-          <div class="setting-row">
-            <div class="setting-desc">
-              <span class="setting-title">Movement Speed</span>
-              <span id="speed-val" class="setting-val-badge">1.2x</span>
-            </div>
-            <input type="range" id="speed-slider" min="1" max="50" value="12" class="custom-slider">
-          </div>
-
-          <div class="setting-row toggle-row">
-            <div class="setting-desc">
-              <span class="setting-title">Daily Schedule & Triggers</span>
-              <span class="setting-subtitle">React to browsing categories, errors, and schedules</span>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="schedule-toggle" checked>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-
-          <div class="setting-row toggle-row">
-            <div class="setting-desc">
-              <span class="setting-title">Seasonal Calendar Events</span>
-              <span class="setting-subtitle">Celebrate holidays like Christmas and Halloween</span>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="seasonal-toggle" checked>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-
-          <div class="setting-row toggle-row">
-            <div class="setting-desc">
-              <span class="setting-title">Sound Effects</span>
-              <span class="setting-subtitle">Toggle retro chiptunes</span>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="sound-toggle" checked>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-
-          <div id="volume-container" class="setting-row">
-            <div class="setting-desc">
-              <span class="setting-title">Volume</span>
-              <span id="volume-val" class="setting-val-badge">50%</span>
-            </div>
-            <input type="range" id="volume-slider" min="0" max="100" value="50" class="custom-slider">
-          </div>
-
-          <div class="setting-row toggle-row">
-            <div class="setting-desc">
-              <span class="setting-title">AI Mood Analysis</span>
-              <span class="setting-subtitle">Read pages to pick matching moods</span>
-            </div>
-            <label class="switch">
-              <input type="checkbox" id="ai-toggle">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-
-          <div id="ai-status-container" class="setting-row hidden">
-            <div class="setting-desc">
-              <span class="setting-title">On-Device AI Status</span>
-              <span class="setting-subtitle" id="ai-status-subtitle">Checking Gemini Nano availability</span>
-            </div>
-            <div id="ai-status-badge" class="ai-status-badge status-checking">
-              <span class="status-dot"></span>
-              <span id="ai-status-text">Checking...</span>
-            </div>
-          </div>
-
-          <div id="api-persona-container" class="setting-row hidden">
-            <div class="setting-desc">
-              <span class="setting-title">AI Persona</span>
-              <span class="setting-subtitle">Tweak Clawd's commentary tone</span>
-            </div>
-            <select id="persona-select" class="custom-select">
-              <option value="default">Default (Friendly)</option>
-              <option value="sarcastic">Sarcastic</option>
-              <option value="encouraging">Encouraging</option>
-              <option value="poetic">Poetic</option>
-              <option value="snarky">Snarky</option>
-            </select>
-          </div>
+        <!-- Primary Link to Full Dashboard -->
+        <section class="settings-section" style="border: none; padding-top: 0; margin-bottom: 0;">
+          <button id="btn-open-dashboard" class="dashboard-link-btn">Open Dashboard</button>
         </section>
 
-        <section class="settings-section">
-          <h2>Backup & Sync</h2>
-          <p class="section-help" style="margin-bottom: 8px;">Export Clawd's settings, stats, and prestige ranks to sync across devices or browsers.</p>
-          <div style="display: flex; gap: 8px;">
-            <button id="btn-export" class="sound-preview-btn" style="flex: 1; margin: 0;">Export Profile</button>
-            <button id="btn-import" class="sound-preview-btn" style="flex: 1; margin: 0;">Import Profile</button>
-            <input type="file" id="file-import" accept=".json" style="display: none;">
-          </div>
-        </section>
-
-        <section class="settings-section">
-          <h2>Support & Contact</h2>
-          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 11px;">
-            <div style="display: flex; justify-content: space-between;">
-              <span style="color: var(--text-secondary); font-weight: 500;">Email:</span>
-              <a href="mailto:fujidevv@duck.com" style="color: var(--accent); text-decoration: none; font-weight: 600;" target="_blank">fujidevv@duck.com</a>
-            </div>
-            <div style="display: flex; justify-content: space-between;">
-              <span style="color: var(--text-secondary); font-weight: 500;">GitHub Issues:</span>
-              <a href="https://github.com/fujiDevv/context-aware-browser-pet/issues" style="color: var(--accent); text-decoration: none; font-weight: 600;" target="_blank">Report Issue</a>
-            </div>
-            <div style="display: flex; justify-content: space-between;">
-              <span style="color: var(--text-secondary); font-weight: 500;">Documentation:</span>
-              <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 600;" target="_blank">View Docs</a>
-            </div>
-          </div>
-        </section>
       </div>
-
     </div>
   </div>
   <script src="popup.js"></script>
 </body>
+
 </html>

@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clawd Sanctuary - Dashboard & Analytics</title>
   <link rel="stylesheet" href="options.css">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
   <div class="dashboard-wrapper">
     <!-- Sidebar Navigation -->
@@ -38,14 +42,14 @@
       </nav>
 
       <div class="sidebar-footer">
-        <div class="version">Version 1.2.0 (Local AI)</div>
+        <div class="version">Version 1.0.0 (Local AI)</div>
         <div class="copyright">© 2026 Clawd Companion</div>
       </div>
     </aside>
 
     <!-- Main Content Area -->
     <main class="content-area">
-      
+
       <!-- PAGE: Sanctuary Playground -->
       <section id="page-sanctuary" class="page-pane active">
         <header class="page-header">
@@ -61,7 +65,7 @@
               <div class="pet-glow-orb" id="pet-orb"></div>
               <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Clawd">
             </div>
-            
+
             <div class="playground-interactions">
               <button id="btn-pet" class="interact-btn pet-btn">Pet Clawd</button>
               <button id="btn-feed" class="interact-btn feed-btn">Feed Snack</button>
@@ -75,7 +79,8 @@
               <h2 id="pet-name">Clawd</h2>
               <div class="badge-group">
                 <span class="badge badge-lvl">LVL <span id="pet-level">1</span></span>
-                <span class="badge badge-prestige hidden" id="prestige-badge">★ <span id="prestige-level">0</span></span>
+                <span class="badge badge-prestige hidden" id="prestige-badge">★ <span
+                    id="prestige-level">0</span></span>
                 <span class="badge badge-mood" id="pet-mood">Happy</span>
                 <span class="badge badge-trait" id="pet-trait">Normal</span>
               </div>
@@ -252,7 +257,7 @@
         <div class="logs-card">
           <div class="logs-filter-row">
             <h2>Timeline Feed</h2>
-            <button class="btn btn-secondary btn-small" id="btn-clear-logs-ui" style="display: none;">Clear Logs</button>
+            <button class="btn btn-secondary btn-small" id="btn-clear-logs-ui">Clear Logs</button>
           </div>
           <div id="timeline-list" class="timeline-list">
             <!-- Timeline items populated dynamically -->
@@ -271,7 +276,7 @@
           <!-- Main Settings Form -->
           <div class="settings-main-card">
             <h2>Mascot Preferences</h2>
-            
+
             <div class="form-group">
               <label for="pet-name-input">Mascot Name</label>
               <input type="text" id="pet-name-input" class="form-control" placeholder="Clawd">
@@ -367,7 +372,7 @@
           <div class="settings-blocklist-card">
             <h2>Site Blocklist (Do Not Spawn)</h2>
             <p class="section-subtitle">Prevent Clawd from spawning on these domain names:</p>
-            
+
             <div class="blocklist-add-row">
               <input type="text" id="input-block-domain" class="form-control" placeholder="e.g. github.com">
               <button class="btn btn-primary" id="btn-add-block">Block</button>
@@ -375,7 +380,8 @@
 
             <div class="blocklist-list-container">
               <div class="blocklist-search-wrapper">
-                <input type="text" id="input-search-blocklist" class="form-control blocklist-search" placeholder="Search blocklist...">
+                <input type="text" id="input-search-blocklist" class="form-control blocklist-search"
+                  placeholder="Search blocklist...">
               </div>
               <table class="blocklist-table">
                 <thead>
@@ -407,7 +413,8 @@
           <!-- Prestige Rebirth Box -->
           <div class="admin-card prestige-admin-card" id="prestige-card">
             <h2>Prestige Rebirth Sanctuary</h2>
-            <p>Clawd has grown extremely wise (Level 50+). Resetting his levels unlocks higher speed multipliers, permanent visual icons, and advanced capabilities.</p>
+            <p>Clawd has grown extremely wise (Level 50+). Resetting his levels unlocks higher speed multipliers,
+              permanent visual icons, and advanced capabilities.</p>
             <div class="prestige-status-row">
               <span>Current Prestige Rank:</span>
               <strong id="lbl-admin-prestige">0</strong>
@@ -419,7 +426,7 @@
           <div class="admin-card">
             <h2>Profile Backups</h2>
             <p>Export your settings, levels, and interest analytics to a file, or restore them onto another device.</p>
-            
+
             <div class="backup-actions">
               <button id="btn-export" class="btn btn-secondary">Export Profile (.json)</button>
               <button id="btn-import" class="btn btn-secondary">Import Profile (.json)</button>
@@ -431,7 +438,7 @@
           <div class="admin-card destructive-card">
             <h2>Factory Reset Options</h2>
             <p>These actions are irreversible. Make backups before executing resets.</p>
-            
+
             <div class="destructive-actions">
               <button id="btn-reset-stats" class="btn btn-danger">Reset Stats & Level Only</button>
               <button id="btn-hard-reset" class="btn btn-danger-dark">Hard Wipe All Storage</button>
@@ -444,4 +451,5 @@
   </div>
   <script src="options.js"></script>
 </body>
+
 </html>

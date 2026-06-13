@@ -261,6 +261,20 @@ async function init() {
     window.location.reload();
   });
 
+  // Clear Logs UI button
+  const btnClearLogs = document.getElementById('btn-clear-logs-ui');
+  if (btnClearLogs) {
+    btnClearLogs.addEventListener('click', async () => {
+      const confirmed = confirm("Are you sure you want to clear Clawd's history timeline?");
+      if (!confirmed) return;
+
+      const data = await chrome.storage.local.get('pet-stats');
+      const stats = data['pet-stats'] || {};
+      stats.moodHistory = [];
+      await chrome.storage.local.set({ 'pet-stats': stats });
+    });
+  }
+
   // Storage listener to update UI in real time
   chrome.storage.onChanged.addListener((changes) => {
     if (changes['pet-stats']) {
@@ -268,6 +282,9 @@ async function init() {
     }
     if (changes['pet-mood']) {
       updateUIMood(changes['pet-mood'].newValue);
+    }
+    if (changes['pet-settings'] && !document.hasFocus()) {
+      applySettings(changes['pet-settings'].newValue);
     }
     if (changes['modelLoadingState'] || changes['modelDownloadProgress']) {
       updateLocalAiStatus();
@@ -542,23 +559,37 @@ function renderTimeline(history: any[] | undefined) {
 }
 
 function applySettings(settings: PetSettings | undefined) {
-  if (!settings) return;
+  const defaults: PetSettings = {
+    size: 48,
+    speed: 1.0,
+    soundEnabled: true,
+    soundVolume: 0.8,
+    aiMode: false,
+    apiKey: '',
+    name: 'Clawd',
+    costume: 'none',
+    persona: 'default',
+    blockedDomains: [],
+    scheduleEnabled: true,
+    seasonalEnabled: true
+  };
+  const activeSettings = { ...defaults, ...settings };
 
-  nameInput.value = settings.name || 'Clawd';
+  nameInput.value = activeSettings.name || 'Clawd';
   petNameEl.textContent = nameInput.value;
 
-  const size = settings.size ?? 48;
+  const size = activeSettings.size ?? 48;
   sizeSlider.value = String(size);
   sizeVal.textContent = `${size}px`;
 
-  const speed = settings.speed ?? 1.0;
+  const speed = activeSettings.speed ?? 1.0;
   speedSlider.value = String(Math.round(speed * 10));
   speedVal.textContent = `${speed.toFixed(1)}x`;
 
-  costumeSelect.value = settings.costume || 'none';
-  personaSelect.value = settings.persona || 'default';
+  costumeSelect.value = activeSettings.costume || 'none';
+  personaSelect.value = activeSettings.persona || 'default';
 
-  const sound = settings.soundEnabled ?? true;
+  const sound = activeSettings.soundEnabled ?? true;
   soundToggle.checked = sound;
   if (sound) {
     volumeContainer.classList.remove('hidden');
@@ -566,13 +597,13 @@ function applySettings(settings: PetSettings | undefined) {
     volumeContainer.classList.add('hidden');
   }
 
-  const volume = settings.soundVolume ?? 0.8;
+  const volume = activeSettings.soundVolume ?? 0.8;
   volumeSlider.value = String(Math.round(volume * 100));
   volumeVal.textContent = `${Math.round(volume * 100)}%`;
 
-  aiToggle.checked = settings.aiMode ?? false;
-  scheduleToggle.checked = settings.scheduleEnabled ?? true;
-  seasonalToggle.checked = settings.seasonalEnabled ?? true;
+  aiToggle.checked = activeSettings.aiMode ?? false;
+  scheduleToggle.checked = activeSettings.scheduleEnabled ?? true;
+  seasonalToggle.checked = activeSettings.seasonalEnabled ?? true;
 
   renderBlocklist();
 }

@@ -1121,3 +1121,24 @@ input:checked + .toggle-slider:before {
     transform: scale(1.1);
   }
 }
+
+.dashboard-link-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.dashboard-link-btn:hover {
+  background-color: var(--accent-light);
+}
