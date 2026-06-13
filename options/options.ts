@@ -257,6 +257,18 @@ async function init() {
   btnImport.addEventListener('click', () => fileImport.click());
   fileImport.addEventListener('change', importProfile);
 
+  // Sound board preview listeners
+  const soundPlayButtons = document.querySelectorAll('.sound-play-btn') as NodeListOf<HTMLButtonElement>;
+  soundPlayButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const soundType = btn.getAttribute('data-sound');
+      if (soundType) {
+        const vol = Number(volumeSlider.value) / 100;
+        playPreviewSound(soundType, vol);
+      }
+    });
+  });
+
   // Resets
   btnResetStats.addEventListener('click', async () => {
     const confirmed = confirm("WARNING: This will reset Clawd's stats, level, prestige, and activity history to defaults. Settings will not be touched. Continue?");
