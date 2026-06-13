@@ -353,18 +353,19 @@ Click the extension icon to open the controls. The controls are organized into t
 
 ---
 
-## AI Mood Analysis (Optional)
+## AI Mood Analysis (Local & Offline)
 
-Clawd can use Anthropic's Claude API to read the page context and generate customized reactions.
+Clawd features a local, privacy-centric AI layer that reads page context and generates customized comments and expressions completely offline.
 
 ### How It Works
-When you visit a page, the extension sends the **page title** and **meta description** to the Claude API. Claude analyzes the content, selects one of the 23 allowed emotions, and writes a short, contextual comment that Clawd displays in a speech bubble.
+When you visit a page, the extension sends the **page title** and **meta description** to a local AI model running inside a hidden **Offscreen Document**. It runs a quantized, highly optimized DistilBERT model to classify the text's sentiment into `POSITIVE`, `NEGATIVE`, or `NEUTRAL`. The pet then maps the classified sentiment and current category to a specific emotional animation and displays a matching dialogue comment from the active persona.
 
 ### Setting Up
-1. Open the popup panel.
-2. Toggle on **AI Mood Analysis**.
-3. Input your Anthropic API Key (starts with `sk-ant-...`). Your key is saved securely in Chrome local storage.
-4. Select your preferred **AI Persona**.
+1. Open the extension popup panel.
+2. Under the **⚙️ Settings** tab, toggle on **AI Mood Analysis**.
+3. The status badge will change to **Downloading (X%)** as the model weights (~67MB) are downloaded and securely stored locally in your browser's IndexedDB. (This only happens on the first run).
+4. Once the status shows **Ready**, the local model is fully operational.
+5. Select your preferred **AI Persona** from the dropdown menu to customize the commentary style. No API keys or configurations are needed!
 
 ### AI Personas
 
@@ -401,13 +402,33 @@ Clawd's chat bubbles change depending on his current stats and trait:
 * If focus is over 80%, he will encourage productivity (*"Focus mode active! 🛡️"*).
 * If he is in a default idle state, he will display unique speech bubbles tailored to his trait (e.g. a Developer pet will say *"Compiling DOM structures... 💻"*, while a Scholar says *"Fascinating reading here! 📖"*).
 
-### AI Stat Context (Optional)
-If AI Mood Analysis is active, Clawd's current stats (e.g. `Focus: 90%, Energy: 40%`) and Trait are passed to Claude. Claude dynamically alters the commentary's tone and choice of emotion (e.g., sounding sleepier if low energy, geekier if a developer).
+### AI Stat Context (Local)
+If local AI Mood Analysis is active, Clawd's current stats (e.g. `Focus: 90%, Energy: 40%`) and Trait are passed to the local classifier. The local sentiment results are combined with these parameters to dynamically alter the commentary's tone and choice of emotion (e.g., sounding sleepier if low energy, geekier if a developer).
 
 ### Visualizing Habits in Popup
 Open the extension popup to view:
 * **Trait Badge**: Displays Clawd's current archetype in his profile header.
 * **Adaptive Habits Card**: Summarizes his current Trait, physical speed modifier, and default behavior type.
+
+---
+
+## Performance, Progression & Storage Optimization
+
+Clawd is designed to run 24/7 inside your browser without impacting computer performance, leaking memory, or overflowing local storage.
+
+### 1. Performance & Memory Management (24/7 Execution)
+* **Zero-Leak Lifecycles**: All DOM elements and active intervals are cleanly destroyed and reconstructed whenever tabs reload or update, ensuring zero memory leak accumulations.
+* **Decoupled Timers**: Tab-specific loops are throttled and only run when the tab is active and visible.
+* **Hardware Acceleration**: Sprite rendering and character squash-and-stretch transitions utilize the browser's native **Web Animations API (WAAPI)**, moving physics calculations to the GPU.
+
+### 2. Long-Term Progression & Stat Balance
+* **Balanced Decay**: Clawd's stat decay values (Happiness, Energy, Focus, etc.) are calculated once per minute to prevent sudden drop-offs.
+* **Linear XP Scaling**: Leveling up requires `Level * 100 XP`, establishing a balanced leveling curve.
+* **Unlocked Thresholds**: Outfits and emotions are locked behind level milestones, ensuring long-term interactive progression.
+
+### 3. Storage Optimization & Habit Lifespan
+* **Rolling Summaries**: To prevent storage leaks, the extension does not save every website you visit. Instead, it aggregates your visits into a compact rolling summary inside `chrome.storage.local`.
+* **Sustained Traits**: Habit tracking updates are throttled and capped to prevent local database growth, keeping the extension's storage footprint under 5KB total.
 
 ---
 
@@ -427,12 +448,13 @@ Clawd is built with privacy in mind.
 All contextual parsing, idle detection, and scrolling evaluations happen entirely on your device. Clawd does not send your web browsing history, active URLs, or keystrokes to any third-party servers.
 
 ### AI Mode Privacy
-If you opt into the **AI Mood Analysis** feature:
-- Only the **Page Title** and **Meta Description** of your active tab are sent to the Claude API. It does not scan or transmit paragraph text, forms, or personal data on the page.
-- Your Anthropic API Key is stored directly and securely on your local machine using Chrome's native `storage.local` API.
+If you opt into the local **AI Mood Analysis** feature:
+- Only the **Page Title** and **Meta Description** of your active tab are processed by the local DistilBERT model. 
+- The model runs entirely inside your browser's offscreen document WebAssembly thread. **No external network requests, server processing, or API key headers are ever used.**
+- 100% of your browsing data remains locally on your physical device.
 
 ### Permissions
-The extension requests only the permissions necessary to render the pet (`activeTab`), communicate with the Claude API via background workers, and save your settings (`storage`).
+The extension requests only the permissions necessary to render the pet (`activeTab`), store settings (`storage`), track navigation events (`webNavigation`), and run local AI computations (`offscreen`). No external host permissions are required for the AI layer.
 
 ---
 

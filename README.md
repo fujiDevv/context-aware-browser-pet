@@ -30,8 +30,10 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 * **Milestone Shader Upgrades**: Unlocks hardware-accelerated CSS shader glows (Detective Blue, Magic Purple, Rainbow Neon) based on pet level milestones.
 * **Seasonal & Calendar Themes**: Automatically changes pet outfits and behaviors for seasonal periods (Halloween pumpkins in October, Christmas wear in December, surfing in Summer).
 * **Cross-Tab Synchronization**: Syncs pet coordinates and current emotional states across background-managed tabs and side-by-side windows.
-* **CSP-Bypassing AI Service**: Service-worker proxy for Anthropic API calls ensuring compliance with page CSP and CORS headers.
-* **Clean Context Lifecycles**: Automatic cleanup of orphaned DOM elements and active loop intervals upon extension updates or reloads.
+* **Local Offline AI Model**: Runs local text sentiment classification inside a secure Offscreen Document using ONNX Runtime Web and a quantized DistilBERT classifier. No external API keys, billing, or network requests required.
+* **Performance & Memory Management (24/7 Execution)**: Leak-free, low-overhead background execution. Decouples tab-specific timers, optimizes event listeners, and uses hardware-accelerated Web Animations API (WAAPI) keyframes.
+* **Long-Term Progression & Stat Balance**: Balanced virtual pet leveling featuring linear XP scaling (`Level * 100 XP`), minute-based decay calculations, and stat thresholds to ensure balanced progression and long-term mascot longevity.
+* **Storage Optimization & Habit Lifespan**: Uses rolling summaries and frequency maps inside `chrome.storage.local` to track personality habits without unbounded storage growth or quota leaks.
 
 ---
 
@@ -42,7 +44,9 @@ context-aware-browser-pet/
 ├── package.json           # Build scripts and dependency configurations
 ├── tsconfig.json          # TypeScript compilation settings
 ├── manifest.json          # Manifest V3 extension configuration
-├── background.ts          # Service worker capturing HTTP errors and proxying AI calls
+├── background.ts          # Service worker managing offscreen document lifecycles and state sync
+├── offscreen.html         # HTML page container hosting the local AI environment
+├── offscreen.ts           # Runs local ONNX Runtime Web WebAssembly and DistilBERT model
 ├── content.ts             # Main content script injected into target web pages
 ├── src/
 │   ├── types.ts           # Shared TypeScript interfaces for settings, stats, and state
@@ -51,7 +55,7 @@ context-aware-browser-pet/
 │   ├── emotion.ts         # Evaluates context snapshots and determines locks/fallbacks
 │   ├── personality.ts     # XP leveling thresholds, stats modifiers, and state saves
 │   ├── animate.ts         # Zero-dependency spring physics and WAAPI keyframe helper
-│   └── ai.ts              # Delegates Claude API queries to the background worker
+│   └── ai.ts              # Connects the content script to the local background worker
 ├── popup/
 │   ├── popup.html         # Controller layout for sliders, badges, and stats
 │   ├── popup.ts           # Binds controls, manages input, and updates status bars
@@ -77,7 +81,7 @@ context-aware-browser-pet/
    ```bash
    cd context-aware-browser-pet
    ```
-2. Install the dev dependencies (TypeScript compiler, types, and `esbuild`):
+2. Install the dev dependencies:
    ```bash
    bun install
    ```
@@ -108,16 +112,16 @@ context-aware-browser-pet/
 * **Click & Drag**: Drag the mascot to reposition it or attach it to a specific wall edge.
 * **Drag-and-Drop Toys**: Drag toys (Ball ⚽, Fish 🐟, Laser 🔴, Yarn 🧶, Duck 🦆, Box 📦) out from the popup UI onto the page. Supports dropping multiple toys at once to queue Clawd's play interactions.
 * **Settings & Triggers**: Click to switch between Mascot, Stats, and Settings tabs. Customize your pet's name, size, speed, and volume, toggle active emotions/aura shaders, toggle the **Daily Schedule & Triggers** switch (or turn it off to let Clawd enter **Autonomous Mode** to decide his own emotes, exploration paths, and webpage analysis commentary), and check the built-in Daily Schedule & Triggers guide.
-* **AI Mood Mode**: Toggle AI Mode in the settings, input your Anthropic API Key, and the pet will periodically evaluate the webpage description using Claude to select a matching emotional expression!
+* **AI Mood Mode**: Toggle AI Mode in the settings, and the pet will periodically evaluate the webpage description using the local DistilBERT model to select a matching emotional expression and display a custom comment bubble!
 
 ---
 
 ## Security & Privacy
 
-* **Local Evaluation**: All website context evaluations, DOM parsing, and activity tracking happen entirely locally on your machine.
-* **No Telemetry**: Clawd does not collect, track, or transmit your browsing history or personal data to external servers.
-* **Secure API Storage**: If you choose to use the optional AI Mood Analysis feature, your Anthropic API Key is stored securely and locally using Chrome's `storage.local`.
-* **Minimal Scope**: The AI proxy only sends the `page title` and `meta description` to Anthropic. It does *not* read or send the body contents or sensitive DOM elements of the pages you visit.
+* **Local Evaluation**: All website context evaluations, DOM parsing, activity tracking, and AI model inference happen entirely locally on your machine.
+* **No Telemetry**: Clawd does not collect, track, or transmit your browsing history, AI inputs, or personal data to external servers.
+* **100% Offline AI**: Unlike cloud models, the local AI model runs entirely in your browser using local WebAssembly. No API keys are required, and no data ever leaves your device.
+* **Minimal Scope**: The local AI only analyzes the webpage `title` and `meta description`. It does *not* read or scan body content or sensitive inputs.
 
 ---
 
