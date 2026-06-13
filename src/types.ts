@@ -28,12 +28,19 @@ export interface PetSettings {
   aiMode: boolean;
   apiKey: string;
   name?: string;
-  costume?: 'none' | 'detective' | 'wizard' | 'party';
+  costume?: 'none' | 'detective' | 'wizard' | 'party' | 'christmas' | 'halloween' | 'summer';
   persona?: 'default' | 'sarcastic' | 'encouraging' | 'poetic' | 'snarky';
   blockedDomains?: string[];
   disabledEmotions?: string[];
   scheduleEnabled?: boolean;
   seasonalEnabled?: boolean;
+  sleepStartHour?: number;
+  sleepEndHour?: number;
+  workStartHour?: number;
+  workEndHour?: number;
+  focusActive?: boolean;
+  focusStartHour?: number;
+  focusEndHour?: number;
 }
 
 export interface SharedPetState {

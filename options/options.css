@@ -867,8 +867,15 @@ body::after {
   gap: 24px;
 }
 
+.settings-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .settings-main-card,
-.settings-blocklist-card {
+.settings-blocklist-card,
+.settings-wardrobe-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 16px;
@@ -876,7 +883,8 @@ body::after {
 }
 
 .settings-main-card h2,
-.settings-blocklist-card h2 {
+.settings-blocklist-card h2,
+.settings-wardrobe-card h2 {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -1290,4 +1298,207 @@ input:checked+.switch-slider:before {
 
 .sound-play-btn:active {
   transform: scale(0.97);
+}
+
+/* Visual Costume Wardrobe Styles */
+.wardrobe-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.wardrobe-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.wardrobe-card:hover {
+  border-color: var(--accent-light);
+  transform: translateY(-2px);
+  background: #ffffff;
+}
+
+.wardrobe-card.wearing {
+  border-color: var(--accent);
+  background: rgba(199, 93, 63, 0.03);
+}
+
+.wardrobe-card.locked {
+  opacity: 0.65;
+}
+
+.wardrobe-thumbnail-container {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.wardrobe-thumbnail {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.wardrobe-info h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.wardrobe-info p {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.wardrobe-wear-btn {
+  width: 100%;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  color: var(--text-primary);
+  cursor: pointer;
+  margin-top: auto;
+  transition: all 0.15s ease;
+}
+
+.wardrobe-card.wearing .wardrobe-wear-btn {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.wardrobe-wear-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.wardrobe-card.wearing .wardrobe-wear-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.wardrobe-thumbnail-container .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.badge.locked {
+  background-color: var(--text-muted);
+  color: #ffffff;
+}
+
+.badge.seasonal {
+  background-color: var(--blue);
+  color: #ffffff;
+}
+
+.badge.wearing-badge {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* Schedule & Focus Planner Styles */
+.settings-planner-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.settings-planner-card h2 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.planner-section {
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+
+.planner-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.planner-section h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.planner-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.planner-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.planner-field label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.planner-select {
+  height: 32px;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+.focus-control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.focus-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.focus-info strong {
+  font-size: 12px;
+  color: var(--text-primary);
 }

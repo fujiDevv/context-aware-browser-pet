@@ -228,21 +228,30 @@ h2 {
   margin: 0;
 }
 
-.header-badges {
+.badge-group {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
   align-items: center;
 }
 
-.level-badge {
+.badge {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: var(--accent-bg);
-  border: 1px solid var(--accent-border);
   padding: 2px 8px;
   border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   width: fit-content;
+  border: 1px solid var(--border-color);
+}
+
+.badge-lvl {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
 }
 
 .level-label {
@@ -257,20 +266,10 @@ h2 {
   color: var(--text-primary);
 }
 
-.mood-badge {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.badge-mood {
   background: #faf5f2;
-  border: 1px solid var(--accent-border);
-  padding: 2px 8px;
-  border-radius: 20px;
-  width: fit-content;
-  font-size: 10px;
-  font-weight: 700;
+  border-color: var(--accent-border);
   color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 #mood-emoji {
@@ -981,41 +980,30 @@ input:checked+.toggle-slider:before {
   color: var(--accent);
 }
 
-.trait-badge {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
-  border-radius: 20px;
-  width: fit-content;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border: 1px solid var(--border-color);
+.badge-trait {
   background: var(--bg-hover);
   color: var(--text-secondary);
 }
 
-.trait-badge.trait-developer {
+.badge-trait.trait-developer {
   background: rgba(59, 130, 246, 0.08);
   border-color: rgba(59, 130, 246, 0.2);
   color: #2563eb;
 }
 
-.trait-badge.trait-gamer {
+.badge-trait.trait-gamer {
   background: rgba(245, 158, 11, 0.08);
   border-color: rgba(245, 158, 11, 0.2);
   color: #d97706;
 }
 
-.trait-badge.trait-scholar {
+.badge-trait.trait-scholar {
   background: rgba(16, 185, 129, 0.08);
   border-color: rgba(16, 185, 129, 0.2);
   color: #059669;
 }
 
-.trait-badge.trait-socialite {
+.badge-trait.trait-socialite {
   background: rgba(236, 72, 153, 0.08);
   border-color: rgba(236, 72, 153, 0.2);
   color: #db2777;
@@ -1071,17 +1059,14 @@ input:checked+.toggle-slider:before {
   transform: translateY(0);
 }
 
-.prestige-badge {
+.badge-prestige {
   background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
   color: white;
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 2px;
+  border-color: transparent;
   box-shadow: 0 1px 3px rgba(217, 119, 6, 0.25);
+  font-size: 9px;
+  gap: 2px;
+  padding: 2px 8px;
 }
 
 .prestige-star {

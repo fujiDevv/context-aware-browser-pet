@@ -261,7 +261,7 @@ async function init(): Promise<void> {
     const traitText = document.getElementById('trait-text') as HTMLElement;
     if (traitBadge && traitText) {
       traitText.textContent = trait;
-      traitBadge.className = `trait-badge trait-${trait}`;
+      traitBadge.className = `badge badge-trait trait-${trait}`;
     }
 
     const hasPrestige = stats.prestige && stats.prestige > 0;

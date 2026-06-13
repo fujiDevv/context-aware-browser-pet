@@ -400,7 +400,17 @@ const movement = new MovementEngine(container, {
 });
 
 async function loadPet(name: string): Promise<void> {
-  petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${name}.svg`);
+  let assetName = name;
+  const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
+  if (currentSettings.costume === 'christmas' && idleStates.includes(name)) {
+    assetName = 'christmas';
+  } else if (currentSettings.costume === 'halloween' && idleStates.includes(name)) {
+    assetName = 'halloween';
+  } else if (currentSettings.costume === 'summer' && idleStates.includes(name)) {
+    assetName = 'summer';
+  }
+
+  petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
   try {
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
       chrome.storage.local.set({ 'pet-mood': name }).catch(() => {});
@@ -512,7 +522,21 @@ async function updateEmotion(): Promise<void> {
     speed: baseSpeed * energyFactor * traitFactor
   });
 
-  if (scheduleEnabled && currentSettings.aiMode && !context.lastHttpError && context.idleSeconds < 60) {
+  let isFocusActive = currentSettings.focusActive || false;
+  const currentHour = new Date().getHours();
+  if (!isFocusActive && currentSettings.focusStartHour !== undefined && currentSettings.focusEndHour !== undefined) {
+    const start = currentSettings.focusStartHour;
+    const end = currentSettings.focusEndHour;
+    if (start < end) {
+      isFocusActive = currentHour >= start && currentHour < end;
+    } else {
+      isFocusActive = currentHour >= start || currentHour < end;
+    }
+  }
+
+  if (isFocusActive) {
+    nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
+  } else if (scheduleEnabled && currentSettings.aiMode && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
       const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
       const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
@@ -527,10 +551,10 @@ async function updateEmotion(): Promise<void> {
         personality.recordSiteVisit(currentAiCategory, currentAiSentiment);
       }
     } else {
-      nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false);
+      nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
     }
   } else {
-    nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false);
+    nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
   }
 
   if (nextEmotion !== emotion.current || aiComment || !petImg.src) {
@@ -556,6 +580,23 @@ async function updateEmotion(): Promise<void> {
 }
 
 function triggerContextDialogue(mood: string): void {
+  // Focus Blocks Override (Manual Toggle or Scheduled Hours)
+  let isFocusActive = currentSettings.focusActive || false;
+  const currentHour = new Date().getHours();
+  if (!isFocusActive && currentSettings.focusStartHour !== undefined && currentSettings.focusEndHour !== undefined) {
+    const start = currentSettings.focusStartHour;
+    const end = currentSettings.focusEndHour;
+    if (start < end) {
+      isFocusActive = currentHour >= start && currentHour < end;
+    } else {
+      isFocusActive = currentHour >= start || currentHour < end;
+    }
+  }
+
+  if (isFocusActive) {
+    return; // Stay quiet during Focus Blocks
+  }
+
   const scheduleEnabled = currentSettings.scheduleEnabled !== false;
 
   if (scheduleEnabled) {
@@ -819,9 +860,14 @@ function applyCostume(): void {
   // Remove previous costume class styles
   petImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
 
-  // Apply new costume class if active
-  if (currentSettings.costume && currentSettings.costume !== 'none') {
+  // Apply new costume class if active (only for detective, wizard, party shaders)
+  if (currentSettings.costume && ['detective', 'wizard', 'party'].includes(currentSettings.costume)) {
     petImg.classList.add(`costume-${currentSettings.costume}`);
+  }
+
+  // Force-reload image src to apply/remove seasonal SVG styles
+  if (emotion && emotion.current) {
+    loadPet(emotion.current);
   }
 }
 
@@ -1157,7 +1203,19 @@ async function init(): Promise<void> {
           chosenDecision();
         }
       } else {
-        if (context.idleSeconds >= 10 && Math.random() < 0.15 && !isTemporarilyInteracting) {
+        let isFocusActive = currentSettings.focusActive || false;
+        const currentHour = new Date().getHours();
+        if (!isFocusActive && currentSettings.focusStartHour !== undefined && currentSettings.focusEndHour !== undefined) {
+          const start = currentSettings.focusStartHour;
+          const end = currentSettings.focusEndHour;
+          if (start < end) {
+            isFocusActive = currentHour >= start && currentHour < end;
+          } else {
+            isFocusActive = currentHour >= start || currentHour < end;
+          }
+        }
+
+        if (!isFocusActive && context.idleSeconds >= 10 && Math.random() < 0.15 && !isTemporarilyInteracting) {
           movement.chaseCursor(context.mouseX - currentSettings.size / 2);
           const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
           showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);

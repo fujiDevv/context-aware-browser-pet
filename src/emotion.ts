@@ -10,8 +10,21 @@ export class EmotionEngine {
     this.current = 'happy';
   }
 
-  async evaluate(ctx: TriggerSnapshot, scheduleEnabled: boolean = true, seasonalEnabled: boolean = true): Promise<string> {
-    let emotion = await this._determineEmotion(ctx, scheduleEnabled, seasonalEnabled);
+  async evaluate(
+    ctx: TriggerSnapshot,
+    scheduleEnabled: boolean = true,
+    seasonalEnabled: boolean = true,
+    customPlanner?: {
+      sleepStartHour?: number;
+      sleepEndHour?: number;
+      workStartHour?: number;
+      workEndHour?: number;
+      focusActive?: boolean;
+      focusStartHour?: number;
+      focusEndHour?: number;
+    }
+  ): Promise<string> {
+    let emotion = await this._determineEmotion(ctx, scheduleEnabled, seasonalEnabled, customPlanner);
 
     const isHttpError = ['404', '500', '403', '429'].includes(emotion);
 
@@ -23,7 +36,46 @@ export class EmotionEngine {
     return emotion;
   }
 
-  async _determineEmotion(ctx: TriggerSnapshot, scheduleEnabled: boolean = true, seasonalEnabled: boolean = true): Promise<string> {
+  async _determineEmotion(
+    ctx: TriggerSnapshot,
+    scheduleEnabled: boolean = true,
+    seasonalEnabled: boolean = true,
+    customPlanner?: {
+      sleepStartHour?: number;
+      sleepEndHour?: number;
+      workStartHour?: number;
+      workEndHour?: number;
+      focusActive?: boolean;
+      focusStartHour?: number;
+      focusEndHour?: number;
+    }
+  ): Promise<string> {
+    if (ctx.lastHttpError === 404) return '404';
+    if (ctx.lastHttpError === 500) return '500';
+    if (ctx.lastHttpError === 403) return '403';
+    if (ctx.lastHttpError === 429) return '429';
+    if (ctx.hasConsoleError) return 'working-debugger';
+
+    // Focus Blocks Override (Manual Toggle or Scheduled Hours)
+    let isFocusActive = customPlanner?.focusActive || false;
+    const hour = new Date().getHours();
+    
+    if (!isFocusActive && customPlanner?.focusStartHour !== undefined && customPlanner?.focusEndHour !== undefined) {
+      const start = customPlanner.focusStartHour;
+      const end = customPlanner.focusEndHour;
+      if (start < end) {
+        isFocusActive = hour >= start && hour < end;
+      } else {
+        isFocusActive = hour >= start || hour < end;
+      }
+    }
+
+    if (isFocusActive) {
+      const focusEmotions = ['working-typing', 'working-thinking', 'studying'];
+      const index = Math.floor(new Date().getMinutes() / 10) % focusEmotions.length;
+      return focusEmotions[index];
+    }
+
     if (!scheduleEnabled) {
       let allEmotions = [
         'happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug', 'reading', 'yoga',
@@ -47,12 +99,6 @@ export class EmotionEngine {
       }
       return this.personality.defaultEmotion();
     }
-
-    if (ctx.lastHttpError === 404) return '404';
-    if (ctx.lastHttpError === 500) return '500';
-    if (ctx.lastHttpError === 403) return '403';
-    if (ctx.lastHttpError === 429) return '429';
-    if (ctx.hasConsoleError) return 'working-debugger';
 
     // 1. High Priority Activity Indicators
     if (ctx.isVideoPlaying) return this._mediaEmotion(ctx);
@@ -84,10 +130,34 @@ export class EmotionEngine {
       return idleChoices[hash];
     }
 
-    // 4. Time of day reactions
-    const hour = new Date().getHours();
-    if (hour >= 22 || hour < 6) return 'sleeping';
-    if (hour >= 6 && hour < 9) return 'yoga';
+    // 4. Custom Sleep planner
+    const sleepStart = customPlanner?.sleepStartHour !== undefined ? customPlanner.sleepStartHour : 22;
+    const sleepEnd = customPlanner?.sleepEndHour !== undefined ? customPlanner.sleepEndHour : 6;
+    let isSleeping = false;
+    if (sleepStart < sleepEnd) {
+      isSleeping = hour >= sleepStart && hour < sleepEnd;
+    } else {
+      isSleeping = hour >= sleepStart || hour < sleepEnd;
+    }
+    if (isSleeping) return 'sleeping';
+
+    // 4.1 Yoga check right after waking up
+    if (hour === sleepEnd) return 'yoga';
+
+    // 4.2 Custom Active Work Hours
+    const workStart = customPlanner?.workStartHour !== undefined ? customPlanner.workStartHour : 9;
+    const workEnd = customPlanner?.workEndHour !== undefined ? customPlanner.workEndHour : 17;
+    let isWorking = false;
+    if (workStart < workEnd) {
+      isWorking = hour >= workStart && hour < workEnd;
+    } else {
+      isWorking = hour >= workStart || hour < workEnd;
+    }
+    if (isWorking) {
+      const workEmotions = ['working-thinking', 'working-rubber-duck', 'coffee', 'studying'];
+      const index = Math.floor(new Date().getMinutes() / 15) % workEmotions.length;
+      return workEmotions[index];
+    }
 
     // 5. Seasonal / Calendar Events (Low Priority Fallback)
     if (seasonalEnabled) {

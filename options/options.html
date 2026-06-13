@@ -301,37 +301,29 @@
         </header>
 
         <div class="settings-grid">
-          <!-- Main Settings Form -->
-          <div class="settings-main-card">
-            <h2>Mascot Preferences</h2>
+          <!-- Main Settings Column -->
+          <div class="settings-main-col">
+            <!-- Main Settings Form -->
+            <div class="settings-main-card">
+              <h2>Mascot Preferences</h2>
 
-            <div class="form-group">
-              <label for="pet-name-input">Mascot Name</label>
-              <input type="text" id="pet-name-input" class="form-control" placeholder="Clawd">
-            </div>
+              <div class="form-group">
+                <label for="pet-name-input">Mascot Name</label>
+                <input type="text" id="pet-name-input" class="form-control" placeholder="Clawd">
+              </div>
 
-            <div class="form-row">
-              <div class="form-group col">
-                <label for="size-slider">Mascot Size (<span id="size-val">100px</span>)</label>
-                <input type="range" id="size-slider" min="32" max="128" value="100" class="slider">
+              <div class="form-row">
+                <div class="form-group col">
+                  <label for="size-slider">Mascot Size (<span id="size-val">100px</span>)</label>
+                  <input type="range" id="size-slider" min="32" max="128" value="100" class="slider">
+                </div>
+                <div class="form-group col">
+                  <label for="speed-slider">Walking Speed (<span id="speed-val">1.0x</span>)</label>
+                  <input type="range" id="speed-slider" min="5" max="30" value="10" class="slider">
+                </div>
               </div>
-              <div class="form-group col">
-                <label for="speed-slider">Walking Speed (<span id="speed-val">1.0x</span>)</label>
-                <input type="range" id="speed-slider" min="5" max="30" value="10" class="slider">
-              </div>
-            </div>
 
-            <div class="form-row">
-              <div class="form-group col">
-                <label for="costume-select">Costume & Aura Glow</label>
-                <select id="costume-select" class="form-control">
-                  <option value="none">Standard Outfit (No Glow)</option>
-                  <option id="opt-detective" value="detective" disabled>Blue Detective Aura (LVL 5)</option>
-                  <option id="opt-wizard" value="wizard" disabled>Magic Purple Aura (LVL 10)</option>
-                  <option id="opt-party" value="party" disabled>Neon Rainbow Shader (LVL 15)</option>
-                </select>
-              </div>
-              <div class="form-group col" id="api-persona-container">
+              <div class="form-group" id="api-persona-container">
                 <label for="persona-select">Dialogue Persona</label>
                 <select id="persona-select" class="form-control">
                   <option value="default">Clawd (Default)</option>
@@ -341,57 +333,65 @@
                   <option value="snarky">Tech Bro Snark</option>
                 </select>
               </div>
-            </div>
 
-            <div class="toggle-group-row">
-              <div class="toggle-card">
-                <div class="toggle-info">
-                  <strong>Sound Effects</strong>
-                  <span>Allow audio feedback on events</span>
+              <div class="toggle-group-row">
+                <div class="toggle-card">
+                  <div class="toggle-info">
+                    <strong>Sound Effects</strong>
+                    <span>Allow audio feedback on events</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="sound-toggle">
+                    <span class="switch-slider"></span>
+                  </label>
                 </div>
-                <label class="switch">
-                  <input type="checkbox" id="sound-toggle">
-                  <span class="switch-slider"></span>
-                </label>
+
+                <div class="toggle-card">
+                  <div class="toggle-info">
+                    <strong>Local AI Mode</strong>
+                    <span>Enable offline DistilBERT evaluation</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="ai-toggle">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
               </div>
 
-              <div class="toggle-card">
-                <div class="toggle-info">
-                  <strong>Local AI Mode</strong>
-                  <span>Enable offline DistilBERT evaluation</span>
+              <div class="form-group hidden" id="volume-container">
+                <label for="volume-slider">SFX Volume (<span id="volume-val">80%</span>)</label>
+                <input type="range" id="volume-slider" min="0" max="100" value="80" class="slider">
+              </div>
+
+              <div class="toggle-group-row">
+                <div class="toggle-card">
+                  <div class="toggle-info">
+                    <strong>Daily Schedule Rules</strong>
+                    <span>Sleep late, wake up with yoga rules</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="schedule-toggle">
+                    <span class="switch-slider"></span>
+                  </label>
                 </div>
-                <label class="switch">
-                  <input type="checkbox" id="ai-toggle">
-                  <span class="switch-slider"></span>
-                </label>
+                <div class="toggle-card">
+                  <div class="toggle-info">
+                    <strong>Seasonal Outfits</strong>
+                    <span>Unlock Christmas/Halloween costumes</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="seasonal-toggle">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
               </div>
             </div>
 
-            <div class="form-group hidden" id="volume-container">
-              <label for="volume-slider">SFX Volume (<span id="volume-val">80%</span>)</label>
-              <input type="range" id="volume-slider" min="0" max="100" value="80" class="slider">
-            </div>
-
-            <div class="toggle-group-row">
-              <div class="toggle-card">
-                <div class="toggle-info">
-                  <strong>Daily Schedule Rules</strong>
-                  <span>Sleep late, wake up with yoga rules</span>
-                </div>
-                <label class="switch">
-                  <input type="checkbox" id="schedule-toggle">
-                  <span class="switch-slider"></span>
-                </label>
-              </div>
-              <div class="toggle-card">
-                <div class="toggle-info">
-                  <strong>Seasonal Outfits</strong>
-                  <span>Unlock Christmas/Halloween costumes</span>
-                </div>
-                <label class="switch">
-                  <input type="checkbox" id="seasonal-toggle">
-                  <span class="switch-slider"></span>
-                </label>
+            <!-- Costume & Aura Wardrobe Card -->
+            <div class="settings-wardrobe-card">
+              <h2>Costume & Aura Wardrobe</h2>
+              <div class="wardrobe-grid" id="wardrobe-grid">
+                <!-- Cards will be populated dynamically by options.ts -->
               </div>
             </div>
           </div>
@@ -426,6 +426,77 @@
                 </table>
                 <div class="empty-blocklist" id="empty-blocklist-msg" style="display: none;">
                   No domains blocked yet.
+                </div>
+              </div>
+            </div>
+
+            <!-- Schedule & Focus Planner Card -->
+            <div class="settings-planner-card">
+              <h2>Schedule & Focus Planner</h2>
+              <p class="section-subtitle">Define Clawd's daily routines and configure focus blocks:</p>
+
+              <div class="planner-section">
+                <h3>💤 Sleep & Wake Routine</h3>
+                <div class="planner-row">
+                  <div class="planner-field">
+                    <label for="sleep-start-select">Sleep Start</label>
+                    <select id="sleep-start-select" class="form-control planner-select">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="planner-field">
+                    <label for="sleep-end-select">Wake Time</label>
+                    <select id="sleep-end-select" class="form-control planner-select">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="planner-section">
+                <h3>💼 Active Work Hours</h3>
+                <div class="planner-row">
+                  <div class="planner-field">
+                    <label for="work-start-select">Work Start</label>
+                    <select id="work-start-select" class="form-control planner-select">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="planner-field">
+                    <label for="work-end-select">Work End</label>
+                    <select id="work-end-select" class="form-control planner-select">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="planner-section">
+                <h3>🎯 Focus Blocks</h3>
+                <div class="focus-control-row">
+                  <div class="focus-info">
+                    <strong>Focus Mode Active</strong>
+                    <span class="section-subtitle">Make Clawd study quietly & stop wandering</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="focus-active-toggle">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+
+                <div class="planner-row" style="margin-top: 10px;">
+                  <div class="planner-field">
+                    <label for="focus-start-select">Focus Start</label>
+                    <select id="focus-start-select" class="form-control planner-select">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="planner-field">
+                    <label for="focus-end-select">Focus End</label>
+                    <select id="focus-end-select" class="form-control planner-select">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>

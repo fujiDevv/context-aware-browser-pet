@@ -53,6 +53,7 @@ const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> = {
 
 let personality: PersonalitySystem;
 let blockedDomains: string[] = [];
+let activeCostume: string = 'none';
 
 // Elements
 const previewImg = document.getElementById('pet-preview') as HTMLImageElement;
@@ -100,7 +101,6 @@ const sizeSlider = document.getElementById('size-slider') as HTMLInputElement;
 const sizeVal = document.getElementById('size-val') as HTMLElement;
 const speedSlider = document.getElementById('speed-slider') as HTMLInputElement;
 const speedVal = document.getElementById('speed-val') as HTMLElement;
-const costumeSelect = document.getElementById('costume-select') as HTMLSelectElement;
 const personaSelect = document.getElementById('persona-select') as HTMLSelectElement;
 const soundToggle = document.getElementById('sound-toggle') as HTMLInputElement;
 const aiToggle = document.getElementById('ai-toggle') as HTMLInputElement;
@@ -109,6 +109,15 @@ const seasonalToggle = document.getElementById('seasonal-toggle') as HTMLInputEl
 const volumeContainer = document.getElementById('volume-container') as HTMLElement;
 const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
 const volumeVal = document.getElementById('volume-val') as HTMLElement;
+
+// Sleep/Wake & Focus Planner Inputs
+const sleepStartSelect = document.getElementById('sleep-start-select') as HTMLSelectElement;
+const sleepEndSelect = document.getElementById('sleep-end-select') as HTMLSelectElement;
+const workStartSelect = document.getElementById('work-start-select') as HTMLSelectElement;
+const workEndSelect = document.getElementById('work-end-select') as HTMLSelectElement;
+const focusActiveToggle = document.getElementById('focus-active-toggle') as HTMLInputElement;
+const focusStartSelect = document.getElementById('focus-start-select') as HTMLSelectElement;
+const focusEndSelect = document.getElementById('focus-end-select') as HTMLSelectElement;
 
 // Blocklist inputs
 const inputBlockDomain = document.getElementById('input-block-domain') as HTMLInputElement;
@@ -126,10 +135,6 @@ const fileImport = document.getElementById('file-import') as HTMLInputElement;
 const btnResetStats = document.getElementById('btn-reset-stats') as HTMLButtonElement;
 const btnHardReset = document.getElementById('btn-hard-reset') as HTMLButtonElement;
 
-// Outfits
-const optDetective = document.getElementById('opt-detective') as HTMLOptionElement;
-const optWizard = document.getElementById('opt-wizard') as HTMLOptionElement;
-const optParty = document.getElementById('opt-party') as HTMLOptionElement;
 
 async function init() {
   // Navigation Tabs Switching
@@ -157,17 +162,23 @@ async function init() {
   // Load Settings and Stats from local storage
   const storageData = await chrome.storage.local.get(['pet-stats', 'pet-settings', 'pet-mood']);
   blockedDomains = storageData['pet-settings']?.blockedDomains || [];
+  
+  populateHourSelects();
   applySettings(storageData['pet-settings']);
 
   // Initializing the Personality System
   personality = new PersonalitySystem((updatedStats) => {
     updateUIStats(updatedStats);
+    renderWardrobe(updatedStats, activeCostume);
   });
 
   await personality.isLoaded;
   updateUIStats(personality.stats);
   updateUIMood(storageData['pet-mood'] || 'happy');
   updateLocalAiStatus();
+
+  // Initial Wardrobe rendering
+  renderWardrobe(personality.stats, storageData['pet-settings']?.costume || 'none');
 
   // Interaction buttons
   const btnPet = document.getElementById('btn-pet') as HTMLButtonElement;
@@ -205,8 +216,16 @@ async function init() {
     saveSettings();
   });
 
-  costumeSelect.addEventListener('change', saveSettings);
   personaSelect.addEventListener('change', saveSettings);
+
+  // Planner change listeners
+  sleepStartSelect.addEventListener('change', saveSettings);
+  sleepEndSelect.addEventListener('change', saveSettings);
+  workStartSelect.addEventListener('change', saveSettings);
+  workEndSelect.addEventListener('change', saveSettings);
+  focusActiveToggle.addEventListener('change', saveSettings);
+  focusStartSelect.addEventListener('change', saveSettings);
+  focusEndSelect.addEventListener('change', saveSettings);
 
   soundToggle.addEventListener('change', () => {
     if (soundToggle.checked) {
@@ -433,15 +452,7 @@ function updateUIStats(stats: PetStats | undefined): void {
     btnPrestige.setAttribute('disabled', 'true');
   }
 
-  // Costumes lock states
-  optDetective.disabled = stats.level < 5 && !hasPrestige;
-  optDetective.textContent = stats.level < 5 && !hasPrestige ? 'Blue Detective Aura (Locked - LVL 5)' : 'Blue Detective Aura';
 
-  optWizard.disabled = stats.level < 10 && !hasPrestige;
-  optWizard.textContent = stats.level < 10 && !hasPrestige ? 'Magic Purple Aura (Locked - LVL 10)' : 'Magic Purple Aura';
-
-  optParty.disabled = stats.level < 15 && !hasPrestige;
-  optParty.textContent = stats.level < 15 && !hasPrestige ? 'Neon Rainbow Shader (Locked - LVL 15)' : 'Neon Rainbow Shader';
 
   // Dominant trait
   const trait = getDominantTrait(stats);
@@ -603,7 +614,12 @@ function applySettings(settings: PetSettings | undefined) {
     persona: 'default',
     blockedDomains: [],
     scheduleEnabled: true,
-    seasonalEnabled: true
+    seasonalEnabled: true,
+    sleepStartHour: 22,
+    sleepEndHour: 6,
+    workStartHour: 9,
+    workEndHour: 17,
+    focusActive: false
   };
   const activeSettings = { ...defaults, ...settings };
 
@@ -618,7 +634,14 @@ function applySettings(settings: PetSettings | undefined) {
   speedSlider.value = String(Math.round(speed * 10));
   speedVal.textContent = `${speed.toFixed(1)}x`;
 
-  costumeSelect.value = activeSettings.costume || 'none';
+  activeCostume = activeSettings.costume || 'none';
+  
+  // Apply costume glows to the preview image in the sanctuary stage
+  previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
+  if (activeCostume !== 'none' && ['detective', 'wizard', 'party'].includes(activeCostume)) {
+    previewImg.classList.add(`costume-${activeCostume}`);
+  }
+
   personaSelect.value = activeSettings.persona || 'default';
 
   const sound = activeSettings.soundEnabled ?? true;
@@ -637,6 +660,15 @@ function applySettings(settings: PetSettings | undefined) {
   scheduleToggle.checked = activeSettings.scheduleEnabled ?? true;
   seasonalToggle.checked = activeSettings.seasonalEnabled ?? true;
 
+  // Apply planner settings to selectors
+  sleepStartSelect.value = activeSettings.sleepStartHour !== undefined ? String(activeSettings.sleepStartHour) : '22';
+  sleepEndSelect.value = activeSettings.sleepEndHour !== undefined ? String(activeSettings.sleepEndHour) : '6';
+  workStartSelect.value = activeSettings.workStartHour !== undefined ? String(activeSettings.workStartHour) : '9';
+  workEndSelect.value = activeSettings.workEndHour !== undefined ? String(activeSettings.workEndHour) : '17';
+  focusActiveToggle.checked = activeSettings.focusActive ?? false;
+  focusStartSelect.value = activeSettings.focusStartHour !== undefined ? String(activeSettings.focusStartHour) : '';
+  focusEndSelect.value = activeSettings.focusEndHour !== undefined ? String(activeSettings.focusEndHour) : '';
+
   renderBlocklist();
 }
 
@@ -650,11 +682,18 @@ function saveSettings() {
       aiMode: aiToggle.checked,
       apiKey: '',
       name: nameInput.value.trim() || 'Clawd',
-      costume: costumeSelect.value,
+      costume: activeCostume,
       persona: personaSelect.value,
       blockedDomains: blockedDomains,
       scheduleEnabled: scheduleToggle.checked,
-      seasonalEnabled: seasonalToggle.checked
+      seasonalEnabled: seasonalToggle.checked,
+      sleepStartHour: sleepStartSelect.value !== '' ? Number(sleepStartSelect.value) : undefined,
+      sleepEndHour: sleepEndSelect.value !== '' ? Number(sleepEndSelect.value) : undefined,
+      workStartHour: workStartSelect.value !== '' ? Number(workStartSelect.value) : undefined,
+      workEndHour: workEndSelect.value !== '' ? Number(workEndSelect.value) : undefined,
+      focusActive: focusActiveToggle.checked,
+      focusStartHour: focusStartSelect.value !== '' ? Number(focusStartSelect.value) : undefined,
+      focusEndHour: focusEndSelect.value !== '' ? Number(focusEndSelect.value) : undefined
     }
   });
 }
@@ -811,6 +850,130 @@ function importProfile(e: Event) {
     }
   };
   reader.readAsText(file);
+}
+
+const COSTUMES_METADATA = [
+  { id: 'none', name: 'Default', desc: 'Original Clawd', unlockLevel: 0, seasonal: false, image: 'happy' },
+  { id: 'detective', name: 'Detective Blue', desc: 'Blue Detective Aura', unlockLevel: 5, seasonal: false, image: 'detective' },
+  { id: 'wizard', name: 'Wizard Purple', desc: 'Magic Purple Aura', unlockLevel: 10, seasonal: false, image: 'magic' },
+  { id: 'party', name: 'Rainbow Party', desc: 'Color Shift Aura', unlockLevel: 15, seasonal: false, image: 'rainbow' },
+  { id: 'christmas', name: 'Santa Hat', desc: 'Holiday festive hat', unlockLevel: 0, seasonal: true, image: 'christmas' },
+  { id: 'halloween', name: 'Spooky Pumpkin', desc: 'Halloween pumpkin mask', unlockLevel: 0, seasonal: true, image: 'halloween' },
+  { id: 'summer', name: 'Summer Shades', desc: 'Cool sunglasses outfit', unlockLevel: 0, seasonal: true, image: 'summer' }
+];
+
+function getMascotSvgName(mood: string, costume: string): string {
+  const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
+  if (costume === 'christmas' && idleStates.includes(mood)) {
+    return 'christmas';
+  }
+  if (costume === 'halloween' && idleStates.includes(mood)) {
+    return 'halloween';
+  }
+  if (costume === 'summer' && idleStates.includes(mood)) {
+    return 'summer';
+  }
+  return mood;
+}
+
+function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
+  const wardrobeGrid = document.getElementById('wardrobe-grid') as HTMLElement;
+  if (!wardrobeGrid) return;
+  wardrobeGrid.innerHTML = '';
+
+  const level = stats?.level || 1;
+  const hasPrestige = stats?.prestige && stats.prestige > 0;
+
+  COSTUMES_METADATA.forEach(item => {
+    const isUnlocked = level >= item.unlockLevel || !!hasPrestige;
+    const isWearing = activeCostumeId === item.id;
+
+    const card = document.createElement('div');
+    card.className = `wardrobe-card ${isWearing ? 'wearing' : ''} ${!isUnlocked ? 'locked' : ''}`;
+    
+    let badgeHtml = '';
+    if (!isUnlocked) {
+      badgeHtml = `<span class="badge locked">LVL ${item.unlockLevel}</span>`;
+    } else if (item.seasonal) {
+      badgeHtml = `<span class="badge seasonal">Seasonal</span>`;
+    } else if (isWearing) {
+      badgeHtml = `<span class="badge wearing-badge">Active</span>`;
+    }
+
+    card.innerHTML = `
+      <div class="wardrobe-thumbnail-container">
+        <img class="wardrobe-thumbnail ${item.id !== 'none' && ['detective', 'wizard', 'party'].includes(item.id) ? 'costume-' + item.id : ''}" src="../assets/pets/clawd-${item.image}.svg" alt="${item.name}">
+        ${badgeHtml}
+      </div>
+      <div class="wardrobe-info">
+        <h3>${item.name}</h3>
+        <p>${item.desc}</p>
+      </div>
+      <button class="wardrobe-wear-btn" ${!isUnlocked ? 'disabled' : ''} data-costume="${item.id}">
+        ${isWearing ? 'Wearing' : isUnlocked ? 'Wear' : 'Locked'}
+      </button>
+    `;
+
+    wardrobeGrid.appendChild(card);
+  });
+
+  // Attach wear button listeners
+  const wearBtns = wardrobeGrid.querySelectorAll('.wardrobe-wear-btn') as NodeListOf<HTMLButtonElement>;
+  wearBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const costumeId = btn.getAttribute('data-costume');
+      if (costumeId) {
+        activeCostume = costumeId;
+        saveSettings();
+        
+        // Update styling of preview image in real time
+        previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
+        if (costumeId !== 'none' && ['detective', 'wizard', 'party'].includes(costumeId)) {
+          previewImg.classList.add(`costume-${costumeId}`);
+        }
+        
+        // Update preview image src based on active costume
+        const currentMoodBadge = document.getElementById('pet-mood') as HTMLElement;
+        const currentMood = currentMoodBadge.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
+        const svgName = getMascotSvgName(currentMood, costumeId);
+        previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
+
+        renderWardrobe(stats, costumeId);
+      }
+    });
+  });
+}
+
+function populateHourSelects() {
+  const selects = [
+    'sleep-start-select', 'sleep-end-select',
+    'work-start-select', 'work-end-select',
+    'focus-start-select', 'focus-end-select'
+  ];
+  
+  selects.forEach(id => {
+    const select = document.getElementById(id) as HTMLSelectElement;
+    if (!select) return;
+    
+    select.innerHTML = '';
+    
+    // Add "Disabled" option for focus start/end scheduler
+    if (id.startsWith('focus-')) {
+      const opt = document.createElement('option');
+      opt.value = '';
+      opt.textContent = 'Disabled';
+      select.appendChild(opt);
+    }
+    
+    for (let h = 0; h < 24; h++) {
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const displayHour = h % 12 === 0 ? 12 : h % 12;
+      const opt = document.createElement('option');
+      opt.value = String(h);
+      opt.textContent = `${displayHour} ${ampm}`;
+      select.appendChild(opt);
+    }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', init);
