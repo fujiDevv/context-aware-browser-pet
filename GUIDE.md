@@ -37,7 +37,7 @@
    - [HTTP Error Reactions](#http-error-reactions)
    - [Console Error Watcher](#console-error-watcher)
 8. [Interactive Toys](#interactive-toys)
-9. [Costume Glow Effects](#costume-glow-effects)
+9. [Wardrobe, Costumes & Glow Effects](#wardrobe-costumes--glow-effects)
 10. [Visibility Controls](#visibility-controls)
     - [Hide on This Tab](#hide-on-this-tab)
     - [Hide on This Site](#hide-on-this-site)
@@ -47,6 +47,10 @@
     - [Movement Speed](#movement-speed)
     - [Sound Effects & Volume](#sound-effects--volume)
     - [Sound Board](#sound-board)
+    - [Interactive Schedule Planner](#interactive-schedule-planner)
+    - [Website & Domain Triggers](#website--domain-triggers)
+    - [Local AI Fine-Tuning](#local-ai-fine-tuning)
+    - [Expanded Analytics & Charts](#expanded-analytics--charts)
 12. [AI Mood Analysis (Optional)](#ai-mood-analysis-optional)
     - [How It Works](#how-it-works)
     - [Setting Up](#setting-up)
@@ -302,9 +306,15 @@ You can drop multiple toys onto the webpage at the same time. The toys will drop
 
 ---
 
-## Costume Glow Effects
+## Wardrobe, Costumes & Glow Effects
 
-As Clawd levels up, you unlock special CSS shaders to give him a glowing effect. Enable them under the **Pet Glow Effect** settings in the popup:
+### Visual Costume Wardrobe
+Clawd features a customizable wardrobe. Open the Options Dashboard to view a visual grid displaying all unlocked and locked seasonal costumes (such as the Santa Hat, Spooky Pumpkin, and Summer Sunglasses).
+* Click the **"Try On"** button on any unlocked costume to instantly equip it on Clawd.
+* Locked seasonal costumes will display a lock icon and hint at how/when they can be unlocked.
+
+### Costume Glow Effects
+As Clawd levels up, you unlock special CSS shaders to give him a glowing effect. Enable them under the **Pet Glow Effect** settings in the popup or dashboard:
 
 | Costume / Shader | Unlock Level | CSS Visual Effect |
 |------------------|--------------|-------------------|
@@ -328,7 +338,7 @@ Permanently blocks Clawd on the current website domain (e.g. `google.com`). Claw
 
 ## Settings & Customization
 
-Click the extension icon to open the controls. The controls are organized into three responsive tabs:
+Click the extension icon or open the Options Dashboard to access comprehensive controls. The controls are organized as follows:
 
 ### 🐾 Mascot Tab
 - **Stats progress bars**: Track happiness, energy, curiosity, focus, and leisure.
@@ -349,7 +359,29 @@ Click the extension icon to open the controls. The controls are organized into t
 - **Pet Name**: Give your pet a custom name (up to 12 characters).
 - **Pet Glow Effect**: Select costume auras unlocked at LVL 5, 10, and 15.
 - **Sliders**: Adjust size (48px - 128px), movement speed (0.1x - 5.0x), and volume.
-- **AI Mood Analysis**: Input your Anthropic API Key and select your Claude commentary persona.
+- **AI Mood Analysis**: Toggle local sentiment evaluation and choose AI commentary persona.
+
+### 📅 Interactive Schedule Planner
+Take control of Clawd's daily routine:
+- **Mascot Sleep/Wake Planner**: A time-block scheduler allowing you to custom-define Clawd's sleeping, waking, and working hours (e.g. setting sleep mode to trigger during your bedtime).
+- **Focus Blocks**: Set up custom focus blocks during work sprints where Clawd stays quiet or plays a typing/studying animation to prevent distraction.
+
+### 🔗 Website & Domain Triggers
+Configure how Clawd reacts to specific websites:
+- **Domain Reaction Dictionary**: A mapping table where you can bind site domains to Clawd's animations or comments. For example:
+  - `stackoverflow.com` $\rightarrow$ Enter study mood + speak coding quotes.
+  - `youtube.com` $\rightarrow$ Enter movie-watching animation with popcorn.
+  - `duolingo.com` $\rightarrow$ Play encouraging chiptune track.
+
+### 🧠 Local AI Fine-Tuning
+Fine-tune Clawd's offline sentiment classifier:
+- **Sentiment Sensitivity Threshold**: Adjust how easily the Local AI registers page sentiment to trigger positive or negative mood shifts.
+- **Comment Frequency**: A rate-limiting slider to control how often Clawd makes AI-derived observations (adjustable from once every 30 seconds to once every 5 minutes).
+
+### 📈 Expanded Analytics & Charts
+Dive into your browsing and pet metrics:
+- **Interests History Chart**: A clean bar chart visualizer breaking down site categories visited over the last 7 days (e.g. Development, Social, Leisure, Reading).
+- **Mood Over Time Tracker**: A dynamic line chart showing Clawd's average daily Happiness and Energy levels.
 
 ---
 
