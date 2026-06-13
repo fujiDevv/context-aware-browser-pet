@@ -89,6 +89,26 @@ h2 {
   border: 1px solid var(--accent-border);
 }
 
+.dashboard-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-btn:hover {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
 .dashboard-content {
   display: flex;
   flex-direction: column;

@@ -233,6 +233,16 @@ async function init(): Promise<void> {
   };
   setupTabSwitching();
 
+  const setupDashboardLink = () => {
+    const btnOpen = document.getElementById('btn-open-dashboard');
+    if (btnOpen) {
+      btnOpen.addEventListener('click', () => {
+        chrome.runtime.openOptionsPage();
+      });
+    }
+  };
+  setupDashboardLink();
+
   const setupSoundPreview = () => {
     const previewButtons = document.querySelectorAll('.sound-preview-btn');
     previewButtons.forEach((btn) => {

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clawd Sanctuary - Dashboard & Analytics</title>
+  <link rel="stylesheet" href="options.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img class="brand-icon" src="../assets/pet128.png" alt="Clawd">
+        <div class="brand-text">
+          <h2>Clawd</h2>
+          <span>Sanctuary Dashboard</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <button class="menu-btn active" data-target="sanctuary">
+          <span class="menu-icon"></span> Sanctuary Playground
+        </button>
+        <button class="menu-btn" data-target="statistics">
+          <span class="menu-icon"></span> Analytics & Stats
+        </button>
+        <button class="menu-btn" data-target="logs">
+          <span class="menu-icon"></span> History Timeline
+        </button>
+        <button class="menu-btn" data-target="settings">
+          <span class="menu-icon"></span> Control Settings
+        </button>
+        <button class="menu-btn" data-target="admin">
+          <span class="menu-icon"></span> Profile Admin
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="version">Version 1.2.0 (Local AI)</div>
+        <div class="copyright">© 2026 Clawd Companion</div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      
+      <!-- PAGE: Sanctuary Playground -->
+      <section id="page-sanctuary" class="page-pane active">
+        <header class="page-header">
+          <h1>Mascot Sanctuary</h1>
+          <p>Observe Clawd's real-time state, interact with him, and guide his habits.</p>
+        </header>
+
+        <div class="sanctuary-layout">
+          <!-- Playground Container -->
+          <div class="playground-card">
+            <div class="playground-stage">
+              <div class="stage-bg-grid"></div>
+              <div class="pet-glow-orb" id="pet-orb"></div>
+              <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Clawd">
+            </div>
+            
+            <div class="playground-interactions">
+              <button id="btn-pet" class="interact-btn pet-btn">Pet Clawd</button>
+              <button id="btn-feed" class="interact-btn feed-btn">Feed Snack</button>
+              <button id="btn-shoo" class="interact-btn shoo-btn">Shoo Away</button>
+            </div>
+          </div>
+
+          <!-- Pet Info & Trait Summary -->
+          <div class="info-card">
+            <div class="profile-header">
+              <h2 id="pet-name">Clawd</h2>
+              <div class="badge-group">
+                <span class="badge badge-lvl">LVL <span id="pet-level">1</span></span>
+                <span class="badge badge-prestige hidden" id="prestige-badge">★ <span id="prestige-level">0</span></span>
+                <span class="badge badge-mood" id="pet-mood">Happy</span>
+                <span class="badge badge-trait" id="pet-trait">Normal</span>
+              </div>
+            </div>
+
+            <div class="xp-progress-container">
+              <div class="xp-labels">
+                <span>Experience Points</span>
+                <span id="xp-text">0 / 150 XP</span>
+              </div>
+              <div class="xp-bar-track">
+                <div id="bar-xp" class="xp-bar-fill"></div>
+              </div>
+            </div>
+
+            <div class="habits-card">
+              <h3>Learning Habits & Adaptation</h3>
+              <div class="habit-stats">
+                <div class="habit-row">
+                  <span class="label">Dominant Trait:</span>
+                  <span class="val uppercase" id="lbl-habit-trait">Normal</span>
+                </div>
+                <div class="habit-row">
+                  <span class="label">Crawling Speed:</span>
+                  <span class="val" id="lbl-habit-speed">1.00x (Normal)</span>
+                </div>
+                <div class="habit-row">
+                  <span class="label">Default Animation:</span>
+                  <span class="val" id="lbl-habit-behavior">Standard</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-status-card">
+              <h3>Local AI (DistilBERT Context)</h3>
+              <div class="ai-indicator-row">
+                <div class="status-indicator status-checking" id="ai-status-badge"></div>
+                <div class="ai-indicator-text">
+                  <strong id="ai-status-text">Checking...</strong>
+                  <span id="ai-status-subtitle">Connecting to local model layer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Guide -->
+        <section class="schedule-section">
+          <h2>Daily Routine & Schedule</h2>
+          <div class="schedule-grid">
+            <div class="schedule-item">
+              <div class="time-block">10 PM - 6 AM</div>
+              <h4>Sleeping</h4>
+              <p>Clawd rests late at night. Energy restores completely during this time.</p>
+            </div>
+            <div class="schedule-item">
+              <div class="time-block">6 AM - 9 AM</div>
+              <h4>Morning Yoga</h4>
+              <p>Clawd does yoga in the morning, boosting his baseline Happiness.</p>
+            </div>
+            <div class="schedule-item">
+              <div class="time-block">Idle &gt; 45s</div>
+              <h4>Random Play</h4>
+              <p>Clawd wanders, skateboards, plays, or reads if you leave the cursor idle.</p>
+            </div>
+            <div class="schedule-item">
+              <div class="time-block">Errors</div>
+              <h4>Debugger</h4>
+              <p>Clawd spots javascript errors on your webpages and inspects them.</p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- PAGE: Statistics -->
+      <section id="page-statistics" class="page-pane">
+        <header class="page-header">
+          <h1>Analytics & Statistics</h1>
+          <p>Analyze Clawd's virtual statistics, browsing category breakdown, and progress meters.</p>
+        </header>
+
+        <div class="stats-overview-grid">
+          <!-- Stat Gauge Cards -->
+          <div class="gauge-card pink-glow">
+            <div class="gauge-header">
+              <span class="gauge-name">Happiness</span>
+              <span class="gauge-val" id="txt-happiness">50%</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill bg-pink" id="bar-happiness"></div>
+            </div>
+            <p class="gauge-desc">Decays over time. Boosted by petting, feeding, and visiting positive websites.</p>
+          </div>
+
+          <div class="gauge-card yellow-glow">
+            <div class="gauge-header">
+              <span class="gauge-name">Energy</span>
+              <span class="gauge-val" id="txt-energy">80%</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill bg-yellow" id="bar-energy"></div>
+            </div>
+            <p class="gauge-desc">Decays when crawling. Restored by feeding and overnight sleep.</p>
+          </div>
+
+          <div class="gauge-card blue-glow">
+            <div class="gauge-header">
+              <span class="gauge-name">Curiosity</span>
+              <span class="gauge-val" id="txt-curiosity">60%</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill bg-blue" id="bar-curiosity"></div>
+            </div>
+            <p class="gauge-desc">Gained by visiting new domains and reading articles.</p>
+          </div>
+
+          <div class="gauge-card green-glow">
+            <div class="gauge-header">
+              <span class="gauge-name">Focus</span>
+              <span class="gauge-val" id="txt-focus">50%</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill bg-green" id="bar-focus"></div>
+            </div>
+            <p class="gauge-desc">Boosted by working/coding and negative coding sentiment (debugging sessions).</p>
+          </div>
+
+          <div class="gauge-card indigo-glow">
+            <div class="gauge-header">
+              <span class="gauge-name">Leisure</span>
+              <span class="gauge-val" id="txt-leisure">50%</span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill bg-indigo" id="bar-leisure"></div>
+            </div>
+            <p class="gauge-desc">Increases when streaming, gaming, or visiting social media domains.</p>
+          </div>
+        </div>
+
+        <div class="analytics-charts-layout">
+          <!-- Category Chart Card -->
+          <div class="analytics-card chart-card">
+            <h2>Browsing Interest Distribution</h2>
+            <p class="section-subtitle">Real-time classification based on your tab navigation history:</p>
+            <div id="categories-list" class="category-chart-list">
+              <!-- Dynamically populated rows -->
+            </div>
+          </div>
+
+          <!-- Counter Card -->
+          <div class="analytics-card count-card">
+            <h2>Lifetime Metrics</h2>
+            <div class="counter-grid">
+              <div class="counter-box">
+                <span class="count-num" id="val-total-pets">0</span>
+                <span class="count-label">Pets Received</span>
+              </div>
+              <div class="counter-box">
+                <span class="count-num" id="val-total-feeds">0</span>
+                <span class="count-label">Feeds Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: History Logs -->
+      <section id="page-logs" class="page-pane">
+        <header class="page-header">
+          <h1>History Logs</h1>
+          <p>Chronological timeline of Clawd's recent mood swings, page evaluations, and actions.</p>
+        </header>
+
+        <div class="logs-card">
+          <div class="logs-filter-row">
+            <h2>Timeline Feed</h2>
+            <button class="btn btn-secondary btn-small" id="btn-clear-logs-ui" style="display: none;">Clear Logs</button>
+          </div>
+          <div id="timeline-list" class="timeline-list">
+            <!-- Timeline items populated dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: Settings -->
+      <section id="page-settings" class="page-pane">
+        <header class="page-header">
+          <h1>Control Settings</h1>
+          <p>Customize Clawd's appearance, size, behavior variables, and configure web blocklists.</p>
+        </header>
+
+        <div class="settings-grid">
+          <!-- Main Settings Form -->
+          <div class="settings-main-card">
+            <h2>Mascot Preferences</h2>
+            
+            <div class="form-group">
+              <label for="pet-name-input">Mascot Name</label>
+              <input type="text" id="pet-name-input" class="form-control" placeholder="Clawd">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="size-slider">Mascot Size (<span id="size-val">48px</span>)</label>
+                <input type="range" id="size-slider" min="32" max="128" value="48" class="slider">
+              </div>
+              <div class="form-group col">
+                <label for="speed-slider">Walking Speed (<span id="speed-val">1.0x</span>)</label>
+                <input type="range" id="speed-slider" min="5" max="30" value="10" class="slider">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="costume-select">Costume & Aura Glow</label>
+                <select id="costume-select" class="form-control">
+                  <option value="none">Standard Outfit (No Glow)</option>
+                  <option id="opt-detective" value="detective" disabled>Blue Detective Aura (LVL 5)</option>
+                  <option id="opt-wizard" value="wizard" disabled>Magic Purple Aura (LVL 10)</option>
+                  <option id="opt-party" value="party" disabled>Neon Rainbow Shader (LVL 15)</option>
+                </select>
+              </div>
+              <div class="form-group col" id="api-persona-container">
+                <label for="persona-select">Dialogue Persona</label>
+                <select id="persona-select" class="form-control">
+                  <option value="default">Clawd (Default)</option>
+                  <option value="sarcastic">Sarcastic & Cynical</option>
+                  <option value="encouraging">Empathetic Coach</option>
+                  <option value="poetic">Whimsical Poet</option>
+                  <option value="snarky">Tech Bro Snark</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="toggle-group-row">
+              <div class="toggle-card">
+                <div class="toggle-info">
+                  <strong>Sound Effects</strong>
+                  <span>Allow audio feedback on events</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="sound-toggle">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-card">
+                <div class="toggle-info">
+                  <strong>Local AI Mode</strong>
+                  <span>Enable offline DistilBERT evaluation</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="ai-toggle">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group hidden" id="volume-container">
+              <label for="volume-slider">SFX Volume (<span id="volume-val">80%</span>)</label>
+              <input type="range" id="volume-slider" min="0" max="100" value="80" class="slider">
+            </div>
+
+            <div class="toggle-group-row">
+              <div class="toggle-card">
+                <div class="toggle-info">
+                  <strong>Daily Schedule Rules</strong>
+                  <span>Sleep late, wake up with yoga rules</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="schedule-toggle">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+              <div class="toggle-card">
+                <div class="toggle-info">
+                  <strong>Seasonal Outfits</strong>
+                  <span>Unlock Christmas/Halloween costumes</span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="seasonal-toggle">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blocklist Settings -->
+          <div class="settings-blocklist-card">
+            <h2>Site Blocklist (Do Not Spawn)</h2>
+            <p class="section-subtitle">Prevent Clawd from spawning on these domain names:</p>
+            
+            <div class="blocklist-add-row">
+              <input type="text" id="input-block-domain" class="form-control" placeholder="e.g. github.com">
+              <button class="btn btn-primary" id="btn-add-block">Block</button>
+            </div>
+
+            <div class="blocklist-list-container">
+              <div class="blocklist-search-wrapper">
+                <input type="text" id="input-search-blocklist" class="form-control blocklist-search" placeholder="Search blocklist...">
+              </div>
+              <table class="blocklist-table">
+                <thead>
+                  <tr>
+                    <th>Domain Name</th>
+                    <th style="width: 80px; text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="blocklist-tbody">
+                  <!-- Blocklist entries populated dynamically -->
+                </tbody>
+              </table>
+              <div class="empty-blocklist" id="empty-blocklist-msg" style="display: none;">
+                No domains blocked yet.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: Admin & Rebirth -->
+      <section id="page-admin" class="page-pane">
+        <header class="page-header">
+          <h1>Profile Admin</h1>
+          <p>Perform backup operations, restore statistics, trigger rebirth, or wipe settings.</p>
+        </header>
+
+        <div class="admin-grid">
+          <!-- Prestige Rebirth Box -->
+          <div class="admin-card prestige-admin-card" id="prestige-card">
+            <h2>Prestige Rebirth Sanctuary</h2>
+            <p>Clawd has grown extremely wise (Level 50+). Resetting his levels unlocks higher speed multipliers, permanent visual icons, and advanced capabilities.</p>
+            <div class="prestige-status-row">
+              <span>Current Prestige Rank:</span>
+              <strong id="lbl-admin-prestige">0</strong>
+            </div>
+            <button id="btn-prestige" class="btn btn-gold" disabled>Rebirth Clawd (Requires LVL 50)</button>
+          </div>
+
+          <!-- Backup & Restore Box -->
+          <div class="admin-card">
+            <h2>Profile Backups</h2>
+            <p>Export your settings, levels, and interest analytics to a file, or restore them onto another device.</p>
+            
+            <div class="backup-actions">
+              <button id="btn-export" class="btn btn-secondary">Export Profile (.json)</button>
+              <button id="btn-import" class="btn btn-secondary">Import Profile (.json)</button>
+              <input type="file" id="file-import" accept=".json" style="display: none;">
+            </div>
+          </div>
+
+          <!-- Destructive Wipes -->
+          <div class="admin-card destructive-card">
+            <h2>Factory Reset Options</h2>
+            <p>These actions are irreversible. Make backups before executing resets.</p>
+            
+            <div class="destructive-actions">
+              <button id="btn-reset-stats" class="btn btn-danger">Reset Stats & Level Only</button>
+              <button id="btn-hard-reset" class="btn btn-danger-dark">Hard Wipe All Storage</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
