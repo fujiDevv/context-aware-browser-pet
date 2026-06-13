@@ -464,8 +464,76 @@ async function init(): Promise<void> {
     });
   }
 
+function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
+  if (!stats) return 'normal';
+  const counts = stats.siteCategoryCounts || {};
+  
+  const developerScore = (counts['code'] || 0) + (counts['docs'] || 0);
+  const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0);
+  const scholarScore = counts['news'] || 0;
+  const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0);
+  
+  const scores = {
+    developer: developerScore,
+    gamer: gamerScore,
+    scholar: scholarScore,
+    socialite: socialiteScore
+  };
+  
+  let maxTrait: 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' = 'normal';
+  let maxScore = 3;
+  
+  for (const [trait, score] of Object.entries(scores)) {
+    if (score > maxScore) {
+      maxScore = score;
+      maxTrait = trait as any;
+    }
+  }
+  
+  return maxTrait;
+}
+
   function updateUIStats(stats: PetStats | undefined): void {
     if (!stats) return;
+
+    const trait = getDominantTrait(stats);
+    const traitBadge = document.getElementById('pet-trait') as HTMLElement;
+    const traitText = document.getElementById('trait-text') as HTMLElement;
+    if (traitBadge && traitText) {
+      traitText.textContent = trait;
+      traitBadge.className = `trait-badge trait-${trait}`;
+    }
+
+    const lblHabitTrait = document.getElementById('lbl-habit-trait') as HTMLElement;
+    const lblHabitSpeed = document.getElementById('lbl-habit-speed') as HTMLElement;
+    const lblHabitBehavior = document.getElementById('lbl-habit-behavior') as HTMLElement;
+    
+    if (lblHabitTrait && lblHabitSpeed && lblHabitBehavior) {
+      lblHabitTrait.textContent = trait;
+      
+      const baseSpeed = 1.0;
+      const energyFactor = Math.max(0.4, Math.min(1.2, stats.energy / 100));
+      let traitFactor = 1.0;
+      if (trait === 'gamer') traitFactor = 1.35;
+      else if (trait === 'developer') traitFactor = 0.85;
+      const speedMod = baseSpeed * energyFactor * traitFactor;
+      
+      let speedDesc = 'Normal';
+      if (speedMod > 1.2) speedDesc = 'Hyper';
+      else if (speedMod > 1.05) speedDesc = 'Fast';
+      else if (speedMod < 0.6) speedDesc = 'Exhausted';
+      else if (speedMod < 0.9) speedDesc = 'Calm';
+      
+      lblHabitSpeed.textContent = `${speedMod.toFixed(2)}x (${speedDesc})`;
+      
+      let behaviorDesc = 'Standard';
+      if (trait === 'developer') behaviorDesc = 'Analytical (Thinking)';
+      else if (trait === 'gamer') behaviorDesc = 'Playful (Cool)';
+      else if (trait === 'scholar') behaviorDesc = 'Focused (Reading)';
+      else if (trait === 'socialite') behaviorDesc = 'Affectionate (Love)';
+      
+      lblHabitBehavior.textContent = behaviorDesc;
+    }
 
     statsEl.level.textContent = String(stats.level);
     const xpNeeded = stats.level * 100;

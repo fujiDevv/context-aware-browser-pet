@@ -51,10 +51,11 @@
     - [How It Works](#how-it-works)
     - [Setting Up](#setting-up)
     - [AI Personas](#ai-personas)
-13. [Cross-Tab Behavior (Hybrid Sync)](#cross-tab-behavior-hybrid-sync)
-14. [Security & Privacy](#security--privacy)
-15. [Frequently Asked Questions](#frequently-asked-questions)
-16. [Contributing](#contributing)
+13. [Adaptive Habits & Learning](#adaptive-habits--learning)
+14. [Cross-Tab Behavior (Hybrid Sync)](#cross-tab-behavior-hybrid-sync)
+15. [Security & Privacy](#security--privacy)
+16. [Frequently Asked Questions](#frequently-asked-questions)
+17. [Contributing](#contributing)
 
 ---
 
@@ -372,6 +373,41 @@ When you visit a page, the extension sends the **page title** and **meta descrip
 - **Encouraging**: Uplifting, positive, and motivating remarks.
 - **Poetic**: Whimsical 1-line rhymes about the pages you visit.
 - **Snarky**: Sassy, humorous, and sharp remarks.
+
+---
+
+## Adaptive Habits & Learning
+
+Clawd features an adaptive learning system that monitors your web browsing habits over time and shapes his behavior, physics, and speech to match.
+
+### Trait Archetypes
+Clawd calculates a **Dominant Trait** based on the categories of websites you visit most frequently (minimum 3 site visits to develop a trait):
+* **Developer** (Coding & Docs): Clawd becomes analytical. He defaults to the `working-thinking` idle animation.
+* **Gamer** (Gaming & Video Streaming): Clawd becomes playful. He defaults to the `cool` (wearing shades!) idle animation.
+* **Scholar** (News & Wikipedia): Clawd becomes studious. He defaults to the `reading` idle animation.
+* **Socialite** (Social media & Webmail): Clawd becomes affectionate. He defaults to the `love` idle animation.
+* **Normal**: The standard balanced behavior (defaults to `happy` or `waving`).
+
+### Physical Speed Modifiers
+Clawd's physical viewport crawling speed scales dynamically based on two factors:
+1. **Energy Level**: If Clawd's energy is high, he moves up to `1.2x` faster. If he is exhausted (below 20% energy), he drags his feet and crawls at a slow `0.4x` speed.
+2. **Trait Factor**:
+   * **Gamer**: clawd is hyperactive and crawls `1.35x` faster.
+   * **Developer**: clawd is focused and calm, crawling at `0.85x` speed to prevent distracting you.
+
+### Stat-Sensitive Dialogue & Speech Bubbles
+Clawd's chat bubbles change depending on his current stats and trait:
+* If energy is under 30%, he will yawn and mention being sleepy (*"I'm running out of energy... 🥱"*).
+* If focus is over 80%, he will encourage productivity (*"Focus mode active! 🛡️"*).
+* If he is in a default idle state, he will display unique speech bubbles tailored to his trait (e.g. a Developer pet will say *"Compiling DOM structures... 💻"*, while a Scholar says *"Fascinating reading here! 📖"*).
+
+### AI Stat Context (Optional)
+If AI Mood Analysis is active, Clawd's current stats (e.g. `Focus: 90%, Energy: 40%`) and Trait are passed to Claude. Claude dynamically alters the commentary's tone and choice of emotion (e.g., sounding sleepier if low energy, geekier if a developer).
+
+### Visualizing Habits in Popup
+Open the extension popup to view:
+* **Trait Badge**: Displays Clawd's current archetype in his profile header.
+* **Adaptive Habits Card**: Summarizes his current Trait, physical speed modifier, and default behavior type.
 
 ---
 

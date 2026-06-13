@@ -460,10 +460,22 @@ async function updateEmotion(): Promise<void> {
   let nextEmotion = 'happy';
   let aiComment: string | undefined = undefined;
 
+  const trait = personality.getDominantTrait();
+  const baseSpeed = currentSettings.speed || 1.2;
+  const energyFactor = Math.max(0.4, Math.min(1.2, personality.stats.energy / 100));
+  let traitFactor = 1.0;
+  if (trait === 'gamer') traitFactor = 1.35;
+  else if (trait === 'developer') traitFactor = 0.85;
+
+  movement.updateSettings({
+    speed: baseSpeed * energyFactor * traitFactor
+  });
+
   if (scheduleEnabled && currentSettings.aiMode && currentSettings.apiKey && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
       const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
-      const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default');
+      const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
+      const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default', statsContext);
       nextEmotion = result.emotion;
       aiComment = result.comment;
       hasEvaluatedPageAi = true;
@@ -498,6 +510,70 @@ async function updateEmotion(): Promise<void> {
 
 function triggerContextDialogue(mood: string): void {
   const scheduleEnabled = currentSettings.scheduleEnabled !== false;
+
+  if (scheduleEnabled) {
+    const stats = personality.stats;
+    const trait = personality.getDominantTrait();
+    
+    if (stats.energy < 30 && Math.random() < 0.5) {
+      const lowEnergyDialogs = [
+        "I'm running out of energy... 🥱",
+        "Need food... or a nap... 💤",
+        "Slow down... so tired... 😴"
+      ];
+      showBubble(lowEnergyDialogs[Math.floor(Math.random() * lowEnergyDialogs.length)]);
+      return;
+    }
+    
+    if (stats.focus > 80 && Math.random() < 0.4) {
+      const highFocusDialogs = [
+        "Let's stay productive! 💻",
+        "We are in the zone! 🚀",
+        "Focus mode active! 🛡️"
+      ];
+      showBubble(highFocusDialogs[Math.floor(Math.random() * highFocusDialogs.length)]);
+      return;
+    }
+
+    if (mood === 'working-thinking' || mood === 'happy' || mood === 'love' || mood === 'cool' || mood === 'reading') {
+      if (trait === 'developer') {
+        const devDialogs = [
+          "Compiling DOM structures... 💻",
+          "This webpage looks like elegant code! ⚙️",
+          "Just inspecting the scripts under the hood... 🔍"
+        ];
+        showBubble(devDialogs[Math.floor(Math.random() * devDialogs.length)]);
+        return;
+      }
+      if (trait === 'gamer') {
+        const gamerDialogs = [
+          "Awesome! This browser session is starting to feel like a game! 🎮",
+          "Just chilling out, keeping it cool. 😎",
+          "Let's play around some more! 👾"
+        ];
+        showBubble(gamerDialogs[Math.floor(Math.random() * gamerDialogs.length)]);
+        return;
+      }
+      if (trait === 'scholar') {
+        const scholarDialogs = [
+          "Fascinating reading here! 📖",
+          "Gaining lots of internet knowledge! 📚",
+          "So much information on this page... 🧐"
+        ];
+        showBubble(scholarDialogs[Math.floor(Math.random() * scholarDialogs.length)]);
+        return;
+      }
+      if (trait === 'socialite') {
+        const socialDialogs = [
+          "I love browsing together with you! ❤️",
+          "Having a great chat with this browser tab! 💬",
+          "Everyone should see this page! 👋"
+        ];
+        showBubble(socialDialogs[Math.floor(Math.random() * socialDialogs.length)]);
+        return;
+      }
+    }
+  }
 
   if (!scheduleEnabled) {
     const autonomousDialogs: Record<string, string[]> = {

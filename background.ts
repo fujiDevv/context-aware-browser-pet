@@ -68,9 +68,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'get-ai-emotion') {
-    const { pageTitle, metaDescription, apiKey, persona } = message;
+    const { pageTitle, metaDescription, apiKey, persona, statsContext } = message;
     
-    fetchAiEmotion(pageTitle, metaDescription, apiKey, persona || 'default')
+    fetchAiEmotion(pageTitle, metaDescription, apiKey, persona || 'default', statsContext)
       .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment }))
       .catch((err) => {
         console.error('Error fetching AI emotion in background:', err);
@@ -85,7 +85,8 @@ async function fetchAiEmotion(
   pageTitle: string,
   metaDescription: string | undefined,
   apiKey: string,
-  persona: string
+  persona: string,
+  statsContext?: string
 ): Promise<{ emotion: string; comment?: string }> {
   const PET_EMOTIONS = [
     'happy', 'sad', 'angry', 'working-thinking', 'sleeping', 'coding', 'dancing',
@@ -104,7 +105,7 @@ async function fetchAiEmotion(
 
   const personaInstruction = personas[persona] || personas.default;
 
-  const systemPrompt = `${personaInstruction}
+  let systemPrompt = `${personaInstruction}
 You decide which emotion to display and what short comment to make.
 You MUST respond with a valid JSON object matching this schema, and nothing else:
 {
@@ -113,6 +114,10 @@ You MUST respond with a valid JSON object matching this schema, and nothing else
 }
 
 Allowed emotions: ${PET_EMOTIONS.join(', ')}`;
+
+  if (statsContext) {
+    systemPrompt += `\n\nClawd's current stats & personality trait context is: ${statsContext}. Adjust your choice of emotion and the tone of your commentary to match these stats (e.g. if he has low energy, Clawd's comment should sound sleepy/tired; if he's highly focused, his comment should be short and productivity-oriented; if he is a 'developer', he might make geeky coding references).`;
+  }
 
   const prompt = `Page Title: ${pageTitle}
 Page Description: ${metaDescription || '(none)'}`;

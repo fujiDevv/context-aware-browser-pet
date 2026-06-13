@@ -2,7 +2,8 @@ export async function getAiEmotion(
   pageTitle: string,
   metaDescription: string | undefined,
   apiKey: string,
-  persona: string
+  persona: string,
+  statsContext?: string
 ): Promise<{ emotion: string; comment?: string }> {
   return new Promise((resolve) => {
     chrome.runtime.sendMessage({
@@ -10,7 +11,8 @@ export async function getAiEmotion(
       pageTitle,
       metaDescription,
       apiKey,
-      persona
+      persona,
+      statsContext
     }, (response: { success: boolean; emotion?: string; comment?: string; error?: string } | undefined) => {
       if (chrome.runtime.lastError) {
         console.warn('AI mood analysis communication error:', chrome.runtime.lastError.message);
