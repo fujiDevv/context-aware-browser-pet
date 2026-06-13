@@ -405,6 +405,12 @@ Clawd's chat bubbles change depending on his current stats and trait:
 ### AI Stat Context (Local)
 If local AI Mood Analysis is active, Clawd's current stats (e.g. `Focus: 90%, Energy: 40%`) and Trait are passed to the local classifier. The local sentiment results are combined with these parameters to dynamically alter the commentary's tone and choice of emotion (e.g., sounding sleepier if low energy, geekier if a developer).
 
+### AI Semantic Stat Modifiers
+When Local AI Mode is enabled, Clawd's stats react to the semantic meaning and sentiment of the webpage rather than just the domain name:
+* **Positive Sites**: Grant bonus Happiness (+2) and Energy (+1) with extra XP.
+* **Negative Code/Docs**: Represent deep or frustrating debugging sessions. They drain Happiness (-2) but boost Focus (+2).
+* **Negative Social**: Heavily drain Happiness (-5) and Energy (-2), encouraging you to step away.
+
 ### Visualizing Habits in Popup
 Open the extension popup to view:
 * **Trait Badge**: Displays Clawd's current archetype in his profile header.
