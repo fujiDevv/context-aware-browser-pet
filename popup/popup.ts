@@ -123,7 +123,6 @@ async function init(): Promise<void> {
     personaSelect: document.getElementById('persona-select') as HTMLSelectElement
   };
 
-  // ── Drag-and-Drop Toy setup ──────────────────────────────────────────────
   const setupToyDrags = () => {
     ['ball', 'fish', 'laser', 'yarn', 'duck', 'box'].forEach((toy) => {
       const el = document.getElementById(`toy-${toy}`);
@@ -139,7 +138,6 @@ async function init(): Promise<void> {
   };
   setupToyDrags();
 
-  // ── Tab Switching setup ──────────────────────────────────────────────────
   const setupTabSwitching = () => {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
@@ -149,11 +147,9 @@ async function init(): Promise<void> {
         const targetTab = btn.getAttribute('data-tab');
         if (!targetTab) return;
 
-        // Update active class on buttons
         tabButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // Toggle visibility of panels
         tabPanes.forEach((pane) => {
           if (pane.id === `tab-${targetTab}`) {
             pane.classList.remove('hidden');
@@ -168,7 +164,6 @@ async function init(): Promise<void> {
   };
   setupTabSwitching();
 
-  // ── Sound Board Preview setup ─────────────────────────────────────────────
   const setupSoundPreview = () => {
     const previewButtons = document.querySelectorAll('.sound-preview-btn');
     previewButtons.forEach((btn) => {
@@ -209,14 +204,12 @@ async function init(): Promise<void> {
 
   setupSoundPreview();
 
-  // ── 1. Load Stats and Settings ──────────────────────────────────────────
   const data = await chrome.storage.local.get(['pet-stats', 'pet-settings', 'pet-mood']);
   
   applySettings(data['pet-settings']);
   updateUIStats(data['pet-stats']);
   updateUIMood(data['pet-mood'] || 'happy');
 
-  // ── Visibility Setup ───────────────────────────────────────────────────
   const tabHideToggle = document.getElementById('tab-hide-toggle') as HTMLInputElement;
   const siteHideToggle = document.getElementById('site-hide-toggle') as HTMLInputElement;
   const siteSubtitle = document.getElementById('site-visibility-subtitle') as HTMLElement;
@@ -248,7 +241,7 @@ async function init(): Promise<void> {
 
       chrome.tabs.sendMessage(tab.id, { type: 'get-tab-visibility' }, (response) => {
         if (chrome.runtime.lastError) {
-          // Content script not loaded (e.g. chrome:// page or extension disabled)
+          
           tabHideToggle.disabled = true;
           siteHideToggle.disabled = true;
           return;
@@ -286,7 +279,6 @@ async function init(): Promise<void> {
     }
   });
 
-  // ── 2. Listen for Real-Time Stats Updates (e.g. from active page walking) ──
   chrome.storage.onChanged.addListener((changes) => {
     if (changes['pet-stats']) {
       updateUIStats(changes['pet-stats'].newValue);
@@ -296,12 +288,11 @@ async function init(): Promise<void> {
     }
   });
 
-  // ── 3. Action Button Message Routing ──────────────────────────────────────
   const sendToActiveTab = (type: string) => {
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
       if (tab && tab.id) {
         chrome.tabs.sendMessage(tab.id, { type }).catch(() => {
-          // Tab does not have the extension content script loaded
+          
         });
       }
     });
@@ -311,8 +302,7 @@ async function init(): Promise<void> {
     if (btn.hasAttribute('disabled')) return;
     
     sendToActiveTab(type);
-    
-    // Apply 3-second cooldown to prevent spam/abuse
+
     btn.setAttribute('disabled', 'true');
     const originalText = btn.textContent;
     btn.textContent = 'Wait...';
@@ -331,7 +321,6 @@ async function init(): Promise<void> {
   btnFeed.addEventListener('click', () => handleActionClick(btnFeed, 'feed'));
   btnShoo.addEventListener('click', () => handleActionClick(btnShoo, 'shoo'));
 
-  // ── 4. Settings Input Handlers ──────────────────────────────────────────
   settingsEl.sizeSlider.addEventListener('input', (e) => {
     const target = e.target as HTMLInputElement;
     const val = target.value;
@@ -399,7 +388,6 @@ async function init(): Promise<void> {
     saveSettings();
   });
 
-  // Toggle API Key password visibility
   settingsEl.btnToggleKey.addEventListener('click', () => {
     if (settingsEl.apiKeyInput.type === 'password') {
       settingsEl.apiKeyInput.type = 'text';
@@ -410,7 +398,6 @@ async function init(): Promise<void> {
     }
   });
 
-  // ── Helper: Save Settings to Storage ──────────────────────────────────────
   function saveSettings(): void {
     chrome.storage.local.set({
       'pet-settings': {
@@ -429,8 +416,6 @@ async function init(): Promise<void> {
       }
     });
   }
-
-
 
   function renderEmotionsGrid(level: number): void {
     const gridEl = document.getElementById('emotions-grid');
@@ -473,17 +458,14 @@ async function init(): Promise<void> {
     });
   }
 
-  // ── Helper: Populate Stats ───────────────────────────────────────────────
   function updateUIStats(stats: PetStats | undefined): void {
     if (!stats) return;
-    
-    // Level & XP
+
     statsEl.level.textContent = String(stats.level);
     const xpNeeded = stats.level * 100;
     statsEl.xpText.textContent = `${stats.xp} / ${xpNeeded} XP`;
     statsEl.xpBar.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
 
-    // Unlock costume selections based on level
     settingsEl.optDetective.disabled = stats.level < 5;
     if (stats.level < 5) {
       settingsEl.optDetective.textContent = 'Blue Detective Aura (Locked - LVL 5)';
@@ -505,7 +487,6 @@ async function init(): Promise<void> {
       settingsEl.optParty.textContent = 'Neon Rainbow Shader';
     }
 
-    // Core attributes
     statsEl.happinessText.textContent = `${stats.happiness}%`;
     statsEl.happinessBar.style.width = `${stats.happiness}%`;
 
@@ -521,9 +502,6 @@ async function init(): Promise<void> {
     statsEl.leisureText.textContent = `${stats.leisure ?? 50}%`;
     statsEl.leisureBar.style.width = `${stats.leisure ?? 50}%`;
 
-    // Preview Image Avatar Reaction is handled in updateUIMood dynamically to show the active state!
-
-    // Analytics Counter Mapping
     if (statsEl.valTotalPets) {
       statsEl.valTotalPets.textContent = String(stats.totalPets || 0);
     }
@@ -531,7 +509,6 @@ async function init(): Promise<void> {
       statsEl.valTotalFeeds.textContent = String(stats.totalFeeds || 0);
     }
 
-    // Dynamic Browsing Interests Category Rendering
     if (statsEl.categoriesList) {
       statsEl.categoriesList.innerHTML = '';
       const counts = stats.siteCategoryCounts || {};
@@ -578,7 +555,6 @@ async function init(): Promise<void> {
       }
     }
 
-    // Dynamic Recent Activity Timeline Rendering
     if (statsEl.timelineList) {
       statsEl.timelineList.innerHTML = '';
       const history = stats.moodHistory || [];
@@ -633,31 +609,25 @@ async function init(): Promise<void> {
     moodEmojiEl.textContent = meta.emoji;
     moodTextEl.textContent = meta.name;
 
-    // Update the pet preview image dynamically to match the current active mood!
     if (statsEl && statsEl.preview) {
       statsEl.preview.src = `../assets/pets/clawd-${mood}.svg`;
     }
   }
 
-  // ── Helper: Populate Settings ─────────────────────────────────────────────
   function applySettings(settings: PetSettings | undefined): void {
     if (!settings) return;
 
-    // Size
     const size = settings.size ?? 64;
     settingsEl.sizeSlider.value = String(size);
     settingsEl.sizeVal.textContent = `${size}px`;
 
-    // Speed
     const speed = settings.speed ?? 1.2;
     settingsEl.speedSlider.value = String(Math.round(speed * 10));
     settingsEl.speedVal.textContent = `${speed.toFixed(1)}x`;
 
-    // Schedule Enabled
     const scheduleEnabled = settings.scheduleEnabled ?? true;
     settingsEl.scheduleToggle.checked = scheduleEnabled;
 
-    // Sound Toggle & Volume
     const soundEnabled = settings.soundEnabled ?? true;
     settingsEl.soundToggle.checked = soundEnabled;
     if (soundEnabled) {
@@ -670,7 +640,6 @@ async function init(): Promise<void> {
     settingsEl.volumeSlider.value = String(Math.round(soundVolume * 100));
     settingsEl.volumeVal.textContent = `${Math.round(soundVolume * 100)}%`;
 
-    // AI Mode
     const aiMode = settings.aiMode ?? false;
     settingsEl.aiToggle.checked = aiMode;
     if (aiMode) {
@@ -681,24 +650,18 @@ async function init(): Promise<void> {
       settingsEl.apiPersonaContainer.classList.add('hidden');
     }
 
-    // API Key
     settingsEl.apiKeyInput.value = settings.apiKey ?? '';
 
-    // Name
     const name = settings.name ?? 'Clawd';
     settingsEl.nameInput.value = name;
     (document.getElementById('pet-name') as HTMLElement).textContent = name;
 
-    // Costume
     settingsEl.costumeSelect.value = settings.costume ?? 'none';
 
-    // Persona
     settingsEl.personaSelect.value = settings.persona ?? 'default';
 
-    // Blocked Domains
     blockedDomains = settings.blockedDomains || [];
 
-    // Disabled Emotions
     disabledEmotions = settings.disabledEmotions || [];
   }
 }

@@ -1,8 +1,3 @@
-/* 
- * Flat Light Theme for Clawd Extension Popup
- * Matching the minimal, clean, shadowless styling of DocsView and Onboarding.
- */
-
 :root {
   --bg-color: #ffffff;
   --accent: #C75D3F;
@@ -16,8 +11,7 @@
   
   --border-color: #e2e8f0;
   --bg-hover: #f8fafc;
-  
-  /* Stat Bar Colors (Flat) */
+
   --xp-color: #10b981;
   --xp-bg: rgba(16, 185, 129, 0.08);
   
@@ -56,7 +50,6 @@ h2 {
   font-weight: 600;
 }
 
-/* ── Tab Navigation ─────────────────────────────────────────────────────── */
 .tab-navigation {
   display: flex;
   gap: 8px;
@@ -96,7 +89,6 @@ h2 {
   border: 1px solid var(--accent-border);
 }
 
-/* ── Content Viewport ───────────────────────────────────────────────────── */
 .dashboard-content {
   display: flex;
   flex-direction: column;
@@ -128,13 +120,12 @@ h2 {
   display: none !important;
 }
 
-/* ── Header Area ────────────────────────────────────────────────────────── */
 .header {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-bottom: 4px;
-  background: #faf5f2; /* Warm minimal cream matching Clawd's branding */
+  background: #faf5f2; 
   border: 1px solid var(--accent-border);
   border-radius: 16px;
   padding: 16px;
@@ -163,7 +154,7 @@ h2 {
 }
 
 .avatar-glow {
-  display: none; /* Removed glow */
+  display: none; 
 }
 
 #pet-preview {
@@ -243,7 +234,6 @@ h2 {
   font-size: 11px;
 }
 
-/* ── Experience Section ─────────────────────────────────────────────────── */
 .xp-section {
   margin-top: 14px;
   margin-bottom: 0;
@@ -273,7 +263,6 @@ h2 {
   background: var(--xp-color) !important;
 }
 
-/* ── Progress Bars & Stats ──────────────────────────────────────────────── */
 .stats-section {
   margin-bottom: 4px;
 }
@@ -323,7 +312,6 @@ h2 {
 .fill-green { background: var(--green-bar); }
 .fill-indigo { background: var(--indigo-bar); }
 
-/* ── Interaction Buttons ────────────────────────────────────────────────── */
 .actions-section {
   display: flex;
   gap: 8px;
@@ -373,7 +361,6 @@ h2 {
   filter: grayscale(0.5);
 }
 
-/* ── Toys Section ───────────────────────────────────────────────────────── */
 .toys-section {
   margin-bottom: 4px;
   background: var(--bg-hover);
@@ -429,7 +416,6 @@ h2 {
   font-style: italic;
 }
 
-/* ── Analytics Pane ─────────────────────────────────────────────────────── */
 .analytics-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -500,7 +486,6 @@ h2 {
   transition: width 0.5s ease-out;
 }
 
-/* ── Timeline Section ───────────────────────────────────────────────────── */
 .timeline-list {
   display: flex;
   flex-direction: column;
@@ -550,7 +535,6 @@ h2 {
   font-size: 9px;
 }
 
-/* ── Triggers Guide Section ─────────────────────────────────────────────── */
 .triggers-list {
   display: flex;
   flex-direction: column;
@@ -610,7 +594,6 @@ h2 {
   line-height: 1.4;
 }
 
-/* ── Settings Sections ──────────────────────────────────────────────────── */
 .settings-section {
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -654,7 +637,6 @@ h2 {
   color: var(--text-primary);
 }
 
-/* Custom Sliders */
 .custom-slider {
   appearance: none;
   width: 100%;
@@ -675,7 +657,6 @@ h2 {
   border: 2px solid #ffffff;
 }
 
-/* Toggle Switches */
 .toggle-row {
   display: flex;
   justify-content: space-between;
@@ -727,7 +708,6 @@ input:checked + .toggle-slider:before {
   transform: translateX(18px);
 }
 
-/* API Key Row */
 .api-key-row {
   display: flex;
   flex-direction: column;
@@ -773,7 +753,6 @@ input:checked + .toggle-slider:before {
   display: none !important;
 }
 
-/* ── Forms and Selections ───────────────────────────────────────────────── */
 .custom-input, .custom-select {
   width: 100%;
   padding: 8px 12px;
@@ -797,7 +776,6 @@ input:checked + .toggle-slider:before {
   color: var(--text-primary);
 }
 
-/* ── Soundboard Section ─────────────────────────────────────────────────── */
 .soundboard-section {
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -839,7 +817,6 @@ input:checked + .toggle-slider:before {
   transform: scale(0.97);
 }
 
-/* ── Active Emotions Section ────────────────────────────────────────────── */
 .section-help {
   font-size: 10px;
   color: var(--text-secondary);

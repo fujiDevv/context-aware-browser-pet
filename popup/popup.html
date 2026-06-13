@@ -9,19 +9,17 @@
 </head>
 <body>
   <div class="popup-container">
-    <!-- Tab Navigation Header -->
+    
     <div class="tab-navigation">
       <button class="tab-btn active" id="btn-tab-mascot" data-tab="mascot">Mascot</button>
       <button class="tab-btn" id="btn-tab-analytics" data-tab="analytics">Stats</button>
       <button class="tab-btn" id="btn-tab-settings" data-tab="settings">Settings</button>
     </div>
 
-    <!-- Scrollable content area -->
     <div class="dashboard-content">
-      
-      <!-- Tab 1: Mascot -->
+
       <div id="tab-mascot" class="tab-pane active">
-        <!-- Header with Mascot Preview -->
+        
         <header class="header">
           <div class="header-profile">
             <div class="avatar-container">
@@ -43,7 +41,6 @@
             </div>
           </div>
 
-          <!-- Integrated XP Progress Bar -->
           <div class="xp-section">
             <div class="xp-header">
               <span>Experience</span>
@@ -55,7 +52,6 @@
           </div>
         </header>
 
-        <!-- Core Pet Stats -->
         <section class="stats-section">
           <h2>Mascot Stats</h2>
           
@@ -110,14 +106,12 @@
           </div>
         </section>
 
-        <!-- Interactivity Actions -->
         <section class="actions-section">
           <button id="btn-pet" class="action-btn pet-btn">Pet</button>
           <button id="btn-feed" class="action-btn feed-btn">Feed</button>
           <button id="btn-shoo" class="action-btn shoo-btn">Shoo</button>
         </section>
 
-        <!-- Interactive Toys Drawer -->
         <section class="toys-section">
           <h2>Interactive Toys</h2>
           <div class="toys-container">
@@ -150,9 +144,8 @@
         </section>
       </div>
 
-      <!-- Tab 2: Stats & Analytics -->
       <div id="tab-analytics" class="tab-pane hidden">
-        <!-- Mascot Analytics Summary -->
+        
         <section class="settings-section analytics-section">
           <h2>Clawd's Analytics</h2>
           <div class="analytics-grid">
@@ -167,24 +160,21 @@
           </div>
         </section>
 
-        <!-- Browsing Interests meter -->
         <section class="settings-section interests-section">
           <h2>Browsing Interests</h2>
           <p class="section-help">Web categories Clawd has analyzed:</p>
           <div id="categories-list" class="categories-list">
-            <!-- Dynamically generated in popup.ts -->
+            
           </div>
         </section>
 
-        <!-- Recent Activity timeline -->
         <section class="settings-section timeline-section">
           <h2>Recent Activity</h2>
           <div id="timeline-list" class="timeline-list">
-            <!-- Dynamically generated from stats.moodHistory -->
+            
           </div>
         </section>
 
-        <!-- Daily Schedule & Triggers -->
         <section class="settings-section triggers-section">
           <h2>Daily Schedule & Triggers</h2>
           <p class="section-help">How Clawd reacts to your daily habits and environment:</p>
@@ -217,18 +207,16 @@
         </section>
       </div>
 
-      <!-- Tab 3: Settings -->
       <div id="tab-settings" class="tab-pane hidden">
-        <!-- Active Emotions Settings -->
+        
         <section class="settings-section emotions-section">
           <h2>Active Emotions</h2>
           <p class="section-help">Toggle which unlocked emotions Clawd can express:</p>
           <div id="emotions-grid" class="emotions-grid">
-            <!-- Will be dynamically generated in popup.ts based on unlocked level -->
+            
           </div>
         </section>
 
-        <!-- Sound Board Drawer -->
         <section class="soundboard-section">
           <h2>Sound Board</h2>
           <div class="soundboard-container">
@@ -243,7 +231,6 @@
           </div>
         </section>
 
-        <!-- Visibility Control -->
         <section class="settings-section visibility-section">
           <h2>Visibility</h2>
           
@@ -270,7 +257,6 @@
           </div>
         </section>
 
-        <!-- Settings & Customisation -->
         <section class="settings-section">
           <h2>Settings</h2>
 
@@ -310,7 +296,6 @@
             <input type="range" id="speed-slider" min="1" max="50" value="12" class="custom-slider">
           </div>
 
-          <!-- Daily Schedule & Triggers Toggle -->
           <div class="setting-row toggle-row">
             <div class="setting-desc">
               <span class="setting-title">Daily Schedule & Triggers</span>
@@ -322,7 +307,6 @@
             </label>
           </div>
 
-          <!-- Sound Settings -->
           <div class="setting-row toggle-row">
             <div class="setting-desc">
               <span class="setting-title">Sound Effects</span>
@@ -342,7 +326,6 @@
             <input type="range" id="volume-slider" min="0" max="100" value="50" class="custom-slider">
           </div>
 
-          <!-- AI Mood Toggle -->
           <div class="setting-row toggle-row">
             <div class="setting-desc">
               <span class="setting-title">AI Mood Analysis</span>
@@ -354,7 +337,6 @@
             </label>
           </div>
 
-          <!-- Secure API Key Section (visible when AI toggle is checked) -->
           <div id="api-key-container" class="setting-row api-key-row hidden">
             <span class="setting-title">Anthropic API Key</span>
             <div class="api-key-input-wrapper">
@@ -363,7 +345,6 @@
             </div>
           </div>
 
-          <!-- AI Persona Section (visible when AI toggle is checked) -->
           <div id="api-persona-container" class="setting-row hidden">
             <div class="setting-desc">
               <span class="setting-title">AI Persona</span>

@@ -1,7 +1,3 @@
-/**
- * Clawd Onboarding — Step Navigation Controller
- * Handles next/back buttons, dot indicators, and slide transitions.
- */
 (function () {
   'use strict';
 
@@ -14,30 +10,22 @@
   const dotsContainer = document.getElementById('step-dots');
   const dots = dotsContainer.querySelectorAll('.step-dot');
 
-  /**
-   * Navigates to the specified step index.
-   * @param {number} index - The zero-based step index to navigate to.
-   */
   function goToStep(index) {
     if (index < 0 || index >= TOTAL_STEPS) return;
     currentStep = index;
 
-    // Slide the track
     track.style.transform = `translateX(-${currentStep * 100}%)`;
 
-    // Update dot indicators
     dots.forEach((dot, i) => {
       dot.classList.toggle('active', i === currentStep);
     });
 
-    // Update back button visibility
     if (currentStep === 0) {
       btnBack.classList.add('hidden');
     } else {
       btnBack.classList.remove('hidden');
     }
 
-    // Update next button text for the last step
     if (currentStep === TOTAL_STEPS - 1) {
       btnNext.innerHTML = 'Close <span class="arrow">✓</span>';
     } else {
@@ -45,22 +33,19 @@
     }
   }
 
-  // Next button handler
   btnNext.addEventListener('click', () => {
     if (currentStep === TOTAL_STEPS - 1) {
-      // Last step — close the tab
+      
       window.close();
     } else {
       goToStep(currentStep + 1);
     }
   });
 
-  // Back button handler
   btnBack.addEventListener('click', () => {
     goToStep(currentStep - 1);
   });
 
-  // Dot click handler
   dots.forEach((dot) => {
     dot.addEventListener('click', () => {
       const stepIndex = parseInt(dot.getAttribute('data-step'), 10);
@@ -68,7 +53,6 @@
     });
   });
 
-  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === 'Enter') {
       if (currentStep < TOTAL_STEPS - 1) {
@@ -81,7 +65,6 @@
     }
   });
 
-  // Parse URL params for version display
   const params = new URLSearchParams(window.location.search);
   const version = params.get('version');
   if (version) {

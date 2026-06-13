@@ -1,8 +1,3 @@
-/*
- * Clawd Onboarding Page Styles
- * White glassmorphic design matching the main Clawd site.
- */
-
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap');
 
 :root {
@@ -42,7 +37,6 @@ body {
   min-height: 100vh;
 }
 
-/* ── Onboarding Container ─────────────────────────────────────────────── */
 .onboarding-container {
   position: relative;
   width: 100%;
@@ -51,7 +45,6 @@ body {
   padding: 24px;
 }
 
-/* ── Steps Viewport ───────────────────────────────────────────────────── */
 .steps-viewport {
   position: relative;
   overflow: hidden;
@@ -76,7 +69,6 @@ body {
   text-align: center;
 }
 
-/* ── Step 1: Welcome ──────────────────────────────────────────────────── */
 .mascot-hero {
   width: 140px;
   height: 140px;
@@ -136,7 +128,6 @@ body {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
-/* ── Step 2: Features ─────────────────────────────────────────────────── */
 .features-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -187,7 +178,6 @@ body {
   line-height: 1.5;
 }
 
-/* ── Step 3: Get Started ──────────────────────────────────────────────── */
 .cta-mascot {
   width: 120px;
   height: 120px;
@@ -254,7 +244,6 @@ body {
   font-weight: 600;
 }
 
-/* ── Navigation Controls ──────────────────────────────────────────────── */
 .nav-controls {
   display: flex;
   align-items: center;
@@ -333,7 +322,6 @@ body {
   line-height: 1;
 }
 
-/* ── Docs link on final step ──────────────────────────────────────────── */
 .docs-link {
   display: inline-flex;
   align-items: center;
@@ -362,7 +350,6 @@ body {
   height: 16px;
 }
 
-/* ── Animations ───────────────────────────────────────────────────────── */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
@@ -379,10 +366,6 @@ body {
   50% { opacity: 0.5; transform: scale(0.8); }
 }
 
-/* ── Background decoration ────────────────────────────────────────────── */
-
-
-/* ── Responsive ───────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .onboarding-container {
     padding: 12px;
