@@ -363,8 +363,14 @@ h2 {
   background: #64748b;
 }
 
-.action-btn:hover {
+.action-btn:hover:not(:disabled) {
   filter: brightness(1.08);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
 }
 
 /* ── Toys Section ───────────────────────────────────────────────────────── */

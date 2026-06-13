@@ -307,9 +307,29 @@ async function init(): Promise<void> {
     });
   };
 
-  (document.getElementById('btn-pet') as HTMLElement).addEventListener('click', () => sendToActiveTab('pet'));
-  (document.getElementById('btn-feed') as HTMLElement).addEventListener('click', () => sendToActiveTab('feed'));
-  (document.getElementById('btn-shoo') as HTMLElement).addEventListener('click', () => sendToActiveTab('shoo'));
+  const handleActionClick = (btn: HTMLElement, type: string) => {
+    if (btn.hasAttribute('disabled')) return;
+    
+    sendToActiveTab(type);
+    
+    // Apply 3-second cooldown to prevent spam/abuse
+    btn.setAttribute('disabled', 'true');
+    const originalText = btn.textContent;
+    btn.textContent = 'Wait...';
+    
+    setTimeout(() => {
+      btn.removeAttribute('disabled');
+      btn.textContent = originalText;
+    }, 3000);
+  };
+
+  const btnPet = document.getElementById('btn-pet') as HTMLElement;
+  const btnFeed = document.getElementById('btn-feed') as HTMLElement;
+  const btnShoo = document.getElementById('btn-shoo') as HTMLElement;
+
+  btnPet.addEventListener('click', () => handleActionClick(btnPet, 'pet'));
+  btnFeed.addEventListener('click', () => handleActionClick(btnFeed, 'feed'));
+  btnShoo.addEventListener('click', () => handleActionClick(btnShoo, 'shoo'));
 
   // ── 4. Settings Input Handlers ──────────────────────────────────────────
   settingsEl.sizeSlider.addEventListener('input', (e) => {
