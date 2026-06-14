@@ -804,7 +804,7 @@ function saveSettings() {
       sleepStartHour: sleepStartSelect.value !== '' ? Number(sleepStartSelect.value) : undefined,
       sleepEndHour: sleepEndSelect.value !== '' ? Number(sleepEndSelect.value) : undefined,
       workStartHour: workStartSelect.value !== '' ? Number(workStartSelect.value) : undefined,
-      workEndHour: workEndSelect.value !== '' ? Number(workEndHour) : undefined,
+      workEndHour: workEndSelect.value !== '' ? Number(workEndSelect.value) : undefined,
       focusActive: focusActiveToggle.checked,
       focusStartHour: focusStartSelect.value !== '' ? Number(focusStartSelect.value) : undefined,
       focusEndHour: focusEndSelect.value !== '' ? Number(focusEndSelect.value) : undefined,

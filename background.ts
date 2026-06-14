@@ -9,6 +9,13 @@ let sharedPetState: SharedPetState = {
   emotion: 'happy'
 };
 
+// Initialize sharedPetState from storage to survive SW suspension
+chrome.storage.local.get('shared-pet-state', (data) => {
+  if (data['shared-pet-state']) {
+    sharedPetState = data['shared-pet-state'];
+  }
+});
+
 const originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
 
@@ -30,7 +37,8 @@ chrome.runtime.onInstalled.addListener((details) => {
         disabledEmotions: [],
         scheduleEnabled: true,
         seasonalEnabled: true
-      }
+      },
+      'shared-pet-state': sharedPetState
     }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set init error:', e); });
   }
 
@@ -91,6 +99,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'update-pet-state') {
     sharedPetState = { ...sharedPetState, ...message.state };
+    
+    // Persist shared state to storage
+    chrome.storage.local.set({ 'shared-pet-state': sharedPetState })
+      .catch((e) => { console.warn('[Clawd Background] storage.set shared-pet-state error:', e); });
 
     const now = Date.now();
     if (now - lastSyncTime > 500) { // Only broadcast max twice a second
