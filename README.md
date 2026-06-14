@@ -1,6 +1,6 @@
 # Clawd: The Context-Aware Browser Pet
 
-An open-source, interactive, context-aware browser mascot pet companion extension built using the [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) SVG library, migrated to TypeScript. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
+An open-source, interactive, context-aware browser mascot pet companion extension built using the [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) SVG library. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
 
 *Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
@@ -22,22 +22,11 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
 ## Key Features
 
-* **Advanced Edge-Crawling Engine**: 5-state viewport movement tracking (top, bottom, left, right edges) with direction-flipping, 90-degree rotations, throwing physics, and edge snapping powered by a custom zero-dependency spring physics engine.
-* **Granular Context Triggers**: Monitors active typing velocity, scroll depth, form submissions, and active HTML5 media play/pause states.
-* **Console Error Watcher**: Detects runtime JS errors and unhandled promise rejections, triggering debug animations and panic reactions.
-* **Domain-Specific Animations**: Displays custom SVGs mapping to site context (popcorn/eating/music/singing/dj for media, book/reading/studying for docs/Wikipedia, laptop/coding/debugger/building for dev sites, money/gift for shopping, mail/notification for webmail, flexing/lifting/yoga for fitness sites).
-* **Virtual Pet Mechanics**: Leveling progression with XP rewards, custom naming, time-decay variables (energy, happiness, curiosity, focus, leisure), and interactive toy drag-and-drop (Ball, Fish, Laser, Yarn, Duck, and Box).
-* **Interactive Options Dashboard**: A comprehensive configuration hub featuring:
-  * **Visual Costume Wardrobe**: A visual grid showing all unlocked/locked seasonal costumes (Santa Hat, Spooky Pumpkin, Summer Sunglasses) with a "Try On" button.
-  * **Interactive Schedule Planner**: A time-block scheduler to define Clawd's sleeping, waking, and working hours, plus custom **Focus Blocks** where Clawd stays quiet or runs study animations to prevent distraction.
-  * **Website & Domain Triggers**: A Domain Reaction Dictionary to bind site rules to Clawd's animations or comments (e.g., stackoverflow.com triggers study mood, youtube.com triggers movie-watching with popcorn, and duolingo.com plays chiptunes).
-  * **Local AI Fine-Tuning**: Fine-grain sliders to adjust the sentiment sensitivity threshold and comment frequency rate-limiting (from 30s to 5min).
-  * **Expanded Analytics & Charts**: Visualizations tracking a 7-day interests history bar chart and daily happiness/energy level line charts.
-* **Adaptive Habits & Learning System**: Clawd analyzes your browsing categories over time to develop a dominant trait (Developer, Gamer, Scholar, or Socialite). His default idle animations, dialogue bubbles, physical speeds, and stat multipliers dynamically adapt to reflect this learned personality. The system is tightly integrated with the **Local Offline AI**, ensuring stats like Happiness and Focus react to the actual semantic sentiment of a webpage rather than just a rigid domain rule.
-* **Local Offline AI Model**: Runs local text sentiment classification inside a secure Offscreen Document using ONNX Runtime Web and a quantized DistilBERT classifier. No external API keys, billing, or network requests required.
-* **Performance & Memory Management (24/7 Execution)**: Leak-free, low-overhead background execution. Decouples tab-specific timers, optimizes event listeners, and uses hardware-accelerated Web Animations API (WAAPI) keyframes.
-* **Long-Term Progression & Stat Balance**: Balanced virtual pet leveling featuring linear XP scaling (`Level * 100 XP`), minute-based decay calculations, and stat thresholds to ensure balanced progression and long-term mascot longevity.
-* **Storage Optimization & Habit Lifespan**: Uses rolling summaries and frequency maps inside `chrome.storage.local` to track personality habits without unbounded storage growth or quota leaks.
+* **Edge-Crawling Physics Engine**: Realistic 5-state viewport movement with throwing physics and edge-snapping.
+* **Context-Aware Emotions**: Real-time expressions that react to typing speed, scroll depth, media playback, and site errors.
+* **Local Offline AI**: Privacy-first sentiment analysis using an on-device DistilBERT model (no API keys required).
+* **Virtual Pet Progression**: Level up your pet through interactions, unlock costumes, and develop unique personality traits based on your browsing habits.
+* **Comprehensive Dashboard**: Track 7-day interest analytics, manage work/sleep schedules, and customize domain-specific reactions.
 
 ---
 
@@ -110,13 +99,12 @@ context-aware-browser-pet/
 
 ## Interactions & Controls
 
-* **Left Click**: "Pet" the mascot to raise its Happiness. Displays the `love` mood.
-* **Double Click**: "Feed" the mascot to raise its Energy. Displays the `celebrating` mood.
-* **Right Click**: "Shoo" the mascot away. Teleports it to a random coordinate along the bottom screen edge.
-* **Click & Drag**: Drag the mascot to reposition it or attach it to a specific wall edge.
-* **Drag-and-Drop Toys**: Drag toys (Ball ⚽, Fish 🐟, Laser 🔴, Yarn 🧶, Duck 🦆, Box 📦) out from the popup UI onto the page. Supports dropping multiple toys at once to queue Clawd's play interactions.
-* **Settings & Triggers**: Click to switch between Mascot, Stats, and Settings tabs. Customize your pet's name, size, speed, and volume, toggle active emotions/aura shaders, toggle the **Daily Schedule & Triggers** switch (or turn it off to let Clawd enter **Autonomous Mode** to decide his own emotes, exploration paths, and webpage analysis commentary), and check the built-in Daily Schedule & Triggers guide.
-* **AI Mood Mode**: Toggle AI Mode in the settings, and the pet will periodically evaluate the webpage description using the local DistilBERT model to select a matching emotional expression and display a custom comment bubble!
+* **Pet (Left Click)**: Boost Happiness and see the 'love' mood.
+* **Feed (Double Click)**: Restore Energy and celebrate.
+* **Shoo (Right Click)**: Relocate the pet to a random spot.
+* **Play (Drag-and-Drop Toys)**: Drop items like Balls, Yarn, or Ducks from the popup to play.
+* **Settings**: Customize names, sizes, speeds, and personas in the dashboard.
+* **AI Vibe Check**: Enable AI Mode to let Clawd analyze page sentiment and comment on your browsing.
 
 ---
 
