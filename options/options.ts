@@ -378,6 +378,29 @@ async function init() {
 }
 
 async function triggerPetAction(action: string, temporaryMood: string, soundName: string, textBubble: string) {
+  const btnPet = document.getElementById('btn-pet') as HTMLButtonElement;
+  const btnFeed = document.getElementById('btn-feed') as HTMLButtonElement;
+  const btnShoo = document.getElementById('btn-shoo') as HTMLButtonElement;
+
+  // Cache original button text
+  const originalPetText = btnPet?.textContent || 'Pet Clawd';
+  const originalFeedText = btnFeed?.textContent || 'Feed Snack';
+  const originalShooText = btnShoo?.textContent || 'Shoo Away';
+
+  // Disable buttons and set to waiting
+  if (btnPet) {
+    btnPet.disabled = true;
+    btnPet.textContent = 'waiting...';
+  }
+  if (btnFeed) {
+    btnFeed.disabled = true;
+    btnFeed.textContent = 'waiting...';
+  }
+  if (btnShoo) {
+    btnShoo.disabled = true;
+    btnShoo.textContent = 'waiting...';
+  }
+
   if (soundToggle.checked) {
     const vol = Number(volumeSlider.value) / 100;
     playPreviewSound(soundName, vol);
@@ -405,6 +428,20 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
   setTimeout(async () => {
     const currentMood = await chrome.storage.local.get('pet-mood');
     updateUIMood(currentMood['pet-mood'] || 'happy');
+
+    // Restore buttons after 3 seconds
+    if (btnPet) {
+      btnPet.disabled = false;
+      btnPet.textContent = originalPetText;
+    }
+    if (btnFeed) {
+      btnFeed.disabled = false;
+      btnFeed.textContent = originalFeedText;
+    }
+    if (btnShoo) {
+      btnShoo.disabled = false;
+      btnShoo.textContent = originalShooText;
+    }
   }, 3000);
 }
 
@@ -1154,7 +1191,10 @@ function renderAnalyticsCharts(stats: any) {
         const row = document.createElement('div');
         row.className = 'category-row';
         row.innerHTML = `
-          <div class="category-name">${category} <span class="category-count">${count}</span></div>
+          <div class="category-name">
+            <span>${category}</span>
+            <span class="category-count">${count} pages</span>
+          </div>
           <div class="category-bar-track">
             <div class="category-bar-fill" style="width: ${pct}%;"></div>
           </div>

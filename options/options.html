@@ -33,8 +33,11 @@
         <button class="menu-btn" data-target="logs">
           <span class="menu-icon"></span> History Timeline
         </button>
-        <button class="menu-btn" data-target="settings">
-          <span class="menu-icon"></span> Control Settings
+        <button class="menu-btn" data-target="settings-mascot">
+          <span class="menu-icon"></span> Mascot & Style
+        </button>
+        <button class="menu-btn" data-target="settings-ai">
+          <span class="menu-icon"></span> AI & Scheduling
         </button>
         <button class="menu-btn" data-target="admin">
           <span class="menu-icon"></span> Profile Admin
@@ -252,6 +255,21 @@
           </div>
         </div>
 
+        <!-- Lifetime Metrics at the top of stats -->
+        <div class="analytics-card count-card" style="margin-bottom: 24px;">
+          <h2>Lifetime Metrics</h2>
+          <div class="counter-grid">
+            <div class="counter-box">
+              <span class="count-num" id="val-total-pets">0</span>
+              <span class="count-label">Pets Received</span>
+            </div>
+            <div class="counter-box">
+              <span class="count-num" id="val-total-feeds">0</span>
+              <span class="count-label">Feeds Completed</span>
+            </div>
+          </div>
+        </div>
+
         <div class="analytics-charts-layout">
           <!-- Category Chart Card -->
           <div class="analytics-card chart-card">
@@ -262,8 +280,8 @@
             </div>
           </div>
 
-          <!-- Interests History Chart -->
-          <div class="analytics-card chart-card" style="grid-column: 1 / -1;">
+          <!-- Interests History Chart side by side -->
+          <div class="analytics-card chart-card">
             <h2>Interests History (Last 7 Days)</h2>
             <p class="section-subtitle">Category breakdown over the last 7 days.</p>
             <div id="interests-history-chart" class="category-chart-list" style="margin-top: 16px;">
@@ -276,23 +294,7 @@
             <h2>Mood Over Time</h2>
             <p class="section-subtitle">Average daily Happiness and Energy.</p>
             <div id="mood-history-chart" style="margin-top: 16px; display: flex; justify-content: center; width: 100%; min-height: 250px;">
-              <!-- SVG dynamically generated -->
-            </div>
-          </div>
-
-          <!-- Counter Card -->
-          <div class="analytics-card count-card">
-            <h2>Lifetime Metrics</h2>
-            <div class="counter-grid">
-              <div class="counter-box">
-                <span class="count-num" id="val-total-pets">0</span>
-                <span class="count-label">Pets Received</span>
               </div>
-              <div class="counter-box">
-                <span class="count-num" id="val-total-feeds">0</span>
-                <span class="count-label">Feeds Completed</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -315,11 +317,11 @@
         </div>
       </section>
 
-      <!-- PAGE: Settings -->
-      <section id="page-settings" class="page-pane">
+      <!-- PAGE: Mascot & Style Settings -->
+      <section id="page-settings-mascot" class="page-pane">
         <header class="page-header">
-          <h1>Control Settings</h1>
-          <p>Customize Clawd's appearance, size, behavior variables, and configure web blocklists.</p>
+          <h1>Mascot & Style</h1>
+          <p>Customize Clawd's appearance, size, active animations, sound effects, and wardrobe.</p>
         </header>
 
         <div class="settings-grid">
@@ -370,50 +372,6 @@
 
                 <div class="toggle-card">
                   <div class="toggle-info">
-                    <strong>Local AI Mode</strong>
-                    <span>Enable offline DistilBERT evaluation</span>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" id="ai-toggle">
-                    <span class="switch-slider"></span>
-                  </label>
-                </div>
-
-                <div class="form-group hidden" id="ai-tuning-container" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; width: 100%;">
-                  <h4 style="margin-bottom: 12px; color: var(--text-color);">Local AI Fine-Tuning</h4>
-                  
-                  <div class="form-group" style="margin-bottom: 16px;">
-                    <label for="ai-sensitivity-slider">Sentiment Sensitivity (<span id="ai-sensitivity-val">50%</span>)</label>
-                    <input type="range" id="ai-sensitivity-slider" min="0" max="100" value="50" class="slider">
-                    <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Adjusts how easily the Local AI registers page sentiment.</p>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="ai-frequency-slider">Comment Frequency (<span id="ai-frequency-val">60s</span>)</label>
-                    <input type="range" id="ai-frequency-slider" min="15" max="600" step="15" value="60" class="slider">
-                    <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often Clawd makes AI-derived observations.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group hidden" id="volume-container">
-                <label for="volume-slider">SFX Volume (<span id="volume-val">80%</span>)</label>
-                <input type="range" id="volume-slider" min="0" max="100" value="80" class="slider">
-              </div>
-
-              <div class="toggle-group-row">
-                <div class="toggle-card">
-                  <div class="toggle-info">
-                    <strong>Daily Schedule Rules</strong>
-                    <span>Sleep late, wake up with yoga rules</span>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" id="schedule-toggle">
-                    <span class="switch-slider"></span>
-                  </label>
-                </div>
-                <div class="toggle-card">
-                  <div class="toggle-info">
                     <strong>Seasonal Outfits</strong>
                     <span>Unlock Christmas/Halloween costumes</span>
                   </div>
@@ -423,6 +381,11 @@
                   </label>
                 </div>
               </div>
+
+              <div class="form-group hidden" id="volume-container">
+                <label for="volume-slider">SFX Volume (<span id="volume-val">80%</span>)</label>
+                <input type="range" id="volume-slider" min="0" max="100" value="80" class="slider">
+              </div>
             </div>
 
             <!-- Costume & Aura Wardrobe Card -->
@@ -430,6 +393,85 @@
               <h2>Costume & Aura Wardrobe</h2>
               <div class="wardrobe-grid" id="wardrobe-grid">
                 <!-- Cards will be populated dynamically by options.ts -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar Settings -->
+          <div class="settings-aside-col">
+            <!-- Sound Board Preview Card -->
+            <div class="settings-soundboard-card">
+              <h2>Sound Board Preview</h2>
+              <p class="section-subtitle">Test and preview Clawd's custom retro sound effects:</p>
+
+              <div class="soundboard-grid">
+                <button class="sound-play-btn" data-sound="greeting">Greeting</button>
+                <button class="sound-play-btn" data-sound="petting">Petting</button>
+                <button class="sound-play-btn" data-sound="feeding">Feeding</button>
+                <button class="sound-play-btn" data-sound="levelUp">Level Up</button>
+                <button class="sound-play-btn" data-sound="thinking">Thinking</button>
+                <button class="sound-play-btn" data-sound="sleeping">Sleeping</button>
+                <button class="sound-play-btn" data-sound="sad">Crying</button>
+                <button class="sound-play-btn" data-sound="shoo">Shoo Run</button>
+              </div>
+            </div>
+
+            <!-- Fun Mascot Facts Card -->
+            <div class="settings-soundboard-card" style="margin-top: 24px;">
+              <h2>Did You Know? 🐾</h2>
+              <p class="section-subtitle">Interesting tidbits about your desktop companion:</p>
+              <ul style="font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding-left: 16px; margin-top: 8px;">
+                <li>Clawd's mood fluctuates based on the websites you visit! Tech blogs keep him focused, while social media makes him playful.</li>
+                <li>At level 50, Clawd can undergo <strong>Prestige Rebirth</strong>, unlocking faster baseline speeds and new cosmetics.</li>
+                <li>Leaving your cursor idle for more than 45 seconds triggers Clawd to wander, skateboard, or read a tiny book!</li>
+                <li>Clawd gets cozy in the winter holidays and spooky in October with seasonal costumes automatically.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: AI & Scheduling Settings -->
+      <section id="page-settings-ai" class="page-pane">
+        <header class="page-header">
+          <h1>AI & Scheduling</h1>
+          <p>Configure local AI evaluation, custom site blocklists, sleep/work calendars, and domain reaction rules.</p>
+        </header>
+
+        <div class="settings-grid">
+          <!-- Main Settings Column -->
+          <div class="settings-main-col">
+            <!-- Local AI Settings -->
+            <div class="settings-main-card">
+              <h2>Local AI Core Configuration</h2>
+              
+              <div class="toggle-group-row" style="margin-top: 0;">
+                <div class="toggle-card" style="width: 100%;">
+                  <div class="toggle-info">
+                    <strong>Local AI Mode</strong>
+                    <span>Enable offline DistilBERT evaluation</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="ai-toggle">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group hidden" id="ai-tuning-container" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; width: 100%;">
+                <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 13px;">Local AI Fine-Tuning</h4>
+                
+                <div class="form-group" style="margin-bottom: 16px;">
+                  <label for="ai-sensitivity-slider">Sentiment Sensitivity (<span id="ai-sensitivity-val">50%</span>)</label>
+                  <input type="range" id="ai-sensitivity-slider" min="0" max="100" value="50" class="slider">
+                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Adjusts how easily the Local AI registers page sentiment.</p>
+                </div>
+                
+                <div class="form-group">
+                  <label for="ai-frequency-slider">Comment Frequency (<span id="ai-frequency-val">60s</span>)</label>
+                  <input type="range" id="ai-frequency-slider" min="15" max="600" step="15" value="60" class="slider">
+                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often Clawd makes AI-derived observations.</p>
+                </div>
               </div>
             </div>
 
@@ -616,38 +658,19 @@
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Sound Board Preview Card -->
-            <div class="settings-soundboard-card">
-              <h2>Sound Board Preview</h2>
-              <p class="section-subtitle">Test and preview Clawd's custom retro sound effects:</p>
-
-              <div class="soundboard-grid">
-                <button class="sound-play-btn" data-sound="greeting">
-                  Greeting
-                </button>
-                <button class="sound-play-btn" data-sound="petting">
-                  Petting
-                </button>
-                <button class="sound-play-btn" data-sound="feeding">
-                  Feeding
-                </button>
-                <button class="sound-play-btn" data-sound="levelUp">
-                  Level Up
-                </button>
-                <button class="sound-play-btn" data-sound="thinking">
-                  Thinking
-                </button>
-                <button class="sound-play-btn" data-sound="sleeping">
-                  Sleeping
-                </button>
-                <button class="sound-play-btn" data-sound="sad">
-                  Crying
-                </button>
-                <button class="sound-play-btn" data-sound="shoo">
-                  Shoo Run
-                </button>
+              <!-- General Schedule Enable Toggle -->
+              <div class="planner-section" style="padding-top: 14px;">
+                <div class="focus-control-row">
+                  <div class="focus-info">
+                    <strong>Daily Schedule Rules</strong>
+                    <span class="section-subtitle">Enable sleep, wake, and work active states</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="schedule-toggle">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
