@@ -460,12 +460,18 @@ function showLevelUpBanner(level: number): void {
       <span class="pet-levelup-title">Level Up Achievement!</span>
     </div>
     <div class="pet-levelup-details">
-      Congratulations! <strong>${petName}</strong> has grown stronger. Stats and attributes have been upgraded!
+      Congratulations! <strong id="safe-pet-name"></strong> has grown stronger. Stats and attributes have been upgraded!
     </div>
-    <div class="pet-levelup-unlocked">
-      ${unlockedText}
+    <div class="pet-levelup-unlocked" id="safe-unlocked-text">
     </div>
   `;
+
+  // Safely inject text content AFTER the innerHTML is set to prevent XSS
+  const nameEl = banner.querySelector('#safe-pet-name');
+  if (nameEl) nameEl.textContent = petName;
+  
+  const unlockedEl = banner.querySelector('#safe-unlocked-text');
+  if (unlockedEl) unlockedEl.textContent = unlockedText;
 
   document.body.appendChild(banner);
 
@@ -811,6 +817,11 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
   isTemporarilyInteracting = true;
   clearTimeout(interactionTimeout);
   
+  // Cancel active WAAPI animations before starting a new one
+  try {
+    petImg.getAnimations().forEach(anim => anim.cancel());
+  } catch (err) {}
+
   personality.recordInteraction(action);
   loadPet(temporaryMood);
   showBubble(message);
@@ -1133,23 +1144,8 @@ function handleVisibilityChange() {
 }
 
 document.addEventListener('visibilitychange', handleVisibilityChange);
-
-syncInterval = setInterval(() => {
-  if (!checkContextOrCleanup()) return;
-  if (isPetHidden()) return;
-  if (document.visibilityState === 'visible' && document.hasFocus() && !movement.isDragging) {
-    safeSendMessage({
-      type: 'update-pet-state',
-      state: {
-        x: movement.x,
-        y: movement.y,
-        state: movement.state,
-        direction: movement.direction,
-        paused: movement.paused
-      }
-    });
-  }
-}, 150);
+// syncInterval removed to prevent CPU meltdown. 
+// State is now only synced when the pet is interacted with or dragged (handled in movement.ts).
 
 function handleConsoleError() {
   if (checkContextOrCleanup() && !isPetHidden()) {

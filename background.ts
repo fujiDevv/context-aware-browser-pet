@@ -72,6 +72,9 @@ chrome.webNavigation.onCommitted.addListener((details) => {
   }
 });
 
+// Add a simple throttle to prevent dragging from spamming messages
+let lastSyncTime = 0;
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'get-tab-http-error') {
     const tabId = sender.tab?.id;
@@ -88,17 +91,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'update-pet-state') {
     sharedPetState = { ...sharedPetState, ...message.state };
 
-    chrome.tabs.query({}, (tabs) => {
-      tabs.forEach((tab) => {
-        if (sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
-          chrome.tabs.sendMessage(tab.id, {
-            type: 'sync-pet-state',
-            state: sharedPetState
-          }).catch(() => {
-          });
-        }
+    const now = Date.now();
+    if (now - lastSyncTime > 500) { // Only broadcast max twice a second
+      lastSyncTime = now;
+      chrome.tabs.query({}, (tabs) => {
+        tabs.forEach((tab) => {
+          if (sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
+            chrome.tabs.sendMessage(tab.id, {
+              type: 'sync-pet-state',
+              state: sharedPetState
+            }).catch(() => {
+            });
+          }
+        });
       });
-    });
+    }
 
     sendResponse({ success: true });
     return false;

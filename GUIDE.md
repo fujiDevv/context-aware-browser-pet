@@ -491,6 +491,10 @@ If you opt into the local **AI Mood Analysis** feature:
 - The model runs entirely inside your browser's offscreen document WebAssembly thread. **No external network requests, server processing, or API key headers are ever used.**
 - 100% of your browsing data remains locally on your physical device.
 
+### Security Audits & Performance Updates
+- **DOM Injection Safety:** All dynamic text (such as custom pet names and unlocking notifications) is injected securely using `textContent` instead of `innerHTML`, entirely preventing DOM-based Universal Cross-Site Scripting (UXSS) vulnerabilities.
+- **CPU Throttling:** Background state synchronization and interactions are strictly throttled. Clawd will not unnecessarily broadcast update events or stack overlapping animation frames, keeping CPU overhead extremely low even with dozens of tabs open.
+
 ### Permissions
 The extension requests only the permissions necessary to render the pet (`activeTab`), store settings (`storage`), track navigation events (`webNavigation`), and run local AI computations (`offscreen`). No external host permissions are required for the AI layer.
 

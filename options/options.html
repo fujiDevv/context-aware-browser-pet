@@ -197,6 +197,21 @@
           <p>Analyze Clawd's virtual statistics, browsing category breakdown, and progress meters.</p>
         </header>
 
+        <!-- Lifetime Metrics at the top of stats -->
+        <div class="analytics-card count-card" style="margin-bottom: 24px;">
+          <h2>Lifetime Metrics</h2>
+          <div class="counter-grid">
+            <div class="counter-box">
+              <span class="count-num" id="val-total-pets">0</span>
+              <span class="count-label">Pets Received</span>
+            </div>
+            <div class="counter-box">
+              <span class="count-num" id="val-total-feeds">0</span>
+              <span class="count-label">Feeds Completed</span>
+            </div>
+          </div>
+        </div>
+
         <div class="stats-overview-grid">
           <!-- Stat Gauge Cards -->
           <div class="gauge-card pink-glow">
@@ -255,22 +270,7 @@
           </div>
         </div>
 
-        <!-- Lifetime Metrics at the top of stats -->
-        <div class="analytics-card count-card" style="margin-bottom: 24px;">
-          <h2>Lifetime Metrics</h2>
-          <div class="counter-grid">
-            <div class="counter-box">
-              <span class="count-num" id="val-total-pets">0</span>
-              <span class="count-label">Pets Received</span>
-            </div>
-            <div class="counter-box">
-              <span class="count-num" id="val-total-feeds">0</span>
-              <span class="count-label">Feeds Completed</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="analytics-charts-layout">
+        <div class="analytics-charts-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
           <!-- Category Chart Card -->
           <div class="analytics-card chart-card">
             <h2>Browsing Interest Distribution</h2>
@@ -284,8 +284,8 @@
           <div class="analytics-card chart-card">
             <h2>Interests History (Last 7 Days)</h2>
             <p class="section-subtitle">Category breakdown over the last 7 days.</p>
-            <div id="interests-history-chart" class="category-chart-list" style="margin-top: 16px;">
-              <!-- Dynamically populated rows -->
+            <div id="interests-history-chart" class="fancy-history-list" style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px;">
+              <!-- Dynamically populated fancy tags -->
             </div>
           </div>
 
