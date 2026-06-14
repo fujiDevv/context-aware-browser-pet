@@ -472,7 +472,8 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
 function updateUIMood(mood: string): void {
   const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
   petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
-  previewImg.src = `../assets/pets/clawd-${mood}.svg`;
+  const svgName = getMascotSvgName(mood, activeCostume);
+  previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
 }
 
 function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
@@ -720,6 +721,11 @@ function applySettings(settings: PetSettings | undefined) {
   if (activeCostume !== 'none' && ['detective', 'wizard', 'party'].includes(activeCostume)) {
     previewImg.classList.add(`costume-${activeCostume}`);
   }
+
+  // Ensure preview image reflects costume on load
+  const lastKnownMood = petMoodBadge.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
+  const svgName = getMascotSvgName(lastKnownMood, activeCostume);
+  previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
 
   personaSelect.value = activeSettings.persona || 'default';
 
@@ -1052,16 +1058,17 @@ const COSTUMES_METADATA = [
 
 function getMascotSvgName(mood: string, costume: string): string {
   const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
-  if (costume === 'christmas' && idleStates.includes(mood)) {
-    return 'christmas';
-  }
-  if (costume === 'halloween' && idleStates.includes(mood)) {
-    return 'halloween';
-  }
-  if (costume === 'summer' && idleStates.includes(mood)) {
-    return 'summer';
-  }
-  return mood;
+  if (!idleStates.includes(mood)) return mood;
+  
+  const costumeMap: Record<string, string> = {
+    christmas: 'christmas',
+    halloween: 'halloween',
+    summer: 'summer',
+    detective: 'detective',
+    wizard: 'magic',
+    party: 'rainbow'
+  };
+  return costumeMap[costume] || mood;
 }
 
 function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {

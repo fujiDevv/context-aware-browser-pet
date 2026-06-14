@@ -409,12 +409,19 @@ const movement = new MovementEngine(container, {
 async function loadPet(name: string): Promise<void> {
   let assetName = name;
   const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
-  if (currentSettings.costume === 'christmas' && idleStates.includes(name)) {
-    assetName = 'christmas';
-  } else if (currentSettings.costume === 'halloween' && idleStates.includes(name)) {
-    assetName = 'halloween';
-  } else if (currentSettings.costume === 'summer' && idleStates.includes(name)) {
-    assetName = 'summer';
+  
+  if (idleStates.includes(name)) {
+    const costumeMap: Record<string, string> = {
+      christmas: 'christmas',
+      halloween: 'halloween',
+      summer: 'summer',
+      detective: 'detective',
+      wizard: 'magic',
+      party: 'rainbow'
+    };
+    if (currentSettings.costume && costumeMap[currentSettings.costume]) {
+      assetName = costumeMap[currentSettings.costume];
+    }
   }
 
   petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
