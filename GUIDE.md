@@ -1,4 +1,4 @@
-# 🐾 Clawd: The Context-Aware Browser Pet — User Guide
+# Clawd: The Context-Aware Browser Pet — User Guide
 
 > Your context-aware browser pet companion.
 > 
@@ -12,49 +12,49 @@
 2. [Installing the Extension](#installing-the-extension)
 3. [Meeting Your Pet](#meeting-your-pet)
 4. [Interacting with Clawd](#interacting-with-clawd)
-   - [Petting](#petting)
-   - [Feeding](#feeding)
-   - [Shooing](#shooing)
-   - [Dragging & Snapping](#dragging--snapping)
-   - [Hover Reaction](#hover-reaction)
+ - [Petting](#petting)
+ - [Feeding](#feeding)
+ - [Shooing](#shooing)
+ - [Dragging & Snapping](#dragging--snapping)
+ - [Hover Reaction](#hover-reaction)
 5. [Mascot Stats & Decay](#mascot-stats--decay)
-   - [Happiness](#happiness)
-   - [Energy](#energy)
-   - [Curiosity](#curiosity)
-   - [Focus](#focus)
-   - [Leisure](#leisure)
-   - [Stat Decay Rates](#stat-decay-rates)
+ - [Happiness](#happiness)
+ - [Energy](#energy)
+ - [Curiosity](#curiosity)
+ - [Focus](#focus)
+ - [Leisure](#leisure)
+ - [Stat Decay Rates](#stat-decay-rates)
 6. [Leveling Up & XP](#leveling-up--xp)
-   - [How to Earn XP](#how-to-earn-xp)
-   - [Level Milestones & Emotion Unlocks](#level-milestones--emotion-unlocks)
+ - [How to Earn XP](#how-to-earn-xp)
+ - [Level Milestones & Emotion Unlocks](#level-milestones--emotion-unlocks)
 7. [Context-Aware Moods](#context-aware-moods)
-   - [Website-Specific Reactions](#website-specific-reactions)
-   - [Activity-Based Reactions](#activity-based-reactions)
-   - [Time of Day Reactions](#time-of-day-reactions)
-   - [Seasonal & Holiday Themes](#seasonal--holiday-themes)
-   - [Idle Behaviors](#idle-behaviors)
-   - [Cursor Chasing](#cursor-chasing)
-   - [HTTP Error Reactions](#http-error-reactions)
-   - [Console Error Watcher](#console-error-watcher)
+ - [Website-Specific Reactions](#website-specific-reactions)
+ - [Activity-Based Reactions](#activity-based-reactions)
+ - [Time of Day Reactions](#time-of-day-reactions)
+ - [Seasonal & Holiday Themes](#seasonal--holiday-themes)
+ - [Idle Behaviors](#idle-behaviors)
+ - [Cursor Chasing](#cursor-chasing)
+ - [HTTP Error Reactions](#http-error-reactions)
+ - [Console Error Watcher](#console-error-watcher)
 8. [Interactive Toys](#interactive-toys)
 9. [Wardrobe, Costumes & Glow Effects](#wardrobe-costumes--glow-effects)
 10. [Visibility Controls](#visibility-controls)
-    - [Hide on This Tab](#hide-on-this-tab)
-    - [Hide on This Site](#hide-on-this-site)
+ - [Hide on This Tab](#hide-on-this-tab)
+ - [Hide on This Site](#hide-on-this-site)
 11. [Settings & Customization](#settings--customization)
-    - [Pet Name](#pet-name)
-    - [Pet Size](#pet-size)
-    - [Movement Speed](#movement-speed)
-    - [Sound Effects & Volume](#sound-effects--volume)
-    - [Sound Board](#sound-board)
-    - [Interactive Schedule Planner](#interactive-schedule-planner)
-    - [Website & Domain Triggers](#website--domain-triggers)
-    - [Local AI Fine-Tuning](#local-ai-fine-tuning)
-    - [Expanded Analytics & Charts](#expanded-analytics--charts)
+ - [Pet Name](#pet-name)
+ - [Pet Size](#pet-size)
+ - [Movement Speed](#movement-speed)
+ - [Sound Effects & Volume](#sound-effects--volume)
+ - [Sound Board](#sound-board)
+ - [Interactive Schedule Planner](#interactive-schedule-planner)
+ - [Website & Domain Triggers](#website--domain-triggers)
+ - [Local AI Fine-Tuning](#local-ai-fine-tuning)
+ - [Expanded Analytics & Charts](#expanded-analytics--charts)
 12. [AI Mood Analysis (Optional)](#ai-mood-analysis-optional)
-    - [How It Works](#how-it-works)
-    - [Setting Up](#setting-up)
-    - [AI Personas](#ai-personas)
+ - [How It Works](#how-it-works)
+ - [Setting Up](#setting-up)
+ - [AI Personas](#ai-personas)
 13. [Adaptive Habits & Learning](#adaptive-habits--learning)
 14. [Cross-Tab Behavior (Hybrid Sync)](#cross-tab-behavior-hybrid-sync)
 15. [Security & Privacy](#security--privacy)
@@ -76,25 +76,25 @@ He's not just for looks — Clawd is a virtual pet with stats, levels, unlockabl
 To install and build the extension:
 
 1. Open your terminal and navigate to the project directory:
-   ```bash
-   cd context-aware-browser-pet
-   ```
+ ```bash
+ cd context-aware-browser-pet
+ ```
 2. Install the developer dependencies:
-   ```bash
-   bun install
-   ```
+ ```bash
+ bun install
+ ```
 3. Type-check the source files to ensure no errors:
-   ```bash
-   bun run type-check
-   ```
+ ```bash
+ bun run type-check
+ ```
 4. Run the production build command:
-   ```bash
-   bun run build
-   ```
+ ```bash
+ bun run build
+ ```
 5. Open **Google Chrome** and go to `chrome://extensions`.
 6. Enable **Developer mode** using the toggle in the top-right corner.
 7. Click **Load unpacked** in the top-left corner and select the `dist/` folder inside the project directory.
-8. Open any regular website (e.g., [github.com](https://github.com)) — Clawd will slide onto the page and say hello! 🐾
+8. Open any regular website (e.g., [github.com](https://github.com)) — Clawd will slide onto the page and say hello! 
 
 ---
 
@@ -102,7 +102,7 @@ To install and build the extension:
 
 When Clawd first appears on a new page:
 - He starts at a random horizontal position along the bottom edge of your browser window.
-- He displays a greeting speech bubble: *"Hello! I'm [Pet Name]! Let's browse together! 🐾"* (defaults to *"Hello! I'm Clawd! Let's browse together! 🐾"*).
+- He displays a greeting speech bubble: *"Hello! I'm [Pet Name]! Let's browse together! "* (defaults to *"Hello! I'm Clawd! Let's browse together! "*).
 - A greeting sound effect is played (if sound is enabled).
 
 Clawd will then begin walking back and forth along the bottom of the page, occasionally pausing to rest.
@@ -115,17 +115,17 @@ You can interact with Clawd directly on the webpage to affect his stats, emotion
 
 ### Petting
 - **How**: Left-click on Clawd.
-- **Reaction**: Clawd displays the `love` mood ❤️, accompanied by a bouncy squash-and-stretch animation.
+- **Reaction**: Clawd displays the `love` mood , accompanied by a bouncy squash-and-stretch animation.
 - **Effect**: +5 Happiness, +2 Energy, +5 Leisure, and +10 XP. Plays the Petting sound effect.
 
 ### Feeding
 - **How**: Double-click on Clawd.
-- **Reaction**: Clawd celebrates and says *"Yum! That was delicious! 🍖"*, showing the `celebrating` mood.
+- **Reaction**: Clawd celebrates and says *"Yum! That was delicious! "*, showing the `celebrating` mood.
 - **Effect**: +10 Energy, +2 Happiness, and +15 XP. Plays the Feeding sound effect.
 
 ### Shooing
 - **How**: Right-click on Clawd.
-- **Reaction**: Clawd teleports to a random spot along the bottom of the screen, saying *"Okay, okay, moving! 🏃‍♂️"* and showing the `shoo` reaction.
+- **Reaction**: Clawd teleports to a random spot along the bottom of the screen, saying *"Okay, okay, moving! �‍♂"* and showing the `shoo` reaction.
 - **Effect**: -10 Happiness, -5 Energy, -5 Leisure, and +5 XP. Plays the Shoo sound effect.
 
 ### Dragging & Snapping
@@ -144,19 +144,19 @@ You can interact with Clawd directly on the webpage to affect his stats, emotion
 Clawd has five core stats that change based on your interactions, browsing categories, and the passage of time. You can view them anytime in the popup panel.
 
 ### Happiness
-🫶 How content Clawd is. Increases when you pet him or visit fun sites. Decreases over time and when you shoo him away.
+ How content Clawd is. Increases when you pet him or visit fun sites. Decreases over time and when you shoo him away.
 
 ### Energy
-🍖 How energized Clawd is. Increases when you feed him. Decreases naturally over time, and during heavy work/development browsing sessions.
+ How energized Clawd is. Increases when you feed him. Decreases naturally over time, and during heavy work/development browsing sessions.
 
 ### Curiosity
-🧐 How intellectually stimulated Clawd is. Increases when you visit developer, documentation, or news sites. Decreases on social media sites.
+ How intellectually stimulated Clawd is. Increases when you visit developer, documentation, or news sites. Decreases on social media sites.
 
 ### Focus
-💻 How productive Clawd is feeling. Increases on developer and documentation websites. Decreases when visiting gaming or social media sites.
+ How productive Clawd is feeling. Increases on developer and documentation websites. Decreases when visiting gaming or social media sites.
 
 ### Leisure
-🍿 How relaxed and entertained Clawd is. Increases on social media and gaming sites. Decreases on work-heavy developer sites.
+ How relaxed and entertained Clawd is. Increases on social media and gaming sites. Decreases on work-heavy developer sites.
 
 ### Stat Decay Rates
 All stats gradually decay in the background. The decay rates (evaluated every 1 minute) are:
@@ -199,7 +199,7 @@ When Clawd levels up, a golden achievement banner slides down from the top of yo
 | **Level 3** | Advanced emotions: `coding`, `working-typing`, `dancing`, `cool`, `love`, `celebrating`, `mindblown` |
 | **Level 5** | Blue Detective Aura + Emotes: `ninja`, `working-wizard`, `astronaut`, `working-debugger`, `working-building` |
 | **Level 8** | Emotes: `rocket`, `pirate`, `working-juggling`, `gaming` |
-| **Level 10** | Magic Purple Aura + **All emotions unlocked** |
+| **Level 10** | Magic Purple Aura + **All emotions unlocked** | |
 | **Level 15** | Neon Rainbow Shader |
 
 > **Note**: Seasonal, holiday, idle, and custom situational behaviors (like fitness and music) are always allowed to bypass level locks so you can enjoy all the unique SVG animations!
@@ -215,27 +215,30 @@ Clawd changes his expression and animation based on the page context of your act
 | Website Category | Matches (Domains) | Clawd's Reaction |
 |-----------------|-------------------|-------------------|
 | **Coding / Dev** | GitHub, StackOverflow, GitLab, npm, etc. | `coding`, `working-building`, `working-typing` |
-| **Social Media** | Twitter/X, Instagram, Reddit, TikTok, etc. | `love` ❤️ |
-| **Gaming** | Twitch, Steam, itch.io, Roblox | `gaming` 🎮 |
-| **News** | BBC, CNN, NYT, Reuters, etc. | `working-thinking` 🤔 |
-| **Shopping** | Amazon, eBay, Etsy, Shopify | `money` 💰 |
-| **Documentation** | Notion, Google Docs, Wikipedia, etc. | `studying` 📚 |
-| **Email** | Gmail, Outlook, Yahoo Mail | `mail` 📬 |
-| **Fitness** | Strava, MyFitnessPal, Fitbit, etc. | `flexing` 💪, `lifting` 🏋️, `yoga` 🧘 (rotating) |
+| **Social Media** | Twitter/X, Instagram, Reddit, TikTok, etc. | `love` |
+| **Gaming** | Twitch, Steam, itch.io, Roblox | `gaming` |
+| **News** | BBC, CNN, NYT, Reuters, etc. | `working-thinking` |
+| **Shopping** | Amazon, eBay, Etsy, Shopify | `money` |
+| **Documentation** | Notion, Google Docs, Wikipedia, etc. | `studying` |
+| **Email** | Gmail, Outlook, Yahoo Mail | `mail` |
+| **Fitness** | Strava, MyFitnessPal, Fitbit, etc. | `flexing` , `lifting` , `yoga` (rotating) |
+| **AI Assistant** | ChatGPT, Claude, Gemini, HF | `mindblown` � |
+| **Streaming** | Netflix, YouTube, Hulu | `eating` |
+| **Finance** | Stripe, PayPal, Banking | `money` |
 
 ### Activity-Based Reactions
 
 - **Heavy Typing**: Displays `working-typing` (or `coding` if on a dev site).
-- **Submitting a Form**: Celebrates with the `celebrating` mood 🎉 and says *"Success! Form sent! 🎉"*.
+- **Submitting a Form**: Celebrates with the `celebrating` mood and says *"Success! Form sent! "*.
 - **Playing a Video/Audio**:
-  - YouTube, Netflix, Vimeo: Displays `eating` (watching snacks!).
-  - Spotify, SoundCloud, Music: Displays `music` 🎵, `singing` 🎤, or `dj` 🎧 (rotating).
-  - Other media: Displays `cool`.
+ - YouTube, Netflix, Vimeo: Displays `eating` (watching snacks!).
+ - Spotify, SoundCloud, Music: Displays `music` �, `singing` , or `dj` (rotating).
+ - Other media: Displays `cool`.
 
 ### Time of Day Reactions
 
-- **Late Night (10:00 PM – 6:00 AM)**: Clawd falls asleep (`sleeping` 💤) and slows his movement speed by 50%.
-- **Morning (6:00 AM – 9:00 AM)**: Performs morning stretches (`yoga` 🧘).
+- **Late Night (10:00 PM – 6:00 AM)**: Clawd falls asleep (`sleeping` ) and slows his movement speed by 50%.
+- **Morning (6:00 AM – 9:00 AM)**: Performs morning stretches (`yoga` ).
 
 ### Autonomous Mode (Toggle Off)
 
@@ -245,35 +248,35 @@ If you turn off the **Daily Schedule & Triggers** toggle in settings, Clawd ente
 - Periodically decides to explore different parts of your browser window or chase your cursor.
 - Displays custom speech bubbles and commentary about analyzing the pages you browse.
 
-> **Daily Schedule & Triggers Guide**: You can check the full schedule of daily routines (Late Night sleep, Morning yoga, Idle actions, Page diagnostics) anytime inside the **📊 Stats** tab of the popup panel.
+> **Daily Schedule & Triggers Guide**: You can check the full schedule of daily routines (Late Night sleep, Morning yoga, Idle actions, Page diagnostics) anytime inside the **� Stats** tab of the popup panel.
 
 ### Seasonal & Holiday Themes
 
 Clawd adjusts his appearance automatically based on the calendar month:
-- **October**: Halloween outfits (`halloween` 🎃).
-- **December**: Christmas cheer (`christmas` 🎄).
-- **Summer (June – August)**: Rotates through `summer` ☀️, `surfing` 🏄, and `ice-cream` 🍦.
+- **October**: Halloween outfits (`halloween` �).
+- **December**: Christmas cheer (`christmas` ).
+- **Summer (June – August)**: Rotates through `summer` , `surfing` , and `ice-cream` .
 
 ### Idle Behaviors
 
 If you are inactive (no typing, scrolling, clicking, or mouse movement) for **over 45 seconds**, Clawd will pick a random idle activity to keep himself busy:
-- Skateboarding (`skateboard` 🛹)
-- Stargazing (`telescope` 🔭)
-- Meditating (`meditating` 🧘)
-- Playing with a rubber duck (`working-rubber-duck` 🐤)
-- Sipping coffee (`coffee` ☕)
-- Yawning (`yawning` 🥱)
-- Thinking (`working-thinking` 💭)
-- Sleeping (`sleeping` 💤)
+- Skateboarding (`skateboard` )
+- Stargazing (`telescope` )
+- Meditating (`meditating` )
+- Playing with a rubber duck (`working-rubber-duck` )
+- Sipping coffee (`coffee` )
+- Yawning (`yawning` )
+- Thinking (`working-thinking` )
+- Sleeping (`sleeping` )
 
-If you remain idle for **over 5 minutes (300 seconds)**, Clawd will curl up and fall asleep (`sleeping` 💤).
+If you remain idle for **over 5 minutes (300 seconds)**, Clawd will curl up and fall asleep (`sleeping` ).
 
 ### Cursor Chasing
 
 When you are idle (for at least 10 seconds), Clawd has a 15% chance every 10 seconds to wander over to your mouse cursor's horizontal position, looking up at it and saying things like:
-- *"Whatcha doing over there? 👀"*
-- *"Let me see! 🧐"*
-- *"Watchu looking at? 👁️"*
+- *"Whatcha doing over there? "*
+- *"Let me see! "*
+- *"Watchu looking at? "*
 
 ### HTTP Error Reactions
 
@@ -285,20 +288,20 @@ If the website you are visiting returns a standard HTTP error code, Clawd displa
 
 ### Console Error Watcher
 
-If a JavaScript runtime error or unhandled promise rejection occurs on the webpage, Clawd immediately enters `working-debugger` mode and looks for the bug, displaying either *"Oh no! Something crashed! 💥"* or *"Found a bug! Let me debug! 🔍"*.
+If a JavaScript runtime error or unhandled promise rejection occurs on the webpage, Clawd immediately enters `working-debugger` mode and looks for the bug, displaying either *"Oh no! Something crashed! "* or *"Found a bug! Let me debug! "*.
 
 ---
 
 ## Interactive Toys
 
-Open the popup panel (under the **🐾 Mascot** tab) and drag a toy from the **Interactive Toys** drawer onto the page to play:
+Open the popup panel (under the ** Mascot** tab) and drag a toy from the **Interactive Toys** drawer onto the page to play:
 
-- **Ball ⚽**: Clawd chases it, does a happy dance, and says *"Wow! A ball! Roll roll roll! ⚽"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
-- **Fish 🐟**: Clawd chases it and says *"Yum! That fish was delicious! 🐟"*. Acts as a Feeding interaction (+15 XP, +10 Energy, +2 Happiness).
-- **Laser 🔴**: Clawd chases it and says *"Got the red dot! Rawr! 🔴"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
-- **Yarn 🧶**: Clawd chases it and says *"Ooh, a ball of yarn! Unraveling time! 🧶"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
-- **Duck 🦆**: Clawd chases it and says *"Squeak squeak! Squeaky toy ducky! 🦆"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
-- **Box 📦**: Clawd chases it and says *"If it fits, I sits! Best box ever! 📦"*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
+- **Ball **: Clawd chases it, does a happy dance, and says *"Wow! A ball! Roll roll roll! "*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
+- **Fish **: Clawd chases it and says *"Yum! That fish was delicious! "*. Acts as a Feeding interaction (+15 XP, +10 Energy, +2 Happiness).
+- **Laser **: Clawd chases it and says *"Got the red dot! Rawr! "*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
+- **Yarn **: Clawd chases it and says *"Ooh, a ball of yarn! Unraveling time! "*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
+- **Duck **: Clawd chases it and says *"Squeak squeak! Squeaky toy ducky! "*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
+- **Box **: Clawd chases it and says *"If it fits, I sits! Best box ever! "*. Acts as a Petting interaction (+10 XP, +5 Happiness, +2 Energy, +5 Leisure).
 
 ### Drop Multiple Toys (Queued Play)
 You can drop multiple toys onto the webpage at the same time. The toys will drop and rest on the page floor using spring-gravity physics, and Clawd will chase and play with them in the order they were dropped.
@@ -340,18 +343,18 @@ Permanently blocks Clawd on the current website domain (e.g. `google.com`). Claw
 
 Click the extension icon or open the Options Dashboard to access comprehensive controls. The controls are organized as follows:
 
-### 🐾 Mascot Tab
+### Mascot Tab
 - **Stats progress bars**: Track happiness, energy, curiosity, focus, and leisure.
 - **Interactions**: Pet, Feed, and Shoo buttons.
 - **Interactive Toys**: Drag 6 different toys (ball, fish, laser, yarn, duck, box) onto the page.
 
-### 📊 Stats Tab
+### � Stats Tab
 - **Mascot Analytics**: View total petting and feeding statistics.
 - **Browsing Interests**: Check the distribution of websites analyzed.
 - **Recent Activity**: Scroll the activity log of events.
 - **Daily Schedule & Triggers**: Reference Clawd's reactions schedule.
 
-### ⚙️ Settings Tab
+### ⚙ Settings Tab
 - **Active Emotions**: Toggle check boxes to allow/disallow specific unlocked emotions.
 - **Daily Schedule & Triggers**: Toggle off to put Clawd in Autonomous Mode, letting him choose his own emotes, move around, and analyze pages on his own terms.
 - **Sound Board**: Click buttons to preview chiptune sounds (greeting, feed, level-up, shoo, etc.).
@@ -361,27 +364,27 @@ Click the extension icon or open the Options Dashboard to access comprehensive c
 - **Sliders**: Adjust size (48px - 128px), movement speed (0.1x - 5.0x), and volume.
 - **AI Mood Analysis**: Toggle local sentiment evaluation and choose AI commentary persona.
 
-### 📅 Interactive Schedule Planner
+### � Interactive Schedule Planner
 Take control of Clawd's daily routine:
 - **Mascot Sleep/Wake Planner**: A time-block scheduler allowing you to custom-define Clawd's sleeping, waking, and working hours (e.g. setting sleep mode to trigger during your bedtime).
 - **Focus Blocks**: Set up custom focus blocks during work sprints where Clawd stays quiet or plays a typing/studying animation to prevent distraction.
 
-### 🔗 Website & Domain Triggers
+### � Website & Domain Triggers
 Configure how Clawd reacts to specific websites:
 - **Domain Reaction Dictionary**: A mapping table where you can bind site domains to Clawd's animations or comments. For example:
-  - `stackoverflow.com` $\rightarrow$ Enter study mood + speak coding quotes.
-  - `youtube.com` $\rightarrow$ Enter movie-watching animation with popcorn.
-  - `duolingo.com` $\rightarrow$ Play encouraging chiptune track.
+ - `stackoverflow.com` $\rightarrow$ Enter study mood + speak coding quotes.
+ - `youtube.com` $\rightarrow$ Enter movie-watching animation with popcorn.
+ - `duolingo.com` $\rightarrow$ Play encouraging chiptune track.
 
-### 🧠 Local AI Fine-Tuning
+### � Local AI Fine-Tuning
 Fine-tune Clawd's offline sentiment classifier:
 - **Sentiment Sensitivity Threshold**: Adjust how easily the Local AI registers page sentiment to trigger positive or negative mood shifts.
 - **Comment Frequency**: A rate-limiting slider to control how often Clawd makes AI-derived observations (adjustable from once every 30 seconds to once every 5 minutes).
 
-### 📈 Expanded Analytics & Charts
+### � Expanded Analytics & Charts
 Dive into your browsing and pet metrics:
 - **Interests History Chart**: A clean bar chart visualizer breaking down site categories visited over the last 7 days (e.g. Development, Social, Leisure, Reading).
-- **Mood Over Time Tracker**: A dynamic line chart showing Clawd's average daily Happiness and Energy levels.
+- **Mood Over Time Tracker**: A dynamic line chart showing Clawd's average daily levels for all five core stats (Happiness, Energy, Curiosity, Focus, and Leisure).
 
 ---
 
@@ -395,18 +398,18 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
 2. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
 3. **Local Sentiment Model:** The WebAssembly runtime evaluates the text using a quantized version of the **DistilBERT** model (`Xenova/distilbert-base-uncased-finetuned-sst-2-english`).
 4. **Dynamic Sentiment Threshold Mapping:**
-   To classify a page as `POSITIVE` or `NEGATIVE`, the classification probability score must exceed a dynamic confidence threshold. This threshold is calculated from the user's **Sentiment Sensitivity Slider** (ranging from `0` to `100`) using the formula:
-   $$\text{threshold} = 0.90 - \left(\frac{\text{sensitivity}}{100}\right) \times 0.40$$
-   * At **0 sensitivity**, the threshold is a strict **0.90** (requires extremely high confidence to shift mood).
-   * At **50 sensitivity**, the threshold is **0.70**.
-   * At **100 sensitivity**, the threshold drops to **0.50** (easily triggers mood shifts).
-   * If the model's confidence does not exceed the calculated threshold, the sentiment defaults to `NEUTRAL`.
+ To classify a page as `POSITIVE` or `NEGATIVE`, the classification probability score must exceed a dynamic confidence threshold. This threshold is calculated from the user's **Sentiment Sensitivity Slider** (ranging from `0` to `100`) using the formula:
+ $$\text{threshold} = 0.90 - \left(\frac{\text{sensitivity}}{100}\right) \times 0.40$$
+ * At **0 sensitivity**, the threshold is a strict **0.90** (requires extremely high confidence to shift mood).
+ * At **50 sensitivity**, the threshold is **0.70**.
+ * At **100 sensitivity**, the threshold drops to **0.50** (easily triggers mood shifts).
+ * If the model's confidence does not exceed the calculated threshold, the sentiment defaults to `NEUTRAL`.
 5. **Contextual Mapping Matrix:**
-   The output sentiment, tab category, and Clawd's active energy level are cross-referenced to trigger a matching physical animation and persona-specific speech bubbles.
+ The output sentiment, tab category, and Clawd's active energy level are cross-referenced to trigger a matching physical animation and persona-specific speech bubbles.
 
 ### Setting Up
 1. Open the extension popup panel.
-2. Under the **⚙️ Settings** tab, toggle on **AI Mood Analysis**.
+2. Under the **⚙ Settings** tab, toggle on **AI Mood Analysis**.
 3. The status badge will change to **Downloading (X%)** as the model weights (~67MB) are downloaded and securely stored locally in your browser's IndexedDB. (This only happens on the first run).
 4. Once the status shows **Ready**, the local model is fully operational.
 5. Select your preferred **AI Persona** from the dropdown menu to customize the commentary style. No API keys or configurations are needed!
@@ -418,6 +421,7 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
 - **Encouraging**: Uplifting, positive, and motivating remarks.
 - **Poetic**: Whimsical 1-line rhymes about the pages you visit.
 - **Snarky**: Sassy, humorous, and sharp remarks.
+- **Gen Z Slang**: Vibe-checks your sites with brain rot, main character energy, and no cap.
 
 ---
 
@@ -437,14 +441,14 @@ Clawd calculates a **Dominant Trait** based on the categories of websites you vi
 Clawd's physical viewport crawling speed scales dynamically based on two factors:
 1. **Energy Level**: If Clawd's energy is high, he moves up to `1.2x` faster. If he is exhausted (below 20% energy), he drags his feet and crawls at a slow `0.4x` speed.
 2. **Trait Factor**:
-   * **Gamer**: clawd is hyperactive and crawls `1.35x` faster.
-   * **Developer**: clawd is focused and calm, crawling at `0.85x` speed to prevent distracting you.
+ * **Gamer**: clawd is hyperactive and crawls `1.35x` faster.
+ * **Developer**: clawd is focused and calm, crawling at `0.85x` speed to prevent distracting you.
 
 ### Stat-Sensitive Dialogue & Speech Bubbles
 Clawd's chat bubbles change depending on his current stats and trait:
-* If energy is under 30%, he will yawn and mention being sleepy (*"I'm running out of energy... 🥱"*).
-* If focus is over 80%, he will encourage productivity (*"Focus mode active! 🛡️"*).
-* If he is in a default idle state, he will display unique speech bubbles tailored to his trait (e.g. a Developer pet will say *"Compiling DOM structures... 💻"*, while a Scholar says *"Fascinating reading here! 📖"*).
+* If energy is under 30%, he will yawn and mention being sleepy (*"I'm running out of energy... "*).
+* If focus is over 80%, he will encourage productivity (*"Focus mode active! �"*).
+* If he is in a default idle state, he will display unique speech bubbles tailored to his trait (e.g. a Developer pet will say *"Compiling DOM structures... "*, while a Scholar says *"Fascinating reading here! �"*).
 
 ### AI Stat Context (Local)
 If local AI Mood Analysis is active, Clawd's current stats (e.g. `Focus: 90%, Energy: 40%`) and Trait are passed to the local classifier. The local sentiment results are combined with these parameters to dynamically alter the commentary's tone and choice of emotion (e.g., sounding sleepier if low energy, geekier if a developer).
@@ -535,5 +539,5 @@ For guidelines on how to contribute code, assets, or animations, see [CONTRIBUTI
 ---
 
 <p align="center">
-  Made with ❤️ by the Joshua Sarmiento
+ Made with by the Joshua Sarmiento
 </p>
