@@ -369,6 +369,7 @@ let currentAiSentiment: string | undefined = undefined;
 let isTemporarilyInteracting = false;
 let interactionTimeout: any = null;
 let bubbleTimeout: any = null;
+let customReactionPlayCount = 0;
 
 let isCurrentlyHidden = false;
 
@@ -591,7 +592,10 @@ async function updateEmotion(): Promise<void> {
     }
 
     if (customReaction && customReaction.sound && customReaction.sound !== 'none' && !isFocusActive) {
-      playSound(customReaction.sound);
+      if (customReactionPlayCount < 2) {
+        playSound(customReaction.sound);
+        customReactionPlayCount++;
+      }
     } else if (nextEmotion === 'waving' || nextEmotion === 'yoga') {
       playSound('greeting');
     } else if (['sad', 'crying'].includes(nextEmotion)) {
