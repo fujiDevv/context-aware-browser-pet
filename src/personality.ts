@@ -206,8 +206,10 @@ export class PersonalitySystem {
     await this._save();
   }
 
-  async recordSiteVisit(category: string, sentiment?: string): Promise<void> {
+  async recordSiteVisit(categoryInput: string, sentiment?: string): Promise<void> {
     await this.isLoaded;
+    let category = categoryInput.toLowerCase();
+    if (category === 'code') category = 'coding';
 
     // Apply Local AI Sentiment Modifiers
     if (sentiment === 'POSITIVE') {

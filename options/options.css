@@ -702,7 +702,7 @@ body::after {
 }
 
 .playground-stage {
-  height: 240px;
+  height: 18rem;
   background-color: var(--bg-secondary);
   border: 1px solid var(--accent-border);
   border-radius: 12px;

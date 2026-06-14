@@ -609,11 +609,9 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
   if (!categoriesList) return;
   categoriesList.innerHTML = '';
 
-  const dataCounts = counts || {};
-  const total = Object.values(dataCounts).reduce((a, b) => a + b, 0);
-
   const CATEGORY_METADATA: Record<string, { name: string; colorClass: string }> = {
     code: { name: 'Coding', colorClass: 'fill-blue' },
+    coding: { name: 'Coding', colorClass: 'fill-blue' },
     social: { name: 'Social Media', colorClass: 'fill-pink' },
     gaming: { name: 'Gaming', colorClass: 'fill-yellow' },
     news: { name: 'News & Media', colorClass: 'fill-green' },
@@ -623,15 +621,30 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
     fitness: { name: 'Fitness & Sports', colorClass: 'fill-pink' }
   };
 
+  // Merge counts into normalized keys
+  const mergedCounts: Record<string, number> = {};
+  if (counts) {
+    Object.entries(counts).forEach(([cat, val]) => {
+      let normalized = cat.toLowerCase();
+      if (normalized === 'code') normalized = 'coding'; // Consolidate aliases
+      mergedCounts[normalized] = (mergedCounts[normalized] || 0) + val;
+    });
+  }
+
+  const total = Object.values(mergedCounts).reduce((a, b) => a + b, 0);
+
   if (total === 0) {
     categoriesList.innerHTML = `<p class="empty-blocklist">No categories evaluated yet. Clawd will learn as you browse!</p>`;
     return;
   }
 
-  Object.entries(dataCounts)
+  Object.entries(mergedCounts)
     .sort((a, b) => b[1] - a[1])
     .forEach(([cat, val]) => {
-      const meta = CATEGORY_METADATA[cat] || { name: cat, colorClass: 'fill-blue' };
+      const meta = CATEGORY_METADATA[cat] || { 
+        name: cat.charAt(0).toUpperCase() + cat.slice(1), 
+        colorClass: 'fill-blue' 
+      };
       const pct = Math.round((val / total) * 100);
 
       const row = document.createElement('div');
