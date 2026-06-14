@@ -83,7 +83,7 @@ async function playSound(type: string): Promise<void> {
   if (audioCtx.state === 'suspended') {
     try {
       await audioCtx.resume();
-    } catch (err) { console.warn('[Clawd Content] cleanupOrphanedScript error:', err); }
+    } catch (err) { console.warn('[Clawd Content] audioCtx.resume error:', err); }
   }
 
   // Fall back to awaiting the window-level resume promise if available
@@ -122,11 +122,11 @@ function cleanupOrphanedScript(): void {
   
   try {
     movement.stop();
-  } catch (e) { console.warn('[Clawd Content] chrome.storage.onChanged error:', e); }
+  } catch (e) { console.warn('[Clawd Content] movement.stop error:', e); }
 
   try {
     triggers.cleanup();
-  } catch (e) { console.warn('[Clawd Content] port.onDisconnect error:', e); }
+  } catch (e) { console.warn('[Clawd Content] triggers.cleanup error:', e); }
 
   // Remove window and document listeners
   window.removeEventListener('click', unlockAudio, { capture: true });
@@ -138,11 +138,11 @@ function cleanupOrphanedScript(): void {
   // Remove chrome API listeners
   try {
     chrome.storage.onChanged.removeListener(handleStorageChanged);
-  } catch (e) { console.warn('[Clawd Content] window.onfocus error:', e); }
+  } catch (e) { console.warn('[Clawd Content] storage.onChanged removal error:', e); }
 
   try {
     chrome.runtime.onMessage.removeListener(handleRuntimeMessage);
-  } catch (e) { console.warn('[Clawd Content] window.onblur error:', e); }
+  } catch (e) { console.warn('[Clawd Content] runtime.onMessage removal error:', e); }
 
   // Remove petImg listeners explicitly
   try {
@@ -150,11 +150,11 @@ function cleanupOrphanedScript(): void {
     petImg.removeEventListener('mousedown', handleMouseDown);
     petImg.removeEventListener('mouseenter', handleMouseEnter);
     petImg.removeEventListener('mouseleave', handleMouseLeave);
-  } catch (e) { console.warn('[Clawd Content] mouseup error:', e); }
+  } catch (e) { console.warn('[Clawd Content] petImg listener removal error:', e); }
 
   try {
     container.remove();
-  } catch (e) { console.warn('[Clawd Content] mousemove error:', e); }
+  } catch (e) { console.warn('[Clawd Content] container removal error:', e); }
   
   console.log("Browser Pet: Old extension context invalidated. Injected mascot cleaned up.");
 }

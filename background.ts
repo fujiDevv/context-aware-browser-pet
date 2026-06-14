@@ -168,6 +168,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       modelLoadingState: message.state,
       modelDownloadProgress: message.progress
     }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set update-ai-progress error:', e); });
+
+    if (message.state === 'error') {
+      closeOffscreen().catch((e) => { console.warn('[Clawd Background] closeOffscreen on error failed:', e); });
+    }
     return false;
   }
 });
@@ -199,6 +203,15 @@ async function setupOffscreen(): Promise<void> {
   }
 }
 
+async function closeOffscreen(): Promise<void> {
+  const contexts = await (chrome.runtime as any).getContexts?.({
+    contextTypes: ['OFFSCREEN_DOCUMENT']
+  });
+  if (contexts && contexts.length > 0) {
+    await chrome.offscreen.closeDocument();
+  }
+}
+
 // Pre-load the offscreen document (which pre-loads the classifier) if AI Mode is enabled
 chrome.storage.local.get('pet-settings', (data) => {
   const settings = data['pet-settings'] || {};
@@ -213,6 +226,8 @@ chrome.storage.onChanged.addListener((changes) => {
     const settings = changes['pet-settings'].newValue || {};
     if (settings.aiMode) {
       setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen re-call error:', e); });
+    } else {
+      closeOffscreen().catch((e) => { console.warn('[Clawd Background] closeOffscreen re-call error:', e); });
     }
   }
 });
