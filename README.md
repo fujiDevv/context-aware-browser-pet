@@ -5,7 +5,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 *Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
 <p align="center">
-  <img src="assets/clawd-cool.svg" alt="Browser Pet Logo" width="128" height="128" />
+   <img src="assets/clawd-gif2.gif" alt="Clawd in Action" width="600" />
 </p>
 
 <p align="center">
@@ -15,6 +15,8 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   <a href="https://bun.sh/"><img src="https://img.shields.io/badge/Runtime-Bun-black?logo=bun&logoColor=F9F0E3" alt="Bun" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" /></a>
 </p>
+
+
 
 ---
 
