@@ -104,7 +104,7 @@ export class MovementEngine {
     if (this._posAnimation) {
       try {
         this._posAnimation.stop();
-      } catch (e) {}
+      } catch (e) { console.warn('[Clawd Movement] handleWindowResize error:', e); }
       this._posAnimation = null;
     }
   }
@@ -265,7 +265,7 @@ export class MovementEngine {
       if (element) {
         try {
           element.remove();
-        } catch (e) {}
+        } catch (e) { console.warn('[Clawd Movement] WAAPI posAnimation.stop error:', e); }
       }
     });
     this.toyTargets = [];
@@ -480,7 +480,7 @@ export class MovementEngine {
   _safeSendMessage(msg: any): void {
     try {
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
-        chrome.runtime.sendMessage(msg).catch(() => {});
+        chrome.runtime.sendMessage(msg).catch((e) => { console.warn('[Clawd Movement] runtime.sendMessage error:', e); });
       }
     } catch (e) {
     }

@@ -72,7 +72,7 @@ window.addEventListener('message', async (event) => {
           } else if (typeof session.close === 'function') {
             await session.close();
           }
-        } catch (err) {}
+        } catch (err) { console.warn('[Clawd Main World] WAAPI cancellation error:', err); }
       }
     }
   }

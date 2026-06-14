@@ -35,7 +35,7 @@ function unlockAudio(e?: Event): void {
     } else {
       cleanUpListeners();
     }
-  } catch (err) {}
+  } catch (err) { console.warn('[Clawd Content] checkContextOrCleanup error:', err); }
 }
 
 function cleanUpListeners(): void {
@@ -83,7 +83,7 @@ async function playSound(type: string): Promise<void> {
   if (audioCtx.state === 'suspended') {
     try {
       await audioCtx.resume();
-    } catch (err) {}
+    } catch (err) { console.warn('[Clawd Content] cleanupOrphanedScript error:', err); }
   }
 
   // Fall back to awaiting the window-level resume promise if available
@@ -122,11 +122,11 @@ function cleanupOrphanedScript(): void {
   
   try {
     movement.stop();
-  } catch (e) {}
+  } catch (e) { console.warn('[Clawd Content] chrome.storage.onChanged error:', e); }
 
   try {
     triggers.cleanup();
-  } catch (e) {}
+  } catch (e) { console.warn('[Clawd Content] port.onDisconnect error:', e); }
 
   // Remove window and document listeners
   window.removeEventListener('click', unlockAudio, { capture: true });
@@ -138,11 +138,11 @@ function cleanupOrphanedScript(): void {
   // Remove chrome API listeners
   try {
     chrome.storage.onChanged.removeListener(handleStorageChanged);
-  } catch (e) {}
+  } catch (e) { console.warn('[Clawd Content] window.onfocus error:', e); }
 
   try {
     chrome.runtime.onMessage.removeListener(handleRuntimeMessage);
-  } catch (e) {}
+  } catch (e) { console.warn('[Clawd Content] window.onblur error:', e); }
 
   // Remove petImg listeners explicitly
   try {
@@ -150,11 +150,11 @@ function cleanupOrphanedScript(): void {
     petImg.removeEventListener('mousedown', handleMouseDown);
     petImg.removeEventListener('mouseenter', handleMouseEnter);
     petImg.removeEventListener('mouseleave', handleMouseLeave);
-  } catch (e) {}
+  } catch (e) { console.warn('[Clawd Content] mouseup error:', e); }
 
   try {
     container.remove();
-  } catch (e) {}
+  } catch (e) { console.warn('[Clawd Content] mousemove error:', e); }
   
   console.log("Browser Pet: Old extension context invalidated. Injected mascot cleaned up.");
 }
@@ -348,11 +348,17 @@ style.textContent = `
     color: #1e293b;
   }
 `;
-document.head.appendChild(style);
+const shadowHost = document.createElement('div');
+shadowHost.id = 'clawd-companion-host';
+document.body.appendChild(shadowHost);
+
+const shadowRoot = shadowHost.attachShadow({ mode: 'closed' });
+
+shadowRoot.appendChild(style);
 
 const container = document.createElement('div');
 container.id = 'browser-pet-root';
-document.body.appendChild(container);
+shadowRoot.appendChild(container);
 
 const petImg = document.createElement('img');
 petImg.id = 'browser-pet-img';
@@ -414,9 +420,9 @@ async function loadPet(name: string): Promise<void> {
   petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
   try {
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-      chrome.storage.local.set({ 'pet-mood': name }).catch(() => {});
+      chrome.storage.local.set({ 'pet-mood': name }).catch((e) => { console.warn('[Clawd Content] storage.set error:', e); });
     }
-  } catch (e) {}
+  } catch (e) { console.warn('[Clawd Content] error:', e); }
 }
 
 function showBubble(text: string, duration = 3000): void {
@@ -431,7 +437,7 @@ function showBubble(text: string, duration = 3000): void {
 function showLevelUpBanner(level: number): void {
   const petName = currentSettings.name || 'Clawd';
   
-  const existing = document.getElementById('browser-pet-levelup');
+  const existing = shadowRoot.querySelector('#browser-pet-levelup');
   if (existing) existing.remove();
 
   const banner = document.createElement('div');
@@ -473,7 +479,7 @@ function showLevelUpBanner(level: number): void {
   const unlockedEl = banner.querySelector('#safe-unlocked-text');
   if (unlockedEl) unlockedEl.textContent = unlockedText;
 
-  document.body.appendChild(banner);
+  shadowRoot.appendChild(banner);
 
   const closeBtn = banner.querySelector('#btn-close-levelup');
   if (closeBtn) {
@@ -805,7 +811,7 @@ function handleShoo(e: Event) {
   // Cancel any active WAAPI animations (like hover scale) so the flip transform applies correctly
   try {
     petImg.getAnimations().forEach(anim => anim.cancel());
-  } catch (err) {}
+  } catch (err) { console.warn('[Clawd Content] error:', err); }
 
   personality.recordInteraction('shoo');
   movement.shoo();
@@ -820,7 +826,7 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
   // Cancel active WAAPI animations before starting a new one
   try {
     petImg.getAnimations().forEach(anim => anim.cancel());
-  } catch (err) {}
+  } catch (err) { console.warn('[Clawd Content] error:', err); }
 
   personality.recordInteraction(action);
   loadPet(temporaryMood);
@@ -1098,7 +1104,7 @@ function handleRuntimeMessage(message: any, sender: chrome.runtime.MessageSender
   } else if (message.type === 'shoo') {
     try {
       petImg.getAnimations().forEach(anim => anim.cancel());
-    } catch (err) {}
+    } catch (err) { console.warn('[Clawd Content] error:', err); }
     personality.recordInteraction('shoo');
     movement.shoo();
     showBubble("Running away! 🏃‍♂️");

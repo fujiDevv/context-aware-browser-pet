@@ -56,7 +56,7 @@ async function getClassifier(): Promise<any> {
 
 // Since the background script only creates this offscreen document when AI Mode is enabled,
 // we can safely begin loading the classifier as soon as this script executes.
-getClassifier().catch(() => {});
+getClassifier().catch((e) => { console.warn('[Clawd Offscreen] getClassifier init error:', e); });
 
 function detectPageCategory(url: string, title: string): string {
   const urlLower = (url || '').toLowerCase();

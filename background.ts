@@ -30,7 +30,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         scheduleEnabled: true,
         seasonalEnabled: true
       }
-    }).catch(() => {});
+    }).catch((e) => { console.warn('[Clawd Background] setupOffscreen error:', e); });
   }
 
   if (details.reason === 'install' || details.reason === 'update') {
@@ -167,7 +167,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.storage.local.set({
       modelLoadingState: message.state,
       modelDownloadProgress: message.progress
-    }).catch(() => {});
+    }).catch((e) => { console.warn('[Clawd Background] chrome.scripting.executeScript error:', e); });
     return false;
   }
 });
@@ -203,7 +203,7 @@ async function setupOffscreen(): Promise<void> {
 chrome.storage.local.get('pet-settings', (data) => {
   const settings = data['pet-settings'] || {};
   if (settings.aiMode) {
-    setupOffscreen().catch(() => {});
+    setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen initial call error:', e); });
   }
 });
 
@@ -212,7 +212,7 @@ chrome.storage.onChanged.addListener((changes) => {
   if (changes['pet-settings']) {
     const settings = changes['pet-settings'].newValue || {};
     if (settings.aiMode) {
-      setupOffscreen().catch(() => {});
+      setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen re-call error:', e); });
     }
   }
 });

@@ -155,7 +155,7 @@ async function init(): Promise<void> {
       chrome.tabs.sendMessage(currentTabId, {
         type: 'toggle-tab-visibility',
         hide: tabHideToggle.checked
-      }).catch(() => {});
+      }).catch((e) => { console.warn('[Clawd Popup] executeScript error:', e); });
     }
   });
 
@@ -196,7 +196,7 @@ async function init(): Promise<void> {
   const sendToActiveTab = (type: string) => {
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
       if (tab && tab.id) {
-        chrome.tabs.sendMessage(tab.id, { type }).catch(() => {});
+        chrome.tabs.sendMessage(tab.id, { type }).catch((e) => { console.warn('[Clawd Popup] sendMessage error:', e); });
       }
     });
   };
