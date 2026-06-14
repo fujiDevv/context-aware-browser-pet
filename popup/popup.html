@@ -13,14 +13,15 @@
   <div class="popup-container">
 
     <header class="header">
-      <div class="header-profile">
+      <div class="header-main">
         <div class="avatar-container">
           <div class="avatar-glow"></div>
           <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Pet Preview">
         </div>
+        
         <div class="header-info">
-          <h1 id="pet-name">Clawd</h1>
-          <div class="badge-group">
+          <div class="name-lvl-row">
+            <h1 id="pet-name">Clawd</h1>
             <div class="badge badge-lvl">
               <span class="level-label">LVL</span>
               <span id="pet-level" class="level-num">1</span>
@@ -29,6 +30,9 @@
               <span class="prestige-star">★</span>
               <span id="prestige-level" class="prestige-level-num">0</span>
             </div>
+          </div>
+          
+          <div class="badge-group">
             <div class="badge badge-mood" id="pet-mood">
               <span id="mood-emoji"></span>
               <span id="mood-text">Happy</span>
@@ -37,6 +41,17 @@
               <span id="trait-text">Normal</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <div id="ai-status-badge" class="ai-status-badge status-checking" title="Local AI (DistilBERT) Status">
+          <span class="status-dot"></span>
+          <span id="ai-status-text">AI: Checking</span>
+        </div>
+        <div class="presence-badge" title="Active browsing sessions">
+          <span class="presence-icon">🌐</span>
+          <span id="active-tabs-text">1 Tab Active</span>
         </div>
       </div>
 
@@ -54,57 +69,63 @@
     <div class="dashboard-content">
       <div class="tab-pane active">
 
-        <!-- Quick Stats -->
+        <!-- Mascot Stats Grid -->
         <section class="stats-section">
           <h2>Mascot Stats</h2>
+          <div class="stats-grid">
+            <div class="stat-card stat-happiness" title="Boosted by petting and fun sites. Decays 4%/hr.">
+              <img src="../assets/pets/clawd-love.svg" class="stat-icon" alt="Happiness">
+              <div class="stat-meta">
+                <span class="stat-label">Happiness</span>
+                <span id="txt-happiness" class="stat-num">50%</span>
+              </div>
+              <div class="stat-progress">
+                <div id="bar-happiness" class="stat-fill bg-pink" style="width: 50%"></div>
+              </div>
+            </div>
 
-          <div class="stat-card">
-            <div class="stat-info">
-              <span class="stat-name">Happiness</span>
-              <span id="txt-happiness" class="stat-val">50%</span>
+            <div class="stat-card stat-energy" title="Restored by feeding and sleep. Decays 6.8%/hr.">
+              <img src="../assets/pets/clawd-battery-low.svg" class="stat-icon" alt="Energy">
+              <div class="stat-meta">
+                <span class="stat-label">Energy</span>
+                <span id="txt-energy" class="stat-num">80%</span>
+              </div>
+              <div class="stat-progress">
+                <div id="bar-energy" class="stat-fill bg-yellow" style="width: 80%"></div>
+              </div>
             </div>
-            <div class="progress-track">
-              <div id="bar-happiness" class="progress-fill fill-pink" style="width: 50%"></div>
-            </div>
-          </div>
 
-          <div class="stat-card">
-            <div class="stat-info">
-              <span class="stat-name">Energy</span>
-              <span id="txt-energy" class="stat-val">80%</span>
+            <div class="stat-card stat-curiosity" title="Gained by visiting new domains. Decays 1.8%/hr.">
+              <img src="../assets/pets/clawd-mindblown.svg" class="stat-icon" alt="Curiosity">
+              <div class="stat-meta">
+                <span class="stat-label">Curiosity</span>
+                <span id="txt-curiosity" class="stat-num">60%</span>
+              </div>
+              <div class="stat-progress">
+                <div id="bar-curiosity" class="stat-fill bg-blue" style="width: 60%"></div>
+              </div>
             </div>
-            <div class="progress-track">
-              <div id="bar-energy" class="progress-fill fill-yellow" style="width: 80%"></div>
-            </div>
-          </div>
 
-          <div class="stat-card">
-            <div class="stat-info">
-              <span class="stat-name">Curiosity</span>
-              <span id="txt-curiosity" class="stat-val">60%</span>
+            <div class="stat-card stat-focus" title="Boosted by work and coding. Decays 5.4%/hr.">
+              <img src="../assets/pets/clawd-coding.svg" class="stat-icon" alt="Focus">
+              <div class="stat-meta">
+                <span class="stat-label">Focus</span>
+                <span id="txt-focus" class="stat-num">50%</span>
+              </div>
+              <div class="stat-progress">
+                <div id="bar-focus" class="stat-fill bg-green" style="width: 50%"></div>
+              </div>
             </div>
-            <div class="progress-track">
-              <div id="bar-curiosity" class="progress-fill fill-blue" style="width: 60%"></div>
-            </div>
-          </div>
 
-          <div class="stat-card">
-            <div class="stat-info">
-              <span class="stat-name">Focus</span>
-              <span id="txt-focus" class="stat-val">50%</span>
-            </div>
-            <div class="progress-track">
-              <div id="bar-focus" class="progress-fill fill-green" style="width: 50%"></div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-info">
-              <span class="stat-name">Leisure</span>
-              <span id="txt-leisure" class="stat-val">50%</span>
-            </div>
-            <div class="progress-track">
-              <div id="bar-leisure" class="progress-fill fill-indigo" style="width: 50%"></div>
+            <div class="stat-card stat-leisure" title="Increases when gaming or streaming. Decays 5.4%/hr.">
+              <img src="../assets/pets/clawd-cool.svg" class="stat-icon" alt="Leisure">
+              <div class="stat-meta">
+                <span class="stat-label">Leisure</span>
+                <span id="txt-leisure" class="stat-num">50%</span>
+              </div>
+              <div class="stat-progress">
+                <div id="bar-leisure" class="stat-fill bg-indigo" style="width: 50%"></div>
+              </div>
             </div>
           </div>
         </section>
@@ -175,13 +196,11 @@
           </div>
         </section>
 
-        <!-- Primary Link to Full Dashboard -->
-        <section class="settings-section" style="border: none; padding-top: 0; margin-bottom: 0;">
-          <button id="btn-open-dashboard" class="dashboard-link-btn">Open Dashboard</button>
-        </section>
-
       </div>
     </div>
+    <footer class="popup-footer">
+      <button id="btn-open-dashboard" class="dashboard-link-btn">Open Dashboard</button>
+    </footer>
   </div>
   <script src="popup.js"></script>
 </body>

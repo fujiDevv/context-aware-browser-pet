@@ -70,6 +70,50 @@ async function init(): Promise<void> {
     preview: document.getElementById('pet-preview') as HTMLImageElement,
   };
 
+  const aiStatusBadge = document.getElementById('ai-status-badge');
+  const aiStatusText = document.getElementById('ai-status-text');
+  const activeTabsText = document.getElementById('active-tabs-text');
+
+  const updateStatusIndicators = () => {
+    // 1. Update Active Tabs Count
+    chrome.tabs.query({}, (tabs) => {
+      const count = tabs.length;
+      if (activeTabsText) {
+        activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
+      }
+    });
+
+    // 2. Update AI Status
+    chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: any) => {
+      if (!aiStatusBadge || !aiStatusText) return;
+
+      if (chrome.runtime.lastError || !response || !response.success) {
+        aiStatusBadge.className = 'ai-status-badge status-unsupported';
+        aiStatusText.textContent = 'AI: Offline';
+        return;
+      }
+
+      const { state, progress } = response;
+      if (state === 'ready') {
+        aiStatusBadge.className = 'ai-status-badge status-ready';
+        aiStatusText.textContent = 'AI: Ready';
+      } else if (state === 'loading') {
+        aiStatusBadge.className = 'ai-status-badge status-downloading';
+        aiStatusText.textContent = `AI: ${progress}%`;
+      } else if (state === 'error') {
+        aiStatusBadge.className = 'ai-status-badge status-unsupported';
+        aiStatusText.textContent = 'AI: Error';
+      } else {
+        aiStatusBadge.className = 'ai-status-badge status-checking';
+        aiStatusText.textContent = 'AI: Checking';
+      }
+    });
+  };
+
+  // Initial update and then every 5 seconds
+  updateStatusIndicators();
+  const statusInterval = setInterval(updateStatusIndicators, 5000);
+
   const setupToyDrags = () => {
     ['ball', 'fish', 'laser', 'yarn', 'duck', 'box'].forEach((toy) => {
       const el = document.getElementById(`toy-${toy}`);
