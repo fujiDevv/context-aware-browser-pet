@@ -1254,15 +1254,24 @@ function renderAnalyticsCharts(stats: any) {
     
     let happinessPoints = '';
     let energyPoints = '';
+    let curiosityPoints = '';
+    let focusPoints = '';
+    let leisurePoints = '';
     
     sortedMoods.forEach((record: any, index: number) => {
       const x = padding + index * stepX;
       // y is inverted (100 is at top)
       const yHappiness = padding + chartHeight - (record.happiness / 100) * chartHeight;
       const yEnergy = padding + chartHeight - (record.energy / 100) * chartHeight;
+      const yCuriosity = padding + chartHeight - ((record.curiosity || 50) / 100) * chartHeight;
+      const yFocus = padding + chartHeight - ((record.focus || 50) / 100) * chartHeight;
+      const yLeisure = padding + chartHeight - ((record.leisure || 50) / 100) * chartHeight;
       
       happinessPoints += `${x},${yHappiness} `;
       energyPoints += `${x},${yEnergy} `;
+      curiosityPoints += `${x},${yCuriosity} `;
+      focusPoints += `${x},${yFocus} `;
+      leisurePoints += `${x},${yLeisure} `;
     });
     
     moodChartContainer.innerHTML = `
@@ -1280,13 +1289,22 @@ function renderAnalyticsCharts(stats: any) {
         <!-- Lines -->
         <polyline points="${happinessPoints}" fill="none" stroke="var(--pink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
         <polyline points="${energyPoints}" fill="none" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${curiosityPoints}" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${focusPoints}" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <polyline points="${leisurePoints}" fill="none" stroke="var(--indigo)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
         
         <!-- Legend -->
-        <rect x="${width - padding - 85}" y="5" width="80" height="35" rx="4" fill="var(--bg-card)" opacity="0.8" />
+        <rect x="${width - padding - 85}" y="5" width="80" height="85" rx="4" fill="var(--bg-card)" opacity="0.8" />
         <circle cx="${width - padding - 75}" cy="15" r="4" fill="var(--pink)" />
         <text x="${width - padding - 65}" y="19" fill="var(--text-color)" font-size="10">Happiness</text>
         <circle cx="${width - padding - 75}" cy="31" r="4" fill="var(--yellow)" />
         <text x="${width - padding - 65}" y="35" fill="var(--text-color)" font-size="10">Energy</text>
+        <circle cx="${width - padding - 75}" cy="47" r="4" fill="var(--blue)" />
+        <text x="${width - padding - 65}" y="51" fill="var(--text-color)" font-size="10">Curiosity</text>
+        <circle cx="${width - padding - 75}" cy="63" r="4" fill="var(--green)" />
+        <text x="${width - padding - 65}" y="67" fill="var(--text-color)" font-size="10">Focus</text>
+        <circle cx="${width - padding - 75}" cy="79" r="4" fill="var(--indigo)" />
+        <text x="${width - padding - 65}" y="83" fill="var(--text-color)" font-size="10">Leisure</text>
       </svg>
     `;
   }

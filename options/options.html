@@ -65,10 +65,10 @@
           <div class="playground-card">
             <div class="playground-stage" id="playground-stage">
               <div class="stage-bg-grid"></div>
-              
+
               <div class="pet-glow-orb" id="pet-orb"></div>
               <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Clawd">
-              
+
               <!-- Floating text/bubbles container for sandbox -->
               <div id="sandbox-speech-bubble" class="pet-speech-bubble"></div>
             </div>
@@ -270,7 +270,8 @@
           </div>
         </div>
 
-        <div class="analytics-charts-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
+        <div class="analytics-charts-layout"
+          style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
           <!-- Category Chart Card -->
           <div class="analytics-card chart-card">
             <h2>Browsing Interest Distribution</h2>
@@ -284,7 +285,8 @@
           <div class="analytics-card chart-card">
             <h2>Interests History (Last 7 Days)</h2>
             <p class="section-subtitle">Category breakdown over the last 7 days.</p>
-            <div id="interests-history-chart" class="fancy-history-list" style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px;">
+            <div id="interests-history-chart" class="fancy-history-list"
+              style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px;">
               <!-- Dynamically populated fancy tags -->
             </div>
           </div>
@@ -293,8 +295,9 @@
           <div class="analytics-card chart-card" style="grid-column: 1 / -1;">
             <h2>Mood Over Time</h2>
             <p class="section-subtitle">Average daily Happiness and Energy.</p>
-            <div id="mood-history-chart" style="margin-top: 16px; display: flex; justify-content: center; width: 100%; min-height: 250px;">
-              </div>
+            <div id="mood-history-chart"
+              style="margin-top: 16px; display: flex; justify-content: center; width: 100%; min-height: 250px;">
+            </div>
           </div>
         </div>
       </section>
@@ -420,11 +423,16 @@
             <div class="settings-soundboard-card" style="margin-top: 24px;">
               <h2>Did You Know? 🐾</h2>
               <p class="section-subtitle">Interesting tidbits about your desktop companion:</p>
-              <ul style="font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding-left: 16px; margin-top: 8px;">
-                <li>Clawd's mood fluctuates based on the websites you visit! Tech blogs keep him focused, while social media makes him playful.</li>
-                <li>At level 50, Clawd can undergo <strong>Prestige Rebirth</strong>, unlocking faster baseline speeds and new cosmetics.</li>
-                <li>Leaving your cursor idle for more than 45 seconds triggers Clawd to wander, skateboard, or read a tiny book!</li>
-                <li>Clawd gets cozy in the winter holidays and spooky in October with seasonal costumes automatically.</li>
+              <ul
+                style="font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding-left: 16px; margin-top: 8px;">
+                <li>Clawd's mood fluctuates based on the websites you visit! Tech blogs keep him focused, while social
+                  media makes him playful.</li>
+                <li>At level 50, Clawd can undergo <strong>Prestige Rebirth</strong>, unlocking faster baseline speeds
+                  and new cosmetics.</li>
+                <li>Leaving your cursor idle for more than 45 seconds triggers Clawd to wander, skateboard, or read a
+                  tiny book!</li>
+                <li>Clawd gets cozy in the winter holidays and spooky in October with seasonal costumes automatically.
+                </li>
               </ul>
             </div>
 
@@ -432,9 +440,12 @@
             <div class="settings-soundboard-card" style="margin-top: 24px;">
               <h2>Pro Tips 💡</h2>
               <p class="section-subtitle">Maximize your productivity:</p>
-              <ul style="font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding-left: 16px; margin-top: 8px;">
-                <li>Use <strong>Focus Blocks</strong> in the Planner to pause Clawd's random wanderings when you need deep work.</li>
-                <li>Customize <strong>Domain Reactions</strong> to have Clawd act as a rubber duck debugger on sites like StackOverflow!</li>
+              <ul
+                style="font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding-left: 16px; margin-top: 8px;">
+                <li>Use <strong>Focus Blocks</strong> in the Planner to pause Clawd's random wanderings when you need
+                  deep work.</li>
+                <li>Customize <strong>Domain Reactions</strong> to have Clawd act as a rubber duck debugger on sites
+                  like StackOverflow!</li>
               </ul>
             </div>
           </div>
@@ -454,7 +465,7 @@
             <!-- Local AI Settings -->
             <div class="settings-main-card">
               <h2>Local AI Core Configuration</h2>
-              
+
               <div class="toggle-group-row" style="margin-top: 0;">
                 <div class="toggle-card" style="width: 100%;">
                   <div class="toggle-info">
@@ -468,19 +479,23 @@
                 </div>
               </div>
 
-              <div class="form-group hidden" id="ai-tuning-container" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; width: 100%;">
+              <div class="form-group hidden" id="ai-tuning-container"
+                style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; width: 100%;">
                 <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 13px;">Local AI Fine-Tuning</h4>
-                
+
                 <div class="form-group" style="margin-bottom: 16px;">
-                  <label for="ai-sensitivity-slider">Sentiment Sensitivity (<span id="ai-sensitivity-val">50%</span>)</label>
+                  <label for="ai-sensitivity-slider">Sentiment Sensitivity (<span
+                      id="ai-sensitivity-val">50%</span>)</label>
                   <input type="range" id="ai-sensitivity-slider" min="0" max="100" value="50" class="slider">
-                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Adjusts how easily the Local AI registers page sentiment.</p>
+                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Adjusts how easily the Local AI
+                    registers page sentiment.</p>
                 </div>
-                
+
                 <div class="form-group">
                   <label for="ai-frequency-slider">Comment Frequency (<span id="ai-frequency-val">60s</span>)</label>
                   <input type="range" id="ai-frequency-slider" min="15" max="600" step="15" value="60" class="slider">
-                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often Clawd makes AI-derived observations.</p>
+                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often Clawd makes
+                    AI-derived observations.</p>
                 </div>
               </div>
             </div>
@@ -488,14 +503,16 @@
             <!-- Domain Reaction Dictionary Card -->
             <div class="settings-reactions-card">
               <h2>Domain Reaction Dictionary</h2>
-              <p class="section-subtitle">Map specific website domains to custom mascot behaviors, comments, and sound effects:</p>
+              <p class="section-subtitle">Map specific website domains to custom mascot behaviors, comments, and sound
+                effects:</p>
 
               <!-- Add Rule Form -->
               <div class="reaction-form">
                 <div class="form-row">
                   <div class="form-group col">
                     <label for="reaction-domain-input">Website Domain</label>
-                    <input type="text" id="reaction-domain-input" class="form-control" placeholder="e.g. stackoverflow.com">
+                    <input type="text" id="reaction-domain-input" class="form-control"
+                      placeholder="e.g. stackoverflow.com">
                   </div>
                   <div class="form-group col">
                     <label for="reaction-emotion-select">Mascot Emotion</label>
@@ -523,7 +540,8 @@
                 <div class="form-row" style="margin-top: 8px;">
                   <div class="form-group col">
                     <label for="reaction-dialogue-input">Speech Dialogue (Optional)</label>
-                    <input type="text" id="reaction-dialogue-input" class="form-control" placeholder="e.g. Let's fix this bug! 🐛">
+                    <input type="text" id="reaction-dialogue-input" class="form-control"
+                      placeholder="e.g. Let's fix this bug! 🐛">
                   </div>
                   <div class="form-group col">
                     <label for="reaction-sound-select">Sound FX (Optional)</label>
@@ -539,7 +557,8 @@
                     </select>
                   </div>
                 </div>
-                <button class="btn btn-primary" id="btn-add-reaction" style="margin-top: 12px; width: 100%;">Add Reaction Rule</button>
+                <button class="btn btn-primary" id="btn-add-reaction" style="margin-top: 12px; width: 100%;">Add
+                  Reaction Rule</button>
               </div>
 
               <!-- Rule List/Table -->
@@ -558,7 +577,8 @@
                     <!-- Rule rows populated dynamically -->
                   </tbody>
                 </table>
-                <div class="empty-blocklist" id="empty-reactions-msg" style="display: none; padding: 12px; text-align: center;">
+                <div class="empty-blocklist" id="empty-reactions-msg"
+                  style="display: none; padding: 12px; text-align: center;">
                   No custom domain reactions set.
                 </div>
               </div>
@@ -750,7 +770,7 @@
               </div>
               <div style="display: flex; justify-content: space-between; padding-bottom: 2px;">
                 <span style="color: var(--text-secondary); font-weight: 500;">Developer Guide:</span>
-                <a href="https://github.com/fujiDevv/context-aware-browser-pet#readme"
+                <a href="https://github.com/fujiDevv/context-aware-browser-pet/blob/main/GUIDE.md"
                   style="color: var(--accent); text-decoration: none; font-weight: 600;" target="_blank">View Docs</a>
               </div>
             </div>

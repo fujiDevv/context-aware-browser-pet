@@ -7,6 +7,9 @@ export interface DailyMoodRecord {
   date: string;
   happiness: number;
   energy: number;
+  curiosity?: number;
+  focus?: number;
+  leisure?: number;
   count: number;
 }
 

@@ -115,11 +115,22 @@ export class PersonalitySystem {
     
     let record = this.stats.dailyMoodHistory.find(r => r.date === today);
     if (!record) {
-      record = { date: today, happiness: this.stats.happiness, energy: this.stats.energy, count: 1 };
+      record = { 
+        date: today, 
+        happiness: this.stats.happiness, 
+        energy: this.stats.energy, 
+        curiosity: this.stats.curiosity,
+        focus: this.stats.focus,
+        leisure: this.stats.leisure,
+        count: 1 
+      };
       this.stats.dailyMoodHistory.push(record);
     } else {
       record.happiness = Math.round((record.happiness * record.count + this.stats.happiness) / (record.count + 1));
       record.energy = Math.round((record.energy * record.count + this.stats.energy) / (record.count + 1));
+      record.curiosity = Math.round(((record.curiosity || 0) * record.count + (this.stats.curiosity || 60)) / (record.count + 1));
+      record.focus = Math.round(((record.focus || 0) * record.count + (this.stats.focus || 50)) / (record.count + 1));
+      record.leisure = Math.round(((record.leisure || 0) * record.count + (this.stats.leisure || 50)) / (record.count + 1));
       record.count++;
     }
 
