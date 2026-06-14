@@ -212,7 +212,7 @@ style.textContent = `
     color: #f8fafc;
     padding: 6px 12px;
     border-radius: 10px;
-    font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 11px;
     font-weight: 500;
     line-height: 1.4;
@@ -279,7 +279,7 @@ style.textContent = `
     border-radius: 12px;
     padding: 16px;
     color: #1e293b;
-    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     z-index: 2147483647;
     pointer-events: auto;
     transition: top 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
@@ -472,15 +472,15 @@ function showLevelUpBanner(level: number): void {
   }
 
   banner.innerHTML = `
-    <button class=\"pet-levelup-close\" id=\"btn-close-levelup\">×</button>
-    <div class=\"pet-levelup-header\">
-      <span class=\"pet-levelup-badge\">LVL ${level}</span>
-      <span class=\"pet-levelup-title\">Level Up Achievement!</span>
+    <button class="pet-levelup-close" id="btn-close-levelup">×</button>
+    <div class="pet-levelup-header">
+      <span class="pet-levelup-badge">LVL ${level}</span>
+      <span class="pet-levelup-title">Level Up Achievement!</span>
     </div>
-    <div class=\"pet-levelup-details\">
-      Congratulations! <strong id=\"safe-pet-name\"></strong> has grown stronger. Stats and attributes have been upgraded!
+    <div class="pet-levelup-details">
+      Congratulations! <strong id="safe-pet-name"></strong> has grown stronger. Stats and attributes have been upgraded!
     </div>
-    <div class=\"pet-levelup-unlocked\" id=\"safe-unlocked-text\">
+    <div class="pet-levelup-unlocked" id="safe-unlocked-text">
     </div>
   `;
 
@@ -581,7 +581,7 @@ async function updateEmotion(): Promise<void> {
       if (now - lastCommentTime >= freqSec * 1000) {
         await chrome.storage.local.set({ 'last-ai-comment-time': now });
         
-        const metaDesc = (document.querySelector('meta[name=\"description\"]') as HTMLMetaElement | null)?.content;
+        const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
         const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
         const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity);
         nextEmotion = result.emotion;
@@ -686,24 +686,24 @@ function triggerContextDialogue(mood: string): void {
   }
 
   const dialogs: Record<string, string> = {
-    '404': \"Whoops! This page doesn't exist (404)!\",
-    '500': \"Ouch! The server is broken (500)!\",
-    '403': \"Stop! Access denied (403)!\",
-    '429': \"Too fast! Calm down (429)!\",
-    'sleeping': \"Zzz... sleeping...\",
-    'working-thinking': \"Hmm... let me think...\",
-    'coding': \"Let's write some code! 💻\",
-    'working-typing': \"Keep typing! You've got this!\",
-    'celebrating': \"Success! Form sent! 🎉\",
-    'love': \"What a lovely page! ❤️\",
-    'gaming': \"Game time! Let's play! 🎮\",
-    'mindblown': \"Oh wow! Look at those items! 😮\",
-    'working-wizard': \"Exploring the docs... 🧙‍♂️\",
-    'working-debugger': Math.random() < 0.5 ? \"Oh no! Something crashed! 💥\" : \"Found a bug! Let me debug! 🔍\",
-    'crying': \"I'm so sad... please pet me! 😢\",
-    'sad': \"Feeling a bit down... 🥺\",
-    'reading': Math.random() < 0.5 ? \"Reading is fun! 📚\" : \"So much knowledge here! 📖\",
-    'yoga': Math.random() < 0.5 ? \"Time for some morning stretches! 🧘‍♂️\" : \"Inhale, exhale... stretch! 🧘‍♀️\"
+    '404': "Whoops! This page doesn't exist (404)!",
+    '500': "Ouch! The server is broken (500)!",
+    '403': "Stop! Access denied (403)!",
+    '429': "Too fast! Calm down (429)!",
+    'sleeping': "Zzz... sleeping...",
+    'working-thinking': "Hmm... let me think...",
+    'coding': "Let's write some code! 💻",
+    'working-typing': "Keep typing! You've got this!",
+    'celebrating': "Success! Form sent! 🎉",
+    'love': "What a lovely page! ❤️",
+    'gaming': "Game time! Let's play! 🎮",
+    'mindblown': "Oh wow! Look at those items! 😮",
+    'working-wizard': "Exploring the docs... 🧙‍♂️",
+    'working-debugger': Math.random() < 0.5 ? "Oh no! Something crashed! 💥" : "Found a bug! Let me debug! 🔍",
+    'crying': "I'm so sad... please pet me! 😢",
+    'sad': "Feeling a bit down... 🥺",
+    'reading': Math.random() < 0.5 ? "Reading is fun! 📚" : "So much knowledge here! 📖",
+    'yoga': Math.random() < 0.5 ? "Time for some morning stretches! 🧘‍♂️" : "Inhale, exhale... stretch! 🧘‍♀️"
   };
 
   if (dialogs[mood]) {
@@ -717,12 +717,12 @@ petImg.addEventListener('click', (e) => {
     movement.wasDragged = false;
     return;
   }
-  triggerInteraction('pet', 'love', 2000, \"Ah, thank you! ❤️\");
+  triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
 });
 
 petImg.addEventListener('dblclick', (e) => {
   e.stopPropagation();
-  triggerInteraction('feed', 'celebrating', 2500, \"Yum! That was delicious! 🍖\");
+  triggerInteraction('feed', 'celebrating', 2500, "Yum! That was delicious! 🍖");
 });
 
 let lastShooTime = 0;
@@ -740,7 +740,7 @@ function handleShoo(e: Event) {
 
   personality.recordInteraction('shoo');
   movement.shoo();
-  showBubble(\"Okay, okay, moving! 🏃‍♂️\");
+  showBubble("Okay, okay, moving! 🏃‍♂️");
   playSound('shoo');
 }
 
@@ -878,7 +878,7 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
     box: `If it fits, I sits! Best box ever! 📦`
   };
 
-  showBubble(dialogs[toyType] || \"Yay, a toy! 🎉\");
+  showBubble(dialogs[toyType] || "Yay, a toy! 🎉");
   
   const playMood = toyType === 'fish' ? 'celebrating' : 'dancing';
   loadPet(playMood);
@@ -1012,16 +1012,16 @@ function handleRuntimeMessage(message: any, sender: chrome.runtime.MessageSender
   }
 
   if (message.type === 'pet') {
-    triggerInteraction('pet', 'love', 2000, \"Love it! ❤️\");
+    triggerInteraction('pet', 'love', 2000, "Love it! ❤️");
   } else if (message.type === 'feed') {
-    triggerInteraction('feed', 'celebrating', 2500, \"Nom nom nom! 🍖\");
+    triggerInteraction('feed', 'celebrating', 2500, "Nom nom nom! 🍖");
   } else if (message.type === 'shoo') {
     try {
       petImg.getAnimations().forEach(anim => anim.cancel());
     } catch (err) { console.warn('[Clawd Content] error:', err); }
     personality.recordInteraction('shoo');
     movement.shoo();
-    showBubble(\"Running away! 🏃‍♂️\");
+    showBubble("Running away! 🏃‍♂️");
     playSound('shoo');
   } else if (message.type === 'http-error') {
     triggers.setHttpError(message.code);
@@ -1124,16 +1124,16 @@ async function init(): Promise<void> {
           const decisions = [
             () => {
               movement.shoo();
-              showBubble(\"Let's go explore this side! 🏃‍♂️\");
+              showBubble("Let's go explore this side! 🏃‍♂️");
             },
             () => {
               movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-              showBubble(\"I'm following you! 👀\");
+              showBubble("I'm following you! 👀");
             },
             () => {
               const pageTitle = document.title || 'this page';
               const truncatedTitle = pageTitle.length > 25 ? pageTitle.substring(0, 22) + '...' : pageTitle;
-              showBubble(`Analyzing \"${truncatedTitle}\"... looks cool! 🧐`);
+              showBubble(`Analyzing "${truncatedTitle}"... looks cool! 🧐`);
               loadPet('working-thinking');
               isTemporarilyInteracting = true;
               setTimeout(() => {
@@ -1160,7 +1160,7 @@ async function init(): Promise<void> {
 
         if (!isFocusActive && context.idleSeconds >= 10 && Math.random() < 0.15 && !isTemporarilyInteracting) {
           movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-          const dialogs = [\"Whatcha doing over there? 👀\", \"Let me see! 🧐\", \"Watchu looking at? 👁️\"];
+          const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
           showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);
         }
       }

@@ -804,6 +804,45 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.fancy-history-list {
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Custom minimal scrollbar for analytics lists */
+.category-chart-list::-webkit-scrollbar,
+.fancy-history-list::-webkit-scrollbar,
+.timeline-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.category-chart-list::-webkit-scrollbar-track,
+.fancy-history-list::-webkit-scrollbar-track,
+.timeline-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.category-chart-list::-webkit-scrollbar-thumb,
+.fancy-history-list::-webkit-scrollbar-thumb,
+.timeline-list::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.category-chart-list::-webkit-scrollbar-thumb:hover,
+.fancy-history-list::-webkit-scrollbar-thumb:hover,
+.timeline-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 .category-row {
