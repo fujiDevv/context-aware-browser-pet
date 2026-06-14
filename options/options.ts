@@ -677,8 +677,19 @@ function renderTimeline(history: any[] | undefined) {
 
   list.slice().reverse().forEach((item: any) => {
     const meta = TIMELINE_METADATA[item.action] || { label: item.action, icon: '🐾' };
-    const date = new Date(item.time);
-    const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' ' + date.toLocaleDateString();
+    
+    let timeStr = 'Recent';
+    try {
+      const date = new Date(item.time);
+      if (!isNaN(date.getTime())) {
+        timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' ' + date.toLocaleDateString();
+      } else if (typeof item.time === 'string') {
+        // Fallback for legacy already-localized strings
+        timeStr = item.time;
+      }
+    } catch (e) {
+      if (typeof item.time === 'string') timeStr = item.time;
+    }
 
     const row = document.createElement('div');
     row.className = 'timeline-item';

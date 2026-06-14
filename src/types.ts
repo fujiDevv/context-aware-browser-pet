@@ -1,6 +1,6 @@
 export interface MoodHistoryItem {
   action: string;
-  time: string;
+  time: number | string;
 }
 
 export interface DailyMoodRecord {

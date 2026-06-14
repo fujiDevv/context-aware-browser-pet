@@ -379,7 +379,7 @@ export class PersonalitySystem {
   }
 
   _recordMoodEvent(action: string): void {
-    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const time = Date.now();
     this.stats.moodHistory.unshift({ action, time });
     if (this.stats.moodHistory.length > 20) {
       this.stats.moodHistory.pop();
