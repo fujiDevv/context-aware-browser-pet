@@ -382,24 +382,22 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
   const btnFeed = document.getElementById('btn-feed') as HTMLButtonElement;
   const btnShoo = document.getElementById('btn-shoo') as HTMLButtonElement;
 
-  // Cache original button text
-  const originalPetText = btnPet?.textContent || 'Pet Clawd';
-  const originalFeedText = btnFeed?.textContent || 'Feed Snack';
-  const originalShooText = btnShoo?.textContent || 'Shoo Away';
+  // Disable buttons and set to waiting cooldown
+  let countdown = 3;
+  if (btnPet) { btnPet.disabled = true; btnPet.textContent = `Wait ${countdown}s...`; }
+  if (btnFeed) { btnFeed.disabled = true; btnFeed.textContent = `Wait ${countdown}s...`; }
+  if (btnShoo) { btnShoo.disabled = true; btnShoo.textContent = `Wait ${countdown}s...`; }
 
-  // Disable buttons and set to waiting
-  if (btnPet) {
-    btnPet.disabled = true;
-    btnPet.textContent = 'waiting...';
-  }
-  if (btnFeed) {
-    btnFeed.disabled = true;
-    btnFeed.textContent = 'waiting...';
-  }
-  if (btnShoo) {
-    btnShoo.disabled = true;
-    btnShoo.textContent = 'waiting...';
-  }
+  const interval = setInterval(() => {
+    countdown--;
+    if (countdown > 0) {
+      if (btnPet) btnPet.textContent = `Wait ${countdown}s...`;
+      if (btnFeed) btnFeed.textContent = `Wait ${countdown}s...`;
+      if (btnShoo) btnShoo.textContent = `Wait ${countdown}s...`;
+    } else {
+      clearInterval(interval);
+    }
+  }, 1000);
 
   if (soundToggle.checked) {
     const vol = Number(volumeSlider.value) / 100;
@@ -432,15 +430,15 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
     // Restore buttons after 3 seconds
     if (btnPet) {
       btnPet.disabled = false;
-      btnPet.textContent = originalPetText;
+      btnPet.textContent = 'Pet Clawd';
     }
     if (btnFeed) {
       btnFeed.disabled = false;
-      btnFeed.textContent = originalFeedText;
+      btnFeed.textContent = 'Feed Snack';
     }
     if (btnShoo) {
       btnShoo.disabled = false;
-      btnShoo.textContent = originalShooText;
+      btnShoo.textContent = 'Shoo Away';
     }
   }, 3000);
 }
@@ -1188,18 +1186,40 @@ function renderAnalyticsCharts(stats: any) {
     } else {
       entries.forEach(([category, count]) => {
         const pct = Math.round((count / maxVal) * 100);
-        const row = document.createElement('div');
-        row.className = 'category-row';
-        row.innerHTML = `
-          <div class="category-name">
-            <span>${category}</span>
-            <span class="category-count">${count} pages</span>
-          </div>
-          <div class="category-bar-track">
-            <div class="category-bar-fill" style="width: ${pct}%;"></div>
-          </div>
+        const tag = document.createElement('div');
+        tag.className = 'fancy-tag';
+        tag.style.cssText = `
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          position: relative;
+          overflow: hidden;
+          cursor: default;
         `;
-        historyChartContainer.appendChild(row);
+        
+        tag.innerHTML = `
+          <div style="position: absolute; left: 0; bottom: 0; height: 3px; background: var(--accent); width: ${pct}%; opacity: 0.8;"></div>
+          <span style="font-weight: 500; font-size: 13px; color: var(--text-color); z-index: 1;">${category}</span>
+          <span style="font-size: 11px; background: var(--bg-body); padding: 2px 6px; border-radius: 4px; color: var(--text-muted); z-index: 1;">${count}</span>
+        `;
+        
+        tag.addEventListener('mouseenter', () => {
+          tag.style.borderColor = 'var(--accent)';
+          tag.style.transform = 'translateY(-2px)';
+          tag.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+        });
+        tag.addEventListener('mouseleave', () => {
+          tag.style.borderColor = 'var(--border-color)';
+          tag.style.transform = 'translateY(0)';
+          tag.style.boxShadow = 'none';
+        });
+
+        historyChartContainer.appendChild(tag);
       });
     }
   }
