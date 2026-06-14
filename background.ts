@@ -30,7 +30,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         scheduleEnabled: true,
         seasonalEnabled: true
       }
-    }).catch((e) => { console.warn('[Clawd Background] setupOffscreen error:', e); });
+    }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set init error:', e); });
   }
 
   if (details.reason === 'install' || details.reason === 'update') {
@@ -167,7 +167,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.storage.local.set({
       modelLoadingState: message.state,
       modelDownloadProgress: message.progress
-    }).catch((e) => { console.warn('[Clawd Background] chrome.scripting.executeScript error:', e); });
+    }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set update-ai-progress error:', e); });
     return false;
   }
 });

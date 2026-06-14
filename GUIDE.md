@@ -390,7 +390,19 @@ Dive into your browsing and pet metrics:
 Clawd features a local, privacy-centric AI layer that reads page context and generates customized comments and expressions completely offline.
 
 ### How It Works
-When you visit a page, the extension sends the **page title** and **meta description** to a local AI model running inside a hidden **Offscreen Document**. It runs a quantized, highly optimized DistilBERT model to classify the text's sentiment into `POSITIVE`, `NEGATIVE`, or `NEUTRAL`. The pet then maps the classified sentiment and current category to a specific emotional animation and displays a matching dialogue comment from the active persona.
+
+1. **Context Extraction:** When you visit a tab, Clawd collects the page's `<title>` and `<meta name="description">`, truncating it to a maximum of 500 characters to optimize processing speeds.
+2. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
+3. **Local Sentiment Model:** The WebAssembly runtime evaluates the text using a quantized version of the **DistilBERT** model (`Xenova/distilbert-base-uncased-finetuned-sst-2-english`).
+4. **Dynamic Sentiment Threshold Mapping:**
+   To classify a page as `POSITIVE` or `NEGATIVE`, the classification probability score must exceed a dynamic confidence threshold. This threshold is calculated from the user's **Sentiment Sensitivity Slider** (ranging from `0` to `100`) using the formula:
+   $$\text{threshold} = 0.90 - \left(\frac{\text{sensitivity}}{100}\right) \times 0.40$$
+   * At **0 sensitivity**, the threshold is a strict **0.90** (requires extremely high confidence to shift mood).
+   * At **50 sensitivity**, the threshold is **0.70**.
+   * At **100 sensitivity**, the threshold drops to **0.50** (easily triggers mood shifts).
+   * If the model's confidence does not exceed the calculated threshold, the sentiment defaults to `NEUTRAL`.
+5. **Contextual Mapping Matrix:**
+   The output sentiment, tab category, and Clawd's active energy level are cross-referenced to trigger a matching physical animation and persona-specific speech bubbles.
 
 ### Setting Up
 1. Open the extension popup panel.
@@ -508,8 +520,8 @@ Open the popup and verify that "Hide on this Tab" and "Hide on this Site" are un
 **Q: Does Clawd use a lot of resources?**
 No. Clawd's animations are powered by native Web Animations API (WAAPI) and lightweight CSS keyframes. Position updates use high-performance `requestAnimationFrame` loops.
 
-**Q: Is my API key secure?**
-Yes. Your Anthropic API key is saved directly in Chrome's local storage on your machine. It is only ever transmitted to Anthropic's secure endpoints and is never uploaded to external servers.
+**Q: Do I need to pay for an API key or hosting?**
+No. Clawd does not use any cloud servers, external databases, or third-party APIs like OpenAI or Anthropic. All text analysis is performed locally in your browser using quantized local models and WebAssembly. It is 100% free to run forever.
 
 **Q: Why does Clawd keep showing a debugger magnifying glass?**
 A JavaScript console error or rejection occurred on the page you are viewing. Once you navigate away or refresh, Clawd will clear his debugger state.
