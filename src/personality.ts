@@ -287,7 +287,7 @@ export class PersonalitySystem {
       }
     }
 
-    this._recordMoodEvent('visit-' + category);
+    this._recordMoodEvent('category_' + category);
 
     await this._save();
   }
