@@ -352,7 +352,7 @@ body::after {
 
 #sandbox-speech-bubble {
   position: absolute;
-  bottom: 120px;
+  bottom: 145px;
   left: 50%;
   transform: translateX(-50%) scale(0.8);
   background: rgba(15, 23, 42, 0.92);
@@ -798,7 +798,7 @@ body::after {
 
 #sandbox-speech-bubble {
   position: absolute;
-  bottom: 120px;
+  bottom: 145px;
   left: 50%;
   transform: translateX(-50%) scale(0.8);
   background: rgba(15, 23, 42, 0.92);
