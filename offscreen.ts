@@ -15,7 +15,7 @@ let modelDownloadProgress = 0;
 // Initialize/fetch the classifier pipeline
 async function getClassifier(): Promise<any> {
   if (classifier) return classifier;
-  
+
   if (modelLoadingState === 'loading') {
     while (modelLoadingState === 'loading') {
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -560,6 +560,53 @@ const COMMENTS: Record<string, Record<string, Record<string, string[]>>> = {
       NEUTRAL: ["A webpage of the standard kind, with information for the mind.", "We browse the web and drift along, like the verses of a song.", "I watch you scroll and click the keys, floating on the digital breeze."]
     }
   },
+  genz: {
+    coding: {
+      POSITIVE: ["The code is giving main character energy today. 💅", "Compiling without errors? Absolute W. 🚀", "This logic is straight fire. 🔥"],
+      NEGATIVE: ["This bug is not very demure. 💀", "L coding session tbh. Let's fix this mess.", "Is it a feature or is it just delulu?"],
+      NEUTRAL: ["Writing code. No thoughts, just vibes. 💻", "Coding era: active. Let's get it.", "StackOverflow is my roman empire."]
+    },
+    reading: {
+      POSITIVE: ["This article is iconic. 📖", "Slatt. Gaining knowledge is the move.", "Obsessed with this read. Very mindful."],
+      NEGATIVE: ["This read is a total mood killer. 😢", "A problematic read. Proceed with caution.", "Oof, that's heavy. Sending virtual hugs."],
+      NEUTRAL: ["Reading is the plot today. 📚", "Staying curious is very demure. 🧠", "Wait, this is actually interesting? Bet."]
+    },
+    music: {
+      POSITIVE: ["This track is a literal bop. 🎵", "Absolute vibes. No skip needed."],
+      NEGATIVE: ["This song is making me feel things. 😢", "Melancholy vibes only today."],
+      NEUTRAL: ["Background noise for the win. 🎧", "Just vibing. Don't mind me."]
+    },
+    video: {
+      POSITIVE: ["This video is ate and left no crumbs. 📺", "Rent free. This content is elite."],
+      NEGATIVE: ["Oof, that was cringe. 🍿", "Ouch. This story is a lot."],
+      NEUTRAL: ["Watching videos. Pure brain rot. 🍿", "Chilling in my watching era."]
+    },
+    social: {
+      POSITIVE: ["Everyone is serving looks online today. ✨", "The TL is actually wholesome for once."],
+      NEGATIVE: ["The comments are not it. 😠", "Cancel culture is typing... 💀"],
+      NEUTRAL: ["Doomscrolling is my cardio. 📱", "Checking the tea. 🍵"]
+    },
+    gaming: {
+      POSITIVE: ["Ate that level up! 🎮", "Gamer mode: Activated. 🏆"],
+      NEGATIVE: ["Skill issue. 😠", "L game. We go again."],
+      NEUTRAL: ["Playing games > Working. Real.", "Gaming era is so back."]
+    },
+    shopping: {
+      POSITIVE: ["Secure the bag! 💰", "Adding to cart is my therapy."],
+      NEGATIVE: ["My bank bank account is screaming. 💸", "Out of stock? That's so mid."],
+      NEUTRAL: ["Window shopping. Financial responsibility is a vibe.", "Just looking. Very mindful."]
+    },
+    search: {
+      POSITIVE: ["Found it! The search engine popped off. 🔍", "The answer is finally here. W."],
+      NEGATIVE: ["No results? That's awkward. 💀", "Google is gaslighting us. No results found."],
+      NEUTRAL: ["Searching the void. 🔍", "Asking the digital oracle. Hope it's not delulu."]
+    },
+    general: {
+      POSITIVE: ["This page is valid. 😊", "The aesthetic of this site is 10/10.", "I'm obsessed with this vibe."],
+      NEGATIVE: ["This site is not a vibe. 😢", "The energy of this page is off.", "Red flag. This page is a lot."],
+      NEUTRAL: ["Just existing on this page. 🐾", "Scrolling. Very demure, very mindful.", "Whatcha looking at? No cap. 👀"]
+    }
+  },
   snarky: {
     coding: {
       POSITIVE: [
@@ -681,7 +728,7 @@ async function getLocalAiEmotion(
     const pipelineInstance = await getClassifier();
     const textToAnalyze = `${pageTitle}. ${metaDescription || ''}`.substring(0, 500);
     const results = await pipelineInstance(textToAnalyze);
-    
+
     if (results && results.length > 0) {
       const topResult = results[0];
       score = topResult.score;
@@ -703,7 +750,7 @@ async function getLocalAiEmotion(
   const personaComments = COMMENTS[persona] || COMMENTS.default;
   const categoryComments = personaComments[category] || personaComments.general;
   const sentimentComments = categoryComments[sentiment] || categoryComments.NEUTRAL;
-  
+
   const commentList = sentimentComments.length > 0 ? sentimentComments : categoryComments.NEUTRAL;
   const comment = commentList[Math.floor(Math.random() * commentList.length)];
 
@@ -714,7 +761,7 @@ async function getLocalAiEmotion(
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'run-local-ai-inference') {
     const { pageTitle, metaDescription, persona, statsContext, sentimentSensitivity, url } = message;
-    
+
     getLocalAiEmotion(pageTitle, metaDescription, url, persona || 'default', statsContext, sentimentSensitivity)
       .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment, category: result.category, sentiment: result.sentiment }))
       .catch((err) => {
