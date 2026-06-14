@@ -486,11 +486,13 @@ Clawd is designed to run 24/7 inside your browser without impacting computer per
 
 ---
 
-## Cross-Tab Behavior (Hybrid Sync)
+## Cross-Tab Behavior (Unified Consciousness)
 
-Clawd runs on a **hybrid synchronization** system:
-- **Physical Coordinates Sync**: Clawd's horizontal position (`x` coordinate), direction, and movement states are synchronized in real-time across all tabs. Clawd is in the exact same spot when you switch between tabs.
-- **Emotional States stay Local**: Each tab evaluates its own page context. Clawd will be coding on GitHub, eating popcorn on YouTube, and reading documentation on Wikipedia — maintaining his local context reactions on each tab.
+Clawd features a sophisticated **Unified Consciousness** synchronization system to ensure a seamless experience across multiple browser tabs:
+
+- **Global Physical Sync**: Clawd's horizontal position (`x` coordinate), direction, and physical movement states are synchronized in real-time across **all open tabs**. If you drag Clawd to the right on one tab, he will be in that exact spot when you switch to any other tab.
+- **Origin-Specific Emotional Sync**: While physical location is shared everywhere, Clawd maintains a "unified mind" across tabs sharing the same **Domain/Origin** (e.g., all your open GitHub tabs). If Clawd enters a "coding" mood or displays a specific speech bubble on one GitHub page, all other GitHub pages will instantly reflect that same emotion and dialogue.
+- **Local Context Awareness**: Tabs on different domains (e.g., GitHub vs. YouTube) maintain their own local context reactions. Clawd will be "coding" on GitHub and "eating popcorn" on YouTube, ensuring his reactions remain relevant to the specific content you are viewing while still sharing a unified physical presence.
 
 ---
 

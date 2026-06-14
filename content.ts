@@ -382,6 +382,9 @@ let interactionTimeout: ReturnType<typeof setTimeout> | null = null;
 let bubbleTimeout: ReturnType<typeof setTimeout> | null = null;
 let customReactionPlayCount = 0;
 
+let lastSentOriginEmotion = '';
+let lastSentOriginDialogue = '';
+
 let isCurrentlyHidden = false;
 
 function isPetHidden(): boolean {
@@ -614,6 +617,19 @@ async function updateEmotion(): Promise<void> {
       triggerContextDialogue(nextEmotion);
     }
 
+    // Unified Consciousness: Broadcast state to other tabs of the same origin
+    const hostname = window.location.hostname;
+    if (nextEmotion !== lastSentOriginEmotion || (aiComment && aiComment !== lastSentOriginDialogue)) {
+      lastSentOriginEmotion = nextEmotion;
+      lastSentOriginDialogue = aiComment || '';
+      safeSendMessage({
+        type: 'update-origin-pet-state',
+        hostname,
+        emotion: nextEmotion,
+        dialogue: aiComment
+      });
+    }
+
     if (customReaction && customReaction.sound && customReaction.sound !== 'none' && !isFocusActive) {
       if (customReactionPlayCount < 2) {
         playSound(customReaction.sound);
@@ -755,6 +771,15 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
   personality.recordInteraction(action);
   loadPet(temporaryMood);
   showBubble(message);
+
+  // Unified Consciousness: Sync interaction to same-origin tabs
+  const hostname = window.location.hostname;
+  safeSendMessage({
+    type: 'update-origin-pet-state',
+    hostname,
+    emotion: temporaryMood,
+    dialogue: message
+  });
 
   if (action === 'pet') {
     playSound('petting');
@@ -1037,6 +1062,15 @@ function handleRuntimeMessage(message: any, sender: chrome.runtime.MessageSender
     if (document.visibilityState === 'visible' && !document.hasFocus() && !movement.isDragging) {
       movement.syncState(message.state);
     }
+  } else if (message.type === 'sync-origin-pet-state') {
+    const { emotion: syncedEmotion, dialogue: syncedDialogue } = message.state;
+    if (syncedEmotion !== emotion.current) {
+      emotion.current = syncedEmotion;
+      loadPet(syncedEmotion);
+    }
+    if (syncedDialogue) {
+      showBubble(syncedDialogue);
+    }
   } else if (message.type === 'check-tab-ai-availability') {
     checkTabAiAvailability()
       .then((availability) => sendResponse({ success: true, availability }))
@@ -1087,28 +1121,39 @@ async function init(): Promise<void> {
     showPet();
   }
 
-  safeSendMessage({ type: 'get-tab-http-error' }, (response: { errorCode?: number } | undefined) => {
-    if (response && response.errorCode) {
-      triggers.setHttpError(response.errorCode);
+  // Unified Consciousness: Fetch initial origin state
+  safeSendMessage({ type: 'get-origin-pet-state', hostname: window.location.hostname }, (originState) => {
+    if (originState && (Date.now() - originState.lastUpdateTime < 30000)) {
+      emotion.current = originState.emotion;
+      loadPet(originState.emotion);
+      if (originState.dialogue) {
+        showBubble(originState.dialogue);
+      }
     }
 
-    safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
-      if (sharedState && sharedState.y !== 0) {
-        movement.syncState(sharedState);
+    safeSendMessage({ type: 'get-tab-http-error' }, (response: { errorCode?: number } | undefined) => {
+      if (response && response.errorCode) {
+        triggers.setHttpError(response.errorCode);
       }
-      updateEmotion();
-      
-      if (isPetHidden()) {
-        hidePet();
-      } else {
-        movement.start();
-        if (!sessionStorage.getItem('clawd-has-greeted')) {
-          const petName = currentSettings.name || 'Clawd';
-          showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
-          playSound('greeting');
-          sessionStorage.setItem('clawd-has-greeted', 'true');
+
+      safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
+        if (sharedState && sharedState.y !== 0) {
+          movement.syncState(sharedState);
         }
-      }
+        updateEmotion();
+        
+        if (isPetHidden()) {
+          hidePet();
+        } else {
+          movement.start();
+          if (!sessionStorage.getItem('clawd-has-greeted')) {
+            const petName = currentSettings.name || 'Clawd';
+            showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
+            playSound('greeting');
+            sessionStorage.setItem('clawd-has-greeted', 'true');
+          }
+        }
+      });
     });
   });
   

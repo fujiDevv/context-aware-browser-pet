@@ -1,4 +1,4 @@
-import { SharedPetState } from './src/types';
+import { SharedPetState, OriginPetState } from './src/types';
 
 let sharedPetState: SharedPetState = {
   x: 200,
@@ -9,6 +9,7 @@ let sharedPetState: SharedPetState = {
   emotion: 'happy'
 };
 
+const originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -107,6 +108,47 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       });
     }
 
+    sendResponse({ success: true });
+    return false;
+  }
+
+  if (message.type === 'get-origin-pet-state') {
+    const hostname = message.hostname;
+    if (hostname && originPetStates[hostname]) {
+      sendResponse(originPetStates[hostname]);
+    } else {
+      sendResponse(null);
+    }
+    return false;
+  }
+
+  if (message.type === 'update-origin-pet-state') {
+    const { hostname, emotion, dialogue } = message;
+    if (hostname) {
+      const newState: OriginPetState = {
+        emotion,
+        dialogue,
+        lastUpdateTime: Date.now()
+      };
+      originPetStates[hostname] = newState;
+
+      // Broadcast to other tabs with the same hostname
+      chrome.tabs.query({}, (tabs) => {
+        tabs.forEach((tab) => {
+          if (tab.url) {
+            try {
+              const tabHostname = new URL(tab.url).hostname;
+              if (tabHostname === hostname && sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
+                chrome.tabs.sendMessage(tab.id, {
+                  type: 'sync-origin-pet-state',
+                  state: newState
+                }).catch(() => { });
+              }
+            } catch (e) { }
+          }
+        });
+      });
+    }
     sendResponse({ success: true });
     return false;
   }

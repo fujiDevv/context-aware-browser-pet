@@ -75,6 +75,12 @@ export interface SharedPetState {
   emotion: string;
 }
 
+export interface OriginPetState {
+  emotion: string;
+  dialogue?: string;
+  lastUpdateTime: number;
+}
+
 export interface TriggerSnapshot {
   hostname: string;
   pageTitle: string;
