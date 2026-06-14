@@ -373,7 +373,7 @@ const bubble = document.createElement('div');
 bubble.className = 'pet-speech-bubble';
 container.appendChild(bubble);
 
-let currentSettings: PetSettings = { size: 100, speed: 1.2, aiMode: false, apiKey: '', soundEnabled: true, soundVolume: 0.5, scheduleEnabled: true };
+let currentSettings: PetSettings = { size: 128, speed: 1.2, aiMode: false, apiKey: '', soundEnabled: true, soundVolume: 0.5, scheduleEnabled: true };
 let hasEvaluatedPageAi = false;
 let currentAiCategory: string | undefined = undefined;
 let currentAiSentiment: string | undefined = undefined;

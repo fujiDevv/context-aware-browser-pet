@@ -75,6 +75,7 @@ const lblHabitBehavior = document.getElementById('lbl-habit-behavior') as HTMLEl
 const aiStatusBadge = document.getElementById('ai-status-badge') as HTMLElement;
 const aiStatusText = document.getElementById('ai-status-text') as HTMLElement;
 const aiStatusSubtitle = document.getElementById('ai-status-subtitle') as HTMLElement;
+const activeTabsText = document.getElementById('active-tabs-text');
 
 // Gauges
 const gauges = {
@@ -194,6 +195,13 @@ async function init() {
   updateUIStats(personality.stats);
   updateUIMood(storageData['pet-mood'] || 'happy');
   updateLocalAiStatus();
+  updatePresence();
+
+  // Polling for real-time indicators
+  setInterval(() => {
+    updatePresence();
+    updateLocalAiStatus();
+  }, 5000);
 
   // Initial Wardrobe rendering
   renderWardrobe(personality.stats, storageData['pet-settings']?.costume || 'none');
@@ -221,7 +229,7 @@ async function init() {
   // Setting bindings
   nameInput.addEventListener('input', () => {
     const name = nameInput.value.trim() || 'Clawd';
-    petNameEl.textContent = name;
+    if (petNameEl) petNameEl.textContent = name;
     saveSettings();
   });
 
@@ -412,14 +420,16 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
   }
 
   // Visual mood preview
-  previewImg.src = `../assets/pets/clawd-${temporaryMood}.svg`;
+  if (previewImg) previewImg.src = `../assets/pets/clawd-${temporaryMood}.svg`;
   
   // Jump animation WAAPI
-  previewImg.animate([
-    { transform: 'translateY(0)' },
-    { transform: 'translateY(-30px)' },
-    { transform: 'translateY(0)' }
-  ], { duration: 400, easing: 'ease-out' });
+  if (previewImg) {
+    previewImg.animate([
+      { transform: 'translateY(0)' },
+      { transform: 'translateY(-30px)' },
+      { transform: 'translateY(0)' }
+    ], { duration: 400, easing: 'ease-out' });
+  }
 
   await personality.recordInteraction(action);
 
@@ -471,9 +481,9 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
 
 function updateUIMood(mood: string): void {
   const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
-  petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
+  if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
   const svgName = getMascotSvgName(mood, activeCostume);
-  previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
+  if (previewImg) previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
 }
 
 function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
@@ -509,20 +519,22 @@ function updateUIStats(stats: PetStats | undefined): void {
   if (!stats) return;
 
   // Level & XP
-  petLevelEl.textContent = String(stats.level);
+  if (petLevelEl) petLevelEl.textContent = String(stats.level);
   const xpNeeded = Math.floor(Math.pow(stats.level, 1.5) * 150);
-  xpText.textContent = `${stats.xp} / ${xpNeeded} XP`;
-  barXp.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
+  if (xpText) xpText.textContent = `${stats.xp} / ${xpNeeded} XP`;
+  if (barXp) barXp.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
 
   // Prestige status
   const hasPrestige = stats.prestige && stats.prestige > 0;
-  lblAdminPrestige.textContent = String(stats.prestige || 0);
-  if (hasPrestige) {
-    prestigeLevelEl.textContent = String(stats.prestige);
-    prestigeBadge.classList.remove('hidden');
-  } else {
-    prestigeBadge.classList.add('hidden');
+  if (lblAdminPrestige) lblAdminPrestige.textContent = String(stats.prestige || 0);
+  if (prestigeBadge) {
+    if (hasPrestige) {
+      prestigeBadge.classList.remove('hidden');
+    } else {
+      prestigeBadge.classList.add('hidden');
+    }
   }
+  if (prestigeLevelEl) prestigeLevelEl.textContent = String(stats.prestige || 0);
 
   // Toggle Rebirth buttons
   if (stats.level >= 50) {
@@ -531,12 +543,12 @@ function updateUIStats(stats: PetStats | undefined): void {
     btnPrestige.setAttribute('disabled', 'true');
   }
 
-
-
   // Dominant trait
   const trait = getDominantTrait(stats);
-  petTraitBadge.textContent = trait.toUpperCase();
-  petTraitBadge.className = `badge badge-trait trait-${trait}`;
+  if (petTraitBadge) {
+    petTraitBadge.textContent = trait.toUpperCase();
+    petTraitBadge.className = `badge badge-trait trait-${trait}`;
+  }
   lblHabitTrait.textContent = trait;
 
   // Calculations for speed
@@ -683,7 +695,7 @@ function renderTimeline(history: any[] | undefined) {
 
 function applySettings(settings: PetSettings | undefined) {
   const defaults: PetSettings = {
-    size: 100,
+    size: 128,
     speed: 1.0,
     soundEnabled: true,
     soundVolume: 0.8,
@@ -704,9 +716,9 @@ function applySettings(settings: PetSettings | undefined) {
   const activeSettings = { ...defaults, ...settings };
 
   nameInput.value = activeSettings.name || 'Clawd';
-  petNameEl.textContent = nameInput.value;
+  if (petNameEl) petNameEl.textContent = nameInput.value;
 
-  const size = activeSettings.size ?? 100;
+  const size = activeSettings.size ?? 128;
   sizeSlider.value = String(size);
   sizeVal.textContent = `${size}px`;
 
@@ -717,15 +729,17 @@ function applySettings(settings: PetSettings | undefined) {
   activeCostume = activeSettings.costume || 'none';
   
   // Apply costume glows to the preview image in the sanctuary stage
-  previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
-  if (activeCostume !== 'none' && ['detective', 'wizard', 'party'].includes(activeCostume)) {
-    previewImg.classList.add(`costume-${activeCostume}`);
+  if (previewImg) {
+    previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
+    if (activeCostume !== 'none' && ['detective', 'wizard', 'party'].includes(activeCostume)) {
+      previewImg.classList.add(`costume-${activeCostume}`);
+    }
   }
 
   // Ensure preview image reflects costume on load
-  const lastKnownMood = petMoodBadge.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
+  const lastKnownMood = petMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
   const svgName = getMascotSvgName(lastKnownMood, activeCostume);
-  previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
+  if (previewImg) previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
 
   personaSelect.value = activeSettings.persona || 'default';
 
@@ -790,7 +804,7 @@ function saveSettings() {
       sleepStartHour: sleepStartSelect.value !== '' ? Number(sleepStartSelect.value) : undefined,
       sleepEndHour: sleepEndSelect.value !== '' ? Number(sleepEndSelect.value) : undefined,
       workStartHour: workStartSelect.value !== '' ? Number(workStartSelect.value) : undefined,
-      workEndHour: workEndSelect.value !== '' ? Number(workEndSelect.value) : undefined,
+      workEndHour: workEndSelect.value !== '' ? Number(workEndHour) : undefined,
       focusActive: focusActiveToggle.checked,
       focusStartHour: focusStartSelect.value !== '' ? Number(focusStartSelect.value) : undefined,
       focusEndHour: focusEndSelect.value !== '' ? Number(focusEndSelect.value) : undefined,
@@ -803,44 +817,53 @@ function saveSettings() {
 
 // AI status update helper
 function updateLocalAiStatus() {
-  if (!aiToggle.checked) {
-    aiStatusBadge.className = 'status-indicator status-unsupported';
-    aiStatusText.textContent = 'Inactive';
-    aiStatusSubtitle.textContent = 'Enable Local AI Mode to initialize';
+  const isEnabled = aiToggle.checked;
+  
+  if (!isEnabled) {
+    if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-unsupported';
+    if (aiStatusText) aiStatusText.textContent = 'Local AI: Inactive';
+    if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Enable Local AI Mode';
     return;
   }
 
-  aiStatusBadge.className = 'status-indicator status-checking';
-  aiStatusText.textContent = 'Checking...';
-  aiStatusSubtitle.textContent = 'Querying local model layer...';
-
   chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: any) => {
-    aiStatusBadge.className = 'status-indicator';
+    let text = 'Local AI: Checking...';
+    let subtitle = 'Querying model...';
+    let className = 'status-indicator status-checking';
 
     if (chrome.runtime.lastError || !response || !response.success) {
-      aiStatusBadge.classList.add('status-unsupported');
-      aiStatusText.textContent = 'Offline';
-      aiStatusSubtitle.textContent = 'Failed to connect to background AI layer';
-      return;
+      text = 'Local AI: Offline';
+      subtitle = 'AI Layer Disconnected';
+      className = 'status-indicator status-unsupported';
+    } else {
+      const s = response.state;
+      const p = response.progress;
+      if (s === 'ready') {
+        text = 'Local AI: Ready';
+        subtitle = 'DistilBERT Model Active';
+        className = 'status-indicator status-ready';
+      } else if (s === 'loading') {
+        text = `Local AI: ${p}%`;
+        subtitle = 'Fetching model weights';
+        className = 'status-indicator status-downloading';
+      } else if (s === 'error') {
+        text = 'Local AI: Error';
+        subtitle = 'WASM Failure';
+        className = 'status-indicator status-unsupported';
+      }
     }
 
-    const { state, progress } = response;
-    if (state === 'ready') {
-      aiStatusBadge.classList.add('status-ready');
-      aiStatusText.textContent = 'Ready';
-      aiStatusSubtitle.textContent = 'Local DistilBERT model active and running';
-    } else if (state === 'loading') {
-      aiStatusBadge.classList.add('status-downloading');
-      aiStatusText.textContent = `Downloading (${progress}%)`;
-      aiStatusSubtitle.textContent = 'Downloading weights (~67MB) to browser storage';
-    } else if (state === 'error') {
-      aiStatusBadge.classList.add('status-unsupported');
-      aiStatusText.textContent = 'Error';
-      aiStatusSubtitle.textContent = 'Failed to compile model weights';
-    } else {
-      aiStatusBadge.classList.add('status-checking');
-      aiStatusText.textContent = 'Inactive';
-      aiStatusSubtitle.textContent = 'Turn on Local AI Mode to initialize';
+    if (aiStatusBadge) aiStatusBadge.className = className;
+    if (aiStatusText) aiStatusText.textContent = text;
+    if (aiStatusSubtitle) aiStatusSubtitle.textContent = subtitle;
+  });
+}
+
+function updatePresence() {
+  chrome.tabs.query({}, (tabs) => {
+    if (activeTabsText) {
+      const count = tabs.length;
+      activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
     }
   });
 }
@@ -1122,16 +1145,19 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
         saveSettings();
         
         // Update styling of preview image in real time
-        previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
-        if (costumeId !== 'none' && ['detective', 'wizard', 'party'].includes(costumeId)) {
-          previewImg.classList.add(`costume-${costumeId}`);
+        if (previewImg) {
+          previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
+          if (costumeId !== 'none' && ['detective', 'wizard', 'party'].includes(costumeId)) {
+            previewImg.classList.add(`costume-${costumeId}`);
+          }
         }
         
         // Update preview image src based on active costume
         const currentMoodBadge = document.getElementById('pet-mood') as HTMLElement;
-        const currentMood = currentMoodBadge.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
+        const currentMood = currentMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
         const svgName = getMascotSvgName(currentMood, costumeId);
-        previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
+        const src = `../assets/pets/clawd-${svgName}.svg`;
+        if (previewImg) previewImg.src = src;
 
         renderWardrobe(stats, costumeId);
       }

@@ -121,13 +121,19 @@
               </div>
             </div>
 
-            <div class="ai-status-card">
-              <h3>Local AI (DistilBERT Context)</h3>
-              <div class="ai-indicator-row">
+            <div class="status-indicators-card">
+              <div class="indicator-row">
                 <div class="status-indicator status-checking" id="ai-status-badge"></div>
-                <div class="ai-indicator-text">
-                  <strong id="ai-status-text">Checking...</strong>
-                  <span id="ai-status-subtitle">Connecting to local model layer</span>
+                <div class="indicator-text">
+                  <strong id="ai-status-text">Local AI: Checking...</strong>
+                  <span id="ai-status-subtitle">DistilBERT Model Status</span>
+                </div>
+              </div>
+              <div class="indicator-row" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color);">
+                <div class="status-icon">🌐</div>
+                <div class="indicator-text">
+                  <strong id="active-tabs-text">1 Tab Active</strong>
+                  <span>Cross-tab Synchronization</span>
                 </div>
               </div>
             </div>
@@ -340,8 +346,8 @@
 
               <div class="form-row">
                 <div class="form-group col">
-                  <label for="size-slider">Mascot Size (<span id="size-val">100px</span>)</label>
-                  <input type="range" id="size-slider" min="32" max="128" value="100" class="slider">
+                  <label for="size-slider">Mascot Size (<span id="size-val">128px</span>)</label>
+                  <input type="range" id="size-slider" min="32" max="256" value="128" class="slider">
                 </div>
                 <div class="form-group col">
                   <label for="speed-slider">Walking Speed (<span id="speed-val">1.0x</span>)</label>

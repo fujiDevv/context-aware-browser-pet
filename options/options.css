@@ -256,6 +256,452 @@ body::after {
 }
 
 .playground-stage {
+  height: 18rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--accent-border);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pet-glow-orb {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(199, 93, 63, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatOrb 6s infinite ease-in-out;
+}
+
+@keyframes floatOrb {
+
+  0%,
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+
+  50% {
+    transform: scale(1.1) translate(4px, -4px);
+  }
+}
+
+.stage-bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(199, 93, 63, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(199, 93, 63, 0.03) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Sandbox Physics Elements */
+.sandbox-toolbar {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 20;
+}
+
+.toy-btn {
+  background: transparent;
+  border: 2px solid transparent;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.toy-btn:hover {
+  transform: scale(1.15);
+}
+
+.toy-btn.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.sandbox-toy {
+  position: absolute;
+  font-size: 24px;
+  user-select: none;
+  pointer-events: none;
+  z-index: 15;
+  transition: transform 0.1s linear, opacity 0.3s ease;
+}
+
+#sandbox-speech-bubble {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(8px);
+  color: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 30;
+}
+
+#sandbox-speech-bubble.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+#sandbox-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0;
+  border-style: solid;
+  border-color: rgba(15, 23, 42, 0.92) transparent;
+  display: block;
+  width: 0;
+}
+
+#pet-preview {
+  width: 90px;
+  height: 90px;
+  z-index: 10;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
+  animation: petIdle 4s infinite ease-in-out;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+#pet-preview:hover {
+  transform: scale(1.1) rotate(2deg);
+}
+
+
+@keyframes petIdle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.playground-interactions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.interact-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.interact-btn:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.pet-btn:hover {
+  color: var(--accent);
+  background-color: var(--accent-bg);
+  border-color: var(--accent-border);
+}
+
+.feed-btn:hover {
+  color: var(--green);
+  background-color: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.shoo-btn:hover {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.05);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* Info Card styling */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--border-color);
+}
+
+.badge-lvl {
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.badge-prestige {
+  background-color: var(--gold);
+  color: #000;
+  border-color: transparent;
+}
+
+.badge-mood {
+  background-color: var(--bg-hover);
+  color: var(--text-secondary);
+}
+
+.badge-trait {
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.xp-progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.xp-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.xp-bar-track {
+  height: 6px;
+  background-color: var(--border-color);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  width: 0%;
+  background-color: var(--xp-color);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.habits-card,
+.status-indicators-card {
+  background-color: var(--bg-hover);
+  background-image: var(--noise-grain);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 14px;
+}
+
+.habits-card h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+}
+
+.habit-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.habit-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.habit-row .label {
+  color: var(--text-secondary);
+}
+
+.habit-row .val {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.indicator-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--text-muted);
+}
+
+.status-checking {
+  background-color: var(--yellow);
+  animation: pulse 1.5s infinite;
+}
+
+.status-ready {
+  background-color: var(--green);
+}
+
+.status-unsupported {
+  background-color: #ef4444;
+}
+
+.status-downloading {
+  background-color: var(--blue);
+  animation: pulse 1.5s infinite;
+}
+
+.indicator-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.indicator-text strong {
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.indicator-text span {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.status-icon {
+  font-size: 16px;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Pages */
+.page-pane {
+  display: none;
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.page-pane.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Playground & Sanctuary Layout */
+.sanctuary-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.playground-card,
+.info-card {
+  background-color: var(--bg-card);
+  background-image: var(--noise-grain);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.playground-stage {
   height: 240px;
   background-color: var(--bg-secondary);
   border: 1px solid var(--accent-border);
@@ -314,7 +760,7 @@ body::after {
   padding: 6px 12px;
   border-radius: 20px;
   border: 1px solid var(--border-color);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   z-index: 20;
 }
 

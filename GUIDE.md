@@ -361,7 +361,7 @@ Click the extension icon or open the Options Dashboard to access comprehensive c
 - **Visibility**: Toggle options to hide Clawd on the current tab or block him entirely on the active domain.
 - **Pet Name**: Give your pet a custom name (up to 12 characters).
 - **Pet Glow Effect**: Select costume auras unlocked at LVL 5, 10, and 15.
-- **Sliders**: Adjust size (48px - 128px), movement speed (0.1x - 5.0x), and volume.
+- **Sliders**: Adjust size (48px - 256px), movement speed (0.1x - 5.0x), and volume.
 - **AI Mood Analysis**: Toggle local sentiment evaluation and choose AI commentary persona.
 
 ### � Interactive Schedule Planner
