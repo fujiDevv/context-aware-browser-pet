@@ -163,12 +163,26 @@ function detectPageCategory(url: string, title: string): string {
     return 'shopping';
   }
 
+  const getHostname = (rawUrl: string): string => {
+    try {
+      return new URL(rawUrl).hostname.toLowerCase();
+    } catch {
+      return '';
+    }
+  };
+
+  const urlMatchesDomain = (rawUrl: string, domain: string): boolean => {
+    const host = getHostname(rawUrl);
+    const normalizedDomain = domain.toLowerCase();
+    return host === normalizedDomain || host.endsWith(`.${normalizedDomain}`);
+  };
+
   // Search
   if (
-    urlLower.includes('google.com') ||
-    urlLower.includes('bing.com') ||
-    urlLower.includes('duckduckgo.com') ||
-    urlLower.includes('yahoo.com')
+    urlMatchesDomain(url, 'google.com') ||
+    urlMatchesDomain(url, 'bing.com') ||
+    urlMatchesDomain(url, 'duckduckgo.com') ||
+    urlMatchesDomain(url, 'yahoo.com')
   ) {
     return 'search';
   }
