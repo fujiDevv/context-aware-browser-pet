@@ -1193,9 +1193,12 @@ async function init(): Promise<void> {
         hidePet();
       } else {
         movement.start();
-        const petName = currentSettings.name || 'Clawd';
-        showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
-        playSound('greeting');
+        if (!sessionStorage.getItem('clawd-has-greeted')) {
+          const petName = currentSettings.name || 'Clawd';
+          showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
+          playSound('greeting');
+          sessionStorage.setItem('clawd-has-greeted', 'true');
+        }
       }
     });
   });
