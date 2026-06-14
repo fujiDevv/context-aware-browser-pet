@@ -14,16 +14,26 @@ export class MovementEngine {
   set paused(value: boolean) {
     this._paused = value;
     if (!value && !this._raf && this.hasFallen) {
-      this._tick();
+      this.lastTime = 0;
+      this._raf = requestAnimationFrame((time) => this._tick(time));
     }
   }
   isDragging: boolean;
   wasDragged: boolean;
   _raf: number | null;
+  lastTime: number = 0;
   hasFallen: boolean;
   toyTargets: { x: number; elementRef: WeakRef<HTMLElement>; type: string; onReach: () => void }[] = [];
   cursorTargetX: number | null = null;
   _posAnimation: SpringAnimation | null = null;
+
+  _handleResize = () => {
+    const W = window.innerWidth - this.size;
+    const H = window.innerHeight - this.size;
+    this.x = Math.max(0, Math.min(this.x, W));
+    this.y = Math.max(0, Math.min(this.y, H));
+    this._apply();
+  };
 
   constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number } = {}) {
     this.elRef = new WeakRef(el);
@@ -41,8 +51,10 @@ export class MovementEngine {
     this.wasDragged = false;
     this.hasFallen = false;
     this._raf = null;
+    this.lastTime = 0;
     
     this._setupDrag();
+    window.addEventListener('resize', this._handleResize);
   }
 
   get el(): HTMLElement | null {
@@ -85,6 +97,7 @@ export class MovementEngine {
       cancelAnimationFrame(this._raf);
       this._raf = null;
     }
+    window.removeEventListener('resize', this._handleResize);
   }
 
   _stopPosAnimation(): void {
@@ -152,28 +165,41 @@ export class MovementEngine {
     this._apply();
   }
 
-  _tick(): void {
+  _tick(currentTime?: number): void {
     if (this._paused || (typeof document !== 'undefined' && document.visibilityState === 'hidden')) {
       this._raf = null;
+      this.lastTime = 0;
       return;
     }
     const el = this.el;
     if (!el) {
       this._raf = null;
+      this.lastTime = 0;
       return;
     }
-    this._step();
+
+    let timeMultiplier = 1;
+    if (currentTime) {
+      if (!this.lastTime) this.lastTime = currentTime;
+      const deltaTime = currentTime - this.lastTime;
+      this.lastTime = currentTime;
+      // Cap at 3x (approx 50ms) to prevent teleportation during lag spikes
+      timeMultiplier = Math.min(deltaTime / 16.66, 3);
+    }
+
+    this._step(timeMultiplier);
     this._apply();
-    this._raf = requestAnimationFrame(() => this._tick());
+    this._raf = requestAnimationFrame((time) => this._tick(time));
   }
 
   resumeTick(): void {
     if (!this._raf && !this._paused && this.hasFallen) {
-      this._tick();
+      this.lastTime = 0;
+      this._raf = requestAnimationFrame((time) => this._tick(time));
     }
   }
 
-  _step(): void {
+  _step(timeMultiplier: number = 1): void {
     const W = window.innerWidth - this.size;
     const H = window.innerHeight - this.size;
 
@@ -181,7 +207,7 @@ export class MovementEngine {
 
     const hour = new Date().getHours();
     const isNight = hour >= 22 || hour < 6;
-    const currentSpeed = isNight ? this.speed * 0.5 : this.speed;
+    const currentSpeed = (isNight ? this.speed * 0.5 : this.speed) * timeMultiplier;
 
     if (this.toyTargets.length > 0) {
       const currentTarget = this.toyTargets[0];
