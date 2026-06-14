@@ -21,7 +21,7 @@ export class PersonalitySystem {
   onStatsChange?: (stats: PetStats) => void;
   isLoaded: Promise<PetStats>;
   disabledEmotions: string[] = [];
-  private _decayInterval: any = null;
+  private _decayInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor(onStatsChange?: (stats: PetStats) => void) {
     this.stats = { ...DEFAULT_STATS };
