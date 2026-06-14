@@ -350,7 +350,19 @@ style.textContent = `
 `;
 const shadowHost = document.createElement('div');
 shadowHost.id = 'clawd-companion-host';
-document.body.appendChild(shadowHost);
+
+// Safety check for document.body to prevent null appendChild error
+if (document.body) {
+  document.body.appendChild(shadowHost);
+} else {
+  const observer = new MutationObserver((mutations, obs) => {
+    if (document.body) {
+      document.body.appendChild(shadowHost);
+      obs.disconnect();
+    }
+  });
+  observer.observe(document.documentElement, { childList: true });
+}
 
 const shadowRoot = shadowHost.attachShadow({ mode: 'closed' });
 
