@@ -10,7 +10,8 @@ import { ViewManager } from './src/view';
 import { STORAGE_KEYS } from './src/constants';
 
 let syncInterval: ReturnType<typeof setInterval> | null = null;
-let emotionInterval: ReturnType<typeof setInterval> | null = null;
+let idleTimer: ReturnType<typeof setTimeout> | null = null;
+let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 let audioCtx: AudioContext | null = null;
 let resumePromise: Promise<void> | null = null;
@@ -117,8 +118,9 @@ async function playSound(type: string): Promise<void> {
 
 function cleanupOrphanedScript(): void {
   if (syncInterval) clearInterval(syncInterval);
-  if (emotionInterval) clearInterval(emotionInterval);
-  
+  if (idleTimer) clearTimeout(idleTimer);
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+
   try {
     movement.stop();
   } catch (e) { console.warn('[Clawd Content] movement.stop error:', e); }
@@ -144,7 +146,7 @@ function cleanupOrphanedScript(): void {
   try {
     view.destroy();
   } catch (e) { console.warn('[Clawd Content] view destruction error:', e); }
-  
+
   console.log("Browser Pet: Old extension context invalidated. Injected mascot cleaned up.");
 }
 
@@ -208,8 +210,89 @@ function showPet(): void {
   movement.start();
 }
 
-const triggers = new TriggerDetector();
-const personality = new PersonalitySystem(() => {});
+function debouncedUpdateEmotion(delay = 500): void {
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    updateEmotion();
+    resetIdleTimer();
+  }, delay);
+}
+
+function resetIdleTimer(): void {
+  if (idleTimer) clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => {
+    handleIdleBehavior();
+  }, 10_000); // Check for minor idle behaviors every 10s
+}
+
+function handleIdleBehavior(): void {
+  if (!checkContextOrCleanup()) return;
+  if (isPetHidden()) return;
+  if (isTemporarilyInteracting) return;
+
+  const context = triggers.snapshot();
+  const scheduleEnabled = currentSettings.scheduleEnabled !== false;
+
+  if (!scheduleEnabled) {
+    if (Math.random() < 0.2) {
+      const decisions = [
+        () => {
+          movement.shoo();
+          view.showBubble("Let's go explore this side! 🏃‍♂️");
+        },
+        () => {
+          movement.chaseCursor(context.mouseX - currentSettings.size / 2);
+          view.showBubble("I'm following you! 👀");
+        },
+        () => {
+          const pageTitle = document.title || 'this page';
+          const truncatedTitle = pageTitle.length > 25 ? pageTitle.substring(0, 22) + '...' : pageTitle;
+          view.showBubble(`Analyzing "${truncatedTitle}"... looks cool! 🧐`);
+          loadPet('working-thinking');
+          isTemporarilyInteracting = true;
+          setTimeout(() => {
+            isTemporarilyInteracting = false;
+            loadPet(emotion.current);
+          }, 2500);
+        }
+      ];
+      const chosenDecision = decisions[Math.floor(Math.random() * decisions.length)];
+      chosenDecision();
+    }
+  } else {
+    let isFocusActive = currentSettings.focusActive || false;
+    const currentHour = new Date().getHours();
+    if (!isFocusActive && currentSettings.focusStartHour !== undefined && currentSettings.focusEndHour !== undefined) {
+      const start = currentSettings.focusStartHour;
+      const end = currentSettings.focusEndHour;
+      if (start < end) {
+        isFocusActive = currentHour >= start && currentHour < end;
+      } else {
+        isFocusActive = currentHour >= start || currentHour < end;
+      }
+    }
+
+    if (!isFocusActive) {
+      if (context.idleSeconds >= 10 && context.idleSeconds < 45 && Math.random() < 0.15) {
+        movement.chaseCursor(context.mouseX - currentSettings.size / 2);
+        const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
+        view.showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);
+      } else if (context.idleSeconds >= 45) {
+        updateEmotion(); // Let engine pick deep idle (skateboard, sleeping, etc)
+      }
+    }
+  }
+
+  // Continue checking if still idle
+  if (context.idleSeconds >= 10) {
+    resetIdleTimer();
+  }
+}
+
+const triggers = new TriggerDetector(() => {
+  debouncedUpdateEmotion();
+});
+const personality = new PersonalitySystem(() => { });
 const emotion = new EmotionEngine(personality);
 
 const view = new ViewManager({
@@ -260,7 +343,7 @@ const movement = new MovementEngine(view.getContainer(), {
 async function loadPet(name: string): Promise<void> {
   let assetName = name;
   const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
-  
+
   if (idleStates.includes(name)) {
     const costumeMap: Record<string, string> = {
       christmas: 'christmas',
@@ -290,7 +373,7 @@ async function updateEmotion(): Promise<void> {
 
   const context = triggers.snapshot();
   const scheduleEnabled = currentSettings.scheduleEnabled !== false;
-  
+
   if (scheduleEnabled && !currentSettings.aiMode) {
     const siteCategory = emotion._classifySite(context.hostname);
     if (siteCategory !== 'default') {
@@ -349,10 +432,10 @@ async function updateEmotion(): Promise<void> {
       const lastCommentTime = storedTime[STORAGE_KEYS.LAST_AI_COMMENT_TIME] || 0;
       const freqSec = currentSettings.commentFrequency ?? 60;
       const now = Date.now();
-      
+
       if (now - lastCommentTime >= freqSec * 1000) {
         await chrome.storage.local.set({ [STORAGE_KEYS.LAST_AI_COMMENT_TIME]: now });
-        
+
         const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
         const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
         const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity);
@@ -361,7 +444,7 @@ async function updateEmotion(): Promise<void> {
         currentAiCategory = result.category;
         currentAiSentiment = result.sentiment;
         hasEvaluatedPageAi = true;
-        
+
         if (scheduleEnabled && currentAiCategory) {
           personality.recordSiteVisit(currentAiCategory, currentAiSentiment);
         }
@@ -379,7 +462,7 @@ async function updateEmotion(): Promise<void> {
   if (nextEmotion !== emotion.current || aiComment || !view.getPetImg().src) {
     emotion.current = nextEmotion;
     loadPet(nextEmotion);
-    
+
     if (aiComment) {
       view.showBubble(aiComment);
     } else {
@@ -440,13 +523,13 @@ function triggerContextDialogue(mood: string): void {
   if (scheduleEnabled) {
     const stats = personality.stats;
     const trait = personality.getDominantTrait();
-    
+
     if (stats.energy < 30 && Math.random() < 0.5) {
       const options = personaDialogs.lowEnergy || PERSONA_AUTONOMOUS_DIALOGUES.default.lowEnergy;
       view.showBubble(options[Math.floor(Math.random() * options.length)]);
       return;
     }
-    
+
     if (stats.focus > 80 && Math.random() < 0.4) {
       const options = personaDialogs.highFocus || PERSONA_AUTONOMOUS_DIALOGUES.default.highFocus;
       view.showBubble(options[Math.floor(Math.random() * options.length)]);
@@ -518,7 +601,7 @@ function handleShoo(e: Event) {
 function triggerInteraction(action: string, temporaryMood: string, duration: number, message: string): void {
   isTemporarilyInteracting = true;
   if (interactionTimeout) clearTimeout(interactionTimeout);
-  
+
   try {
     view.getPetImg().getAnimations().forEach(anim => anim.cancel());
   } catch (err) { console.warn('[Clawd Content] triggerInteraction animations cancel error:', err); }
@@ -558,7 +641,7 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
       { transform: 'scale(1)' }
     ], { duration: 650, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   }
-  
+
   interactionTimeout = setTimeout(() => {
     isTemporarilyInteracting = false;
     loadPet(emotion.current);
@@ -609,7 +692,7 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
   };
 
   view.showBubble(dialogs[toyType] || "Yay, a toy! 🎉");
-  
+
   const playMood = toyType === 'fish' ? 'celebrating' : 'dancing';
   loadPet(playMood);
 
@@ -793,6 +876,8 @@ function handleVisibilityChange() {
   if (isPetHidden()) return;
   if (document.visibilityState === 'visible') {
     movement.resumeTick();
+    resetIdleTimer();
+    debouncedUpdateEmotion(100);
     safeSendMessage({ type: 'get-pet-state' }, (state: SharedPetState | undefined) => {
       if (state) {
         movement.syncState(state);
@@ -801,7 +886,15 @@ function handleVisibilityChange() {
   }
 }
 
+function handleWindowFocus() {
+  if (!checkContextOrCleanup()) return;
+  if (isPetHidden()) return;
+  resetIdleTimer();
+  debouncedUpdateEmotion(100);
+}
+
 document.addEventListener('visibilitychange', handleVisibilityChange);
+window.addEventListener('focus', handleWindowFocus);
 
 function handleConsoleError() {
   if (checkContextOrCleanup() && !isPetHidden()) {
@@ -812,7 +905,7 @@ function handleConsoleError() {
 async function init(): Promise<void> {
   await loadAndApplySettings();
   await personality.isLoaded;
-  
+
   if (!checkContextOrCleanup()) return;
 
   view.preloadAssets();
@@ -849,7 +942,7 @@ async function init(): Promise<void> {
           movement.syncState(sharedState);
         }
         updateEmotion();
-        
+
         if (isPetHidden()) {
           hidePet();
         } else {
@@ -864,61 +957,10 @@ async function init(): Promise<void> {
       });
     });
   });
-  
-  emotionInterval = setInterval(() => {
-    if (checkContextOrCleanup() && !isPetHidden()) {
-      updateEmotion();
 
-      const context = triggers.snapshot();
-      const scheduleEnabled = currentSettings.scheduleEnabled !== false;
-
-      if (!scheduleEnabled) {
-        if (Math.random() < 0.15 && !isTemporarilyInteracting) {
-          const decisions = [
-            () => {
-              movement.shoo();
-              view.showBubble("Let's go explore this side! 🏃‍♂️");
-            },
-            () => {
-              movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-              view.showBubble("I'm following you! 👀");
-            },
-            () => {
-              const pageTitle = document.title || 'this page';
-              const truncatedTitle = pageTitle.length > 25 ? pageTitle.substring(0, 22) + '...' : pageTitle;
-              view.showBubble(`Analyzing "${truncatedTitle}"... looks cool! 🧐`);
-              loadPet('working-thinking');
-              isTemporarilyInteracting = true;
-              setTimeout(() => {
-                isTemporarilyInteracting = false;
-                loadPet(emotion.current);
-              }, 2500);
-            }
-          ];
-          const chosenDecision = decisions[Math.floor(Math.random() * decisions.length)];
-          chosenDecision();
-        }
-      } else {
-        let isFocusActive = currentSettings.focusActive || false;
-        const currentHour = new Date().getHours();
-        if (!isFocusActive && currentSettings.focusStartHour !== undefined && currentSettings.focusEndHour !== undefined) {
-          const start = currentSettings.focusStartHour;
-          const end = currentSettings.focusEndHour;
-          if (start < end) {
-            isFocusActive = currentHour >= start && currentHour < end;
-          } else {
-            isFocusActive = currentHour >= start || currentHour < end;
-          }
-        }
-
-        if (!isFocusActive && context.idleSeconds >= 10 && Math.random() < 0.15 && !isTemporarilyInteracting) {
-          movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-          const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
-          view.showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);
-        }
-      }
-    }
-  }, 3000);
+  // Initial check
+  updateEmotion();
+  resetIdleTimer();
 }
 
 async function checkTabAiAvailability(): Promise<'readily' | 'after-download' | 'no'> {

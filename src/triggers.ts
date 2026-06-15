@@ -10,8 +10,9 @@ export class TriggerDetector {
   _hasConsoleError: boolean;
   _mouseX: number;
   _lastMouseMove: number;
+  _onStateChange?: () => void;
 
-  constructor() {
+  constructor(onStateChange?: () => void) {
     this._lastInput = Date.now();
     this._keyCount = 0;
     this._keyTimer = undefined;
@@ -21,6 +22,7 @@ export class TriggerDetector {
     this._hasConsoleError = false;
     this._mouseX = window.innerWidth / 2;
     this._lastMouseMove = Date.now();
+    this._onStateChange = onStateChange;
 
     this._bindEvents();
     this._watchVideo();
@@ -28,17 +30,17 @@ export class TriggerDetector {
 
   snapshot(): TriggerSnapshot {
     return {
-      hostname:         location.hostname,
-      pageTitle:        document.title,
-      idleSeconds:      Math.floor((Date.now() - this._lastInput) / 1000),
-      isTypingHeavy:    this._keyCount > 5,
-      isVideoPlaying:   this._isVideo,
+      hostname: location.hostname,
+      pageTitle: document.title,
+      idleSeconds: Math.floor((Date.now() - this._lastInput) / 1000),
+      isTypingHeavy: this._keyCount > 5,
+      isVideoPlaying: this._isVideo,
       isFormSubmitting: this._isSubmitting,
-      lastHttpError:    this._lastError,
-      scrollDepth:      this._scrollDepth(),
-      hasConsoleError:  this._hasConsoleError,
-      mouseX:           this._mouseX,
-      isCursorActive:   (Date.now() - this._lastMouseMove) < 5000,
+      lastHttpError: this._lastError,
+      scrollDepth: this._scrollDepth(),
+      hasConsoleError: this._hasConsoleError,
+      mouseX: this._mouseX,
+      isCursorActive: (Date.now() - this._lastMouseMove) < 5000,
     };
   }
 
@@ -82,17 +84,25 @@ export class TriggerDetector {
   };
 
   private _onKeyDownHeavy = (): void => {
+    const wasTypingHeavy = this._keyCount > 5;
     this._keyCount++;
     clearTimeout(this._keyTimer);
     this._keyTimer = setTimeout(() => {
       this._keyCount = 0;
+      if (this._onStateChange) this._onStateChange();
     }, 5000);
+
+    if (!wasTypingHeavy && this._keyCount > 5 && this._onStateChange) {
+      this._onStateChange();
+    }
   };
 
   private _onSubmit = (): void => {
     this._isSubmitting = true;
+    if (this._onStateChange) this._onStateChange();
     setTimeout(() => {
       this._isSubmitting = false;
+      if (this._onStateChange) this._onStateChange();
     }, 3000);
   };
 
@@ -113,13 +123,19 @@ export class TriggerDetector {
     if (target && target.tagName === 'VIDEO') {
       if (e?.type === 'play' || e?.type === 'playing') {
         this._isVideo = true;
+        if (this._onStateChange) this._onStateChange();
         return;
       }
     }
     const videos = document.querySelectorAll('video');
-    this._isVideo = Array.from(videos).some(video => {
+    const newState = Array.from(videos).some(video => {
       return !video.paused && !video.ended && video.readyState > 2;
     });
+
+    if (newState !== this._isVideo) {
+      this._isVideo = newState;
+      if (this._onStateChange) this._onStateChange();
+    }
   };
 
   _bindEvents(): void {
