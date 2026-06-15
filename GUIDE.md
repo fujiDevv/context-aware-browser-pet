@@ -286,6 +286,9 @@ If the website you are visiting returns a standard HTTP error code, Clawd displa
 - **429**: *"Too fast! Calm down (429)!"*
 - **500**: *"Ouch! The server is broken (500)!"*
 
+### Smart Download & Lite Mode Fallback
+Clawd will notify you via a speech bubble while he's *"downloading his high-tech brain"* on the first run. If the AI model is still loading, unavailable, or the connection is metered/slow, Clawd automatically falls back to **Lite Mode**, using backup instincts to stay reactive.
+
 ### Console Error Watcher
 
 If a JavaScript runtime error or unhandled promise rejection occurs on the webpage, Clawd immediately enters `working-debugger` mode and looks for the bug, displaying either *"Oh no! Something crashed! "* or *"Found a bug! Let me debug! "*.
