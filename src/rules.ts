@@ -110,3 +110,39 @@ export const ALL_EMOTIONS_POOL = [
 ];
 
 export const SEASONAL_POOL = ['christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing'];
+
+/**
+ * Calculates the dominant trait based on site category visit counts.
+ */
+export function getDominantTrait(siteCategoryCounts: Record<string, number> | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
+  if (!siteCategoryCounts) return 'normal';
+  
+  const counts = siteCategoryCounts;
+  
+  // Combine code and coding just in case legacy data is present
+  const codingScore = (counts['code'] || 0) + (counts['coding'] || 0);
+
+  const developerScore = codingScore + (counts['docs'] || 0);
+  const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0);
+  const scholarScore = counts['news'] || 0;
+  const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0);
+  
+  const scores = {
+    developer: developerScore,
+    gamer: gamerScore,
+    scholar: scholarScore,
+    socialite: socialiteScore
+  };
+  
+  let maxTrait: 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' = 'normal';
+  let maxScore = 3; // Minimum threshold to develop a trait
+  
+  for (const [trait, score] of Object.entries(scores)) {
+    if (score > maxScore) {
+      maxScore = score;
+      maxTrait = trait as 'developer' | 'gamer' | 'scholar' | 'socialite';
+    }
+  }
+  
+  return maxTrait;
+}

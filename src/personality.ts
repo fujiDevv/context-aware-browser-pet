@@ -1,5 +1,6 @@
 import { PetStats } from './types';
 import { STORAGE_KEYS } from './constants';
+import { getDominantTrait } from './rules';
 
 const DEFAULT_STATS: PetStats = {
   happiness: 50,
@@ -313,34 +314,6 @@ export class PersonalitySystem {
     await this._save();
   }
 
-  getDominantTrait(): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
-    const counts = this.stats.siteCategoryCounts || {};
-    
-    const developerScore = (counts['code'] || 0) + (counts['coding'] || 0) + (counts['docs'] || 0);
-    const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0);
-    const scholarScore = counts['news'] || 0;
-    const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0);
-    
-    const scores = {
-      developer: developerScore,
-      gamer: gamerScore,
-      scholar: scholarScore,
-      socialite: socialiteScore
-    };
-    
-    let maxTrait: 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' = 'normal';
-    let maxScore = 3;
-    
-    for (const [trait, score] of Object.entries(scores)) {
-      if (score > maxScore) {
-        maxScore = score;
-        maxTrait = trait as 'developer' | 'gamer' | 'scholar' | 'socialite';
-      }
-    }
-    
-    return maxTrait;
-  }
-
   defaultEmotion(): string {
     const happiness = this.stats.happiness;
     const energy = this.stats.energy;
@@ -349,7 +322,7 @@ export class PersonalitySystem {
     if (happiness < 25) return 'crying';
     if (happiness < 50) return 'sad';
 
-    const trait = this.getDominantTrait();
+    const trait = getDominantTrait(this.stats.siteCategoryCounts);
     if (trait === 'developer') return 'working-thinking';
     if (trait === 'gamer') return 'cool';
     if (trait === 'socialite') return 'love';

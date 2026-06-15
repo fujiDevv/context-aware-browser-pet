@@ -8,6 +8,7 @@ import { springAnimate, keyframeAnimate } from './src/animate';
 import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
 import { ViewManager } from './src/view';
 import { STORAGE_KEYS } from './src/constants';
+import { getDominantTrait } from './src/rules';
 
 let syncInterval: ReturnType<typeof setInterval> | null = null;
 let idleTimer: ReturnType<typeof setTimeout> | null = null;
@@ -362,7 +363,7 @@ movement.onLanding = () => {
   // Daze for 1 second, then "dust off" (sweep)
   interactionTimeout = setTimeout(() => {
     loadPet('working-sweeping');
-    
+
     // Reset after sweep duration
     interactionTimeout = setTimeout(() => {
       isTemporarilyInteracting = false;
@@ -417,7 +418,7 @@ async function updateEmotion(): Promise<void> {
   let nextEmotion = 'happy';
   let aiComment: string | undefined = undefined;
 
-  const trait = personality.getDominantTrait();
+  const trait = getDominantTrait(personality.stats.siteCategoryCounts);
   const prestige = personality.stats.prestige || 0;
   const baseSpeed = currentSettings.speed || 1.2;
   const energyFactor = Math.max(0.4, Math.min(1.2, personality.stats.energy / 100));
@@ -497,9 +498,9 @@ async function updateEmotion(): Promise<void> {
 
     // Optional: Add a subtle notification bubble if AI was intended but bypassed due to Lite Mode
     if (currentSettings.aiMode && useLiteMode && !hasEvaluatedPageAi && !sessionStorage.getItem('clawd-lite-mode-notified')) {
-       const reason = isMetered ? "on a metered connection" : "still loading my big brain";
-       console.log(`[Clawd] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
-       sessionStorage.setItem('clawd-lite-mode-notified', 'true');
+      const reason = isMetered ? "on a metered connection" : "still loading my big brain";
+      console.log(`[Clawd] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
+      sessionStorage.setItem('clawd-lite-mode-notified', 'true');
     }
   }
   if (nextEmotion !== emotion.current || aiComment || !view.getPetImg().src) {
@@ -565,7 +566,7 @@ function triggerContextDialogue(mood: string): void {
 
   if (scheduleEnabled) {
     const stats = personality.stats;
-    const trait = personality.getDominantTrait();
+    const trait = getDominantTrait(personality.stats.siteCategoryCounts);
 
     if (stats.energy < 30 && Math.random() < 0.5) {
       const options = personaDialogs.lowEnergy || PERSONA_AUTONOMOUS_DIALOGUES.default.lowEnergy;

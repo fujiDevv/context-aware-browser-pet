@@ -1,4 +1,5 @@
 import { PetStats } from './types';
+import { getDominantTrait as getTrait } from './rules';
 
 export const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> = {
   'happy': { name: 'Happy', emoji: '😊' },
@@ -51,33 +52,5 @@ export const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> 
 };
 
 export function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
-  if (!stats) return 'normal';
-  const counts = stats.siteCategoryCounts || {};
-
-  // Combine code and coding just in case legacy data is present
-  const codingScore = (counts['code'] || 0) + (counts['coding'] || 0);
-
-  const developerScore = codingScore + (counts['docs'] || 0);
-  const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0);
-  const scholarScore = counts['news'] || 0;
-  const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0);
-
-  const scores = {
-    developer: developerScore,
-    gamer: gamerScore,
-    scholar: scholarScore,
-    socialite: socialiteScore
-  };
-
-  let maxTrait: 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' = 'normal';
-  let maxScore = 3;
-
-  for (const [trait, score] of Object.entries(scores)) {
-    if (score > maxScore) {
-      maxScore = score;
-      maxTrait = trait as 'developer' | 'gamer' | 'scholar' | 'socialite';
-    }
-  }
-
-  return maxTrait;
+  return getTrait(stats?.siteCategoryCounts);
 }
