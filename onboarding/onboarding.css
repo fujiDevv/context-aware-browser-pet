@@ -1,21 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap');
 
 :root {
-  --accent: #C75D3F;
-  --accent-light: #e8917a;
-  --accent-bg: rgba(199, 93, 63, 0.08);
-  --accent-border: rgba(199, 93, 63, 0.25);
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --card-bg: #ffffff;
-  --card-border: #e2e8f0;
-  --card-shadow: none;
   --dot-inactive: #cbd5e1;
   --dot-active: var(--accent);
   --transition-slide: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-
-  --noise-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.87 0 0 0 0 0.53 0 0 0 0 0.43 0.09 0 0 0 0' in='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 * {
@@ -38,21 +26,6 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-}
-
-/* Grainy noise texture overlay */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturation' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.05;
-  mix-blend-mode: multiply;
 }
 
 .onboarding-container {

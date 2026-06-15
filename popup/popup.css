@@ -1,27 +1,5 @@
 :root {
   --bg-color: #ffffff;
-  --accent: #C75D3F;
-  --accent-light: #e8917a;
-  --accent-bg: rgba(199, 93, 63, 0.08);
-  --accent-border: rgba(199, 93, 63, 0.25);
-
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-
-  --border-color: #e2e8f0;
-  --bg-hover: #f8fafc;
-
-  --xp-color: #10b981;
-  --xp-bg: rgba(16, 185, 129, 0.08);
-
-  --pink-bar: #ec4899;
-  --yellow-bar: #eab308;
-  --blue-bar: #3b82f6;
-  --green-bar: #10b981;
-  --indigo-bar: #6366f1;
-
-  --noise-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.87 0 0 0 0 0.53 0 0 0 0 0.43 0.09 0 0 0 0' in='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 * {
@@ -38,20 +16,6 @@ body {
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-primary);
   user-select: none;
-}
-
-/* Grainy noise texture overlay */
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.08;
 }
 
 .popup-container {
@@ -244,7 +208,7 @@ h2 {
   font-weight: 600;
   background: rgba(59, 130, 246, 0.08);
   border: 1px solid rgba(59, 130, 246, 0.2);
-  color: var(--blue-bar);
+  color: var(--blue);
 }
 
 .presence-icon {
@@ -256,20 +220,6 @@ h2 {
   flex-wrap: wrap;
   gap: 4px;
   align-items: center;
-}
-
-.badge {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  width: fit-content;
-  border: 1px solid var(--border-color);
 }
 
 .xp-section {
@@ -379,26 +329,6 @@ h2 {
   height: 100%;
   border-radius: 10px;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.bg-pink {
-  background: var(--pink-bar);
-}
-
-.bg-yellow {
-  background: var(--yellow-bar);
-}
-
-.bg-blue {
-  background: var(--blue-bar);
-}
-
-.bg-green {
-  background: var(--green-bar);
-}
-
-.bg-indigo {
-  background: var(--indigo-bar);
 }
 
 /* Ensure the grid looks balanced with 5 items */
@@ -1029,35 +959,6 @@ input:checked+.toggle-slider:before {
   color: var(--accent);
 }
 
-.badge-trait {
-  background: var(--bg-hover);
-  color: var(--text-secondary);
-}
-
-.badge-trait.trait-developer {
-  background: rgba(59, 130, 246, 0.08);
-  border-color: rgba(59, 130, 246, 0.2);
-  color: #2563eb;
-}
-
-.badge-trait.trait-gamer {
-  background: rgba(245, 158, 11, 0.08);
-  border-color: rgba(245, 158, 11, 0.2);
-  color: #d97706;
-}
-
-.badge-trait.trait-scholar {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.2);
-  color: #059669;
-}
-
-.badge-trait.trait-socialite {
-  background: rgba(236, 72, 153, 0.08);
-  border-color: rgba(236, 72, 153, 0.2);
-  color: #db2777;
-}
-
 .prestige-promo-card {
   background: linear-gradient(135deg, rgba(217, 119, 6, 0.08) 0%, rgba(245, 158, 11, 0.03) 100%);
   border: 1px solid rgba(245, 158, 11, 0.25);
@@ -1106,16 +1007,6 @@ input:checked+.toggle-slider:before {
 
 .prestige-btn:active {
   transform: translateY(0);
-}
-
-.badge-prestige {
-  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-  color: white;
-  border-color: transparent;
-  box-shadow: 0 1px 3px rgba(217, 119, 6, 0.25);
-  font-size: 9px;
-  gap: 2px;
-  padding: 2px 8px;
 }
 
 .prestige-star {
