@@ -127,6 +127,28 @@ body {
   width: 100%;
   max-width: 540px;
   margin-top: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-border) transparent;
+}
+
+.features-grid::-webkit-scrollbar {
+  width: 5px;
+}
+
+.features-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.features-grid::-webkit-scrollbar-thumb {
+  background: var(--accent-border);
+  border-radius: 10px;
+}
+
+.features-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 .feature-card {
