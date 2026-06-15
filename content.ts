@@ -15,6 +15,7 @@ setBridgeToken(BRIDGE_TOKEN);
 
 (function injectMainWorld() {
   try {
+    if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) return;
     const script = document.createElement('script');
     script.src = chrome.runtime.getURL('main_world.js');
     script.dataset.token = BRIDGE_TOKEN;
@@ -57,7 +58,12 @@ async function playSound(type: string): Promise<void> {
   });
 }
 
+let isOrphaned = false;
+
 function cleanupOrphanedScript(): void {
+  if (isOrphaned) return;
+  isOrphaned = true;
+
   if (syncInterval) clearInterval(syncInterval);
   if (idleTimer) clearTimeout(idleTimer);
   if (debounceTimeout) clearTimeout(debounceTimeout);
@@ -65,15 +71,19 @@ function cleanupOrphanedScript(): void {
   if (isInitialized) {
     try {
       movement.stop();
-    } catch (e) { console.warn('[Clawd Content] movement.stop error:', e); }
+    } catch (e) { /* ignore */ }
 
     try {
       triggers.cleanup();
-    } catch (e) { console.warn('[Clawd Content] triggers.cleanup error:', e); }
+    } catch (e) { /* ignore */ }
+
+    try {
+      personality.destroy();
+    } catch (e) { /* ignore */ }
 
     try {
       view.destroy();
-    } catch (e) { console.warn('[Clawd Content] view destruction error:', e); }
+    } catch (e) { /* ignore */ }
   }
 
   window.removeEventListener('dragover', handleDragOver);
@@ -82,17 +92,22 @@ function cleanupOrphanedScript(): void {
   window.removeEventListener('pet-console-error', handleConsoleError);
 
   try {
-    chrome.storage.onChanged.removeListener(handleStorageChanged);
-  } catch (e) { console.warn('[Clawd Content] storage.onChanged removal error:', e); }
+    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
+      chrome.storage.onChanged.removeListener(handleStorageChanged);
+    }
+  } catch (e) { /* ignore */ }
 
   try {
-    chrome.runtime.onMessage.removeListener(handleRuntimeMessage);
-  } catch (e) { console.warn('[Clawd Content] runtime.onMessage removal error:', e); }
+    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage) {
+      chrome.runtime.onMessage.removeListener(handleRuntimeMessage);
+    }
+  } catch (e) { /* ignore */ }
 
   console.log("Browser Pet: Old extension context invalidated. Injected mascot cleaned up.");
 }
 
 function checkContextOrCleanup(): boolean {
+  if (isOrphaned) return false;
   if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
     cleanupOrphanedScript();
     return false;
@@ -341,7 +356,7 @@ function ensureInitialized(): void {
 }
 
 async function loadPet(name: string): Promise<void> {
-  if (!isInitialized) return;
+  if (!isInitialized || isOrphaned) return;
   let assetName = name;
   const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
 
@@ -360,11 +375,24 @@ async function loadPet(name: string): Promise<void> {
   }
 
   view.setEmotion(assetName);
+  
+  if (!checkContextOrCleanup()) return;
+
   try {
-    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-      chrome.storage.local.set({ [STORAGE_KEYS.MOOD]: name }).catch((e) => { console.warn('[Clawd Content] storage.set error:', e); });
+    chrome.storage.local.set({ [STORAGE_KEYS.MOOD]: name }).catch((e) => {
+      if (e.message && e.message.includes('context invalidated')) {
+        cleanupOrphanedScript();
+      } else {
+        console.warn('[Clawd Content] storage.set error:', e);
+      }
+    });
+  } catch (e: any) {
+    if (e.message && e.message.includes('context invalidated')) {
+      cleanupOrphanedScript();
+    } else {
+      console.warn('[Clawd Content] error:', e);
     }
-  } catch (e) { console.warn('[Clawd Content] error:', e); }
+  }
 }
 
 async function updateEmotion(): Promise<void> {
@@ -440,27 +468,40 @@ async function updateEmotion(): Promise<void> {
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
   } else if (scheduleEnabled && currentSettings.aiMode && !useLiteMode && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
-      const storedTime = await chrome.storage.local.get(STORAGE_KEYS.LAST_AI_COMMENT_TIME);
-      const lastCommentTime = storedTime[STORAGE_KEYS.LAST_AI_COMMENT_TIME] || 0;
-      const freqSec = currentSettings.commentFrequency ?? 60;
-      const now = Date.now();
+      if (!checkContextOrCleanup()) return;
 
-      if (now - lastCommentTime >= freqSec * 1000) {
-        await chrome.storage.local.set({ [STORAGE_KEYS.LAST_AI_COMMENT_TIME]: now });
+      try {
+        const storedTime = await chrome.storage.local.get(STORAGE_KEYS.LAST_AI_COMMENT_TIME);
+        const lastCommentTime = storedTime[STORAGE_KEYS.LAST_AI_COMMENT_TIME] || 0;
+        const freqSec = currentSettings.commentFrequency ?? 60;
+        const now = Date.now();
 
-        const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
-        const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
-        const result = await getAiEmotion(context.pageTitle, metaDesc, window.location.href, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity);
-        nextEmotion = result.emotion;
-        aiComment = result.comment;
-        currentAiCategory = result.category;
-        currentAiSentiment = result.sentiment;
-        hasEvaluatedPageAi = true;
+        if (now - lastCommentTime >= freqSec * 1000) {
+          if (!checkContextOrCleanup()) return;
+          await chrome.storage.local.set({ [STORAGE_KEYS.LAST_AI_COMMENT_TIME]: now });
 
-        if (scheduleEnabled && currentAiCategory) {
-          personality.recordSiteVisit(currentAiCategory, currentAiSentiment);
+          const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
+          const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
+          const result = await getAiEmotion(context.pageTitle, metaDesc, window.location.href, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity);
+          nextEmotion = result.emotion;
+          aiComment = result.comment;
+          currentAiCategory = result.category;
+          currentAiSentiment = result.sentiment;
+          hasEvaluatedPageAi = true;
+
+          if (scheduleEnabled && currentAiCategory) {
+            personality.recordSiteVisit(currentAiCategory, currentAiSentiment);
+          }
+        } else {
+          hasEvaluatedPageAi = true;
+          nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
         }
-      } else {
+      } catch (e: any) {
+        if (e.message && e.message.includes('context invalidated')) {
+          cleanupOrphanedScript();
+          return;
+        }
+        console.warn('[Clawd Content] updateEmotion AI error:', e);
         hasEvaluatedPageAi = true;
         nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
       }
@@ -769,16 +810,23 @@ window.addEventListener('dragover', handleDragOver);
 window.addEventListener('drop', handleDrop);
 
 async function loadAndApplySettings(): Promise<void> {
-  const saved = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
-  if (saved[STORAGE_KEYS.SETTINGS]) {
-    currentSettings = { ...currentSettings, ...saved[STORAGE_KEYS.SETTINGS] };
-    if (isInitialized) {
-      personality.disabledEmotions = currentSettings.disabledEmotions || [];
-      movement.updateSettings({
-        size: currentSettings.size,
-        speed: currentSettings.speed
-      });
-      view.applyCostume(currentSettings.costume);
+  if (!checkContextOrCleanup()) return;
+  try {
+    const saved = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+    if (saved[STORAGE_KEYS.SETTINGS]) {
+      currentSettings = { ...currentSettings, ...saved[STORAGE_KEYS.SETTINGS] };
+      if (isInitialized) {
+        personality.disabledEmotions = currentSettings.disabledEmotions || [];
+        movement.updateSettings({
+          size: currentSettings.size,
+          speed: currentSettings.speed
+        });
+        view.applyCostume(currentSettings.costume);
+      }
+    }
+  } catch (e: any) {
+    if (e.message && e.message.includes('context invalidated')) {
+      cleanupOrphanedScript();
     }
   }
 }
@@ -972,16 +1020,25 @@ async function init(): Promise<void> {
 }
 
 async function actuallyInit(): Promise<void> {
-  if (isInitialized) return;
+  if (isInitialized || isOrphaned) return;
   ensureInitialized();
 
   await personality.isLoaded;
+  
+  if (!checkContextOrCleanup()) return;
 
   view.preloadAssets();
 
-  const savedMood = (await chrome.storage.local.get(STORAGE_KEYS.MOOD).catch(() => ({}))) as Record<string, any>;
-  const initialMood = savedMood[STORAGE_KEYS.MOOD] || 'happy';
-  await loadPet(initialMood);
+  try {
+    const savedMood = (await chrome.storage.local.get(STORAGE_KEYS.MOOD).catch(() => ({}))) as Record<string, any>;
+    const initialMood = savedMood[STORAGE_KEYS.MOOD] || 'happy';
+    await loadPet(initialMood);
+  } catch (e: any) {
+    if (e.message && e.message.includes('context invalidated')) {
+      cleanupOrphanedScript();
+      return;
+    }
+  }
 
   window.addEventListener('pet-console-error', handleConsoleError);
 
@@ -993,6 +1050,7 @@ async function actuallyInit(): Promise<void> {
 
   // Unified Consciousness: Fetch initial origin state
   safeSendMessage({ type: 'get-origin-pet-state', hostname: window.location.hostname }, (originState) => {
+    if (isOrphaned) return;
     if (originState && (Date.now() - originState.lastUpdateTime < 30000)) {
       emotion.current = originState.emotion;
       loadPet(originState.emotion);
@@ -1002,11 +1060,13 @@ async function actuallyInit(): Promise<void> {
     }
 
     safeSendMessage({ type: 'get-tab-http-error' }, (response: { errorCode?: number } | undefined) => {
+      if (isOrphaned) return;
       if (response && response.errorCode) {
         triggers.setHttpError(response.errorCode);
       }
 
       safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
+        if (isOrphaned) return;
         if (sharedState && sharedState.y !== 0) {
           movement.syncState(sharedState);
         }
@@ -1025,8 +1085,10 @@ async function actuallyInit(): Promise<void> {
             // Lite Mode Notification (AI Downloading)
             if (currentSettings.aiMode) {
               checkTabAiAvailability().then(status => {
+                if (isOrphaned) return;
                 if (status === 'after-download') {
                   setTimeout(() => {
+                    if (isOrphaned) return;
                     view.showBubble("I'm still downloading my high-tech brain, using my backup instincts for now! 🧠", 5000);
                   }, 4000);
                 }
@@ -1044,10 +1106,18 @@ async function actuallyInit(): Promise<void> {
 }
 
 async function checkTabAiAvailability(): Promise<'readily' | 'after-download' | 'no'> {
+  if (!checkContextOrCleanup()) return 'no';
   try {
     return new Promise((resolve) => {
       chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (res) => {
-        if (chrome.runtime.lastError || !res || !res.success) {
+        if (chrome.runtime.lastError) {
+          if (chrome.runtime.lastError.message && chrome.runtime.lastError.message.includes('context invalidated')) {
+            cleanupOrphanedScript();
+          }
+          resolve('no');
+          return;
+        }
+        if (!res || !res.success) {
           resolve('no');
         } else {
           const state = res.state;
@@ -1061,8 +1131,12 @@ async function checkTabAiAvailability(): Promise<'readily' | 'after-download' | 
         }
       });
     });
-  } catch (err) {
-    console.error('[Clawd AI] Failed to check local AI availability:', err);
+  } catch (err: any) {
+    if (err.message && err.message.includes('context invalidated')) {
+      cleanupOrphanedScript();
+    } else {
+      console.error('[Clawd AI] Failed to check local AI availability:', err);
+    }
     return 'no';
   }
 }

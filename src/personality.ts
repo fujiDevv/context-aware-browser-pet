@@ -379,4 +379,11 @@ export class PersonalitySystem {
       this.stats.moodHistory.pop();
     }
   }
+
+  destroy(): void {
+    if (this._decayInterval) {
+      clearInterval(this._decayInterval);
+      this._decayInterval = null;
+    }
+  }
 }

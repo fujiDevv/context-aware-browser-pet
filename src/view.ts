@@ -85,7 +85,9 @@ export class ViewManager {
   }
 
   public setEmotion(assetName: string) {
-    this.petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
+    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
+      this.petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
+    }
   }
 
   public showBubble(text: string, duration = 3000) {
@@ -186,6 +188,9 @@ export class ViewManager {
   }
 
   public preloadAssets() {
+    if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+      return;
+    }
     const criticalAssets = [
       'happy', 'sad', 'working-thinking', 'sleeping', 'waving', 'smile', 'love', 'cool', 'celebrating', 'dancing'
     ];
