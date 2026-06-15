@@ -14,50 +14,6 @@ let syncInterval: ReturnType<typeof setInterval> | null = null;
 let idleTimer: ReturnType<typeof setTimeout> | null = null;
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
-let audioCtx: AudioContext | null = null;
-let resumePromise: Promise<void> | null = null;
-let pendingGreetingSound = false;
-
-function unlockAudio(e?: Event): void {
-  if (e) {
-    if (!e.isTrusted) return;
-    if (e.type === 'click' && (e as MouseEvent).button !== 0) return;
-  }
-  if (typeof navigator !== 'undefined' && navigator.userActivation && !navigator.userActivation.isActive) {
-    return;
-  }
-  try {
-    if (!audioCtx) {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContextClass();
-    }
-    if (audioCtx && audioCtx.state === 'suspended') {
-      resumePromise = audioCtx.resume().then(() => {
-        resumePromise = null;
-        if (pendingGreetingSound) {
-          pendingGreetingSound = false;
-          playSound('greeting');
-        }
-        cleanUpListeners();
-      }).catch(() => {
-        resumePromise = null;
-      });
-    } else {
-      if (pendingGreetingSound) {
-        pendingGreetingSound = false;
-        playSound('greeting');
-      }
-      cleanUpListeners();
-    }
-  } catch (err) { console.warn('[Clawd Content] unlockAudio error:', err); }
-}
-
-function cleanUpListeners(): void {
-  window.removeEventListener('click', unlockAudio, { capture: true });
-}
-
-window.addEventListener('click', unlockAudio, { capture: true, passive: true });
-
 async function playSound(type: string): Promise<void> {
   const sounds: Record<string, string> = {
     greeting: 'greeting.mp3',
@@ -77,53 +33,13 @@ async function playSound(type: string): Promise<void> {
     return;
   }
 
-  if (typeof navigator !== 'undefined' && navigator.userActivation && !navigator.userActivation.hasBeenActive) {
-    return;
-  }
+  const volume = currentSettings.soundVolume !== undefined ? currentSettings.soundVolume : 0.5;
 
-  if (!audioCtx) {
-    try {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContextClass();
-    } catch (err) {
-      console.warn("Failed to create AudioContext:", err);
-      return;
-    }
-  }
-
-  if (audioCtx.state === 'suspended') {
-    try {
-      await audioCtx.resume();
-    } catch (err) { console.warn('[Clawd Content] audioCtx.resume error:', err); }
-  }
-
-  if (audioCtx.state === 'suspended' && resumePromise) {
-    await resumePromise;
-  }
-
-  if (audioCtx.state === 'suspended') {
-    return;
-  }
-
-  try {
-    const soundUrl = chrome.runtime.getURL(`assets/${encodeURIComponent(filename)}`);
-    const response = await fetch(soundUrl);
-    const arrayBuffer = await response.arrayBuffer();
-    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-
-    const gainNode = audioCtx.createGain();
-    gainNode.gain.value = currentSettings.soundVolume !== undefined ? currentSettings.soundVolume : 0.5;
-
-    const source = audioCtx.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    source.start(0);
-  } catch (e: any) {
-    if (e.name !== 'NotAllowedError') {
-      console.warn("Failed to play sound:", e);
-    }
-  }
+  safeSendMessage({
+    type: 'play-sound',
+    filename,
+    volume
+  });
 }
 
 function cleanupOrphanedScript(): void {
@@ -145,7 +61,6 @@ function cleanupOrphanedScript(): void {
     } catch (e) { console.warn('[Clawd Content] view destruction error:', e); }
   }
 
-  window.removeEventListener('click', unlockAudio, { capture: true });
   window.removeEventListener('dragover', handleDragOver);
   window.removeEventListener('drop', handleDrop);
   document.removeEventListener('visibilitychange', handleVisibilityChange);

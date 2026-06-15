@@ -129,6 +129,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return false;
   }
 
+  if (message.type === 'play-sound') {
+    const { filename, volume } = message;
+    setupOffscreen()
+      .then(() => {
+        chrome.runtime.sendMessage({ type: 'play-sound-offscreen', filename, volume }, (res) => {
+          if (chrome.runtime.lastError) {
+            sendResponse({ success: false, error: chrome.runtime.lastError.message });
+          } else {
+            sendResponse(res);
+          }
+        });
+      })
+      .catch((err) => {
+        console.error('Failed to setup offscreen context for audio:', err);
+        sendResponse({ success: false, error: err.message });
+      });
+    return true;
+  }
+
   if (message.type === 'get-origin-pet-state') {
     const hostname = message.hostname;
     if (hostname && originPetStates[hostname]) {
@@ -270,8 +289,8 @@ async function setupOffscreen(): Promise<void> {
 
   creatingOffscreen = chrome.offscreen.createDocument({
     url: 'offscreen.html',
-    reasons: [chrome.offscreen.Reason.DOM_PARSER],
-    justification: 'Run local machine learning models for pet behavior analysis'
+    reasons: [chrome.offscreen.Reason.DOM_PARSER, chrome.offscreen.Reason.AUDIO_PLAYBACK],
+    justification: 'Run local machine learning models and handle centralized audio playback for the pet companion'
   });
 
   try {
@@ -290,10 +309,10 @@ async function closeOffscreen(): Promise<void> {
   }
 }
 
-// Pre-load the offscreen document (which pre-loads the classifier) if AI Mode is enabled
+// Pre-load the offscreen document (which pre-loads the classifier) if AI Mode or Sound is enabled
 chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
   const settings = data[STORAGE_KEYS.SETTINGS] || {};
-  if (settings.aiMode && settings.advancedAiEnabled) {
+  if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
     setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen initial call error:', e); });
   }
 });
@@ -302,7 +321,7 @@ chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
 chrome.storage.onChanged.addListener((changes) => {
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const settings = changes[STORAGE_KEYS.SETTINGS].newValue || {};
-    if (settings.aiMode && settings.advancedAiEnabled) {
+    if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
       setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen re-call error:', e); });
     } else {
       closeOffscreen().catch((e) => { console.warn('[Clawd Background] closeOffscreen re-call error:', e); });

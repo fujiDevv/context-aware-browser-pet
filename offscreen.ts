@@ -135,6 +135,40 @@ async function getLocalAiEmotion(
   return { emotion, comment, category: finalCategory, sentiment };
 }
 
+let audioCtx: AudioContext | null = null;
+const audioBuffers: Record<string, AudioBuffer> = {};
+
+async function playSound(filename: string, volume: number): Promise<void> {
+  try {
+    if (!audioCtx) {
+      audioCtx = new AudioContext();
+    }
+
+    if (audioCtx.state === 'suspended') {
+      await audioCtx.resume();
+    }
+
+    let buffer = audioBuffers[filename];
+    if (!buffer) {
+      const soundUrl = chrome.runtime.getURL(`assets/${encodeURIComponent(filename)}`);
+      const response = await fetch(soundUrl);
+      const arrayBuffer = await response.arrayBuffer();
+      buffer = await audioCtx.decodeAudioData(arrayBuffer);
+      audioBuffers[filename] = buffer;
+    }
+
+    const source = audioCtx.createBufferSource();
+    source.buffer = buffer;
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.value = volume;
+    source.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    source.start(0);
+  } catch (err) {
+    console.error('[Clawd Offscreen] Failed to play sound:', err);
+  }
+}
+
 // Set up Chrome runtime message listener in the offscreen document
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'run-local-ai-inference') {
@@ -153,5 +187,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'check-local-ai-status') {
     sendResponse({ success: true, state: modelLoadingState, progress: modelDownloadProgress });
     return false;
+  }
+
+  if (message.type === 'play-sound-offscreen') {
+    playSound(message.filename, message.volume)
+      .then(() => sendResponse({ success: true }))
+      .catch((err) => sendResponse({ success: false, error: err.message }));
+    return true;
   }
 });

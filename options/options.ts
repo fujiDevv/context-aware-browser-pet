@@ -428,10 +428,11 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
   if (!filename) return;
 
   try {
-    const soundUrl = chrome.runtime.getURL(`assets/${filename}`);
-    const audio = new Audio(soundUrl);
-    audio.volume = volume;
-    await audio.play();
+    chrome.runtime.sendMessage({
+      type: 'play-sound',
+      filename,
+      volume
+    });
   } catch (e) {
     console.warn("Failed to play sound preview:", e);
   }
