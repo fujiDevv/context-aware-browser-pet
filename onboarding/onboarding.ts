@@ -129,7 +129,11 @@
     const badge = document.querySelector('.version-badge') as HTMLElement | null;
     if (badge) {
       const statusText = reason === 'update' ? 'Successfully Updated' : 'Successfully Installed';
-      badge.innerHTML = `<span class="dot"></span> ${version} — ${statusText}`;
+      badge.textContent = '';
+      const dot = document.createElement('span');
+      dot.className = 'dot';
+      badge.appendChild(dot);
+      badge.appendChild(document.createTextNode(` ${version} — ${statusText}`));
     }
   }
 })();
