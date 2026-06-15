@@ -591,11 +591,33 @@ body {
   overflow: hidden;
 }
 
-.reactions-table th:nth-child(1), .reactions-table td:nth-child(1) { width: 25%; }
-.reactions-table th:nth-child(2), .reactions-table td:nth-child(2) { width: 15%; }
-.reactions-table th:nth-child(3), .reactions-table td:nth-child(3) { width: 35%; white-space: normal; line-height: 1.4; }
-.reactions-table th:nth-child(4), .reactions-table td:nth-child(4) { width: 15%; }
-.reactions-table th:nth-child(5), .reactions-table td:nth-child(5) { width: 10%; text-align: right; }
+.reactions-table th:nth-child(1),
+.reactions-table td:nth-child(1) {
+  width: 25%;
+}
+
+.reactions-table th:nth-child(2),
+.reactions-table td:nth-child(2) {
+  width: 15%;
+}
+
+.reactions-table th:nth-child(3),
+.reactions-table td:nth-child(3) {
+  width: 35%;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.reactions-table th:nth-child(4),
+.reactions-table td:nth-child(4) {
+  width: 15%;
+}
+
+.reactions-table th:nth-child(5),
+.reactions-table td:nth-child(5) {
+  width: 10%;
+  text-align: right;
+}
 
 .reactions-table th {
   background-color: var(--bg-hover);
@@ -1432,6 +1454,7 @@ input:checked+.switch-slider:before {
 
 .settings-soundboard-card {
   background-color: var(--bg-card);
+  background-image: var(--noise-grain);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 20px;
