@@ -116,19 +116,42 @@ export class MovementEngine {
     }
   }
 
-  shoo(): void {
+  shoo(onComplete?: () => void): Promise<void> {
     const el = this.el;
-    if (!el) return;
+    if (!el) return Promise.resolve();
 
     this._stopPosAnimation();
     this.clearToyTargets();
 
     const W = window.innerWidth - this.size;
     const H = window.innerHeight - this.size;
-    this.x = Math.random() * W;
-    this.y = H;
-    this.state = 'walk-bottom';
-    this.direction = Math.random() < 0.5 ? 1 : -1;
+    
+    // Pick a random edge to shoo to
+    const edges = ['bottom', 'top', 'left', 'right'];
+    const targetEdge = edges[Math.floor(Math.random() * edges.length)];
+    
+    if (targetEdge === 'bottom') {
+      this.x = Math.random() * W;
+      this.y = H;
+      this.state = 'walk-bottom';
+      this.direction = Math.random() < 0.5 ? 1 : -1;
+    } else if (targetEdge === 'top') {
+      this.x = Math.random() * W;
+      this.y = 0;
+      this.state = 'walk-top';
+      this.direction = Math.random() < 0.5 ? 1 : -1;
+    } else if (targetEdge === 'left') {
+      this.x = 0;
+      this.y = Math.random() * H;
+      this.state = 'walk-left';
+      this.direction = Math.random() < 0.5 ? 1 : -1;
+    } else {
+      this.x = W;
+      this.y = Math.random() * H;
+      this.state = 'walk-right';
+      this.direction = Math.random() < 0.5 ? 1 : -1;
+    }
+
     this.paused = true;
 
     // Smoothly spring to the new location
@@ -140,15 +163,16 @@ export class MovementEngine {
       damping: 12
     });
 
-    this._posAnimation.then(() => {
-      this.paused = false;
+    const promise = new Promise<void>((resolve) => {
+      this._posAnimation!.then(() => {
+        this.paused = false;
+        if (onComplete) onComplete();
+        resolve();
+      });
     });
 
-    const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
-    const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
-    if (img) {
-      img.style.transform = `${flip} rotate(0deg)`;
-    }
+    this._apply();
+    return promise;
   }
 
   updateSettings(settings: { size?: number; speed?: number }): void {

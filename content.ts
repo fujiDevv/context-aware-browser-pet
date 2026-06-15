@@ -186,7 +186,12 @@ function handleIdleBehavior(): void {
     if (Math.random() < 0.2) {
       const decisions = [
         () => {
-          movement.shoo();
+          isTemporarilyInteracting = true;
+          loadPet(Math.random() < 0.5 ? 'running' : 'flying');
+          movement.shoo(() => {
+            isTemporarilyInteracting = false;
+            loadPet(emotion.current);
+          });
           view.showBubble("Let's go explore this side! 🏃‍♂️");
         },
         () => {
@@ -603,8 +608,17 @@ function handleShoo(e: Event) {
     view.getPetImg().getAnimations().forEach(anim => anim.cancel());
   } catch (err) { console.warn('[Clawd Content] handleShoo animations cancel error:', err); }
 
+  isTemporarilyInteracting = true;
   personality.recordInteraction('shoo');
-  movement.shoo();
+  
+  const shooEmotion = Math.random() < 0.5 ? 'running' : 'flying';
+  loadPet(shooEmotion);
+  
+  movement.shoo(() => {
+    isTemporarilyInteracting = false;
+    loadPet(emotion.current);
+  });
+
   view.showBubble("Okay, okay, moving! 🏃‍♂️");
   playSound('shoo');
 }
@@ -848,12 +862,23 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
       try {
         view.getPetImg().getAnimations().forEach(anim => anim.cancel());
       } catch (err) { console.warn('[Clawd Content] handleRuntimeMessage shoo animations cancel error:', err); }
+
+      isTemporarilyInteracting = true;
       personality.recordInteraction('shoo');
-      movement.shoo();
+
+      const shooEmotion = Math.random() < 0.5 ? 'running' : 'flying';
+      loadPet(shooEmotion);
+
+      movement.shoo(() => {
+        isTemporarilyInteracting = false;
+        loadPet(emotion.current);
+      });
+
       view.showBubble("Running away! 🏃‍♂️");
       playSound('shoo');
     }
-  } else if (message.type === 'http-error') {
+  }
+ else if (message.type === 'http-error') {
     if (isInitialized) {
       triggers.setHttpError(message.code);
       updateEmotion();
