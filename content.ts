@@ -419,6 +419,11 @@ async function updateEmotion(): Promise<void> {
     customReaction = currentSettings.domainReactions.find(r => r.domain === currentDomain);
   }
 
+  // Detect metered connection or slow network for "Lite Mode" fallback
+  const isMetered = (navigator as any).connection?.saveData === true;
+  const aiStatus = await checkTabAiAvailability();
+  const useLiteMode = isMetered || aiStatus !== 'readily';
+
   if (customReaction && !isFocusActive) {
     nextEmotion = customReaction.emotion;
     if (customReaction.dialogue) {
@@ -426,7 +431,7 @@ async function updateEmotion(): Promise<void> {
     }
   } else if (isFocusActive) {
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
-  } else if (scheduleEnabled && currentSettings.aiMode && !context.lastHttpError && context.idleSeconds < 60) {
+  } else if (scheduleEnabled && currentSettings.aiMode && !useLiteMode && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
       const storedTime = await chrome.storage.local.get(STORAGE_KEYS.LAST_AI_COMMENT_TIME);
       const lastCommentTime = storedTime[STORAGE_KEYS.LAST_AI_COMMENT_TIME] || 0;
@@ -456,9 +461,16 @@ async function updateEmotion(): Promise<void> {
       nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
     }
   } else {
+    // Falls back to Regex-based classifier (Lite Mode) automatically
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
-  }
 
+    // Optional: Add a subtle notification bubble if AI was intended but bypassed due to Lite Mode
+    if (currentSettings.aiMode && useLiteMode && !hasEvaluatedPageAi && !sessionStorage.getItem('clawd-lite-mode-notified')) {
+       const reason = isMetered ? "on a metered connection" : "still loading my big brain";
+       console.log(`[Clawd] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
+       sessionStorage.setItem('clawd-lite-mode-notified', 'true');
+    }
+  }
   if (nextEmotion !== emotion.current || aiComment || !view.getPetImg().src) {
     emotion.current = nextEmotion;
     loadPet(nextEmotion);
