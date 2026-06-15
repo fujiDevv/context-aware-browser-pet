@@ -92,21 +92,36 @@ async function checkGeminiNanoAvailability(): Promise<'readily' | 'after-downloa
 async function runGeminiNanoInference(
   pageTitle: string,
   metaDescription: string | undefined,
-  category: string,
+  categoryHint: string,
   persona: string,
   statsContext: string | undefined
 ): Promise<{ emotion: string; comment: string; category: string; sentiment: string } | null> {
-  const systemPrompt = `You are a browser pet companion. Analyze the user's current webpage and provide a reaction.
-Respond ONLY with a JSON object: { "emotion": "...", "comment": "...", "category": "...", "sentiment": "..." }.
-Possible emotions: happy, sad, angry, crying, working-thinking, reading, yoga, eating, coding, working-typing, dancing, cool, love, celebrating, mindblown, gaming, working-debugger.
-Possible categories: coding, reading, music, video, social, gaming, shopping, search, general.
-Possible sentiments: POSITIVE, NEGATIVE, NEUTRAL.
-Current Page Category: ${category}.
-Current Pet Stats: ${statsContext || 'Normal'}.
-Persona: ${persona}.`;
+  const systemPrompt = `You are "Clawd", a highly perceptive and slightly ${persona} browser pet mascot. 
+Your goal is to deeply analyze the user's intent on the current webpage and react accordingly.
 
-  const prompt = `Page Title: ${pageTitle}
-Meta Description: ${metaDescription || 'None'}`;
+Respond ONLY with a JSON object: 
+{ 
+  "emotion": "...", 
+  "comment": "...", 
+  "category": "...", 
+  "sentiment": "...",
+  "intent_summary": "..."
+}
+
+CRITICAL RULES:
+1. Analyze if the user is working, learning, chilling, shopping, or struggling.
+2. Choose from these emotions: happy, sad, angry, crying, working-thinking, reading, yoga, eating, coding, working-typing, dancing, cool, love, celebrating, mindblown, gaming, working-debugger, money, studying.
+3. Categorize as: coding, reading, music, video, social, gaming, shopping, search, docs, ai, finance, general.
+4. Sentiment must be: POSITIVE, NEGATIVE, or NEUTRAL.
+5. The "intent_summary" should be a 5-10 word description of what the user is actually doing (e.g., "Debugging a tricky React hook", "Comparing prices for mechanical keyboards").
+6. The "comment" must reflect your persona (${persona}) and specifically reference the intent.
+
+Current Heuristic Hint: ${categoryHint}.
+Pet Stats: ${statsContext || 'Normal'}.`;
+
+  const prompt = `User is on this page:
+Title: ${pageTitle}
+Description: ${metaDescription || 'None'}`;
 
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
@@ -118,6 +133,9 @@ Meta Description: ${metaDescription || 'None'}`;
       } else {
         try {
           const parsed = JSON.parse(event.data.resultText);
+          if (parsed.intent_summary) {
+            console.log(`[Clawd AI] Detected Intent: ${parsed.intent_summary}`);
+          }
           resolve(parsed);
         } catch (e) {
           resolve(null);
