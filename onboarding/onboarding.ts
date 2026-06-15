@@ -83,24 +83,34 @@
   const VERSION_FEATURES: Record<string, Feature[]> = {
     '1.1.0': [
       {
-        title: 'Cross-Tab Sync',
-        description: 'Clawd now shares personality, emotions, and movement across all your open tabs in real-time.',
+        title: 'Four-Edge Crawling',
+        description: 'Clawd can now crawl along all four edges of your screen with improved spring physics and rotation.',
+        icon: '../assets/pets/clawd-climbing.svg'
+      },
+      {
+        title: 'AI Intent Detection',
+        description: 'Enhanced AI context awareness with high-fidelity intent detection for smarter, more relevant dialogue.',
+        icon: '../assets/pets/clawd-mindblown.svg'
+      },
+      {
+        title: 'Unified Consciousness',
+        description: 'Personality, emotions, and movement are now synchronized across all same-origin tabs in real-time.',
         icon: '../assets/pets/clawd-happy.svg'
       },
       {
-        title: 'Event-Driven Updates',
-        description: 'Refactored polling to event-driven updates for better battery life and instant responsiveness.',
-        icon: '../assets/pets/clawd-working-thinking.svg'
+        title: 'Visual UI Redesign',
+        description: 'Redesigned card-based stats grid and glassmorphic popup with new AI and tab status indicators.',
+        icon: '../assets/pets/clawd-working-building.svg'
       },
       {
-        title: 'Lite Mode Fallback',
-        description: 'Smart fallback for AI Mood Analysis on metered or slow connections to ensure smooth performance.',
+        title: 'Lite Mode & Performance',
+        description: 'Default Lite Mode ensures zero-download speed, with an optional "Brain Upgrade" for power users.',
         icon: '../assets/pets/clawd-cool.svg'
       },
       {
-        title: 'Persona Refactor',
-        description: 'Dialogue system modularized for faster loading and easier personality switching.',
-        icon: '../assets/pets/clawd-celebrating.svg'
+        title: 'Battery Optimization',
+        description: 'Shifted to event-driven updates and lazy initialization for significantly better battery life.',
+        icon: '../assets/pets/clawd-charging.svg'
       }
     ]
   };
