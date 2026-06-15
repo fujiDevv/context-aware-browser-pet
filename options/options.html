@@ -26,7 +26,7 @@
 
       <nav class="sidebar-menu">
         <button class="menu-btn active" data-target="sanctuary">
-          <span class="menu-icon"></span> Sanctuary Playground
+          <span class="menu-icon"></span>Sanctuary Playground
         </button>
         <button class="menu-btn" data-target="statistics">
           <span class="menu-icon"></span> Analytics & Stats
@@ -124,14 +124,18 @@
 
             <div class="status-indicators-card">
               <div class="indicator-row">
-                <div class="status-indicator status-checking" id="ai-status-badge"></div>
+                <div class="status-icon-container">
+                  <div class="status-indicator status-checking" id="ai-status-badge"></div>
+                </div>
                 <div class="indicator-text">
                   <strong id="ai-status-text">Local AI: Checking...</strong>
                   <span id="ai-status-subtitle">DistilBERT Model Status</span>
                 </div>
               </div>
               <div class="indicator-row sync-row">
-                <div class="status-icon">🌐</div>
+                <div class="status-icon-container">
+                  <div class="status-icon">🌐</div>
+                </div>
                 <div class="indicator-text">
                   <strong id="active-tabs-text">1 Tab Active</strong>
                   <span>Cross-tab Synchronization</span>
