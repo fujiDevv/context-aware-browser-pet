@@ -8,7 +8,7 @@ import { springAnimate, keyframeAnimate } from './src/animate';
 import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
 import { ViewManager } from './src/view';
 import { STORAGE_KEYS } from './src/constants';
-import { getDominantTrait } from './src/rules';
+import { getDominantTrait, detectPageCategory } from './src/rules';
 
 let syncInterval: ReturnType<typeof setInterval> | null = null;
 let idleTimer: ReturnType<typeof setTimeout> | null = null;
@@ -416,8 +416,8 @@ async function updateEmotion(): Promise<void> {
   const scheduleEnabled = currentSettings.scheduleEnabled !== false;
 
   if (scheduleEnabled && !currentSettings.aiMode) {
-    const siteCategory = emotion._classifySite(context.hostname);
-    if (siteCategory !== 'default') {
+    const siteCategory = detectPageCategory(context.hostname, context.pageTitle);
+    if (siteCategory !== 'general') {
       personality.recordSiteVisit(siteCategory);
     }
   } else if (scheduleEnabled && currentSettings.aiMode && currentAiCategory) {

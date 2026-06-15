@@ -1,7 +1,7 @@
 import { PersonalitySystem } from './personality';
 import { TriggerSnapshot } from './types';
 import { 
-  SITE_CLASSIFICATION_RULES, 
+  detectPageCategory,
   EMOTION_FALLBACKS, 
   FOCUS_EMOTIONS, 
   IDLE_CHOICES, 
@@ -110,8 +110,8 @@ export class EmotionEngine {
     if (ctx.isFormSubmitting) return 'celebrating';
 
     // 2. Site Classification Custom Matches
-    const category = this._classifySite(ctx.hostname);
-    if (category === 'code') return this._codeEmotion(ctx);
+    const category = detectPageCategory(ctx.hostname, ctx.pageTitle);
+    if (category === 'coding') return this._codeEmotion(ctx);
     if (category === 'social') return 'love';
     if (category === 'gaming') return 'gaming';
     if (category === 'news') return 'working-thinking';
@@ -121,6 +121,7 @@ export class EmotionEngine {
     if (category === 'ai') return 'mindblown';
     if (category === 'streaming') return 'eating';
     if (category === 'finance') return 'money';
+    if (category === 'search') return 'working-thinking';
     if (category === 'fitness') {
       return FITNESS_EMOTES[Math.floor(new Date().getMinutes() % FITNESS_EMOTES.length)];
     }
@@ -174,15 +175,6 @@ export class EmotionEngine {
     return this.personality.defaultEmotion();
   }
 
-  _classifySite(hostname: string): string {
-    for (const [category, hosts] of Object.entries(SITE_CLASSIFICATION_RULES)) {
-      if (hosts.some(h => hostname.endsWith(h) || hostname.includes('.' + h + '.') || hostname === h)) {
-        return category;
-      }
-    }
-    return 'default';
-  }
-
   _codeEmotion(ctx: TriggerSnapshot): string {
     const titleLower = (ctx.pageTitle || '').toLowerCase();
     if (titleLower.includes('error') || titleLower.includes('fail') || titleLower.includes('bug')) {
@@ -209,3 +201,4 @@ export class EmotionEngine {
     return EMOTION_FALLBACKS[emotion] || this.personality.defaultEmotion();
   }
 }
+
