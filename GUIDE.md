@@ -65,7 +65,7 @@
 
 ## What is Clawd?
 
-Clawd is an open-source, context-aware browser mascot that lives at the bottom of your browser window. He walks around, reacts to what you're doing online, and changes his expression and outfit depending on the website you're visiting, the time of day, and even the season.
+Clawd is an open-source, context-aware browser mascot that lives along the edges of your browser window. He walks around, reacts to what you're doing online, and changes his expression and outfit depending on the website you're visiting, the time of day, and even the season.
 
 He's not just for looks — Clawd is a virtual pet with stats, levels, unlockable costumes, and over **140 unique animations**. Pet him, feed him, play with him, or just let him keep you company while you browse.
 
@@ -190,7 +190,7 @@ Clawd grows stronger as you use your browser. Leveling up unlocks new cosmetic t
 
 ### Level Milestones & Emotion Unlocks
 
-The XP required to level up is `Level × 100 XP` (e.g., Level 1 requires 100 XP to reach Level 2, Level 2 requires 200 XP to reach Level 3, and so on).
+The XP required to level up follows an exponential curve: `Math.floor(Math.pow(Level, 1.5) * 150)` (e.g., Level 1 requires 150 XP to reach Level 2, Level 2 requires 424 XP to reach Level 3, and so on).
 
 When Clawd levels up, a golden achievement banner slides down from the top of your current page to show what was unlocked!
 

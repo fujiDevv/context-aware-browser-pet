@@ -36,26 +36,27 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   ├── package.json           # Build scripts and dependency configurations
   ├── tsconfig.json          # TypeScript compilation settings
   ├── manifest.json          # Manifest V3 extension metadata
-  ├── background.ts          # State synchronizer and offscreen document manager
+  ├── background.ts          # State synchronizer and offscreen manager
   ├── offscreen.html         # Container for local AI and Audio playback
   ├── offscreen.ts           # Centralized runtime for ONNX AI and audio systems
-  ├── content.ts             # Main content script with lazy initialization
+  ├── content.ts             # Main content script injected into viewports
+  ├── main_world.ts          # MAIN world bridge for CSP-blocked API access
   ├── src/
-  │   ├── types.ts           # Shared TypeScript interfaces
+  │   ├── types.ts           # Shared state and settings interfaces
   │   ├── movement.ts        # Edge-crawling machine, rotation, and snapping
   │   ├── triggers.ts        # User interaction monitors (scroll, typing, video)
   │   ├── emotion.ts         # Reaction gates, emotes, and milestone locks
-  │   ├── personality.ts     # XP thresholds, stats modifiers, and state saves
-  │   ├── animate.ts         # Hooke's Law spring physics formulas
-  │   ├── view.ts            # Shadow DOM ViewManager & isolated UI injection
-  │   └── rules.ts           # Centralized site classification and emotion rules
-  ├── popup/
-  │   ├── popup.html         # Premium glassmorphic controller layout
-  │   ├── popup.ts           # Binds controls and manages settings input
-  │   └── popup.css          # Visual stylesheet for popup and options
-  ├── assets/
-  │   ├── pet.svg            # Mascot extension icon
-  │   └── *.mp3              # Chiptune sound effects (greeting, shoo, etc.)
+  │   ├── personality.ts     # Stat management & decay logic
+  │   ├── rules.ts           # Centralized site & emotion classification rules
+  │   ├── constants.ts       # Centralized storage keys and shared constants
+  │   ├── ai.ts              # Gemini Nano & Offscreen AI orchestration
+  │   ├── view.ts            # Shadow DOM ViewManager & UI injection
+  │   ├── shared-ui.ts       # Common glassmorphic UI components
+  │   ├── dialogues.ts       # Intent-based speech bubble collections
+  │   ├── personas/          # Modular persona dialogue collections
+  │   └── animate.ts         # viscus damping spring solver formulas
+  ├── popup/                 # Mascot settings and status bar UI
+  ├── assets/                # Mascot icons and chiptune sound effects
   └── dist/                  # Output bundle for Chrome installation
   ```
 
