@@ -19,7 +19,8 @@ export async function getAiEmotion(
   sentimentSensitivity: number = 50
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   try {
-    const category = detectPageCategory(url, pageTitle);
+    const ogType = (document.querySelector('meta[property="og:type"]') as HTMLMetaElement | null)?.content;
+    const category = detectPageCategory(url, pageTitle, ogType || undefined, metaDescription);
 
     // 1. Try Gemini Nano (Built-in Prompt API) first if available
     const geminiNanoAvailable = await checkGeminiNanoAvailability();

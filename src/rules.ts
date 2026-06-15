@@ -69,26 +69,36 @@ export const SITE_CLASSIFICATION_RULES: Record<string, string[]> = {
   ]
 };
 
-export function detectPageCategory(url: string, title: string): string {
+export function detectPageCategory(url: string, title: string, ogType?: string, description?: string): string {
   const urlLower = (url || '').toLowerCase();
   const titleLower = (title || '').toLowerCase();
+  const ogLower = (ogType || '').toLowerCase();
+  const descLower = (description || '').toLowerCase();
 
+  // 1. Meta-tag (OpenGraph) - High Signal for dynamic learning
+  if (ogLower.includes('article') || ogLower.includes('blog') || ogLower.includes('post')) return 'reading';
+  if (ogLower.includes('video')) return 'video';
+  if (ogLower.includes('music') || ogLower.includes('audio') || ogLower.includes('song')) return 'music';
+  if (ogLower.includes('book')) return 'reading';
+  if (ogLower.includes('game')) return 'gaming';
+
+  // 2. Hardcoded Domain Rules (Fallback)
   for (const [category, hosts] of Object.entries(SITE_CLASSIFICATION_RULES)) {
     if (hosts.some(h => urlLower.includes(h))) {
       return category;
     }
   }
 
-  // Enhanced Title Keyword Matching for category overrides (on general domains)
-  const devKeywords = ['programming', 'tutorial', 'code', 'rust', 'python', 'javascript', 'typescript', 'java', 'c++', 'html', 'css', 'git', 'compiler', 'api'];
-  const scholarKeywords = ['news', 'article', 'science', 'research', 'history', 'wikipedia', 'study', 'journal', 'daily'];
-  const gamingKeywords = ['game', 'play', 'arcade', 'retro', 'nintendo', 'playstation', 'xbox', 'steam'];
-  const shoppingKeywords = ['buy', 'shop', 'store', 'checkout', 'price', 'deal', 'discount'];
+  // 3. Keyword Matching (Title & Description)
+  const devKeywords = ['programming', 'tutorial', 'code', 'rust', 'python', 'javascript', 'typescript', 'java', 'c++', 'html', 'css', 'git', 'compiler', 'api', 'documentation', 'stack overflow', 'developer'];
+  const scholarKeywords = ['news', 'article', 'science', 'research', 'history', 'wikipedia', 'study', 'journal', 'daily', 'paper', 'manuscript'];
+  const gamingKeywords = ['game', 'play', 'arcade', 'retro', 'nintendo', 'playstation', 'xbox', 'steam', 'quest', 'rpg', 'fps', 'multiplayer'];
+  const shoppingKeywords = ['buy', 'shop', 'store', 'checkout', 'price', 'deal', 'discount', 'cart', 'purchase', 'order', 'amazon', 'ebay'];
 
-  if (devKeywords.some(kw => titleLower.includes(kw))) return 'coding';
-  if (scholarKeywords.some(kw => titleLower.includes(kw))) return 'reading';
-  if (gamingKeywords.some(kw => titleLower.includes(kw))) return 'gaming';
-  if (shoppingKeywords.some(kw => titleLower.includes(kw))) return 'shopping';
+  if (devKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'coding';
+  if (scholarKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'reading';
+  if (gamingKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'gaming';
+  if (shoppingKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'shopping';
 
   return 'general';
 }

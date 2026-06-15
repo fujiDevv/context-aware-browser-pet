@@ -416,7 +416,9 @@ async function updateEmotion(): Promise<void> {
   const scheduleEnabled = currentSettings.scheduleEnabled !== false;
 
   if (scheduleEnabled && !currentSettings.aiMode) {
-    const siteCategory = detectPageCategory(context.hostname, context.pageTitle);
+    const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
+    const ogType = (document.querySelector('meta[property="og:type"]') as HTMLMetaElement | null)?.content;
+    const siteCategory = detectPageCategory(window.location.href, context.pageTitle, ogType || undefined, metaDesc || undefined);
     if (siteCategory !== 'general') {
       personality.recordSiteVisit(siteCategory);
     }
