@@ -17,6 +17,9 @@ const DEFAULT_STATS: PetStats = {
   lastHabitDecayTime: 0
 };
 
+const OFFLINE_DECAY_CAP_SECONDS = 86400; // 24 hours
+const MIN_STAT_VALUE = 15; // 15% floor
+
 export class PersonalitySystem {
   stats: PetStats;
   onStatsChange?: (stats: PetStats) => void;
@@ -50,8 +53,15 @@ export class PersonalitySystem {
   _applyDecay(): void {
     const lastUpdate = this.stats.lastUpdateTime || Date.now();
     const elapsedMs = Date.now() - lastUpdate;
+    
+    if (elapsedMs < 1000) return; // Skip if basically no time passed
+
     // Limit offline decay calculation to max 24 hours (86,400 seconds)
-    const elapsedSeconds = Math.max(0, Math.min(86400, elapsedMs / 1000));
+    const elapsedSeconds = Math.max(0, Math.min(OFFLINE_DECAY_CAP_SECONDS, elapsedMs / 1000));
+
+    if (elapsedSeconds > 3600) {
+      console.debug(`[Clawd Personality] Applying catch-up decay for ${Math.round(elapsedSeconds / 3600)} hours of inactivity.`);
+    }
 
     // Decay rates per second
     const happinessDecay = elapsedSeconds * 0.0011;
@@ -61,11 +71,13 @@ export class PersonalitySystem {
     const leisureDecay = elapsedSeconds * 0.0015;
 
     // Clamp stats at 15% floor so Clawd is never fully depleted/unusable offline
-    this.stats.happiness = Math.max(15, Math.round(this.stats.happiness - happinessDecay));
-    this.stats.energy = Math.max(15, Math.round(this.stats.energy - energyDecay));
-    this.stats.curiosity = Math.max(15, Math.round(this.stats.curiosity - curiosityDecay));
-    this.stats.focus = Math.max(15, Math.round(this.stats.focus - focusDecay));
-    this.stats.leisure = Math.max(15, Math.round(this.stats.leisure - leisureDecay));
+    this.stats.happiness = Math.max(MIN_STAT_VALUE, Math.round(this.stats.happiness - happinessDecay));
+    this.stats.energy = Math.max(MIN_STAT_VALUE, Math.round(this.stats.energy - energyDecay));
+    this.stats.curiosity = Math.max(MIN_STAT_VALUE, Math.round(this.stats.curiosity - curiosityDecay));
+    this.stats.focus = Math.max(MIN_STAT_VALUE, Math.round(this.stats.focus - focusDecay));
+    this.stats.leisure = Math.max(MIN_STAT_VALUE, Math.round(this.stats.leisure - leisureDecay));
+    
+    this.stats.lastUpdateTime = Date.now();
   }
 
   _applyHabitDecay(): void {
@@ -101,6 +113,12 @@ export class PersonalitySystem {
   }
 
   async _periodicDecay(): Promise<void> {
+    // Only apply periodic decay if the document is visible to avoid redundant storage writes from multiple tabs.
+    // Initial catch-up decay is still handled by _load() when the extension starts.
+    if (typeof document !== 'undefined' && document.visibilityState !== 'visible') {
+      return;
+    }
+
     await this.isLoaded;
     this._applyDecay();
     this._applyHabitDecay();
