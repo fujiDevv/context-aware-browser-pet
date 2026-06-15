@@ -238,7 +238,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 let creatingOffscreen: Promise<void> | null = null;
 async function setupOffscreen(): Promise<void> {
-  const contexts = await (chrome.runtime as any).getContexts?.({
+  const contexts = await chrome.runtime.getContexts?.({
     contextTypes: ['OFFSCREEN_DOCUMENT']
   });
   if (contexts && contexts.length > 0) {
@@ -264,7 +264,7 @@ async function setupOffscreen(): Promise<void> {
 }
 
 async function closeOffscreen(): Promise<void> {
-  const contexts = await (chrome.runtime as any).getContexts?.({
+  const contexts = await chrome.runtime.getContexts?.({
     contextTypes: ['OFFSCREEN_DOCUMENT']
   });
   if (contexts && contexts.length > 0) {

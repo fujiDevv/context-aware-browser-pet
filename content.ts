@@ -28,7 +28,7 @@ function unlockAudio(e?: Event): void {
   }
   try {
     if (!audioCtx) {
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       audioCtx = new AudioContextClass();
     }
     if (audioCtx && audioCtx.state === 'suspended') {
@@ -83,7 +83,7 @@ async function playSound(type: string): Promise<void> {
 
   if (!audioCtx) {
     try {
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       audioCtx = new AudioContextClass();
     } catch (err) {
       console.warn("Failed to create AudioContext:", err);
@@ -461,7 +461,7 @@ async function updateEmotion(): Promise<void> {
   }
 
   // Detect metered connection or slow network for "Lite Mode" fallback
-  const isMetered = (navigator as any).connection?.saveData === true;
+  const isMetered = navigator.connection?.saveData === true;
   const aiStatus = await checkTabAiAvailability();
   const useLiteMode = isMetered || aiStatus !== 'readily';
 
