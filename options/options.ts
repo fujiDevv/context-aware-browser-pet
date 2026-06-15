@@ -1028,7 +1028,23 @@ const COSTUMES_METADATA = [
 
 function getMascotSvgName(mood: string, costume: string): string {
   const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
-  if (!idleStates.includes(mood)) return mood;
+  const allowedSvgNames = new Set([
+    'happy',
+    'waving',
+    'smile',
+    'idle-living',
+    'christmas',
+    'halloween',
+    'summer',
+    'detective',
+    'magic',
+    'rainbow'
+  ]);
+  const normalizedMood = mood.trim().toLowerCase();
+
+  if (!idleStates.includes(normalizedMood)) {
+    return allowedSvgNames.has(normalizedMood) ? normalizedMood : 'happy';
+  }
 
   const costumeMap: Record<string, string> = {
     christmas: 'christmas',
@@ -1038,7 +1054,8 @@ function getMascotSvgName(mood: string, costume: string): string {
     wizard: 'magic',
     party: 'rainbow'
   };
-  return costumeMap[costume] || mood;
+  const mapped = costumeMap[costume] || normalizedMood;
+  return allowedSvgNames.has(mapped) ? mapped : 'happy';
 }
 
 function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
