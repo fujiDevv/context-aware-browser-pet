@@ -187,3 +187,11 @@
 .pet-levelup-close:hover {
   color: #1e293b;
 }
+
+.browser-pet-toy {
+  position: fixed;
+  font-size: 24px;
+  pointer-events: none;
+  z-index: 2147483646;
+  user-select: none;
+}

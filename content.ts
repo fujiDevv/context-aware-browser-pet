@@ -664,13 +664,9 @@ function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
   toyEl.className = 'browser-pet-toy';
   const emojis: Record<string, string> = { ball: '⚽', fish: '🐟', laser: '🔴', yarn: '🧶', duck: '🦆', box: '📦' };
   toyEl.textContent = emojis[toyType] || '🧸';
-  toyEl.style.position = 'fixed';
   toyEl.style.left = `${dropX - 15}px`;
   toyEl.style.top = `${dropY - 15}px`;
-  toyEl.style.fontSize = '24px';
-  toyEl.style.pointerEvents = 'none';
-  toyEl.style.zIndex = '2147483646';
-  document.body.appendChild(toyEl);
+  view.addItem(toyEl);
 
   const floorY = window.innerHeight - 32;
   springAnimate(toyEl, {

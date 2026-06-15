@@ -48,16 +48,18 @@ export class ViewManager {
   }
 
   private injectHost() {
-    if (document.body) {
-      document.body.appendChild(this.shadowHost);
+    this.shadowHost.style.display = 'contents';
+    const target = document.documentElement;
+    if (target) {
+      target.appendChild(this.shadowHost);
     } else {
       const observer = new MutationObserver((_, obs) => {
-        if (document.body) {
-          document.body.appendChild(this.shadowHost);
+        if (document.documentElement) {
+          document.documentElement.appendChild(this.shadowHost);
           obs.disconnect();
         }
       });
-      observer.observe(document.documentElement, { childList: true });
+      observer.observe(document, { childList: true, subtree: true });
     }
   }
 
@@ -76,6 +78,10 @@ export class ViewManager {
 
   public getPetImg(): HTMLImageElement {
     return this.petImg;
+  }
+
+  public addItem(el: HTMLElement) {
+    this.container.appendChild(el);
   }
 
   public setEmotion(assetName: string) {
