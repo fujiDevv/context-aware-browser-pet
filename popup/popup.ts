@@ -1,54 +1,6 @@
 import { PetStats, PetSettings } from '../src/types';
-
-const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> = {
-  'happy': { name: 'Happy', emoji: '😊' },
-  'sad': { name: 'Sad', emoji: '😢' },
-  'angry': { name: 'Angry', emoji: '😠' },
-  'crying': { name: 'Crying', emoji: '😭' },
-  'waving': { name: 'Waving', emoji: '👋' },
-  'sleeping': { name: 'Sleeping', emoji: '💤' },
-  'working-thinking': { name: 'Thinking', emoji: '🤔' },
-  'shrug': { name: 'Shrug', emoji: '🤷' },
-  'reading': { name: 'Reading', emoji: '📖' },
-  'yoga': { name: 'Yoga', emoji: '🧘' },
-  'eating': { name: 'Eating', emoji: '🍕' },
-  'coding': { name: 'Coding', emoji: '💻' },
-  'working-typing': { name: 'Typing', emoji: '⌨️' },
-  'dancing': { name: 'Dancing', emoji: '💃' },
-  'cool': { name: 'Cool', emoji: '😎' },
-  'love': { name: 'Love', emoji: '❤️' },
-  'celebrating': { name: 'Celebrating', emoji: '🎉' },
-  'mindblown': { name: 'Mindblown', emoji: '🤯' },
-  'ninja': { name: 'Ninja', emoji: '🥷' },
-  'working-wizard': { name: 'Wizard', emoji: '🧙' },
-  'astronaut': { name: 'Astronaut', emoji: '🧑‍🚀' },
-  'working-debugger': { name: 'Debugger', emoji: '🔍' },
-  'working-building': { name: 'Building', emoji: '🧱' },
-  'rocket': { name: 'Rocket', emoji: '🚀' },
-  'pirate': { name: 'Pirate', emoji: '🏴‍☠️' },
-  'working-juggling': { name: 'Juggling', emoji: '🤹' },
-  'gaming': { name: 'Gaming', emoji: '🎮' },
-  'battery-low': { name: 'Low Battery', emoji: '🪫' },
-  'christmas': { name: 'Christmas', emoji: '🎄' },
-  'winter': { name: 'Winter', emoji: '❄️' },
-  'halloween': { name: 'Halloween', emoji: '🎃' },
-  'summer': { name: 'Summer', emoji: '☀️' },
-  'ice-cream': { name: 'Ice Cream', emoji: '🍦' },
-  'surfing': { name: 'Surfing', emoji: '🏄' },
-  'skateboard': { name: 'Skateboard', emoji: '🛹' },
-  'telescope': { name: 'Telescope', emoji: '🔭' },
-  'meditating': { name: 'Meditating', emoji: '🧘' },
-  'working-rubber-duck': { name: 'Rubber Duck', emoji: '🦆' },
-  'coffee': { name: 'Coffee', emoji: '☕' },
-  'mail': { name: 'Mail', emoji: '✉️' },
-  'notification': { name: 'Notification', emoji: '🔔' },
-  'flexing': { name: 'Flexing', emoji: '💪' },
-  'lifting': { name: 'Lifting', emoji: '🏋️' },
-  'singing': { name: 'Singing', emoji: '🎤' },
-  'music': { name: 'Music', emoji: '🎵' },
-  'dj': { name: 'DJ', emoji: '🎧' },
-  'money': { name: 'Money', emoji: '💰' }
-};
+import { EMOTIONS_METADATA, getDominantTrait } from '../src/shared-ui';
+import { STORAGE_KEYS } from '../src/constants';
 
 async function init(): Promise<void> {
   let blockedDomains: string[] = [];
@@ -139,14 +91,14 @@ async function init(): Promise<void> {
   };
   setupDashboardLink();
 
-  const data = await chrome.storage.local.get(['pet-stats', 'pet-settings', 'pet-mood']);
-  blockedDomains = data['pet-settings']?.blockedDomains || [];
+  const data = await chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
+  blockedDomains = data[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
   
-  if (data['pet-settings']?.name) {
-    (document.getElementById('pet-name') as HTMLElement).textContent = data['pet-settings'].name;
+  if (data[STORAGE_KEYS.SETTINGS]?.name) {
+    (document.getElementById('pet-name') as HTMLElement).textContent = data[STORAGE_KEYS.SETTINGS].name;
   }
-  updateUIStats(data['pet-stats']);
-  updateUIMood(data['pet-mood'] || 'happy');
+  updateUIStats(data[STORAGE_KEYS.STATS]);
+  updateUIMood(data[STORAGE_KEYS.MOOD] || 'happy');
 
   const tabHideToggle = document.getElementById('tab-hide-toggle') as HTMLInputElement;
   const siteHideToggle = document.getElementById('site-hide-toggle') as HTMLInputElement;
@@ -214,23 +166,23 @@ async function init(): Promise<void> {
       }
       
       // Save updated blocked domains
-      chrome.storage.local.get('pet-settings', (res) => {
-        const settings = res['pet-settings'] || {};
+      chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
+        const settings = res[STORAGE_KEYS.SETTINGS] || {};
         settings.blockedDomains = blockedDomains;
-        chrome.storage.local.set({ 'pet-settings': settings });
+        chrome.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
       });
     }
   });
 
   chrome.storage.onChanged.addListener((changes) => {
-    if (changes['pet-stats']) {
-      updateUIStats(changes['pet-stats'].newValue);
+    if (changes[STORAGE_KEYS.STATS]) {
+      updateUIStats(changes[STORAGE_KEYS.STATS].newValue);
     }
-    if (changes['pet-mood']) {
-      updateUIMood(changes['pet-mood'].newValue);
+    if (changes[STORAGE_KEYS.MOOD]) {
+      updateUIMood(changes[STORAGE_KEYS.MOOD].newValue);
     }
-    if (changes['pet-settings']) {
-      const newSettings = changes['pet-settings'].newValue;
+    if (changes[STORAGE_KEYS.SETTINGS]) {
+      const newSettings = changes[STORAGE_KEYS.SETTINGS].newValue;
       if (newSettings?.name) {
         (document.getElementById('pet-name') as HTMLElement).textContent = newSettings.name;
       }
@@ -267,35 +219,6 @@ async function init(): Promise<void> {
   btnPet.addEventListener('click', () => handleActionClick(btnPet, 'pet'));
   btnFeed.addEventListener('click', () => handleActionClick(btnFeed, 'feed'));
   btnShoo.addEventListener('click', () => handleActionClick(btnShoo, 'shoo'));
-
-  function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
-    if (!stats) return 'normal';
-    const counts = stats.siteCategoryCounts || {};
-    
-    const developerScore = (counts['code'] || 0) + (counts['docs'] || 0);
-    const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0);
-    const scholarScore = counts['news'] || 0;
-    const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0);
-    
-    const scores = {
-      developer: developerScore,
-      gamer: gamerScore,
-      scholar: scholarScore,
-      socialite: socialiteScore
-    };
-    
-    let maxTrait: 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' = 'normal';
-    let maxScore = 3;
-    
-    for (const [trait, score] of Object.entries(scores)) {
-      if (score > maxScore) {
-        maxScore = score;
-        maxTrait = trait as any;
-      }
-    }
-    
-    return maxTrait;
-  }
 
   function updateUIStats(stats: PetStats | undefined): void {
     if (!stats) return;

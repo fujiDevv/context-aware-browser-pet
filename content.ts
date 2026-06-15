@@ -7,6 +7,7 @@ import { PetSettings, SharedPetState } from './src/types';
 import { springAnimate, keyframeAnimate } from './src/animate';
 import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
 import { ViewManager } from './src/view';
+import { STORAGE_KEYS } from './src/constants';
 
 let syncInterval: ReturnType<typeof setInterval> | null = null;
 let emotionInterval: ReturnType<typeof setInterval> | null = null;
@@ -277,7 +278,7 @@ async function loadPet(name: string): Promise<void> {
   view.setEmotion(assetName);
   try {
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-      chrome.storage.local.set({ 'pet-mood': name }).catch((e) => { console.warn('[Clawd Content] storage.set error:', e); });
+      chrome.storage.local.set({ [STORAGE_KEYS.MOOD]: name }).catch((e) => { console.warn('[Clawd Content] storage.set error:', e); });
     }
   } catch (e) { console.warn('[Clawd Content] error:', e); }
 }
@@ -344,13 +345,13 @@ async function updateEmotion(): Promise<void> {
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
   } else if (scheduleEnabled && currentSettings.aiMode && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
-      const storedTime = await chrome.storage.local.get('last-ai-comment-time');
-      const lastCommentTime = storedTime['last-ai-comment-time'] || 0;
+      const storedTime = await chrome.storage.local.get(STORAGE_KEYS.LAST_AI_COMMENT_TIME);
+      const lastCommentTime = storedTime[STORAGE_KEYS.LAST_AI_COMMENT_TIME] || 0;
       const freqSec = currentSettings.commentFrequency ?? 60;
       const now = Date.now();
       
       if (now - lastCommentTime >= freqSec * 1000) {
-        await chrome.storage.local.set({ 'last-ai-comment-time': now });
+        await chrome.storage.local.set({ [STORAGE_KEYS.LAST_AI_COMMENT_TIME]: now });
         
         const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
         const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
@@ -661,9 +662,9 @@ window.addEventListener('dragover', handleDragOver);
 window.addEventListener('drop', handleDrop);
 
 async function loadAndApplySettings(): Promise<void> {
-  const saved = await chrome.storage.local.get('pet-settings');
-  if (saved['pet-settings']) {
-    currentSettings = { ...currentSettings, ...saved['pet-settings'] };
+  const saved = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+  if (saved[STORAGE_KEYS.SETTINGS]) {
+    currentSettings = { ...currentSettings, ...saved[STORAGE_KEYS.SETTINGS] };
     personality.disabledEmotions = currentSettings.disabledEmotions || [];
     movement.updateSettings({
       size: currentSettings.size,
@@ -675,8 +676,8 @@ async function loadAndApplySettings(): Promise<void> {
 
 function handleStorageChanged(changes: Record<string, chrome.storage.StorageChange>) {
   if (!checkContextOrCleanup()) return;
-  if (changes['pet-settings']) {
-    const newSettings = changes['pet-settings'].newValue;
+  if (changes[STORAGE_KEYS.SETTINGS]) {
+    const newSettings = changes[STORAGE_KEYS.SETTINGS].newValue;
     if (newSettings) {
       currentSettings = { ...currentSettings, ...newSettings };
       personality.disabledEmotions = currentSettings.disabledEmotions || [];
@@ -685,7 +686,7 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
         speed: currentSettings.speed
       });
       view.applyCostume(currentSettings.costume);
-      if (changes['pet-settings'].oldValue?.aiMode !== newSettings.aiMode) {
+      if (changes[STORAGE_KEYS.SETTINGS].oldValue?.aiMode !== newSettings.aiMode) {
         hasEvaluatedPageAi = false;
       }
       if (isPetHidden()) {
@@ -695,9 +696,9 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
       }
     }
   }
-  if (changes['pet-stats']) {
-    const newStats = changes['pet-stats'].newValue;
-    const oldStats = changes['pet-stats'].oldValue;
+  if (changes[STORAGE_KEYS.STATS]) {
+    const newStats = changes[STORAGE_KEYS.STATS].newValue;
+    const oldStats = changes[STORAGE_KEYS.STATS].oldValue;
     if (newStats) {
       const oldLevel = oldStats ? oldStats.level : 1;
       if (document.visibilityState === 'visible' && !isPetHidden() && newStats.level > oldLevel) {
@@ -816,8 +817,8 @@ async function init(): Promise<void> {
 
   view.preloadAssets();
 
-  const savedMood = (await chrome.storage.local.get('pet-mood').catch(() => ({}))) as Record<string, any>;
-  const initialMood = savedMood['pet-mood'] || 'happy';
+  const savedMood = (await chrome.storage.local.get(STORAGE_KEYS.MOOD).catch(() => ({}))) as Record<string, any>;
+  const initialMood = savedMood[STORAGE_KEYS.MOOD] || 'happy';
   await loadPet(initialMood);
 
   window.addEventListener('pet-console-error', handleConsoleError);

@@ -1,4 +1,5 @@
 import { SharedPetState, OriginPetState } from './src/types';
+import { STORAGE_KEYS } from './src/constants';
 
 let sharedPetState: SharedPetState = {
   x: 200,
@@ -10,9 +11,9 @@ let sharedPetState: SharedPetState = {
 };
 
 // Initialize sharedPetState from storage to survive SW suspension
-chrome.storage.local.get('shared-pet-state', (data) => {
-  if (data['shared-pet-state']) {
-    sharedPetState = data['shared-pet-state'];
+chrome.storage.local.get(STORAGE_KEYS.SHARED_STATE, (data) => {
+  if (data[STORAGE_KEYS.SHARED_STATE]) {
+    sharedPetState = data[STORAGE_KEYS.SHARED_STATE];
   }
 });
 
@@ -23,7 +24,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
     // Initialize default settings with local AI disabled (off by default)
     chrome.storage.local.set({
-      'pet-settings': {
+      [STORAGE_KEYS.SETTINGS]: {
         size: 128,
         speed: 1.2,
         soundEnabled: true,
@@ -38,7 +39,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         scheduleEnabled: true,
         seasonalEnabled: true
       },
-      'shared-pet-state': sharedPetState
+      [STORAGE_KEYS.SHARED_STATE]: sharedPetState
     }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set init error:', e); });
   }
 
@@ -101,7 +102,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sharedPetState = { ...sharedPetState, ...message.state };
     
     // Persist shared state to storage
-    chrome.storage.local.set({ 'shared-pet-state': sharedPetState })
+    chrome.storage.local.set({ [STORAGE_KEYS.SHARED_STATE]: sharedPetState })
       .catch((e) => { console.warn('[Clawd Background] storage.set shared-pet-state error:', e); });
 
     const now = Date.now();
@@ -219,8 +220,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'update-ai-progress') {
     chrome.storage.local.set({
-      modelLoadingState: message.state,
-      modelDownloadProgress: message.progress
+      [STORAGE_KEYS.MODEL_LOADING_STATE]: message.state,
+      [STORAGE_KEYS.MODEL_DOWNLOAD_PROGRESS]: message.progress
     }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set update-ai-progress error:', e); });
 
     if (message.state === 'error') {
@@ -267,8 +268,8 @@ async function closeOffscreen(): Promise<void> {
 }
 
 // Pre-load the offscreen document (which pre-loads the classifier) if AI Mode is enabled
-chrome.storage.local.get('pet-settings', (data) => {
-  const settings = data['pet-settings'] || {};
+chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+  const settings = data[STORAGE_KEYS.SETTINGS] || {};
   if (settings.aiMode) {
     setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen initial call error:', e); });
   }
@@ -276,8 +277,8 @@ chrome.storage.local.get('pet-settings', (data) => {
 
 // Watch for settings changes to boot offscreen context in real time
 chrome.storage.onChanged.addListener((changes) => {
-  if (changes['pet-settings']) {
-    const settings = changes['pet-settings'].newValue || {};
+  if (changes[STORAGE_KEYS.SETTINGS]) {
+    const settings = changes[STORAGE_KEYS.SETTINGS].newValue || {};
     if (settings.aiMode) {
       setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen re-call error:', e); });
     } else {

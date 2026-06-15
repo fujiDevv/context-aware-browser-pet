@@ -1,4 +1,5 @@
 import { PetStats } from './types';
+import { STORAGE_KEYS } from './constants';
 
 const DEFAULT_STATS: PetStats = {
   happiness: 50,
@@ -36,8 +37,8 @@ export class PersonalitySystem {
 
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
       chrome.storage.onChanged.addListener((changes) => {
-        if (changes['pet-stats']) {
-          const newVal = changes['pet-stats'].newValue;
+        if (changes[STORAGE_KEYS.STATS]) {
+          const newVal = changes[STORAGE_KEYS.STATS].newValue;
           if (newVal) {
             this.stats = newVal;
           }
@@ -145,9 +146,9 @@ export class PersonalitySystem {
       if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
         return this.stats;
       }
-      const saved = await chrome.storage.local.get('pet-stats');
-      if (saved['pet-stats']) {
-        this.stats = { ...DEFAULT_STATS, ...saved['pet-stats'] };
+      const saved = await chrome.storage.local.get(STORAGE_KEYS.STATS);
+      if (saved[STORAGE_KEYS.STATS]) {
+        this.stats = { ...DEFAULT_STATS, ...saved[STORAGE_KEYS.STATS] };
       }
 
       this._applyDecay();
@@ -171,7 +172,7 @@ export class PersonalitySystem {
         return;
       }
       this.stats.lastUpdateTime = Date.now();
-      await chrome.storage.local.set({ 'pet-stats': this.stats });
+      await chrome.storage.local.set({ [STORAGE_KEYS.STATS]: this.stats });
       if (this.onStatsChange) {
         this.onStatsChange(this.stats);
       }

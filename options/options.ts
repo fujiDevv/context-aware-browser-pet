@@ -1,55 +1,7 @@
 import { PersonalitySystem } from '../src/personality';
 import { PetStats, PetSettings } from '../src/types';
-
-const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> = {
-  'happy': { name: 'Happy', emoji: '😊' },
-  'sad': { name: 'Sad', emoji: '😢' },
-  'angry': { name: 'Angry', emoji: '😠' },
-  'crying': { name: 'Crying', emoji: '😭' },
-  'waving': { name: 'Waving', emoji: '👋' },
-  'sleeping': { name: 'Sleeping', emoji: '💤' },
-  'working-thinking': { name: 'Thinking', emoji: '🤔' },
-  'shrug': { name: 'Shrug', emoji: '🤷' },
-  'reading': { name: 'Reading', emoji: '📖' },
-  'yoga': { name: 'Yoga', emoji: '🧘' },
-  'eating': { name: 'Eating', emoji: '🍕' },
-  'coding': { name: 'Coding', emoji: '💻' },
-  'working-typing': { name: 'Typing', emoji: '⌨️' },
-  'dancing': { name: 'Dancing', emoji: '💃' },
-  'cool': { name: 'Cool', emoji: '😎' },
-  'love': { name: 'Love', emoji: '❤️' },
-  'celebrating': { name: 'Celebrating', emoji: '🎉' },
-  'mindblown': { name: 'Mindblown', emoji: '🤯' },
-  'ninja': { name: 'Ninja', emoji: '🥷' },
-  'working-wizard': { name: 'Wizard', emoji: '🧙' },
-  'astronaut': { name: 'Astronaut', emoji: '🧑‍🚀' },
-  'working-debugger': { name: 'Debugger', emoji: '🔍' },
-  'working-building': { name: 'Building', emoji: '🧱' },
-  'rocket': { name: 'Rocket', emoji: '🚀' },
-  'pirate': { name: 'Pirate', emoji: '🏴‍☠️' },
-  'working-juggling': { name: 'Juggling', emoji: '🤹' },
-  'gaming': { name: 'Gaming', emoji: '🎮' },
-  'battery-low': { name: 'Low Battery', emoji: '🪫' },
-  'christmas': { name: 'Christmas', emoji: '🎄' },
-  'winter': { name: 'Winter', emoji: '❄️' },
-  'halloween': { name: 'Halloween', emoji: '🎃' },
-  'summer': { name: 'Summer', emoji: '☀️' },
-  'ice-cream': { name: 'Ice Cream', emoji: '🍦' },
-  'surfing': { name: 'Surfing', emoji: '🏄' },
-  'skateboard': { name: 'Skateboard', emoji: '🛹' },
-  'telescope': { name: 'Telescope', emoji: '🔭' },
-  'meditating': { name: 'Meditating', emoji: '🧘' },
-  'working-rubber-duck': { name: 'Rubber Duck', emoji: '🦆' },
-  'coffee': { name: 'Coffee', emoji: '☕' },
-  'mail': { name: 'Mail', emoji: '✉️' },
-  'notification': { name: 'Notification', emoji: '🔔' },
-  'flexing': { name: 'Flexing', emoji: '💪' },
-  'lifting': { name: 'Lifting', emoji: '🏋️' },
-  'singing': { name: 'Singing', emoji: '🎤' },
-  'music': { name: 'Music', emoji: '🎵' },
-  'dj': { name: 'DJ', emoji: '🎧' },
-  'money': { name: 'Money', emoji: '💰' }
-};
+import { STORAGE_KEYS } from '../src/constants';
+import { EMOTIONS_METADATA, getDominantTrait } from '../src/shared-ui';
 
 let personality: PersonalitySystem;
 let blockedDomains: string[] = [];
@@ -178,12 +130,12 @@ async function init() {
   });
 
   // Load Settings and Stats from local storage
-  const storageData = await chrome.storage.local.get(['pet-stats', 'pet-settings', 'pet-mood']);
-  blockedDomains = storageData['pet-settings']?.blockedDomains || [];
-  domainReactions = storageData['pet-settings']?.domainReactions || [];
-  
+  const storageData = await chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
+  blockedDomains = storageData[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
+  domainReactions = storageData[STORAGE_KEYS.SETTINGS]?.domainReactions || [];
+
   populateHourSelects();
-  applySettings(storageData['pet-settings']);
+  applySettings(storageData[STORAGE_KEYS.SETTINGS]);
 
   // Initializing the Personality System
   personality = new PersonalitySystem((updatedStats) => {
@@ -193,7 +145,7 @@ async function init() {
 
   await personality.isLoaded;
   updateUIStats(personality.stats);
-  updateUIMood(storageData['pet-mood'] || 'happy');
+  updateUIMood(storageData[STORAGE_KEYS.MOOD] || 'happy');
   updateLocalAiStatus();
   updatePresence();
 
@@ -204,7 +156,7 @@ async function init() {
   }, 5000);
 
   // Initial Wardrobe rendering
-  renderWardrobe(personality.stats, storageData['pet-settings']?.costume || 'none');
+  renderWardrobe(personality.stats, storageData[STORAGE_KEYS.SETTINGS]?.costume || 'none');
 
   // Interaction buttons
   const btnPet = document.getElementById('btn-pet') as HTMLButtonElement;
@@ -215,12 +167,12 @@ async function init() {
     if (btnPet.hasAttribute('disabled')) return;
     triggerPetAction('pet', 'love', 'petting', 'Purrrr... ❤️');
   });
-  
+
   btnFeed?.addEventListener('click', () => {
     if (btnFeed.hasAttribute('disabled')) return;
     triggerPetAction('feed', 'eating', 'feeding', 'Munch munch! 🍕');
   });
-  
+
   btnShoo?.addEventListener('click', () => {
     if (btnShoo.hasAttribute('disabled')) return;
     triggerPetAction('shoo', 'cool', 'shoo', 'Shoo! 🏃‍♂️');
@@ -342,7 +294,7 @@ async function init() {
     const confirmed = confirm("WARNING: This will reset Clawd's stats, level, prestige, and activity history to defaults. Settings will not be touched. Continue?");
     if (!confirmed) return;
 
-    await chrome.storage.local.remove('pet-stats');
+    await chrome.storage.local.remove(STORAGE_KEYS.STATS);
     window.location.reload();
   });
 
@@ -361,25 +313,25 @@ async function init() {
       const confirmed = confirm("Are you sure you want to clear Clawd's history timeline?");
       if (!confirmed) return;
 
-      const data = await chrome.storage.local.get('pet-stats');
-      const stats = data['pet-stats'] || {};
+      const data = await chrome.storage.local.get(STORAGE_KEYS.STATS);
+      const stats = data[STORAGE_KEYS.STATS] || {};
       stats.moodHistory = [];
-      await chrome.storage.local.set({ 'pet-stats': stats });
+      await chrome.storage.local.set({ [STORAGE_KEYS.STATS]: stats });
     });
   }
 
   // Storage listener to update UI in real time
   chrome.storage.onChanged.addListener((changes) => {
-    if (changes['pet-stats']) {
-      updateUIStats(changes['pet-stats'].newValue);
+    if (changes[STORAGE_KEYS.STATS]) {
+      updateUIStats(changes[STORAGE_KEYS.STATS].newValue);
     }
-    if (changes['pet-mood']) {
-      updateUIMood(changes['pet-mood'].newValue);
+    if (changes[STORAGE_KEYS.MOOD]) {
+      updateUIMood(changes[STORAGE_KEYS.MOOD].newValue);
     }
-    if (changes['pet-settings'] && !document.hasFocus()) {
-      applySettings(changes['pet-settings'].newValue);
+    if (changes[STORAGE_KEYS.SETTINGS] && !document.hasFocus()) {
+      applySettings(changes[STORAGE_KEYS.SETTINGS].newValue);
     }
-    if (changes['modelLoadingState'] || changes['modelDownloadProgress']) {
+    if (changes[STORAGE_KEYS.MODEL_LOADING_STATE] || changes[STORAGE_KEYS.MODEL_DOWNLOAD_PROGRESS]) {
       updateLocalAiStatus();
     }
   });
@@ -421,7 +373,7 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
 
   // Visual mood preview
   if (previewImg) previewImg.src = `../assets/pets/clawd-${temporaryMood}.svg`;
-  
+
   // Jump animation WAAPI
   if (previewImg) {
     previewImg.animate([
@@ -434,8 +386,8 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
   await personality.recordInteraction(action);
 
   setTimeout(async () => {
-    const currentMood = await chrome.storage.local.get('pet-mood');
-    updateUIMood(currentMood['pet-mood'] || 'happy');
+    const currentMood = await chrome.storage.local.get(STORAGE_KEYS.MOOD);
+    updateUIMood(currentMood[STORAGE_KEYS.MOOD] || 'happy');
 
     // Restore buttons after 3 seconds
     if (btnPet) {
@@ -484,35 +436,6 @@ function updateUIMood(mood: string): void {
   if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
   const svgName = getMascotSvgName(mood, activeCostume);
   if (previewImg) previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
-}
-
-function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
-  if (!stats) return 'normal';
-  const counts = stats.siteCategoryCounts || {};
-
-  const developerScore = (counts['code'] || 0) + (counts['docs'] || 0);
-  const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0);
-  const scholarScore = counts['news'] || 0;
-  const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0);
-
-  const scores = {
-    developer: developerScore,
-    gamer: gamerScore,
-    scholar: scholarScore,
-    socialite: socialiteScore
-  };
-
-  let maxTrait: 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' = 'normal';
-  let maxScore = 3;
-
-  for (const [trait, score] of Object.entries(scores)) {
-    if (score > maxScore) {
-      maxScore = score;
-      maxTrait = trait as any;
-    }
-  }
-
-  return maxTrait;
 }
 
 function updateUIStats(stats: PetStats | undefined): void {
@@ -641,9 +564,9 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
   Object.entries(mergedCounts)
     .sort((a, b) => b[1] - a[1])
     .forEach(([cat, val]) => {
-      const meta = CATEGORY_METADATA[cat] || { 
-        name: cat.charAt(0).toUpperCase() + cat.slice(1), 
-        colorClass: 'fill-blue' 
+      const meta = CATEGORY_METADATA[cat] || {
+        name: cat.charAt(0).toUpperCase() + cat.slice(1),
+        colorClass: 'fill-blue'
       };
       const pct = Math.round((val / total) * 100);
 
@@ -690,7 +613,7 @@ function renderTimeline(history: any[] | undefined) {
 
   list.slice().reverse().forEach((item: any) => {
     const meta = TIMELINE_METADATA[item.action] || { label: item.action, icon: '🐾' };
-    
+
     let timeStr = 'Recent';
     try {
       const date = new Date(item.time);
@@ -751,7 +674,7 @@ function applySettings(settings: PetSettings | undefined) {
   speedVal.textContent = `${speed.toFixed(1)}x`;
 
   activeCostume = activeSettings.costume || 'none';
-  
+
   // Apply costume glows to the preview image in the sanctuary stage
   if (previewImg) {
     previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
@@ -812,7 +735,7 @@ function applySettings(settings: PetSettings | undefined) {
 
 function saveSettings() {
   chrome.storage.local.set({
-    'pet-settings': {
+    [STORAGE_KEYS.SETTINGS]: {
       size: Number(sizeSlider.value),
       speed: Number(speedSlider.value) / 10,
       soundEnabled: soundToggle.checked,
@@ -842,7 +765,7 @@ function saveSettings() {
 // AI status update helper
 function updateLocalAiStatus() {
   const isEnabled = aiToggle.checked;
-  
+
   if (!isEnabled) {
     if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-unsupported';
     if (aiStatusText) aiStatusText.textContent = 'Local AI: Inactive';
@@ -954,7 +877,7 @@ function removeBlockedDomain(domain: string) {
 function renderDomainReactions() {
   if (!reactionsTbody) return;
   reactionsTbody.innerHTML = '';
-  
+
   if (domainReactions.length === 0) {
     emptyReactionsMsg.style.display = 'block';
     return;
@@ -1024,7 +947,7 @@ function addDomainReaction() {
 
       saveSettings();
       renderDomainReactions();
-      
+
       inputReactionDomain.value = '';
       inputReactionDialogue.value = '';
       selectReactionEmotion.value = 'happy';
@@ -1043,11 +966,11 @@ function removeDomainReaction(index: number) {
 
 // Backups
 function exportProfile() {
-  chrome.storage.local.get(['pet-stats', 'pet-settings'], (data) => {
+  chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS], (data) => {
     const exportData = {
       version: 'v1.2.0',
-      stats: data['pet-stats'] || {},
-      settings: data['pet-settings'] || {}
+      stats: data[STORAGE_KEYS.STATS] || {},
+      settings: data[STORAGE_KEYS.SETTINGS] || {}
     };
 
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
@@ -1077,8 +1000,8 @@ function importProfile(e: Event) {
         if (!confirmed) return;
 
         await chrome.storage.local.set({
-          'pet-stats': imported.stats,
-          'pet-settings': imported.settings
+          [STORAGE_KEYS.STATS]: imported.stats,
+          [STORAGE_KEYS.SETTINGS]: imported.settings
         });
 
         alert("Profile imported successfully! Reloading...");
@@ -1106,7 +1029,7 @@ const COSTUMES_METADATA = [
 function getMascotSvgName(mood: string, costume: string): string {
   const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
   if (!idleStates.includes(mood)) return mood;
-  
+
   const costumeMap: Record<string, string> = {
     christmas: 'christmas',
     halloween: 'halloween',
@@ -1132,7 +1055,7 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
 
     const card = document.createElement('div');
     card.className = `wardrobe-card ${isWearing ? 'wearing' : ''} ${!isUnlocked ? 'locked' : ''}`;
-    
+
     let badgeHtml = '';
     if (!isUnlocked) {
       badgeHtml = `<span class="badge locked">LVL ${item.unlockLevel}</span>`;
@@ -1167,7 +1090,7 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
       if (costumeId) {
         activeCostume = costumeId;
         saveSettings();
-        
+
         // Update styling of preview image in real time
         if (previewImg) {
           previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
@@ -1175,7 +1098,7 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
             previewImg.classList.add(`costume-${costumeId}`);
           }
         }
-        
+
         // Update preview image src based on active costume
         const currentMoodBadge = document.getElementById('pet-mood') as HTMLElement;
         const currentMood = currentMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
@@ -1195,13 +1118,13 @@ function populateHourSelects() {
     'work-start-select', 'work-end-select',
     'focus-start-select', 'focus-end-select'
   ];
-  
+
   selects.forEach(id => {
     const select = document.getElementById(id) as HTMLSelectElement;
     if (!select) return;
-    
+
     select.innerHTML = '';
-    
+
     // Add "Disabled" option for focus start/end scheduler
     if (id.startsWith('focus-')) {
       const opt = document.createElement('option');
@@ -1209,7 +1132,7 @@ function populateHourSelects() {
       opt.textContent = 'Disabled';
       select.appendChild(opt);
     }
-    
+
     for (let h = 0; h < 24; h++) {
       const ampm = h >= 12 ? 'PM' : 'AM';
       const displayHour = h % 12 === 0 ? 12 : h % 12;
@@ -1234,10 +1157,10 @@ function renderAnalyticsCharts(stats: any) {
         categoryTotals[cat] = (categoryTotals[cat] || 0) + history[date][cat];
       }
     }
-    
+
     const entries = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1]);
     const maxVal = entries.length ? entries[0][1] : 0;
-    
+
     if (entries.length === 0) {
       historyChartContainer.innerHTML = '<div class="empty-msg" style="color: var(--text-muted); padding: 12px 0;">No history data found for the last 7 days.</div>';
     } else {
@@ -1258,13 +1181,13 @@ function renderAnalyticsCharts(stats: any) {
           overflow: hidden;
           cursor: default;
         `;
-        
+
         tag.innerHTML = `
           <div style="position: absolute; left: 0; bottom: 0; height: 3px; background: var(--accent); width: ${pct}%; opacity: 0.8;"></div>
           <span style="font-weight: 500; font-size: 13px; color: var(--text-color); z-index: 1;">${category}</span>
           <span style="font-size: 11px; background: var(--bg-body); padding: 2px 6px; border-radius: 4px; color: var(--text-muted); z-index: 1;">${count}</span>
         `;
-        
+
         tag.addEventListener('mouseenter', () => {
           tag.style.borderColor = 'var(--accent)';
           tag.style.transform = 'translateY(-2px)';
@@ -1292,22 +1215,22 @@ function renderAnalyticsCharts(stats: any) {
 
     // Sort by date ascending
     const sortedMoods = [...dailyMoods].sort((a: any, b: any) => a.date.localeCompare(b.date));
-    
+
     const width = 500;
     const height = 200;
     const padding = 25; // increased padding to fit labels
     const chartWidth = width - padding * 2;
     const chartHeight = height - padding * 2;
-    
+
     // X axis steps
     const stepX = chartWidth / (Math.max(1, sortedMoods.length - 1));
-    
+
     let happinessPoints = '';
     let energyPoints = '';
     let curiosityPoints = '';
     let focusPoints = '';
     let leisurePoints = '';
-    
+
     sortedMoods.forEach((record: any, index: number) => {
       const x = padding + index * stepX;
       // y is inverted (100 is at top)
@@ -1316,14 +1239,14 @@ function renderAnalyticsCharts(stats: any) {
       const yCuriosity = padding + chartHeight - ((record.curiosity || 50) / 100) * chartHeight;
       const yFocus = padding + chartHeight - ((record.focus || 50) / 100) * chartHeight;
       const yLeisure = padding + chartHeight - ((record.leisure || 50) / 100) * chartHeight;
-      
+
       happinessPoints += `${x},${yHappiness} `;
       energyPoints += `${x},${yEnergy} `;
       curiosityPoints += `${x},${yCuriosity} `;
       focusPoints += `${x},${yFocus} `;
       leisurePoints += `${x},${yLeisure} `;
     });
-    
+
     moodChartContainer.innerHTML = `
       <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" style="max-width: 100%;">
         <!-- Grid lines -->
