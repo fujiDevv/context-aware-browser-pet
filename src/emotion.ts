@@ -1,5 +1,18 @@
 import { PersonalitySystem } from './personality';
 import { TriggerSnapshot } from './types';
+import { 
+  SITE_CLASSIFICATION_RULES, 
+  EMOTION_FALLBACKS, 
+  FOCUS_EMOTIONS, 
+  IDLE_CHOICES, 
+  WORK_EMOTIONS, 
+  SUMMER_CHOICES, 
+  CODING_EMOTES, 
+  MUSIC_EMOTES, 
+  FITNESS_EMOTES, 
+  ALL_EMOTIONS_POOL, 
+  SEASONAL_POOL 
+} from './rules';
 
 export class EmotionEngine {
   personality: PersonalitySystem;
@@ -71,27 +84,18 @@ export class EmotionEngine {
     }
 
     if (isFocusActive) {
-      const focusEmotions = ['working-typing', 'working-thinking', 'studying'];
-      const index = Math.floor(new Date().getMinutes() / 10) % focusEmotions.length;
-      return focusEmotions[index];
+      const index = Math.floor(new Date().getMinutes() / 10) % FOCUS_EMOTIONS.length;
+      return FOCUS_EMOTIONS[index];
     }
 
     if (!scheduleEnabled) {
-      let allEmotions = [
-        'happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug', 'reading', 'yoga',
-        'eating', 'coding', 'working-typing', 'dancing', 'cool', 'love', 'celebrating', 'mindblown', 'ninja',
-        'working-wizard', 'astronaut', 'working-debugger', 'working-building', 'rocket', 'pirate', 'working-juggling',
-        'gaming', 'battery-low', 'christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing',
-        'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'mail', 'notification',
-        'flexing', 'lifting', 'singing', 'music', 'dj'
-      ];
+      let pool = [...ALL_EMOTIONS_POOL];
 
       if (!seasonalEnabled) {
-        const seasonalPool = ['christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing'];
-        allEmotions = allEmotions.filter(e => !seasonalPool.includes(e));
+        pool = pool.filter(e => !SEASONAL_POOL.includes(e));
       }
 
-      const unlocked = allEmotions.filter(e => this.personality.isEmotionUnlocked(e));
+      const unlocked = pool.filter(e => this.personality.isEmotionUnlocked(e));
       if (unlocked.length > 0) {
         const timeHash = Math.floor(Date.now() / 60000);
         const index = timeHash % unlocked.length;
@@ -118,16 +122,14 @@ export class EmotionEngine {
     if (category === 'streaming') return 'eating';
     if (category === 'finance') return 'money';
     if (category === 'fitness') {
-      const fitChoices = ['flexing', 'lifting', 'yoga'];
-      return fitChoices[Math.floor(new Date().getMinutes() % fitChoices.length)];
+      return FITNESS_EMOTES[Math.floor(new Date().getMinutes() % FITNESS_EMOTES.length)];
     }
 
     // 3. Idle State Dynamic Choices
     if (ctx.idleSeconds > 300) return 'sleeping';
     if (ctx.idleSeconds > 45) {
-      const idleChoices = ['sleeping', 'working-thinking', 'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'yawning'];
-      const hash = Math.floor((ctx.idleSeconds + new Date().getMinutes()) % idleChoices.length);
-      return idleChoices[hash];
+      const hash = Math.floor((ctx.idleSeconds + new Date().getMinutes()) % IDLE_CHOICES.length);
+      return IDLE_CHOICES[hash];
     }
 
     // 4. Custom Sleep planner
@@ -154,9 +156,8 @@ export class EmotionEngine {
       isWorking = hour >= workStart || hour < workEnd;
     }
     if (isWorking) {
-      const workEmotions = ['working-thinking', 'working-rubber-duck', 'coffee', 'studying'];
-      const index = Math.floor(new Date().getMinutes() / 15) % workEmotions.length;
-      return workEmotions[index];
+      const index = Math.floor(new Date().getMinutes() / 15) % WORK_EMOTIONS.length;
+      return WORK_EMOTIONS[index];
     }
 
     // 5. Seasonal / Calendar Events (Low Priority Fallback)
@@ -166,8 +167,7 @@ export class EmotionEngine {
       if (month === 11) return 'christmas'; // December
       if (month >= 5 && month <= 7) {
         // Summer months
-        const summerChoices = ['summer', 'surfing', 'ice-cream'];
-        return summerChoices[Math.floor(new Date().getMinutes() % summerChoices.length)];
+        return SUMMER_CHOICES[Math.floor(new Date().getMinutes() % SUMMER_CHOICES.length)];
       }
     }
 
@@ -175,60 +175,7 @@ export class EmotionEngine {
   }
 
   _classifySite(hostname: string): string {
-    const rules: Record<string, string[]> = {
-      code: [
-        'github.com', 'stackoverflow.com', 'codepen.io', 'replit.com', 'gitlab.com',
-        'bitbucket.org', 'npmjs.com', 'leetcode.com', 'hackerrank.com', 'w3schools.com',
-        'developer.mozilla.org', 'dev.to', 'medium.com', 'hashnode.dev', 'gist.github.com'
-      ],
-      social: [
-        'twitter.com', 'x.com', 'instagram.com', 'reddit.com', 'facebook.com',
-        'tiktok.com', 'threads.net', 'linkedin.com', 'pinterest.com', 'tumblr.com',
-        'snapchat.com', 'discord.com', 'whatsapp.com', 't.me', 'telegram.org'
-      ],
-      gaming: [
-        'twitch.tv', 'store.steampowered.com', 'itch.io', 'roblox.com', 'epicgames.com',
-        'gog.com', 'ign.com', 'gamespot.com', 'nexusmods.com', 'discordapp.com',
-        'playstation.com', 'xbox.com', 'nintendo.com', 'minecraft.net'
-      ],
-      news: [
-        'bbc.com', 'bbc.co.uk', 'cnn.com', 'nytimes.com', 'theguardian.com', 'reuters.com',
-        'apnews.com', 'bloomberg.com', 'forbes.com', 'wsj.com', 'ft.com', 'cnbc.com',
-        'huffpost.com', 'aljazeera.com', 'techcrunch.com', 'theverge.com', 'wired.com'
-      ],
-      shopping: [
-        'amazon.com', 'ebay.com', 'shopify.com', 'etsy.com', 'aliexpress.com',
-        'target.com', 'walmart.com', 'bestbuy.com', 'craigslist.org', 'temu.com',
-        'shein.com', 'ikea.com', 'apple.com/shop'
-      ],
-      docs: [
-        'notion.so', 'confluence.atlassian.com', 'docs.google.com', 'obsidian.md',
-        'wikipedia.org', 'miro.com', 'figma.com', 'clickup.com', 'monday.com',
-        'asana.com', 'trello.com', 'linear.app', 'airtable.com'
-      ],
-      mail: [
-        'mail.google.com', 'outlook.live.com', 'mail.yahoo.com', 'proton.me',
-        'protonmail.com', 'icloud.com', 'zoho.com/mail'
-      ],
-      fitness: [
-        'strava.com', 'bodybuilding.com', 'fitbit.com', 'myfitnesspal.com',
-        'garmin.com', 'nike.com', 'trainingpeaks.com', 'alltrails.com', 'peloton.com'
-      ],
-      ai: [
-        'chatgpt.com', 'openai.com', 'claude.ai', 'anthropic.com', 'gemini.google.com',
-        'perplexity.ai', 'huggingface.co', 'midjourney.com', 'v0.dev'
-      ],
-      streaming: [
-        'youtube.com', 'youtu.be', 'netflix.com', 'spotify.com', 'hulu.com',
-        'disneyplus.com', 'hbo.com', 'max.com', 'vimeo.com', 'soundcloud.com'
-      ],
-      finance: [
-        'stripe.com', 'paypal.com', 'chase.com', 'bankofamerica.com', 'wellsfargo.com',
-        'coinbase.com', 'binance.com', 'fidelity.com', 'vanguard.com', 'mint.com'
-      ]
-    };
-
-    for (const [category, hosts] of Object.entries(rules)) {
+    for (const [category, hosts] of Object.entries(SITE_CLASSIFICATION_RULES)) {
       if (hosts.some(h => hostname.endsWith(h) || hostname.includes('.' + h + '.') || hostname === h)) {
         return category;
       }
@@ -243,8 +190,7 @@ export class EmotionEngine {
     }
     if (ctx.isTypingHeavy) return 'coding';
     // Randomly show coding tasks
-    const codingEmotes = ['coding', 'working-building', 'working-typing'];
-    return codingEmotes[Math.floor(new Date().getMinutes() % codingEmotes.length)];
+    return CODING_EMOTES[Math.floor(new Date().getMinutes() % CODING_EMOTES.length)];
   }
 
   _mediaEmotion(ctx: TriggerSnapshot): string {
@@ -254,38 +200,12 @@ export class EmotionEngine {
     }
     if (host.includes('spotify') || host.includes('soundcloud') || host.includes('music')) {
       // Rotate music emotions
-      const musicEmotes = ['music', 'singing', 'dj'];
-      return musicEmotes[Math.floor(new Date().getMinutes() % musicEmotes.length)];
+      return MUSIC_EMOTES[Math.floor(new Date().getMinutes() % MUSIC_EMOTES.length)];
     }
     return 'cool';
   }
 
   _getFallback(emotion: string): string {
-    const fallbacks: Record<string, string> = {
-      coding: 'working-thinking',
-      'working-typing': 'working-thinking',
-      dancing: 'happy',
-      cool: 'happy',
-      love: 'happy',
-      celebrating: 'happy',
-      mindblown: 'working-thinking',
-      eating: 'happy',
-      reading: 'working-thinking',
-      yoga: 'happy',
-
-      ninja: 'happy',
-      'working-wizard': 'working-thinking',
-      astronaut: 'sleeping',
-      'working-debugger': 'angry',
-      'working-building': 'working-thinking',
-
-      rocket: 'happy',
-      pirate: 'sad',
-      'working-juggling': 'happy',
-      gaming: 'happy',
-      money: 'happy'
-    };
-
-    return fallbacks[emotion] || this.personality.defaultEmotion();
+    return EMOTION_FALLBACKS[emotion] || this.personality.defaultEmotion();
   }
 }
