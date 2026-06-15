@@ -340,6 +340,37 @@ const movement = new MovementEngine(view.getContainer(), {
   speed: currentSettings.speed
 });
 
+movement.onLanding = () => {
+  if (isPetHidden()) return;
+
+  isTemporarilyInteracting = true;
+  if (interactionTimeout) clearTimeout(interactionTimeout);
+
+  // Play impact/crying sound and show initial "ouch" face
+  playSound('sad');
+  loadPet('sad');
+
+  const petImg = view.getPetImg();
+  // Physical landing squash/stretch
+  petImg.animate([
+    { transform: 'scale(1.3, 0.7)', offset: 0 },
+    { transform: 'scale(0.8, 1.2)', offset: 0.3 },
+    { transform: 'scale(1.1, 0.9)', offset: 0.6 },
+    { transform: 'scale(1, 1)', offset: 1 }
+  ], { duration: 500, easing: 'ease-out' });
+
+  // Daze for 1 second, then "dust off" (sweep)
+  interactionTimeout = setTimeout(() => {
+    loadPet('working-sweeping');
+    
+    // Reset after sweep duration
+    interactionTimeout = setTimeout(() => {
+      isTemporarilyInteracting = false;
+      loadPet(emotion.current);
+    }, 1500);
+  }, 1000);
+};
+
 async function loadPet(name: string): Promise<void> {
   let assetName = name;
   const idleStates = ['happy', 'waving', 'smile', 'idle-living'];

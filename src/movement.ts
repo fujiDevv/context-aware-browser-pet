@@ -26,6 +26,7 @@ export class MovementEngine {
   toyTargets: { x: number; elementRef: WeakRef<HTMLElement>; type: string; onReach: () => void }[] = [];
   cursorTargetX: number | null = null;
   _posAnimation: SpringAnimation | null = null;
+  onLanding?: () => void;
 
   _handleResize = () => {
     const W = window.innerWidth - this.size;
@@ -439,17 +440,19 @@ export class MovementEngine {
     
     this.paused = true;
     
-    // Spring snap to the bottom floor
+    // Spring snap to the bottom floor with more "weight" and less magnetism
     this._posAnimation = springAnimate(el, {
       '--pet-x': `${this.x}px`,
       '--pet-y': `${this.y}px`
     }, {
-      stiffness: 250,
-      damping: 16
+      stiffness: 150,
+      damping: 12,
+      mass: 1.5
     });
 
     this._posAnimation.then(() => {
       this.paused = false;
+      if (this.onLanding) this.onLanding();
     });
 
     const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
