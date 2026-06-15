@@ -131,13 +131,19 @@ function cleanupOrphanedScript(): void {
   if (idleTimer) clearTimeout(idleTimer);
   if (debounceTimeout) clearTimeout(debounceTimeout);
 
-  try {
-    movement.stop();
-  } catch (e) { console.warn('[Clawd Content] movement.stop error:', e); }
+  if (isInitialized) {
+    try {
+      movement.stop();
+    } catch (e) { console.warn('[Clawd Content] movement.stop error:', e); }
 
-  try {
-    triggers.cleanup();
-  } catch (e) { console.warn('[Clawd Content] triggers.cleanup error:', e); }
+    try {
+      triggers.cleanup();
+    } catch (e) { console.warn('[Clawd Content] triggers.cleanup error:', e); }
+
+    try {
+      view.destroy();
+    } catch (e) { console.warn('[Clawd Content] view destruction error:', e); }
+  }
 
   window.removeEventListener('click', unlockAudio, { capture: true });
   window.removeEventListener('dragover', handleDragOver);
@@ -152,10 +158,6 @@ function cleanupOrphanedScript(): void {
   try {
     chrome.runtime.onMessage.removeListener(handleRuntimeMessage);
   } catch (e) { console.warn('[Clawd Content] runtime.onMessage removal error:', e); }
-
-  try {
-    view.destroy();
-  } catch (e) { console.warn('[Clawd Content] view destruction error:', e); }
 
   console.log("Browser Pet: Old extension context invalidated. Injected mascot cleaned up.");
 }
@@ -210,14 +212,20 @@ function isPetHidden(): boolean {
 
 function hidePet(): void {
   isCurrentlyHidden = true;
-  view.hide();
-  movement.stop();
+  if (isInitialized) {
+    view.hide();
+    movement.stop();
+  }
 }
 
 function showPet(): void {
   isCurrentlyHidden = false;
-  view.show();
-  movement.start();
+  if (!isInitialized) {
+    actuallyInit();
+  } else {
+    view.show();
+    movement.start();
+  }
 }
 
 function debouncedUpdateEmotion(delay = 500): void {
@@ -237,6 +245,7 @@ function resetIdleTimer(): void {
 
 function handleIdleBehavior(): void {
   if (!checkContextOrCleanup()) return;
+  if (!isInitialized) return;
   if (isPetHidden()) return;
   if (isTemporarilyInteracting) return;
 
@@ -299,89 +308,102 @@ function handleIdleBehavior(): void {
   }
 }
 
-const triggers = new TriggerDetector(() => {
-  debouncedUpdateEmotion();
-});
-const personality = new PersonalitySystem(() => { });
-const emotion = new EmotionEngine(personality);
+let isInitialized = false;
+let triggers: TriggerDetector;
+let personality: PersonalitySystem;
+let emotion: EmotionEngine;
+let view: ViewManager;
+let movement: MovementEngine;
 
-const view = new ViewManager({
-  onPetClick: (e) => {
-    e.stopPropagation();
-    if (movement.wasDragged) {
-      movement.wasDragged = false;
-      return;
-    }
-    triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
-  },
-  onPetDoubleClick: (e) => {
-    e.stopPropagation();
-    triggerInteraction('feed', 'celebrating', 2500, "Yum! That was delicious! 🍖");
-  },
-  onPetContextMenu: (e) => {
-    handleShoo(e);
-  },
-  onPetMouseDown: (e) => {
-    if (e.button === 2) {
+function ensureInitialized(): void {
+  if (isInitialized) return;
+  isInitialized = true;
+
+  personality = new PersonalitySystem(() => { });
+  emotion = new EmotionEngine(personality);
+  triggers = new TriggerDetector(() => {
+    debouncedUpdateEmotion();
+  });
+
+  view = new ViewManager({
+    onPetClick: (e) => {
+      e.stopPropagation();
+      if (movement.wasDragged) {
+        movement.wasDragged = false;
+        return;
+      }
+      triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
+    },
+    onPetDoubleClick: (e) => {
+      e.stopPropagation();
+      triggerInteraction('feed', 'celebrating', 2500, "Yum! That was delicious! 🍖");
+    },
+    onPetContextMenu: (e) => {
       handleShoo(e);
+    },
+    onPetMouseDown: (e) => {
+      if (e.button === 2) {
+        handleShoo(e);
+      }
+    },
+    onPetMouseEnter: () => {
+      if (isPetHidden()) return;
+      view.getPetImg().animate([
+        { transform: 'scale(1) rotate(0deg)' },
+        { transform: 'scale(1.2) rotate(6deg)' },
+        { transform: 'scale(1.12) rotate(4deg)' },
+        { transform: 'scale(1.15) rotate(5deg)' }
+      ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
+    },
+    onPetMouseLeave: () => {
+      if (isPetHidden()) return;
+      view.getPetImg().animate([
+        { transform: 'scale(1.15) rotate(5deg)' },
+        { transform: 'scale(0.97) rotate(-1deg)' },
+        { transform: 'scale(1) rotate(0deg)' }
+      ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
     }
-  },
-  onPetMouseEnter: () => {
+  });
+
+  movement = new MovementEngine(view.getContainer(), {
+    size: currentSettings.size,
+    speed: currentSettings.speed
+  });
+
+  movement.onLanding = () => {
     if (isPetHidden()) return;
-    view.getPetImg().animate([
-      { transform: 'scale(1) rotate(0deg)' },
-      { transform: 'scale(1.2) rotate(6deg)' },
-      { transform: 'scale(1.12) rotate(4deg)' },
-      { transform: 'scale(1.15) rotate(5deg)' }
-    ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
-  },
-  onPetMouseLeave: () => {
-    if (isPetHidden()) return;
-    view.getPetImg().animate([
-      { transform: 'scale(1.15) rotate(5deg)' },
-      { transform: 'scale(0.97) rotate(-1deg)' },
-      { transform: 'scale(1) rotate(0deg)' }
-    ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
-  }
-});
 
-const movement = new MovementEngine(view.getContainer(), {
-  size: currentSettings.size,
-  speed: currentSettings.speed
-});
+    isTemporarilyInteracting = true;
+    if (interactionTimeout) clearTimeout(interactionTimeout);
 
-movement.onLanding = () => {
-  if (isPetHidden()) return;
+    // Play impact/crying sound and show initial "ouch" face
+    playSound('sad');
+    loadPet('sad');
 
-  isTemporarilyInteracting = true;
-  if (interactionTimeout) clearTimeout(interactionTimeout);
+    const petImg = view.getPetImg();
+    // Physical landing squash/stretch
+    petImg.animate([
+      { transform: 'scale(1.3, 0.7)', offset: 0 },
+      { transform: 'scale(0.8, 1.2)', offset: 0.3 },
+      { transform: 'scale(1.1, 0.9)', offset: 0.6 },
+      { transform: 'scale(1, 1)', offset: 1 }
+    ], { duration: 500, easing: 'ease-out' });
 
-  // Play impact/crying sound and show initial "ouch" face
-  playSound('sad');
-  loadPet('sad');
-
-  const petImg = view.getPetImg();
-  // Physical landing squash/stretch
-  petImg.animate([
-    { transform: 'scale(1.3, 0.7)', offset: 0 },
-    { transform: 'scale(0.8, 1.2)', offset: 0.3 },
-    { transform: 'scale(1.1, 0.9)', offset: 0.6 },
-    { transform: 'scale(1, 1)', offset: 1 }
-  ], { duration: 500, easing: 'ease-out' });
-
-  // Daze for 1 second, then "dust off" (sweep)
-  interactionTimeout = setTimeout(() => {
-    loadPet('working-sweeping');
-
-    // Reset after sweep duration
+    // Daze for 1 second, then "dust off" (sweep)
     interactionTimeout = setTimeout(() => {
-      isTemporarilyInteracting = false;
-      loadPet(emotion.current);
-    }, 1500);
-  }, 1000);
-};
+      loadPet('working-sweeping');
+
+      // Reset after sweep duration
+      interactionTimeout = setTimeout(() => {
+        isTemporarilyInteracting = false;
+        loadPet(emotion.current);
+      }, 1500);
+    }, 1000);
+  };
+}
 
 async function loadPet(name: string): Promise<void> {
+  if (!isInitialized) return;
   let assetName = name;
   const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
 
@@ -409,6 +431,7 @@ async function loadPet(name: string): Promise<void> {
 
 async function updateEmotion(): Promise<void> {
   if (!checkContextOrCleanup()) return;
+  if (!isInitialized) return;
   if (isPetHidden()) return;
   if (isTemporarilyInteracting) return;
 
@@ -821,12 +844,14 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
     const newSettings = changes[STORAGE_KEYS.SETTINGS].newValue;
     if (newSettings) {
       currentSettings = { ...currentSettings, ...newSettings };
-      personality.disabledEmotions = currentSettings.disabledEmotions || [];
-      movement.updateSettings({
-        size: currentSettings.size,
-        speed: currentSettings.speed
-      });
-      view.applyCostume(currentSettings.costume);
+      if (isInitialized) {
+        personality.disabledEmotions = currentSettings.disabledEmotions || [];
+        movement.updateSettings({
+          size: currentSettings.size,
+          speed: currentSettings.speed
+        });
+        view.applyCostume(currentSettings.costume);
+      }
       if (changes[STORAGE_KEYS.SETTINGS].oldValue?.aiMode !== newSettings.aiMode) {
         hasEvaluatedPageAi = false;
       }
@@ -842,7 +867,7 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
     const oldStats = changes[STORAGE_KEYS.STATS].oldValue;
     if (newStats) {
       const oldLevel = oldStats ? oldStats.level : 1;
-      if (document.visibilityState === 'visible' && !isPetHidden() && newStats.level > oldLevel) {
+      if (isInitialized && document.visibilityState === 'visible' && !isPetHidden() && newStats.level > oldLevel) {
         view.showLevelUpBanner(newStats.level, currentSettings.name || 'Clawd');
         loadPet('celebrating');
         playSound('levelUp');
@@ -883,40 +908,53 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
     return false;
   }
 
+  // Visual/Interactive messages below this line require initialization
+  if (!isInitialized && ['pet', 'feed', 'shoo', 'sync-pet-state', 'sync-origin-pet-state'].includes(message.type)) {
+     actuallyInit();
+  }
+
   if (message.type === 'pet') {
-    triggerInteraction('pet', 'love', 2000, "Love it! ❤️");
+    if (isInitialized) triggerInteraction('pet', 'love', 2000, "Love it! ❤️");
   } else if (message.type === 'feed') {
-    triggerInteraction('feed', 'celebrating', 2500, "Nom nom nom! 🍖");
+    if (isInitialized) triggerInteraction('feed', 'celebrating', 2500, "Nom nom nom! 🍖");
   } else if (message.type === 'shoo') {
-    try {
-      view.getPetImg().getAnimations().forEach(anim => anim.cancel());
-    } catch (err) { console.warn('[Clawd Content] handleRuntimeMessage shoo animations cancel error:', err); }
-    personality.recordInteraction('shoo');
-    movement.shoo();
-    view.showBubble("Running away! 🏃‍♂️");
-    playSound('shoo');
+    if (isInitialized) {
+      try {
+        view.getPetImg().getAnimations().forEach(anim => anim.cancel());
+      } catch (err) { console.warn('[Clawd Content] handleRuntimeMessage shoo animations cancel error:', err); }
+      personality.recordInteraction('shoo');
+      movement.shoo();
+      view.showBubble("Running away! 🏃‍♂️");
+      playSound('shoo');
+    }
   } else if (message.type === 'http-error') {
-    triggers.setHttpError(message.code);
-    updateEmotion();
+    if (isInitialized) {
+      triggers.setHttpError(message.code);
+      updateEmotion();
+    }
   } else if (message.type === 'navigation') {
-    triggers.clearHttpError();
-    triggers.clearConsoleError();
-    hasEvaluatedPageAi = false;
-    currentAiCategory = undefined;
-    currentAiSentiment = undefined;
-    updateEmotion();
+    if (isInitialized) {
+      triggers.clearHttpError();
+      triggers.clearConsoleError();
+      hasEvaluatedPageAi = false;
+      currentAiCategory = undefined;
+      currentAiSentiment = undefined;
+      updateEmotion();
+    }
   } else if (message.type === 'sync-pet-state') {
-    if (document.visibilityState === 'visible' && !document.hasFocus() && !movement.isDragging) {
+    if (isInitialized && document.visibilityState === 'visible' && !document.hasFocus() && !movement.isDragging) {
       movement.syncState(message.state);
     }
   } else if (message.type === 'sync-origin-pet-state') {
-    const { emotion: syncedEmotion, dialogue: syncedDialogue } = message.state;
-    if (syncedEmotion !== emotion.current) {
-      emotion.current = syncedEmotion;
-      loadPet(syncedEmotion);
-    }
-    if (syncedDialogue) {
-      view.showBubble(syncedDialogue);
+    if (isInitialized) {
+      const { emotion: syncedEmotion, dialogue: syncedDialogue } = message.state;
+      if (syncedEmotion !== emotion.current) {
+        emotion.current = syncedEmotion;
+        loadPet(syncedEmotion);
+      }
+      if (syncedDialogue) {
+        view.showBubble(syncedDialogue);
+      }
     }
   } else if (message.type === 'check-tab-ai-availability') {
     checkTabAiAvailability()
@@ -933,14 +971,18 @@ function handleVisibilityChange() {
   if (!checkContextOrCleanup()) return;
   if (isPetHidden()) return;
   if (document.visibilityState === 'visible') {
-    movement.resumeTick();
-    resetIdleTimer();
-    debouncedUpdateEmotion(100);
-    safeSendMessage({ type: 'get-pet-state' }, (state: SharedPetState | undefined) => {
-      if (state) {
-        movement.syncState(state);
-      }
-    });
+    if (!isInitialized) {
+      actuallyInit();
+    } else {
+      movement.resumeTick();
+      resetIdleTimer();
+      debouncedUpdateEmotion(100);
+      safeSendMessage({ type: 'get-pet-state' }, (state: SharedPetState | undefined) => {
+        if (state) {
+          movement.syncState(state);
+        }
+      });
+    }
   }
 }
 
@@ -962,9 +1004,22 @@ function handleConsoleError() {
 
 async function init(): Promise<void> {
   await loadAndApplySettings();
-  await personality.isLoaded;
-
+  
   if (!checkContextOrCleanup()) return;
+
+  if (document.visibilityState === 'visible') {
+    actuallyInit();
+  } else {
+    // Basic setup so we can still receive messages or handle visibility changes
+    console.log("[Clawd Content] Tab is backgrounded. Delaying mascot initialization.");
+  }
+}
+
+async function actuallyInit(): Promise<void> {
+  if (isInitialized) return;
+  ensureInitialized();
+
+  await personality.isLoaded;
 
   view.preloadAssets();
 
