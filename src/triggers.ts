@@ -3,7 +3,7 @@ import { TriggerSnapshot } from './types';
 export class TriggerDetector {
   _lastInput: number;
   _keyCount: number;
-  _keyTimer: any;
+  _keyTimer: ReturnType<typeof setTimeout> | undefined;
   _lastError: number | null;
   _isVideo: boolean;
   _isSubmitting: boolean;
@@ -14,7 +14,7 @@ export class TriggerDetector {
   constructor() {
     this._lastInput = Date.now();
     this._keyCount = 0;
-    this._keyTimer = null;
+    this._keyTimer = undefined;
     this._lastError = null;
     this._isVideo = false;
     this._isSubmitting = false;
@@ -129,7 +129,7 @@ export class TriggerDetector {
     document.addEventListener('click', this._onClick, { passive: true });
     document.addEventListener('keydown', this._onKeyDownHeavy, { passive: true });
     document.addEventListener('submit', this._onSubmit, { passive: true });
-    window.addEventListener('message', this._onMessage as any);
+    window.addEventListener('message', this._onMessage);
     window.addEventListener('error', this._onError);
   }
 
@@ -154,7 +154,7 @@ export class TriggerDetector {
     document.removeEventListener('click', this._onClick);
     document.removeEventListener('keydown', this._onKeyDownHeavy);
     document.removeEventListener('submit', this._onSubmit);
-    window.removeEventListener('message', this._onMessage as any);
+    window.removeEventListener('message', this._onMessage);
     window.removeEventListener('error', this._onError);
 
     document.removeEventListener('play', this._updateVideoState, true);

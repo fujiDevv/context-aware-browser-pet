@@ -1,4 +1,4 @@
-import { SharedPetState } from './types';
+import { SharedPetState, PetMessage } from './types';
 import { springAnimate, SpringAnimation } from './animate';
 
 export class MovementEngine {
@@ -477,7 +477,7 @@ export class MovementEngine {
     this._apply();
   }
 
-  _safeSendMessage(msg: any): void {
+  _safeSendMessage(msg: PetMessage): void {
     try {
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
         chrome.runtime.sendMessage(msg).catch((e) => { console.warn('[Clawd Movement] runtime.sendMessage error:', e); });

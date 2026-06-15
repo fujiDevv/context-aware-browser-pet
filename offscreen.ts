@@ -2,18 +2,25 @@
 import { pipeline, env } from '@huggingface/transformers';
 
 // Configure ONNX Runtime to load WASM binaries locally from the extension
-const wasmConfig = (env as any).backends?.onnx?.wasm;
+const wasmConfig = (env as Record<string, any>).backends?.onnx?.wasm;
 if (wasmConfig) {
   wasmConfig.wasmPaths = chrome.runtime.getURL('wasm/');
 }
 env.allowLocalModels = false; // Force fetching from Hugging Face Hub (cached locally in IndexedDB)
 
-let classifier: any = null;
+interface TextClassificationResult {
+  label: string;
+  score: number;
+}
+
+type ClassifierPipeline = (text: string) => Promise<TextClassificationResult[]>;
+
+let classifier: ClassifierPipeline | null = null;
 let modelLoadingState: 'idle' | 'loading' | 'ready' | 'error' = 'idle';
 let modelDownloadProgress = 0;
 
 // Initialize/fetch the classifier pipeline
-async function getClassifier(): Promise<any> {
+async function getClassifier(): Promise<ClassifierPipeline> {
   if (classifier) return classifier;
 
   if (modelLoadingState === 'loading') {
@@ -28,7 +35,7 @@ async function getClassifier(): Promise<any> {
   chrome.runtime.sendMessage({ type: 'update-ai-progress', state: modelLoadingState, progress: modelDownloadProgress });
 
   try {
-    classifier = await pipeline(
+    const pipelineInstance = await pipeline(
       'text-classification',
       'Xenova/distilbert-base-uncased-finetuned-sst-2-english',
       {
@@ -43,6 +50,7 @@ async function getClassifier(): Promise<any> {
         }
       }
     );
+    classifier = pipelineInstance as unknown as ClassifierPipeline;
     modelLoadingState = 'ready';
     chrome.runtime.sendMessage({ type: 'update-ai-progress', state: modelLoadingState, progress: 100 });
     return classifier;

@@ -75,7 +75,7 @@ export function getDominantTrait(stats: PetStats | undefined): 'developer' | 'ga
   for (const [trait, score] of Object.entries(scores)) {
     if (score > maxScore) {
       maxScore = score;
-      maxTrait = trait as any;
+      maxTrait = trait as 'developer' | 'gamer' | 'scholar' | 'socialite';
     }
   }
 

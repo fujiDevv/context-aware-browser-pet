@@ -33,7 +33,7 @@ export interface PetStats {
 }
 
 export interface DomainReaction {
-  id: string;
+  id?: string;
   domain: string;
   emotion: string;
   dialogue?: string;
@@ -93,6 +93,11 @@ export interface TriggerSnapshot {
   hasConsoleError: boolean;
   mouseX: number;
   isCursorActive: boolean;
+}
+
+export interface PetMessage {
+  type: string;
+  [key: string]: any;
 }
 
 declare global {

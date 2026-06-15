@@ -1,3 +1,12 @@
+interface AiEmotionResponse {
+  success: boolean;
+  emotion: string;
+  comment?: string;
+  category?: string;
+  sentiment?: string;
+  error?: string;
+}
+
 export async function getAiEmotion(
   pageTitle: string,
   metaDescription: string | undefined,
@@ -7,7 +16,7 @@ export async function getAiEmotion(
   sentimentSensitivity?: number
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   try {
-    const response = await new Promise<any>((resolve, reject) => {
+    const response = await new Promise<AiEmotionResponse>((resolve, reject) => {
       chrome.runtime.sendMessage(
         {
           type: 'get-local-ai-emotion',

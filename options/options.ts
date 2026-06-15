@@ -1,12 +1,12 @@
 import { PersonalitySystem } from '../src/personality';
-import { PetStats, PetSettings } from '../src/types';
+import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem } from '../src/types';
 import { STORAGE_KEYS } from '../src/constants';
 import { EMOTIONS_METADATA, getDominantTrait } from '../src/shared-ui';
 
 let personality: PersonalitySystem;
 let blockedDomains: string[] = [];
 let activeCostume: string = 'none';
-let domainReactions: any[] = [];
+let domainReactions: DomainReaction[] = [];
 
 // Elements
 const previewImg = document.getElementById('pet-preview') as HTMLImageElement;
@@ -585,7 +585,7 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
     });
 }
 
-function renderTimeline(history: any[] | undefined) {
+function renderTimeline(history: MoodHistoryItem[] | undefined) {
   if (!timelineList) return;
   timelineList.innerHTML = '';
 
@@ -611,7 +611,7 @@ function renderTimeline(history: any[] | undefined) {
     return;
   }
 
-  list.slice().reverse().forEach((item: any) => {
+  list.slice().reverse().forEach((item: MoodHistoryItem) => {
     const meta = TIMELINE_METADATA[item.action] || { label: item.action, icon: '🐾' };
 
     let timeStr = 'Recent';
@@ -773,7 +773,7 @@ function updateLocalAiStatus() {
     return;
   }
 
-  chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: any) => {
+  chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: { success: boolean; state: string; progress: number } | undefined) => {
     let text = 'Local AI: Checking...';
     let subtitle = 'Querying model...';
     let className = 'status-indicator status-checking';
@@ -1144,7 +1144,7 @@ function populateHourSelects() {
   });
 }
 
-function renderAnalyticsCharts(stats: any) {
+function renderAnalyticsCharts(stats: PetStats) {
   // 1. Render Interests History Bar Chart (Last 7 Days)
   const historyChartContainer = document.getElementById('interests-history-chart');
   if (historyChartContainer) {
@@ -1214,7 +1214,7 @@ function renderAnalyticsCharts(stats: any) {
     }
 
     // Sort by date ascending
-    const sortedMoods = [...dailyMoods].sort((a: any, b: any) => a.date.localeCompare(b.date));
+    const sortedMoods = [...dailyMoods].sort((a, b) => a.date.localeCompare(b.date));
 
     const width = 500;
     const height = 200;
@@ -1231,7 +1231,7 @@ function renderAnalyticsCharts(stats: any) {
     let focusPoints = '';
     let leisurePoints = '';
 
-    sortedMoods.forEach((record: any, index: number) => {
+    sortedMoods.forEach((record: DailyMoodRecord, index: number) => {
       const x = padding + index * stepX;
       // y is inverted (100 is at top)
       const yHappiness = padding + chartHeight - (record.happiness / 100) * chartHeight;

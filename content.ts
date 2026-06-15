@@ -3,7 +3,7 @@ import { EmotionEngine } from './src/emotion';
 import { TriggerDetector } from './src/triggers';
 import { PersonalitySystem } from './src/personality';
 import { getAiEmotion } from './src/ai';
-import { PetSettings, SharedPetState } from './src/types';
+import { PetSettings, SharedPetState, PetMessage } from './src/types';
 import { springAnimate, keyframeAnimate } from './src/animate';
 import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
 import { ViewManager } from './src/view';
@@ -156,7 +156,7 @@ function checkContextOrCleanup(): boolean {
   return true;
 }
 
-function safeSendMessage(message: any, callback?: (response: any) => void): void {
+function safeSendMessage(message: PetMessage, callback?: (response: any) => void): void {
   try {
     if (!checkContextOrCleanup()) return;
     chrome.runtime.sendMessage(message, (response) => {
@@ -717,7 +717,7 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
 
 chrome.storage.onChanged.addListener(handleStorageChanged);
 
-function handleRuntimeMessage(message: any, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) {
+function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) {
   if (!checkContextOrCleanup()) return;
 
   if (message.type === 'get-tab-visibility') {
