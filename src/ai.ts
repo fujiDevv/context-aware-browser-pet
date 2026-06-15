@@ -12,17 +12,20 @@ interface AiEmotionResponse {
 export async function getAiEmotion(
   pageTitle: string,
   metaDescription: string | undefined,
+  url: string,
   apiKey: string,
   persona: string,
   statsContext?: string,
   sentimentSensitivity: number = 50
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   try {
+    const category = detectPageCategory(url, pageTitle);
+
     // 1. Try Gemini Nano (Built-in Prompt API) first if available
     const geminiNanoAvailable = await checkGeminiNanoAvailability();
     if (geminiNanoAvailable === 'readily' || geminiNanoAvailable === 'after-download') {
       try {
-        const result = await runGeminiNanoInference(pageTitle, metaDescription, persona, statsContext);
+        const result = await runGeminiNanoInference(pageTitle, metaDescription, category, persona, statsContext);
         if (result) return result;
       } catch (e) {
         console.warn('[Clawd AI] Gemini Nano inference failed, falling back to DistilBERT:', e);
@@ -36,9 +39,11 @@ export async function getAiEmotion(
           type: 'get-local-ai-emotion',
           pageTitle,
           metaDescription,
+          category,
           persona,
           statsContext,
-          sentimentSensitivity
+          sentimentSensitivity,
+          url
         },
         (res) => {
           if (chrome.runtime.lastError) {
@@ -86,6 +91,7 @@ async function checkGeminiNanoAvailability(): Promise<'readily' | 'after-downloa
 async function runGeminiNanoInference(
   pageTitle: string,
   metaDescription: string | undefined,
+  category: string,
   persona: string,
   statsContext: string | undefined
 ): Promise<{ emotion: string; comment: string; category: string; sentiment: string } | null> {
@@ -94,6 +100,7 @@ Respond ONLY with a JSON object: { "emotion": "...", "comment": "...", "category
 Possible emotions: happy, sad, angry, crying, working-thinking, reading, yoga, eating, coding, working-typing, dancing, cool, love, celebrating, mindblown, gaming, working-debugger.
 Possible categories: coding, reading, music, video, social, gaming, shopping, search, general.
 Possible sentiments: POSITIVE, NEGATIVE, NEUTRAL.
+Current Page Category: ${category}.
 Current Pet Stats: ${statsContext || 'Normal'}.
 Persona: ${persona}.`;
 

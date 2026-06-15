@@ -71,6 +71,7 @@ async function getLocalAiEmotion(
   pageTitle: string,
   metaDescription: string | undefined,
   url: string,
+  category: string,
   persona: string,
   statsContext?: string,
   sentimentSensitivity: number = 50
@@ -95,8 +96,8 @@ async function getLocalAiEmotion(
     if (energyMatch) energy = parseInt(energyMatch[1]);
   }
 
-  // Detect page activity/category using shared rules
-  const category = detectPageCategory(url, pageTitle);
+  // Use the pre-determined category passed from the content script
+  const finalCategory = category || detectPageCategory(url, pageTitle);
 
   let sentiment: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL' = 'NEUTRAL';
   let score = 0.5;
@@ -121,25 +122,25 @@ async function getLocalAiEmotion(
   }
 
   // Map to final pet emotion using shared rules
-  const emotion = mapActivityToEmotion(category, sentiment, energy);
+  const emotion = mapActivityToEmotion(finalCategory, sentiment, energy);
 
   // Generate comment based on persona, category, and sentiment from shared AI_COMMENTS
   const personaComments = AI_COMMENTS[persona] || AI_COMMENTS.default;
-  const categoryComments = personaComments[category] || personaComments.general;
+  const categoryComments = personaComments[finalCategory] || personaComments.general;
   const sentimentComments = categoryComments[sentiment] || categoryComments.NEUTRAL;
 
   const commentList = sentimentComments.length > 0 ? sentimentComments : categoryComments.NEUTRAL;
   const comment = commentList[Math.floor(Math.random() * commentList.length)];
 
-  return { emotion, comment, category, sentiment };
+  return { emotion, comment, category: finalCategory, sentiment };
 }
 
 // Set up Chrome runtime message listener in the offscreen document
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'run-local-ai-inference') {
-    const { pageTitle, metaDescription, persona, statsContext, sentimentSensitivity, url } = message;
+    const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity, url } = message;
 
-    getLocalAiEmotion(pageTitle, metaDescription, url, persona || 'default', statsContext, sentimentSensitivity)
+    getLocalAiEmotion(pageTitle, metaDescription, url, category, persona || 'default', statsContext, sentimentSensitivity)
       .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment, category: result.category, sentiment: result.sentiment }))
       .catch((err) => {
         console.error('Error in local AI emotion processing:', err);

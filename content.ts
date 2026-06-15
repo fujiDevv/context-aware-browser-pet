@@ -484,7 +484,7 @@ async function updateEmotion(): Promise<void> {
 
         const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
         const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
-        const result = await getAiEmotion(context.pageTitle, metaDesc, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity);
+        const result = await getAiEmotion(context.pageTitle, metaDesc, window.location.href, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity);
         nextEmotion = result.emotion;
         aiComment = result.comment;
         currentAiCategory = result.category;
