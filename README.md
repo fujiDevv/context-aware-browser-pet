@@ -20,9 +20,9 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   ## Key Features
 
-  * **Edge-Crawling Physics Engine**: Realistic 5-state viewport movement with throwing physics and edge-snapping.
-  * **Context-Aware Emotions**: Real-time expressions that react to typing speed, scroll depth, media playback, and site errors.
-  * **Lite Mode (Default)**: Efficient, rule-based behavior analysis using Regex—zero downloads or API keys required.
+  * **Edge-Crawling Physics Engine**: Realistic 5-state viewport movement (Bottom, Top, Left, Right, Falling) with spring-physics and intelligent edge-snapping.
+  * **Context-Aware Emotions**: Real-time expressions that react to typing speed, scroll depth, media playback, intent detection, and site errors.
+  * **Lite Mode (Default)**: Efficient, rule-based behavior analysis using Regex and meta-tag analysis—zero downloads or API keys required.
   * **Brain Upgrade (Optional AI)**: Privacy-first, high-fidelity sentiment analysis using an on-device DistilBERT model.
   * **Virtual Pet Progression**: Level up your pet through interactions, unlock costumes, and develop unique personality traits based on your browsing habits.
   * **Comprehensive Dashboard**: Track 7-day interest analytics, manage work/sleep schedules, and customize domain-specific reactions.
@@ -35,28 +35,28 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   context-aware-browser-pet/
   ├── package.json           # Build scripts and dependency configurations
   ├── tsconfig.json          # TypeScript compilation settings
-  ├── manifest.json          # Manifest V3 extension configuration
-  ├── background.ts          # Service worker managing offscreen document lifecycles and state sync
-  ├── offscreen.html         # HTML page container hosting the local AI environment
-  ├── offscreen.ts           # Runs local ONNX Runtime Web WebAssembly and DistilBERT model
-  ├── content.ts             # Main content script injected into target web pages
+  ├── manifest.json          # Manifest V3 extension metadata
+  ├── background.ts          # State synchronizer and offscreen document manager
+  ├── offscreen.html         # Container for local AI and Audio playback
+  ├── offscreen.ts           # Centralized runtime for ONNX AI and audio systems
+  ├── content.ts             # Main content script with lazy initialization
   ├── src/
-  │   ├── types.ts           # Shared TypeScript interfaces for settings, stats, and state
-  │   ├── movement.ts        # Edge-crawling state machine, dragging, and snapping
+  │   ├── types.ts           # Shared TypeScript interfaces
+  │   ├── movement.ts        # Edge-crawling machine, rotation, and snapping
   │   ├── triggers.ts        # User interaction monitors (scroll, typing, video)
-  │   ├── emotion.ts         # Evaluates context snapshots and determines locks/fallbacks
-  │   ├── personality.ts     # XP leveling thresholds, stats modifiers, and state saves
-  │   ├── animate.ts         # Zero-dependency spring physics and WAAPI keyframe helper
-  │   └── ai.ts              # Connects the content script to the local background worker
+  │   ├── emotion.ts         # Reaction gates, emotes, and milestone locks
+  │   ├── personality.ts     # XP thresholds, stats modifiers, and state saves
+  │   ├── animate.ts         # Hooke's Law spring physics formulas
+  │   ├── view.ts            # Shadow DOM ViewManager & isolated UI injection
+  │   └── rules.ts           # Centralized site classification and emotion rules
   ├── popup/
-  │   ├── popup.html         # Controller layout for sliders, badges, and stats
-  │   ├── popup.ts           # Binds controls, manages input, and updates status bars
-  │   └── popup.css          # Premium glassmorphic visual stylesheet
+  │   ├── popup.html         # Premium glassmorphic controller layout
+  │   ├── popup.ts           # Binds controls and manages settings input
+  │   └── popup.css          # Visual stylesheet for popup and options
   ├── assets/
   │   ├── pet.svg            # Mascot extension icon
-  │   ├── clawd-cool.svg     # SVG mascot asset
-  │   └── *.mp3              # Chiptune sound effect assets (greeting, petting, feeding, etc.)
-  └── dist/                  # Output directory containing the packaged extension
+  │   └── *.mp3              # Chiptune sound effects (greeting, shoo, etc.)
+  └── dist/                  # Output bundle for Chrome installation
   ```
 
   ---

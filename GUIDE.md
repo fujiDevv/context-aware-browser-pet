@@ -105,7 +105,7 @@ When Clawd first appears on a new page:
 - He displays a greeting speech bubble: *"Hello! I'm [Pet Name]! Let's browse together! "* (defaults to *"Hello! I'm Clawd! Let's browse together! "*).
 - A greeting sound effect is played (if sound is enabled).
 
-Clawd will then begin walking back and forth along the bottom of the page, occasionally pausing to rest.
+Clawd will then begin walking back and forth along the edges of the page, occasionally pausing to rest.
 
 ---
 
@@ -125,13 +125,14 @@ You can interact with Clawd directly on the webpage to affect his stats, emotion
 
 ### Shooing
 - **How**: Right-click on Clawd.
-- **Reaction**: Clawd teleports to a random spot along the bottom of the screen, saying *"Okay, okay, moving! �‍♂"* and showing the `shoo` reaction.
+- **Reaction**: Clawd dash-runs or flies to a random spot on any of the four viewport edges, displaying a temporary `running` or `flying` animation for physical feedback.
 - **Effect**: -10 Happiness, -5 Energy, -5 Leisure, and +5 XP. Plays the Shoo sound effect.
 
 ### Dragging & Snapping
 - **How**: Click and hold on Clawd, then drag him anywhere on the screen.
-- **Reaction**: Clawd follows your mouse. When you release him, he smoothly snaps back to the bottom edge using a physics-based spring animation.
-- **Position Sync**: While dragging, Clawd's coordinates sync in real-time across your active tabs.
+- **Reaction**: Clawd follows your mouse. When you release him, he intelligently snaps to the **closest edge** (bottom, top, left, or right) using a physics-based spring animation.
+- **Position Sync**: While dragging, Clawd's coordinates and edge-state sync in real-time across your active tabs.
+
 
 ### Hover Reaction
 - **How**: Move your mouse cursor over Clawd.
