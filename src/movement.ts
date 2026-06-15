@@ -33,6 +33,12 @@ export class MovementEngine {
     const H = window.innerHeight - this.size;
     this.x = Math.max(0, Math.min(this.x, W));
     this.y = Math.max(0, Math.min(this.y, H));
+
+    if (this.state === 'walk-bottom') this.y = H;
+    else if (this.state === 'walk-right') this.x = W;
+    else if (this.state === 'walk-top') this.y = 0;
+    else if (this.state === 'walk-left') this.x = 0;
+
     this._apply();
   };
 
@@ -201,44 +207,80 @@ export class MovementEngine {
   }
 
   _step(timeMultiplier: number = 1): void {
+    if (this._paused || (typeof document !== 'undefined' && document.visibilityState === 'hidden')) {
+      return;
+    }
+
     const W = window.innerWidth - this.size;
     const H = window.innerHeight - this.size;
-
-    this.y = H;
 
     const hour = new Date().getHours();
     const isNight = hour >= 22 || hour < 6;
     const currentSpeed = (isNight ? this.speed * 0.5 : this.speed) * timeMultiplier;
 
+    // Determine target location (toys or cursor)
+    let targetX: number | null = null;
+    let targetY: number | null = null;
+    let onReach: (() => void) | null = null;
+
     if (this.toyTargets.length > 0) {
-      const currentTarget = this.toyTargets[0];
-      const targetX = currentTarget.x;
-      if (Math.abs(this.x - targetX) <= Math.max(currentSpeed, 2)) {
-        this.x = targetX;
-        this.toyTargets.shift();
-        currentTarget.onReach();
-      } else {
-        this.direction = targetX > this.x ? 1 : -1;
-        this.x += currentSpeed * this.direction;
-      }
+      targetX = this.toyTargets[0].x;
+      targetY = H; // Toys are always on the floor
+      onReach = () => {
+        const t = this.toyTargets.shift();
+        if (t) t.onReach();
+      };
     } else if (this.cursorTargetX !== null) {
-      const targetX = this.cursorTargetX;
-      if (Math.abs(this.x - targetX) <= Math.max(currentSpeed, 2)) {
-        this.x = targetX;
-        this.cursorTargetX = null;
+      targetX = this.cursorTargetX;
+      targetY = H; // Cursor chasing usually stays on floor
+    }
+
+    if (targetX !== null && targetY !== null) {
+      // Pathfinding along edges towards target
+      if (this.state === 'walk-bottom') {
+        if (Math.abs(this.x - targetX) <= Math.max(currentSpeed, 2)) {
+          this.x = targetX;
+          if (onReach) onReach();
+          else this.cursorTargetX = null;
+        } else {
+          this.direction = targetX > this.x ? 1 : -1;
+          this.x += currentSpeed * this.direction;
+        }
       } else {
-        this.direction = targetX > this.x ? 1 : -1;
-        this.x += currentSpeed * this.direction;
+        // Move towards bottom edge
+        if (this.state === 'walk-left') {
+          this.direction = 1; // Down
+          this.y += currentSpeed;
+          if (this.y >= H) { this.y = H; this.state = 'walk-bottom'; this.direction = 1; }
+        } else if (this.state === 'walk-right') {
+          this.direction = 1; // Down
+          this.y += currentSpeed;
+          if (this.y >= H) { this.y = H; this.state = 'walk-bottom'; this.direction = -1; }
+        } else if (this.state === 'walk-top') {
+          this.direction = targetX > this.x ? 1 : -1;
+          this.x += currentSpeed * this.direction;
+          if (this.x >= W) { this.x = W; this.state = 'walk-right'; this.direction = 1; }
+          else if (this.x <= 0) { this.x = 0; this.state = 'walk-left'; this.direction = 1; }
+        }
       }
     } else {
-      this.x += currentSpeed * this.direction;
-
-      if (this.x >= W) {
-        this.x = W;
-        this.direction = -1;
-      } else if (this.x <= 0) {
-        this.x = 0;
-        this.direction = 1;
+      // Autonomous movement along edges
+      if (this.state === 'walk-bottom') {
+        this.x += currentSpeed * this.direction;
+        if (this.x >= W) { this.x = W; this.state = 'walk-right'; this.direction = -1; }
+        else if (this.x <= 0) { this.x = 0; this.state = 'walk-left'; this.direction = -1; }
+      } else if (this.state === 'walk-top') {
+        this.x += currentSpeed * this.direction;
+        if (this.x >= W) { this.x = W; this.state = 'walk-right'; this.direction = 1; }
+        else if (this.x <= 0) { this.x = 0; this.state = 'walk-left'; this.direction = 1; }
+      } else if (this.state === 'walk-left') {
+        this.y += currentSpeed * this.direction;
+        if (this.y >= H) { this.y = H; this.state = 'walk-bottom'; this.direction = 1; }
+        else if (this.y <= 0) { this.y = 0; this.state = 'walk-top'; this.direction = 1; }
+      } else if (this.state === 'walk-right') {
+        this.y += currentSpeed * this.direction;
+        if (this.y >= H) { this.y = H; this.state = 'walk-bottom'; this.direction = -1; }
+        else if (this.y <= 0) { this.y = 0; this.state = 'walk-top'; this.direction = -1; }
       }
 
       if (Math.random() < 0.0005) {
@@ -290,8 +332,21 @@ export class MovementEngine {
     const el = this.el;
     if (!el) return;
 
-    const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
-    const rotate = 'rotate(0deg)';
+    let rotate = '0deg';
+    let flipValue = this.direction;
+
+    if (this.state === 'walk-top') {
+      rotate = '180deg';
+      flipValue = -this.direction;
+    } else if (this.state === 'walk-left') {
+      rotate = '90deg';
+      flipValue = -this.direction;
+    } else if (this.state === 'walk-right') {
+      rotate = '-90deg';
+      flipValue = this.direction;
+    }
+
+    const flip = (flipValue === -1) ? 'scaleX(-1)' : 'scaleX(1)';
 
     el.style.setProperty('--pet-x', `${this.x}px`);
     el.style.setProperty('--pet-y', `${this.y}px`);
@@ -302,7 +357,7 @@ export class MovementEngine {
     
     const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
-      img.style.transform = `${flip} ${rotate}`;
+      img.style.transform = `${flip} rotate(${rotate})`;
       img.style.width = `${this.size}px`;
       img.style.height = `${this.size}px`;
     }
@@ -429,18 +484,34 @@ export class MovementEngine {
     const W = window.innerWidth - this.size;
     const H = window.innerHeight - this.size;
     
-    this.y = H;
-    this.state = 'walk-bottom';
-    
-    if (this.x >= W / 2) {
-      this.direction = -1;
+    const distLeft = this.x;
+    const distRight = W - this.x;
+    const distTop = this.y;
+    const distBottom = H - this.y;
+
+    const minDist = Math.min(distLeft, distRight, distTop, distBottom);
+
+    if (minDist === distBottom) {
+      this.y = H;
+      this.state = 'walk-bottom';
+      this.direction = this.x >= W / 2 ? -1 : 1;
+    } else if (minDist === distTop) {
+      this.y = 0;
+      this.state = 'walk-top';
+      this.direction = this.x >= W / 2 ? -1 : 1;
+    } else if (minDist === distLeft) {
+      this.x = 0;
+      this.state = 'walk-left';
+      this.direction = this.y >= H / 2 ? -1 : 1;
     } else {
-      this.direction = 1;
+      this.x = W;
+      this.state = 'walk-right';
+      this.direction = this.y >= H / 2 ? -1 : 1;
     }
     
     this.paused = true;
     
-    // Spring snap to the bottom floor with more "weight" and less magnetism
+    // Spring snap to the nearest edge with more "weight" and less magnetism
     this._posAnimation = springAnimate(el, {
       '--pet-x': `${this.x}px`,
       '--pet-y': `${this.y}px`
@@ -455,13 +526,7 @@ export class MovementEngine {
       if (this.onLanding) this.onLanding();
     });
 
-    const flip = (this.direction === -1) ? 'scaleX(-1)' : 'scaleX(1)';
-    const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
-    if (img) {
-      img.style.transform = `${flip} rotate(0deg)`;
-      img.style.width = `${this.size}px`;
-      img.style.height = `${this.size}px`;
-    }
+    this._apply();
   }
 
   syncState(state: Partial<SharedPetState>): void {
@@ -471,10 +536,11 @@ export class MovementEngine {
     this.hasFallen = true;
 
     const W = window.innerWidth - this.size;
+    const H = window.innerHeight - this.size;
     
     this.x = Math.max(0, Math.min(state.x ?? this.x, W));
-    this.y = window.innerHeight - this.size;
-    this.state = 'walk-bottom';
+    this.y = Math.max(0, Math.min(state.y ?? this.y, H));
+    this.state = state.state || 'walk-bottom';
     this.direction = state.direction || 1;
     this.paused = state.paused ?? false;
     this._apply();
