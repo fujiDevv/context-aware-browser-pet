@@ -16,6 +16,7 @@ let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 let audioCtx: AudioContext | null = null;
 let resumePromise: Promise<void> | null = null;
+let pendingGreetingSound = false;
 
 function unlockAudio(e?: Event): void {
   if (e) {
@@ -33,11 +34,19 @@ function unlockAudio(e?: Event): void {
     if (audioCtx && audioCtx.state === 'suspended') {
       resumePromise = audioCtx.resume().then(() => {
         resumePromise = null;
+        if (pendingGreetingSound) {
+          pendingGreetingSound = false;
+          playSound('greeting');
+        }
         cleanUpListeners();
       }).catch(() => {
         resumePromise = null;
       });
     } else {
+      if (pendingGreetingSound) {
+        pendingGreetingSound = false;
+        playSound('greeting');
+      }
       cleanUpListeners();
     }
   } catch (err) { console.warn('[Clawd Content] unlockAudio error:', err); }
