@@ -1005,6 +1005,17 @@ async function init(): Promise<void> {
             view.showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
             playSound('greeting');
             sessionStorage.setItem('clawd-has-greeted', 'true');
+
+            // Lite Mode Notification (AI Downloading)
+            if (currentSettings.aiMode) {
+              checkTabAiAvailability().then(status => {
+                if (status === 'after-download') {
+                  setTimeout(() => {
+                    view.showBubble("I'm still downloading my high-tech brain, using my backup instincts for now! 🧠", 5000);
+                  }, 4000);
+                }
+              });
+            }
           }
         }
       });
