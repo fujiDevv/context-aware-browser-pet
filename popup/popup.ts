@@ -88,6 +88,11 @@ async function init(): Promise<void> {
         chrome.runtime.openOptionsPage();
       });
     }
+
+    const versionEl = document.getElementById('version-display');
+    if (versionEl && typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) {
+      versionEl.textContent = `v${chrome.runtime.getManifest().version}`;
+    }
   };
   setupDashboardLink();
 

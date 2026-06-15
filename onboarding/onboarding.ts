@@ -68,8 +68,42 @@
   });
 
   const params = new URLSearchParams(window.location.search);
-  const version = params.get('version');
+  const manifestVersion = (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) 
+    ? chrome.runtime.getManifest().version 
+    : '1.1.0';
+  const version = params.get('version') || manifestVersion;
   const reason = params.get('reason') || 'install';
+
+  interface Feature {
+    title: string;
+    description: string;
+    icon: string;
+  }
+
+  const VERSION_FEATURES: Record<string, Feature[]> = {
+    '1.1.0': [
+      {
+        title: 'Cross-Tab Sync',
+        description: 'Clawd now shares personality, emotions, and movement across all your open tabs in real-time.',
+        icon: '../assets/pets/clawd-happy.svg'
+      },
+      {
+        title: 'Event-Driven Updates',
+        description: 'Refactored polling to event-driven updates for better battery life and instant responsiveness.',
+        icon: '../assets/pets/clawd-working-thinking.svg'
+      },
+      {
+        title: 'Lite Mode Fallback',
+        description: 'Smart fallback for AI Mood Analysis on metered or slow connections to ensure smooth performance.',
+        icon: '../assets/pets/clawd-cool.svg'
+      },
+      {
+        title: 'Persona Refactor',
+        description: 'Dialogue system modularized for faster loading and easier personality switching.',
+        icon: '../assets/pets/clawd-celebrating.svg'
+      }
+    ]
+  };
 
   if (reason === 'update') {
     const step1Title = document.querySelector('#step-1 .step-title') as HTMLElement | null;
@@ -78,7 +112,7 @@
     }
     const step1Subtitle = document.querySelector('#step-1 .step-subtitle') as HTMLElement | null;
     if (step1Subtitle) {
-      step1Subtitle.textContent = `Your context-aware AI browser companion has been updated. Explore the new adaptive learning systems, custom physics, and more!`;
+      step1Subtitle.textContent = `Your context-aware AI browser companion has been updated to ${version}. Explore the new cross-tab behaviors and optimized performance!`;
     }
 
     const step2Title = document.querySelector('#step-2 .step-title') as HTMLElement | null;
@@ -87,41 +121,22 @@
     }
     const step2Subtitle = document.querySelector('#step-2 .step-subtitle') as HTMLElement | null;
     if (step2Subtitle) {
-      step2Subtitle.textContent = `Here is a quick look at the new features and improvements in this release.`;
+      step2Subtitle.textContent = `Version ${version} brings significant architectural improvements and new features.`;
     }
 
     const featuresGrid = document.querySelector('.features-grid') as HTMLElement | null;
-    if (featuresGrid) {
-      featuresGrid.innerHTML = `
+    const features = VERSION_FEATURES[version] || VERSION_FEATURES['1.1.0'];
+
+    if (featuresGrid && features) {
+      featuresGrid.innerHTML = features.map(f => `
         <div class="feature-card">
           <div class="feature-icon">
-            <img src="../assets/pets/clawd-working-thinking.svg" alt="Adaptive Traits">
+            <img src="${f.icon}" alt="${f.title}">
           </div>
-          <h3>Adaptive Traits</h3>
-          <p>Clawd learns traits (Developer, Gamer, Scholar, Socialite) from your site visits and updates default idle animations.</p>
+          <h3>${f.title}</h3>
+          <p>${f.description}</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <img src="../assets/pets/clawd-cool.svg" alt="Speed Modifiers">
-          </div>
-          <h3>Speed Modifiers</h3>
-          <p>Crawling speed dynamically scales based on energy and active trait (calm developer vs. hyperactive gamer).</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <img src="../assets/pets/clawd-celebrating.svg" alt="Seasonal Toggle">
-          </div>
-          <h3>Seasonal Toggle</h3>
-          <p>Configure and toggle holiday outfits and behaviors directly from the popup settings.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <img src="../assets/pets/clawd-happy.svg" alt="Local Support">
-          </div>
-          <h3>Local Support</h3>
-          <p>Direct support email and issue tracker links are now integrated directly inside the settings card.</p>
-        </div>
-      `;
+      `).join('');
     }
   }
 
@@ -129,7 +144,7 @@
     const badge = document.querySelector('.version-badge') as HTMLElement | null;
     if (badge) {
       const statusText = reason === 'update' ? 'Successfully Updated' : 'Successfully Installed';
-      badge.innerHTML = `<span class="dot"></span> ${version} — ${statusText}`;
+      badge.innerHTML = `<span class="dot"></span> v${version} — ${statusText}`;
     }
   }
 })();

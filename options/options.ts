@@ -149,6 +149,12 @@ async function init() {
   updateLocalAiStatus();
   updatePresence();
 
+  // Inject version
+  const versionEl = document.getElementById('version-display');
+  if (versionEl && typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) {
+    versionEl.textContent = `Version ${chrome.runtime.getManifest().version} (Local AI)`;
+  }
+
   // Polling for real-time indicators
   setInterval(() => {
     updatePresence();
