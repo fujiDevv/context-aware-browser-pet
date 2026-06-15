@@ -12,7 +12,9 @@ export class TriggerDetector {
   _lastMouseMove: number;
   _onStateChange?: () => void;
 
-  constructor(onStateChange?: () => void) {
+  private _bridgeToken: string | null = null;
+
+  constructor(onStateChange?: () => void, bridgeToken?: string) {
     this._lastInput = Date.now();
     this._keyCount = 0;
     this._keyTimer = undefined;
@@ -23,9 +25,14 @@ export class TriggerDetector {
     this._mouseX = window.innerWidth / 2;
     this._lastMouseMove = Date.now();
     this._onStateChange = onStateChange;
+    this._bridgeToken = bridgeToken || null;
 
     this._bindEvents();
     this._watchVideo();
+  }
+
+  setBridgeToken(token: string): void {
+    this._bridgeToken = token;
   }
 
   snapshot(): TriggerSnapshot {
@@ -107,7 +114,7 @@ export class TriggerDetector {
   };
 
   private _onMessage = (event: MessageEvent): void => {
-    if (event.data && event.data.type === 'PET_PAGE_ERROR') {
+    if (event.data && event.data.type === 'PET_PAGE_ERROR' && event.data.token === this._bridgeToken) {
       this._hasConsoleError = true;
       window.dispatchEvent(new CustomEvent('pet-console-error'));
     }

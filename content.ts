@@ -2,13 +2,28 @@ import { MovementEngine } from './src/movement';
 import { EmotionEngine } from './src/emotion';
 import { TriggerDetector } from './src/triggers';
 import { PersonalitySystem } from './src/personality';
-import { getAiEmotion } from './src/ai';
+import { getAiEmotion, setBridgeToken } from './src/ai';
 import { PetSettings, SharedPetState, PetMessage } from './src/types';
 import { springAnimate, keyframeAnimate } from './src/animate';
 import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
 import { ViewManager } from './src/view';
 import { STORAGE_KEYS } from './src/constants';
 import { getDominantTrait, detectPageCategory } from './src/rules';
+
+const BRIDGE_TOKEN = Math.random().toString(36).substring(2) + Date.now().toString(36);
+setBridgeToken(BRIDGE_TOKEN);
+
+(function injectMainWorld() {
+  try {
+    const script = document.createElement('script');
+    script.src = chrome.runtime.getURL('main_world.js');
+    script.dataset.token = BRIDGE_TOKEN;
+    script.onload = () => script.remove();
+    (document.head || document.documentElement).appendChild(script);
+  } catch (e) {
+    console.warn('[Clawd Content] Main world injection failed:', e);
+  }
+})();
 
 let syncInterval: ReturnType<typeof setInterval> | null = null;
 let idleTimer: ReturnType<typeof setTimeout> | null = null;
@@ -238,7 +253,7 @@ function ensureInitialized(): void {
   emotion = new EmotionEngine(personality);
   triggers = new TriggerDetector(() => {
     debouncedUpdateEmotion();
-  });
+  }, BRIDGE_TOKEN);
 
   view = new ViewManager({
     onPetClick: (e) => {

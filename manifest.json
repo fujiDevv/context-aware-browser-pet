@@ -22,19 +22,9 @@
         "<all_urls>"
       ],
       "js": [
-        "main_world.js"
-      ],
-      "run_at": "document_start",
-      "world": "MAIN"
-    },
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
         "content.js"
       ],
-      "run_at": "document_idle"
+      "run_at": "document_start"
     }
   ],
   "action": {
@@ -55,7 +45,8 @@
       "resources": [
         "assets/*",
         "onboarding/*",
-        "wasm/*"
+        "wasm/*",
+        "main_world.js"
       ],
       "matches": [
         "<all_urls>"

@@ -70,16 +70,22 @@ export async function getAiEmotion(
   }
 }
 
+let bridgeToken: string | null = null;
+
+export function setBridgeToken(token: string): void {
+  bridgeToken = token;
+}
+
 async function checkGeminiNanoAvailability(): Promise<'readily' | 'after-download' | 'no'> {
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
     const handler = (event: MessageEvent) => {
-      if (event.source !== window || !event.data || event.data.type !== 'PET_AI_AVAILABILITY_CHECK_RESPONSE' || event.data.id !== requestId) return;
+      if (event.source !== window || !event.data || event.data.type !== 'PET_AI_AVAILABILITY_CHECK_RESPONSE' || event.data.id !== requestId || event.data.token !== bridgeToken) return;
       window.removeEventListener('message', handler);
       resolve(event.data.availability);
     };
     window.addEventListener('message', handler);
-    window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_REQUEST', id: requestId }, '*');
+    window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_REQUEST', id: requestId, token: bridgeToken }, '*');
     
     // Timeout fallback
     setTimeout(() => {
@@ -126,7 +132,7 @@ Description: ${metaDescription || 'None'}`;
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
     const handler = (event: MessageEvent) => {
-      if (event.source !== window || !event.data || event.data.type !== 'PET_AI_PROMPT_RESPONSE' || event.data.id !== requestId) return;
+      if (event.source !== window || !event.data || event.data.type !== 'PET_AI_PROMPT_RESPONSE' || event.data.id !== requestId || event.data.token !== bridgeToken) return;
       window.removeEventListener('message', handler);
       if (event.data.error) {
         resolve(null);
@@ -143,7 +149,7 @@ Description: ${metaDescription || 'None'}`;
       }
     };
     window.addEventListener('message', handler);
-    window.postMessage({ type: 'PET_AI_PROMPT_REQUEST', id: requestId, systemPrompt, prompt }, '*');
+    window.postMessage({ type: 'PET_AI_PROMPT_REQUEST', id: requestId, systemPrompt, prompt, token: bridgeToken }, '*');
 
     // Timeout fallback
     setTimeout(() => {

@@ -1,21 +1,22 @@
 // Captured in the webpage's MAIN world context to bypass Content Security Policies
+const currentScript = document.currentScript as HTMLScriptElement;
+const BRIDGE_TOKEN = currentScript?.dataset.token;
+
 window.addEventListener('error', (event) => {
-  window.postMessage({ type: 'PET_PAGE_ERROR', message: event.message }, '*');
+  window.postMessage({ type: 'PET_PAGE_ERROR', message: event.message, token: BRIDGE_TOKEN }, '*');
 });
 
 window.addEventListener('unhandledrejection', (event) => {
-  window.postMessage({ type: 'PET_PAGE_ERROR', message: event.reason?.message || 'Unhandled rejection' }, '*');
+  window.postMessage({ type: 'PET_PAGE_ERROR', message: event.reason?.message || 'Unhandled rejection', token: BRIDGE_TOKEN }, '*');
 });
 
 window.addEventListener('message', async (event) => {
-  if (event.source !== window || !event.data) return;
+  if (event.source !== window || !event.data || event.data.token !== BRIDGE_TOKEN) return;
 
   if (event.data.type === 'PET_AI_AVAILABILITY_CHECK_REQUEST') {
-    console.log('[Clawd MAIN] Received AI availability check request');
     const aiGlobal = (globalThis as any).ai || window.ai;
     let availability = 'no';
     if (aiGlobal && (typeof aiGlobal.languageModel !== 'undefined' || typeof aiGlobal.assistant !== 'undefined')) {
-      console.log('[Clawd MAIN] window.ai detected!', aiGlobal);
       const modelAPI = aiGlobal.languageModel || aiGlobal.assistant;
       try {
         if (typeof modelAPI.availability === 'function') {
@@ -24,14 +25,11 @@ window.addEventListener('message', async (event) => {
           const caps = await modelAPI.capabilities();
           availability = caps.available || 'no';
         }
-        console.log('[Clawd MAIN] AI availability:', availability);
       } catch (e) {
         console.error('[Clawd Local AI] Availability check failed:', e);
       }
-    } else {
-      console.log('[Clawd MAIN] window.ai is undefined or missing languageModel/assistant in MAIN world');
     }
-    window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_RESPONSE', id: event.data.id, availability }, '*');
+    window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_RESPONSE', id: event.data.id, availability, token: BRIDGE_TOKEN }, '*');
   }
 
   if (event.data.type === 'PET_AI_PROMPT_REQUEST') {
@@ -39,7 +37,7 @@ window.addEventListener('message', async (event) => {
     const aiGlobal = (globalThis as any).ai || window.ai;
 
     if (!aiGlobal || (typeof aiGlobal.languageModel === 'undefined' && typeof aiGlobal.assistant === 'undefined')) {
-      window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: 'built-in Prompt API is not defined in this context' }, '*');
+      window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: 'built-in Prompt API is not defined in this context', token: BRIDGE_TOKEN }, '*');
       return;
     }
 
@@ -51,7 +49,7 @@ window.addEventListener('message', async (event) => {
         : (await modelAPI.capabilities?.())?.available || 'no';
 
       if (availability !== 'readily' && availability !== 'after-download') {
-        window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: 'Gemini Nano model is not ready: ' + availability }, '*');
+        window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: 'Gemini Nano model is not ready: ' + availability, token: BRIDGE_TOKEN }, '*');
         return;
       }
 
@@ -60,10 +58,10 @@ window.addEventListener('message', async (event) => {
       });
 
       const resultText = await session.prompt(prompt);
-      window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, resultText }, '*');
+      window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, resultText, token: BRIDGE_TOKEN }, '*');
 
     } catch (error: any) {
-      window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: error.message || String(error) }, '*');
+      window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: error.message || String(error), token: BRIDGE_TOKEN }, '*');
     } finally {
       if (session) {
         try {
