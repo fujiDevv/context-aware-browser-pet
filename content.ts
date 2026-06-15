@@ -305,6 +305,9 @@ function ensureInitialized(): void {
     speed: currentSettings.speed
   });
 
+  personality.disabledEmotions = currentSettings.disabledEmotions || [];
+  view.applyCostume(currentSettings.costume);
+
   movement.onLanding = () => {
     if (isPetHidden()) return;
 
@@ -769,12 +772,14 @@ async function loadAndApplySettings(): Promise<void> {
   const saved = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
   if (saved[STORAGE_KEYS.SETTINGS]) {
     currentSettings = { ...currentSettings, ...saved[STORAGE_KEYS.SETTINGS] };
-    personality.disabledEmotions = currentSettings.disabledEmotions || [];
-    movement.updateSettings({
-      size: currentSettings.size,
-      speed: currentSettings.speed
-    });
-    view.applyCostume(currentSettings.costume);
+    if (isInitialized) {
+      personality.disabledEmotions = currentSettings.disabledEmotions || [];
+      movement.updateSettings({
+        size: currentSettings.size,
+        speed: currentSettings.speed
+      });
+      view.applyCostume(currentSettings.costume);
+    }
   }
 }
 
