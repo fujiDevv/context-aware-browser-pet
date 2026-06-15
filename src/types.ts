@@ -46,6 +46,7 @@ export interface PetSettings {
   soundEnabled: boolean;
   soundVolume: number;
   aiMode: boolean;
+  advancedAiEnabled?: boolean; // "Brain Upgrade" - DistilBERT ONNX
   apiKey: string;
   name?: string;
   costume?: 'none' | 'detective' | 'wizard' | 'party' | 'christmas' | 'halloween' | 'summer';

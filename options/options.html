@@ -128,8 +128,8 @@
                   <div class="status-indicator status-checking" id="ai-status-badge"></div>
                 </div>
                 <div class="indicator-text">
-                  <strong id="ai-status-text">Local AI: Checking...</strong>
-                  <span id="ai-status-subtitle">DistilBERT Model Status</span>
+                  <strong id="ai-status-text">Brain: Checking...</strong>
+                  <span id="ai-status-subtitle">Local AI Upgrade Status</span>
                 </div>
               </div>
               <div class="indicator-row sync-row">
@@ -475,13 +475,13 @@
           <div class="settings-main-col">
             <!-- Local AI Settings -->
             <div class="settings-main-card">
-              <h2>Local AI Core Configuration</h2>
+              <h2>Mascot Intelligence (AI)</h2>
 
               <div class="toggle-group-row" style="margin-top: 0;">
                 <div class="toggle-card" style="width: 100%;">
                   <div class="toggle-info">
-                    <strong>Local AI Mode</strong>
-                    <span>Enable offline DistilBERT evaluation</span>
+                    <strong>Brain Upgrade (Local AI)</strong>
+                    <span>Enable high-fidelity DistilBERT evaluation</span>
                   </div>
                   <label class="switch">
                     <input type="checkbox" id="ai-toggle">
@@ -492,7 +492,7 @@
 
               <div class="form-group hidden" id="ai-tuning-container"
                 style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; width: 100%;">
-                <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 13px;">Local AI Fine-Tuning</h4>
+                <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 13px;">Brain Upgrade Tuning</h4>
 
                 <div class="form-group" style="margin-bottom: 16px;">
                   <label for="ai-sensitivity-slider">Sentiment Sensitivity (<span
@@ -503,20 +503,21 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="ai-frequency-slider">Comment Frequency (<span id="ai-frequency-val">60s</span>)</label>
+                  <label for="ai-frequency-slider">Observation Frequency (<span id="ai-frequency-val">60s</span>)</label>
                   <input type="range" id="ai-frequency-slider" min="15" max="600" step="15" value="60" class="slider">
                   <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often Clawd makes
-                    AI-derived observations.</p>
+                    deep observations.</p>
                 </div>
               </div>
               <div
                 style="font-size: 11px; color: var(--text-muted); margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px; line-height: 1.5;">
+                <p style="margin-bottom: 8px;"><strong>Mode: Lite (Default)</strong> — Uses rule-based logic and Regex for fast, zero-download behavior analysis.</p>
                 <strong style="color: var(--text-color); display: block; margin-bottom: 4px;">Privacy & Resource
-                  Notice:</strong>
-                Enabling Local AI will download pre-trained machine learning weights (~67MB) directly to your browser's
-                local storage.
+                  Notice (Brain Upgrade):</strong>
+                Enabling the Brain Upgrade will download pre-trained machine learning weights (~67MB) directly to your browser's
+                local storage via Hugging Face.
                 All page analysis is performed <strong>strictly on your device</strong>—your browsing data is processed
-                locally and is never sent to external servers or cloud APIs.
+                locally and is never sent to external servers.
               </div>
             </div>
 

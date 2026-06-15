@@ -36,29 +36,40 @@ async function init(): Promise<void> {
     });
 
     // 2. Update AI Status
-    chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: any) => {
-      if (!aiStatusBadge || !aiStatusText) return;
-
-      if (chrome.runtime.lastError || !response || !response.success) {
-        aiStatusBadge.className = 'ai-status-badge status-unsupported';
-        aiStatusText.textContent = 'AI: Offline';
+    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
+      const settings = res[STORAGE_KEYS.SETTINGS] || {};
+      if (!settings.aiMode) {
+        if (aiStatusBadge && aiStatusText) {
+          aiStatusBadge.className = 'ai-status-badge status-checking';
+          aiStatusText.textContent = 'Brain: Lite';
+        }
         return;
       }
 
-      const { state, progress } = response;
-      if (state === 'ready') {
-        aiStatusBadge.className = 'ai-status-badge status-ready';
-        aiStatusText.textContent = 'AI: Ready';
-      } else if (state === 'loading') {
-        aiStatusBadge.className = 'ai-status-badge status-downloading';
-        aiStatusText.textContent = `AI: ${progress}%`;
-      } else if (state === 'error') {
-        aiStatusBadge.className = 'ai-status-badge status-unsupported';
-        aiStatusText.textContent = 'AI: Error';
-      } else {
-        aiStatusBadge.className = 'ai-status-badge status-checking';
-        aiStatusText.textContent = 'AI: Checking';
-      }
+      chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: any) => {
+        if (!aiStatusBadge || !aiStatusText) return;
+
+        if (chrome.runtime.lastError || !response || !response.success) {
+          aiStatusBadge.className = 'ai-status-badge status-unsupported';
+          aiStatusText.textContent = 'Brain: Offline';
+          return;
+        }
+
+        const { state, progress } = response;
+        if (state === 'ready') {
+          aiStatusBadge.className = 'ai-status-badge status-ready';
+          aiStatusText.textContent = 'Brain: Ready';
+        } else if (state === 'loading') {
+          aiStatusBadge.className = 'ai-status-badge status-downloading';
+          aiStatusText.textContent = `Brain: ${progress}%`;
+        } else if (state === 'error') {
+          aiStatusBadge.className = 'ai-status-badge status-unsupported';
+          aiStatusText.textContent = 'Brain: Error';
+        } else {
+          aiStatusBadge.className = 'ai-status-badge status-checking';
+          aiStatusText.textContent = 'Brain: Checking';
+        }
+      });
     });
   };
 

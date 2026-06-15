@@ -22,7 +22,8 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   * **Edge-Crawling Physics Engine**: Realistic 5-state viewport movement with throwing physics and edge-snapping.
   * **Context-Aware Emotions**: Real-time expressions that react to typing speed, scroll depth, media playback, and site errors.
-  * **Local Offline AI**: Privacy-first sentiment analysis using an on-device DistilBERT model (no API keys required).
+  * **Lite Mode (Default)**: Efficient, rule-based behavior analysis using Regex—zero downloads or API keys required.
+  * **Brain Upgrade (Optional AI)**: Privacy-first, high-fidelity sentiment analysis using an on-device DistilBERT model.
   * **Virtual Pet Progression**: Level up your pet through interactions, unlock costumes, and develop unique personality traits based on your browsing habits.
   * **Comprehensive Dashboard**: Track 7-day interest analytics, manage work/sleep schedules, and customize domain-specific reactions.
 
@@ -110,8 +111,8 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   * **Local Evaluation**: All website context evaluations, DOM parsing, activity tracking, and AI model inference happen entirely locally on your machine.
   * **No Telemetry**: Clawd does not collect, track, or transmit your browsing history, AI inputs, or personal data to external servers.
-  * **100% Offline AI**: Unlike cloud models, the local AI model runs entirely in your browser using local WebAssembly. No API keys are required, and no data ever leaves your device.
-  * **Minimal Scope**: The local AI only analyzes the webpage `title` and `meta description`. It does *not* read or scan body content or sensitive inputs.
+  * **Optional Brain Upgrade**: The local AI model is entirely optional. Lite Mode (Regex-based) is the default and requires no downloads. If you choose to enable the Brain Upgrade, the model weights are downloaded from Hugging Face and run entirely in your browser using local WebAssembly.
+  * **Minimal Scope**: Even with the Brain Upgrade, Clawd only analyzes the webpage `title` and `meta description`. It does *not* read or scan body content or sensitive inputs.
 
   ---
 

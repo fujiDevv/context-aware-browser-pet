@@ -30,6 +30,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         soundEnabled: true,
         soundVolume: 0.5,
         aiMode: false,
+        advancedAiEnabled: false,
         apiKey: '',
         name: 'Clawd',
         costume: 'none',
@@ -175,51 +176,67 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity } = message;
     const tabUrl = sender.tab?.url || '';
 
-    setupOffscreen()
-      .then(() => {
-        chrome.runtime.sendMessage(
-          {
-            type: 'run-local-ai-inference',
-            pageTitle,
-            metaDescription,
-            category,
-            persona,
-            statsContext,
-            sentimentSensitivity,
-            url: tabUrl
-          },
-          (res) => {
-            if (chrome.runtime.lastError) {
-              sendResponse({ success: false, error: chrome.runtime.lastError.message });
-            } else {
-              sendResponse(res);
+    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+      const settings = data[STORAGE_KEYS.SETTINGS] || {};
+      if (!settings.aiMode) {
+        sendResponse({ success: false, error: 'AI Mode is disabled' });
+        return;
+      }
+
+      setupOffscreen()
+        .then(() => {
+          chrome.runtime.sendMessage(
+            {
+              type: 'run-local-ai-inference',
+              pageTitle,
+              metaDescription,
+              category,
+              persona,
+              statsContext,
+              sentimentSensitivity,
+              url: tabUrl
+            },
+            (res) => {
+              if (chrome.runtime.lastError) {
+                sendResponse({ success: false, error: chrome.runtime.lastError.message });
+              } else {
+                sendResponse(res);
+              }
             }
-          }
-        );
-      })
-      .catch((err) => {
-        console.error('Failed to setup offscreen context for emotion:', err);
-        sendResponse({ success: false, error: err.message });
-      });
+          );
+        })
+        .catch((err) => {
+          console.error('Failed to setup offscreen context for emotion:', err);
+          sendResponse({ success: false, error: err.message });
+        });
+    });
 
     return true;
   }
 
   if (message.type === 'check-local-ai-status') {
-    setupOffscreen()
-      .then(() => {
-        chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (res) => {
-          if (chrome.runtime.lastError) {
-            sendResponse({ success: false, error: chrome.runtime.lastError.message });
-          } else {
-            sendResponse(res);
-          }
+    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+      const settings = data[STORAGE_KEYS.SETTINGS] || {};
+      if (!settings.aiMode) {
+        sendResponse({ success: true, state: 'idle', progress: 0 });
+        return;
+      }
+
+      setupOffscreen()
+        .then(() => {
+          chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (res) => {
+            if (chrome.runtime.lastError) {
+              sendResponse({ success: false, error: chrome.runtime.lastError.message });
+            } else {
+              sendResponse(res);
+            }
+          });
+        })
+        .catch((err) => {
+          console.error('Failed to setup offscreen context for status:', err);
+          sendResponse({ success: false, error: err.message });
         });
-      })
-      .catch((err) => {
-        console.error('Failed to setup offscreen context for status:', err);
-        sendResponse({ success: false, error: err.message });
-      });
+    });
 
     return true;
   }
@@ -276,7 +293,7 @@ async function closeOffscreen(): Promise<void> {
 // Pre-load the offscreen document (which pre-loads the classifier) if AI Mode is enabled
 chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
   const settings = data[STORAGE_KEYS.SETTINGS] || {};
-  if (settings.aiMode) {
+  if (settings.aiMode && settings.advancedAiEnabled) {
     setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen initial call error:', e); });
   }
 });
@@ -285,7 +302,7 @@ chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
 chrome.storage.onChanged.addListener((changes) => {
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const settings = changes[STORAGE_KEYS.SETTINGS].newValue || {};
-    if (settings.aiMode) {
+    if (settings.aiMode && settings.advancedAiEnabled) {
       setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen re-call error:', e); });
     } else {
       closeOffscreen().catch((e) => { console.warn('[Clawd Background] closeOffscreen re-call error:', e); });

@@ -464,8 +464,11 @@ async function updateEmotion(): Promise<void> {
 
   // Detect metered connection or slow network for "Lite Mode" fallback
   const isMetered = navigator.connection?.saveData === true;
-  const aiStatus = await checkTabAiAvailability();
-  const useLiteMode = isMetered || aiStatus !== 'readily';
+  let aiStatus = 'no';
+  if (currentSettings.aiMode) {
+    aiStatus = await checkTabAiAvailability();
+  }
+  const useLiteMode = !currentSettings.aiMode || isMetered || aiStatus !== 'readily';
 
   if (customReaction && !isFocusActive) {
     nextEmotion = customReaction.emotion;

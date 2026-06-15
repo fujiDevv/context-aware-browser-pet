@@ -774,33 +774,33 @@ function updateLocalAiStatus() {
 
   if (!isEnabled) {
     if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-unsupported';
-    if (aiStatusText) aiStatusText.textContent = 'Local AI: Inactive';
-    if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Enable Local AI Mode';
+    if (aiStatusText) aiStatusText.textContent = 'Brain: Lite Mode';
+    if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Using backup instincts';
     return;
   }
 
   chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: { success: boolean; state: string; progress: number } | undefined) => {
-    let text = 'Local AI: Checking...';
+    let text = 'Brain: Checking...';
     let subtitle = 'Querying model...';
     let className = 'status-indicator status-checking';
 
     if (chrome.runtime.lastError || !response || !response.success) {
-      text = 'Local AI: Offline';
+      text = 'Brain: Offline';
       subtitle = 'AI Layer Disconnected';
       className = 'status-indicator status-unsupported';
     } else {
       const s = response.state;
       const p = response.progress;
       if (s === 'ready') {
-        text = 'Local AI: Ready';
+        text = 'Brain: Ready';
         subtitle = 'DistilBERT Model Active';
         className = 'status-indicator status-ready';
       } else if (s === 'loading') {
-        text = `Local AI: ${p}%`;
+        text = `Brain: ${p}%`;
         subtitle = 'Fetching model weights';
         className = 'status-indicator status-downloading';
       } else if (s === 'error') {
-        text = 'Local AI: Error';
+        text = 'Brain: Error';
         subtitle = 'WASM Failure';
         className = 'status-indicator status-unsupported';
       }

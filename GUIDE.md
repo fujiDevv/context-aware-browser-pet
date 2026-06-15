@@ -51,7 +51,7 @@
  - [Website & Domain Triggers](#website--domain-triggers)
  - [Local AI Fine-Tuning](#local-ai-fine-tuning)
  - [Expanded Analytics & Charts](#expanded-analytics--charts)
-12. [AI Mood Analysis (Optional)](#ai-mood-analysis-optional)
+12. [Brain Upgrade (Local AI) — Optional](#brain-upgrade-local-ai--optional)
  - [How It Works](#how-it-works)
  - [Setting Up](#setting-up)
  - [AI Personas](#ai-personas)
@@ -391,9 +391,9 @@ Dive into your browsing and pet metrics:
 
 ---
 
-## AI Mood Analysis (Local & Offline)
+## Brain Upgrade (Local AI) — Optional
 
-Clawd features a local, privacy-centric AI layer that reads page context and generates customized comments and expressions completely offline.
+Clawd features a local, privacy-centric AI layer that reads page context and generates customized comments and expressions completely offline. By default, Clawd runs in **Lite Mode**, which uses efficient Regex rules to determine site categories and emotions with zero downloads.
 
 ### How It Works
 
@@ -411,11 +411,11 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
  The output sentiment, tab category, and Clawd's active energy level are cross-referenced to trigger a matching physical animation and persona-specific speech bubbles.
 
 ### Setting Up
-1. Open the extension popup panel.
-2. Under the **⚙ Settings** tab, toggle on **AI Mood Analysis**.
-3. The status badge will change to **Downloading (X%)** as the model weights (~67MB) are downloaded and securely stored locally in your browser's IndexedDB. (This only happens on the first run).
+1. Open the extension **Options Dashboard**.
+2. Under the **AI & Scheduling** tab, locate the **Brain Upgrade (Local AI)** toggle.
+3. Once enabled, the status badge will change to **Downloading (X%)** as the model weights (~67MB) are downloaded and securely stored locally in your browser's IndexedDB. **Note: This only happens once.**
 4. Once the status shows **Ready**, the local model is fully operational.
-5. Select your preferred **AI Persona** from the dropdown menu to customize the commentary style. No API keys or configurations are needed!
+5. Select your preferred **AI Persona** from the dropdown menu to customize the commentary style. No API keys or cloud accounts are needed!
 
 ### AI Personas
 
@@ -454,10 +454,10 @@ Clawd's chat bubbles change depending on his current stats and trait:
 * If he is in a default idle state, he will display unique speech bubbles tailored to his trait (e.g. a Developer pet will say *"Compiling DOM structures... "*, while a Scholar says *"Fascinating reading here! �"*).
 
 ### AI Stat Context (Local)
-If local AI Mood Analysis is active, Clawd's current stats (e.g. `Focus: 90%, Energy: 40%`) and Trait are passed to the local classifier. The local sentiment results are combined with these parameters to dynamically alter the commentary's tone and choice of emotion (e.g., sounding sleepier if low energy, geekier if a developer).
+If local **Brain Upgrade (Local AI)** is active, Clawd's current stats (e.g. `Focus: 90%, Energy: 40%`) and Trait are passed to the local classifier. The local sentiment results are combined with these parameters to dynamically alter the commentary's tone and choice of emotion (e.g., sounding sleepier if low energy, geekier if a developer).
 
 ### AI Semantic Stat Modifiers
-When Local AI Mode is enabled, Clawd's stats react to the semantic meaning and sentiment of the webpage rather than just the domain name:
+When **Brain Upgrade (Local AI)** is enabled, Clawd's stats react to the semantic meaning and sentiment of the webpage rather than just the domain name:
 * **Positive Sites**: Grant bonus Happiness (+2) and Energy (+1) with extra XP.
 * **Negative Code/Docs**: Represent deep or frustrating debugging sessions. They drain Happiness (-2) but boost Focus (+2).
 * **Negative Social**: Heavily drain Happiness (-5) and Energy (-2), encouraging you to step away.
@@ -530,7 +530,7 @@ Open the popup and verify that "Hide on this Tab" and "Hide on this Site" are un
 No. Clawd's animations are powered by native Web Animations API (WAAPI) and lightweight CSS keyframes. Position updates use high-performance `requestAnimationFrame` loops.
 
 **Q: Do I need to pay for an API key or hosting?**
-No. Clawd does not use any cloud servers, external databases, or third-party APIs like OpenAI or Anthropic. All text analysis is performed locally in your browser using quantized local models and WebAssembly. It is 100% free to run forever.
+No. Clawd does not use any cloud servers, external databases, or third-party APIs like OpenAI or Anthropic. All text analysis is performed locally in your browser. By default, Clawd uses **Lite Mode** (Regex-based), which requires no downloads. If you enable the **Brain Upgrade**, he uses quantized local models and WebAssembly. It is 100% free to run forever.
 
 **Q: Why does Clawd keep showing a debugger magnifying glass?**
 A JavaScript console error or rejection occurred on the page you are viewing. Once you navigate away or refresh, Clawd will clear his debugger state.
