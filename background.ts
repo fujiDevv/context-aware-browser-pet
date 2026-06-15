@@ -58,7 +58,8 @@ chrome.webRequest.onCompleted.addListener(
       chrome.tabs.sendMessage(details.tabId, {
         type: 'http-error',
         code: details.statusCode,
-      }).catch(() => {
+      }).catch((e) => {
+        console.debug('[Clawd Background] http-error message failed:', e);
       });
     }
   },
@@ -77,7 +78,8 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
 
 chrome.webNavigation.onCommitted.addListener((details) => {
   if (details.frameId === 0) {
-    chrome.tabs.sendMessage(details.tabId, { type: 'navigation' }).catch(() => {
+    chrome.tabs.sendMessage(details.tabId, { type: 'navigation' }).catch((e) => {
+      console.debug('[Clawd Background] navigation message failed:', e);
     });
   }
 });
@@ -114,7 +116,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             chrome.tabs.sendMessage(tab.id, {
               type: 'sync-pet-state',
               state: sharedPetState
-            }).catch(() => {
+            }).catch((e) => {
+              console.debug('[Clawd Background] sync-pet-state broadcast failed:', e);
             });
           }
         });
@@ -155,7 +158,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 chrome.tabs.sendMessage(tab.id, {
                   type: 'sync-origin-pet-state',
                   state: newState
-                }).catch(() => { });
+                }).catch((e) => {
+                  console.debug('[Clawd Background] sync-origin-pet-state broadcast failed:', e);
+                });
               }
             } catch (e) { }
           }
