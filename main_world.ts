@@ -9,10 +9,10 @@ window.addEventListener('unhandledrejection', (event) => {
 
 window.addEventListener('message', async (event) => {
   if (event.source !== window || !event.data) return;
-  
+
   if (event.data.type === 'PET_AI_AVAILABILITY_CHECK_REQUEST') {
     console.log('[Clawd MAIN] Received AI availability check request');
-    const aiGlobal = globalThis.ai || window.ai;
+    const aiGlobal = (globalThis as any).ai || window.ai;
     let availability = 'no';
     if (aiGlobal && (typeof aiGlobal.languageModel !== 'undefined' || typeof aiGlobal.assistant !== 'undefined')) {
       console.log('[Clawd MAIN] window.ai detected!', aiGlobal);
@@ -36,8 +36,8 @@ window.addEventListener('message', async (event) => {
 
   if (event.data.type === 'PET_AI_PROMPT_REQUEST') {
     const { id, systemPrompt, prompt } = event.data;
-    const aiGlobal = globalThis.ai || window.ai;
-    
+    const aiGlobal = (globalThis as any).ai || window.ai;
+
     if (!aiGlobal || (typeof aiGlobal.languageModel === 'undefined' && typeof aiGlobal.assistant === 'undefined')) {
       window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: 'built-in Prompt API is not defined in this context' }, '*');
       return;

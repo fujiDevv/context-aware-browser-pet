@@ -22,6 +22,10 @@ interface Window {
   ai?: any; // Using any here for now as the 'ai' type is complex and defined in types.ts
 }
 
+declare global {
+  var ai: any;
+}
+
 declare namespace chrome.runtime {
   function getContexts(filter: any): Promise<any[]>;
 }
