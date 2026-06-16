@@ -1110,7 +1110,19 @@ async function actuallyInit(): Promise<void> {
           movement.start();
           if (!sessionStorage.getItem('clawd-has-greeted')) {
             const petName = currentSettings.name || 'Clawd';
-            showBubbleWithSound(`Hello! I'm ${petName}! Let's browse together! 🐾`);
+            const greetings = [
+              `Hi, I'm ${petName}! Let's explore!`,
+              `Meet ${petName}, your guide!`,
+              `${petName} here! Let's look around.`,
+              `Let's explore together with ${petName}!`,
+              `Browse with ${petName}!`,
+              `Ready to explore with ${petName}?`,
+              `Explore with ${petName}!`,
+              `Hi! I'm ${petName}.`,
+              `${petName}: Let's explore!`
+            ];
+            const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+            view.showBubble(randomGreeting);
             playSound('greeting');
             sessionStorage.setItem('clawd-has-greeted', 'true');
 
@@ -1121,7 +1133,7 @@ async function actuallyInit(): Promise<void> {
                 if (status === 'after-download') {
                   setTimeout(() => {
                     if (isOrphaned) return;
-                    showBubbleWithSound("I'm still downloading my high-tech brain, using my backup instincts for now! 🧠", 5000);
+                    view.showBubble("I'm still downloading my high-tech brain, using my backup instincts for now! 🧠", 5000);
                   }, 4000);
                 }
               });
