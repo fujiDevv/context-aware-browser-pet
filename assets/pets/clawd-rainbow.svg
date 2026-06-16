@@ -1,5 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
   <defs>
+    <linearGradient id="pet-rainbow-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF4444;stop-opacity:1" />
+      <stop offset="20%" style="stop-color:#FF8800;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#44CC44;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#4488FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8844FF;stop-opacity:1" />
+    </linearGradient>
     <style>
       .rain-body { transform-origin: 7.5px 15px; animation: rain-bob 2s infinite ease-in-out; }
       .rain-shadow { animation: rain-s 2s infinite; }
@@ -22,7 +30,7 @@
     <rect x="1" y="-7" width="13" height="1" fill="#8844FF" opacity="0.6"/>
   </g>
   <g class="rain-body">
-    <g fill="#DE886D">
+    <g fill="url(#pet-rainbow-gradient)">
       <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
       <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
       <rect x="2" y="6" width="11" height="7"/>
