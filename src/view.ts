@@ -13,6 +13,7 @@ export interface ViewManagerOptions {
 export class ViewManager {
   private shadowHost: HTMLElement;
   private shadowRoot: ShadowRoot;
+  private canvas: HTMLElement;
   private container: HTMLElement;
   private petImg: HTMLImageElement;
   private bubble: HTMLElement;
@@ -31,9 +32,13 @@ export class ViewManager {
     style.textContent = viewStyles;
     this.shadowRoot.appendChild(style);
 
+    this.canvas = document.createElement('div');
+    this.canvas.id = 'browser-pet-canvas';
+    this.shadowRoot.appendChild(this.canvas);
+
     this.container = document.createElement('div');
     this.container.id = 'browser-pet-root';
-    this.shadowRoot.appendChild(this.container);
+    this.canvas.appendChild(this.container);
 
     this.petImg = document.createElement('img');
     this.petImg.id = 'browser-pet-img';
@@ -81,7 +86,7 @@ export class ViewManager {
   }
 
   public addItem(el: HTMLElement) {
-    this.container.appendChild(el);
+    this.canvas.appendChild(el);
   }
 
   public setEmotion(assetName: string) {

@@ -793,6 +793,7 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
 function handleDragOver(e: DragEvent) {
   if (e.dataTransfer && e.dataTransfer.types.includes('text/plain')) {
     e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
   }
 }
 

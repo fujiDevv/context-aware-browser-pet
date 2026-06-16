@@ -332,7 +332,7 @@ export class MovementEngine {
       if (element) {
         try {
           element.remove();
-        } catch (e) { console.warn('[Clawd Movement] WAAPI posAnimation.stop error:', e); }
+        } catch (e) { console.warn('[Clawd Movement] toy removal error:', e); }
       }
     });
     this.toyTargets = [];

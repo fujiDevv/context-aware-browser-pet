@@ -81,6 +81,7 @@ async function init(): Promise<void> {
     ['ball', 'fish', 'laser', 'yarn', 'duck', 'box'].forEach((toy) => {
       const el = document.getElementById(`toy-${toy}`);
       if (el) {
+        el.setAttribute('draggable', 'true');
         el.addEventListener('dragstart', (e) => {
           if (e.dataTransfer) {
             e.dataTransfer.setData('text/plain', `toy-${toy}`);
