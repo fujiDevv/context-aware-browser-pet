@@ -571,15 +571,16 @@ body {
 .reactions-list-container {
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  overflow: hidden;
+  overflow-x: auto;
   background-color: var(--bg-primary);
 }
 
 .reactions-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   font-size: 13px;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .reactions-table th,
@@ -1054,6 +1055,69 @@ body {
 .timeline-time {
   font-size: 9px;
   color: var(--text-muted);
+}
+
+/* Milestones Grid */
+.milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.milestone-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  background-color: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.milestone-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-light);
+  background-color: #ffffff;
+}
+
+.milestone-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.milestone-icon {
+  font-size: 18px;
+  background: var(--bg-primary);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.milestone-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.milestone-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.milestone-date {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: 4px;
 }
 
 /* PAGE: Settings */

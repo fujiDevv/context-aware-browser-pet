@@ -48,6 +48,7 @@ const valTotalPets = document.getElementById('val-total-pets') as HTMLElement;
 const valTotalFeeds = document.getElementById('val-total-feeds') as HTMLElement;
 const categoriesList = document.getElementById('categories-list') as HTMLElement;
 const timelineList = document.getElementById('timeline-list') as HTMLElement;
+const milestonesList = document.getElementById('milestones-list') as HTMLElement;
 
 // Inputs
 const nameInput = document.getElementById('pet-name-input') as HTMLInputElement;
@@ -533,6 +534,67 @@ function updateUIStats(stats: PetStats | undefined): void {
 
   // Timeline list
   renderTimeline(stats.moodHistory);
+
+  // Milestones list
+  renderMilestones(stats);
+}
+
+function renderMilestones(stats: PetStats) {
+  if (!milestonesList) return;
+  milestonesList.innerHTML = '';
+
+  const milestones = [];
+
+  // Level Milestones
+  if (stats.level >= 1) milestones.push({ title: 'New Beginning', desc: 'Clawd has entered your browser sanctuary.', icon: '🐾', date: 'Level 1' });
+  if (stats.level >= 3) milestones.push({ title: 'Expressive Mind', desc: 'Unlocked Advanced Emotions (Coding, Dancing, etc).', icon: '🧠', date: 'Level 3' });
+  if (stats.level >= 5) milestones.push({ title: 'Aura of Mystery', desc: 'Unlocked Detective Costume & Blue Aura.', icon: '🕵️', date: 'Level 5' });
+  if (stats.level >= 10) milestones.push({ title: 'Ultimate Companion', desc: 'All standard emotions and Magic Purple Aura unlocked.', icon: '✨', date: 'Level 10' });
+  if (stats.level >= 15) milestones.push({ title: 'Neon Dreamer', desc: 'Unlocked the Rainbow Shader costume.', icon: '🌈', date: 'Level 15' });
+  if (stats.level >= 50) milestones.push({ title: 'Mascot Sage', desc: 'Reached the peak of standard growth.', icon: '🎓', date: 'Level 50' });
+
+  // Interaction Milestones
+  if (stats.totalPets >= 10) milestones.push({ title: 'Well Loved', desc: 'Received more than 10 head pats.', icon: '❤️', date: `${stats.totalPets} Pets` });
+  if (stats.totalPets >= 100) milestones.push({ title: 'Heart of Gold', desc: 'A truly pampered mascot!', icon: '💖', date: `${stats.totalPets} Pets` });
+  if (stats.totalFeeds >= 10) milestones.push({ title: 'Happy Tummy', desc: 'Successfully enjoyed 10 snacks.', icon: '🍕', date: `${stats.totalFeeds} Feeds` });
+  if (stats.totalFeeds >= 100) milestones.push({ title: 'Gourmet Eater', desc: 'A professional browser snacker.', icon: '🍗', date: `${stats.totalFeeds} Feeds` });
+
+  // Prestige Milestones
+  if (stats.prestige && stats.prestige > 0) {
+    milestones.push({ title: 'Ethereal Rebirth', desc: `Reborn into a higher state of being (${stats.prestige}x).`, icon: '🌟', date: `Prestige ${stats.prestige}` });
+  }
+
+  // Trait Milestones
+  const trait = getDominantTrait(stats);
+  if (trait !== 'normal') {
+    const traitMeta = {
+      developer: { title: 'Code Architect', desc: 'Developed a permanent passion for documentation and code.', icon: '💻' },
+      gamer: { title: 'Epic Gamer', desc: 'Preferred leisure activities over everything else.', icon: '🎮' },
+      scholar: { title: 'Deep Researcher', desc: 'Became an expert in browsing news and articles.', icon: '📖' },
+      socialite: { title: 'Social Butterfly', desc: 'Loves spending time on social boards and mail.', icon: '💬' }
+    }[trait];
+    if (traitMeta) milestones.push({ ...traitMeta, date: 'Trait Evolved' });
+  }
+
+  if (milestones.length === 0) {
+    milestonesList.innerHTML = `<p class="empty-blocklist">No milestones reached yet. Keep interacting to unlock achievements!</p>`;
+    return;
+  }
+
+  // Show only last 6 milestones to keep it clean, or all? Let's show all but reverse so newest is first
+  milestones.reverse().forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'milestone-item';
+    card.innerHTML = `
+      <div class="milestone-header">
+        <div class="milestone-icon">${m.icon}</div>
+        <span class="milestone-title">${m.title}</span>
+      </div>
+      <p class="milestone-desc">${m.desc}</p>
+      <span class="milestone-date">${m.date}</span>
+    `;
+    milestonesList.appendChild(card);
+  });
 }
 
 function renderCategoriesChart(counts: Record<string, number> | undefined) {
