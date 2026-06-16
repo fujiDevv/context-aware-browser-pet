@@ -343,10 +343,20 @@ function ensureInitialized(): void {
     ], { duration: 500, easing: 'ease-out' });
 
     // Daze for 1 second, then "dust off" (sweep)
-    interactionTimeout = setTimeout(() => {
-      loadPet('working-sweeping');
+    // interactionTimeout = setTimeout(() => {
+    //   loadPet('working-sweeping');
 
-      // Reset after sweep duration
+    //   // Reset after sweep duration
+    //   interactionTimeout = setTimeout(() => {
+    //     isTemporarilyInteracting = false;
+    //     loadPet(emotion.current);
+    //   }, 1500);
+    // }, 1000);
+
+    interactionTimeout = setTimeout(() => {
+      loadPet('sad');
+
+      // Reset after
       interactionTimeout = setTimeout(() => {
         isTemporarilyInteracting = false;
         loadPet(emotion.current);
@@ -375,7 +385,7 @@ async function loadPet(name: string): Promise<void> {
   }
 
   view.setEmotion(assetName);
-  
+
   if (!checkContextOrCleanup()) return;
 
   try {
@@ -661,10 +671,10 @@ function handleShoo(e: Event) {
 
   isTemporarilyInteracting = true;
   personality.recordInteraction('shoo');
-  
+
   const shooEmotion = Math.random() < 0.5 ? 'running' : 'flying';
   loadPet(shooEmotion);
-  
+
   movement.shoo(() => {
     isTemporarilyInteracting = false;
     loadPet(emotion.current);
@@ -911,7 +921,7 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
 
   // Visual/Interactive messages below this line require initialization
   if (!isInitialized && ['pet', 'feed', 'shoo', 'sync-pet-state', 'sync-origin-pet-state'].includes(message.type)) {
-     actuallyInit();
+    actuallyInit();
   }
 
   if (message.type === 'pet') {
@@ -939,7 +949,7 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
       playSound('shoo');
     }
   }
- else if (message.type === 'http-error') {
+  else if (message.type === 'http-error') {
     if (isInitialized) {
       triggers.setHttpError(message.code);
       updateEmotion();
@@ -1016,7 +1026,7 @@ function handleConsoleError() {
 
 async function init(): Promise<void> {
   await loadAndApplySettings();
-  
+
   if (!checkContextOrCleanup()) return;
 
   if (document.visibilityState === 'visible') {
@@ -1032,7 +1042,7 @@ async function actuallyInit(): Promise<void> {
   ensureInitialized();
 
   await personality.isLoaded;
-  
+
   if (!checkContextOrCleanup()) return;
 
   view.preloadAssets();
@@ -1128,7 +1138,7 @@ async function getAiEmotionAvailability(): Promise<'readily' | 'after-download' 
     };
     window.addEventListener('message', handler);
     window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_REQUEST', id: requestId, token: BRIDGE_TOKEN }, '*');
-    
+
     setTimeout(() => {
       window.removeEventListener('message', handler);
       resolve('no');
