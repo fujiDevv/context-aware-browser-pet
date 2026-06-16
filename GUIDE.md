@@ -450,9 +450,13 @@ Clawd's physical viewport crawling speed scales dynamically based on two factors
 
 ### Stat-Sensitive Dialogue & Speech Bubbles
 Clawd's chat bubbles change depending on his current stats and trait:
-* If energy is under 30%, he will yawn and mention being sleepy (*"I'm running out of energy... "*).
-* If focus is over 80%, he will encourage productivity (*"Focus mode active! �"*).
-* If he is in a default idle state, he will display unique speech bubbles tailored to his trait (e.g. a Developer pet will say *"Compiling DOM structures... "*, while a Scholar says *"Fascinating reading here! �"*).
+* If energy is under 30%, he will yawn and mention being sleepy (*"I'm running out of energy... 🥱"*).
+* If focus is over 80%, he will encourage productivity (*"Focus mode active! 🛡️"*).
+* If he is in a default idle state, he will display unique speech bubbles tailored to his trait (e.g. a Developer pet will say *"Compiling DOM structures... 💻"*, while a Scholar says *"Fascinating reading here! 📖"*).
+
+### Ambient Observations
+Clawd is now more perceptive than ever. Even when his mood is stable, he has a chance to share **ambient observations** or "inner thoughts" about your browsing session. This ensures he feels like a living companion rather than a static sprite, periodically checking in or commenting on the page even if you stay on one site for a long time.
+
 
 ### AI Stat Context (Local)
 If local **Brain Upgrade (Local AI)** is active, Clawd's current stats (e.g. `Focus: 90%, Energy: 40%`) and Trait are passed to the local classifier. The local sentiment results are combined with these parameters to dynamically alter the commentary's tone and choice of emotion (e.g., sounding sleepier if low energy, geekier if a developer).
@@ -545,5 +549,5 @@ For guidelines on how to contribute code, assets, or animations, see [CONTRIBUTI
 ---
 
 <p align="center">
- Made with by the Joshua Sarmiento
+ Made by the Joshua Sarmiento
 </p>
