@@ -68,9 +68,10 @@
               <div class="stage-bg-grid"></div>
 
               <div class="pet-glow-orb" id="pet-orb"></div>
-              
+
               <div id="playground-pet-root" style="position: absolute; pointer-events: none;">
-                <img id="browser-pet-img" src="../assets/pets/clawd-happy.svg" alt="Clawd" style="pointer-events: auto; cursor: pointer;">
+                <img id="browser-pet-img" src="../assets/pets/clawd-happy.svg" alt="Clawd"
+                  style="pointer-events: auto; cursor: pointer;">
                 <!-- Floating text/bubbles container for sandbox -->
                 <div id="sandbox-speech-bubble" class="pet-speech-bubble"></div>
               </div>
@@ -545,7 +546,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="ai-frequency-slider">Observation Frequency (<span id="ai-frequency-val">60s</span>)</label>
+                  <label for="ai-frequency-slider">Observation Frequency (<span
+                      id="ai-frequency-val">60s</span>)</label>
                   <input type="range" id="ai-frequency-slider" min="15" max="600" step="15" value="60" class="slider">
                   <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often Clawd makes
                     deep observations.</p>
@@ -553,7 +555,8 @@
 
                 <div id="ai-connection-status"
                   style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; font-size: 11px;">
-                  <h4 style="margin-bottom: 8px; color: var(--text-color); font-size: 11px; text-transform: uppercase;">Active Brain Modules</h4>
+                  <h4 style="margin-bottom: 8px; color: var(--text-color); font-size: 11px; text-transform: uppercase;">
+                    Active Brain Modules</h4>
                   <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                     <span style="color: var(--text-secondary);">Emotion Classifier (BERT):</span>
                     <strong id="status-bert" style="color: var(--text-muted);">Syncing...</strong>
@@ -612,6 +615,24 @@
                       <option value="working-wizard">Wizard 🧙</option>
                       <option value="astronaut">Astronaut 🧑‍🚀</option>
                       <option value="working-debugger">Debugger 🔍</option>
+                      <option value="working-merging">Merging/Git 🔀</option>
+                      <option value="working-deploying">Deploying 🚀</option>
+                      <option value="working-firefighting">Firefighting 🚒</option>
+                      <option value="working-rubber-duck">Rubber Duck 🦆</option>
+                      <option value="working-building">Building 🏗️</option>
+                      <option value="working-sweeping">Sweeping 🧹</option>
+                      <option value="dizzy">Dizzy 💫</option>
+                      <option value="evil">Evil 😈</option>
+                      <option value="king">King 👑</option>
+                      <option value="music">Listening Music 🎧</option>
+                      <option value="dj">DJ 🎛️</option>
+                      <option value="magic">Magic 🪄</option>
+                      <option value="fishing">Fishing 🎣</option>
+                      <option value="bowling">Bowling 🎳</option>
+                      <option value="detective">Detective 🕵️</option>
+                      <option value="painting">Painting 🎨</option>
+                      <option value="photography">Photography 📷</option>
+                      <option value="working-juggling">Juggling 🤹</option>
                     </select>
                   </div>
                 </div>
@@ -627,6 +648,7 @@
                       <option value="none">None</option>
                       <option value="greeting">Greeting</option>
                       <option value="levelUp">Level Up</option>
+                      <option value="chat">Chat Message</option>
                       <option value="petting">Petting</option>
                       <option value="sad">Crying</option>
                       <option value="sleeping">Sleeping</option>

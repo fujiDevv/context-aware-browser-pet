@@ -39,7 +39,7 @@ export class EmotionEngine {
   ): Promise<string> {
     let emotion = await this._determineEmotion(ctx, scheduleEnabled, seasonalEnabled, customPlanner);
 
-    const isHttpError = ['404', '500', '403', '429'].includes(emotion);
+    const isHttpError = !isNaN(Number(emotion)) || emotion === 'error';
 
     if (!isHttpError && !this.personality.isEmotionUnlocked(emotion)) {
       emotion = this._getFallback(emotion);
@@ -63,10 +63,13 @@ export class EmotionEngine {
       focusEndHour?: number;
     }
   ): Promise<string> {
-    if (ctx.lastHttpError === 404) return '404';
-    if (ctx.lastHttpError === 500) return '500';
-    if (ctx.lastHttpError === 403) return '403';
-    if (ctx.lastHttpError === 429) return '429';
+    if (ctx.lastHttpError && ctx.lastHttpError >= 400) {
+      const errorStr = ctx.lastHttpError.toString();
+      if (ALL_EMOTIONS_POOL.includes(errorStr)) {
+        return errorStr;
+      }
+      return 'error';
+    }
     if (ctx.hasConsoleError) return 'working-debugger';
 
     // Focus Blocks Override (Manual Toggle or Scheduled Hours)
@@ -163,13 +166,27 @@ export class EmotionEngine {
 
     // 5. Seasonal / Calendar Events (Low Priority Fallback)
     if (seasonalEnabled) {
-      const month = new Date().getMonth(); // 0 = Jan, 11 = Dec
-      if (month === 9) return 'halloween'; // October
-      if (month === 11) return 'christmas'; // December
+      const now = new Date();
+      const month = now.getMonth(); // 0 = Jan, 11 = Dec
+      const day = now.getDate();
+      
+      if (month === 0 && day === 1) return 'new-year';
+      if (month === 1 && day === 14) return 'valentine';
+      if (month >= 2 && month <= 4) return 'spring';
       if (month >= 5 && month <= 7) {
         // Summer months
         return SUMMER_CHOICES[Math.floor(new Date().getMinutes() % SUMMER_CHOICES.length)];
       }
+      if (month >= 8 && month <= 10) {
+        if (month === 9 && day === 31) return 'halloween';
+        if (month === 10 && day >= 22 && day <= 28) return 'thanksgiving'; // Rough approximation
+        return 'autumn';
+      }
+      if (month === 11) {
+        if (day >= 24 && day <= 26) return 'christmas';
+        return 'winter';
+      }
+      if (month === 0 || month === 1) return 'winter';
     }
 
     return this.personality.defaultEmotion();
@@ -177,10 +194,23 @@ export class EmotionEngine {
 
   _codeEmotion(ctx: TriggerSnapshot): string {
     const titleLower = (ctx.pageTitle || '').toLowerCase();
+    const hostLower = (ctx.hostname || '').toLowerCase();
+    
     if (titleLower.includes('error') || titleLower.includes('fail') || titleLower.includes('bug')) {
       return 'working-debugger';
     }
-    if (ctx.isTypingHeavy) return 'coding';
+    if (hostLower.includes('github') || hostLower.includes('gitlab')) {
+      if (titleLower.includes('pull request') || titleLower.includes('merge')) return 'working-merging';
+      if (titleLower.includes('push') || titleLower.includes('commit')) return 'working-pushing';
+      if (titleLower.includes('revert')) return 'working-rollback';
+    }
+    if (hostLower.includes('vercel') || hostLower.includes('netlify') || hostLower.includes('aws') || titleLower.includes('deploy')) {
+      return 'working-deploying';
+    }
+    if (hostLower.includes('stackoverflow')) return 'working-rubber-duck';
+    
+    if (ctx.isTypingHeavy) return 'working-typing';
+    
     // Randomly show coding tasks
     return CODING_EMOTES[Math.floor(new Date().getMinutes() % CODING_EMOTES.length)];
   }

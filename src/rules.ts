@@ -448,30 +448,81 @@ export const EMOTION_FALLBACKS: Record<string, string> = {
   astronaut: 'sleeping',
   'working-debugger': 'angry',
   'working-building': 'working-thinking',
+  'working-merging': 'working-thinking',
+  'working-pushing': 'working-thinking',
+  'working-rollback': 'working-thinking',
+  'working-deploying': 'celebrating',
+  'working-firefighting': 'angry',
+  'working-oncall': 'sad',
 
   rocket: 'happy',
   pirate: 'sad',
   'working-juggling': 'happy',
   gaming: 'happy',
-  money: 'happy'
+  money: 'happy',
+  
+  error: 'sad',
+  'battery-low': 'sleeping',
+  bored: 'sleeping',
+  dizzy: 'sad',
+  embarrassed: 'sad',
+  evil: 'angry',
+  fire: 'angry',
+  flying: 'happy',
+  gift: 'happy',
+  'going-away': 'sad',
+  grumpy: 'angry',
+  hallucinating: 'dizzy',
+  hopeful: 'happy',
+  idea: 'working-thinking',
+  jealous: 'angry',
+  king: 'happy',
+  laughing: 'happy',
+  loading: 'working-thinking',
+  peeking: 'happy',
+  praying: 'sleeping',
+  rainbow: 'happy',
+  scared: 'sad',
+  security: 'working-thinking',
+  shipping: 'working-thinking',
+  sick: 'sad',
+  skeptical: 'shrug',
+  smile: 'happy',
+  snow: 'winter',
+  star: 'happy',
+  'static-base': 'happy',
+  sweeping: 'working-thinking',
+  'time-travel': 'working-thinking',
+  trophy: 'celebrating',
+  umbrella: 'sad'
 };
 
 export const FOCUS_EMOTIONS = ['working-typing', 'working-thinking', 'studying'];
 
 export const IDLE_CHOICES = [
   'sleeping', 'working-thinking', 'skateboard', 'telescope', 'meditating',
-  'working-rubber-duck', 'coffee', 'yawning'
+  'working-rubber-duck', 'coffee', 'yawning', 'astronaut', 'bowling', 'camping',
+  'chef', 'climbing', 'crafting', 'detective', 'driving', 'fishing', 'gardening',
+  'magic', 'painting', 'photography', 'swimming', 'bored', 'facepalm', 'idle-living'
 ];
 
-export const WORK_EMOTIONS = ['working-thinking', 'working-rubber-duck', 'coffee', 'studying'];
+export const WORK_EMOTIONS = [
+  'working-thinking', 'working-rubber-duck', 'coffee', 'studying', 'working-typing',
+  'working-context-full', 'working-testing', 'working-tool-calling', 'working-pairing',
+  'working-meeting'
+];
 
-export const SUMMER_CHOICES = ['summer', 'surfing', 'ice-cream'];
+export const SUMMER_CHOICES = ['summer', 'surfing', 'ice-cream', 'swimming', 'camping'];
 
-export const CODING_EMOTES = ['coding', 'working-building', 'working-typing'];
+export const CODING_EMOTES = [
+  'coding', 'working-building', 'working-typing', 'working-merging', 'working-pushing',
+  'working-rollback', 'working-deploying', 'working-firefighting', 'working-oncall',
+  'working-debugger'
+];
 
-export const MUSIC_EMOTES = ['music', 'singing', 'dj'];
+export const MUSIC_EMOTES = ['music', 'singing', 'dj', 'drumming', 'podcast'];
 
-export const FITNESS_EMOTES = ['flexing', 'lifting', 'yoga'];
+export const FITNESS_EMOTES = ['flexing', 'lifting', 'yoga', 'running'];
 
 export const ALL_EMOTIONS_POOL = [
   'happy', 'sad', 'angry', 'crying', 'waving', 'sleeping', 'working-thinking', 'shrug', 'reading', 'yoga',
@@ -479,10 +530,23 @@ export const ALL_EMOTIONS_POOL = [
   'working-wizard', 'astronaut', 'working-debugger', 'working-building', 'rocket', 'pirate', 'working-juggling',
   'gaming', 'battery-low', 'christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing',
   'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'mail', 'notification',
-  'flexing', 'lifting', 'singing', 'music', 'dj'
+  'flexing', 'lifting', 'singing', 'music', 'dj', 'bowling', 'camping', 'chef', 'climbing', 'crafting',
+  'detective', 'driving', 'fishing', 'gardening', 'magic', 'painting', 'photography', 'swimming', 'bored',
+  'facepalm', 'idle-living', 'working-context-full', 'working-testing', 'working-tool-calling', 'working-pairing',
+  'working-meeting', 'working-merging', 'working-pushing', 'working-rollback', 'working-deploying',
+  'working-firefighting', 'working-oncall', 'drumming', 'podcast', 'running', 'autumn', 'birthday',
+  'new-year', 'spring', 'thanksgiving', 'valentine', '200', '201', '204', '301', '400', '401', '402',
+  '403', '404', '408', '410', '418', '429', '451', '500', '502', '503', '504', 'crab-walking', 'dizzy',
+  'embarrassed', 'error', 'evil', 'fire', 'flying', 'gift', 'going-away', 'grumpy', 'hallucinating',
+  'hopeful', 'idea', 'jealous', 'king', 'laughing', 'loading', 'money', 'peeking', 'praying', 'rainbow',
+  'scared', 'security', 'shipping', 'sick', 'skeptical', 'smile', 'snow', 'star', 'static-base', 'sweeping',
+  'time-travel', 'trophy', 'umbrella'
 ];
 
-export const SEASONAL_POOL = ['christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing'];
+export const SEASONAL_POOL = [
+  'christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing',
+  'autumn', 'spring', 'thanksgiving', 'valentine', 'new-year', 'snow'
+];
 
 /**
  * Calculates the dominant trait based on site category visit counts.
