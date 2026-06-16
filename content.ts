@@ -40,7 +40,8 @@ async function playSound(type: string): Promise<void> {
     shoo: 'shoo-run.mp3',
     sleeping: 'sleeping.mp3',
     thinking: 'thinking-coding-work.mp3',
-    feeding: 'feeding-celebrating.mp3'
+    feeding: 'feeding-celebrating.mp3',
+    chat: 'chat-message.mp3'
   };
 
   const filename = sounds[type];
@@ -175,6 +176,13 @@ function showPet(): void {
   }
 }
 
+function showBubbleWithSound(text: string, duration = 3000): void {
+  if (document.visibilityState === 'visible' && !isPetHidden()) {
+    playSound('chat');
+  }
+  view.showBubble(text, duration);
+}
+
 function debouncedUpdateEmotion(delay = 500): void {
   if (debounceTimeout) clearTimeout(debounceTimeout);
   debounceTimeout = setTimeout(() => {
@@ -209,16 +217,16 @@ function handleIdleBehavior(): void {
             isTemporarilyInteracting = false;
             loadPet(emotion.current);
           });
-          view.showBubble("Let's go explore this side! 🏃‍♂️");
+          showBubbleWithSound("Let's go explore this side! 🏃‍♂️");
         },
         () => {
           movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-          view.showBubble("I'm following you! 👀");
+          showBubbleWithSound("I'm following you! 👀");
         },
         () => {
           const pageTitle = document.title || 'this page';
           const truncatedTitle = pageTitle.length > 25 ? pageTitle.substring(0, 22) + '...' : pageTitle;
-          view.showBubble(`Analyzing "${truncatedTitle}"... looks cool! 🧐`);
+          showBubbleWithSound(`Analyzing "${truncatedTitle}"... looks cool! 🧐`);
           loadPet('working-thinking');
           isTemporarilyInteracting = true;
           setTimeout(() => {
@@ -247,7 +255,7 @@ function handleIdleBehavior(): void {
       if (context.idleSeconds >= 10 && context.idleSeconds < 45 && Math.random() < 0.3) {
         movement.chaseCursor(context.mouseX - currentSettings.size / 2);
         const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
-        view.showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);
+        showBubbleWithSound(dialogs[Math.floor(Math.random() * dialogs.length)]);
       } else if (context.idleSeconds >= 45) {
         updateEmotion(); // Let engine pick deep idle (skateboard, sleeping, etc)
       }
@@ -536,7 +544,7 @@ async function updateEmotion(): Promise<void> {
     loadPet(nextEmotion);
 
     if (aiComment) {
-      view.showBubble(aiComment);
+      showBubbleWithSound(aiComment);
     } else {
       triggerContextDialogue(nextEmotion);
     }
@@ -605,20 +613,20 @@ function triggerContextDialogue(mood: string): void {
 
     if (stats.energy < 30 && Math.random() < 0.5) {
       const options = personaDialogs.lowEnergy || PERSONA_AUTONOMOUS_DIALOGUES.default.lowEnergy;
-      view.showBubble(options[Math.floor(Math.random() * options.length)]);
+      showBubbleWithSound(options[Math.floor(Math.random() * options.length)]);
       return;
     }
 
     if (stats.focus > 80 && Math.random() < 0.4) {
       const options = personaDialogs.highFocus || PERSONA_AUTONOMOUS_DIALOGUES.default.highFocus;
-      view.showBubble(options[Math.floor(Math.random() * options.length)]);
+      showBubbleWithSound(options[Math.floor(Math.random() * options.length)]);
       return;
     }
 
     if (mood === 'working-thinking' || mood === 'happy' || mood === 'love' || mood === 'cool' || mood === 'reading') {
       const traitOptions = personaDialogs[trait] || PERSONA_AUTONOMOUS_DIALOGUES.default[trait];
       if (traitOptions) {
-        view.showBubble(traitOptions[Math.floor(Math.random() * traitOptions.length)]);
+        showBubbleWithSound(traitOptions[Math.floor(Math.random() * traitOptions.length)]);
         return;
       }
     }
@@ -627,7 +635,7 @@ function triggerContextDialogue(mood: string): void {
   if (!scheduleEnabled) {
     const options = personaDialogs[mood];
     if (options) {
-      view.showBubble(options[Math.floor(Math.random() * options.length)]);
+      showBubbleWithSound(options[Math.floor(Math.random() * options.length)]);
       return;
     }
   }
@@ -658,7 +666,7 @@ function triggerContextDialogue(mood: string): void {
   };
 
   if (dialogs[mood]) {
-    view.showBubble(dialogs[mood]);
+    showBubbleWithSound(dialogs[mood]);
   }
 }
 
@@ -686,7 +694,7 @@ function handleShoo(e: Event) {
     loadPet(emotion.current);
   });
 
-  view.showBubble("Okay, okay, moving! 🏃‍♂️");
+  showBubbleWithSound("Okay, okay, moving! 🏃‍♂️");
   playSound('shoo');
 }
 
@@ -700,7 +708,7 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
 
   personality.recordInteraction(action);
   loadPet(temporaryMood);
-  view.showBubble(message);
+  showBubbleWithSound(message);
 
   // Unified Consciousness: Sync interaction to same-origin tabs
   const hostname = window.location.hostname;
@@ -779,7 +787,7 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
     box: `If it fits, I sits! Best box ever! 📦`
   };
 
-  view.showBubble(dialogs[toyType] || "Yay, a toy! 🎉");
+  showBubbleWithSound(dialogs[toyType] || "Yay, a toy! 🎉");
 
   const playMood = toyType === 'fish' ? 'celebrating' : 'dancing';
   loadPet(playMood);
@@ -951,7 +959,7 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
         loadPet(emotion.current);
       });
 
-      view.showBubble("Running away! 🏃‍♂️");
+      showBubbleWithSound("Running away! 🏃‍♂️");
       playSound('shoo');
     }
   }
@@ -981,7 +989,7 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
         loadPet(syncedEmotion);
       }
       if (syncedDialogue) {
-        view.showBubble(syncedDialogue);
+        showBubbleWithSound(syncedDialogue);
       }
     }
   } else if (message.type === 'check-tab-ai-availability') {
@@ -1079,7 +1087,7 @@ async function actuallyInit(): Promise<void> {
       emotion.current = originState.emotion;
       loadPet(originState.emotion);
       if (originState.dialogue) {
-        view.showBubble(originState.dialogue);
+        showBubbleWithSound(originState.dialogue);
       }
     }
 
@@ -1102,7 +1110,7 @@ async function actuallyInit(): Promise<void> {
           movement.start();
           if (!sessionStorage.getItem('clawd-has-greeted')) {
             const petName = currentSettings.name || 'Clawd';
-            view.showBubble(`Hello! I'm ${petName}! Let's browse together! 🐾`);
+            showBubbleWithSound(`Hello! I'm ${petName}! Let's browse together! 🐾`);
             playSound('greeting');
             sessionStorage.setItem('clawd-has-greeted', 'true');
 
@@ -1113,7 +1121,7 @@ async function actuallyInit(): Promise<void> {
                 if (status === 'after-download') {
                   setTimeout(() => {
                     if (isOrphaned) return;
-                    view.showBubble("I'm still downloading my high-tech brain, using my backup instincts for now! 🧠", 5000);
+                    showBubbleWithSound("I'm still downloading my high-tech brain, using my backup instincts for now! 🧠", 5000);
                   }, 4000);
                 }
               });

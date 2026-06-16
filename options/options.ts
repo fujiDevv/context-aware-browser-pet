@@ -443,6 +443,7 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
   if (soundToggle.checked) {
     const vol = Number(volumeSlider.value) / 100;
     playPreviewSound(soundName, vol);
+    setTimeout(() => { playPreviewSound('chat', vol); }, 100); // slight delay so the chat sound follows the action sound
   }
 
   const bubble = document.getElementById('sandbox-speech-bubble');
@@ -500,7 +501,8 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
     shoo: 'shoo-run.mp3',
     sleeping: 'sleeping.mp3',
     thinking: 'thinking-coding-work.mp3',
-    feeding: 'feeding-celebrating.mp3'
+    feeding: 'feeding-celebrating.mp3',
+    chat: 'chat-message.mp3'
   };
 
   const filename = sounds[type];
