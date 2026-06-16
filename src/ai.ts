@@ -158,6 +158,12 @@ function getTemplateFallback(stats: any, persona: string): string {
       docs: ["Gaining knowledge era is so back. Very demure.", "Inspecting the plot. We love to see it."],
       general: ["Just existing in your browser era. Valid.", "Today was a mood. Let's do it again tomorrow."]
     },
+    kid: {
+      coding: ["You're literally building the best map ever! OP!", "That code is cracked! Massive W!"],
+      social: ["The lobby was super full today! Epic hangs.", "So many people chatting, it was wild!"],
+      docs: ["Big brain plays today! You read so much lore.", "Leveling up your IRL intelligence stat! Epic!"],
+      general: ["We had a massive W of a day exploring the internet!", "Best server ever. Let's play again tomorrow!"]
+    },
     snarky: {
       coding: ["Found more bugs than features today. Classic you.", "I hope that code works better than your life choices."],
       social: ["If scrolling was a sport, you'd be an Olympic gold medalist.", "The internet is mostly ads, but you seem to love them."],

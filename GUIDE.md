@@ -436,6 +436,7 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
 - **Poetic**: Whimsical 1-line rhymes about the pages you visit.
 - **Snarky**: Sassy, humorous, and sharp remarks.
 - **Gen Z Slang**: Vibe-checks your sites with brain rot, main character energy, and no cap.
+- **Kid / Gamified**: High-energy gaming slang (W, L, OP, HP) that feels like a co-op buddy.
 
 ### 24-Hour AI Synapse
 

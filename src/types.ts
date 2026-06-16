@@ -55,7 +55,7 @@ export interface PetSettings {
   apiKey: string;
   name?: string;
   costume?: 'none' | 'detective' | 'wizard' | 'party' | 'christmas' | 'halloween' | 'summer';
-  persona?: 'default' | 'sarcastic' | 'encouraging' | 'poetic' | 'snarky';
+  persona?: 'default' | 'sarcastic' | 'encouraging' | 'poetic' | 'snarky' | 'genz' | 'kid';
   blockedDomains?: string[];
   disabledEmotions?: string[];
   scheduleEnabled?: boolean;

@@ -4,6 +4,7 @@ import { encouragingDialogues } from './personas/encouraging';
 import { poeticDialogues } from './personas/poetic';
 import { genzDialogues } from './personas/genz';
 import { snarkyDialogues } from './personas/snarky';
+import { kidDialogues } from './personas/kid';
 
 export const PERSONA_AUTONOMOUS_DIALOGUES: Record<string, Record<string, string[]>> = {
   "default": defaultDialogues,
@@ -11,5 +12,6 @@ export const PERSONA_AUTONOMOUS_DIALOGUES: Record<string, Record<string, string[
   "encouraging": encouragingDialogues,
   "poetic": poeticDialogues,
   "genz": genzDialogues,
-  "snarky": snarkyDialogues
+  "snarky": snarkyDialogues,
+  "kid": kidDialogues
 };
