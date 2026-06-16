@@ -3,6 +3,8 @@ import { springAnimate, SpringAnimation } from './animate';
 
 export class MovementEngine {
   elRef: WeakRef<HTMLElement>;
+  containerRef?: WeakRef<HTMLElement>;
+  isSandbox: boolean;
   state: string;
   size: number;
   speed: number;
@@ -29,8 +31,9 @@ export class MovementEngine {
   onLanding?: () => void;
 
   _handleResize = () => {
-    const W = window.innerWidth - this.size;
-    const H = window.innerHeight - this.size;
+    const container = this.containerRef?.deref();
+    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
     this.x = Math.max(0, Math.min(this.x, W));
     this.y = Math.max(0, Math.min(this.y, H));
 
@@ -42,15 +45,23 @@ export class MovementEngine {
     this._apply();
   };
 
-  constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number } = {}) {
+  constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number; container?: HTMLElement; isSandbox?: boolean } = {}) {
     this.elRef = new WeakRef(el);
+    if (initialSettings.container) {
+      this.containerRef = new WeakRef(initialSettings.container);
+    }
+    this.isSandbox = initialSettings.isSandbox || false;
     this.state = 'walk-bottom';
     
     this.size = initialSettings.size || 100;
     this.speed = initialSettings.speed || 1.2;
     
-    this.x = Math.random() * (window.innerWidth - this.size);
-    this.y = window.innerHeight - this.size;
+    const container = initialSettings.container;
+    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+
+    this.x = Math.random() * W;
+    this.y = H;
     this.direction = 1;
     
     this._paused = false;
@@ -74,7 +85,9 @@ export class MovementEngine {
 
     if (!this.hasFallen) {
       this.hasFallen = true;
-      const targetY = window.innerHeight - this.size;
+      const container = this.containerRef?.deref();
+      const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+      
       this.y = -this.size;
       this.paused = true;
       this.state = 'falling';
@@ -82,7 +95,7 @@ export class MovementEngine {
 
       this._posAnimation = springAnimate(el, {
         '--pet-x': `${this.x}px`,
-        '--pet-y': `${targetY}px`
+        '--pet-y': `${H}px`
       }, {
         stiffness: 180,
         damping: 15,
@@ -90,7 +103,7 @@ export class MovementEngine {
       });
 
       this._posAnimation.then(() => {
-        this.y = targetY;
+        this.y = H;
         this.state = 'walk-bottom';
         this.paused = false;
       });
@@ -123,8 +136,9 @@ export class MovementEngine {
     this._stopPosAnimation();
     this.clearToyTargets();
 
-    const W = window.innerWidth - this.size;
-    const H = window.innerHeight - this.size;
+    const container = this.containerRef?.deref();
+    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
     
     // Pick a random edge to shoo to
     const edges = ['bottom', 'top', 'left', 'right'];
@@ -188,8 +202,9 @@ export class MovementEngine {
         el.style.height = `${this.size}px`;
       }
       
-      const W = window.innerWidth - this.size;
-      const H = window.innerHeight - this.size;
+      const container = this.containerRef?.deref();
+      const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+      const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
       this.x = Math.max(0, Math.min(this.x, W));
       this.y = Math.max(0, Math.min(this.y, H));
     }
@@ -235,8 +250,9 @@ export class MovementEngine {
       return;
     }
 
-    const W = window.innerWidth - this.size;
-    const H = window.innerHeight - this.size;
+    const container = this.containerRef?.deref();
+    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
 
     const hour = new Date().getHours();
     const isNight = hour >= 22 || hour < 6;
@@ -378,6 +394,7 @@ export class MovementEngine {
     el.style.left = '0px';
     el.style.top = '0px';
     el.style.bottom = 'auto';
+    el.style.position = 'absolute';
     
     const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
@@ -430,8 +447,9 @@ export class MovementEngine {
       }
       
       if (hasMoved) {
-        const W = window.innerWidth - this.size;
-        const H = window.innerHeight - this.size;
+        const container = this.containerRef?.deref();
+        const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+        const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
         
         this.x = Math.max(0, Math.min(startPetX + dx, W));
         this.y = Math.max(0, Math.min(startPetY + dy, H));
@@ -505,8 +523,9 @@ export class MovementEngine {
 
     this._stopPosAnimation();
 
-    const W = window.innerWidth - this.size;
-    const H = window.innerHeight - this.size;
+    const container = this.containerRef?.deref();
+    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
     
     const distLeft = this.x;
     const distRight = W - this.x;
@@ -559,8 +578,9 @@ export class MovementEngine {
     this._stopPosAnimation();
     this.hasFallen = true;
 
-    const W = window.innerWidth - this.size;
-    const H = window.innerHeight - this.size;
+    const container = this.containerRef?.deref();
+    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
     
     this.x = Math.max(0, Math.min(state.x ?? this.x, W));
     this.y = Math.max(0, Math.min(state.y ?? this.y, H));
@@ -571,6 +591,7 @@ export class MovementEngine {
   }
 
   _safeSendMessage(msg: PetMessage): void {
+    if (this.isSandbox) return;
     try {
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
         chrome.runtime.sendMessage(msg).catch((e) => { console.warn('[Clawd Movement] runtime.sendMessage error:', e); });

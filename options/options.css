@@ -211,10 +211,13 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .playground-stage {
-  height: 18rem;
+  flex-grow: 1;
+  min-height: 24rem;
   background-color: var(--bg-secondary);
   border: 1px solid var(--accent-border);
   border-radius: 12px;
@@ -349,31 +352,22 @@ body {
   width: 0;
 }
 
-#pet-preview {
+#playground-pet-root {
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+#browser-pet-img {
   width: 90px;
   height: 90px;
   z-index: 10;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
-  animation: petIdle 4s infinite ease-in-out;
   transition: transform 0.2s ease;
   position: relative;
 }
 
-#pet-preview:hover {
+#browser-pet-img:hover {
   transform: scale(1.1) rotate(2deg);
-}
-
-
-@keyframes petIdle {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-6px);
-  }
 }
 
 .playground-interactions {

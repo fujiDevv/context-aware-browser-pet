@@ -3,14 +3,18 @@ import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem
 import { STORAGE_KEYS } from '../src/constants';
 import { EMOTIONS_METADATA, getDominantTrait } from '../src/shared-ui';
 import { getDailyInsight } from '../src/ai';
+import { MovementEngine } from '../src/movement';
 
 let personality: PersonalitySystem;
+let playgroundMovement: MovementEngine;
 let blockedDomains: string[] = [];
 let activeCostume: string = 'none';
 let domainReactions: DomainReaction[] = [];
 
 // Elements
-const previewImg = document.getElementById('pet-preview') as HTMLImageElement;
+const petImg = document.getElementById('browser-pet-img') as HTMLImageElement;
+const playgroundStage = document.getElementById('playground-stage') as HTMLElement;
+const playgroundPetRoot = document.getElementById('playground-pet-root') as HTMLElement;
 const petNameEl = document.getElementById('pet-name') as HTMLElement;
 const petLevelEl = document.getElementById('pet-level') as HTMLElement;
 const prestigeBadge = document.getElementById('prestige-badge') as HTMLElement;
@@ -152,6 +156,28 @@ async function init() {
 
   populateHourSelects();
   applySettings(storageData[STORAGE_KEYS.SETTINGS]);
+
+  // Initializing the Movement Engine for the Playground
+  playgroundMovement = new MovementEngine(playgroundPetRoot, {
+    size: storageData[STORAGE_KEYS.SETTINGS]?.size || 128,
+    speed: storageData[STORAGE_KEYS.SETTINGS]?.speed || 1.0,
+    container: playgroundStage,
+    isSandbox: true
+  });
+  playgroundMovement.start();
+
+  petImg.addEventListener('mouseenter', () => {
+    petImg.animate([
+      { transform: 'scale(1) rotate(0deg)' },
+      { transform: 'scale(1.2) rotate(6deg)' }
+    ], { duration: 200, fill: 'forwards' });
+  });
+  petImg.addEventListener('mouseleave', () => {
+    petImg.animate([
+      { transform: 'scale(1.2) rotate(6deg)' },
+      { transform: 'scale(1) rotate(0deg)' }
+    ], { duration: 200, fill: 'forwards' });
+  });
 
   // Initializing the Personality System
   personality = new PersonalitySystem((updatedStats) => {
@@ -427,15 +453,19 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
   }
 
   // Visual mood preview
-  if (previewImg) previewImg.src = `../assets/pets/clawd-${temporaryMood}.svg`;
+  if (petImg) petImg.src = `../assets/pets/clawd-${temporaryMood}.svg`;
 
   // Jump animation WAAPI
-  if (previewImg) {
-    previewImg.animate([
+  if (petImg) {
+    petImg.animate([
       { transform: 'translateY(0)' },
       { transform: 'translateY(-30px)' },
       { transform: 'translateY(0)' }
     ], { duration: 400, easing: 'ease-out' });
+  }
+
+  if (action === 'shoo') {
+    playgroundMovement.shoo();
   }
 
   await personality.recordInteraction(action);
@@ -491,7 +521,7 @@ function updateUIMood(mood: string): void {
   const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
   if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
   const svgName = getMascotSvgName(mood, activeCostume);
-  if (previewImg) previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
+  if (petImg) petImg.src = `../assets/pets/clawd-${svgName}.svg`;
 }
 
 function updateUIStats(stats: PetStats | undefined): void {
@@ -852,17 +882,25 @@ function applySettings(settings: PetSettings | undefined) {
   activeCostume = activeSettings.costume || 'none';
 
   // Apply costume glows to the preview image in the sanctuary stage
-  if (previewImg) {
-    previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
+  if (petImg) {
+    petImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
     if (activeCostume !== 'none' && ['detective', 'wizard', 'party'].includes(activeCostume)) {
-      previewImg.classList.add(`costume-${activeCostume}`);
+      petImg.classList.add(`costume-${activeCostume}`);
     }
   }
 
   // Ensure preview image reflects costume on load
   const lastKnownMood = petMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
   const svgName = getMascotSvgName(lastKnownMood, activeCostume);
-  if (previewImg) previewImg.src = `../assets/pets/clawd-${svgName}.svg`;
+  if (petImg) petImg.src = `../assets/pets/clawd-${svgName}.svg`;
+
+  // Update playground movement settings
+  if (playgroundMovement) {
+    playgroundMovement.updateSettings({
+      size: size,
+      speed: speed
+    });
+  }
 
   personaSelect.value = activeSettings.persona || 'default';
 
@@ -1326,10 +1364,10 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
         saveSettings();
 
         // Update styling of preview image in real time
-        if (previewImg) {
-          previewImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
+        if (petImg) {
+          petImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
           if (costumeId !== 'none' && ['detective', 'wizard', 'party'].includes(costumeId)) {
-            previewImg.classList.add(`costume-${costumeId}`);
+            petImg.classList.add(`costume-${costumeId}`);
           }
         }
 
@@ -1338,7 +1376,7 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
         const currentMood = currentMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
         const svgName = getMascotSvgName(currentMood, costumeId);
         const src = `../assets/pets/clawd-${svgName}.svg`;
-        if (previewImg) previewImg.src = src;
+        if (petImg) petImg.src = src;
 
         renderWardrobe(stats, costumeId);
       }

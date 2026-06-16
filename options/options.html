@@ -68,10 +68,12 @@
               <div class="stage-bg-grid"></div>
 
               <div class="pet-glow-orb" id="pet-orb"></div>
-              <img id="pet-preview" src="../assets/pets/clawd-happy.svg" alt="Clawd">
-
-              <!-- Floating text/bubbles container for sandbox -->
-              <div id="sandbox-speech-bubble" class="pet-speech-bubble"></div>
+              
+              <div id="playground-pet-root" style="position: absolute; pointer-events: none;">
+                <img id="browser-pet-img" src="../assets/pets/clawd-happy.svg" alt="Clawd" style="pointer-events: auto; cursor: pointer;">
+                <!-- Floating text/bubbles container for sandbox -->
+                <div id="sandbox-speech-bubble" class="pet-speech-bubble"></div>
+              </div>
             </div>
 
             <div class="playground-interactions">
