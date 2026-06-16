@@ -202,7 +202,7 @@ When Clawd levels up, a golden achievement banner slides down from the top of yo
 | **Level 3** | Advanced emotions: `coding`, `working-typing`, `dancing`, `cool`, `love`, `celebrating`, `mindblown` |
 | **Level 5** | Blue Detective Aura + Emotes: `ninja`, `working-wizard`, `astronaut`, `working-debugger`, `working-building` |
 | **Level 8** | Emotes: `rocket`, `pirate`, `working-juggling`, `gaming` |
-| **Level 10** | Magic Purple Aura + **All emotions unlocked** | |
+| **Level 10** | Magic Purple Aura + **All standard emotions, hobbies, and situational states unlocked (100+ dynamic animations)** |
 | **Level 15** | Neon Rainbow Shader |
 
 ### Mascot Milestones Dashboard
@@ -226,17 +226,18 @@ Clawd changes his expression and animation based on the page context of your act
 
 | Website Category | Matches (Domains) | Clawd's Reaction |
 |-----------------|-------------------|-------------------|
-| **Coding / Dev** | GitHub, StackOverflow, GitLab, npm, etc. | `coding`, `working-building`, `working-typing` |
+| **Coding / Dev** | GitHub, StackOverflow, GitLab, npm, etc. | Cycles `coding`, `working-building`, `working-typing`. Shows `working-merging`/`working-pushing`/`working-rollback` on Git PRs/commits. Shows `working-deploying` on Vercel/Netlify. Shows `working-rubber-duck` on StackOverflow. |
 | **Social Media** | Twitter/X, Instagram, Reddit, TikTok, etc. | `love` |
 | **Gaming** | Twitch, Steam, itch.io, Roblox | `gaming` |
 | **News** | BBC, CNN, NYT, Reuters, etc. | `working-thinking` |
 | **Shopping** | Amazon, eBay, Etsy, Shopify | `money` |
 | **Documentation** | Notion, Google Docs, Wikipedia, etc. | `studying` |
 | **Email** | Gmail, Outlook, Yahoo Mail | `mail` |
-| **Fitness** | Strava, MyFitnessPal, Fitbit, etc. | `flexing` , `lifting` , `yoga` (rotating) |
+| **Fitness** | Strava, MyFitnessPal, Fitbit, etc. | `flexing`, `lifting`, `yoga`, `running` (rotating) |
 | **AI Assistant** | ChatGPT, Claude, Gemini, HF | `mindblown` � |
 | **Streaming** | Netflix, YouTube, Hulu | `eating` |
 | **Finance** | Stripe, PayPal, Banking | `money` |
+| **Music/Audio** | Spotify, SoundCloud, Music | `music`, `singing`, `dj`, `drumming`, `podcast` (rotating) |
 
 ### Activity-Based Reactions
 
@@ -264,22 +265,23 @@ If you turn off the **Daily Schedule & Triggers** toggle in settings, Clawd ente
 
 ### Seasonal & Holiday Themes
 
-Clawd adjusts his appearance automatically based on the calendar month:
-- **October**: Halloween outfits (`halloween` �).
-- **December**: Christmas cheer (`christmas` ).
-- **Summer (June – August)**: Rotates through `summer` , `surfing` , and `ice-cream` .
+Clawd adjusts his appearance automatically based on the calendar month and day:
+- **New Year (Jan 1)**: Party hats and confetti (`new-year`).
+- **Valentine's Day (Feb 14)**: Floating hearts (`valentine`).
+- **Spring (Mar - May)**: Flowers and butterflies (`spring`).
+- **Summer (Jun – Aug)**: Rotates through `summer`, `surfing`, `camping`, `swimming`, and `ice-cream`.
+- **Autumn (Sep - Nov)**: Falling leaves and scarves (`autumn`).
+- **Halloween (Oct 31)**: Spooky pumpkin mask (`halloween`).
+- **Thanksgiving (Late Nov)**: Pumpkin pie (`thanksgiving`).
+- **Winter / Christmas (Dec)**: Santa hats and snow (`christmas`, `winter`, `snow`).
 
 ### Idle Behaviors
 
-If you are inactive (no typing, scrolling, clicking, or mouse movement) for **over 45 seconds**, Clawd will pick a random idle activity to keep himself busy:
-- Skateboarding (`skateboard` )
-- Stargazing (`telescope` )
-- Meditating (`meditating` )
-- Playing with a rubber duck (`working-rubber-duck` )
-- Sipping coffee (`coffee` )
-- Yawning (`yawning` )
-- Thinking (`working-thinking` )
-- Sleeping (`sleeping` )
+If you are inactive (no typing, scrolling, clicking, or mouse movement) for **over 45 seconds**, Clawd will pick a random idle activity from a massive pool of hobbies to keep himself busy:
+- **Outdoor & Active:** `skateboard`, `swimming`, `fishing`, `climbing`, `driving`, `camping`
+- **Arts & Crafts:** `painting`, `photography`, `magic`, `crafting`, `gardening`, `chef`
+- **Relaxing:** `telescope`, `meditating`, `yawning`, `coffee`, `reading`, `idle-living`
+- **Quirky:** `astronaut`, `detective`, `bowling`, `working-rubber-duck`
 
 If you remain idle for **over 5 minutes (300 seconds)**, Clawd will curl up and fall asleep (`sleeping` ).
 
@@ -292,11 +294,8 @@ When you are idle (for at least 10 seconds), Clawd has a 15% chance every 10 sec
 
 ### HTTP Error Reactions
 
-If the website you are visiting returns a standard HTTP error code, Clawd displays a reaction bubble:
-- **404**: *"Whoops! This page doesn't exist (404)!"*
-- **403**: *"Stop! Access denied (403)!"*
-- **429**: *"Too fast! Calm down (429)!"*
-- **500**: *"Ouch! The server is broken (500)!"*
+If the website you are visiting returns a standard HTTP error code, Clawd displays a custom animated SVG specific to that exact error alongside a reaction bubble. 
+Supported error states include: **200, 201, 204, 301, 400, 401, 402, 403, 404, 408, 410, 418, 429, 451, 500, 502, 503, 504**.
 
 ### Smart Download & Lite Mode Fallback
 Clawd will notify you via a speech bubble while he's *"downloading his high-tech brain"* on the first run. If the AI model is still loading, unavailable, or the connection is metered/slow, Clawd automatically falls back to **Lite Mode**, using backup instincts to stay reactive.
