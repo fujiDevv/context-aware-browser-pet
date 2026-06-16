@@ -528,20 +528,27 @@ async function updateEmotion(): Promise<void> {
     } else {
       triggerContextDialogue(nextEmotion);
     }
-
-    // Unified Consciousness: Broadcast state to other tabs of the same origin
-    const hostname = window.location.hostname;
-    if (nextEmotion !== lastSentOriginEmotion || (aiComment && aiComment !== lastSentOriginDialogue)) {
-      lastSentOriginEmotion = nextEmotion;
-      lastSentOriginDialogue = aiComment || '';
-      safeSendMessage({
-        type: 'update-origin-pet-state',
-        hostname,
-        emotion: nextEmotion,
-        dialogue: aiComment
-      });
+  } else {
+    // If emotion hasn't changed, still allow a small chance for ambient dialogue
+    if (Math.random() < 0.05) {
+      triggerContextDialogue(nextEmotion);
     }
+  }
 
+  // Unified Consciousness: Broadcast state to other tabs of the same origin
+  const hostname = window.location.hostname;
+  if (nextEmotion !== lastSentOriginEmotion || (aiComment && aiComment !== lastSentOriginDialogue)) {
+    lastSentOriginEmotion = nextEmotion;
+    lastSentOriginDialogue = aiComment || '';
+    safeSendMessage({
+      type: 'update-origin-pet-state',
+      hostname,
+      emotion: nextEmotion,
+      dialogue: aiComment
+    });
+  }
+
+  if (nextEmotion !== emotion.current || aiComment) {
     if (customReaction && customReaction.sound && customReaction.sound !== 'none' && !isFocusActive) {
       if (customReactionPlayCount < 2) {
         playSound(customReaction.sound);
