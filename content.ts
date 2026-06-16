@@ -29,6 +29,7 @@ setBridgeToken(BRIDGE_TOKEN);
 let syncInterval: ReturnType<typeof setInterval> | null = null;
 let idleTimer: ReturnType<typeof setTimeout> | null = null;
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
+let pokeInterval: ReturnType<typeof setInterval> | null = null;
 
 async function playSound(type: string): Promise<void> {
   const sounds: Record<string, string> = {
@@ -67,6 +68,7 @@ function cleanupOrphanedScript(): void {
   if (syncInterval) clearInterval(syncInterval);
   if (idleTimer) clearTimeout(idleTimer);
   if (debounceTimeout) clearTimeout(debounceTimeout);
+  if (pokeInterval) clearInterval(pokeInterval);
 
   if (isInitialized) {
     try {
@@ -198,7 +200,7 @@ function handleIdleBehavior(): void {
   const scheduleEnabled = currentSettings.scheduleEnabled !== false;
 
   if (!scheduleEnabled) {
-    if (Math.random() < 0.2) {
+    if (Math.random() < 0.4) {
       const decisions = [
         () => {
           isTemporarilyInteracting = true;
@@ -242,7 +244,7 @@ function handleIdleBehavior(): void {
     }
 
     if (!isFocusActive) {
-      if (context.idleSeconds >= 10 && context.idleSeconds < 45 && Math.random() < 0.15) {
+      if (context.idleSeconds >= 10 && context.idleSeconds < 45 && Math.random() < 0.3) {
         movement.chaseCursor(context.mouseX - currentSettings.size / 2);
         const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
         view.showBubble(dialogs[Math.floor(Math.random() * dialogs.length)]);
@@ -540,7 +542,7 @@ async function updateEmotion(): Promise<void> {
     }
   } else {
     // If emotion hasn't changed, still allow a small chance for ambient dialogue
-    if (Math.random() < 0.05) {
+    if (Math.random() < 0.15) {
       triggerContextDialogue(nextEmotion);
     }
   }
@@ -648,7 +650,11 @@ function triggerContextDialogue(mood: string): void {
     'crying': "I'm so sad... please pet me! 😢",
     'sad': "Feeling a bit down... 🥺",
     'reading': Math.random() < 0.5 ? "Reading is fun! 📚" : "So much knowledge here! 📖",
-    'yoga': Math.random() < 0.5 ? "Time for some morning stretches! 🧘‍♂️" : "Inhale, exhale... stretch! 🧘‍♀️"
+    'yoga': Math.random() < 0.5 ? "Time for some morning stretches! 🧘‍♂️" : "Inhale, exhale... stretch! 🧘‍♀️",
+    'happy': Math.random() < 0.5 ? "Just wandering around! 😊" : "Hope you're having a good day! 🌟",
+    'waving': "Hello there! 👋",
+    'shrug': "Not sure what to make of this page... 🤷",
+    'smile': "Nice to see you! 😊"
   };
 
   if (dialogs[mood]) {
@@ -1121,6 +1127,16 @@ async function actuallyInit(): Promise<void> {
   // Initial check
   updateEmotion();
   resetIdleTimer();
+
+  if (pokeInterval) clearInterval(pokeInterval);
+  pokeInterval = setInterval(() => {
+    if (!checkContextOrCleanup() || !isInitialized || isPetHidden() || isTemporarilyInteracting) return;
+
+    // Check if we should say something ambiently
+    if (Math.random() < 0.25) { // 25% chance every 30s to say something even if nothing happened
+      triggerContextDialogue(emotion.current);
+    }
+  }, 30_000);
 }
 
 async function checkTabAiAvailability(): Promise<'readily' | 'after-download' | 'no'> {
