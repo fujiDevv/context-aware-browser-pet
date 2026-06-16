@@ -30,6 +30,11 @@ export interface PetStats {
   lastHabitDecayTime?: number;
   siteCategoryHistory?: Record<string, Record<string, number>>;
   dailyMoodHistory?: DailyMoodRecord[];
+  aiInsight?: {
+    lastGeneratedTimestamp: number;
+    content: string;
+    isNew: boolean;
+  };
 }
 
 export interface DomainReaction {

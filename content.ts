@@ -1114,39 +1114,26 @@ async function actuallyInit(): Promise<void> {
 }
 
 async function checkTabAiAvailability(): Promise<'readily' | 'after-download' | 'no'> {
-  if (!checkContextOrCleanup()) return 'no';
-  try {
-    return new Promise((resolve) => {
-      chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (res) => {
-        if (chrome.runtime.lastError) {
-          if (chrome.runtime.lastError.message && chrome.runtime.lastError.message.includes('context invalidated')) {
-            cleanupOrphanedScript();
-          }
-          resolve('no');
-          return;
-        }
-        if (!res || !res.success) {
-          resolve('no');
-        } else {
-          const state = res.state;
-          if (state === 'ready') {
-            resolve('readily');
-          } else if (state === 'loading') {
-            resolve('after-download');
-          } else {
-            resolve('no');
-          }
-        }
-      });
-    });
-  } catch (err: any) {
-    if (err.message && err.message.includes('context invalidated')) {
-      cleanupOrphanedScript();
-    } else {
-      console.error('[Clawd AI] Failed to check local AI availability:', err);
-    }
-    return 'no';
-  }
+  return getAiEmotionAvailability();
+}
+
+async function getAiEmotionAvailability(): Promise<'readily' | 'after-download' | 'no'> {
+  // Use the existing logic from src/ai.ts via bridge
+  return new Promise((resolve) => {
+    const requestId = Math.random().toString(36).substring(7);
+    const handler = (event: MessageEvent) => {
+      if (event.source !== window || !event.data || event.data.type !== 'PET_AI_AVAILABILITY_CHECK_RESPONSE' || event.data.id !== requestId || event.data.token !== BRIDGE_TOKEN) return;
+      window.removeEventListener('message', handler);
+      resolve(event.data.availability);
+    };
+    window.addEventListener('message', handler);
+    window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_REQUEST', id: requestId, token: BRIDGE_TOKEN }, '*');
+    
+    setTimeout(() => {
+      window.removeEventListener('message', handler);
+      resolve('no');
+    }, 2000);
+  });
 }
 
 init();

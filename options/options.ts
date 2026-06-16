@@ -2,6 +2,7 @@ import { PersonalitySystem } from '../src/personality';
 import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem } from '../src/types';
 import { STORAGE_KEYS } from '../src/constants';
 import { EMOTIONS_METADATA, getDominantTrait } from '../src/shared-ui';
+import { getDailyInsight } from '../src/ai';
 
 let personality: PersonalitySystem;
 let blockedDomains: string[] = [];
@@ -28,6 +29,16 @@ const aiStatusBadge = document.getElementById('ai-status-badge') as HTMLElement;
 const aiStatusText = document.getElementById('ai-status-text') as HTMLElement;
 const aiStatusSubtitle = document.getElementById('ai-status-subtitle') as HTMLElement;
 const activeTabsText = document.getElementById('active-tabs-text');
+
+// Synapse Elements
+const synapseChargingContainer = document.getElementById('synapse-charging-container') as HTMLElement;
+const synapseReadyContainer = document.getElementById('synapse-ready-container') as HTMLElement;
+const barSynapse = document.getElementById('bar-synapse') as HTMLElement;
+const synapsePct = document.getElementById('synapse-pct') as HTMLElement;
+const synapseLabel = document.getElementById('synapse-label') as HTMLElement;
+const synapseStatusBadge = document.getElementById('synapse-status-badge') as HTMLElement;
+const btnViewInsight = document.getElementById('btn-view-insight') as HTMLButtonElement;
+const synapsePreviewText = document.getElementById('synapse-preview-text') as HTMLElement;
 
 // Gauges
 const gauges = {
@@ -71,6 +82,10 @@ const aiSensitivitySlider = document.getElementById('ai-sensitivity-slider') as 
 const aiSensitivityVal = document.getElementById('ai-sensitivity-val') as HTMLElement;
 const aiFrequencySlider = document.getElementById('ai-frequency-slider') as HTMLInputElement;
 const aiFrequencyVal = document.getElementById('ai-frequency-val') as HTMLElement;
+
+// AI Status Elements
+const statusBert = document.getElementById('status-bert') as HTMLElement;
+const statusNano = document.getElementById('status-nano') as HTMLElement;
 
 // Sleep/Wake & Focus Planner Inputs
 const sleepStartSelect = document.getElementById('sleep-start-select') as HTMLSelectElement;
@@ -313,6 +328,39 @@ async function init() {
     window.location.reload();
   });
 
+  // 24-Hour Synapse Viewer
+  btnViewInsight?.addEventListener('click', async () => {
+    if (!personality.stats.aiInsight?.content) return;
+
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 10000;
+      animation: fadeIn 0.3s ease;
+    `;
+    modal.innerHTML = `
+      <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 32px; max-width: 450px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+        <div style="font-size: 40px; margin-bottom: 16px;">🧠</div>
+        <h2 style="font-size: 20px; margin-bottom: 12px; font-weight: 700;">Daily Synapse Reflection</h2>
+        <p style="font-size: 15px; line-height: 1.6; color: var(--text-primary); font-style: italic; margin-bottom: 24px;">
+          "${personality.stats.aiInsight.content}"
+        </p>
+        <button id="close-insight-modal" class="btn btn-primary" style="width: 100%;">Got it, Clawd!</button>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    const closeBtn = modal.querySelector('#close-insight-modal');
+    closeBtn?.addEventListener('click', async () => {
+      modal.remove();
+      if (personality.stats.aiInsight) {
+        personality.stats.aiInsight.isNew = false;
+        await personality._save();
+      }
+    });
+  });
+
   // Clear Logs UI button
   const btnClearLogs = document.getElementById('btn-clear-logs-ui');
   if (btnClearLogs) {
@@ -537,6 +585,60 @@ function updateUIStats(stats: PetStats | undefined): void {
 
   // Milestones list
   renderMilestones(stats);
+
+  // 24-Hour Synapse Progress
+  updateSynapseUI(stats);
+}
+
+async function updateSynapseUI(stats: PetStats) {
+  if (!synapseChargingContainer || !synapseReadyContainer) return;
+
+  const lastGen = stats.aiInsight?.lastGeneratedTimestamp || Date.now();
+  const now = Date.now();
+  const msInDay = 24 * 60 * 60 * 1000;
+  // const msInDay = 1 * 60 * 1000;
+  const elapsed = now - lastGen;
+  const progress = Math.min(100, Math.floor((elapsed / msInDay) * 100));
+
+  const remainingHours = Math.max(0, 24 - Math.floor(elapsed / (60 * 60 * 1000)));
+
+  if (progress < 100) {
+    synapseChargingContainer.classList.remove('hidden');
+    synapseReadyContainer.classList.add('hidden');
+    synapsePct.textContent = `${progress}%`;
+    barSynapse.style.width = `${progress}%`;
+    synapseLabel.textContent = `Gathering Memories...`;
+    synapseStatusBadge.textContent = 'Syncing';
+    synapseStatusBadge.className = 'badge badge-mood';
+  } else {
+    // Synapse is ready!
+    synapseChargingContainer.classList.add('hidden');
+    synapseReadyContainer.classList.remove('hidden');
+    synapseStatusBadge.textContent = 'Ready';
+    synapseStatusBadge.className = 'badge badge-lvl';
+
+    // If there's no content or it's been more than 24 hours since the last one, generate it
+    if (!stats.aiInsight?.content || !stats.aiInsight.isNew) {
+      // Trigger AI generation
+      const settingsData = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+      const persona = settingsData[STORAGE_KEYS.SETTINGS]?.persona || 'default';
+
+      if (synapsePreviewText) synapsePreviewText.textContent = "Clawd is concentrating on your day...";
+
+      const insight = await getDailyInsight(stats, persona);
+
+      personality.stats.aiInsight = {
+        lastGeneratedTimestamp: now,
+        content: insight,
+        isNew: true
+      };
+      await personality._save();
+
+      if (synapsePreviewText) synapsePreviewText.textContent = `"${insight.substring(0, 60)}..."`;
+    } else {
+      if (synapsePreviewText) synapsePreviewText.textContent = `"${stats.aiInsight.content.substring(0, 60)}..."`;
+    }
+  }
 }
 
 function renderMilestones(stats: PetStats) {
@@ -562,6 +664,11 @@ function renderMilestones(stats: PetStats) {
   // Prestige Milestones
   if (stats.prestige && stats.prestige > 0) {
     milestones.push({ title: 'Ethereal Rebirth', desc: `Reborn into a higher state of being (${stats.prestige}x).`, icon: '🌟', date: `Prestige ${stats.prestige}` });
+  }
+
+  // AI Milestones
+  if (stats.aiInsight?.content) {
+    milestones.push({ title: 'Daily Enlightenment', desc: 'Successfully processed a 24-hour behavioral synapse.', icon: '🧠', date: 'Daily' });
   }
 
   // Trait Milestones
@@ -842,15 +949,20 @@ function updateLocalAiStatus() {
     return;
   }
 
+  // 1. Check DistilBERT (Offscreen)
   chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: { success: boolean; state: string; progress: number } | undefined) => {
     let text = 'Brain: Checking...';
     let subtitle = 'Querying model...';
     let className = 'status-indicator status-checking';
+    let bertLabel = 'Syncing...';
+    let bertColor = 'var(--text-muted)';
 
     if (chrome.runtime.lastError || !response || !response.success) {
       text = 'Brain: Offline';
       subtitle = 'AI Layer Disconnected';
       className = 'status-indicator status-unsupported';
+      bertLabel = 'Disconnected';
+      bertColor = '#ef4444';
     } else {
       const s = response.state;
       const p = response.progress;
@@ -858,20 +970,56 @@ function updateLocalAiStatus() {
         text = 'Brain: Ready';
         subtitle = 'DistilBERT Model Active';
         className = 'status-indicator status-ready';
+        bertLabel = '✅ Ready';
+        bertColor = 'var(--green)';
       } else if (s === 'loading') {
         text = `Brain: ${p}%`;
         subtitle = 'Fetching model weights';
         className = 'status-indicator status-downloading';
+        bertLabel = `⏳ ${p}% Loading`;
+        bertColor = 'var(--yellow)';
       } else if (s === 'error') {
         text = 'Brain: Error';
         subtitle = 'WASM Failure';
         className = 'status-indicator status-unsupported';
+        bertLabel = '❌ Error';
+        bertColor = '#ef4444';
       }
     }
 
     if (aiStatusBadge) aiStatusBadge.className = className;
     if (aiStatusText) aiStatusText.textContent = text;
     if (aiStatusSubtitle) aiStatusSubtitle.textContent = subtitle;
+    if (statusBert) {
+      statusBert.textContent = bertLabel;
+      statusBert.style.color = bertColor;
+    }
+
+    // 2. Check Gemini Nano (Active Tab Bridge)
+    chrome.runtime.sendMessage({ type: 'check-tab-ai-availability' }, (nanoResponse: { success: boolean; availability: string } | undefined) => {
+      if (!statusNano) return;
+      
+      if (chrome.runtime.lastError || !nanoResponse) {
+        statusNano.textContent = 'Wait for web tab...';
+        statusNano.style.color = 'var(--text-muted)';
+        return;
+      }
+
+      const availability = nanoResponse.availability;
+      if (availability === 'no') {
+        statusNano.textContent = '❌ Unsupported';
+        statusNano.style.color = '#ef4444';
+      } else if (availability === 'after-download') {
+        statusNano.textContent = '⏳ Downloading...';
+        statusNano.style.color = 'var(--yellow)';
+      } else if (availability === 'readily') {
+        statusNano.textContent = '✅ Connected';
+        statusNano.style.color = 'var(--green)';
+      } else {
+        statusNano.textContent = 'Wait for web tab...';
+        statusNano.style.color = 'var(--text-muted)';
+      }
+    });
   });
 }
 

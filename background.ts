@@ -191,6 +191,24 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return false;
   }
 
+  if (message.type === 'check-tab-ai-availability') {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
+      if (!activeTab?.id) {
+        sendResponse({ success: false, error: 'No active tab found' });
+        return;
+      }
+      chrome.tabs.sendMessage(activeTab.id, { type: 'check-tab-ai-availability' }, (res) => {
+        if (chrome.runtime.lastError) {
+          sendResponse({ success: false, error: chrome.runtime.lastError.message });
+        } else {
+          sendResponse(res);
+        }
+      });
+    });
+    return true;
+  }
+
   if (message.type === 'get-local-ai-emotion') {
     const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity } = message;
     const tabUrl = sender.tab?.url || '';

@@ -142,6 +142,35 @@
                 </div>
               </div>
             </div>
+
+            <!-- 24-Hour AI Synapse Card -->
+            <div class="habits-card synapse-card" id="synapse-card">
+              <div class="synapse-header">
+                <h3>24-Hour AI Synapse</h3>
+                <span id="synapse-status-badge" class="badge badge-mood">Syncing</span>
+              </div>
+              <div class="synapse-body">
+                <div class="xp-progress-container" id="synapse-charging-container">
+                  <div class="xp-labels">
+                    <span id="synapse-label">Gathering Memories...</span>
+                    <span id="synapse-pct">0%</span>
+                  </div>
+                  <div class="xp-bar-track">
+                    <div id="bar-synapse" class="xp-bar-fill" style="background-color: var(--blue);"></div>
+                  </div>
+                  <p class="section-subtitle" style="margin-top: 8px; font-size: 10px;">Clawd is observing your habits
+                    to provide a daily reflection.</p>
+                </div>
+
+                <div id="synapse-ready-container" class="hidden">
+                  <p class="milestone-desc" id="synapse-preview-text" style="margin-bottom: 12px; font-style: italic;">
+                    "I've finished analyzing our day together..."</p>
+                  <button id="btn-view-insight" class="btn btn-primary" style="width: 100%; gap: 8px;">
+                    <span>🧠</span> Read Daily Reflection
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -518,13 +547,28 @@
                   <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often Clawd makes
                     deep observations.</p>
                 </div>
+
+                <div id="ai-connection-status"
+                  style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; font-size: 11px;">
+                  <h4 style="margin-bottom: 8px; color: var(--text-color); font-size: 11px; text-transform: uppercase;">Active Brain Modules</h4>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                    <span style="color: var(--text-secondary);">Emotion Classifier (BERT):</span>
+                    <strong id="status-bert" style="color: var(--text-muted);">Syncing...</strong>
+                  </div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-secondary);">Generative Reflections (Nano):</span>
+                    <strong id="status-nano" style="color: var(--text-muted);">Syncing...</strong>
+                  </div>
+                </div>
               </div>
               <div
                 style="font-size: 11px; color: var(--text-muted); margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px; line-height: 1.5;">
-                <p style="margin-bottom: 8px;"><strong>Mode: Lite (Default)</strong> — Uses rule-based logic and Regex for fast, zero-download behavior analysis.</p>
+                <p style="margin-bottom: 8px;"><strong>Mode: Lite (Default)</strong> — Uses rule-based logic and Regex
+                  for fast, zero-download behavior analysis.</p>
                 <strong style="color: var(--text-color); display: block; margin-bottom: 4px;">Privacy & Resource
                   Notice (Brain Upgrade):</strong>
-                Enabling the Brain Upgrade will download pre-trained machine learning weights (~67MB) directly to your browser's
+                Enabling the Brain Upgrade will download pre-trained machine learning weights (~67MB) directly to your
+                browser's
                 local storage via Hugging Face.
                 All page analysis is performed <strong>strictly on your device</strong>—your browsing data is processed
                 locally and is never sent to external servers.

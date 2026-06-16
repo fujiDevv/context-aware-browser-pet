@@ -15,7 +15,12 @@ const DEFAULT_STATS: PetStats = {
   moodHistory: [],
   siteCategoryCounts: {},
   prestige: 0,
-  lastHabitDecayTime: 0
+  lastHabitDecayTime: 0,
+  aiInsight: {
+    lastGeneratedTimestamp: Date.now(),
+    content: '',
+    isNew: false
+  }
 };
 
 const OFFLINE_DECAY_CAP_SECONDS = 86400; // 24 hours

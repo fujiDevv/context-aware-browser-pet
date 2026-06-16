@@ -27,6 +27,7 @@
 6. [Leveling Up & XP](#leveling-up--xp)
  - [How to Earn XP](#how-to-earn-xp)
  - [Level Milestones & Emotion Unlocks](#level-milestones--emotion-unlocks)
+ - [Mascot Milestones Dashboard](#mascot-milestones--dashboard)
 7. [Context-Aware Moods](#context-aware-moods)
  - [Website-Specific Reactions](#website-specific-reactions)
  - [Activity-Based Reactions](#activity-based-reactions)
@@ -55,6 +56,7 @@
  - [How It Works](#how-it-works)
  - [Setting Up](#setting-up)
  - [AI Personas](#ai-personas)
+ - [24-Hour AI Synapse](#24-hour-ai-synapse)
 13. [Adaptive Habits & Learning](#adaptive-habits--learning)
 14. [Cross-Tab Behavior (Hybrid Sync)](#cross-tab-behavior-hybrid-sync)
 15. [Security & Privacy](#security--privacy)
@@ -202,6 +204,15 @@ When Clawd levels up, a golden achievement banner slides down from the top of yo
 | **Level 8** | Emotes: `rocket`, `pirate`, `working-juggling`, `gaming` |
 | **Level 10** | Magic Purple Aura + **All emotions unlocked** | |
 | **Level 15** | Neon Rainbow Shader |
+
+### Mascot Milestones Dashboard
+
+Track significant growth markers and achievements beyond just numerical levels. Located in the **History Timeline** tab of the Options Dashboard, the Milestones grid commemorates:
+- **Major Level Thresholds:** Celebrates reaching Levels 1, 3, 5, 10, 15, and 50.
+- **Interaction Achievements:** Recognizes high levels of care, such as "Well Loved" (10+ pets) or "Gourmet Eater" (100+ feeds).
+- **Trait Evolutions:** Commemorates when Clawd permanently develops a dominant personality trait like "Code Architect" or "Social Butterfly".
+- **Ethereal Rebirths:** Marks every time you trigger a Prestige Rebirth.
+- **AI Enlightenment:** Tracks daily 24-hour behavioral synapse generations.
 
 > **Note**: Seasonal, holiday, idle, and custom situational behaviors (like fitness and music) are always allowed to bypass level locks so you can enjoy all the unique SVG animations!
 
@@ -426,6 +437,15 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
 - **Poetic**: Whimsical 1-line rhymes about the pages you visit.
 - **Snarky**: Sassy, humorous, and sharp remarks.
 - **Gen Z Slang**: Vibe-checks your sites with brain rot, main character energy, and no cap.
+
+### 24-Hour AI Synapse
+
+The **24-Hour AI Synapse** is an advanced generative feature that uses **Gemini Nano** to provide a daily reflection on your browsing journey.
+
+1. **The Charging State:** In the Sanctuary Playground, you'll see a progress bar titled "Gathering Memories." This bar fills up over 24 hours as Clawd observes your site categories and interactions.
+2. **Generative Reflection:** Once the bar hits 100%, the Synapse is fully charged. Clawd synthesizes your top categories, interaction counts, and mood history into a unique 1-2 sentence reflection.
+3. **Persona Integration:** The reflection is written in the voice of your currently active **Dialogue Persona**.
+4. **Privacy:** Like all other AI features in Clawd, the data synthesis is performed locally on your device. The AI only sees categorized totals, not your raw browsing history or URLs.
 
 ---
 

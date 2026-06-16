@@ -548,6 +548,34 @@ body {
   color: var(--text-muted);
 }
 
+/* Synapse Card */
+.synapse-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.synapse-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.synapse-body {
+  position: relative;
+}
+
+#btn-view-insight {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(199, 93, 63, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(199, 93, 63, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(199, 93, 63, 0); }
+}
+
 .sync-row {
   margin-top: 12px;
   padding-top: 12px;
