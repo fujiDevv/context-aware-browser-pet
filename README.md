@@ -20,7 +20,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   ## Key Features
 
-  * **Edge-Crawling Physics Engine**: Realistic 5-state viewport movement (Bottom, Top, Left, Right, Falling) with spring-physics and intelligent edge-snapping.
+  * **Gravity-Driven Physics Engine**: Reliable floor/ceiling crawling with a built-in Gravity Engine, spring-physics, and intelligent edge-snapping (no more wall-sticking).
   * **Context-Aware Emotions**: Real-time expressions that react to typing speed, scroll depth, media playback, intent detection, and site errors.
   * **Lite Mode (Default)**: Efficient, rule-based behavior analysis using Regex and meta-tag analysis—zero downloads or API keys required.
   * **Brain Upgrade (Optional AI)**: Privacy-first, high-fidelity sentiment analysis using an on-device DistilBERT model.

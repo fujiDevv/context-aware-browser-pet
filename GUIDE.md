@@ -107,7 +107,7 @@ When Clawd first appears on a new page:
 - He displays a greeting speech bubble: *"Hello! I'm [Pet Name]! Let's browse together! 👋"* (defaults to *"Hello! I'm Clawd! Let's browse together! 👋"*).
 - A greeting sound effect is played (if sound is enabled).
 
-Clawd will then begin walking back and forth along the edges of the page, occasionally pausing to rest.
+Clawd will then begin walking back and forth exclusively along the **floor** or **ceiling** of the page, occasionally pausing to rest. If he reaches a side edge, he will flip direction or drop down to the floor using his built-in **Gravity Engine**. Sometimes, he might even trigger his **Rocket Thrusters** to blast off! This realistic flight sequence includes a 1-second engine charging phase (with crouch and shake visuals) followed by a smooth, heavy vertical ascent and a final 180° landing flip to dock with the ceiling.
 
 ---
 
@@ -127,12 +127,12 @@ You can interact with Clawd directly on the webpage to affect his stats, emotion
 
 ### Shooing
 - **How**: Right-click on Clawd.
-- **Reaction**: Clawd dash-runs or flies to a random spot on any of the four viewport edges, displaying a temporary `running` or `flying` animation for physical feedback.
+- **Reaction**: Clawd dash-runs, flies, or uses his **rocket** to move to a random spot on the **top or bottom** viewport edges, displaying a temporary `running`, `flying`, or `rocket` animation for physical feedback.
 - **Effect**: -10 Happiness, -5 Energy, -5 Leisure, and +5 XP. Plays the Shoo sound effect.
 
 ### Dragging & Snapping
 - **How**: Click and hold on Clawd, then drag him anywhere on the screen.
-- **Reaction**: Clawd follows your mouse. When you release him, he intelligently snaps to the **closest edge** (bottom, top, left, or right) using a physics-based spring animation.
+- **Reaction**: Clawd follows your mouse. When you release him, he intelligently snaps to the **closest floor or ceiling edge** using a physics-based spring animation. He no longer sticks to vertical walls.
 - **Position Sync**: While dragging, Clawd's coordinates and edge-state sync in real-time across your active tabs.
 
 
@@ -376,7 +376,7 @@ Click the extension icon or open the Options Dashboard to access comprehensive c
 - **Pet Name**: Give your pet a custom name (up to 12 characters).
 - **Pet Glow Effect**: Select costume auras unlocked at LVL 5, 10, and 15.
 - **Custom Mascot Color**: Pick a specific body color for your mascot (unlocked at LVL 15).
-- **Sliders**: Adjust size (48px - 256px), movement speed (0.1x - 5.0x), and volume.
+- **Sliders**: Adjust size (48px - 256px), walking speed (0.1x - 3.0x), rocket flight speed (0.5x - 5.0x), and volume.
 - **AI Mood Analysis**: Toggle local sentiment evaluation and choose AI commentary persona.
 
 ### � Interactive Schedule Planner
@@ -566,6 +566,13 @@ A JavaScript console error or rejection occurred on the page you are viewing. On
 ## Contributing
 
 For guidelines on how to contribute code, assets, or animations, see [CONTRIBUTING.md](file:///Users/joshuasarmiento/Documents/Github/contextual-pet-extension/context-aware-pet/CONTRIBUTING.md).
+
+---
+
+<p align="center">
+ Made by the Joshua Sarmiento
+</p>
+ontextual-pet-extension/context-aware-pet/CONTRIBUTING.md).
 
 ---
 

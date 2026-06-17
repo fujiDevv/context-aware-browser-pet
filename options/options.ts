@@ -71,6 +71,8 @@ const sizeSlider = document.getElementById('size-slider') as HTMLInputElement;
 const sizeVal = document.getElementById('size-val') as HTMLElement;
 const speedSlider = document.getElementById('speed-slider') as HTMLInputElement;
 const speedVal = document.getElementById('speed-val') as HTMLElement;
+const flightSpeedSlider = document.getElementById('flight-speed-slider') as HTMLInputElement;
+const flightSpeedVal = document.getElementById('flight-speed-val') as HTMLElement;
 const personaSelect = document.getElementById('persona-select') as HTMLSelectElement;
 const soundToggle = document.getElementById('sound-toggle') as HTMLInputElement;
 const aiToggle = document.getElementById('ai-toggle') as HTMLInputElement;
@@ -245,6 +247,12 @@ async function init() {
   speedSlider.addEventListener('input', () => {
     const speed = (Number(speedSlider.value) / 10).toFixed(1);
     speedVal.textContent = `${speed}x`;
+    saveSettings();
+  });
+
+  flightSpeedSlider.addEventListener('input', () => {
+    const flightSpeed = (Number(flightSpeedSlider.value) / 10).toFixed(1);
+    flightSpeedVal.textContent = `${flightSpeed}x`;
     saveSettings();
   });
 
@@ -931,6 +939,10 @@ function applySettings(settings: PetSettings | undefined) {
   speedSlider.value = String(Math.round(speed * 10));
   speedVal.textContent = `${speed.toFixed(1)}x`;
 
+  const flightSpeed = activeSettings.flightSpeed ?? 1.0;
+  flightSpeedSlider.value = String(Math.round(flightSpeed * 10));
+  flightSpeedVal.textContent = `${flightSpeed.toFixed(1)}x`;
+
   activeCostume = activeSettings.costume || 'none';
 
   // Apply costume glows to the preview image in the sanctuary stage
@@ -950,7 +962,8 @@ function applySettings(settings: PetSettings | undefined) {
   if (playgroundMovement) {
     playgroundMovement.updateSettings({
       size: size,
-      speed: speed
+      speed: speed,
+      flightSpeed: flightSpeed
     });
   }
 
@@ -1008,6 +1021,7 @@ function saveSettings() {
     [STORAGE_KEYS.SETTINGS]: {
       size: Number(sizeSlider.value),
       speed: Number(speedSlider.value) / 10,
+      flightSpeed: Number(flightSpeedSlider.value) / 10,
       soundEnabled: soundToggle.checked,
       soundVolume: Number(volumeSlider.value) / 100,
       aiMode: aiToggle.checked,

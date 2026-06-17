@@ -8,6 +8,7 @@ export class MovementEngine {
   state: string;
   size: number;
   speed: number;
+  flightSpeed: number;
   x: number;
   y: number;
   direction: number;
@@ -29,6 +30,8 @@ export class MovementEngine {
   cursorTargetX: number | null = null;
   _posAnimation: SpringAnimation | null = null;
   onLanding?: () => void;
+  onFlightStart?: () => void;
+  onFlightEnd?: () => void;
   private _isResizeBound = false;
 
   _handleResize = () => {
@@ -38,10 +41,12 @@ export class MovementEngine {
     this.x = Math.max(0, Math.min(this.x, W));
     this.y = Math.max(0, Math.min(this.y, H));
 
-    if (this.state === 'walk-bottom') this.y = H;
-    else if (this.state === 'walk-right') this.x = W;
-    else if (this.state === 'walk-top') this.y = 0;
-    else if (this.state === 'walk-left') this.x = 0;
+    if (this.state === 'walk-top') {
+      this.y = 0;
+    } else {
+      this.y = H;
+      this.state = 'walk-bottom';
+    }
 
     this._apply();
   };
@@ -56,6 +61,7 @@ export class MovementEngine {
 
     this.size = initialSettings.size || 100;
     this.speed = initialSettings.speed || 1.2;
+    this.flightSpeed = 1.0;
 
     const container = initialSettings.container;
     const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
@@ -152,6 +158,85 @@ export class MovementEngine {
     }
   }
 
+  _triggerFall(edgeX?: number): void {
+    const el = this.el;
+    if (!el) return;
+
+    this._stopPosAnimation();
+    this.paused = true;
+
+    if (edgeX !== undefined) {
+      this.x = edgeX;
+    }
+
+    const container = this.containerRef?.deref();
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+
+    // Reset rotation immediately so the pet drops upright
+    this.state = 'walk-bottom';
+    this._apply();
+
+    this._posAnimation = springAnimate(el, {
+      '--pet-x': `${this.x}px`,
+      '--pet-y': `${H}px`
+    }, {
+      stiffness: 150,
+      damping: 15,
+      mass: 1.5
+    });
+
+    this._posAnimation.then(() => {
+      this.y = H;
+      this.paused = false;
+      if (this.onLanding) this.onLanding();
+    });
+  }
+
+  _triggerRocketFlight(): void {
+    const el = this.el;
+    if (!el) return;
+
+    this._stopPosAnimation();
+    this.paused = true;
+
+    if (this.onFlightStart) this.onFlightStart();
+
+    // 1. Preparation Phase (Engine Charging)
+    setTimeout(() => {
+      const el = this.el;
+      if (!el) return;
+
+      // 2. Vertical Ascent Phase (Smooth lift-off to ceiling)
+      this._posAnimation = springAnimate(el, {
+        '--pet-y': '0px',
+        '--pet-rotation': '0deg'
+      }, {
+        stiffness: 18 * this.flightSpeed,
+        damping: 14 * Math.sqrt(this.flightSpeed),
+        mass: 4.0 // Very heavy, steady ascent
+      });
+
+      this._posAnimation.then(() => {
+        // 3. Landing Maneuver Phase (Smooth flip to orient to ceiling)
+        this._posAnimation = springAnimate(el, {
+          '--pet-rotation': '180deg'
+        }, {
+          stiffness: 150,
+          damping: 12,
+          mass: 0.8 // Light, quick flip
+        });
+
+        this._posAnimation.then(() => {
+          this.y = 0;
+          this.state = 'walk-top';
+          this.paused = false;
+          if (this.onFlightEnd) this.onFlightEnd();
+          this._apply();
+        });
+      });
+    }, 1000);
+  }
+
   shoo(onComplete?: () => void): Promise<void> {
     const el = this.el;
     if (!el) return Promise.resolve();
@@ -163,8 +248,8 @@ export class MovementEngine {
     const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
     const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
 
-    // Pick a random edge to shoo to
-    const edges = ['bottom', 'top', 'left', 'right'];
+    // Shoo exclusively to Top or Bottom
+    const edges = ['bottom', 'top'];
     const targetEdge = edges[Math.floor(Math.random() * edges.length)];
 
     if (targetEdge === 'bottom') {
@@ -172,26 +257,15 @@ export class MovementEngine {
       this.y = H;
       this.state = 'walk-bottom';
       this.direction = Math.random() < 0.5 ? 1 : -1;
-    } else if (targetEdge === 'top') {
+    } else {
       this.x = Math.random() * W;
       this.y = 0;
       this.state = 'walk-top';
-      this.direction = Math.random() < 0.5 ? 1 : -1;
-    } else if (targetEdge === 'left') {
-      this.x = 0;
-      this.y = Math.random() * H;
-      this.state = 'walk-left';
-      this.direction = Math.random() < 0.5 ? 1 : -1;
-    } else {
-      this.x = W;
-      this.y = Math.random() * H;
-      this.state = 'walk-right';
       this.direction = Math.random() < 0.5 ? 1 : -1;
     }
 
     this.paused = true;
 
-    // Smoothly spring to the new location
     this._posAnimation = springAnimate(el, {
       '--pet-x': `${this.x}px`,
       '--pet-y': `${this.y}px`
@@ -212,9 +286,12 @@ export class MovementEngine {
     return promise;
   }
 
-  updateSettings(settings: { size?: number; speed?: number }): void {
+  updateSettings(settings: { size?: number; speed?: number; flightSpeed?: number }): void {
     if (settings.speed !== undefined) {
       this.speed = settings.speed;
+    }
+    if (settings.flightSpeed !== undefined) {
+      this.flightSpeed = settings.flightSpeed;
     }
     const el = this.el;
     if (settings.size !== undefined) {
@@ -252,7 +329,6 @@ export class MovementEngine {
       if (!this.lastTime) this.lastTime = currentTime;
       const deltaTime = currentTime - this.lastTime;
       this.lastTime = currentTime;
-      // Cap at 3x (approx 50ms) to prevent teleportation during lag spikes
       timeMultiplier = Math.min(deltaTime / 16.66, 3);
     }
 
@@ -281,25 +357,23 @@ export class MovementEngine {
     const isNight = hour >= 22 || hour < 6;
     const currentSpeed = (isNight ? this.speed * 0.5 : this.speed) * timeMultiplier;
 
-    // Determine target location (toys or cursor)
     let targetX: number | null = null;
     let targetY: number | null = null;
     let onReach: (() => void) | null = null;
 
     if (this.toyTargets.length > 0) {
       targetX = this.toyTargets[0].x;
-      targetY = H; // Toys are always on the floor
+      targetY = H;
       onReach = () => {
         const t = this.toyTargets.shift();
         if (t) t.onReach();
       };
     } else if (this.cursorTargetX !== null) {
       targetX = this.cursorTargetX;
-      targetY = H; // Cursor chasing usually stays on floor
+      targetY = H;
     }
 
     if (targetX !== null && targetY !== null) {
-      // Pathfinding along edges towards target
       if (this.state === 'walk-bottom') {
         if (Math.abs(this.x - targetX) <= Math.max(currentSpeed, 2)) {
           this.x = targetX;
@@ -310,44 +384,35 @@ export class MovementEngine {
           this.x += currentSpeed * this.direction;
         }
       } else {
-        // Move towards bottom edge
-        if (this.state === 'walk-left') {
-          this.direction = 1; // Down
-          this.y += currentSpeed;
-          if (this.y >= H) { this.y = H; this.state = 'walk-bottom'; this.direction = 1; }
-        } else if (this.state === 'walk-right') {
-          this.direction = 1; // Down
-          this.y += currentSpeed;
-          if (this.y >= H) { this.y = H; this.state = 'walk-bottom'; this.direction = -1; }
-        } else if (this.state === 'walk-top') {
-          this.direction = targetX > this.x ? 1 : -1;
-          this.x += currentSpeed * this.direction;
-          if (this.x >= W) { this.x = W; this.state = 'walk-right'; this.direction = 1; }
-          else if (this.x <= 0) { this.x = 0; this.state = 'walk-left'; this.direction = 1; }
-        }
+        // Triggers immediate drop if chasing on the ceiling
+        this._triggerFall();
       }
     } else {
-      // Autonomous movement along edges
+      // Autonomous movement 
       if (this.state === 'walk-bottom') {
         this.x += currentSpeed * this.direction;
-        if (this.x >= W) { this.x = W; this.state = 'walk-right'; this.direction = -1; }
-        else if (this.x <= 0) { this.x = 0; this.state = 'walk-left'; this.direction = -1; }
+        // Flip direction dynamically when hitting the Left/Right boundaries
+        if (this.x >= W) { this.x = W; this.direction = -1; }
+        else if (this.x <= 0) { this.x = 0; this.direction = 1; }
+
+        if (Math.random() < 0.0005) {
+          this._idlePause();
+        } else if (Math.random() < 0.0001) {
+          this._triggerRocketFlight();
+        }
       } else if (this.state === 'walk-top') {
         this.x += currentSpeed * this.direction;
-        if (this.x >= W) { this.x = W; this.state = 'walk-right'; this.direction = 1; }
-        else if (this.x <= 0) { this.x = 0; this.state = 'walk-left'; this.direction = 1; }
-      } else if (this.state === 'walk-left') {
-        this.y += currentSpeed * this.direction;
-        if (this.y >= H) { this.y = H; this.state = 'walk-bottom'; this.direction = 1; }
-        else if (this.y <= 0) { this.y = 0; this.state = 'walk-top'; this.direction = 1; }
-      } else if (this.state === 'walk-right') {
-        this.y += currentSpeed * this.direction;
-        if (this.y >= H) { this.y = H; this.state = 'walk-bottom'; this.direction = -1; }
-        else if (this.y <= 0) { this.y = 0; this.state = 'walk-top'; this.direction = -1; }
-      }
-
-      if (Math.random() < 0.0005) {
-        this._idlePause();
+        // Fall down when walking off the Left/Right edge of the ceiling
+        if (this.x >= W) {
+          this._triggerFall(W);
+        } else if (this.x <= 0) {
+          this._triggerFall(0);
+        } else if (Math.random() < 0.0005) {
+          this._idlePause();
+        }
+      } else {
+        // Fallback for errant states
+        this._triggerFall();
       }
     }
   }
@@ -355,8 +420,8 @@ export class MovementEngine {
   addToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
     this._stopPosAnimation();
     this.toyTargets.push({ x, elementRef: new WeakRef(element), type, onReach });
-    this.cursorTargetX = null; // Clear cursor chase if a toy is dropped
-    this.paused = false; // Resume if pet is currently paused
+    this.cursorTargetX = null;
+    this.paused = false;
   }
 
   setToyTarget(x: number, element: HTMLElement, type: string, onReach: () => void): void {
@@ -380,7 +445,7 @@ export class MovementEngine {
   chaseCursor(x: number): void {
     this._stopPosAnimation();
     this.cursorTargetX = x;
-    this.paused = false; // Resume if pet is currently paused
+    this.paused = false;
   }
 
   _idlePause(): void {
@@ -400,15 +465,18 @@ export class MovementEngine {
 
     if (this.state === 'walk-top') {
       rotate = '180deg';
-      flipValue = -this.direction;
-    } else if (this.state === 'walk-left') {
-      rotate = '-90deg';
-      flipValue = -this.direction;
-    } else if (this.state === 'walk-right') {
-      rotate = '90deg';
-      flipValue = -this.direction;
+      flipValue = this.direction;
     } else if (this.state === 'walk-bottom') {
       flipValue = -this.direction;
+    } else {
+      // Legacy catch-all handling in the event a network sync forces a left/right edge
+      if (this.state === 'walk-left') {
+        rotate = '90deg';
+        flipValue = -this.direction;
+      } else if (this.state === 'walk-right') {
+        rotate = '-90deg';
+        flipValue = this.direction;
+      }
     }
 
     const flip = (flipValue === -1) ? 'scaleX(-1)' : 'scaleX(1)';
@@ -433,29 +501,27 @@ export class MovementEngine {
 
     const bubble = el.parentElement?.querySelector('.pet-speech-bubble') as HTMLElement | null;
     if (bubble) {
-      // Counter-rotate the bubble so it's always readable
       let counterRotate = '0deg';
-      let bubbleY = '65px'; // Default above pet
+      let bubbleY = '65px';
       let bubbleX = '-50%';
 
       if (this.state === 'walk-top') {
         counterRotate = '0deg';
-        bubbleY = `${this.size + 15}px`; // Below pet when on ceiling
+        bubbleY = `${this.size + 15}px`;
       } else if (this.state === 'walk-left') {
         counterRotate = '0deg';
-        bubbleX = '10%'; // Right of pet when on left wall
+        bubbleX = '10%';
         bubbleY = `${this.size / 2 - 10}px`;
       } else if (this.state === 'walk-right') {
         counterRotate = '0deg';
-        bubbleX = '-110%'; // Left of pet when on right wall
+        bubbleX = '-110%';
         bubbleY = `${this.size / 2 - 10}px`;
       }
 
-      bubble.style.bottom = 'auto'; // Reset CSS bottom
+      bubble.style.bottom = 'auto';
       bubble.style.top = bubbleY;
       bubble.style.transform = `translateX(${bubbleX}) rotate(${counterRotate}) scale(var(--bubble-scale, 1))`;
 
-      // We need to pass the scale dynamically if it's currently showing
       if (bubble.classList.contains('show')) {
         bubble.style.setProperty('--bubble-scale', '1');
       } else {
@@ -558,54 +624,6 @@ export class MovementEngine {
     img.addEventListener('mousedown', onMouseDown);
   }
 
-  // _applyDragStyle(): void {
-  //   const el = this.el;
-  //   if (!el) return;
-
-  //   this._stopPosAnimation();
-
-  //   const container = this.containerRef?.deref();
-  //   const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
-  //   const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
-
-  //   // Calculate nearest edge for live rotation during drag
-  //   const distLeft = this.x;
-  //   const distRight = W - this.x;
-  //   const distTop = this.y;
-  //   const distBottom = H - this.y;
-  //   const minDist = Math.min(distLeft, distRight, distTop, distBottom);
-
-  //   let dragRotate = '0deg';
-  //   let dragFlip = 'scaleX(1)';
-
-  //   if (minDist === distTop) {
-  //     dragRotate = '180deg';
-  //     dragFlip = this.x >= W / 2 ? 'scaleX(1)' : 'scaleX(-1)';
-  //   } else if (minDist === distLeft) {
-  //     dragRotate = '90deg';
-  //     dragFlip = this.y >= H / 2 ? 'scaleX(1)' : 'scaleX(-1)';
-  //   } else if (minDist === distRight) {
-  //     dragRotate = '-90deg';
-  //     dragFlip = this.y >= H / 2 ? 'scaleX(-1)' : 'scaleX(1)';
-  //   } else {
-  //     dragFlip = this.x >= W / 2 ? 'scaleX(-1)' : 'scaleX(1)';
-  //   }
-
-  //   el.style.setProperty('--pet-x', `${this.x}px`);
-  //   el.style.setProperty('--pet-y', `${this.y}px`);
-  //   el.style.setProperty('--pet-rotation', dragRotate);
-  //   el.style.setProperty('--pet-flip', dragFlip);
-  //   el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
-  //   el.style.left = '0px';
-  //   el.style.top = '0px';
-  //   el.style.bottom = 'auto';
-
-  //   const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
-  //   if (img) {
-  //     img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
-  //   }
-  // }
-
   _applyDragStyle(): void {
     const el = this.el;
     if (!el) return;
@@ -614,35 +632,9 @@ export class MovementEngine {
 
     const container = this.containerRef?.deref();
     const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
-    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
 
-    // Calculate nearest edge for live rotation during drag
-    const distLeft = this.x;
-    const distRight = W - this.x;
-    const distTop = this.y;
-    const distBottom = H - this.y;
-    const minDist = Math.min(distLeft, distRight, distTop, distBottom);
-
-    let dragRotate = '0deg';
-    let dragFlip = 'scaleX(1)';
-
-    // Harmonized with _apply() mechanics: 
-    // Bottom = 0deg, Top = 180deg, Left = -90deg, Right = 90deg
-    if (minDist === distTop) {
-      dragRotate = '180deg';
-      // Inverting conditions for main diagonal (top-left/bottom-right) based on feedback
-      dragFlip = this.x >= W / 2 ? 'scaleX(-1)' : 'scaleX(-1)';
-    } else if (minDist === distLeft) {
-      dragRotate = '-90deg';
-      dragFlip = this.y >= H / 2 ? 'scaleX(-1)' : 'scaleX(-1)';
-    } else if (minDist === distRight) {
-      dragRotate = '90deg';
-      dragFlip = this.y >= H / 2 ? 'scaleX(-1)' : 'scaleX(-1)';
-    } else {
-      // On bottom floor (minDist === distBottom)
-      dragRotate = '0deg';
-      dragFlip = this.x >= W / 2 ? 'scaleX(-1)' : 'scaleX(-1)';
-    }
+    const dragRotate = '0deg';
+    const dragFlip = this.x >= W / 2 ? 'scaleX(1)' : 'scaleX(-1)';
 
     el.style.setProperty('--pet-x', `${this.x}px`);
     el.style.setProperty('--pet-y', `${this.y}px`);
@@ -670,34 +662,22 @@ export class MovementEngine {
     const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
     const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
 
-    const distLeft = this.x;
-    const distRight = W - this.x;
     const distTop = this.y;
     const distBottom = H - this.y;
 
-    const minDist = Math.min(distLeft, distRight, distTop, distBottom);
-
-    if (minDist === distBottom) {
-      this.y = H;
-      this.state = 'walk-bottom';
-      this.direction = this.x >= W / 2 ? -1 : 1;
-    } else if (minDist === distTop) {
+    // Forces snapping exclusively to the ceiling or the floor
+    if (distTop <= distBottom) {
       this.y = 0;
       this.state = 'walk-top';
       this.direction = this.x >= W / 2 ? -1 : 1;
-    } else if (minDist === distLeft) {
-      this.x = 0;
-      this.state = 'walk-left';
-      this.direction = this.y >= H / 2 ? -1 : 1;
     } else {
-      this.x = W;
-      this.state = 'walk-right';
-      this.direction = this.y >= H / 2 ? -1 : 1;
+      this.y = H;
+      this.state = 'walk-bottom';
+      this.direction = this.x >= W / 2 ? -1 : 1;
     }
 
     this.paused = true;
 
-    // Spring snap to the nearest edge with more "weight" and less magnetism
     this._posAnimation = springAnimate(el, {
       '--pet-x': `${this.x}px`,
       '--pet-y': `${this.y}px`
@@ -739,7 +719,6 @@ export class MovementEngine {
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
         chrome.runtime.sendMessage(msg).catch((e) => { console.warn('[Clawd Movement] runtime.sendMessage error:', e); });
       }
-    } catch (e) {
-    }
+    } catch (e) { }
   }
 }

@@ -381,6 +381,43 @@ function ensureInitialized(): void {
       }, 1500);
     }, 1000);
   };
+
+  movement.onFlightStart = () => {
+    if (isPetHidden()) return;
+    isTemporarilyInteracting = true;
+    if (interactionTimeout) clearTimeout(interactionTimeout);
+    loadPet('rocket');
+    
+    const petImg = view.getPetImg();
+    // Preparation animation: crouch and shake before takeoff
+    petImg.animate([
+      { transform: 'var(--pet-flip) translateY(0) scale(1)', offset: 0 },
+      { transform: 'var(--pet-flip) translateY(4px) scale(1.1, 0.9)', offset: 0.3 }, // Crouch
+      { transform: 'var(--pet-flip) translateY(4px) scale(1.1, 0.9) translateX(-2px)', offset: 0.4 }, // Shake start
+      { transform: 'var(--pet-flip) translateY(4px) scale(1.1, 0.9) translateX(2px)', offset: 0.5 },
+      { transform: 'var(--pet-flip) translateY(4px) scale(1.1, 0.9) translateX(-2px)', offset: 0.6 },
+      { transform: 'var(--pet-flip) translateY(4px) scale(1.1, 0.9) translateX(2px)', offset: 0.7 },
+      { transform: 'var(--pet-flip) translateY(4px) scale(1.1, 0.9) translateX(-2px)', offset: 0.8 },
+      { transform: 'var(--pet-flip) translateY(0) scale(0.9, 1.3)', offset: 1 } // Takeoff stretch
+    ], { duration: 1000, easing: 'ease-in-out' });
+
+    playSound('thinking'); // Using thinking sound as a placeholder for engine noise
+  };
+
+  movement.onFlightEnd = () => {
+    if (isPetHidden()) return;
+
+    const petImg = view.getPetImg();
+    // Ceiling landing squash/stretch impact
+    petImg.animate([
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.1, 0.9)', offset: 0 },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(0.97, 1.03)', offset: 0.5 },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1, 1)', offset: 1 }
+    ], { duration: 400, easing: 'ease-out' });
+
+    isTemporarilyInteracting = false;
+    loadPet(emotion.current);
+  };
 }
 
 async function loadPet(name: string): Promise<void> {
@@ -694,7 +731,8 @@ function handleShoo(e: Event) {
   isTemporarilyInteracting = true;
   personality.recordInteraction('shoo');
 
-  const shooEmotion = Math.random() < 0.5 ? 'running' : 'flying';
+  const r = Math.random();
+  const shooEmotion = r < 0.33 ? 'running' : (r < 0.66 ? 'flying' : 'rocket');
   loadPet(shooEmotion);
 
   movement.shoo(() => {
@@ -859,7 +897,8 @@ async function loadAndApplySettings(): Promise<void> {
         personality.disabledEmotions = currentSettings.disabledEmotions || [];
         movement.updateSettings({
           size: currentSettings.size,
-          speed: currentSettings.speed
+          speed: currentSettings.speed,
+          flightSpeed: currentSettings.flightSpeed
         });
         view.applyCostume(currentSettings.costume);
       }
@@ -881,7 +920,8 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
         personality.disabledEmotions = currentSettings.disabledEmotions || [];
         movement.updateSettings({
           size: currentSettings.size,
-          speed: currentSettings.speed
+          speed: currentSettings.speed,
+          flightSpeed: currentSettings.flightSpeed
         });
         view.applyCostume(currentSettings.costume);
       }
@@ -959,7 +999,8 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
       isTemporarilyInteracting = true;
       personality.recordInteraction('shoo');
 
-      const shooEmotion = Math.random() < 0.5 ? 'running' : 'flying';
+      const r = Math.random();
+      const shooEmotion = r < 0.33 ? 'running' : (r < 0.66 ? 'flying' : 'rocket');
       loadPet(shooEmotion);
 
       movement.shoo(() => {
