@@ -114,12 +114,20 @@ export class ViewManager {
       const resp = await fetch(url);
       let svgText = await resp.text();
       
-      this.baseColors.forEach(color => {
-        const regex = new RegExp(color, 'gi');
-        svgText = svgText.replace(regex, customColor);
-      });
+      // Architectural Fix: Instead of fragile string replacement of exact hex codes,
+      // we inject a style block into the SVG that targets our base colors.
+      // This is resistant to case changes, shorthand hexes, or formatting changes by optimizers.
+      const styleBlock = `<style>
+        :root { --pet-core-color: ${customColor}; }
+        [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
+          fill: var(--pet-core-color) !important; 
+        }
+      </style>`;
+      
+      // Inject right after the opening <svg> tag
+      svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
 
-      const dataUri = `data:image/svg+xml;base64,${btoa(svgText)}`;
+      const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
       this.colorCache.set(cacheKey, dataUri);
       this.petImg.src = dataUri;
     } catch (e) {

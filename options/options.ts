@@ -562,12 +562,17 @@ function updateUIMood(mood: string): void {
     }
 
     fetch(url).then(r => r.text()).then(svgText => {
-      const baseColors = ['#DE886D', '#CF7B61', '#C77A5E', '#C9745A', '#A85B45', '#C75D3F'];
-      baseColors.forEach(c => {
-        const regex = new RegExp(c, 'gi');
-        svgText = svgText.replace(regex, activeColor);
-      });
-      const dataUri = `data:image/svg+xml;base64,${btoa(svgText)}`;
+      // Architectural Fix: Instead of fragile string replacement of exact hex codes,
+      // we inject a style block into the SVG that targets our base colors.
+      const styleBlock = `<style>
+        :root { --pet-core-color: ${activeColor}; }
+        [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
+          fill: var(--pet-core-color) !important; 
+        }
+      </style>`;
+      
+      svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
+      const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
       if (petImg) petImg.src = dataUri;
     });
   });

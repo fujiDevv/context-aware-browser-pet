@@ -65,16 +65,22 @@ export class PersonalitySystem {
     // Limit offline decay calculation to max 24 hours (86,400 seconds)
     const elapsedSeconds = Math.max(0, Math.min(OFFLINE_DECAY_CAP_SECONDS, elapsedMs / 1000));
 
+    // Decay Softening: Slow down decay after the first 2 hours of absence
+    let decaySeconds = elapsedSeconds;
+    if (elapsedSeconds > 7200) {
+      decaySeconds = 7200 + (elapsedSeconds - 7200) * 0.25; // Decay at 25% speed after 2 hours
+    }
+
     if (elapsedSeconds > 3600) {
-      console.debug(`[Clawd Personality] Applying catch-up decay for ${Math.round(elapsedSeconds / 3600)} hours of inactivity.`);
+      console.debug(`[Clawd Personality] Applying catch-up decay for ${Math.round(elapsedSeconds / 3600)} hours of inactivity (Softened).`);
     }
 
     // Decay rates per second
-    const happinessDecay = elapsedSeconds * 0.0011;
-    const energyDecay = elapsedSeconds * 0.0019;
-    const curiosityDecay = elapsedSeconds * 0.0005;
-    const focusDecay = elapsedSeconds * 0.0015;
-    const leisureDecay = elapsedSeconds * 0.0015;
+    const happinessDecay = decaySeconds * 0.0011;
+    const energyDecay = decaySeconds * 0.0019;
+    const curiosityDecay = decaySeconds * 0.0005;
+    const focusDecay = decaySeconds * 0.0015;
+    const leisureDecay = decaySeconds * 0.0015;
 
     // Clamp stats at 15% floor so Clawd is never fully depleted/unusable offline
     this.stats.happiness = Math.max(MIN_STAT_VALUE, Math.round(this.stats.happiness - happinessDecay));

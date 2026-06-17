@@ -168,6 +168,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       };
       originPetStates[hostname] = newState;
 
+      // Memory Management: Prune originPetStates if it exceeds 200 domains
+      const keys = Object.keys(originPetStates);
+      if (keys.length > 200) {
+        // Prune the 50 oldest entries
+        const sortedKeys = keys.sort((a, b) => originPetStates[a].lastUpdateTime - originPetStates[b].lastUpdateTime);
+        for (let i = 0; i < 50; i++) {
+          delete originPetStates[sortedKeys[i]];
+        }
+      }
+
       // Broadcast to other tabs with the same hostname
       chrome.tabs.query({}, (tabs) => {
         tabs.forEach((tab) => {

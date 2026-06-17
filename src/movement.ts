@@ -204,7 +204,7 @@ export class MovementEngine {
     // 1. Preparation Phase (Engine Charging)
     setTimeout(() => {
       const el = this.el;
-      if (!el) return;
+      if (!el || !this.hasFallen || this.isDragging) return;
 
       // 2. Vertical Ascent Phase (Smooth lift-off to ceiling)
       this._posAnimation = springAnimate(el, {
@@ -698,6 +698,24 @@ export class MovementEngine {
   syncState(state: Partial<SharedPetState>): void {
     if (this.isDragging) return;
 
+    const newX = state.x ?? this.x;
+    const newY = state.y ?? this.y;
+
+    // Jitter Reduction: Only stop animations and jump if distance delta is significant (> 60px)
+    // or if the state (floor/ceiling) has changed.
+    const dx = newX - this.x;
+    const dy = newY - this.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const stateChanged = state.state && state.state !== this.state;
+
+    if (distance < 60 && !stateChanged) {
+      // Small update: update internal coordinates but don't stop current spring animation
+      this.x = newX;
+      this.y = newY;
+      if (state.direction !== undefined) this.direction = state.direction;
+      return;
+    }
+
     this._stopPosAnimation();
     this.hasFallen = true;
 
@@ -705,8 +723,8 @@ export class MovementEngine {
     const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
     const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
 
-    this.x = Math.max(0, Math.min(state.x ?? this.x, W));
-    this.y = Math.max(0, Math.min(state.y ?? this.y, H));
+    this.x = Math.max(0, Math.min(newX, W));
+    this.y = Math.max(0, Math.min(newY, H));
     this.state = state.state || 'walk-bottom';
     this.direction = state.direction || 1;
     this.paused = state.paused ?? false;
