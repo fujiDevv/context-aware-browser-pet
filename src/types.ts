@@ -70,6 +70,7 @@ export interface PetSettings {
   domainReactions?: DomainReaction[];
   sentimentSensitivity?: number;
   commentFrequency?: number;
+  customColor?: string;
 }
 
 export interface SharedPetState {

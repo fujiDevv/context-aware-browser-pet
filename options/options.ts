@@ -80,6 +80,10 @@ const volumeContainer = document.getElementById('volume-container') as HTMLEleme
 const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
 const volumeVal = document.getElementById('volume-val') as HTMLElement;
 
+// Color Picker Elements
+const petColorInput = document.getElementById('pet-color-input') as HTMLInputElement;
+const btnResetColor = document.getElementById('btn-reset-color') as HTMLButtonElement;
+
 // AI Tuning
 const aiTuningContainer = document.getElementById('ai-tuning-container') as HTMLElement;
 const aiSensitivitySlider = document.getElementById('ai-sensitivity-slider') as HTMLInputElement;
@@ -242,6 +246,19 @@ async function init() {
     const speed = (Number(speedSlider.value) / 10).toFixed(1);
     speedVal.textContent = `${speed}x`;
     saveSettings();
+  });
+
+  petColorInput.addEventListener('change', () => {
+    saveSettings();
+    const lastKnownMood = petMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
+    updateUIMood(lastKnownMood);
+  });
+
+  btnResetColor.addEventListener('click', () => {
+    petColorInput.value = '#DE886D';
+    saveSettings();
+    const lastKnownMood = petMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
+    updateUIMood(lastKnownMood);
   });
 
   personaSelect.addEventListener('change', saveSettings);
@@ -523,7 +540,29 @@ function updateUIMood(mood: string): void {
   const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
   if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
   const svgName = getMascotSvgName(mood, activeCostume);
-  if (petImg) petImg.src = `../assets/pets/clawd-${svgName}.svg`;
+  
+  // Apply custom color if set
+  const color = petColorInput.value;
+  personality.isLoaded.then(() => {
+    const isUnlocked = personality.stats.level >= 15 || (personality.stats.prestige && personality.stats.prestige > 0);
+    const activeColor = isUnlocked ? color : undefined;
+    
+    const url = chrome.runtime.getURL(`assets/pets/clawd-${svgName}.svg`);
+    if (!activeColor || activeColor === '#DE886D') {
+      if (petImg) petImg.src = url;
+      return;
+    }
+
+    fetch(url).then(r => r.text()).then(svgText => {
+      const baseColors = ['#DE886D', '#CF7B61', '#C77A5E', '#C9745A', '#A85B45', '#C75D3F'];
+      baseColors.forEach(c => {
+        const regex = new RegExp(c, 'gi');
+        svgText = svgText.replace(regex, activeColor);
+      });
+      const dataUri = `data:image/svg+xml;base64,${btoa(svgText)}`;
+      if (petImg) petImg.src = dataUri;
+    });
+  });
 }
 
 function updateUIStats(stats: PetStats | undefined): void {
@@ -534,6 +573,17 @@ function updateUIStats(stats: PetStats | undefined): void {
   const xpNeeded = Math.floor(Math.pow(stats.level, 1.5) * 150);
   if (xpText) xpText.textContent = `${stats.xp} / ${xpNeeded} XP`;
   if (barXp) barXp.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
+
+  // Color Picker unlock check
+  const colorUnlocked = stats.level >= 15 || (stats.prestige && stats.prestige > 0);
+  if (petColorInput) {
+    petColorInput.disabled = !colorUnlocked;
+    const label = document.querySelector('label[for="pet-color-input"]');
+    if (label) {
+      label.textContent = colorUnlocked ? 'Custom Mascot Color' : 'Custom Mascot Color (Unlocked at LVL 15)';
+    }
+  }
+  if (btnResetColor) btnResetColor.disabled = !colorUnlocked;
 
   // Prestige status
   const hasPrestige = stats.prestige && stats.prestige > 0;
@@ -684,7 +734,7 @@ function renderMilestones(stats: PetStats) {
   if (stats.level >= 3) milestones.push({ title: 'Expressive Mind', desc: 'Unlocked Advanced Emotions (Coding, Dancing, etc).', icon: '🧠', date: 'Level 3' });
   if (stats.level >= 5) milestones.push({ title: 'Aura of Mystery', desc: 'Unlocked Detective Costume & Blue Aura.', icon: '🕵️', date: 'Level 5' });
   if (stats.level >= 10) milestones.push({ title: 'Ultimate Companion', desc: 'All standard emotions and Magic Purple Aura unlocked.', icon: '✨', date: 'Level 10' });
-  if (stats.level >= 15) milestones.push({ title: 'Neon Dreamer', desc: 'Unlocked the Rainbow Shader costume.', icon: '🌈', date: 'Level 15' });
+  if (stats.level >= 15) milestones.push({ title: 'Neon Dreamer', desc: 'Unlocked the Rainbow Shader and Custom Mascot Color Picker.', icon: '🌈', date: 'Level 15' });
   if (stats.level >= 50) milestones.push({ title: 'Mascot Sage', desc: 'Reached the peak of standard growth.', icon: '🎓', date: 'Level 50' });
 
   // Interaction Milestones
@@ -918,6 +968,10 @@ function applySettings(settings: PetSettings | undefined) {
   volumeSlider.value = String(Math.round(volume * 100));
   volumeVal.textContent = `${Math.round(volume * 100)}%`;
 
+  if (petColorInput) {
+    petColorInput.value = activeSettings.customColor || '#DE886D';
+  }
+
   aiToggle.checked = activeSettings.aiMode ?? false;
   if (aiToggle.checked) {
     aiTuningContainer.classList.remove('hidden');
@@ -973,7 +1027,8 @@ function saveSettings() {
       focusEndHour: focusEndSelect.value !== '' ? Number(focusEndSelect.value) : undefined,
       domainReactions: domainReactions,
       sentimentSensitivity: Number(aiSensitivitySlider.value),
-      commentFrequency: Number(aiFrequencySlider.value)
+      commentFrequency: Number(aiFrequencySlider.value),
+      customColor: petColorInput.value
     }
   });
 }
@@ -1376,9 +1431,7 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
         // Update preview image src based on active costume
         const currentMoodBadge = document.getElementById('pet-mood') as HTMLElement;
         const currentMood = currentMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
-        const svgName = getMascotSvgName(currentMood, costumeId);
-        const src = `../assets/pets/clawd-${svgName}.svg`;
-        if (petImg) petImg.src = src;
+        updateUIMood(currentMood);
 
         renderWardrobe(stats, costumeId);
       }

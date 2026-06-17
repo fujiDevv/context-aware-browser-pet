@@ -89,9 +89,42 @@ export class ViewManager {
     this.canvas.appendChild(el);
   }
 
-  public setEmotion(assetName: string) {
-    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
-      this.petImg.src = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
+  private colorCache: Map<string, string> = new Map();
+  private baseColors = ['#DE886D', '#CF7B61', '#C77A5E', '#C9745A', '#A85B45', '#C75D3F'];
+
+  public async setEmotion(assetName: string, customColor?: string) {
+    if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+      return;
+    }
+    
+    const url = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
+
+    if (!customColor || customColor === '#DE886D') {
+      this.petImg.src = url;
+      return;
+    }
+
+    const cacheKey = `${assetName}-${customColor}`;
+    if (this.colorCache.has(cacheKey)) {
+      this.petImg.src = this.colorCache.get(cacheKey)!;
+      return;
+    }
+
+    try {
+      const resp = await fetch(url);
+      let svgText = await resp.text();
+      
+      this.baseColors.forEach(color => {
+        const regex = new RegExp(color, 'gi');
+        svgText = svgText.replace(regex, customColor);
+      });
+
+      const dataUri = `data:image/svg+xml;base64,${btoa(svgText)}`;
+      this.colorCache.set(cacheKey, dataUri);
+      this.petImg.src = dataUri;
+    } catch (e) {
+      console.warn('[Clawd View] Failed to apply custom color:', e);
+      this.petImg.src = url;
     }
   }
 

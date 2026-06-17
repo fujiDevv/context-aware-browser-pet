@@ -402,7 +402,7 @@ async function loadPet(name: string): Promise<void> {
     }
   }
 
-  view.setEmotion(assetName);
+  view.setEmotion(assetName, currentSettings.customColor);
 
   if (!checkContextOrCleanup()) return;
 

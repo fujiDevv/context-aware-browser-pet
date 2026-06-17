@@ -203,7 +203,7 @@ When Clawd levels up, a golden achievement banner slides down from the top of yo
 | **Level 5** | Blue Detective Aura + Emotes: `ninja`, `working-wizard`, `astronaut`, `working-debugger`, `working-building` |
 | **Level 8** | Emotes: `rocket`, `pirate`, `working-juggling`, `gaming` |
 | **Level 10** | Magic Purple Aura + **All standard emotions, hobbies, and situational states unlocked (100+ dynamic animations)** |
-| **Level 15** | Neon Rainbow Shader |
+| **Level 15** | Neon Rainbow Shader + **Custom Mascot Color Picker** |
 
 ### Mascot Milestones Dashboard
 
@@ -375,6 +375,7 @@ Click the extension icon or open the Options Dashboard to access comprehensive c
 - **Visibility**: Toggle options to hide Clawd on the current tab or block him entirely on the active domain.
 - **Pet Name**: Give your pet a custom name (up to 12 characters).
 - **Pet Glow Effect**: Select costume auras unlocked at LVL 5, 10, and 15.
+- **Custom Mascot Color**: Pick a specific body color for your mascot (unlocked at LVL 15).
 - **Sliders**: Adjust size (48px - 256px), movement speed (0.1x - 5.0x), and volume.
 - **AI Mood Analysis**: Toggle local sentiment evaluation and choose AI commentary persona.
 
