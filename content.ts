@@ -159,6 +159,7 @@ function isPetHidden(): boolean {
 }
 
 function hidePet(): void {
+  if (isCurrentlyHidden) return;
   isCurrentlyHidden = true;
   if (isInitialized) {
     view.hide();
@@ -167,6 +168,7 @@ function hidePet(): void {
 }
 
 function showPet(): void {
+  if (!isCurrentlyHidden) return;
   isCurrentlyHidden = false;
   if (!isInitialized) {
     actuallyInit();
@@ -192,13 +194,21 @@ function debouncedUpdateEmotion(delay = 500): void {
 }
 
 function resetIdleTimer(): void {
-  if (idleTimer) clearTimeout(idleTimer);
+  if (idleTimer) {
+    clearTimeout(idleTimer);
+    idleTimer = null;
+  }
   idleTimer = setTimeout(() => {
     handleIdleBehavior();
   }, 10_000); // Check for minor idle behaviors every 10s
 }
 
 function handleIdleBehavior(): void {
+  if (idleTimer) {
+    clearTimeout(idleTimer);
+    idleTimer = null;
+  }
+
   if (!checkContextOrCleanup()) return;
   if (!isInitialized) return;
   if (isPetHidden()) return;
@@ -341,7 +351,7 @@ function ensureInitialized(): void {
 
     // Play impact/crying sound and show initial "ouch" face
     playSound('sad');
-    loadPet('sad');
+    loadPet('crying');
 
     const petImg = view.getPetImg();
     // Physical landing squash/stretch
@@ -364,7 +374,7 @@ function ensureInitialized(): void {
     // }, 1000);
 
     interactionTimeout = setTimeout(() => {
-      loadPet('sad');
+      loadPet('crying');
 
       // Reset after
       interactionTimeout = setTimeout(() => {
@@ -1167,17 +1177,25 @@ async function getAiEmotionAvailability(): Promise<'readily' | 'after-download' 
   // Use the existing logic from src/ai.ts via bridge
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
+    let resolved = false;
+
     const handler = (event: MessageEvent) => {
+      if (resolved) return;
       if (event.source !== window || !event.data || event.data.type !== 'PET_AI_AVAILABILITY_CHECK_RESPONSE' || event.data.id !== requestId || event.data.token !== BRIDGE_TOKEN) return;
+      resolved = true;
       window.removeEventListener('message', handler);
       resolve(event.data.availability);
     };
+
     window.addEventListener('message', handler);
     window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_REQUEST', id: requestId, token: BRIDGE_TOKEN }, '*');
 
     setTimeout(() => {
-      window.removeEventListener('message', handler);
-      resolve('no');
+      if (!resolved) {
+        resolved = true;
+        window.removeEventListener('message', handler);
+        resolve('no');
+      }
     }, 2000);
   });
 }

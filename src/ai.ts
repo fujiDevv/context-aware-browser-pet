@@ -108,8 +108,13 @@ RULE:
 
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
+    let resolved = false;
+
     const handler = (event: MessageEvent) => {
+      if (resolved) return;
       if (event.source !== window || !event.data || event.data.type !== 'PET_AI_PROMPT_RESPONSE' || event.data.id !== requestId || event.data.token !== bridgeToken) return;
+      
+      resolved = true;
       window.removeEventListener('message', handler);
       if (event.data.error) {
         resolve(getTemplateFallback(stats, persona));
@@ -117,12 +122,16 @@ RULE:
         resolve(event.data.resultText.trim().replace(/^["']|["']$/g, ''));
       }
     };
+    
     window.addEventListener('message', handler);
     window.postMessage({ type: 'PET_AI_PROMPT_REQUEST', id: requestId, systemPrompt, prompt, token: bridgeToken }, '*');
 
     setTimeout(() => {
-      window.removeEventListener('message', handler);
-      resolve(getTemplateFallback(stats, persona));
+      if (!resolved) {
+        resolved = true;
+        window.removeEventListener('message', handler);
+        resolve(getTemplateFallback(stats, persona));
+      }
     }, 15000);
   });
 }
@@ -186,18 +195,27 @@ export function setBridgeToken(token: string): void {
 async function checkGeminiNanoAvailability(): Promise<'readily' | 'after-download' | 'no'> {
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
+    let resolved = false;
+
     const handler = (event: MessageEvent) => {
+      if (resolved) return;
       if (event.source !== window || !event.data || event.data.type !== 'PET_AI_AVAILABILITY_CHECK_RESPONSE' || event.data.id !== requestId || event.data.token !== bridgeToken) return;
+      
+      resolved = true;
       window.removeEventListener('message', handler);
       resolve(event.data.availability);
     };
+    
     window.addEventListener('message', handler);
     window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_REQUEST', id: requestId, token: bridgeToken }, '*');
 
     // Timeout fallback
     setTimeout(() => {
-      window.removeEventListener('message', handler);
-      resolve('no');
+      if (!resolved) {
+        resolved = true;
+        window.removeEventListener('message', handler);
+        resolve('no');
+      }
     }, 2000);
   });
 }
@@ -238,8 +256,13 @@ Description: ${metaDescription || 'None'}`;
 
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
+    let resolved = false;
+
     const handler = (event: MessageEvent) => {
+      if (resolved) return;
       if (event.source !== window || !event.data || event.data.type !== 'PET_AI_PROMPT_RESPONSE' || event.data.id !== requestId || event.data.token !== bridgeToken) return;
+      
+      resolved = true;
       window.removeEventListener('message', handler);
       if (event.data.error) {
         resolve(null);
@@ -255,13 +278,17 @@ Description: ${metaDescription || 'None'}`;
         }
       }
     };
+    
     window.addEventListener('message', handler);
     window.postMessage({ type: 'PET_AI_PROMPT_REQUEST', id: requestId, systemPrompt, prompt, token: bridgeToken }, '*');
 
     // Timeout fallback
     setTimeout(() => {
-      window.removeEventListener('message', handler);
-      resolve(null);
+      if (!resolved) {
+        resolved = true;
+        window.removeEventListener('message', handler);
+        resolve(null);
+      }
     }, 10000);
   });
 }

@@ -90,15 +90,23 @@ export function detectPageCategory(url: string, title: string, ogType?: string, 
   }
 
   // 3. Keyword Matching (Title & Description)
-  const devKeywords = ['programming', 'tutorial', 'code', 'rust', 'python', 'javascript', 'typescript', 'java', 'c++', 'html', 'css', 'git', 'compiler', 'api', 'documentation', 'stack overflow', 'developer'];
-  const scholarKeywords = ['news', 'article', 'science', 'research', 'history', 'wikipedia', 'study', 'journal', 'daily', 'paper', 'manuscript'];
-  const gamingKeywords = ['game', 'play', 'arcade', 'retro', 'nintendo', 'playstation', 'xbox', 'steam', 'quest', 'rpg', 'fps', 'multiplayer'];
-  const shoppingKeywords = ['buy', 'shop', 'store', 'checkout', 'price', 'deal', 'discount', 'cart', 'purchase', 'order', 'amazon', 'ebay'];
+  const devKeywords = ['programming', 'tutorial', 'code', 'rust', 'python', 'javascript', 'typescript', 'java', 'c++', 'html', 'css', 'git', 'compiler', 'api', 'documentation', 'stack overflow', 'developer', 'vscode', 'terminal', 'cmd', 'bash', 'zsh', 'kernel'];
+  const scholarKeywords = ['news', 'article', 'science', 'research', 'history', 'wikipedia', 'study', 'journal', 'daily', 'paper', 'manuscript', 'education', 'learning', 'university', 'college', 'course', 'theory'];
+  const gamingKeywords = ['game', 'play', 'arcade', 'retro', 'nintendo', 'playstation', 'xbox', 'steam', 'quest', 'rpg', 'fps', 'multiplayer', 'esports', 'controller', 'joystick', 'valorant', 'minecraft', 'roblox', 'fortnite'];
+  const shoppingKeywords = ['buy', 'shop', 'store', 'checkout', 'price', 'deal', 'discount', 'cart', 'purchase', 'order', 'amazon', 'ebay', 'payment', 'billing'];
+  const aiKeywords = ['gpt', 'chatbot', 'llm', 'generative ai', 'machine learning', 'neural network', 'automation', 'openai', 'anthropic', 'claude', 'gemini', 'perplexity', 'huggingface'];
+  const musicKeywords = ['music', 'song', 'audio', 'sound', 'spotify', 'playlist', 'album', 'artist', 'track', 'rhythm', 'beats', 'podcast'];
+  const videoKeywords = ['video', 'movie', 'film', 'cinema', 'trailer', 'netflix', 'youtube', 'vimeo', 'stream', 'broadcast', 'tv'];
+  const mailKeywords = ['mail', 'email', 'inbox', 'gmail', 'outlook', 'proton', 'message', 'letter', 'compose'];
 
   if (devKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'coding';
   if (scholarKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'reading';
   if (gamingKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'gaming';
   if (shoppingKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'shopping';
+  if (aiKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'ai';
+  if (musicKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'music';
+  if (videoKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'video';
+  if (mailKeywords.some(kw => titleLower.includes(kw) || descLower.includes(kw))) return 'mail';
 
   return 'general';
 }
@@ -427,6 +435,53 @@ export const AI_COMMENTS: Record<string, Record<string, Record<string, string[]>
       NEGATIVE: ["This is a mess. I'm embarrassed for you. 🤨", "This page is a disaster. I love it.", "Well, this is cheerful. Not.", "Oh, tragedy. Let's move on before I get emotional."],
       NEUTRAL: ["Another day, another digital wasteland. 🐾", "Just another page on the information superhighway.", "We are here. For some reason.", "Staring at the screen. Riveting."]
     }
+  },
+  kid: {
+    coding: {
+      POSITIVE: ["Everything compiles! Epic win! 🎉", "Your code is OP! Keep it up! 💻", "Massive W on this codebase! 🚀"],
+      NEGATIVE: ["Found a glitch! Let's squash it! 🔍", "Debugging is like a boss battle, you've got this! 👾", "That bug is totally sus! Let's fix it!"],
+      NEUTRAL: ["Time to craft some clean code! ⌨️", "Building something epic, one block at a time.", "Let's optimize the server!"]
+    },
+    reading: {
+      POSITIVE: ["What epic lore! 📖", "Gaining big brain knowledge! 🧠", "This story is a total W!"],
+      NEGATIVE: ["This topic is kind of sad... need a medkit. 😢", "A high-level challenge, read carefully.", "This is a bit intense!"],
+      NEUTRAL: ["Reading boosts your IRL stats! 📚", "Exploring the wiki today.", "Learning some cool secrets."]
+    },
+    music: {
+      POSITIVE: ["This music disc goes hard! 🎵", "Total bop! 🎧"],
+      NEGATIVE: ["This song has a bit of a sad vibe.", "Vibing to some chill tunes."],
+      NEUTRAL: ["Background music makes the grind easier.", "Listening to the soundtrack."]
+    },
+    video: {
+      POSITIVE: ["This video is so hype! 🍿", "Epic content! 📺"],
+      NEGATIVE: ["This video is a bit of a downer.", "Oof, rough watch."],
+      NEUTRAL: ["Watching some streams.", "Popcorn break! 🍿"]
+    },
+    social: {
+      POSITIVE: ["The lobby is super full today! ✨", "Nice to see epic vibes!"],
+      NEGATIVE: ["Chat is getting toxic. Take a break!", "A lot of toxic players here."],
+      NEUTRAL: ["Checking the server status.", "Scrolling through the hub."]
+    },
+    gaming: {
+      POSITIVE: ["Epic gaming moment! Absolute W! 🎮", "Leveling up! GG!"],
+      NEGATIVE: ["Rage quit alert! Keep it chill. 😠", "That was a tough round."],
+      NEUTRAL: ["Gaming mode: Active!", "Let's play some minigames! 🕹️"]
+    },
+    shopping: {
+      POSITIVE: ["Found a legendary item! 💰", "Adding to the inventory!"],
+      NEGATIVE: ["Too expensive? Oof. 💸", "Out of stock? That's an L."],
+      NEUTRAL: ["Window shopping in the market.", "Looking for some gear."]
+    },
+    search: {
+      POSITIVE: ["Found the secret! 🔍", "Search completed! W!"],
+      NEGATIVE: ["Zero results? Must be a glitch.", "Hmm, that didn't help."],
+      NEUTRAL: ["Searching the world map...", "Let's see what we find."]
+    },
+    general: {
+      POSITIVE: ["What a fun server! 😊", "This site has epic vibes!", "I'm happy to be here!"],
+      NEGATIVE: ["This page is kind of sus...", "Hmm, things seem a bit glitched here.", "Oh no, hope everything is okay!"],
+      NEUTRAL: ["Exploring the internet server!", "Just hanging out in the lobby.", "Whatcha looking at? 👀"]
+    }
   }
 };
 
@@ -556,13 +611,11 @@ export function getDominantTrait(siteCategoryCounts: Record<string, number> | un
   
   const counts = siteCategoryCounts;
   
-  // Combine code and coding just in case legacy data is present
-  const codingScore = (counts['code'] || 0) + (counts['coding'] || 0);
-
-  const developerScore = codingScore + (counts['docs'] || 0);
-  const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0);
-  const scholarScore = counts['news'] || 0;
-  const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0);
+  // Combine related categories into trait buckets
+  const developerScore = (counts['coding'] || 0) + (counts['docs'] || 0) + (counts['finance'] || 0);
+  const gamerScore = (counts['gaming'] || 0) + (counts['streaming'] || 0) + (counts['video'] || 0);
+  const scholarScore = (counts['news'] || 0) + (counts['reading'] || 0) + (counts['ai'] || 0);
+  const socialiteScore = (counts['social'] || 0) + (counts['mail'] || 0) + (counts['search'] || 0);
   
   const scores = {
     developer: developerScore,

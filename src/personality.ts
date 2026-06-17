@@ -266,26 +266,30 @@ export class PersonalitySystem {
       this.stats.focus = Math.max(0, this.stats.focus - 2);
       this.stats.curiosity = Math.max(0, this.stats.curiosity - 1);
       this._addXp(2);
-    } else if (category === 'news') {
+    } else if (category === 'news' || category === 'reading') {
       this.stats.happiness = Math.max(0, this.stats.happiness - 2);
-      this.stats.curiosity = Math.min(100, this.stats.curiosity + 2);
-      this.stats.focus = Math.min(100, this.stats.focus + 1);
-      this._addXp(3);
+      this.stats.curiosity = Math.min(100, this.stats.curiosity + 4);
+      this.stats.focus = Math.min(100, this.stats.focus + 2);
+      this._addXp(4);
     } else if (category === 'gaming') {
       this.stats.happiness = Math.min(100, this.stats.happiness + 5);
       this.stats.leisure = Math.min(100, this.stats.leisure + 8);
       this.stats.focus = Math.max(0, this.stats.focus - 5);
       this.stats.energy = Math.min(100, this.stats.energy + 2);
       this._addXp(6);
-    } else if (category === 'shopping') {
+    } else if (category === 'shopping' || category === 'finance') {
       this.stats.curiosity = Math.min(100, this.stats.curiosity + 1);
       this.stats.leisure = Math.min(100, this.stats.leisure + 2);
       this._addXp(2);
-    } else if (category === 'docs') {
-      this.stats.curiosity = Math.min(100, this.stats.curiosity + 2);
+    } else if (category === 'docs' || category === 'ai') {
+      this.stats.curiosity = Math.min(100, this.stats.curiosity + 4);
       this.stats.focus = Math.min(100, this.stats.focus + 4);
-      this.stats.energy = Math.max(0, this.stats.energy - 2);
-      this._addXp(4);
+      this.stats.energy = Math.max(0, this.stats.energy - 1);
+      this._addXp(5);
+    } else if (category === 'music' || category === 'video' || category === 'streaming') {
+      this.stats.happiness = Math.min(100, this.stats.happiness + 2);
+      this.stats.leisure = Math.min(100, this.stats.leisure + 3);
+      this._addXp(3);
     }
 
     // Record category analytics
@@ -350,7 +354,15 @@ export class PersonalitySystem {
       'battery-low', 'christmas', 'winter', 'halloween', 'summer', 'ice-cream', 'surfing', 'skateboard',
       'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'mail', 'notification', 'flexing',
       'lifting', 'singing', 'music', 'dj', 'eating', 'studying', 'crying', 'sad', 'happy', 'waving', 'sleeping',
-      'money'
+      'money', 'working-merging', 'working-pushing', 'working-rollback', 'working-deploying', 'working-firefighting',
+      'working-oncall', 'working-context-full', 'working-testing', 'working-tool-calling', 'working-pairing',
+      'working-meeting', 'working-sweeping', 'drumming', 'podcast', 'running', 'autumn', 'birthday',
+      'new-year', 'spring', 'thanksgiving', 'valentine', 'crab-walking', 'dizzy', 'embarrassed', 'evil',
+      'fire', 'flying', 'gift', 'going-away', 'grumpy', 'hallucinating', 'hopeful', 'idea', 'jealous',
+      'king', 'laughing', 'loading', 'peeking', 'praying', 'rainbow', 'scared', 'security', 'shipping',
+      'sick', 'skeptical', 'smile', 'snow', 'star', 'static-base', 'sweeping', 'time-travel', 'trophy', 'umbrella',
+      'bowling', 'camping', 'chef', 'climbing', 'crafting', 'detective', 'driving', 'fishing', 'gardening',
+      'magic', 'painting', 'photography', 'swimming', 'bored', 'facepalm', 'idle-living'
     ];
     if (freePassEmotions.includes(emotion)) return true;
 

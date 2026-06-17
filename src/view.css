@@ -57,7 +57,7 @@
   transform: translateX(-50%) scale(1);
 }
 
-.pet-speech-bubble::after {
+/* .pet-speech-bubble::after {
   content: '';
   position: absolute;
   bottom: -5px;
@@ -68,7 +68,7 @@
   border-color: rgba(15, 23, 42, 0.92) transparent;
   display: block;
   width: 0;
-}
+} */
 
 /* ── Costume Glows & Shaders ── */
 .costume-detective {

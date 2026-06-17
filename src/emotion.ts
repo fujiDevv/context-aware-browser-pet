@@ -126,7 +126,8 @@ export class EmotionEngine {
     if (category === 'finance') return 'money';
     if (category === 'search') return 'working-thinking';
     if (category === 'fitness') {
-      return FITNESS_EMOTES[Math.floor(new Date().getMinutes() % FITNESS_EMOTES.length)];
+      const index = Math.floor(new Date().getMinutes() / 5) % FITNESS_EMOTES.length;
+      return FITNESS_EMOTES[index];
     }
 
     // 3. Idle State Dynamic Choices
@@ -221,8 +222,9 @@ export class EmotionEngine {
       return 'eating';
     }
     if (host.includes('spotify') || host.includes('soundcloud') || host.includes('music')) {
-      // Rotate music emotions
-      return MUSIC_EMOTES[Math.floor(new Date().getMinutes() % MUSIC_EMOTES.length)];
+      // Rotate music emotions every 5 minutes
+      const index = Math.floor(new Date().getMinutes() / 5) % MUSIC_EMOTES.length;
+      return MUSIC_EMOTES[index];
     }
     return 'cool';
   }
