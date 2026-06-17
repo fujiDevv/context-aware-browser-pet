@@ -103,8 +103,8 @@ To install and build the extension:
 ## Meeting Your Pet
 
 When Clawd first appears on a new page:
-- He starts at a random horizontal position along the bottom edge of your browser window.
-- He displays a greeting speech bubble: *"Hello! I'm [Pet Name]! Let's browse together! "* (defaults to *"Hello! I'm Clawd! Let's browse together! "*).
+- He has a **60% chance to start on the ground** and a **40% chance to start on the ceiling**.
+- He displays a greeting speech bubble: *"Hello! I'm [Pet Name]! Let's browse together! 👋"* (defaults to *"Hello! I'm Clawd! Let's browse together! 👋"*).
 - A greeting sound effect is played (if sound is enabled).
 
 Clawd will then begin walking back and forth along the edges of the page, occasionally pausing to rest.
@@ -227,17 +227,17 @@ Clawd changes his expression and animation based on the page context of your act
 | Website Category | Matches (Domains) | Clawd's Reaction |
 |-----------------|-------------------|-------------------|
 | **Coding / Dev** | GitHub, StackOverflow, GitLab, npm, etc. | Cycles `coding`, `working-building`, `working-typing`. Shows `working-merging`/`working-pushing`/`working-rollback` on Git PRs/commits. Shows `working-deploying` on Vercel/Netlify. Shows `working-rubber-duck` on StackOverflow. |
-| **Social Media** | Twitter/X, Instagram, Reddit, TikTok, etc. | `love` |
-| **Gaming** | Twitch, Steam, itch.io, Roblox | `gaming` |
-| **News** | BBC, CNN, NYT, Reuters, etc. | `working-thinking` |
-| **Shopping** | Amazon, eBay, Etsy, Shopify | `money` |
-| **Documentation** | Notion, Google Docs, Wikipedia, etc. | `studying` |
-| **Email** | Gmail, Outlook, Yahoo Mail | `mail` |
-| **Fitness** | Strava, MyFitnessPal, Fitbit, etc. | `flexing`, `lifting`, `yoga`, `running` (rotating) |
-| **AI Assistant** | ChatGPT, Claude, Gemini, HF | `mindblown` � |
-| **Streaming** | Netflix, YouTube, Hulu | `eating` |
-| **Finance** | Stripe, PayPal, Banking | `money` |
-| **Music/Audio** | Spotify, SoundCloud, Music | `music`, `singing`, `dj`, `drumming`, `podcast` (rotating) |
+| **Social Media** | Twitter/X, Instagram, Reddit, TikTok, etc. | `love` ❤️ |
+| **Gaming** | Twitch, Steam, itch.io, Roblox | `gaming` 🎮 |
+| **News** | BBC, CNN, NYT, Reuters, etc. | `working-thinking` 🧐 |
+| **Shopping** | Amazon, eBay, Etsy, Shopify | `money` 💰 |
+| **Documentation** | Notion, Google Docs, Wikipedia, etc. | `studying` 📚 |
+| **Email** | Gmail, Outlook, Yahoo Mail | `mail` 📧 |
+| **Fitness** | Strava, MyFitnessPal, Fitbit, etc. | `flexing`, `lifting`, `yoga`, `running` (rotating) 🏃‍♂️ |
+| **AI Assistant** | ChatGPT, Claude, Gemini, HF | `mindblown` 🤯 |
+| **Streaming** | Netflix, YouTube, Hulu | `eating` 🍿 |
+| **Finance** | Stripe, PayPal, Banking | `money` 💸 |
+| **Music/Audio** | Spotify, SoundCloud, Music | `music`, `singing`, `dj`, `drumming`, `podcast` (rotating) 🎵 |
 
 ### Activity-Based Reactions
 
