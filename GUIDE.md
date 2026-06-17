@@ -570,12 +570,5 @@ For guidelines on how to contribute code, assets, or animations, see [CONTRIBUTI
 ---
 
 <p align="center">
- Made by the Joshua Sarmiento
-</p>
-ontextual-pet-extension/context-aware-pet/CONTRIBUTING.md).
-
----
-
-<p align="center">
- Made by the Joshua Sarmiento
+ Made by Joshua Sarmiento
 </p>
