@@ -83,8 +83,8 @@
   const VERSION_FEATURES: Record<string, Feature[]> = {
     '1.1.0': [
       {
-        title: 'Four-Edge Crawling',
-        description: 'Clawd can now crawl along all four edges of your screen with improved spring physics and rotation.',
+        title: 'Gravity Physics Engine',
+        description: 'Clawd features a new physics engine restricting him exclusively to the floor and ceiling with smooth spring-based edge snapping.',
         icon: '../assets/pets/clawd-climbing.svg'
       },
       {
