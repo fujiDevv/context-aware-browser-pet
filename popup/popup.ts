@@ -1,5 +1,5 @@
 import { PetStats, PetSettings } from '../src/types';
-import { EMOTIONS_METADATA, getDominantTrait } from '../src/shared-ui';
+import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/shared-ui';
 import { STORAGE_KEYS } from '../src/constants';
 
 async function init(): Promise<void> {
@@ -114,8 +114,18 @@ async function init(): Promise<void> {
   if (data[STORAGE_KEYS.SETTINGS]?.name) {
     (document.getElementById('pet-name') as HTMLElement).textContent = data[STORAGE_KEYS.SETTINGS].name;
   }
-  updateUIStats(data[STORAGE_KEYS.STATS]);
-  updateUIMood(data[STORAGE_KEYS.MOOD] || 'happy');
+  
+  let currentCostume = data[STORAGE_KEYS.SETTINGS]?.costume;
+  let customColor: string | undefined = undefined;
+  
+  // Custom Color is only active if level >= 15 or Prestige > 0
+  const stats = data[STORAGE_KEYS.STATS];
+  if (stats && (stats.level >= 15 || (stats.prestige && stats.prestige > 0))) {
+    customColor = data[STORAGE_KEYS.SETTINGS]?.customColor;
+  }
+
+  updateUIStats(stats);
+  updateUIMood(data[STORAGE_KEYS.MOOD] || 'happy', currentCostume, customColor);
 
   const tabHideToggle = document.getElementById('tab-hide-toggle') as HTMLInputElement;
   const siteHideToggle = document.getElementById('site-hide-toggle') as HTMLInputElement;
@@ -192,17 +202,37 @@ async function init(): Promise<void> {
   });
 
   chrome.storage.onChanged.addListener((changes) => {
+    let newStats = undefined;
+    
     if (changes[STORAGE_KEYS.STATS]) {
-      updateUIStats(changes[STORAGE_KEYS.STATS].newValue);
+      newStats = changes[STORAGE_KEYS.STATS].newValue;
+      updateUIStats(newStats);
     }
-    if (changes[STORAGE_KEYS.MOOD]) {
-      updateUIMood(changes[STORAGE_KEYS.MOOD].newValue);
-    }
+
     if (changes[STORAGE_KEYS.SETTINGS]) {
       const newSettings = changes[STORAGE_KEYS.SETTINGS].newValue;
       if (newSettings?.name) {
         (document.getElementById('pet-name') as HTMLElement).textContent = newSettings.name;
       }
+      currentCostume = newSettings?.costume;
+      
+      // Re-evaluate color on settings change
+      chrome.storage.local.get(STORAGE_KEYS.STATS, (res) => {
+        const latestStats = newStats || res[STORAGE_KEYS.STATS];
+        if (latestStats && (latestStats.level >= 15 || (latestStats.prestige && latestStats.prestige > 0))) {
+          customColor = newSettings?.customColor;
+        } else {
+          customColor = undefined;
+        }
+        // Force mood update to apply new visual settings
+        chrome.storage.local.get(STORAGE_KEYS.MOOD, (moodRes) => {
+          updateUIMood(moodRes[STORAGE_KEYS.MOOD] || 'happy', currentCostume, customColor);
+        });
+      });
+    }
+
+    if (changes[STORAGE_KEYS.MOOD]) {
+      updateUIMood(changes[STORAGE_KEYS.MOOD].newValue, currentCostume, customColor);
     }
   });
 
@@ -281,7 +311,7 @@ async function init(): Promise<void> {
     statsEl.leisureBar.style.width = `${stats.leisure ?? 50}%`;
   }
 
-  function updateUIMood(mood: string): void {
+  function updateUIMood(mood: string, costume?: string, customColor?: string): void {
     const moodEmojiEl = document.getElementById('mood-emoji');
     const moodTextEl = document.getElementById('mood-text');
     if (!moodEmojiEl || !moodTextEl) return;
@@ -291,7 +321,29 @@ async function init(): Promise<void> {
     moodTextEl.textContent = meta.name;
 
     if (statsEl && statsEl.preview) {
-      statsEl.preview.src = `../assets/pets/clawd-${mood}.svg`;
+      const svgName = getResolvedCostumeName(mood, costume);
+      const url = chrome.runtime.getURL(`assets/pets/clawd-${svgName}.svg`);
+
+      if (!customColor || customColor === '#DE886D') {
+        statsEl.preview.src = url;
+        return;
+      }
+
+      fetch(url).then(r => r.text()).then(svgText => {
+        const styleBlock = `<style>
+          :root { --pet-core-color: ${customColor}; }
+          [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
+            fill: var(--pet-core-color) !important; 
+          }
+        </style>`;
+        
+        svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
+        const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
+        statsEl.preview.src = dataUri;
+      }).catch(e => {
+        console.warn('[Clawd Popup] Failed to apply custom color:', e);
+        statsEl.preview.src = url;
+      });
     }
   }
 }
