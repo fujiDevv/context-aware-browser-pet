@@ -29,6 +29,7 @@ export class MovementEngine {
   cursorTargetX: number | null = null;
   _posAnimation: SpringAnimation | null = null;
   onLanding?: () => void;
+  private _isResizeBound = false;
 
   _handleResize = () => {
     const container = this.containerRef?.deref();
@@ -72,7 +73,6 @@ export class MovementEngine {
     this.lastTime = 0;
 
     this._setupDrag();
-    window.addEventListener('resize', this._handleResize);
   }
 
   get el(): HTMLElement | null {
@@ -82,6 +82,11 @@ export class MovementEngine {
   start(): void {
     const el = this.el;
     if (!el) return;
+
+    if (!this._isResizeBound) {
+      window.addEventListener('resize', this._handleResize);
+      this._isResizeBound = true;
+    }
 
     if (!this.hasFallen) {
       this.hasFallen = true;
@@ -135,6 +140,7 @@ export class MovementEngine {
       this._raf = null;
     }
     window.removeEventListener('resize', this._handleResize);
+    this._isResizeBound = false;
   }
 
   _stopPosAnimation(): void {
@@ -392,26 +398,25 @@ export class MovementEngine {
     let rotate = '0deg';
     let flipValue = this.direction;
 
-    // We must ensure the rotation doesn't push the pet off the screen by translating
-    // the image based on its rotation state, effectively pivoting around its feet/edges.
-    let offsetX = '0px';
-    let offsetY = '0px';
-
-    // if (this.state === 'walk-top') {
-    //   rotate = '180deg';
-    //   flipValue = -this.direction;
-    // } else if (this.state === 'walk-left') {
-    //   rotate = '90deg';
-    //   flipValue = -this.direction;
-    // } else if (this.state === 'walk-right') {
-    //   rotate = '-90deg';
-    //   flipValue = this.direction;
-    // }
+    if (this.state === 'walk-top') {
+      rotate = '180deg';
+      flipValue = -this.direction;
+    } else if (this.state === 'walk-left') {
+      rotate = '-90deg';
+      flipValue = -this.direction;
+    } else if (this.state === 'walk-right') {
+      rotate = '90deg';
+      flipValue = -this.direction;
+    } else if (this.state === 'walk-bottom') {
+      flipValue = -this.direction;
+    }
 
     const flip = (flipValue === -1) ? 'scaleX(-1)' : 'scaleX(1)';
 
     el.style.setProperty('--pet-x', `${this.x}px`);
     el.style.setProperty('--pet-y', `${this.y}px`);
+    el.style.setProperty('--pet-rotation', rotate);
+    el.style.setProperty('--pet-flip', flip);
     el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
     el.style.left = '0px';
     el.style.top = '0px';
@@ -421,7 +426,7 @@ export class MovementEngine {
     const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
       img.style.transformOrigin = 'center center';
-      img.style.transform = `translate(${offsetX}, ${offsetY}) ${flip} rotate(${rotate})`;
+      img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
       img.style.width = `${this.size}px`;
       img.style.height = `${this.size}px`;
     }
@@ -553,14 +558,96 @@ export class MovementEngine {
     img.addEventListener('mousedown', onMouseDown);
   }
 
+  // _applyDragStyle(): void {
+  //   const el = this.el;
+  //   if (!el) return;
+
+  //   this._stopPosAnimation();
+
+  //   const container = this.containerRef?.deref();
+  //   const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+  //   const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+
+  //   // Calculate nearest edge for live rotation during drag
+  //   const distLeft = this.x;
+  //   const distRight = W - this.x;
+  //   const distTop = this.y;
+  //   const distBottom = H - this.y;
+  //   const minDist = Math.min(distLeft, distRight, distTop, distBottom);
+
+  //   let dragRotate = '0deg';
+  //   let dragFlip = 'scaleX(1)';
+
+  //   if (minDist === distTop) {
+  //     dragRotate = '180deg';
+  //     dragFlip = this.x >= W / 2 ? 'scaleX(1)' : 'scaleX(-1)';
+  //   } else if (minDist === distLeft) {
+  //     dragRotate = '90deg';
+  //     dragFlip = this.y >= H / 2 ? 'scaleX(1)' : 'scaleX(-1)';
+  //   } else if (minDist === distRight) {
+  //     dragRotate = '-90deg';
+  //     dragFlip = this.y >= H / 2 ? 'scaleX(-1)' : 'scaleX(1)';
+  //   } else {
+  //     dragFlip = this.x >= W / 2 ? 'scaleX(-1)' : 'scaleX(1)';
+  //   }
+
+  //   el.style.setProperty('--pet-x', `${this.x}px`);
+  //   el.style.setProperty('--pet-y', `${this.y}px`);
+  //   el.style.setProperty('--pet-rotation', dragRotate);
+  //   el.style.setProperty('--pet-flip', dragFlip);
+  //   el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
+  //   el.style.left = '0px';
+  //   el.style.top = '0px';
+  //   el.style.bottom = 'auto';
+
+  //   const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
+  //   if (img) {
+  //     img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
+  //   }
+  // }
+
   _applyDragStyle(): void {
     const el = this.el;
     if (!el) return;
 
     this._stopPosAnimation();
 
+    const container = this.containerRef?.deref();
+    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+
+    // Calculate nearest edge for live rotation during drag
+    const distLeft = this.x;
+    const distRight = W - this.x;
+    const distTop = this.y;
+    const distBottom = H - this.y;
+    const minDist = Math.min(distLeft, distRight, distTop, distBottom);
+
+    let dragRotate = '0deg';
+    let dragFlip = 'scaleX(1)';
+
+    // Harmonized with _apply() mechanics: 
+    // Bottom = 0deg, Top = 180deg, Left = -90deg, Right = 90deg
+    if (minDist === distTop) {
+      dragRotate = '180deg';
+      // Inverting conditions for main diagonal (top-left/bottom-right) based on feedback
+      dragFlip = this.x >= W / 2 ? 'scaleX(-1)' : 'scaleX(-1)';
+    } else if (minDist === distLeft) {
+      dragRotate = '-90deg';
+      dragFlip = this.y >= H / 2 ? 'scaleX(-1)' : 'scaleX(-1)';
+    } else if (minDist === distRight) {
+      dragRotate = '90deg';
+      dragFlip = this.y >= H / 2 ? 'scaleX(-1)' : 'scaleX(-1)';
+    } else {
+      // On bottom floor (minDist === distBottom)
+      dragRotate = '0deg';
+      dragFlip = this.x >= W / 2 ? 'scaleX(-1)' : 'scaleX(-1)';
+    }
+
     el.style.setProperty('--pet-x', `${this.x}px`);
     el.style.setProperty('--pet-y', `${this.y}px`);
+    el.style.setProperty('--pet-rotation', dragRotate);
+    el.style.setProperty('--pet-flip', dragFlip);
     el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
     el.style.left = '0px';
     el.style.top = '0px';
@@ -568,7 +655,8 @@ export class MovementEngine {
 
     const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
     if (img) {
-      img.style.transform = 'scaleX(1) rotate(0deg)';
+      img.style.transformOrigin = 'center center';
+      img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
     }
   }
 

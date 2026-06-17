@@ -26,7 +26,6 @@ setBridgeToken(BRIDGE_TOKEN);
   }
 })();
 
-let syncInterval: ReturnType<typeof setInterval> | null = null;
 let idleTimer: ReturnType<typeof setTimeout> | null = null;
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 let pokeInterval: ReturnType<typeof setInterval> | null = null;
@@ -66,7 +65,6 @@ function cleanupOrphanedScript(): void {
   if (isOrphaned) return;
   isOrphaned = true;
 
-  if (syncInterval) clearInterval(syncInterval);
   if (idleTimer) clearTimeout(idleTimer);
   if (debounceTimeout) clearTimeout(debounceTimeout);
   if (pokeInterval) clearInterval(pokeInterval);
@@ -319,18 +317,18 @@ function ensureInitialized(): void {
     onPetMouseEnter: () => {
       if (isPetHidden()) return;
       view.getPetImg().animate([
-        { transform: 'scale(1) rotate(0deg)' },
-        { transform: 'scale(1.2) rotate(6deg)' },
-        { transform: 'scale(1.12) rotate(4deg)' },
-        { transform: 'scale(1.15) rotate(5deg)' }
+        { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1)' },
+        { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) + 6deg)) scale(1.2)' },
+        { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) + 4deg)) scale(1.12)' },
+        { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) + 5deg)) scale(1.15)' }
       ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
     },
     onPetMouseLeave: () => {
       if (isPetHidden()) return;
       view.getPetImg().animate([
-        { transform: 'scale(1.15) rotate(5deg)' },
-        { transform: 'scale(0.97) rotate(-1deg)' },
-        { transform: 'scale(1) rotate(0deg)' }
+        { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) + 5deg)) scale(1.15)' },
+        { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) - 1deg)) scale(0.97)' },
+        { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1)' }
       ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
     }
   });
@@ -356,10 +354,10 @@ function ensureInitialized(): void {
     const petImg = view.getPetImg();
     // Physical landing squash/stretch
     petImg.animate([
-      { transform: 'scale(1.3, 0.7)', offset: 0 },
-      { transform: 'scale(0.8, 1.2)', offset: 0.3 },
-      { transform: 'scale(1.1, 0.9)', offset: 0.6 },
-      { transform: 'scale(1, 1)', offset: 1 }
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.3, 0.7)', offset: 0 },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(0.8, 1.2)', offset: 0.3 },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.1, 0.9)', offset: 0.6 },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1, 1)', offset: 1 }
     ], { duration: 500, easing: 'ease-out' });
 
     // Daze for 1 second, then "dust off" (sweep)
@@ -733,22 +731,22 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
   if (action === 'pet') {
     playSound('petting');
     petImg.animate([
-      { transform: 'scale(1) rotate(0deg)' },
-      { transform: 'scale(0.8) rotate(-8deg)' },
-      { transform: 'scale(1.25) rotate(8deg)' },
-      { transform: 'scale(0.95) rotate(-4deg)' },
-      { transform: 'scale(1.05) rotate(4deg)' },
-      { transform: 'scale(1) rotate(0deg)' }
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1)' },
+      { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) - 8deg)) scale(0.8)' },
+      { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) + 8deg)) scale(1.25)' },
+      { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) - 4deg)) scale(0.95)' },
+      { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) + 4deg)) scale(1.05)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1)' }
     ], { duration: 600, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   } else if (action === 'feed') {
     playSound('feeding');
     petImg.animate([
-      { transform: 'scale(1)' },
-      { transform: 'scale(1.3)' },
-      { transform: 'scale(0.85)' },
-      { transform: 'scale(1.15)' },
-      { transform: 'scale(0.95)' },
-      { transform: 'scale(1)' }
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.3)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(0.85)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.15)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(0.95)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1)' }
     ], { duration: 650, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   }
 
@@ -807,21 +805,21 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
     playSound('feeding');
     personality.recordInteraction('feed');
     petImg.animate([
-      { transform: 'scale(1) translateY(0)' },
-      { transform: 'scale(1.4) translateY(-20px)' },
-      { transform: 'scale(0.9) translateY(0)' },
-      { transform: 'scale(1.2) translateY(-5px)' },
-      { transform: 'scale(1) translateY(0)' }
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1) translateY(0)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.4) translateY(-20px)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(0.9) translateY(0)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.2) translateY(-5px)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1) translateY(0)' }
     ], { duration: 600, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   } else {
     playSound('petting');
     personality.recordInteraction('pet');
     petImg.animate([
-      { transform: 'scale(1) translateY(0)' },
-      { transform: 'scale(1.25) translateY(-35px)' },
-      { transform: 'scale(0.85) translateY(5px)' },
-      { transform: 'scale(1.15) translateY(-10px)' },
-      { transform: 'scale(1) translateY(0)' }
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1) translateY(0)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.25) translateY(-35px)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(0.85) translateY(5px)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.15) translateY(-10px)' },
+      { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1) translateY(0)' }
     ], { duration: 800, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   }
 
@@ -1109,7 +1107,7 @@ async function actuallyInit(): Promise<void> {
 
       safeSendMessage({ type: 'get-pet-state' }, (sharedState: SharedPetState | undefined) => {
         if (isOrphaned) return;
-        if (sharedState && sharedState.y !== 0) {
+        if (sharedState && sharedState.y !== undefined) {
           movement.syncState(sharedState);
         }
         updateEmotion();
