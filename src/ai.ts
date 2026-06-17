@@ -106,6 +106,33 @@ RULE:
 
   const prompt = `Write our daily reflection for today based on these habits.`;
 
+  const result = await promptGeminiNano(systemPrompt, prompt);
+  return result ? result.trim().replace(/^["']|["']$/g, '') : getTemplateFallback(stats, persona);
+}
+
+/**
+ * Orchestrates a prompt to Gemini Nano, handling both direct access and bridge-based communication.
+ */
+async function promptGeminiNano(systemPrompt: string, prompt: string): Promise<string | null> {
+  // 1. Direct Extension/Extension Context Attempt
+  const aiGlobal = (globalThis as any).ai || (typeof window !== 'undefined' ? (window as any).ai : null);
+  if (aiGlobal && (typeof aiGlobal.languageModel !== 'undefined' || typeof aiGlobal.assistant !== 'undefined')) {
+    const modelAPI = aiGlobal.languageModel || aiGlobal.assistant;
+    try {
+      const session = await modelAPI.create({ systemPrompt });
+      const resultText = await session.prompt(prompt);
+      await session.destroy();
+      return resultText;
+    } catch (e) {
+      console.warn('[Clawd AI] Direct prompt attempt failed:', e);
+    }
+  }
+
+  // 2. Fallback to Content Script -> Main World bridge
+  if (typeof window === 'undefined') return null;
+  // Extension pages do not have main_world.js injected, so don't hang waiting for a response
+  if (window.location.protocol.startsWith('chrome-extension:')) return null;
+
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
     let resolved = false;
@@ -117,22 +144,23 @@ RULE:
       resolved = true;
       window.removeEventListener('message', handler);
       if (event.data.error) {
-        resolve(getTemplateFallback(stats, persona));
+        resolve(null);
       } else {
-        resolve(event.data.resultText.trim().replace(/^["']|["']$/g, ''));
+        resolve(event.data.resultText);
       }
     };
     
     window.addEventListener('message', handler);
     window.postMessage({ type: 'PET_AI_PROMPT_REQUEST', id: requestId, systemPrompt, prompt, token: bridgeToken }, '*');
 
+    // Timeout fallback
     setTimeout(() => {
       if (!resolved) {
         resolved = true;
         window.removeEventListener('message', handler);
-        resolve(getTemplateFallback(stats, persona));
+        resolve(null);
       }
-    }, 15000);
+    }, 10000);
   });
 }
 
@@ -193,6 +221,27 @@ export function setBridgeToken(token: string): void {
 }
 
 async function checkGeminiNanoAvailability(): Promise<'readily' | 'after-download' | 'no'> {
+  // 1. Extension context direct check
+  const aiGlobal = (globalThis as any).ai || (typeof window !== 'undefined' ? (window as any).ai : null);
+  if (aiGlobal && (typeof aiGlobal.languageModel !== 'undefined' || typeof aiGlobal.assistant !== 'undefined')) {
+    const modelAPI = aiGlobal.languageModel || aiGlobal.assistant;
+    try {
+      if (typeof modelAPI.availability === 'function') {
+        return await modelAPI.availability();
+      } else if (typeof modelAPI.capabilities === 'function') {
+        const caps = await modelAPI.capabilities();
+        return caps.available || 'no';
+      }
+    } catch (e) {
+      console.warn('[Clawd AI] Direct availability check failed:', e);
+    }
+  }
+
+  // 2. Fallback to Content Script -> Main World bridge
+  if (typeof window === 'undefined') return 'no';
+  // Extension pages do not have main_world.js injected, so don't hang waiting for a response
+  if (window.location.protocol.startsWith('chrome-extension:')) return 'no';
+
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
     let resolved = false;
@@ -254,41 +303,16 @@ Pet Stats: ${statsContext || 'Normal'}.`;
 Title: ${pageTitle}
 Description: ${metaDescription || 'None'}`;
 
-  return new Promise((resolve) => {
-    const requestId = Math.random().toString(36).substring(7);
-    let resolved = false;
+  const resultText = await promptGeminiNano(systemPrompt, prompt);
+  if (!resultText) return null;
 
-    const handler = (event: MessageEvent) => {
-      if (resolved) return;
-      if (event.source !== window || !event.data || event.data.type !== 'PET_AI_PROMPT_RESPONSE' || event.data.id !== requestId || event.data.token !== bridgeToken) return;
-      
-      resolved = true;
-      window.removeEventListener('message', handler);
-      if (event.data.error) {
-        resolve(null);
-      } else {
-        try {
-          const parsed = JSON.parse(event.data.resultText);
-          if (parsed.intent_summary) {
-            console.log(`[Clawd AI] Detected Intent: ${parsed.intent_summary}`);
-          }
-          resolve(parsed);
-        } catch (e) {
-          resolve(null);
-        }
-      }
-    };
-    
-    window.addEventListener('message', handler);
-    window.postMessage({ type: 'PET_AI_PROMPT_REQUEST', id: requestId, systemPrompt, prompt, token: bridgeToken }, '*');
-
-    // Timeout fallback
-    setTimeout(() => {
-      if (!resolved) {
-        resolved = true;
-        window.removeEventListener('message', handler);
-        resolve(null);
-      }
-    }, 10000);
-  });
+  try {
+    const parsed = JSON.parse(resultText);
+    if (parsed.intent_summary) {
+      console.log(`[Clawd AI] Detected Intent: ${parsed.intent_summary}`);
+    }
+    return parsed;
+  } catch (e) {
+    return null;
+  }
 }

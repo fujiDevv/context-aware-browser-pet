@@ -1,7 +1,7 @@
 import { PersonalitySystem } from '../src/personality';
 import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem } from '../src/types';
 import { STORAGE_KEYS } from '../src/constants';
-import { EMOTIONS_METADATA, getDominantTrait } from '../src/shared-ui';
+import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/shared-ui';
 import { getDailyInsight } from '../src/ai';
 import { MovementEngine } from '../src/movement';
 
@@ -441,6 +441,26 @@ async function init() {
       updateLocalAiStatus();
     }
   });
+
+  // Real-time State Synchronization for Sanctuary
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message.type === 'sync-pet-state') {
+      if (playgroundMovement && !playgroundMovement.isDragging) {
+        playgroundMovement.syncState(message.state);
+      }
+    } else if (message.type === 'sync-origin-pet-state') {
+      const { emotion: syncedEmotion, dialogue: syncedDialogue } = message.state;
+      updateUIMood(syncedEmotion);
+      if (syncedDialogue) {
+        const bubble = document.getElementById('sandbox-speech-bubble');
+        if (bubble) {
+          bubble.textContent = syncedDialogue;
+          bubble.classList.add('show');
+          setTimeout(() => bubble.classList.remove('show'), 3000);
+        }
+      }
+    }
+  });
 }
 
 async function triggerPetAction(action: string, temporaryMood: string, soundName: string, textBubble: string) {
@@ -479,7 +499,7 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
   }
 
   // Visual mood preview
-  if (petImg) petImg.src = `../assets/pets/clawd-${temporaryMood}.svg`;
+  updateUIMood(temporaryMood);
 
   // Jump animation WAAPI
   if (petImg) {
@@ -547,7 +567,7 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
 function updateUIMood(mood: string): void {
   const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
   if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
-  const svgName = getMascotSvgName(mood, activeCostume);
+  const svgName = getResolvedCostumeName(mood, activeCostume);
   
   // Apply custom color if set
   const color = petColorInput.value;
@@ -642,6 +662,12 @@ function updateUIStats(stats: PetStats | undefined): void {
   else if (speedMod < 0.9) speedDesc = 'Calm';
 
   lblHabitSpeed.textContent = `${speedMod.toFixed(2)}x (${speedDesc})`;
+
+  if (playgroundMovement) {
+    playgroundMovement.updateSettings({
+      speed: speedMod
+    });
+  }
 
   // Default behaviors
   let behaviorDesc = 'Standard';
@@ -960,7 +986,7 @@ function applySettings(settings: PetSettings | undefined) {
 
   // Ensure preview image reflects costume on load
   const lastKnownMood = petMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
-  const svgName = getMascotSvgName(lastKnownMood, activeCostume);
+  const svgName = getResolvedCostumeName(lastKnownMood, activeCostume);
   if (petImg) petImg.src = `../assets/pets/clawd-${svgName}.svg`;
 
   // Update playground movement settings
@@ -1356,38 +1382,6 @@ const COSTUMES_METADATA = [
   { id: 'halloween', name: 'Spooky Pumpkin', desc: 'Halloween pumpkin mask', unlockLevel: 0, seasonal: true, image: 'halloween' },
   { id: 'summer', name: 'Summer Shades', desc: 'Cool sunglasses outfit', unlockLevel: 0, seasonal: true, image: 'summer' }
 ];
-
-function getMascotSvgName(mood: string, costume: string): string {
-  const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
-  const allowedSvgNames = new Set([
-    'happy',
-    'waving',
-    'smile',
-    'idle-living',
-    'christmas',
-    'halloween',
-    'summer',
-    'detective',
-    'magic',
-    'rainbow'
-  ]);
-  const normalizedMood = mood.trim().toLowerCase();
-
-  if (!idleStates.includes(normalizedMood)) {
-    return allowedSvgNames.has(normalizedMood) ? normalizedMood : 'happy';
-  }
-
-  const costumeMap: Record<string, string> = {
-    christmas: 'christmas',
-    halloween: 'halloween',
-    summer: 'summer',
-    detective: 'detective',
-    wizard: 'magic',
-    party: 'rainbow'
-  };
-  const mapped = costumeMap[costume] || normalizedMood;
-  return allowedSvgNames.has(mapped) ? mapped : 'happy';
-}
 
 function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
   const wardrobeGrid = document.getElementById('wardrobe-grid') as HTMLElement;

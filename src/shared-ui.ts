@@ -54,3 +54,49 @@ export const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> 
 export function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
   return getTrait(stats?.siteCategoryCounts);
 }
+
+/**
+ * Resolves the final SVG asset name for a given mood and active costume.
+ */
+export function getResolvedCostumeName(mood: string, costume: string | undefined): string {
+  const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
+  const allowedSvgNames = new Set([
+    'happy', 'waving', 'smile', 'idle-living', 'christmas', 'halloween', 'summer', 'detective', 'magic', 'rainbow',
+    'sad', 'angry', 'crying', 'working-thinking', 'shrug', 'reading', 'yoga', 'eating', 'coding', 'working-typing',
+    'dancing', 'cool', 'love', 'celebrating', 'mindblown', 'ninja', 'working-wizard', 'astronaut', 'working-debugger',
+    'working-building', 'rocket', 'pirate', 'working-juggling', 'gaming', 'battery-low', 'winter', 'ice-cream',
+    'surfing', 'skateboard', 'telescope', 'meditating', 'working-rubber-duck', 'coffee', 'mail', 'notification',
+    'flexing', 'lifting', 'singing', 'music', 'dj', 'money', 'working-merging', 'working-pushing', 'working-rollback',
+    'working-deploying', 'working-firefighting', 'working-oncall', 'working-context-full', 'working-testing',
+    'working-tool-calling', 'working-pairing', 'working-meeting', 'working-sweeping', 'drumming', 'podcast',
+    'running', 'autumn', 'birthday', 'new-year', 'spring', 'thanksgiving', 'valentine', 'crab-walking', 'dizzy',
+    'embarrassed', 'error', 'evil', 'fire', 'flying', 'gift', 'going-away', 'grumpy', 'hallucinating', 'hopeful',
+    'idea', 'jealous', 'king', 'laughing', 'loading', 'peeking', 'praying', 'scared', 'security', 'shipping',
+    'sick', 'skeptical', 'snow', 'star', 'static-base', 'sweeping', 'time-travel', 'trophy', 'umbrella',
+    'bowling', 'camping', 'chef', 'climbing', 'crafting', 'driving', 'fishing', 'gardening', 'painting',
+    'photography', 'swimming', 'bored', 'facepalm'
+  ]);
+
+  const normalizedMood = mood.trim().toLowerCase();
+
+  // Non-idle states ignore costumes usually
+  if (!idleStates.includes(normalizedMood)) {
+    return allowedSvgNames.has(normalizedMood) ? normalizedMood : 'happy';
+  }
+
+  const costumeMap: Record<string, string> = {
+    christmas: 'christmas',
+    halloween: 'halloween',
+    summer: 'summer',
+    detective: 'detective',
+    wizard: 'magic',
+    party: 'rainbow'
+  };
+
+  if (costume && costumeMap[costume]) {
+    const mapped = costumeMap[costume];
+    return allowedSvgNames.has(mapped) ? mapped : 'happy';
+  }
+
+  return allowedSvgNames.has(normalizedMood) ? normalizedMood : 'happy';
+}

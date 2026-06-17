@@ -9,6 +9,7 @@ import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
 import { ViewManager } from './src/view';
 import { STORAGE_KEYS } from './src/constants';
 import { getDominantTrait, detectPageCategory } from './src/rules';
+import { getResolvedCostumeName } from './src/shared-ui';
 
 const BRIDGE_TOKEN = Math.random().toString(36).substring(2) + Date.now().toString(36);
 setBridgeToken(BRIDGE_TOKEN);
@@ -422,23 +423,7 @@ function ensureInitialized(): void {
 
 async function loadPet(name: string): Promise<void> {
   if (!isInitialized || isOrphaned) return;
-  let assetName = name;
-  const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
-
-  if (idleStates.includes(name)) {
-    const costumeMap: Record<string, string> = {
-      christmas: 'christmas',
-      halloween: 'halloween',
-      summer: 'summer',
-      detective: 'detective',
-      wizard: 'magic',
-      party: 'rainbow'
-    };
-    if (currentSettings.costume && costumeMap[currentSettings.costume]) {
-      assetName = costumeMap[currentSettings.costume];
-    }
-  }
-
+  const assetName = getResolvedCostumeName(name, currentSettings.costume);
   view.setEmotion(assetName, currentSettings.customColor);
 
   if (!checkContextOrCleanup()) return;
