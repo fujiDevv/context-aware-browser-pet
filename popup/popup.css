@@ -5,13 +5,11 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
-}
-
-body {
+html, body {
   width: 380px;
   height: 580px;
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   background-color: var(--bg-color);
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -19,16 +17,10 @@ body {
   user-select: none;
 }
 
-@media (max-width: 400px) {
-  body {
-    width: 100%;
-    height: 100vh;
-  }
-}
-
 .popup-container {
+  width: 380px;
+  height: 580px;
   padding: 16px;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
