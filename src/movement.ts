@@ -176,6 +176,11 @@ export class MovementEngine {
     this.state = 'walk-bottom';
     this._apply();
 
+    this._safeSendMessage({
+      type: 'update-pet-state',
+      state: { x: this.x, y: H, state: this.state, direction: this.direction, paused: this.paused }
+    });
+
     this._posAnimation = springAnimate(el, {
       '--pet-x': `${this.x}px`,
       '--pet-y': `${H}px`
@@ -189,6 +194,10 @@ export class MovementEngine {
       this.y = H;
       this.paused = false;
       if (this.onLanding) this.onLanding();
+      this._safeSendMessage({
+        type: 'update-pet-state',
+        state: { x: this.x, y: this.y, state: this.state, direction: this.direction, paused: this.paused }
+      });
     });
   }
 
@@ -205,6 +214,11 @@ export class MovementEngine {
     setTimeout(() => {
       const el = this.el;
       if (!el || !this.hasFallen || this.isDragging) return;
+
+      this._safeSendMessage({
+        type: 'update-pet-state',
+        state: { x: this.x, y: 0, state: 'walk-top', direction: this.direction, paused: this.paused }
+      });
 
       // 2. Vertical Ascent Phase (Smooth lift-off to ceiling)
       this._posAnimation = springAnimate(el, {
@@ -232,6 +246,10 @@ export class MovementEngine {
           this.paused = false;
           if (this.onFlightEnd) this.onFlightEnd();
           this._apply();
+          this._safeSendMessage({
+            type: 'update-pet-state',
+            state: { x: this.x, y: this.y, state: this.state, direction: this.direction, paused: this.paused }
+          });
         });
       });
     }, 1000);
@@ -265,6 +283,11 @@ export class MovementEngine {
     }
 
     this.paused = true;
+    
+    this._safeSendMessage({
+      type: 'update-pet-state',
+      state: { x: this.x, y: this.y, state: this.state, direction: this.direction, paused: this.paused }
+    });
 
     this._posAnimation = springAnimate(el, {
       '--pet-x': `${this.x}px`,
@@ -278,6 +301,10 @@ export class MovementEngine {
       this._posAnimation!.then(() => {
         this.paused = false;
         if (onComplete) onComplete();
+        this._safeSendMessage({
+          type: 'update-pet-state',
+          state: { x: this.x, y: this.y, state: this.state, direction: this.direction, paused: this.paused }
+        });
         resolve();
       });
     });
@@ -299,7 +326,7 @@ export class MovementEngine {
 
       if (el) {
         el.style.width = `${this.size}px`;
-        el.style.height = `${this.size}px`;
+        el.style.height = `auto`;
       }
 
       const container = this.containerRef?.deref();
@@ -353,9 +380,8 @@ export class MovementEngine {
     const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
     const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
 
-    const hour = new Date().getHours();
-    const isNight = hour >= 22 || hour < 6;
-    const currentSpeed = (isNight ? this.speed * 0.5 : this.speed) * timeMultiplier;
+    // Hardcoded night speed removed. Rely on content.ts to set this.speed via updateSettings
+    const currentSpeed = this.speed * timeMultiplier;
 
     let targetX: number | null = null;
     let targetY: number | null = null;
@@ -496,7 +522,7 @@ export class MovementEngine {
       img.style.transformOrigin = 'center center';
       img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
       img.style.width = `${this.size}px`;
-      img.style.height = `${this.size}px`;
+      img.style.height = `auto`;
     }
 
     const bubble = el.parentElement?.querySelector('.pet-speech-bubble') as HTMLElement | null;

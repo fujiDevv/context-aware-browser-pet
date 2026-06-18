@@ -1,6 +1,7 @@
 import { PetStats } from './types';
 import { STORAGE_KEYS } from './constants';
 import { getDominantTrait } from './rules';
+import { isSleeping, isYogaTime } from './schedule';
 
 const DEFAULT_STATS: PetStats = {
   happiness: 50,
@@ -38,12 +39,6 @@ export class PersonalitySystem {
     this.onStatsChange = onStatsChange;
     this.isLoaded = this._load();
 
-    if (typeof window !== 'undefined') {
-      this._decayInterval = setInterval(() => {
-        this._periodicDecay();
-      }, 60_000); // Check decay every 1 minute
-    }
-
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
       chrome.storage.onChanged.addListener((changes) => {
         if (changes[STORAGE_KEYS.STATS]) {
@@ -56,7 +51,7 @@ export class PersonalitySystem {
     }
   }
 
-  _applyDecay(): void {
+  _applyDecay(settings?: import('./types').PetSettings): void {
     const lastUpdate = this.stats.lastUpdateTime || Date.now();
     const elapsedMs = Date.now() - lastUpdate;
     
@@ -75,19 +70,35 @@ export class PersonalitySystem {
       console.debug(`[Clawd Personality] Applying catch-up decay for ${Math.round(elapsedSeconds / 3600)} hours of inactivity (Softened).`);
     }
 
-    // Decay rates per second
-    const happinessDecay = decaySeconds * 0.0011;
-    const energyDecay = decaySeconds * 0.0019;
+    // Default Decay rates per second
+    let happinessDecay = decaySeconds * 0.0011;
+    let energyDecay = decaySeconds * 0.0019;
     const curiosityDecay = decaySeconds * 0.0005;
     const focusDecay = decaySeconds * 0.0015;
     const leisureDecay = decaySeconds * 0.0015;
 
-    // Clamp stats at 15% floor so Clawd is never fully depleted/unusable offline
-    this.stats.happiness = Math.max(MIN_STAT_VALUE, Math.round(this.stats.happiness - happinessDecay));
-    this.stats.energy = Math.max(MIN_STAT_VALUE, Math.round(this.stats.energy - energyDecay));
-    this.stats.curiosity = Math.max(MIN_STAT_VALUE, Math.round(this.stats.curiosity - curiosityDecay));
-    this.stats.focus = Math.max(MIN_STAT_VALUE, Math.round(this.stats.focus - focusDecay));
-    this.stats.leisure = Math.max(MIN_STAT_VALUE, Math.round(this.stats.leisure - leisureDecay));
+    // Apply Restoration if settings are provided
+    if (settings && settings.scheduleEnabled !== false) {
+      const hour = new Date().getHours();
+      
+      if (isSleeping(settings, hour)) {
+        // Restore energy instead of decaying (+2% per minute = ~0.0333 per second)
+        energyDecay = -(decaySeconds * 0.0333);
+      }
+      
+      if (isYogaTime(settings, hour)) {
+        // Restore happiness instead of decaying (+1% per minute = ~0.0166 per second)
+        happinessDecay = -(decaySeconds * 0.0166);
+      }
+    }
+
+    // Clamp stats at MIN_STAT_VALUE so Clawd is never fully depleted/unusable offline
+    // Fix: Remove Math.round to prevent "Ghost Decay" rounding bug where stats never drop
+    this.stats.happiness = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.happiness - happinessDecay));
+    this.stats.energy = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.energy - energyDecay));
+    this.stats.curiosity = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.curiosity - curiosityDecay));
+    this.stats.focus = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.focus - focusDecay));
+    this.stats.leisure = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.leisure - leisureDecay));
     
     this.stats.lastUpdateTime = Date.now();
   }
@@ -124,15 +135,9 @@ export class PersonalitySystem {
     }
   }
 
-  async _periodicDecay(): Promise<void> {
-    // Only apply periodic decay if the document is visible to avoid redundant storage writes from multiple tabs.
-    // Initial catch-up decay is still handled by _load() when the extension starts.
-    if (typeof document !== 'undefined' && document.visibilityState !== 'visible') {
-      return;
-    }
-
+  async _periodicDecay(settings?: import('./types').PetSettings): Promise<void> {
     await this.isLoaded;
-    this._applyDecay();
+    this._applyDecay(settings);
     this._applyHabitDecay();
     this._recordDailyMood();
     await this._save();
@@ -176,12 +181,14 @@ export class PersonalitySystem {
       if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
         return this.stats;
       }
-      const saved = await chrome.storage.local.get(STORAGE_KEYS.STATS);
+      const saved = await chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS]);
       if (saved[STORAGE_KEYS.STATS]) {
         this.stats = { ...DEFAULT_STATS, ...saved[STORAGE_KEYS.STATS] };
       }
 
-      this._applyDecay();
+      const settings = saved[STORAGE_KEYS.SETTINGS];
+
+      this._applyDecay(settings);
       this._applyHabitDecay();
       this.stats.lastUpdateTime = Date.now();
       await this._save();

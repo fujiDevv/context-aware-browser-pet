@@ -13,6 +13,7 @@ import {
   ALL_EMOTIONS_POOL, 
   SEASONAL_POOL 
 } from './rules';
+import { isSleeping, isWorking, isFocusActive, isYogaTime } from './schedule';
 
 export class EmotionEngine {
   personality: PersonalitySystem;
@@ -27,15 +28,7 @@ export class EmotionEngine {
     ctx: TriggerSnapshot,
     scheduleEnabled: boolean = true,
     seasonalEnabled: boolean = true,
-    customPlanner?: {
-      sleepStartHour?: number;
-      sleepEndHour?: number;
-      workStartHour?: number;
-      workEndHour?: number;
-      focusActive?: boolean;
-      focusStartHour?: number;
-      focusEndHour?: number;
-    }
+    customPlanner?: any // Kept as any for backwards compatibility if needed, but expected to be PetSettings
   ): Promise<string> {
     let emotion = await this._determineEmotion(ctx, scheduleEnabled, seasonalEnabled, customPlanner);
 
@@ -53,15 +46,7 @@ export class EmotionEngine {
     ctx: TriggerSnapshot,
     scheduleEnabled: boolean = true,
     seasonalEnabled: boolean = true,
-    customPlanner?: {
-      sleepStartHour?: number;
-      sleepEndHour?: number;
-      workStartHour?: number;
-      workEndHour?: number;
-      focusActive?: boolean;
-      focusStartHour?: number;
-      focusEndHour?: number;
-    }
+    customPlanner?: any
   ): Promise<string> {
     if (ctx.lastHttpError && ctx.lastHttpError >= 400) {
       const errorStr = ctx.lastHttpError.toString();
@@ -73,20 +58,10 @@ export class EmotionEngine {
     if (ctx.hasConsoleError) return 'working-debugger';
 
     // Focus Blocks Override (Manual Toggle or Scheduled Hours)
-    let isFocusActive = customPlanner?.focusActive || false;
+    const settings = customPlanner || {};
     const hour = new Date().getHours();
     
-    if (!isFocusActive && customPlanner?.focusStartHour !== undefined && customPlanner?.focusEndHour !== undefined) {
-      const start = customPlanner.focusStartHour;
-      const end = customPlanner.focusEndHour;
-      if (start < end) {
-        isFocusActive = hour >= start && hour < end;
-      } else {
-        isFocusActive = hour >= start || hour < end;
-      }
-    }
-
-    if (isFocusActive) {
+    if (isFocusActive(settings, hour)) {
       const index = Math.floor(new Date().getMinutes() / 10) % FOCUS_EMOTIONS.length;
       return FOCUS_EMOTIONS[index];
     }
@@ -138,29 +113,13 @@ export class EmotionEngine {
     }
 
     // 4. Custom Sleep planner
-    const sleepStart = customPlanner?.sleepStartHour !== undefined ? customPlanner.sleepStartHour : 22;
-    const sleepEnd = customPlanner?.sleepEndHour !== undefined ? customPlanner.sleepEndHour : 6;
-    let isSleeping = false;
-    if (sleepStart < sleepEnd) {
-      isSleeping = hour >= sleepStart && hour < sleepEnd;
-    } else {
-      isSleeping = hour >= sleepStart || hour < sleepEnd;
-    }
-    if (isSleeping) return 'sleeping';
+    if (isSleeping(settings, hour)) return 'sleeping';
 
     // 4.1 Yoga check right after waking up
-    if (hour === sleepEnd) return 'yoga';
+    if (isYogaTime(settings, hour)) return 'yoga';
 
     // 4.2 Custom Active Work Hours
-    const workStart = customPlanner?.workStartHour !== undefined ? customPlanner.workStartHour : 9;
-    const workEnd = customPlanner?.workEndHour !== undefined ? customPlanner.workEndHour : 17;
-    let isWorking = false;
-    if (workStart < workEnd) {
-      isWorking = hour >= workStart && hour < workEnd;
-    } else {
-      isWorking = hour >= workStart || hour < workEnd;
-    }
-    if (isWorking) {
+    if (isWorking(settings, hour)) {
       const index = Math.floor(new Date().getMinutes() / 15) % WORK_EMOTIONS.length;
       return WORK_EMOTIONS[index];
     }

@@ -10,6 +10,7 @@ import { ViewManager } from './src/view';
 import { STORAGE_KEYS } from './src/constants';
 import { getDominantTrait, detectPageCategory } from './src/rules';
 import { getResolvedCostumeName } from './src/shared-ui';
+import { isFocusActive, isSleeping } from './src/schedule';
 
 const BRIDGE_TOKEN = Math.random().toString(36).substring(2) + Date.now().toString(36);
 setBridgeToken(BRIDGE_TOKEN);
@@ -48,6 +49,11 @@ async function playSound(type: string): Promise<void> {
   if (!filename) return;
 
   if (currentSettings.soundEnabled === false) {
+    return;
+  }
+
+  // Mute during Focus Blocks
+  if (isFocusActive(currentSettings)) {
     return;
   }
 
@@ -181,6 +187,7 @@ function showBubbleWithSound(text: string, duration = 3000): void {
   if (document.visibilityState === 'visible' && !isPetHidden()) {
     playSound('chat');
   }
+  // Even if focus blocks sound, it still shows the bubble
   view.showBubble(text, duration);
 }
 
@@ -216,6 +223,18 @@ function handleIdleBehavior(): void {
   const context = triggers.snapshot();
   const scheduleEnabled = currentSettings.scheduleEnabled !== false;
 
+  // Enforce Focus Mode silence even in Autonomous Mode
+  if (isFocusActive(currentSettings)) {
+    if (context.idleSeconds >= 45) {
+      updateEmotion(); // Allows transition to idle focus like 'studying'
+    }
+    // Continue checking if still idle
+    if (context.idleSeconds >= 10) {
+      resetIdleTimer();
+    }
+    return;
+  }
+
   if (!scheduleEnabled) {
     if (Math.random() < 0.4) {
       const decisions = [
@@ -248,26 +267,12 @@ function handleIdleBehavior(): void {
       chosenDecision();
     }
   } else {
-    let isFocusActive = currentSettings.focusActive || false;
-    const currentHour = new Date().getHours();
-    if (!isFocusActive && currentSettings.focusStartHour !== undefined && currentSettings.focusEndHour !== undefined) {
-      const start = currentSettings.focusStartHour;
-      const end = currentSettings.focusEndHour;
-      if (start < end) {
-        isFocusActive = currentHour >= start && currentHour < end;
-      } else {
-        isFocusActive = currentHour >= start || currentHour < end;
-      }
-    }
-
-    if (!isFocusActive) {
-      if (context.idleSeconds >= 10 && context.idleSeconds < 45 && Math.random() < 0.3) {
-        movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-        const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
-        showBubbleWithSound(dialogs[Math.floor(Math.random() * dialogs.length)]);
-      } else if (context.idleSeconds >= 45) {
-        updateEmotion(); // Let engine pick deep idle (skateboard, sleeping, etc)
-      }
+    if (context.idleSeconds >= 10 && context.idleSeconds < 45 && Math.random() < 0.3) {
+      movement.chaseCursor(context.mouseX - currentSettings.size / 2);
+      const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
+      showBubbleWithSound(dialogs[Math.floor(Math.random() * dialogs.length)]);
+    } else if (context.idleSeconds >= 45) {
+      updateEmotion(); // Let engine pick deep idle (skateboard, sleeping, etc)
     }
   }
 
@@ -479,21 +484,16 @@ async function updateEmotion(): Promise<void> {
     traitFactor = 0.85 / (1 + prestige * 0.1);
   }
 
+  let finalSpeed = baseSpeed * energyFactor * traitFactor;
+  if (scheduleEnabled && isSleeping(currentSettings)) {
+    finalSpeed *= 0.5;
+  }
+
   movement.updateSettings({
-    speed: baseSpeed * energyFactor * traitFactor
+    speed: finalSpeed
   });
 
-  let isFocusActive = currentSettings.focusActive || false;
-  const currentHour = new Date().getHours();
-  if (!isFocusActive && currentSettings.focusStartHour !== undefined && currentSettings.focusEndHour !== undefined) {
-    const start = currentSettings.focusStartHour;
-    const end = currentSettings.focusEndHour;
-    if (start < end) {
-      isFocusActive = currentHour >= start && currentHour < end;
-    } else {
-      isFocusActive = currentHour >= start || currentHour < end;
-    }
-  }
+  const focusActive = isFocusActive(currentSettings);
 
   let customReaction = undefined;
   if (currentSettings.domainReactions) {
@@ -509,12 +509,12 @@ async function updateEmotion(): Promise<void> {
   }
   const useLiteMode = !currentSettings.aiMode || isMetered || aiStatus !== 'readily';
 
-  if (customReaction && !isFocusActive) {
+  if (customReaction && !focusActive) {
     nextEmotion = customReaction.emotion;
     if (customReaction.dialogue) {
       aiComment = customReaction.dialogue;
     }
-  } else if (isFocusActive) {
+  } else if (focusActive) {
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
   } else if (scheduleEnabled && currentSettings.aiMode && !useLiteMode && !context.lastHttpError && context.idleSeconds < 60) {
     if (!hasEvaluatedPageAi) {
@@ -599,7 +599,7 @@ async function updateEmotion(): Promise<void> {
   }
 
   if (nextEmotion !== emotion.current || aiComment) {
-    if (customReaction && customReaction.sound && customReaction.sound !== 'none' && !isFocusActive) {
+    if (customReaction && customReaction.sound && customReaction.sound !== 'none' && !focusActive) {
       if (customReactionPlayCount < 2) {
         playSound(customReaction.sound);
         customReactionPlayCount++;
@@ -617,19 +617,7 @@ async function updateEmotion(): Promise<void> {
 }
 
 function triggerContextDialogue(mood: string): void {
-  let isFocusActive = currentSettings.focusActive || false;
-  const currentHour = new Date().getHours();
-  if (!isFocusActive && currentSettings.focusStartHour !== undefined && currentSettings.focusEndHour !== undefined) {
-    const start = currentSettings.focusStartHour;
-    const end = currentSettings.focusEndHour;
-    if (start < end) {
-      isFocusActive = currentHour >= start && currentHour < end;
-    } else {
-      isFocusActive = currentHour >= start || currentHour < end;
-    }
-  }
-
-  if (isFocusActive) {
+  if (isFocusActive(currentSettings)) {
     return;
   }
 

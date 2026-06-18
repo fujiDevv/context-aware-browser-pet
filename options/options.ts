@@ -678,20 +678,26 @@ function updateUIStats(stats: PetStats | undefined): void {
   lblHabitBehavior.textContent = behaviorDesc;
 
   // Update core gauges
-  gauges.happinessVal.textContent = `${stats.happiness}%`;
-  gauges.happinessBar.style.width = `${stats.happiness}%`;
+  const roundedHappiness = Math.round(stats.happiness);
+  const roundedEnergy = Math.round(stats.energy);
+  const roundedCuriosity = Math.round(stats.curiosity);
+  const roundedFocus = Math.round(stats.focus ?? 50);
+  const roundedLeisure = Math.round(stats.leisure ?? 50);
 
-  gauges.energyVal.textContent = `${stats.energy}%`;
-  gauges.energyBar.style.width = `${stats.energy}%`;
+  gauges.happinessVal.textContent = `${roundedHappiness}%`;
+  gauges.happinessBar.style.width = `${roundedHappiness}%`;
 
-  gauges.curiosityVal.textContent = `${stats.curiosity}%`;
-  gauges.curiosityBar.style.width = `${stats.curiosity}%`;
+  gauges.energyVal.textContent = `${roundedEnergy}%`;
+  gauges.energyBar.style.width = `${roundedEnergy}%`;
 
-  gauges.focusVal.textContent = `${stats.focus ?? 50}%`;
-  gauges.focusBar.style.width = `${stats.focus ?? 50}%`;
+  gauges.curiosityVal.textContent = `${roundedCuriosity}%`;
+  gauges.curiosityBar.style.width = `${roundedCuriosity}%`;
 
-  gauges.leisureVal.textContent = `${stats.leisure ?? 50}%`;
-  gauges.leisureBar.style.width = `${stats.leisure ?? 50}%`;
+  gauges.focusVal.textContent = `${roundedFocus}%`;
+  gauges.focusBar.style.width = `${roundedFocus}%`;
+
+  gauges.leisureVal.textContent = `${roundedLeisure}%`;
+  gauges.leisureBar.style.width = `${roundedLeisure}%`;
 
   // Lifetime counts
   valTotalPets.textContent = String(stats.totalPets || 0);
@@ -975,6 +981,27 @@ function applySettings(settings: PetSettings | undefined) {
   flightSpeedVal.textContent = `${flightSpeed.toFixed(1)}x`;
 
   activeCostume = activeSettings.costume || 'none';
+
+  // Apply dynamic times to the Schedule Guide
+  const formatHour = (h: number) => {
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const displayHour = h % 12 === 0 ? 12 : h % 12;
+    return `${displayHour} ${ampm}`;
+  };
+  
+  const uiScheduleSleep = document.getElementById('ui-schedule-sleep');
+  const uiScheduleYoga = document.getElementById('ui-schedule-yoga');
+  const sleepStart = activeSettings.sleepStartHour ?? 22;
+  const sleepEnd = activeSettings.sleepEndHour ?? 6;
+  const workStart = activeSettings.workStartHour ?? 9;
+
+  if (uiScheduleSleep) {
+    uiScheduleSleep.textContent = `${formatHour(sleepStart)} - ${formatHour(sleepEnd)}`;
+  }
+  if (uiScheduleYoga) {
+    // Yoga is typically the hour after waking up until work starts (or just a 1-3 hr block)
+    uiScheduleYoga.textContent = `${formatHour(sleepEnd)} - ${formatHour(workStart)}`;
+  }
 
   // Apply costume glows to the preview image in the sanctuary stage
   if (petImg) {

@@ -1,5 +1,6 @@
 import { SharedPetState, OriginPetState } from './src/types';
 import { STORAGE_KEYS } from './src/constants';
+import { PersonalitySystem } from './src/personality';
 
 let sharedPetState: SharedPetState = {
   x: 200,
@@ -19,6 +20,7 @@ chrome.storage.local.get(STORAGE_KEYS.SHARED_STATE, (data) => {
 
 const originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
+const backgroundPersonality = new PersonalitySystem();
 
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
@@ -49,6 +51,27 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.tabs.create({
       url: `onboarding/onboarding.html?version=v${version}&reason=${details.reason}`
     });
+  }
+
+  chrome.alarms.create('pet-decay', { periodInMinutes: 1 });
+});
+
+chrome.runtime.onStartup.addListener(() => {
+  chrome.alarms.get('pet-decay', (alarm) => {
+    if (!alarm) {
+      chrome.alarms.create('pet-decay', { periodInMinutes: 1 });
+    }
+  });
+});
+
+chrome.alarms.onAlarm.addListener(async (alarm) => {
+  if (alarm.name === 'pet-decay') {
+    try {
+      const data = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+      await backgroundPersonality._periodicDecay(data[STORAGE_KEYS.SETTINGS]);
+    } catch (e) {
+      console.warn('[Clawd Background] Failed to apply periodic decay:', e);
+    }
   }
 });
 
