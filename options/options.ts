@@ -728,7 +728,6 @@ async function updateSynapseUI(stats: PetStats) {
   const lastGen = stats.aiInsight?.lastGeneratedTimestamp || Date.now();
   const now = Date.now();
   const msInDay = 24 * 60 * 60 * 1000;
-  // const msInDay = 1 * 60 * 1000;
   const elapsed = now - lastGen;
   const progress = Math.min(100, Math.floor((elapsed / msInDay) * 100));
 

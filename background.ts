@@ -362,6 +362,10 @@ async function setupOffscreen(): Promise<void> {
 
   try {
     await creatingOffscreen;
+  } catch (err: any) {
+    if (!err.message.includes('Only a single offscreen document may be created')) {
+      throw err;
+    }
   } finally {
     creatingOffscreen = null;
   }
