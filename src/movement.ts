@@ -213,7 +213,11 @@ export class MovementEngine {
     // 1. Preparation Phase (Engine Charging)
     setTimeout(() => {
       const el = this.el;
-      if (!el || !this.hasFallen || this.isDragging) return;
+      if (!el || !this.hasFallen || this.isDragging) {
+        if (this.onFlightEnd) this.onFlightEnd(); // abort safely
+        this.paused = false;
+        return;
+      }
 
       this._safeSendMessage({
         type: 'update-pet-state',
