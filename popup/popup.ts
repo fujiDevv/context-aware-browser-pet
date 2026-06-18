@@ -292,23 +292,29 @@ async function init(): Promise<void> {
 
     statsEl.level.textContent = String(stats.level);
     const xpNeeded = Math.floor(Math.pow(stats.level, 1.5) * 150);
-    statsEl.xpText.textContent = `${stats.xp} / ${xpNeeded} XP`;
+    statsEl.xpText.textContent = `${Math.round(stats.xp)} / ${xpNeeded} XP`;
     statsEl.xpBar.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
 
-    statsEl.happinessText.textContent = `${stats.happiness}%`;
-    statsEl.happinessBar.style.width = `${stats.happiness}%`;
+    const roundedHappiness = Math.round(stats.happiness);
+    const roundedEnergy = Math.round(stats.energy);
+    const roundedCuriosity = Math.round(stats.curiosity);
+    const roundedFocus = Math.round(stats.focus ?? 50);
+    const roundedLeisure = Math.round(stats.leisure ?? 50);
 
-    statsEl.energyText.textContent = `${stats.energy}%`;
-    statsEl.energyBar.style.width = `${stats.energy}%`;
+    statsEl.happinessText.textContent = `${roundedHappiness}%`;
+    statsEl.happinessBar.style.width = `${roundedHappiness}%`;
 
-    statsEl.curiosityText.textContent = `${stats.curiosity}%`;
-    statsEl.curiosityBar.style.width = `${stats.curiosity}%`;
+    statsEl.energyText.textContent = `${roundedEnergy}%`;
+    statsEl.energyBar.style.width = `${roundedEnergy}%`;
 
-    statsEl.focusText.textContent = `${stats.focus ?? 50}%`;
-    statsEl.focusBar.style.width = `${stats.focus ?? 50}%`;
+    statsEl.curiosityText.textContent = `${roundedCuriosity}%`;
+    statsEl.curiosityBar.style.width = `${roundedCuriosity}%`;
 
-    statsEl.leisureText.textContent = `${stats.leisure ?? 50}%`;
-    statsEl.leisureBar.style.width = `${stats.leisure ?? 50}%`;
+    statsEl.focusText.textContent = `${roundedFocus}%`;
+    statsEl.focusBar.style.width = `${roundedFocus}%`;
+
+    statsEl.leisureText.textContent = `${roundedLeisure}%`;
+    statsEl.leisureBar.style.width = `${roundedLeisure}%`;
   }
 
   function updateUIMood(mood: string, costume?: string, customColor?: string): void {
