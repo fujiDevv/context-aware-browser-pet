@@ -73,6 +73,10 @@ body {
 }
 
 @media (max-width: 900px) {
+  body {
+    padding: 0;
+  }
+
   .dashboard-wrapper {
     flex-direction: column;
     max-height: 100vh;
@@ -85,13 +89,13 @@ body {
     padding: 16px 20px;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 
   .sidebar-brand {
-    margin-bottom: 0;
+    margin-bottom: 12px;
   }
 
   .sidebar-menu {
@@ -99,7 +103,8 @@ body {
     overflow-x: auto;
     gap: 8px;
     flex-grow: 0;
-    padding-bottom: 4px; /* for scrollbar */
+    width: 100%;
+    padding-bottom: 8px; /* for scrollbar */
   }
 
   .menu-btn {

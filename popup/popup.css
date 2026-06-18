@@ -9,13 +9,23 @@
 }
 
 body {
-  width: 380px;
-  height: 580px;
+  width: 100%;
+  max-width: 380px;
+  height: 100vh;
+  max-height: 580px;
+  margin: 0 auto;
   overflow: hidden;
   background-color: var(--bg-color);
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-primary);
   user-select: none;
+}
+
+@media (max-width: 400px) {
+  body {
+    max-width: none;
+    max-height: none;
+  }
 }
 
 .popup-container {
