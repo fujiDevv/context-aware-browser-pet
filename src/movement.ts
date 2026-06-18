@@ -338,6 +338,12 @@ export class MovementEngine {
       const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
       this.x = Math.max(0, Math.min(this.x, W));
       this.y = Math.max(0, Math.min(this.y, H));
+
+      if (this.state === 'walk-top') {
+        this.y = 0;
+      } else if (this.state === 'walk-bottom') {
+        this.y = H;
+      }
     }
     this._apply();
   }
@@ -743,6 +749,8 @@ export class MovementEngine {
       this.x = newX;
       this.y = newY;
       if (state.direction !== undefined) this.direction = state.direction;
+      if (state.paused !== undefined) this.paused = state.paused;
+      this._apply();
       return;
     }
 
