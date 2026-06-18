@@ -1076,7 +1076,7 @@ function applySettings(settings: PetSettings | undefined) {
   renderDomainReactions();
 
   renderBlocklist();
-  renderWardrobe(personality.stats, activeCostume, seasonalToggle.checked);
+  renderWardrobe(personality?.stats, activeCostume, seasonalToggle.checked);
 }
 
 function saveSettings() {
