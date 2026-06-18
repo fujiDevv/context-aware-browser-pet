@@ -19,6 +19,8 @@ export class ViewManager {
   private bubble: HTMLElement;
   private bubbleTimeout: ReturnType<typeof setTimeout> | null = null;
   private options: ViewManagerOptions;
+  private activeCostume: string | undefined = 'none';
+  private lastAssetName: string = 'happy';
 
   constructor(options: ViewManagerOptions) {
     this.options = options;
@@ -92,12 +94,32 @@ export class ViewManager {
   private colorCache: Map<string, string> = new Map();
   private baseColors = ['#DE886D', '#CF7B61', '#C77A5E', '#C9745A', '#A85B45', '#C75D3F'];
 
+  private _syncAura(currentAsset: string) {
+    const costume = this.activeCostume;
+    
+    // Magical Auras only apply to their specific costume assets.
+    // If the pet switches to an 'action' asset (like coding.svg), the aura is suppressed.
+    const supportsAura = (
+      (costume === 'detective' && currentAsset === 'detective') ||
+      (costume === 'wizard' && currentAsset === 'magic') ||
+      (costume === 'party' && currentAsset === 'rainbow')
+    );
+
+    this.petImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
+    if (supportsAura && costume && ['detective', 'wizard', 'party'].includes(costume)) {
+      this.petImg.classList.add(`costume-${costume}`);
+    }
+  }
+
   public async setEmotion(assetName: string, customColor?: string) {
     if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
       return;
     }
     
     const url = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
+
+    this.lastAssetName = assetName;
+    this._syncAura(assetName);
 
     if (!customColor || customColor === '#DE886D') {
       this.petImg.src = url;
@@ -214,10 +236,8 @@ export class ViewManager {
   }
 
   public applyCostume(costume: string | undefined) {
-    this.petImg.classList.remove('costume-detective', 'costume-wizard', 'costume-party');
-    if (costume && ['detective', 'wizard', 'party'].includes(costume)) {
-      this.petImg.classList.add(`costume-${costume}`);
-    }
+    this.activeCostume = costume;
+    this._syncAura(this.lastAssetName);
   }
 
   public hide() {

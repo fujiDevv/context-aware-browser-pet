@@ -58,8 +58,8 @@ export function getDominantTrait(stats: PetStats | undefined): 'developer' | 'ga
 /**
  * Resolves the final SVG asset name for a given mood and active costume.
  */
-export function getResolvedCostumeName(mood: string, costume: string | undefined): string {
-  const idleStates = ['happy', 'waving', 'smile', 'idle-living'];
+export function getResolvedCostumeName(mood: string, costume: string | undefined, seasonalEnabled: boolean = true): string {
+  const costumeStates = ['happy', 'waving', 'smile', 'idle-living', 'yoga', 'reading', 'shrug', 'working-thinking'];
   const allowedSvgNames = new Set([
     'happy', 'waving', 'smile', 'idle-living', 'christmas', 'halloween', 'summer', 'detective', 'magic', 'rainbow',
     'sad', 'angry', 'crying', 'working-thinking', 'shrug', 'reading', 'yoga', 'eating', 'coding', 'working-typing',
@@ -79,8 +79,13 @@ export function getResolvedCostumeName(mood: string, costume: string | undefined
 
   const normalizedMood = mood.trim().toLowerCase();
 
-  // Non-idle states ignore costumes usually
-  if (!idleStates.includes(normalizedMood)) {
+  // If seasonal outfits are disabled, ignore seasonal costumes (but keep permanent ones like detective)
+  const seasonalCostumes = ['christmas', 'halloween', 'summer'];
+  const isSeasonalRequested = costume && seasonalCostumes.includes(costume);
+  const effectiveCostume = (isSeasonalRequested && !seasonalEnabled) ? 'none' : costume;
+
+  // States that support wearing a full-body costume overlay
+  if (!costumeStates.includes(normalizedMood)) {
     return allowedSvgNames.has(normalizedMood) ? normalizedMood : 'happy';
   }
 
@@ -93,8 +98,8 @@ export function getResolvedCostumeName(mood: string, costume: string | undefined
     party: 'rainbow'
   };
 
-  if (costume && costumeMap[costume]) {
-    const mapped = costumeMap[costume];
+  if (effectiveCostume && costumeMap[effectiveCostume]) {
+    const mapped = costumeMap[effectiveCostume];
     return allowedSvgNames.has(mapped) ? mapped : 'happy';
   }
 

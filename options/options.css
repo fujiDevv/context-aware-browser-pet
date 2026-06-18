@@ -1740,6 +1740,11 @@ input:checked+.switch-slider:before {
   opacity: 0.65;
 }
 
+.wardrobe-card.seasonal-disabled {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
 .wardrobe-thumbnail-container {
   width: 64px;
   height: 64px;

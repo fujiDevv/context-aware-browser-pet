@@ -428,7 +428,7 @@ function ensureInitialized(): void {
 
 async function loadPet(name: string): Promise<void> {
   if (!isInitialized || isOrphaned) return;
-  const assetName = getResolvedCostumeName(name, currentSettings.costume);
+  const assetName = getResolvedCostumeName(name, currentSettings.costume, currentSettings.seasonalEnabled);
   view.setEmotion(assetName, currentSettings.customColor);
 
   if (!checkContextOrCleanup()) return;

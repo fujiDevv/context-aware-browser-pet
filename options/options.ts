@@ -188,7 +188,7 @@ async function init() {
   // Initializing the Personality System
   personality = new PersonalitySystem((updatedStats) => {
     updateUIStats(updatedStats);
-    renderWardrobe(updatedStats, activeCostume);
+    renderWardrobe(updatedStats, activeCostume, seasonalToggle.checked);
   });
 
   await personality.isLoaded;
@@ -210,7 +210,7 @@ async function init() {
   }, 5000);
 
   // Initial Wardrobe rendering
-  renderWardrobe(personality.stats, storageData[STORAGE_KEYS.SETTINGS]?.costume || 'none');
+  renderWardrobe(personality.stats, storageData[STORAGE_KEYS.SETTINGS]?.costume || 'none', storageData[STORAGE_KEYS.SETTINGS]?.seasonalEnabled ?? true);
 
   // Interaction buttons
   const btnPet = document.getElementById('btn-pet') as HTMLButtonElement;
@@ -315,7 +315,14 @@ async function init() {
   });
 
   scheduleToggle.addEventListener('change', saveSettings);
-  seasonalToggle.addEventListener('change', saveSettings);
+  seasonalToggle.addEventListener('change', () => {
+    saveSettings();
+    renderWardrobe(personality.stats, activeCostume, seasonalToggle.checked);
+    // Force mood update to apply seasonal fallback if needed
+    const currentMoodBadge = document.getElementById('pet-mood') as HTMLElement;
+    const currentMood = currentMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
+    updateUIMood(currentMood);
+  });
 
   // Blocklist listeners
   btnAddBlock.addEventListener('click', addBlockedDomain);
@@ -1072,6 +1079,7 @@ function applySettings(settings: PetSettings | undefined) {
   renderDomainReactions();
 
   renderBlocklist();
+  renderWardrobe(personality.stats, activeCostume, seasonalToggle.checked);
 }
 
 function saveSettings() {
@@ -1410,7 +1418,7 @@ const COSTUMES_METADATA = [
   { id: 'summer', name: 'Summer Shades', desc: 'Cool sunglasses outfit', unlockLevel: 0, seasonal: true, image: 'summer' }
 ];
 
-function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
+function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string, seasonalEnabled: boolean = true) {
   const wardrobeGrid = document.getElementById('wardrobe-grid') as HTMLElement;
   if (!wardrobeGrid) return;
   wardrobeGrid.innerHTML = '';
@@ -1421,18 +1429,22 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
   COSTUMES_METADATA.forEach(item => {
     const isUnlocked = level >= item.unlockLevel || !!hasPrestige;
     const isWearing = activeCostumeId === item.id;
+    const isSeasonalDisabled = item.seasonal && !seasonalEnabled;
 
     const card = document.createElement('div');
-    card.className = `wardrobe-card ${isWearing ? 'wearing' : ''} ${!isUnlocked ? 'locked' : ''}`;
+    card.className = `wardrobe-card ${isWearing ? 'wearing' : ''} ${!isUnlocked ? 'locked' : ''} ${isSeasonalDisabled ? 'seasonal-disabled' : ''}`;
 
     let badgeHtml = '';
     if (!isUnlocked) {
       badgeHtml = `<span class="badge locked">LVL ${item.unlockLevel}</span>`;
     } else if (item.seasonal) {
-      badgeHtml = `<span class="badge seasonal">Seasonal</span>`;
+      badgeHtml = `<span class="badge seasonal">${seasonalEnabled ? 'Seasonal' : 'Seasonal (Disabled)'}</span>`;
     } else if (isWearing) {
       badgeHtml = `<span class="badge wearing-badge">Active</span>`;
     }
+
+    const btnText = isWearing ? 'Wearing' : (isSeasonalDisabled ? 'Disabled' : (isUnlocked ? 'Wear' : 'Locked'));
+    const btnDisabled = !isUnlocked || isSeasonalDisabled;
 
     card.innerHTML = `
       <div class="wardrobe-thumbnail-container">
@@ -1443,8 +1455,8 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
         <h3>${item.name}</h3>
         <p>${item.desc}</p>
       </div>
-      <button class="wardrobe-wear-btn" ${!isUnlocked ? 'disabled' : ''} data-costume="${item.id}">
-        ${isWearing ? 'Wearing' : isUnlocked ? 'Wear' : 'Locked'}
+      <button class="wardrobe-wear-btn" ${btnDisabled ? 'disabled' : ''} data-costume="${item.id}">
+        ${btnText}
       </button>
     `;
 
@@ -1473,7 +1485,7 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string) {
         const currentMood = currentMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
         updateUIMood(currentMood);
 
-        renderWardrobe(stats, costumeId);
+        renderWardrobe(stats, costumeId, seasonalEnabled);
       }
     });
   });
