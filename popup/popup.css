@@ -9,10 +9,8 @@
 }
 
 body {
-  width: 100%;
-  max-width: 380px;
-  height: 100vh;
-  max-height: 580px;
+  width: 380px;
+  height: 580px;
   margin: 0 auto;
   overflow: hidden;
   background-color: var(--bg-color);
@@ -23,8 +21,8 @@ body {
 
 @media (max-width: 400px) {
   body {
-    max-width: none;
-    max-height: none;
+    width: 100%;
+    height: 100vh;
   }
 }
 
@@ -139,73 +137,71 @@ h2 {
 .header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 2px;
-  background: #faf5f2;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 8px;
+  background: var(--bg-hover);
   background-image: var(--noise-grain);
-  border: 1px solid var(--accent-border);
-  border-radius: 16px;
-  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
 
-.header-main {
+.header-top {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
   width: 100%;
 }
 
-.avatar-container {
+.avatar-hero-container {
   position: relative;
-  width: 52px;
-  height: 52px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: #ffffff;
   border: 1px solid var(--border-color);
-  padding: 4px;
-  flex-shrink: 0;
+  padding: 6px;
+  margin-top: -4px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+}
+
+.avatar-hero-container .avatar-glow {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%);
+  z-index: 0;
 }
 
 #pet-preview {
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   image-rendering: pixelated;
   z-index: 1;
   transition: transform 0.2s ease;
 }
 
-.header-info {
+.header-title-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  flex: 1;
-}
-
-.name-lvl-row {
-  display: flex;
   align-items: center;
   gap: 8px;
-  width: 100%;
 }
 
 #pet-name {
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 700;
-  letter-spacing: 0.2px;
+  letter-spacing: -0.5px;
   color: var(--text-primary);
   margin: 0;
-}
-
-.status-bar {
-  display: flex;
-  gap: 8px;
-  margin-top: 2px;
 }
 
 .presence-badge {
@@ -228,15 +224,17 @@ h2 {
 .badge-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
   align-items: center;
+  justify-content: center;
 }
 
 .xp-section {
-  margin-top: 6px;
+  width: 100%;
+  margin-top: 4px;
   margin-bottom: 0;
-  border-top: 1px solid var(--accent-border);
-  padding-top: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-color);
 }
 
 .xp-header {
@@ -245,20 +243,43 @@ h2 {
   font-size: 10px;
   color: var(--text-secondary);
   margin-bottom: 4px;
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 #xp-text {
-  color: var(--xp-color);
-  font-weight: 600;
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
 .xp-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 10px;
+  overflow: hidden;
   background: var(--xp-bg) !important;
 }
 
 .xp-fill {
+  height: 100%;
+  border-radius: 10px;
   background: var(--xp-color) !important;
+  transition: width 0.4s ease;
+}
+
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stats-section {
