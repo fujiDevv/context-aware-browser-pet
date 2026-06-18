@@ -531,8 +531,10 @@ export class MovementEngine {
     if (img) {
       img.style.transformOrigin = 'center center';
       img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
-      img.style.width = `${this.size}px`;
+      img.style.width = `calc(${this.size}px * var(--crop-w, 1))`;
       img.style.height = `auto`;
+      img.style.marginLeft = `calc(${this.size}px * var(--crop-x, 0))`;
+      img.style.marginTop = `calc(${this.size}px * var(--crop-y, 0))`;
     }
 
     const bubble = el.parentElement?.querySelector('.pet-speech-bubble') as HTMLElement | null;

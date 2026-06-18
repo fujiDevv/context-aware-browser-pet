@@ -91,12 +91,12 @@ export class ViewManager {
     this.canvas.appendChild(el);
   }
 
-  private colorCache: Map<string, string> = new Map();
+  private colorCache: Map<string, any> = new Map();
   private baseColors = ['#DE886D', '#CF7B61', '#C77A5E', '#C9745A', '#A85B45', '#C75D3F'];
 
   private _syncAura(currentAsset: string) {
     const costume = this.activeCostume;
-    
+
     // Magical Auras only apply to their specific costume assets.
     // If the pet switches to an 'action' asset (like coding.svg), the aura is suppressed.
     const supportsAura = (
@@ -115,45 +115,292 @@ export class ViewManager {
     if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
       return;
     }
-    
+
     const url = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
 
     this.lastAssetName = assetName;
     this._syncAura(assetName);
 
-    if (!customColor || customColor === '#DE886D') {
-      this.petImg.src = url;
-      return;
-    }
-
-    const cacheKey = `${assetName}-${customColor}`;
+    const cacheKey = `${assetName}-${customColor || 'default'}`;
     if (this.colorCache.has(cacheKey)) {
-      this.petImg.src = this.colorCache.get(cacheKey)!;
+      const cached = this.colorCache.get(cacheKey)!;
+      this.petImg.src = cached.dataUri;
+      this.petImg.style.setProperty('--crop-w', cached.cropW.toString());
+      this.petImg.style.setProperty('--crop-h', cached.cropH.toString());
+      this.petImg.style.setProperty('--crop-x', cached.cropX.toString());
+      this.petImg.style.setProperty('--crop-y', cached.cropY.toString());
       return;
     }
 
     try {
       const resp = await fetch(url);
       let svgText = await resp.text();
-      
+
+      // Inline SVG optimizer to remove unused bounding box space while exporting crop offsets
+      let cropW = 1, cropH = 1, cropX = 0, cropY = 0;
+      function optimizeSvgStr(content: string): string {
+          const styleMatch = content.match(/<style>([\s\S]*?)<\/style>/);
+          const styles = styleMatch ? styleMatch[1] : '';
+          
+          const keyframes: any = {};
+          const keyframeRegex = /@keyframes\s+([\w-]+)\s*{([\s\S]*?)}/g;
+          let m;
+          while ((m = keyframeRegex.exec(styles)) !== null) {
+              const name = m[1];
+              const body = m[2];
+              const frames = [];
+              const frameRegex = /([\d%]+|from|to)\s*{([\s\S]*?)}/g;
+              let fm;
+              while ((fm = frameRegex.exec(body)) !== null) {
+                  const props = fm[2];
+                  const transformMatch = props.match(/transform:\s*([^;]+)/);
+                  frames.push({
+                      transform: transformMatch ? transformMatch[1] : ''
+                  });
+              }
+              keyframes[name] = frames;
+          }
+
+          const classes: any = {};
+          const classRegex = /\.([\w-]+)\s*{([\s\S]*?)}/g;
+          while ((m = classRegex.exec(styles)) !== null) {
+              const name = m[1];
+              const body = m[2];
+              const animMatch = body.match(/animation:\s*([\w-]+)/);
+              const transMatch = body.match(/transform:\s*([^;]+)/);
+              const originMatch = body.match(/transform-origin:\s*([^;]+)/);
+              classes[name] = {
+                  animation: animMatch ? animMatch[1] : null,
+                  transform: transMatch ? transMatch[1] : null,
+                  origin: originMatch ? originMatch[1] : null
+              };
+          }
+
+          function parseTransform(str: string) {
+              if (!str) return { tx: 0, ty: 0, sx: 1, sy: 1, ra: 0 };
+              let tx = 0, ty = 0, sx = 1, sy = 1, ra = 0;
+              const translateMatch = str.match(/translate(?:X|Y|Z)?\(([^)]+)\)/);
+              if (translateMatch) {
+                  const parts = translateMatch[1].split(/,\s*|\s+/).map(parseFloat);
+                  if (str.includes('translateX')) tx = parts[0];
+                  else if (str.includes('translateY')) ty = parts[0];
+                  else { tx = parts[0]; ty = parts[1] || 0; }
+              }
+              const scaleMatch = str.match(/scale(?:X|Y|Z)?\(([^)]+)\)/);
+              if (scaleMatch) {
+                  const parts = scaleMatch[1].split(/,\s*|\s+/).map(parseFloat);
+                  if (str.includes('scaleX')) sx = parts[0];
+                  else if (str.includes('scaleY')) sy = parts[0];
+                  else { sx = parts[0]; sy = parts[1] !== undefined ? parts[1] : parts[0]; }
+              }
+              const rotateMatch = str.match(/rotate\(([^)]+)\)/);
+              if (rotateMatch) {
+                  ra = parseFloat(rotateMatch[1]);
+              }
+              return { tx, ty, sx, sy, ra };
+          }
+
+          function getAnimationRange(animName: string) {
+              if (!animName || !keyframes[animName]) return [{ tx: 0, ty: 0, sx: 1, sy: 1, ra: 0 }];
+              return keyframes[animName].map((f: any) => parseTransform(f.transform));
+          }
+
+          function getElements(svgStr: string) {
+              const elements = [];
+              const tagRegex = /<(rect|circle|path|g|use|text)\b([^>]*?)(?:\/?>|>(.*?)<\/\1>)/gs;
+              let match;
+              while ((match = tagRegex.exec(svgStr)) !== null) {
+                  const type = match[1];
+                  const attrsStr = match[2];
+                  const children = match[3];
+                  const attrs: any = {};
+                  const attrRegex = /([\w-]+)="([^"]*)"/g;
+                  let am;
+                  while ((am = attrRegex.exec(attrsStr)) !== null) {
+                      attrs[am[1]] = am[2];
+                  }
+                  elements.push({ type, attrs, children });
+              }
+              return elements;
+          }
+
+          function applyTransform(x: number, y: number, t: any, ox: number, oy: number) {
+              let nx = x - ox;
+              let ny = y - oy;
+              nx *= t.sx;
+              ny *= t.sy;
+              if (t.ra) {
+                  const rad = t.ra * Math.PI / 180;
+                  const rx = nx * Math.cos(rad) - ny * Math.sin(rad);
+                  const ry = nx * Math.sin(rad) + ny * Math.cos(rad);
+                  nx = rx; ny = ry;
+              }
+              nx += ox + t.tx;
+              ny += oy + t.ty;
+              return { x: nx, y: ny };
+          }
+
+          function getBBoxRecursive(elements: any[], context = { tx: 0, ty: 0, sx: 1, sy: 1, ra: 0 }): any {
+              let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+              for (const el of elements) {
+                  const elClass = el.attrs.class;
+                  const classInfo = classes[elClass] || {};
+                  const elTransform = parseTransform(el.attrs.transform || classInfo.transform);
+                  const animStates = getAnimationRange(classInfo.animation);
+                  
+                  let elMinX = Infinity, elMinY = Infinity, elMaxX = -Infinity, elMaxY = -Infinity;
+
+                  if (el.type === 'rect') {
+                      const x = parseFloat(el.attrs.x || 0);
+                      const y = parseFloat(el.attrs.y || 0);
+                      const w = parseFloat(el.attrs.width || 0);
+                      const h = parseFloat(el.attrs.height || 0);
+                      elMinX = x; elMaxX = x + w;
+                      elMinY = y; elMaxY = y + h;
+                  } else if (el.type === 'circle') {
+                      const cx = parseFloat(el.attrs.cx || 0);
+                      const cy = parseFloat(el.attrs.cy || 0);
+                      const r = parseFloat(el.attrs.r || 0);
+                      elMinX = cx - r; elMaxX = cx + r;
+                      elMinY = cy - r; elMaxY = cy + r;
+                  } else if (el.type === 'path') {
+                      const d = el.attrs.d || '';
+                      const coords = d.match(/-?\d+\.?\d*/g);
+                      if (coords) {
+                          const pts = coords.map(parseFloat);
+                          for (let i = 0; i < pts.length; i += 2) {
+                              if (isNaN(pts[i])) continue;
+                              elMinX = Math.min(elMinX, pts[i]);
+                              elMaxX = Math.max(elMaxX, pts[i]);
+                              if (pts[i+1] !== undefined) {
+                                  elMinY = Math.min(elMinY, pts[i+1]);
+                                  elMaxY = Math.max(elMaxY, pts[i+1]);
+                              }
+                          }
+                      }
+                  } else if (el.type === 'use') {
+                      const href = el.attrs['href'] || el.attrs['xlink:href'];
+                      if (href && href.startsWith('#')) {
+                          const id = href.slice(1);
+                          const defMatch = content.match(new RegExp(`<g id="${id}"[^>]*>([\\s\\S]*?)<\\/g>`));
+                          if (defMatch) {
+                              const subBBox = getBBoxRecursive(getElements(defMatch[1]), { tx: parseFloat(el.attrs.x || 0), ty: parseFloat(el.attrs.y || 0), sx: 1, sy: 1, ra: 0 });
+                              elMinX = subBBox.minX; elMaxX = subBBox.maxX; elMinY = subBBox.minY; elMaxY = subBBox.maxY;
+                          }
+                      }
+                  } else if (el.type === 'g') {
+                      const subBBox = getBBoxRecursive(getElements(el.children));
+                      elMinX = subBBox.minX; elMaxX = subBBox.maxX; elMinY = subBBox.minY; elMaxY = subBBox.maxY;
+                  }
+
+                  if (elMinX === Infinity) continue;
+
+                  let ox = 0, oy = 0;
+                  if (classInfo.origin) {
+                      const parts = classInfo.origin.split(/\s+/);
+                      if (parts[0].endsWith('%')) ox = elMinX + (parseFloat(parts[0]) / 100) * (elMaxX - elMinX);
+                      else ox = parseFloat(parts[0]) || 0;
+                      if (parts[1] && parts[1].endsWith('%')) oy = elMinY + (parseFloat(parts[1]) / 100) * (elMaxY - elMinY);
+                      else if (parts[1]) oy = parseFloat(parts[1]) || 0;
+                      else oy = ox;
+                  }
+
+                  const corners = [
+                      {x: elMinX, y: elMinY}, {x: elMaxX, y: elMinY},
+                      {x: elMinX, y: elMaxY}, {x: elMaxX, y: elMaxY}
+                  ];
+
+                  const states = animStates.length > 0 ? animStates : [{tx:0, ty:0, sx:1, sy:1, ra:0}];
+                  
+                  for (const state of states) {
+                      for (const corner of corners) {
+                          let p = applyTransform(corner.x, corner.y, {
+                              tx: elTransform.tx + state.tx,
+                              ty: elTransform.ty + state.ty,
+                              sx: elTransform.sx * state.sx,
+                              sy: elTransform.sy * state.sy,
+                              ra: elTransform.ra + state.ra
+                          }, ox, oy);
+                          
+                          let pFinal = applyTransform(p.x, p.y, context, 0, 0);
+
+                          minX = Math.min(minX, pFinal.x);
+                          maxX = Math.max(maxX, pFinal.x);
+                          minY = Math.min(minY, pFinal.y);
+                          maxY = Math.max(maxY, pFinal.y);
+                      }
+                  }
+              }
+              return { minX, minY, maxX, maxY };
+          }
+
+          const visualElements = getElements(content).filter(el => el.type !== 'defs');
+          let { minX, minY, maxX, maxY } = getBBoxRecursive(visualElements);
+
+          if (minX === Infinity) return content;
+
+          minX = Math.floor(minX - 0.5);
+          minY = Math.floor(minY - 0.5);
+          maxX = Math.ceil(maxX + 0.5);
+          maxY = Math.ceil(maxY + 0.5);
+          
+          const width = maxX - minX;
+          const height = maxY - minY;
+          
+          let origW = width, origH = height, origX = 0, origY = 0;
+          const vbMatch = content.match(/viewBox="([-0-9.]+)\s+([-0-9.]+)\s+([-0-9.]+)\s+([-0-9.]+)"/);
+          if (vbMatch) {
+              origX = parseFloat(vbMatch[1]);
+              origY = parseFloat(vbMatch[2]);
+              origW = parseFloat(vbMatch[3]);
+              origH = parseFloat(vbMatch[4]);
+          }
+
+          cropW = width / origW;
+          cropH = height / origH;
+          cropX = (minX - origX) / origW;
+          cropY = (minY - origY) / origH;
+          
+          let formattedContent = content.replace(/<svg[^>]*>/, (match) => {
+              let updated = match.replace(/viewBox="[^"]*"/, `viewBox="${minX} ${minY} ${width} ${height}"`);
+              if (!updated.includes('viewBox=')) updated = updated.replace('<svg', `<svg viewBox="${minX} ${minY} ${width} ${height}"`);
+              updated = updated.replace(/width="[^"]*"/, `width="${width}"`);
+              updated = updated.replace(/height="[^"]*"/, `height="${height}"`);
+              return updated;
+          });
+
+          return formattedContent;
+      }
+
+      svgText = optimizeSvgStr(svgText);
+
       // Architectural Fix: Instead of fragile string replacement of exact hex codes,
       // we inject a style block into the SVG that targets our base colors.
-      // This is resistant to case changes, shorthand hexes, or formatting changes by optimizers.
-      const styleBlock = `<style>
-        :root { --pet-core-color: ${customColor}; }
-        [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
-          fill: var(--pet-core-color) !important; 
-        }
-      </style>`;
-      
-      // Inject right after the opening <svg> tag
-      svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
+      if (customColor && customColor !== '#DE886D') {
+        const styleBlock = `<style>
+          :root { --pet-core-color: ${customColor}; }
+          [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
+            fill: var(--pet-core-color) !important; 
+          }
+        </style>`;
+
+        // Inject right after the opening <svg> tag
+        svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
+      }
 
       const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
-      this.colorCache.set(cacheKey, dataUri);
+      
+      const cacheObj = { dataUri, cropW, cropH, cropX, cropY };
+      this.colorCache.set(cacheKey, cacheObj);
+      
       this.petImg.src = dataUri;
+      this.petImg.style.setProperty('--crop-w', cropW.toString());
+      this.petImg.style.setProperty('--crop-h', cropH.toString());
+      this.petImg.style.setProperty('--crop-x', cropX.toString());
+      this.petImg.style.setProperty('--crop-y', cropY.toString());
     } catch (e) {
-      console.warn('[Clawd View] Failed to apply custom color:', e);
+      console.warn('[Clawd View] Failed to apply custom color/formatter:', e);
       this.petImg.src = url;
     }
   }
@@ -210,7 +457,7 @@ export class ViewManager {
 
     const nameEl = banner.querySelector('#safe-pet-name');
     if (nameEl) nameEl.textContent = petName;
-    
+
     const unlockedEl = banner.querySelector('#safe-unlocked-text');
     if (unlockedEl) unlockedEl.textContent = unlockedText;
 
