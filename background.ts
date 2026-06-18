@@ -110,6 +110,7 @@ chrome.webNavigation.onCommitted.addListener((details) => {
 
 // Add a simple throttle to prevent dragging from spamming messages
 let lastSyncTime = 0;
+let syncTimeout: ReturnType<typeof setTimeout> | null = null;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'get-tab-http-error') {
@@ -131,9 +132,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.storage.local.set({ [STORAGE_KEYS.SHARED_STATE]: sharedPetState })
       .catch((e) => { console.warn('[Clawd Background] storage.set shared-pet-state error:', e); });
 
-    const now = Date.now();
-    if (now - lastSyncTime > 500) { // Only broadcast max twice a second
-      lastSyncTime = now;
+    const broadcast = () => {
       chrome.tabs.query({}, (tabs) => {
         tabs.forEach((tab) => {
           if (sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
@@ -146,6 +145,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           }
         });
       });
+    };
+
+    const now = Date.now();
+    if (now - lastSyncTime > 500) { // Only broadcast max twice a second
+      lastSyncTime = now;
+      if (syncTimeout) {
+        clearTimeout(syncTimeout);
+        syncTimeout = null;
+      }
+      broadcast();
+    } else {
+      if (syncTimeout) clearTimeout(syncTimeout);
+      syncTimeout = setTimeout(() => {
+        lastSyncTime = Date.now();
+        broadcast();
+        syncTimeout = null;
+      }, 500 - (now - lastSyncTime));
     }
 
     sendResponse({ success: true });
