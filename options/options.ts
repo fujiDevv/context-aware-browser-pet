@@ -589,16 +589,21 @@ function updateUIMood(mood: string): void {
     fetch(url).then(r => r.text()).then(svgText => {
       // Architectural Fix: Instead of fragile string replacement of exact hex codes,
       // we inject a style block into the SVG that targets our base colors.
-      const styleBlock = `<style>
-        :root { --pet-core-color: ${activeColor}; }
-        [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
-          fill: var(--pet-core-color) !important; 
-        }
-      </style>`;
+      if (activeColor && activeColor !== '#DE886D') {
+        const styleBlock = `<style>
+          :root { --pet-core-color: ${activeColor}; }
+          [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
+            fill: var(--pet-core-color) !important; 
+          }
+        </style>`;
+        svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
+      }
       
-      svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
       const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
       if (petImg) petImg.src = dataUri;
+    }).catch(e => {
+      console.warn('[Clawd Dashboard] Failed to apply custom color/formatter:', e);
+      if (petImg) petImg.src = url;
     });
   });
 }
