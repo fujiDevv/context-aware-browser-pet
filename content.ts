@@ -791,6 +791,7 @@ function handleToyDrop(dropX: number, dropY: number, toyType: string): void {
 
 function playWithToy(toyType: string, toyEl: HTMLElement): void {
   isTemporarilyInteracting = true;
+  movement.paused = true;
 
   keyframeAnimate(toyEl, [
     { opacity: '1' },
@@ -836,6 +837,7 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
 
   setTimeout(() => {
     isTemporarilyInteracting = false;
+    movement.paused = false;
     loadPet(emotion.current);
   }, 2000);
 }

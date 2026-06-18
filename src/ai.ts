@@ -307,7 +307,13 @@ Description: ${metaDescription || 'None'}`;
   if (!resultText) return null;
 
   try {
-    const parsed = JSON.parse(resultText);
+    let cleanText = resultText.trim();
+    if (cleanText.startsWith('```json')) {
+      cleanText = cleanText.replace(/^```json\n?/, '').replace(/```$/, '').trim();
+    } else if (cleanText.startsWith('```')) {
+      cleanText = cleanText.replace(/^```\n?/, '').replace(/```$/, '').trim();
+    }
+    const parsed = JSON.parse(cleanText);
     if (parsed.intent_summary) {
       console.log(`[Clawd AI] Detected Intent: ${parsed.intent_summary}`);
     }

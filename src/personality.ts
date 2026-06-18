@@ -94,11 +94,11 @@ export class PersonalitySystem {
 
     // Clamp stats at MIN_STAT_VALUE so Clawd is never fully depleted/unusable offline
     // Fix: Remove Math.round to prevent "Ghost Decay" rounding bug where stats never drop
-    this.stats.happiness = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.happiness - happinessDecay));
-    this.stats.energy = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.energy - energyDecay));
-    this.stats.curiosity = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.curiosity - curiosityDecay));
-    this.stats.focus = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.focus - focusDecay));
-    this.stats.leisure = Math.max(MIN_STAT_VALUE, Math.min(100, this.stats.leisure - leisureDecay));
+    this.stats.happiness = Math.max(this.stats.happiness <= MIN_STAT_VALUE ? 0 : MIN_STAT_VALUE, Math.min(100, this.stats.happiness - happinessDecay));
+    this.stats.energy = Math.max(this.stats.energy <= MIN_STAT_VALUE ? 0 : MIN_STAT_VALUE, Math.min(100, this.stats.energy - energyDecay));
+    this.stats.curiosity = Math.max(this.stats.curiosity <= MIN_STAT_VALUE ? 0 : MIN_STAT_VALUE, Math.min(100, this.stats.curiosity - curiosityDecay));
+    this.stats.focus = Math.max(this.stats.focus <= MIN_STAT_VALUE ? 0 : MIN_STAT_VALUE, Math.min(100, this.stats.focus - focusDecay));
+    this.stats.leisure = Math.max(this.stats.leisure <= MIN_STAT_VALUE ? 0 : MIN_STAT_VALUE, Math.min(100, this.stats.leisure - leisureDecay));
     
     this.stats.lastUpdateTime = Date.now();
   }

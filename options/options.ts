@@ -10,6 +10,7 @@ let playgroundMovement: MovementEngine;
 let blockedDomains: string[] = [];
 let activeCostume: string = 'none';
 let domainReactions: DomainReaction[] = [];
+let currentMoodState: string = 'happy';
 
 // Elements
 const petImg = document.getElementById('browser-pet-img') as HTMLImageElement;
@@ -258,15 +259,13 @@ async function init() {
 
   petColorInput.addEventListener('change', () => {
     saveSettings();
-    const lastKnownMood = petMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
-    updateUIMood(lastKnownMood);
+    updateUIMood(currentMoodState);
   });
 
   btnResetColor.addEventListener('click', () => {
     petColorInput.value = '#DE886D';
     saveSettings();
-    const lastKnownMood = petMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
-    updateUIMood(lastKnownMood);
+    updateUIMood(currentMoodState);
   });
 
   personaSelect.addEventListener('change', saveSettings);
@@ -319,9 +318,7 @@ async function init() {
     saveSettings();
     renderWardrobe(personality.stats, activeCostume, seasonalToggle.checked);
     // Force mood update to apply seasonal fallback if needed
-    const currentMoodBadge = document.getElementById('pet-mood') as HTMLElement;
-    const currentMood = currentMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
-    updateUIMood(currentMood);
+    updateUIMood(currentMoodState);
   });
 
   // Blocklist listeners
@@ -572,6 +569,7 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
 }
 
 function updateUIMood(mood: string): void {
+  currentMoodState = mood;
   const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
   if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
   const svgName = getResolvedCostumeName(mood, activeCostume);
