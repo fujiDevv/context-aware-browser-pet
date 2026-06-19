@@ -521,7 +521,14 @@ export class MovementEngine {
     el.style.setProperty('--pet-y', `${this.y}px`);
     el.style.setProperty('--pet-rotation', rotate);
     el.style.setProperty('--pet-flip', flip);
-    el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
+    let offsetY = '0px';
+    if (this.state === 'walk-top') {
+      offsetY = `calc(-1 * var(--crop-y, 0) * ${this.size}px)`;
+    } else if (this.state === 'walk-bottom') {
+      offsetY = `calc(${this.size}px - (var(--crop-y, 0) + var(--crop-h, 1)) * ${this.size}px)`;
+    }
+    el.style.setProperty('--pet-offset-y', offsetY);
+    el.style.transform = `translate(var(--pet-x), calc(var(--pet-y) + var(--pet-offset-y, 0px)))`;
     el.style.left = '0px';
     el.style.top = '0px';
     el.style.bottom = 'auto';
@@ -678,7 +685,14 @@ export class MovementEngine {
     el.style.setProperty('--pet-y', `${this.y}px`);
     el.style.setProperty('--pet-rotation', dragRotate);
     el.style.setProperty('--pet-flip', dragFlip);
-    el.style.transform = `translate(var(--pet-x), var(--pet-y))`;
+    let offsetY = '0px';
+    if (this.state === 'walk-top') {
+      offsetY = `calc(-1 * var(--crop-y, 0) * ${this.size}px)`;
+    } else if (this.state === 'walk-bottom') {
+      offsetY = `calc(${this.size}px - (var(--crop-y, 0) + var(--crop-h, 1)) * ${this.size}px)`;
+    }
+    el.style.setProperty('--pet-offset-y', offsetY);
+    el.style.transform = `translate(var(--pet-x), calc(var(--pet-y) + var(--pet-offset-y, 0px)))`;
     el.style.left = '0px';
     el.style.top = '0px';
     el.style.bottom = 'auto';
