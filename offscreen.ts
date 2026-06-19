@@ -63,9 +63,16 @@ async function getClassifier(): Promise<ClassifierPipeline> {
   }
 }
 
-// Since the background script only creates this offscreen document when AI Mode is enabled,
-// we can safely begin loading the classifier as soon as this script executes.
-getClassifier().catch((e) => { console.warn('[Clawd Offscreen] getClassifier init error:', e); });
+import { STORAGE_KEYS } from './src/constants';
+
+// Pre-load the classifier only if AI mode is actually enabled. The offscreen document
+// might have been created solely for audio playback.
+chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+  const settings = data[STORAGE_KEYS.SETTINGS] || {};
+  if (settings.aiMode && settings.advancedAiEnabled) {
+    getClassifier().catch((e) => { console.warn('[Clawd Offscreen] getClassifier init error:', e); });
+  }
+});
 
 async function getLocalAiEmotion(
   pageTitle: string,

@@ -97,7 +97,9 @@ function cleanupOrphanedScript(): void {
   window.removeEventListener('dragover', handleDragOver);
   window.removeEventListener('drop', handleDrop);
   document.removeEventListener('visibilitychange', handleVisibilityChange);
+  window.removeEventListener('focus', handleWindowFocus);
   window.removeEventListener('pet-console-error', handleConsoleError);
+  window.removeEventListener('keydown', handleKeydown);
 
   try {
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
@@ -1115,6 +1117,14 @@ function handleConsoleError() {
   }
 }
 
+function handleKeydown(e: KeyboardEvent) {
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'c') {
+    if (view) {
+      view.toggleChat();
+    }
+  }
+}
+
 async function init(): Promise<void> {
   await loadAndApplySettings();
 
@@ -1151,13 +1161,7 @@ async function actuallyInit(): Promise<void> {
 
   window.addEventListener('pet-console-error', handleConsoleError);
 
-  window.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'c') {
-      if (view) {
-        view.toggleChat();
-      }
-    }
-  });
+  window.addEventListener('keydown', handleKeydown);
 
   if (isPetHidden()) {
     hidePet();
