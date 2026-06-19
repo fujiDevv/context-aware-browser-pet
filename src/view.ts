@@ -8,6 +8,7 @@ export interface ViewManagerOptions {
   onPetMouseDown: (e: MouseEvent) => void;
   onPetMouseEnter: (e: MouseEvent) => void;
   onPetMouseLeave: (e: MouseEvent) => void;
+  onChatToggle?: (isOpen: boolean) => void;
 }
 
 export class ViewManager {
@@ -21,6 +22,13 @@ export class ViewManager {
   private options: ViewManagerOptions;
   private activeCostume: string | undefined = 'none';
   private lastAssetName: string = 'happy';
+
+  // Chat UI Elements
+  private chatPanel: HTMLElement;
+  private chatMessages: HTMLElement;
+  private chatInput: HTMLInputElement;
+  private chatSend: HTMLButtonElement;
+  public onChatSubmit: ((message: string) => void) | null = null;
 
   constructor(options: ViewManagerOptions) {
     this.options = options;
@@ -49,6 +57,48 @@ export class ViewManager {
     this.bubble = document.createElement('div');
     this.bubble.className = 'pet-speech-bubble';
     this.container.appendChild(this.bubble);
+
+    // Initialize Chat Panel
+    this.chatPanel = document.createElement('div');
+    this.chatPanel.id = 'clawd-chat-panel';
+    this.chatPanel.innerHTML = `
+      <div class="clawd-chat-header">
+        <span>Chat with Clawd</span>
+        <button class="clawd-chat-close">×</button>
+      </div>
+      <div class="clawd-chat-messages">
+        <div class="clawd-chat-msg clawd">Hi there! Click me if you want to chat.</div>
+      </div>
+      <div class="clawd-chat-input-container">
+        <input type="text" id="clawd-chat-input" placeholder="Ask me anything..." autocomplete="off">
+        <button id="clawd-chat-send">Send</button>
+      </div>
+    `;
+    this.container.appendChild(this.chatPanel);
+
+    this.chatMessages = this.chatPanel.querySelector('.clawd-chat-messages') as HTMLElement;
+    this.chatInput = this.chatPanel.querySelector('#clawd-chat-input') as HTMLInputElement;
+    this.chatSend = this.chatPanel.querySelector('#clawd-chat-send') as HTMLButtonElement;
+
+    this.chatPanel.querySelector('.clawd-chat-close')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.toggleChat(false);
+    });
+
+    const submitChat = () => {
+      const text = this.chatInput.value.trim();
+      if (text && this.onChatSubmit) {
+        this.addChatMessage('user', text);
+        this.chatInput.value = '';
+        this.setChatLoading(true);
+        this.onChatSubmit(text);
+      }
+    };
+
+    this.chatSend.addEventListener('click', submitChat);
+    this.chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitChat();
+    });
 
     this.bindEvents();
     this.injectHost();
@@ -416,6 +466,46 @@ export class ViewManager {
     } catch (e) {
       console.warn('[Clawd View] Failed to apply custom color/formatter:', e);
       this.petImg.src = url;
+    }
+  }
+
+  public toggleChat(force?: boolean) {
+    const isShowing = this.chatPanel.classList.contains('show');
+    let willShow = false;
+    if (force === true || (force === undefined && !isShowing)) {
+      willShow = true;
+      this.chatPanel.classList.add('show');
+      this.chatInput.focus();
+    } else {
+      this.chatPanel.classList.remove('show');
+    }
+    
+    if (this.options.onChatToggle) {
+      this.options.onChatToggle(willShow);
+    }
+  }
+
+  public addChatMessage(role: 'user' | 'clawd', text: string) {
+    const msg = document.createElement('div');
+    msg.className = `clawd-chat-msg ${role}`;
+    msg.textContent = text;
+    this.chatMessages.appendChild(msg);
+    this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+  }
+
+  public setChatLoading(isLoading: boolean) {
+    this.chatSend.disabled = isLoading;
+    this.chatInput.disabled = isLoading;
+    if (isLoading) {
+      const loadingMsg = document.createElement('div');
+      loadingMsg.className = 'clawd-chat-msg clawd loading-indicator';
+      loadingMsg.textContent = '...';
+      this.chatMessages.appendChild(loadingMsg);
+      this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    } else {
+      const loadingIndicator = this.chatMessages.querySelector('.loading-indicator');
+      if (loadingIndicator) loadingIndicator.remove();
+      this.chatInput.focus();
     }
   }
 

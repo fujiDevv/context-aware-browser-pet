@@ -28,6 +28,9 @@
         <button class="menu-btn active" data-target="sanctuary">
           <span class="menu-icon"></span>Sanctuary Playground
         </button>
+        <button class="menu-btn" data-target="chat">
+          <span class="menu-icon"></span> Chat with Clawd
+        </button>
         <button class="menu-btn" data-target="statistics">
           <span class="menu-icon"></span> Analytics & Stats
         </button>
@@ -240,6 +243,27 @@
             </div>
           </div>
         </section>
+      </section>
+
+      <!-- PAGE: Chat with Clawd -->
+      <section id="page-chat" class="page-pane">
+        <header class="page-header">
+          <h1>Chat with Clawd</h1>
+          <p>Talk to your context-aware virtual companion!</p>
+        </header>
+
+        <div class="chat-tab-layout">
+          <!-- Options Chat Panel -->
+          <div id="options-chat-panel" class="options-chat-panel">
+            <div class="options-chat-messages" id="options-chat-messages">
+              <div class="options-chat-msg clawd">Hi! I'm Clawd. What's on your mind?</div>
+            </div>
+            <div class="options-chat-input-container">
+              <input type="text" id="options-chat-input" placeholder="Type a message..." autocomplete="off">
+              <button id="options-chat-send" disabled>Send</button>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- PAGE: Statistics -->

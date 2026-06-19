@@ -334,3 +334,41 @@ Description: ${metaDescription || 'None'}`;
     return null;
   }
 }
+
+export async function getAiChatResponse(
+  userMessage: string,
+  pageText: string,
+  persona: string,
+  statsContext?: string,
+  chatHistory?: { role: string, content: string }[]
+): Promise<string | null> {
+  const geminiNanoAvailable = await checkGeminiNanoAvailability();
+  if (geminiNanoAvailable !== 'available' && geminiNanoAvailable !== 'downloadable' && geminiNanoAvailable !== 'downloading') {
+    return "I'm sorry, my brain (Gemini Nano) isn't ready right now. Wait for me to download or enable AI Mode!";
+  }
+
+  // Truncate page text to avoid token limits
+  const truncatedPageText = pageText.length > 3000 ? pageText.substring(0, 3000) + '...' : pageText;
+  
+  let historyStr = '';
+  if (chatHistory && chatHistory.length > 0) {
+    historyStr = 'Recent Conversation History:\n' + chatHistory.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n') + '\n\n';
+  }
+
+  const systemPrompt = `You are "Clawd", a perceptive browser pet mascot with a ${persona} persona.
+You are chatting directly with the user while they browse the web.
+Maintain your ${persona} personality. Keep responses concise (1-3 sentences).
+
+Context about your current state:
+${statsContext || 'Normal'}
+
+Context about the webpage the user is currently looking at:
+"""
+${truncatedPageText}
+"""
+
+${historyStr}Respond directly to the user's latest message based on your persona and the webpage context.`;
+
+  const resultText = await promptGeminiNano(systemPrompt, userMessage);
+  return resultText;
+}

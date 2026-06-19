@@ -2,7 +2,7 @@ import { PersonalitySystem } from '../src/personality';
 import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem } from '../src/types';
 import { STORAGE_KEYS } from '../src/constants';
 import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/shared-ui';
-import { getDailyInsight } from '../src/ai';
+import { getDailyInsight, getAiChatResponse } from '../src/ai';
 import { MovementEngine } from '../src/movement';
 
 let personality: PersonalitySystem;
@@ -141,23 +141,41 @@ async function init() {
   const menuButtons = document.querySelectorAll('.menu-btn');
   const pagePanes = document.querySelectorAll('.page-pane');
 
+  const switchTab = (target: string) => {
+    menuButtons.forEach(b => {
+      if (b.getAttribute('data-target') === target) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+
+    pagePanes.forEach((pane) => {
+      if (pane.id === `page-${target}`) {
+        pane.classList.add('active');
+      } else {
+        pane.classList.remove('active');
+      }
+    });
+  };
+
   menuButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const target = btn.getAttribute('data-target');
       if (!target) return;
-
-      menuButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      pagePanes.forEach((pane) => {
-        if (pane.id === `page-${target}`) {
-          pane.classList.add('active');
-        } else {
-          pane.classList.remove('active');
-        }
-      });
+      switchTab(target);
+      window.location.hash = target;
     });
   });
+
+  // Handle initial hash
+  if (window.location.hash) {
+    const target = window.location.hash.substring(1);
+    const validTarget = Array.from(menuButtons).some(b => b.getAttribute('data-target') === target);
+    if (validTarget) {
+      switchTab(target);
+    }
+  }
 
   // Load Settings and Stats from local storage
   const storageData = await chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
@@ -234,6 +252,85 @@ async function init() {
   btnShoo?.addEventListener('click', () => {
     if (btnShoo.hasAttribute('disabled')) return;
     triggerPetAction('shoo', 'cool', 'shoo', 'Shoo! 🏃‍♂️');
+  });
+
+  // Chat Panel Logic
+  const chatPanel = document.getElementById('options-chat-panel') as HTMLElement;
+  const chatInput = document.getElementById('options-chat-input') as HTMLInputElement;
+  const chatSend = document.getElementById('options-chat-send') as HTMLButtonElement;
+  const chatMessages = document.getElementById('options-chat-messages') as HTMLElement;
+
+  let chatHistory: { role: string; content: string }[] = [];
+
+  const addChatMessage = (role: 'user' | 'clawd', text: string) => {
+    const el = document.createElement('div');
+    el.className = `options-chat-msg ${role}`;
+    el.textContent = text;
+    chatMessages.appendChild(el);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  };
+
+  // Focus the input when the chat tab is selected
+  const chatMenuBtn = document.querySelector('.menu-btn[data-target="chat"]');
+  chatMenuBtn?.addEventListener('click', () => {
+    setTimeout(() => chatInput.focus(), 50);
+  });
+
+  const setChatLoading = (isLoading: boolean) => {
+    chatSend.disabled = isLoading;
+    chatInput.disabled = isLoading;
+    if (isLoading) {
+      const loadingMsg = document.createElement('div');
+      loadingMsg.className = 'options-chat-msg clawd loading-indicator';
+      loadingMsg.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+      chatMessages.appendChild(loadingMsg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    } else {
+      const loadingIndicator = chatMessages.querySelector('.loading-indicator');
+      if (loadingIndicator) loadingIndicator.remove();
+      chatInput.focus();
+    }
+  };
+
+  const submitOptionsChat = async () => {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    
+    addChatMessage('user', text);
+    chatInput.value = '';
+    
+    setChatLoading(true);
+    chatHistory.push({ role: 'user', content: text });
+    
+    try {
+      const persona = personaSelect.value || 'default';
+      const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${getDominantTrait(personality.stats)}`;
+      // Passing a dummy page context since we are in the dashboard
+      const response = await getAiChatResponse(text, "User is currently looking at the Sanctuary Dashboard.", persona, statsContext, chatHistory);
+      
+      setChatLoading(false);
+
+      if (response) {
+        addChatMessage('clawd', response);
+        chatHistory.push({ role: 'assistant', content: response });
+      } else {
+        addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
+      }
+    } catch (e) {
+      console.error('[Clawd Dashboard Chat] Error:', e);
+      addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
+    } finally {
+      chatInput.disabled = false;
+      chatInput.focus();
+    }
+  };
+
+  chatSend?.addEventListener('click', submitOptionsChat);
+  chatInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !chatInput.disabled) submitOptionsChat();
+  });
+  chatInput?.addEventListener('input', () => {
+    chatSend.disabled = chatInput.value.trim().length === 0;
   });
 
   // Setting bindings

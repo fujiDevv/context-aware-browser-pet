@@ -104,6 +104,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **Pet (Left Click)**: Boost Happiness and see the 'love' mood.
   * **Feed (Double Click)**: Restore Energy and celebrate.
   * **Shoo (Right Click)**: Relocate the pet to a random spot.
+  * **Chat with Clawd**: Open the interactive chat panel in the Dashboard or press `Ctrl+Shift+C` on any page to talk directly to your pet! Features include animated typing indicators and persona-specific AI responses.
   * **Play (Drag-and-Drop Toys)**: Drop items like Balls, Yarn, or Ducks from the popup to play.
   * **Settings**: Customize names, sizes, speeds, and personas in the dashboard.
   * **AI Vibe Check**: Enable AI Mode to let Clawd analyze page sentiment and comment on your browsing.

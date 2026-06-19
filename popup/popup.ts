@@ -127,6 +127,23 @@ async function init(): Promise<void> {
       });
     }
 
+    const btnChat = document.getElementById('btn-open-chat');
+    if (btnChat) {
+      btnChat.addEventListener('click', async () => {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (tab && tab.id) {
+          try {
+            await chrome.tabs.sendMessage(tab.id, { type: 'toggle-chat' });
+            window.close(); // Close popup
+          } catch (e) {
+            console.info('No content script in tab. Falling back to options page chat.');
+            await chrome.tabs.create({ url: chrome.runtime.getURL('options/options.html#chat') });
+            window.close();
+          }
+        }
+      });
+    }
+
     const versionEl = document.getElementById('version-display');
     if (versionEl && typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) {
       versionEl.textContent = `v${chrome.runtime.getManifest().version}`;

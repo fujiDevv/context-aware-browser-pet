@@ -2,7 +2,7 @@ import { MovementEngine } from './src/movement';
 import { EmotionEngine } from './src/emotion';
 import { TriggerDetector } from './src/triggers';
 import { PersonalitySystem } from './src/personality';
-import { getAiEmotion, setBridgeToken } from './src/ai';
+import { getAiEmotion, setBridgeToken, getAiChatResponse } from './src/ai';
 import { PetSettings, SharedPetState, PetMessage } from './src/types';
 import { springAnimate, keyframeAnimate } from './src/animate';
 import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
@@ -299,6 +299,8 @@ function ensureInitialized(): void {
     debouncedUpdateEmotion();
   }, BRIDGE_TOKEN);
 
+  const chatHistory: { role: string; content: string; }[] = [];
+
   view = new ViewManager({
     onPetClick: (e) => {
       e.stopPropagation();
@@ -306,7 +308,8 @@ function ensureInitialized(): void {
         movement.wasDragged = false;
         return;
       }
-      triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
+      // triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
+      view.toggleChat();
     },
     onPetDoubleClick: (e) => {
       e.stopPropagation();
@@ -336,8 +339,54 @@ function ensureInitialized(): void {
         { transform: 'var(--pet-flip) rotate(calc(var(--pet-rotation) - 1deg)) scale(0.97)' },
         { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1)' }
       ], { duration: 300, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)', fill: 'forwards' });
+    },
+    onChatToggle: (isOpen) => {
+      isTemporarilyInteracting = isOpen;
+      movement.paused = isOpen;
+      const container = view.getContainer();
+      if (isOpen) {
+        movement.hasFallen = true;
+        const bottomY = window.innerHeight - movement.size;
+        movement.y = bottomY;
+        const scaleX = movement.direction < 0 ? -1 : 1;
+        container.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        container.style.transform = `translate(${movement.x}px, ${bottomY}px)`;
+        loadPet('working-typing');
+      } else {
+        container.style.transition = 'none';
+        loadPet(emotion.current);
+      }
     }
   });
+
+  view.onChatSubmit = async (text: string) => {
+    chatHistory.push({ role: 'user', content: text });
+    
+    const pageText = document.body.innerText || '';
+    const trait = getDominantTrait(personality.stats.siteCategoryCounts);
+    const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
+    const persona = currentSettings.persona || 'default';
+    
+    try {
+      const response = await getAiChatResponse(text, pageText, persona, statsContext, chatHistory);
+      
+      view.setChatLoading(false);
+      
+      if (response) {
+        chatHistory.push({ role: 'assistant', content: response });
+        view.addChatMessage('clawd', response);
+        // Play chatting sound and animation
+        playSound('chat');
+        loadPet('working-typing');
+      } else {
+        view.addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
+      }
+    } catch (e) {
+      console.error('[Clawd Chat] Error:', e);
+      view.setChatLoading(false);
+      view.addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
+    }
+  };
 
   movement = new MovementEngine(view.getContainer(), {
     size: currentSettings.size,
@@ -1021,6 +1070,10 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
       .then((availability) => sendResponse({ success: true, availability }))
       .catch((err) => sendResponse({ success: false, error: err.message }));
     return true;
+  } else if (message.type === 'toggle-chat') {
+    if (isInitialized && view) {
+      view.toggleChat();
+    }
   }
   return false;
 }
@@ -1097,6 +1150,14 @@ async function actuallyInit(): Promise<void> {
   }
 
   window.addEventListener('pet-console-error', handleConsoleError);
+
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'c') {
+      if (view) {
+        view.toggleChat();
+      }
+    }
+  });
 
   if (isPetHidden()) {
     hidePet();

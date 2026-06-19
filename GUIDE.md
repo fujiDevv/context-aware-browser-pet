@@ -136,6 +136,11 @@ You can interact with Clawd directly on the webpage to affect his stats, emotion
 - **Position Sync**: While dragging, Clawd's coordinates and edge-state sync in real-time across your active tabs.
 
 
+### Chatting with Clawd
+- **How**: Click the **Chat** button in the popup panel, press `Ctrl + Shift + C` on any active page, or visit the **Chat with Clawd** tab in the Options Dashboard.
+- **Reaction**: Opens a sleek, interactive chat interface where you can have full conversations with Clawd based on his current active Persona and stats!
+- **Features**: Animated typing indicators and context-aware responses (he knows if you're on a webpage or in the dashboard).
+
 ### Hover Reaction
 - **How**: Move your mouse cursor over Clawd.
 - **Reaction**: Clawd scales up and rotates slightly to acknowledge your cursor. When you move the mouse away, he springs back to his normal size.
