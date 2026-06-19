@@ -63,16 +63,7 @@ async function getClassifier(): Promise<ClassifierPipeline> {
   }
 }
 
-import { STORAGE_KEYS } from './src/constants';
-
-// Pre-load the classifier only if AI mode is actually enabled. The offscreen document
-// might have been created solely for audio playback.
-chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
-  const settings = data[STORAGE_KEYS.SETTINGS] || {};
-  if (settings.aiMode && settings.advancedAiEnabled) {
-    getClassifier().catch((e) => { console.warn('[Clawd Offscreen] getClassifier init error:', e); });
-  }
-});
+// Initialize/fetch the classifier pipeline is now lazily triggered on first request
 
 async function getLocalAiEmotion(
   pageTitle: string,
@@ -180,6 +171,10 @@ async function playSound(filename: string, volume: number): Promise<void> {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'run-local-ai-inference') {
     const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity, url } = message;
+
+    if (modelLoadingState === 'idle') {
+      getClassifier().catch((e) => console.warn('[Clawd Offscreen] auto-init error:', e));
+    }
 
     getLocalAiEmotion(pageTitle, metaDescription, url, category, persona || 'default', statsContext, sentimentSensitivity)
       .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment, category: result.category, sentiment: result.sentiment }))
