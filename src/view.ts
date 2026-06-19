@@ -201,6 +201,7 @@ export class ViewManager {
       let svgText = '';
       try {
         const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
         svgText = await resp.text();
       } catch (fetchErr) {
         // CSP on strict sites (e.g., GitHub, Twitter) blocks fetch() to chrome-extension://

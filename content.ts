@@ -348,11 +348,11 @@ function ensureInitialized(): void {
       const container = view.getContainer();
       if (isOpen) {
         movement.hasFallen = true;
+        movement.state = 'walk-bottom'; // Ensure pet knows it is at the bottom
         const bottomY = window.innerHeight - movement.size;
         movement.y = bottomY;
-        const scaleX = movement.direction < 0 ? -1 : 1;
         container.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        container.style.transform = `translate(${movement.x}px, ${bottomY}px)`;
+        movement._apply(); // Applies new position and upright rotation
         loadPet('working-typing');
       } else {
         container.style.transition = 'none';

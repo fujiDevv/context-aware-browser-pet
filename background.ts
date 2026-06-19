@@ -169,8 +169,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'fetch-svg') {
-    fetch(message.url)
-      .then(res => res.text())
+    // Chrome SW fetch can sometimes fail on absolute extension URLs due to CORS bugs.
+    // Ensure we use a relative path if it's an extension resource.
+    let fetchUrl = message.url;
+    if (fetchUrl.startsWith('chrome-extension://')) {
+      const urlObj = new URL(fetchUrl);
+      fetchUrl = urlObj.pathname;
+    }
+    
+    fetch(fetchUrl)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.text();
+      })
       .then(text => sendResponse({ success: true, text }))
       .catch(err => sendResponse({ success: false, error: err.message }));
     return true;
