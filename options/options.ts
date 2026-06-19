@@ -12,6 +12,15 @@ let activeCostume: string = 'none';
 let domainReactions: DomainReaction[] = [];
 let currentMoodState: string = 'happy';
 
+function escapeHtml(unsafe: string): string {
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 // Elements
 const petImg = document.getElementById('browser-pet-img') as HTMLImageElement;
 const playgroundStage = document.getElementById('playground-stage') as HTMLElement;
@@ -499,7 +508,7 @@ async function init() {
         <div style="font-size: 40px; margin-bottom: 16px;">🧠</div>
         <h2 style="font-size: 20px; margin-bottom: 12px; font-weight: 700;">Daily Synapse Reflection</h2>
         <p style="font-size: 15px; line-height: 1.6; color: var(--text-primary); font-style: italic; margin-bottom: 24px;">
-          "${personality.stats.aiInsight.content}"
+          "${escapeHtml(personality.stats.aiInsight.content)}"
         </p>
         <button id="close-insight-modal" class="btn btn-primary" style="width: 100%;">Got it, Clawd!</button>
       </div>
@@ -930,11 +939,11 @@ function renderMilestones(stats: PetStats) {
     card.className = 'milestone-item';
     card.innerHTML = `
       <div class="milestone-header">
-        <div class="milestone-icon">${m.icon}</div>
-        <span class="milestone-title">${m.title}</span>
+        <div class="milestone-icon">${escapeHtml(m.icon)}</div>
+        <span class="milestone-title">${escapeHtml(m.title)}</span>
       </div>
-      <p class="milestone-desc">${m.desc}</p>
-      <span class="milestone-date">${m.date}</span>
+      <p class="milestone-desc">${escapeHtml(m.desc)}</p>
+      <span class="milestone-date">${escapeHtml(m.date)}</span>
     `;
     milestonesList.appendChild(card);
   });
@@ -986,11 +995,11 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
       row.className = 'category-row';
       row.innerHTML = `
         <div class="category-meta">
-          <span>${meta.name}</span>
+          <span>${escapeHtml(meta.name)}</span>
           <span class="category-pct">${val} (${pct}%)</span>
         </div>
         <div class="category-bar-wrapper">
-          <div class="category-bar ${meta.colorClass}" style="width: ${pct}%"></div>
+          <div class="category-bar ${escapeHtml(meta.colorClass)}" style="width: ${pct}%"></div>
         </div>
       `;
       categoriesList.appendChild(row);
@@ -1042,10 +1051,10 @@ function renderTimeline(history: MoodHistoryItem[] | undefined) {
     const row = document.createElement('div');
     row.className = 'timeline-item';
     row.innerHTML = `
-      <div class="timeline-icon">${meta.icon}</div>
+      <div class="timeline-icon">${escapeHtml(meta.icon)}</div>
       <div class="timeline-body">
-        <span class="timeline-text">${meta.label}</span>
-        <span class="timeline-time">${timeStr}</span>
+        <span class="timeline-text">${escapeHtml(meta.label)}</span>
+        <span class="timeline-time">${escapeHtml(timeStr)}</span>
       </div>
     `;
     timelineList.appendChild(row);

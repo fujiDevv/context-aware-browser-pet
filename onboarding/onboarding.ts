@@ -150,11 +150,20 @@
     }
   }
 
+  function escapeHtml(unsafe: string): string {
+    return String(unsafe)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   if (version) {
     const badge = document.querySelector('.version-badge') as HTMLElement | null;
     if (badge) {
       const statusText = reason === 'update' ? 'Successfully Updated' : 'Successfully Installed';
-      badge.innerHTML = `<span class="dot"></span> v${version} — ${statusText}`;
+      badge.innerHTML = `<span class="dot"></span> v${escapeHtml(version)} — ${statusText}`;
     }
   }
 })();
