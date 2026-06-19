@@ -168,6 +168,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return false;
   }
 
+  if (message.type === 'fetch-svg') {
+    fetch(message.url)
+      .then(res => res.text())
+      .then(text => sendResponse({ success: true, text }))
+      .catch(err => sendResponse({ success: false, error: err.message }));
+    return true;
+  }
+
   if (message.type === 'play-sound') {
     const { filename, volume } = message;
     setupOffscreen()

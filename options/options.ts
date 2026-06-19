@@ -1183,14 +1183,14 @@ function updateLocalAiStatus() {
       }
 
       const availability = nanoResponse.availability;
-      if (availability === 'no') {
+      if (availability === 'no' || availability === 'unavailable') {
         statusNano.textContent = '❌ Unsupported';
         statusNano.style.color = '#ef4444';
-      } else if (availability === 'after-download') {
+      } else if (availability === 'after-download' || availability === 'downloadable' || availability === 'downloading') {
         statusNano.textContent = '⏳ Downloading...';
         statusNano.style.color = 'var(--yellow)';
-      } else if (availability === 'readily') {
-        statusNano.textContent = '✅ Connected';
+      } else if (availability === 'readily' || availability === 'available') {
+        statusNano.textContent = '✅ Connected (Gemini Nano)';
         statusNano.style.color = 'var(--green)';
       } else {
         statusNano.textContent = 'Wait for web tab...';

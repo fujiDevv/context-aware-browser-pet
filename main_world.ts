@@ -14,48 +14,68 @@ window.addEventListener('message', async (event) => {
   if (event.source !== window || !event.data || event.data.token !== BRIDGE_TOKEN) return;
 
   if (event.data.type === 'PET_AI_AVAILABILITY_CHECK_REQUEST') {
-    const aiGlobal = (globalThis as any).ai || window.ai;
-    let availability = 'no';
-    if (aiGlobal && (typeof aiGlobal.languageModel !== 'undefined' || typeof aiGlobal.assistant !== 'undefined')) {
-      const modelAPI = aiGlobal.languageModel || aiGlobal.assistant;
+    const lm = (globalThis as any).LanguageModel || (window as any).LanguageModel;
+    let availability = 'unavailable';
+    
+    if (lm) {
       try {
-        if (typeof modelAPI.availability === 'function') {
-          availability = await modelAPI.availability();
-        } else if (typeof modelAPI.capabilities === 'function') {
-          const caps = await modelAPI.capabilities();
-          availability = caps.available || 'no';
+        if (typeof lm.availability === 'function') {
+          availability = await lm.availability({
+            language: 'en',
+            expectedLanguage: 'en',
+            outputLanguage: 'en',
+            expectedOutputs: [{ type: 'text', languages: ['en'] }],
+            expectedInputs: [{ type: 'text', languages: ['en'] }]
+          });
         }
       } catch (e) {
         console.error('[Clawd Local AI] Availability check failed:', e);
       }
     }
+    
+    // In the new API, availability is "unavailable" | "downloadable" | "downloading" | "available"
     window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_RESPONSE', id: event.data.id, availability, token: BRIDGE_TOKEN }, '*');
   }
 
   if (event.data.type === 'PET_AI_PROMPT_REQUEST') {
     const { id, systemPrompt, prompt } = event.data;
-    const aiGlobal = (globalThis as any).ai || window.ai;
+    const lm = (globalThis as any).LanguageModel || (window as any).LanguageModel;
 
-    if (!aiGlobal || (typeof aiGlobal.languageModel === 'undefined' && typeof aiGlobal.assistant === 'undefined')) {
-      window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: 'built-in Prompt API is not defined in this context', token: BRIDGE_TOKEN }, '*');
+    if (!lm) {
+      window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: 'built-in Prompt API (LanguageModel) is not defined in this context', token: BRIDGE_TOKEN }, '*');
       return;
     }
 
-    const modelAPI = aiGlobal.languageModel || aiGlobal.assistant;
     let session: any = null;
     try {
-      const availability = typeof modelAPI.availability === 'function'
-        ? await modelAPI.availability()
-        : (await modelAPI.capabilities?.())?.available || 'no';
+      const availability = typeof lm.availability === 'function'
+        ? await lm.availability({
+            language: 'en',
+            expectedLanguage: 'en',
+            outputLanguage: 'en',
+            expectedOutputs: [{ type: 'text', languages: ['en'] }],
+            expectedInputs: [{ type: 'text', languages: ['en'] }]
+          })
+        : 'unavailable';
 
-      if (availability !== 'readily' && availability !== 'after-download') {
+      if (availability !== 'available' && availability !== 'downloadable' && availability !== 'downloading') {
         window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, error: 'Gemini Nano model is not ready: ' + availability, token: BRIDGE_TOKEN }, '*');
         return;
       }
 
-      session = await modelAPI.create({
-        systemPrompt: systemPrompt
-      });
+      const createOptions: any = {
+        language: 'en',
+        expectedLanguage: 'en',
+        outputLanguage: 'en',
+        expectedOutputs: [{ type: 'text', languages: ['en'] }],
+        expectedInputs: [{ type: 'text', languages: ['en'] }]
+      };
+      if (systemPrompt) {
+        createOptions.initialPrompts = [{ role: 'system', content: systemPrompt }];
+      }
+
+      console.log('[Clawd AI] Executing local Gemini Nano inference (MAIN_WORLD)...');
+      session = await lm.create(createOptions);
 
       const resultText = await session.prompt(prompt);
       window.postMessage({ type: 'PET_AI_PROMPT_RESPONSE', id, resultText, token: BRIDGE_TOKEN }, '*');

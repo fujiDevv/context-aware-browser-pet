@@ -51,23 +51,49 @@ async function init(): Promise<void> {
 
         if (chrome.runtime.lastError || !response || !response.success) {
           aiStatusBadge.className = 'ai-status-badge status-unsupported';
-          aiStatusText.textContent = 'Brain: Offline';
+          aiStatusText.textContent = 'BERT: Offline';
+        } else {
+          const { state, progress } = response;
+          if (state === 'ready') {
+            aiStatusBadge.className = 'ai-status-badge status-ready';
+            aiStatusText.textContent = 'BERT: Ready';
+          } else if (state === 'loading') {
+            aiStatusBadge.className = 'ai-status-badge status-downloading';
+            aiStatusText.textContent = `BERT: ${progress}%`;
+          } else if (state === 'error') {
+            aiStatusBadge.className = 'ai-status-badge status-unsupported';
+            aiStatusText.textContent = 'BERT: Error';
+          } else {
+            aiStatusBadge.className = 'ai-status-badge status-checking';
+            aiStatusText.textContent = 'BERT: Checking';
+          }
+        }
+      });
+
+      chrome.runtime.sendMessage({ type: 'check-tab-ai-availability' }, (response: any) => {
+        const nanoBadge = document.getElementById('nano-status-badge');
+        const nanoText = document.getElementById('nano-status-text');
+        if (!nanoBadge || !nanoText) return;
+
+        if (chrome.runtime.lastError || !response) {
+          nanoBadge.className = 'ai-status-badge status-unsupported';
+          nanoText.textContent = 'Nano: Offline';
           return;
         }
 
-        const { state, progress } = response;
-        if (state === 'ready') {
-          aiStatusBadge.className = 'ai-status-badge status-ready';
-          aiStatusText.textContent = 'Brain: Ready';
-        } else if (state === 'loading') {
-          aiStatusBadge.className = 'ai-status-badge status-downloading';
-          aiStatusText.textContent = `Brain: ${progress}%`;
-        } else if (state === 'error') {
-          aiStatusBadge.className = 'ai-status-badge status-unsupported';
-          aiStatusText.textContent = 'Brain: Error';
+        const availability = response.availability;
+        if (availability === 'no' || availability === 'unavailable') {
+          nanoBadge.className = 'ai-status-badge status-unsupported';
+          nanoText.textContent = 'Nano: Unsupported';
+        } else if (availability === 'after-download' || availability === 'downloadable' || availability === 'downloading') {
+          nanoBadge.className = 'ai-status-badge status-downloading';
+          nanoText.textContent = 'Nano: Downloading';
+        } else if (availability === 'readily' || availability === 'available') {
+          nanoBadge.className = 'ai-status-badge status-ready';
+          nanoText.textContent = 'Nano: Ready';
         } else {
-          aiStatusBadge.className = 'ai-status-badge status-checking';
-          aiStatusText.textContent = 'Brain: Checking';
+          nanoBadge.className = 'ai-status-badge status-checking';
+          nanoText.textContent = 'Nano: Waiting';
         }
       });
     });

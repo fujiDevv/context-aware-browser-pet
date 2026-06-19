@@ -24,7 +24,7 @@ export async function getAiEmotion(
 
     // 1. Try Gemini Nano (Built-in Prompt API) first if available
     const geminiNanoAvailable = await checkGeminiNanoAvailability();
-    if (geminiNanoAvailable === 'readily' || geminiNanoAvailable === 'after-download') {
+    if (geminiNanoAvailable === 'available' || geminiNanoAvailable === 'downloadable' || geminiNanoAvailable === 'downloading') {
       try {
         const result = await runGeminiNanoInference(pageTitle, metaDescription, category, persona, statsContext);
         if (result) return result;
@@ -75,7 +75,7 @@ export async function getDailyInsight(
   persona: string
 ): Promise<string> {
   const geminiNanoAvailable = await checkGeminiNanoAvailability();
-  if (geminiNanoAvailable !== 'readily' && geminiNanoAvailable !== 'after-download') {
+  if (geminiNanoAvailable !== 'available' && geminiNanoAvailable !== 'downloadable' && geminiNanoAvailable !== 'downloading') {
     return getTemplateFallback(stats, persona);
   }
 
@@ -115,11 +115,21 @@ RULE:
  */
 async function promptGeminiNano(systemPrompt: string, prompt: string): Promise<string | null> {
   // 1. Direct Extension/Extension Context Attempt
-  const aiGlobal = (globalThis as any).ai || (typeof window !== 'undefined' ? (window as any).ai : null);
-  if (aiGlobal && (typeof aiGlobal.languageModel !== 'undefined' || typeof aiGlobal.assistant !== 'undefined')) {
-    const modelAPI = aiGlobal.languageModel || aiGlobal.assistant;
+  const lm = (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? (window as any).LanguageModel : null);
+  if (lm) {
     try {
-      const session = await modelAPI.create({ systemPrompt });
+      const createOptions: any = {
+        language: 'en',
+        expectedLanguage: 'en',
+        outputLanguage: 'en',
+        expectedOutputs: [{ type: 'text', languages: ['en'] }],
+        expectedInputs: [{ type: 'text', languages: ['en'] }]
+      };
+      if (systemPrompt) {
+        createOptions.initialPrompts = [{ role: 'system', content: systemPrompt }];
+      }
+      console.log('[Clawd AI] Executing local Gemini Nano inference (EXTENSION_CONTEXT)...');
+      const session = await lm.create(createOptions);
       const resultText = await session.prompt(prompt);
       await session.destroy();
       return resultText;
@@ -220,17 +230,19 @@ export function setBridgeToken(token: string): void {
   bridgeToken = token;
 }
 
-async function checkGeminiNanoAvailability(): Promise<'readily' | 'after-download' | 'no'> {
+async function checkGeminiNanoAvailability(): Promise<'available' | 'downloadable' | 'downloading' | 'unavailable'> {
   // 1. Extension context direct check
-  const aiGlobal = (globalThis as any).ai || (typeof window !== 'undefined' ? (window as any).ai : null);
-  if (aiGlobal && (typeof aiGlobal.languageModel !== 'undefined' || typeof aiGlobal.assistant !== 'undefined')) {
-    const modelAPI = aiGlobal.languageModel || aiGlobal.assistant;
+  const lm = (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? (window as any).LanguageModel : null);
+  if (lm) {
     try {
-      if (typeof modelAPI.availability === 'function') {
-        return await modelAPI.availability();
-      } else if (typeof modelAPI.capabilities === 'function') {
-        const caps = await modelAPI.capabilities();
-        return caps.available || 'no';
+      if (typeof lm.availability === 'function') {
+        return await lm.availability({
+          language: 'en',
+          expectedLanguage: 'en',
+          outputLanguage: 'en',
+          expectedOutputs: [{ type: 'text', languages: ['en'] }],
+          expectedInputs: [{ type: 'text', languages: ['en'] }]
+        });
       }
     } catch (e) {
       console.warn('[Clawd AI] Direct availability check failed:', e);
@@ -238,9 +250,9 @@ async function checkGeminiNanoAvailability(): Promise<'readily' | 'after-downloa
   }
 
   // 2. Fallback to Content Script -> Main World bridge
-  if (typeof window === 'undefined') return 'no';
+  if (typeof window === 'undefined') return 'unavailable';
   // Extension pages do not have main_world.js injected, so don't hang waiting for a response
-  if (window.location.protocol.startsWith('chrome-extension:')) return 'no';
+  if (window.location.protocol.startsWith('chrome-extension:')) return 'unavailable';
 
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
@@ -263,7 +275,7 @@ async function checkGeminiNanoAvailability(): Promise<'readily' | 'after-downloa
       if (!resolved) {
         resolved = true;
         window.removeEventListener('message', handler);
-        resolve('no');
+        resolve('unavailable');
       }
     }, 2000);
   });

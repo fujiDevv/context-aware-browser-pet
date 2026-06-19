@@ -133,8 +133,22 @@ export class ViewManager {
     }
 
     try {
-      const resp = await fetch(url);
-      let svgText = await resp.text();
+      let svgText = '';
+      try {
+        const resp = await fetch(url);
+        svgText = await resp.text();
+      } catch (fetchErr) {
+        // CSP on strict sites (e.g., GitHub, Twitter) blocks fetch() to chrome-extension://
+        // Fallback to background service worker which has no such CSP restrictions
+        const bgRes = await new Promise<any>((resolve) => {
+          chrome.runtime.sendMessage({ type: 'fetch-svg', url }, resolve);
+        });
+        if (bgRes && bgRes.success) {
+          svgText = bgRes.text;
+        } else {
+          throw new Error(bgRes?.error || 'Background SVG fetch failed');
+        }
+      }
 
       // Inline SVG optimizer to remove unused bounding box space while exporting crop offsets
       let cropW = 1, cropH = 1, cropX = 0, cropY = 0;
