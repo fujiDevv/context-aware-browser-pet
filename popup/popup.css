@@ -5,6 +5,8 @@
 * {
   box-sizing: border-box;
   margin: 0;
+}
+
 html, body {
   width: 380px;
   height: 580px;
