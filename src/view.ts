@@ -100,6 +100,21 @@ export class ViewManager {
       if (e.key === 'Enter') submitChat();
     });
 
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.chatPanel.classList.contains('show')) {
+        this.toggleChat(false);
+      }
+    });
+
+    document.addEventListener('mousedown', (e) => {
+      if (this.chatPanel.classList.contains('show')) {
+        const path = e.composedPath();
+        if (!path.includes(this.chatPanel) && !path.includes(this.petImg)) {
+          this.toggleChat(false);
+        }
+      }
+    });
+
     this.bindEvents();
     this.injectHost();
   }
