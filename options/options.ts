@@ -97,6 +97,9 @@ const aiFrequencyVal = document.getElementById('ai-frequency-val') as HTMLElemen
 // AI Status Elements
 const statusBert = document.getElementById('status-bert') as HTMLElement;
 const statusNano = document.getElementById('status-nano') as HTMLElement;
+const sancNanoBadge = document.getElementById('sanc-nano-status-badge') as HTMLElement;
+const sancNanoText = document.getElementById('sanc-nano-status-text') as HTMLElement;
+const sancNanoSubtitle = document.getElementById('sanc-nano-status-subtitle') as HTMLElement;
 
 // Sleep/Wake & Focus Planner Inputs
 const sleepStartSelect = document.getElementById('sleep-start-select') as HTMLSelectElement;
@@ -1174,28 +1177,41 @@ function updateLocalAiStatus() {
 
     // 2. Check Gemini Nano (Active Tab Bridge)
     chrome.runtime.sendMessage({ type: 'check-tab-ai-availability' }, (nanoResponse: { success: boolean; availability: string } | undefined) => {
+      let sancClass = 'status-indicator status-checking';
+      let sancText = 'Nano: Checking...';
+      
       if (!statusNano) return;
       
       if (chrome.runtime.lastError || !nanoResponse) {
         statusNano.textContent = 'Wait for web tab...';
         statusNano.style.color = 'var(--text-muted)';
-        return;
-      }
-
-      const availability = nanoResponse.availability;
-      if (availability === 'no' || availability === 'unavailable') {
-        statusNano.textContent = '❌ Unsupported';
-        statusNano.style.color = '#ef4444';
-      } else if (availability === 'after-download' || availability === 'downloadable' || availability === 'downloading') {
-        statusNano.textContent = '⏳ Downloading...';
-        statusNano.style.color = 'var(--yellow)';
-      } else if (availability === 'readily' || availability === 'available') {
-        statusNano.textContent = '✅ Connected (Gemini Nano)';
-        statusNano.style.color = 'var(--green)';
+        sancText = 'Wait for web tab...';
       } else {
-        statusNano.textContent = 'Wait for web tab...';
-        statusNano.style.color = 'var(--text-muted)';
+        const availability = nanoResponse.availability;
+        if (availability === 'no' || availability === 'unavailable') {
+          statusNano.textContent = '❌ Unsupported';
+          statusNano.style.color = '#ef4444';
+          sancClass = 'status-indicator status-unsupported';
+          sancText = 'Nano: Offline';
+        } else if (availability === 'after-download' || availability === 'downloadable' || availability === 'downloading') {
+          statusNano.textContent = '⏳ Downloading...';
+          statusNano.style.color = 'var(--yellow)';
+          sancClass = 'status-indicator status-downloading';
+          sancText = 'Nano: Downloading...';
+        } else if (availability === 'readily' || availability === 'available') {
+          statusNano.textContent = '✅ Connected (Gemini Nano)';
+          statusNano.style.color = 'var(--green)';
+          sancClass = 'status-indicator status-ready';
+          sancText = 'Nano: Ready';
+        } else {
+          statusNano.textContent = 'Wait for web tab...';
+          statusNano.style.color = 'var(--text-muted)';
+          sancText = 'Wait for web tab...';
+        }
       }
+      
+      if (sancNanoBadge) sancNanoBadge.className = sancClass;
+      if (sancNanoText) sancNanoText.textContent = sancText;
     });
   });
 }

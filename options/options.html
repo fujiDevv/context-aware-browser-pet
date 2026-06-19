@@ -131,8 +131,17 @@
                   <div class="status-indicator status-checking" id="ai-status-badge"></div>
                 </div>
                 <div class="indicator-text">
-                  <strong id="ai-status-text">Brain: Checking...</strong>
-                  <span id="ai-status-subtitle">Local AI Upgrade Status</span>
+                  <strong id="ai-status-text">BERT: Checking...</strong>
+                  <span id="ai-status-subtitle">DistilBERT Model Active</span>
+                </div>
+              </div>
+              <div class="indicator-row sync-row">
+                <div class="status-icon-container">
+                  <div class="status-indicator status-checking" id="sanc-nano-status-badge"></div>
+                </div>
+                <div class="indicator-text">
+                  <strong id="sanc-nano-status-text">Nano: Checking...</strong>
+                  <span id="sanc-nano-status-subtitle">Gemini Nano Active</span>
                 </div>
               </div>
               <div class="indicator-row sync-row">
@@ -409,8 +418,10 @@
               <div class="form-group" id="custom-color-container">
                 <label for="pet-color-input">Custom Mascot Color (Unlocked at LVL 15)</label>
                 <div style="display: flex; align-items: center; gap: 12px;">
-                  <input type="color" id="pet-color-input" class="form-control" style="width: 60px; height: 40px; padding: 4px; cursor: pointer;" disabled>
-                  <button id="btn-reset-color" class="btn btn-secondary btn-small" style="font-size: 11px;" disabled>Reset to Default</button>
+                  <input type="color" id="pet-color-input" class="form-control"
+                    style="width: 60px; height: 40px; padding: 4px; cursor: pointer;" disabled>
+                  <button id="btn-reset-color" class="btn btn-secondary btn-small" style="font-size: 11px;"
+                    disabled>Reset to Default</button>
                 </div>
               </div>
 
