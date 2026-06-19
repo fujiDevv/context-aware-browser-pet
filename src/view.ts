@@ -125,10 +125,10 @@ export class ViewManager {
     if (this.colorCache.has(cacheKey)) {
       const cached = this.colorCache.get(cacheKey)!;
       this.petImg.src = cached.dataUri;
-      this.petImg.style.setProperty('--crop-w', cached.cropW.toString());
-      this.petImg.style.setProperty('--crop-h', cached.cropH.toString());
-      this.petImg.style.setProperty('--crop-x', cached.cropX.toString());
-      this.petImg.style.setProperty('--crop-y', cached.cropY.toString());
+      this.container.style.setProperty('--crop-w', cached.cropW.toString());
+      this.container.style.setProperty('--crop-h', cached.cropH.toString());
+      this.container.style.setProperty('--crop-x', cached.cropX.toString());
+      this.container.style.setProperty('--crop-y', cached.cropY.toString());
       return;
     }
 
@@ -395,10 +395,10 @@ export class ViewManager {
       this.colorCache.set(cacheKey, cacheObj);
       
       this.petImg.src = dataUri;
-      this.petImg.style.setProperty('--crop-w', cropW.toString());
-      this.petImg.style.setProperty('--crop-h', cropH.toString());
-      this.petImg.style.setProperty('--crop-x', cropX.toString());
-      this.petImg.style.setProperty('--crop-y', cropY.toString());
+      this.container.style.setProperty('--crop-w', cropW.toString());
+      this.container.style.setProperty('--crop-h', cropH.toString());
+      this.container.style.setProperty('--crop-x', cropX.toString());
+      this.container.style.setProperty('--crop-y', cropY.toString());
     } catch (e) {
       console.warn('[Clawd View] Failed to apply custom color/formatter:', e);
       this.petImg.src = url;
