@@ -323,7 +323,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       setupOffscreen()
         .then(() => {
-          chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (res) => {
+          chrome.runtime.sendMessage({ type: 'check-offscreen-ai-status' }, (res) => {
             if (chrome.runtime.lastError) {
               sendResponse({ success: false, error: chrome.runtime.lastError.message });
             } else {

@@ -1408,23 +1408,20 @@ function updateLocalAiStatus() {
       
       if (!statusNano) return;
       
-      if (chrome.runtime.lastError || !nanoResponse) {
-        statusNano.textContent = 'Wait for web tab...';
-        statusNano.style.color = 'var(--text-muted)';
-        sancText = 'Wait for web tab...';
-      } else {
-        const availability = nanoResponse.availability;
-        if (availability === 'no' || availability === 'unavailable') {
+      let availability = nanoResponse?.availability;
+      
+      const applyAvailability = (avail: string | undefined) => {
+        if (!avail || avail === 'no' || avail === 'unavailable') {
           statusNano.textContent = '❌ Unsupported';
           statusNano.style.color = '#ef4444';
           sancClass = 'status-indicator status-unsupported';
           sancText = 'Nano: Offline';
-        } else if (availability === 'after-download' || availability === 'downloadable' || availability === 'downloading') {
+        } else if (avail === 'after-download' || avail === 'downloadable' || avail === 'downloading') {
           statusNano.textContent = '⏳ Downloading...';
           statusNano.style.color = 'var(--yellow)';
           sancClass = 'status-indicator status-downloading';
           sancText = 'Nano: Downloading...';
-        } else if (availability === 'readily' || availability === 'available') {
+        } else if (avail === 'readily' || avail === 'available') {
           statusNano.textContent = '✅ Connected (Gemini Nano)';
           statusNano.style.color = 'var(--green)';
           sancClass = 'status-indicator status-ready';
@@ -1434,10 +1431,25 @@ function updateLocalAiStatus() {
           statusNano.style.color = 'var(--text-muted)';
           sancText = 'Wait for web tab...';
         }
+
+        if (sancNanoBadge) sancNanoBadge.className = sancClass;
+        if (sancNanoText) sancNanoText.textContent = sancText;
+      };
+
+      if (chrome.runtime.lastError || !nanoResponse || availability === 'no') {
+        // Fallback to local check if the tab doesn't respond or says 'no'
+        if ('ai' in window && (window as any).ai?.languageModel) {
+          (window as any).ai.languageModel.capabilities().then((cap: any) => {
+            applyAvailability(cap.available);
+          }).catch(() => {
+            applyAvailability('no');
+          });
+        } else {
+          applyAvailability(availability || 'no');
+        }
+      } else {
+        applyAvailability(availability);
       }
-      
-      if (sancNanoBadge) sancNanoBadge.className = sancClass;
-      if (sancNanoText) sancNanoText.textContent = sancText;
     });
   });
 }

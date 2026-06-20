@@ -186,7 +186,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true; // Keep message channel open for async response
   }
 
-  if (message.type === 'check-local-ai-status') {
+  if (message.type === 'check-offscreen-ai-status') {
     sendResponse({ success: true, state: modelLoadingState, progress: modelDownloadProgress });
     return false;
   }

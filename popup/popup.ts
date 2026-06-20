@@ -75,25 +75,36 @@ async function init(): Promise<void> {
         const nanoText = document.getElementById('nano-status-text');
         if (!nanoBadge || !nanoText) return;
 
-        if (chrome.runtime.lastError || !response) {
-          nanoBadge.className = 'ai-status-badge status-unsupported';
-          nanoText.textContent = 'Nano: Offline';
-          return;
-        }
+        let availability = response?.availability;
 
-        const availability = response.availability;
-        if (availability === 'no' || availability === 'unavailable') {
-          nanoBadge.className = 'ai-status-badge status-unsupported';
-          nanoText.textContent = 'Nano: Unsupported';
-        } else if (availability === 'after-download' || availability === 'downloadable' || availability === 'downloading') {
-          nanoBadge.className = 'ai-status-badge status-downloading';
-          nanoText.textContent = 'Nano: Downloading';
-        } else if (availability === 'readily' || availability === 'available') {
-          nanoBadge.className = 'ai-status-badge status-ready';
-          nanoText.textContent = 'Nano: Ready';
+        const applyAvailability = (avail: string | undefined) => {
+          if (!avail || avail === 'no' || avail === 'unavailable') {
+            nanoBadge.className = 'ai-status-badge status-unsupported';
+            nanoText.textContent = 'Nano: Unsupported';
+          } else if (avail === 'after-download' || avail === 'downloadable' || avail === 'downloading') {
+            nanoBadge.className = 'ai-status-badge status-downloading';
+            nanoText.textContent = 'Nano: Downloading';
+          } else if (avail === 'readily' || avail === 'available') {
+            nanoBadge.className = 'ai-status-badge status-ready';
+            nanoText.textContent = 'Nano: Ready';
+          } else {
+            nanoBadge.className = 'ai-status-badge status-checking';
+            nanoText.textContent = 'Nano: Waiting';
+          }
+        };
+
+        if (chrome.runtime.lastError || !response || availability === 'no') {
+          if ('ai' in window && (window as any).ai?.languageModel) {
+            (window as any).ai.languageModel.capabilities().then((cap: any) => {
+              applyAvailability(cap.available);
+            }).catch(() => {
+              applyAvailability('no');
+            });
+          } else {
+            applyAvailability(availability || 'no');
+          }
         } else {
-          nanoBadge.className = 'ai-status-badge status-checking';
-          nanoText.textContent = 'Nano: Waiting';
+          applyAvailability(availability);
         }
       });
     });
