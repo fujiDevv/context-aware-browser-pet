@@ -803,7 +803,7 @@ function updateUIMood(mood: string): void {
       if (petImg) petImg.src = dataUri;
     }).catch(e => {
       console.warn('[Clawd Dashboard] Failed to apply custom color/formatter:', e);
-      if (petImg) petImg.src = url;
+      if (petImg) petImg.src = chrome.runtime.getURL('assets/pets/clawd-happy.svg');
     });
   });
 }

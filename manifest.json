@@ -45,6 +45,7 @@
     {
       "resources": [
         "assets/*",
+        "assets/pets/*",
         "onboarding/*",
         "wasm/*",
         "main_world.js"

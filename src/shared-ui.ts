@@ -98,6 +98,10 @@ export function getResolvedCostumeName(mood: string, costume: string | undefined
     party: 'rainbow'
   };
 
+  if (normalizedMood === 'sweeping') {
+    return 'working-sweeping';
+  }
+
   if (effectiveCostume && costumeMap[effectiveCostume]) {
     const mapped = costumeMap[effectiveCostume];
     return allowedSvgNames.has(mapped) ? mapped : 'happy';

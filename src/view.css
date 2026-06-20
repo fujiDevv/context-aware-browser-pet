@@ -267,8 +267,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-height: 150px;
-  max-height: 250px;
+  min-height: 300px;
+  max-height: 450px;
   background: #faf5f2;
   /* Subtle bg to match options dashboard secondary */
 }

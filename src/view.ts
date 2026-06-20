@@ -545,7 +545,7 @@ export class ViewManager {
       this.container.style.setProperty('--crop-y', cropY.toString());
     } catch (e) {
       console.warn(`[${this.options.petName || 'Clawd'} View] Failed to apply custom color/formatter:`, e);
-      this.petImg.src = url;
+      this.petImg.src = chrome.runtime.getURL('assets/pets/clawd-happy.svg');
     }
   }
 
