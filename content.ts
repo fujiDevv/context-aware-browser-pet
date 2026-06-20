@@ -686,8 +686,8 @@ async function updateEmotion(): Promise<void> {
 
     // Optional: Add a subtle notification bubble if AI was intended but bypassed due to Lite Mode
     if (currentSettings.aiMode && useLiteMode && !hasEvaluatedPageAi && !getSessionItem('clawd-lite-mode-notified')) {
-      view.showStatusBadge('Lite Mode', 'Active', 'Using DistilBERT Nano.');
-      view.addChatMessage('clawd', 'I am using my lightweight brain (Lite Mode) to save power!');
+      const reason = isMetered ? "on a metered connection" : "still loading my big brain";
+      console.log(`[Clawd] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
       setSessionItem('clawd-lite-mode-notified', 'true');
     }
   }
