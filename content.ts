@@ -380,6 +380,30 @@ function ensureInitialized(): void {
         // Play chatting sound and animation
         playSound('chat');
         loadPet('working-typing');
+
+        // Text-to-Speech
+        if (currentSettings.soundEnabled !== false && !isFocusActive(currentSettings)) {
+          if ('speechSynthesis' in window) {
+            // Strip emojis so the voice doesn't read them aloud
+            const spokenResponse = response.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+            const utterance = new SpeechSynthesisUtterance(spokenResponse);
+            const voices = window.speechSynthesis.getVoices();
+            // Pick the user's selected voice, or fallback to a friendly default
+            let preferredVoice;
+            if (currentSettings.chatVoice) {
+              preferredVoice = voices.find(v => v.name === currentSettings.chatVoice);
+            }
+            if (!preferredVoice) {
+              preferredVoice = voices.find(v => 
+                v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')
+              );
+            }
+            if (preferredVoice) utterance.voice = preferredVoice;
+            utterance.volume = currentSettings.soundVolume !== undefined ? currentSettings.soundVolume : 0.5;
+            utterance.pitch = 1.2; // slightly higher pitch for a pet
+            window.speechSynthesis.speak(utterance);
+          }
+        }
       } else {
         view.addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
       }

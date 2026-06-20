@@ -28,6 +28,9 @@ export class ViewManager {
   private chatMessages: HTMLElement;
   private chatInput: HTMLInputElement;
   private chatSend: HTMLButtonElement;
+  private chatMic: HTMLButtonElement;
+  private recognition: any = null;
+  private isListening: boolean = false;
   public onChatSubmit: ((message: string) => void) | null = null;
 
   constructor(options: ViewManagerOptions) {
@@ -70,6 +73,7 @@ export class ViewManager {
         <div class="clawd-chat-msg clawd">Hi there! Click me if you want to chat.</div>
       </div>
       <div class="clawd-chat-input-container">
+        <button id="clawd-chat-mic" title="Voice Chat">🎤</button>
         <input type="text" id="clawd-chat-input" placeholder="Ask me anything..." autocomplete="off">
         <button id="clawd-chat-send">Send</button>
       </div>
@@ -79,6 +83,7 @@ export class ViewManager {
     this.chatMessages = this.chatPanel.querySelector('.clawd-chat-messages') as HTMLElement;
     this.chatInput = this.chatPanel.querySelector('#clawd-chat-input') as HTMLInputElement;
     this.chatSend = this.chatPanel.querySelector('#clawd-chat-send') as HTMLButtonElement;
+    this.chatMic = this.chatPanel.querySelector('#clawd-chat-mic') as HTMLButtonElement;
 
     this.chatPanel.querySelector('.clawd-chat-close')?.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -100,6 +105,57 @@ export class ViewManager {
       if (e.key === 'Enter') submitChat();
     });
 
+    // Voice Chat Integration
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      this.recognition = new SpeechRecognition();
+      this.recognition.continuous = false;
+      this.recognition.interimResults = true;
+
+      this.recognition.onstart = () => {
+        this.isListening = true;
+        this.chatMic.classList.add('listening-pulse');
+        this.chatInput.placeholder = "Listening...";
+        this.setEmotion('smile'); // Use existing smile for listening, or a specific asset if available
+      };
+
+      this.recognition.onresult = (event: any) => {
+        let finalTranscript = '';
+        let interimTranscript = '';
+
+        for (let i = 0; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            interimTranscript += event.results[i][0].transcript;
+          }
+        }
+        this.chatInput.value = finalTranscript + interimTranscript;
+      };
+
+      this.recognition.onerror = (event: any) => {
+        console.warn('[Clawd View] Speech recognition error', event.error);
+        this.stopListening();
+      };
+
+      this.recognition.onend = () => {
+        this.stopListening();
+        if (this.chatInput.value.trim()) {
+          submitChat();
+        }
+      };
+
+      this.chatMic.addEventListener('click', () => {
+        if (this.isListening) {
+          this.recognition.stop();
+        } else {
+          this.recognition.start();
+        }
+      });
+    } else {
+      this.chatMic.style.display = 'none'; // Hide if not supported
+    }
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.chatPanel.classList.contains('show')) {
         this.toggleChat(false);
@@ -109,7 +165,7 @@ export class ViewManager {
     document.addEventListener('mousedown', (e) => {
       if (this.chatPanel.classList.contains('show')) {
         const path = e.composedPath();
-        if (!path.includes(this.chatPanel) && !path.includes(this.petImg)) {
+        if (!path.includes(this.shadowHost)) {
           this.toggleChat(false);
         }
       }
@@ -142,6 +198,12 @@ export class ViewManager {
     this.petImg.addEventListener('mousedown', (e) => this.options.onPetMouseDown(e));
     this.petImg.addEventListener('mouseenter', (e) => this.options.onPetMouseEnter(e));
     this.petImg.addEventListener('mouseleave', (e) => this.options.onPetMouseLeave(e));
+  }
+
+  private stopListening() {
+    this.isListening = false;
+    this.chatMic.classList.remove('listening-pulse');
+    this.chatInput.placeholder = "Ask me anything...";
   }
 
   public getContainer(): HTMLElement {

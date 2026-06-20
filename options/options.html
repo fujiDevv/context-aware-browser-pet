@@ -259,6 +259,7 @@
               <div class="options-chat-msg clawd">Hi! I'm Clawd. What's on your mind?</div>
             </div>
             <div class="options-chat-input-container">
+              <button id="options-chat-mic" title="Voice Chat">🎤</button>
               <input type="text" id="options-chat-input" placeholder="Type a message..." autocomplete="off">
               <button id="options-chat-send" disabled>Send</button>
             </div>
@@ -460,6 +461,16 @@
                   <option value="genz">Gen Z Slang</option>
                   <option value="kid">Kid / Gamified (High Energy)</option>
                 </select>
+              </div>
+
+              <div class="form-group" id="chat-voice-container">
+                <label for="chat-voice-select">Chat Voice (Text-to-Speech)</label>
+                <select id="chat-voice-select" class="form-control">
+                  <option value="">Default (Browser Choice)</option>
+                </select>
+                <div class="hint-text" style="margin-top: 4px; font-size: 12px; color: var(--text-secondary);">
+                  Select the voice Clawd uses to speak back to you.
+                </div>
               </div>
 
               <div class="toggle-group-row">

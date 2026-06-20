@@ -84,6 +84,7 @@ const speedVal = document.getElementById('speed-val') as HTMLElement;
 const flightSpeedSlider = document.getElementById('flight-speed-slider') as HTMLInputElement;
 const flightSpeedVal = document.getElementById('flight-speed-val') as HTMLElement;
 const personaSelect = document.getElementById('persona-select') as HTMLSelectElement;
+const chatVoiceSelect = document.getElementById('chat-voice-select') as HTMLSelectElement;
 const soundToggle = document.getElementById('sound-toggle') as HTMLInputElement;
 const aiToggle = document.getElementById('ai-toggle') as HTMLInputElement;
 const scheduleToggle = document.getElementById('schedule-toggle') as HTMLInputElement;
@@ -267,6 +268,7 @@ async function init() {
   const chatPanel = document.getElementById('options-chat-panel') as HTMLElement;
   const chatInput = document.getElementById('options-chat-input') as HTMLInputElement;
   const chatSend = document.getElementById('options-chat-send') as HTMLButtonElement;
+  const chatMic = document.getElementById('options-chat-mic') as HTMLButtonElement;
   const chatMessages = document.getElementById('options-chat-messages') as HTMLElement;
 
   let chatHistory: { role: string; content: string }[] = [];
@@ -322,6 +324,27 @@ async function init() {
       if (response) {
         addChatMessage('clawd', response);
         chatHistory.push({ role: 'assistant', content: response });
+
+        // Text-to-Speech playback
+        const soundEnabled = soundToggle.checked;
+        if (soundEnabled && 'speechSynthesis' in window) {
+          const spokenResponse = response.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+          const utterance = new SpeechSynthesisUtterance(spokenResponse);
+          const voices = window.speechSynthesis.getVoices();
+          let preferredVoice;
+          if (chatVoiceSelect.value) {
+            preferredVoice = voices.find(v => v.name === chatVoiceSelect.value);
+          }
+          if (!preferredVoice) {
+            preferredVoice = voices.find(v => 
+              v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')
+            );
+          }
+          if (preferredVoice) utterance.voice = preferredVoice;
+          utterance.volume = Number(volumeSlider.value) / 100;
+          utterance.pitch = 1.2;
+          window.speechSynthesis.speak(utterance);
+        }
       } else {
         addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
       }
@@ -340,6 +363,65 @@ async function init() {
   });
   chatInput?.addEventListener('input', () => {
     chatSend.disabled = chatInput.value.trim().length === 0;
+  });
+
+  // Speech Recognition
+  let recognition: any = null;
+  let isListening = false;
+  if ('webkitSpeechRecognition' in window) {
+    recognition = new (window as any).webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    recognition.onstart = () => {
+      isListening = true;
+      chatMic.classList.add('listening-pulse');
+      chatInput.placeholder = "Listening...";
+    };
+
+    recognition.onresult = (event: any) => {
+      let finalTranscript = '';
+      let interimTranscript = '';
+
+      for (let i = 0; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+        } else {
+          interimTranscript += event.results[i][0].transcript;
+        }
+      }
+      chatInput.value = finalTranscript + interimTranscript;
+      chatSend.disabled = chatInput.value.trim().length === 0;
+    };
+
+    recognition.onerror = (event: any) => {
+      console.warn("Speech recognition error", event.error);
+      stopListening();
+    };
+
+    recognition.onend = () => {
+      stopListening();
+    };
+  }
+
+  const stopListening = () => {
+    isListening = false;
+    chatMic?.classList.remove('listening-pulse');
+    if (chatInput) chatInput.placeholder = "Type a message...";
+    if (recognition) recognition.stop();
+  };
+
+  chatMic?.addEventListener('click', () => {
+    if (!recognition) {
+      alert("Speech recognition is not supported in this browser.");
+      return;
+    }
+    if (isListening) {
+      stopListening();
+    } else {
+      chatInput.value = '';
+      recognition.start();
+    }
   });
 
   // Setting bindings
@@ -378,6 +460,7 @@ async function init() {
   });
 
   personaSelect.addEventListener('change', saveSettings);
+  chatVoiceSelect.addEventListener('change', saveSettings);
 
   // Planner change listeners
   sleepStartSelect.addEventListener('change', saveSettings);
@@ -1144,6 +1227,11 @@ function applySettings(settings: PetSettings | undefined) {
   }
 
   personaSelect.value = activeSettings.persona || 'default';
+  if (activeSettings.chatVoice) {
+    chatVoiceSelect.value = activeSettings.chatVoice;
+  } else {
+    chatVoiceSelect.value = '';
+  }
 
   const sound = activeSettings.soundEnabled ?? true;
   soundToggle.checked = sound;
@@ -1206,6 +1294,7 @@ function saveSettings() {
       name: nameInput.value.trim() || 'Clawd',
       costume: activeCostume,
       persona: personaSelect.value,
+      chatVoice: chatVoiceSelect.value,
       blockedDomains: blockedDomains,
       scheduleEnabled: scheduleToggle.checked,
       seasonalEnabled: seasonalToggle.checked,
@@ -1784,6 +1873,31 @@ function renderAnalyticsCharts(stats: PetStats) {
       </svg>
     `;
   }
+}
+
+function populateVoices() {
+  if (!('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length === 0) return;
+  
+  const currentValue = chatVoiceSelect.value;
+  chatVoiceSelect.innerHTML = '<option value="">Default (Browser Choice)</option>';
+  
+  voices.forEach(voice => {
+    const option = document.createElement('option');
+    option.value = voice.name;
+    option.textContent = `${voice.name} (${voice.lang})`;
+    chatVoiceSelect.appendChild(option);
+  });
+  
+  if (currentValue) {
+    chatVoiceSelect.value = currentValue;
+  }
+}
+
+if ('speechSynthesis' in window) {
+  populateVoices();
+  window.speechSynthesis.onvoiceschanged = populateVoices;
 }
 
 document.addEventListener('DOMContentLoaded', init);

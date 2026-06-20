@@ -72,6 +72,7 @@ export interface PetSettings {
   commentFrequency?: number;
   flightSpeed?: number;
   customColor?: string;
+  chatVoice?: string;
 }
 
 export interface SharedPetState {
