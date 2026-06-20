@@ -283,7 +283,50 @@ async function init() {
   const addChatMessage = (role: 'user' | 'clawd', text: string) => {
     const el = document.createElement('div');
     el.className = `options-chat-msg ${role}`;
-    el.textContent = text;
+    
+    const textNode = document.createElement('span');
+    textNode.textContent = text;
+    el.appendChild(textNode);
+
+    if (role === 'clawd') {
+      const playBtn = document.createElement('button');
+      playBtn.className = 'clawd-play-btn';
+      playBtn.innerHTML = '🔊 Play';
+      playBtn.title = 'Play voice';
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const soundEnabled = soundToggle.checked;
+        if (soundEnabled && 'speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const spokenResponse = text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+          const utterance = new SpeechSynthesisUtterance(spokenResponse);
+          
+          (window as any).__currentUtterance = utterance;
+
+          const voices = window.speechSynthesis.getVoices();
+          let preferredVoice;
+          if (chatVoiceSelect.value) {
+            preferredVoice = voices.find(v => v.name === chatVoiceSelect.value);
+          }
+          if (!preferredVoice) {
+            preferredVoice = voices.find(v => 
+              v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')
+            );
+          }
+          if (preferredVoice) utterance.voice = preferredVoice;
+          utterance.volume = Number(volumeSlider.value) / 100;
+          utterance.pitch = 1.2;
+
+          utterance.onend = () => {
+            (window as any).__currentUtterance = null;
+          };
+
+          window.speechSynthesis.speak(utterance);
+        }
+      });
+      el.appendChild(playBtn);
+    }
+
     chatMessages.appendChild(el);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   };
@@ -331,27 +374,6 @@ async function init() {
       if (response) {
         addChatMessage('clawd', response);
         chatHistory.push({ role: 'assistant', content: response });
-
-        // Text-to-Speech playback
-        const soundEnabled = soundToggle.checked;
-        if (soundEnabled && 'speechSynthesis' in window) {
-          const spokenResponse = response.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
-          const utterance = new SpeechSynthesisUtterance(spokenResponse);
-          const voices = window.speechSynthesis.getVoices();
-          let preferredVoice;
-          if (chatVoiceSelect.value) {
-            preferredVoice = voices.find(v => v.name === chatVoiceSelect.value);
-          }
-          if (!preferredVoice) {
-            preferredVoice = voices.find(v => 
-              v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')
-            );
-          }
-          if (preferredVoice) utterance.voice = preferredVoice;
-          utterance.volume = Number(volumeSlider.value) / 100;
-          utterance.pitch = 1.2;
-          window.speechSynthesis.speak(utterance);
-        }
       } else {
         addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
       }

@@ -565,10 +565,30 @@ export class ViewManager {
     }
   }
 
+  public onPlayVoice: ((text: string) => void) | null = null;
+
   public addChatMessage(role: 'user' | 'clawd', text: string) {
     const msg = document.createElement('div');
     msg.className = `clawd-chat-msg ${role}`;
-    msg.textContent = text;
+
+    const textNode = document.createElement('span');
+    textNode.textContent = text;
+    msg.appendChild(textNode);
+
+    if (role === 'clawd') {
+      const playBtn = document.createElement('button');
+      playBtn.className = 'clawd-play-btn';
+      playBtn.innerHTML = '🔊 Play';
+      playBtn.title = 'Play voice';
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (this.onPlayVoice) {
+          this.onPlayVoice(text);
+        }
+      });
+      msg.appendChild(playBtn);
+    }
+
     this.chatMessages.appendChild(msg);
     this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
   }

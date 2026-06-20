@@ -280,6 +280,29 @@
   font-size: 13px;
   line-height: 1.4;
   word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.clawd-play-btn {
+  align-self: flex-start;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #475569;
+  transition: all 0.2s;
+}
+
+.clawd-play-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #1e293b;
 }
 
 .clawd-chat-msg.user {

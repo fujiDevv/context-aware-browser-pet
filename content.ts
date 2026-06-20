@@ -380,6 +380,38 @@ function ensureInitialized(): void {
     }
   });
 
+  view.onPlayVoice = (text: string) => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); // Stop any current speech
+      
+      const spokenResponse = text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+      const utterance = new SpeechSynthesisUtterance(spokenResponse);
+      
+      // Prevent Chrome garbage collection bug
+      (window as any).__currentUtterance = utterance;
+      
+      const voices = window.speechSynthesis.getVoices();
+      let preferredVoice;
+      if (currentSettings.chatVoice) {
+        preferredVoice = voices.find(v => v.name === currentSettings.chatVoice);
+      }
+      if (!preferredVoice) {
+        preferredVoice = voices.find(v => 
+          v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')
+        );
+      }
+      if (preferredVoice) utterance.voice = preferredVoice;
+      utterance.volume = currentSettings.soundVolume !== undefined ? currentSettings.soundVolume : 0.5;
+      utterance.pitch = 1.2;
+      
+      utterance.onend = () => {
+        (window as any).__currentUtterance = null;
+      };
+      
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   view.onChatSubmit = async (text: string) => {
     chatHistory.push({ role: 'user', content: text });
     
@@ -400,30 +432,6 @@ function ensureInitialized(): void {
         playSound('chat');
         loadPet('working-typing');
 
-        // Text-to-Speech
-        if (currentSettings.soundEnabled !== false && !isFocusActive(currentSettings)) {
-          if ('speechSynthesis' in window) {
-            // Strip emojis so the voice doesn't read them aloud
-            const spokenResponse = response.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
-            const utterance = new SpeechSynthesisUtterance(spokenResponse);
-            const voices = window.speechSynthesis.getVoices();
-            // Pick the user's selected voice, or fallback to a friendly default
-            let preferredVoice;
-            if (currentSettings.chatVoice) {
-              preferredVoice = voices.find(v => v.name === currentSettings.chatVoice);
-            }
-            if (!preferredVoice) {
-              preferredVoice = voices.find(v => 
-                v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')
-              );
-            }
-            if (preferredVoice) utterance.voice = preferredVoice;
-            utterance.volume = currentSettings.soundVolume !== undefined ? currentSettings.soundVolume : 0.5;
-            utterance.pitch = 1.2; // slightly higher pitch for a pet
-            window.speechSynthesis.speak(utterance);
-          }
-        }
-        
         // Send random initial dialogue to say hello (only once per session per tab)
         if (currentSettings.aiMode && currentSettings.commentFrequency! > 0) {
           if (!getSessionItem('clawd-has-greeted')) {
@@ -437,17 +445,6 @@ function ensureInitialized(): void {
               const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
               view.addChatMessage('clawd', randomGreeting);
               if (currentSettings.soundEnabled) playSound('chat');
-              
-              // Only do text-to-speech for the greeting if they have a voice setup
-              if (currentSettings.soundEnabled && currentSettings.chatVoice && 'speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(randomGreeting);
-                const voices = window.speechSynthesis.getVoices();
-                const preferredVoice = voices.find(v => v.name === currentSettings.chatVoice);
-                if (preferredVoice) utterance.voice = preferredVoice;
-                utterance.volume = currentSettings.soundVolume !== undefined ? currentSettings.soundVolume : 0.5;
-                utterance.pitch = 1.2;
-                window.speechSynthesis.speak(utterance);
-              }
 
               setSessionItem('clawd-has-greeted', 'true');
             }, 5000);
