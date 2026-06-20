@@ -16,20 +16,21 @@ export async function getAiEmotion(
   apiKey: string,
   persona: string,
   statsContext?: string,
-  sentimentSensitivity: number = 50
+  sentimentSensitivity: number = 50,
+  petName: string = 'Clawd'
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   try {
     const ogType = (document.querySelector('meta[property="og:type"]') as HTMLMetaElement | null)?.content;
     const category = detectPageCategory(url, pageTitle, ogType || undefined, metaDescription);
 
     // 1. Try Gemini Nano (Built-in Prompt API) first if available
-    const geminiNanoAvailable = await checkGeminiNanoAvailability();
+    const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
     if (geminiNanoAvailable === 'available' || geminiNanoAvailable === 'downloadable' || geminiNanoAvailable === 'downloading') {
       try {
-        const result = await runGeminiNanoInference(pageTitle, metaDescription, category, persona, statsContext);
+        const result = await runGeminiNanoInference(pageTitle, metaDescription, category, persona, statsContext, petName);
         if (result) return result;
       } catch (e) {
-        console.warn('[Clawd AI] Gemini Nano inference failed, falling back to DistilBERT:', e);
+        console.warn(`[${petName} AI] Gemini Nano inference failed, falling back to DistilBERT:`, e);
       }
     }
 
@@ -65,16 +66,17 @@ export async function getAiEmotion(
       sentiment: response.sentiment
     };
   } catch (error) {
-    console.warn('[Clawd Local AI] All AI paths failed, falling back to happy:', error);
+    console.warn(`[${petName} Local AI] All AI paths failed, falling back to happy:`, error);
     return { emotion: 'happy' };
   }
 }
 
 export async function getDailyInsight(
   stats: any,
-  persona: string
+  persona: string,
+  petName: string = 'Clawd'
 ): Promise<string> {
-  const geminiNanoAvailable = await checkGeminiNanoAvailability();
+  const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
   if (geminiNanoAvailable !== 'available' && geminiNanoAvailable !== 'downloadable' && geminiNanoAvailable !== 'downloading') {
     return getTemplateFallback(stats, persona);
   }
@@ -88,7 +90,7 @@ export async function getDailyInsight(
     .map(([cat, count]) => `${cat} (${count} visits)`)
     .join(', ');
 
-  const systemPrompt = `You are "Clawd", a perceptive browser pet with a ${persona} persona. 
+  const systemPrompt = `You are "${petName}", a perceptive browser pet with a ${persona} persona. 
 Analyze the user's browsing day and provide a 1-2 sentence reflection.
 
 DATA CONTEXT:
@@ -106,14 +108,14 @@ RULE:
 
   const prompt = `Write our daily reflection for today based on these habits.`;
 
-  const result = await promptGeminiNano(systemPrompt, prompt);
+  const result = await promptGeminiNano(systemPrompt, prompt, petName);
   return result ? result.trim().replace(/^["']|["']$/g, '') : getTemplateFallback(stats, persona);
 }
 
 /**
  * Orchestrates a prompt to Gemini Nano, handling both direct access and bridge-based communication.
  */
-async function promptGeminiNano(systemPrompt: string, prompt: string): Promise<string | null> {
+async function promptGeminiNano(systemPrompt: string, prompt: string, petName: string = 'Clawd'): Promise<string | null> {
   // 1. Direct Extension/Extension Context Attempt
   const lm = (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? (window as any).LanguageModel : null);
   if (lm) {
@@ -128,13 +130,13 @@ async function promptGeminiNano(systemPrompt: string, prompt: string): Promise<s
       if (systemPrompt) {
         createOptions.initialPrompts = [{ role: 'system', content: systemPrompt }];
       }
-      console.log('[Clawd AI] Executing local Gemini Nano inference (EXTENSION_CONTEXT)...');
+      console.log(`[${petName} AI] Executing local Gemini Nano inference (EXTENSION_CONTEXT)...`);
       const session = await lm.create(createOptions);
       const resultText = await session.prompt(prompt);
       await session.destroy();
       return resultText;
     } catch (e) {
-      console.warn('[Clawd AI] Direct prompt attempt failed:', e);
+      console.warn(`[${petName} AI] Direct prompt attempt failed:`, e);
     }
   }
 
@@ -230,7 +232,7 @@ export function setBridgeToken(token: string): void {
   bridgeToken = token;
 }
 
-async function checkGeminiNanoAvailability(): Promise<'available' | 'downloadable' | 'downloading' | 'unavailable'> {
+async function checkGeminiNanoAvailability(petName: string = 'Clawd'): Promise<'available' | 'downloadable' | 'downloading' | 'unavailable'> {
   // 1. Extension context direct check
   const lm = (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? (window as any).LanguageModel : null);
   if (lm) {
@@ -245,7 +247,7 @@ async function checkGeminiNanoAvailability(): Promise<'available' | 'downloadabl
         });
       }
     } catch (e) {
-      console.warn('[Clawd AI] Direct availability check failed:', e);
+      console.warn(`[${petName} AI] Direct availability check failed:`, e);
     }
   }
 
@@ -286,9 +288,10 @@ async function runGeminiNanoInference(
   metaDescription: string | undefined,
   categoryHint: string,
   persona: string,
-  statsContext: string | undefined
+  statsContext: string | undefined,
+  petName: string = 'Clawd'
 ): Promise<{ emotion: string; comment: string; category: string; sentiment: string } | null> {
-  const systemPrompt = `You are "Clawd", a highly perceptive and slightly ${persona} browser pet mascot. 
+  const systemPrompt = `You are "${petName}", a highly perceptive and slightly ${persona} browser pet mascot. 
 Your goal is to deeply analyze the user's intent on the current webpage and react accordingly.
 
 Respond ONLY with a JSON object: 
@@ -315,7 +318,7 @@ Pet Stats: ${statsContext || 'Normal'}.`;
 Title: ${pageTitle}
 Description: ${metaDescription || 'None'}`;
 
-  const resultText = await promptGeminiNano(systemPrompt, prompt);
+  const resultText = await promptGeminiNano(systemPrompt, prompt, petName);
   if (!resultText) return null;
 
   try {
@@ -327,7 +330,7 @@ Description: ${metaDescription || 'None'}`;
     }
     const parsed = JSON.parse(cleanText);
     if (parsed.intent_summary) {
-      console.log(`[Clawd AI] Detected Intent: ${parsed.intent_summary}`);
+      console.log(`[${petName} AI] Detected Intent: ${parsed.intent_summary}`);
     }
     return parsed;
   } catch (e) {
@@ -340,9 +343,10 @@ export async function getAiChatResponse(
   pageText: string,
   persona: string,
   statsContext?: string,
-  chatHistory?: { role: string, content: string }[]
+  chatHistory?: { role: string, content: string }[],
+  petName: string = 'Clawd'
 ): Promise<string | null> {
-  const geminiNanoAvailable = await checkGeminiNanoAvailability();
+  const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
   if (geminiNanoAvailable !== 'available' && geminiNanoAvailable !== 'downloadable' && geminiNanoAvailable !== 'downloading') {
     return "I'm sorry, my brain (Gemini Nano) isn't ready right now. Wait for me to download or enable AI Mode!";
   }
@@ -355,7 +359,7 @@ export async function getAiChatResponse(
     historyStr = 'Recent Conversation History:\n' + chatHistory.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n') + '\n\n';
   }
 
-  const systemPrompt = `You are "Clawd", a perceptive browser pet mascot with a ${persona} persona.
+  const systemPrompt = `You are "${petName}", a perceptive browser pet mascot with a ${persona} persona.
 You are chatting directly with the user while they browse the web.
 Maintain your ${persona} personality. Give thorough and helpful responses without artificial length limits.
 Use emojis where appropriate, but if you are responding to voice or code, adjust accordingly.
@@ -370,6 +374,6 @@ ${truncatedPageText}
 
 ${historyStr}Respond directly to the user's latest message based on your persona and the webpage context.`;
 
-  const resultText = await promptGeminiNano(systemPrompt, userMessage);
+  const resultText = await promptGeminiNano(systemPrompt, userMessage, petName);
   return resultText;
 }

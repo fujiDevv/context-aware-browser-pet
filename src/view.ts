@@ -2,6 +2,7 @@ import { PetSettings } from './types';
 import viewStyles from './view.css';
 
 export interface ViewManagerOptions {
+  petName?: string;
   onPetClick: (e: MouseEvent) => void;
   onPetDoubleClick: (e: MouseEvent) => void;
   onPetContextMenu: (e: MouseEvent) => void;
@@ -64,13 +65,14 @@ export class ViewManager {
     // Initialize Chat Panel
     this.chatPanel = document.createElement('div');
     this.chatPanel.id = 'clawd-chat-panel';
+    const petName = this.options.petName || 'Clawd';
     this.chatPanel.innerHTML = `
       <div class="clawd-chat-header">
-        <span>Chat with Clawd</span>
+        <span>Chat with ${petName}</span>
         <button class="clawd-chat-close">×</button>
       </div>
       <div class="clawd-chat-messages">
-        <div class="clawd-chat-msg clawd">Hi there! Click me if you want to chat.</div>
+        <div class="clawd-chat-msg clawd">Hi there! I'm ${petName}. Click me if you want to chat.</div>
       </div>
       <div class="clawd-chat-input-container">
         <button id="clawd-chat-mic" title="Voice Chat">🎤</button>
@@ -134,7 +136,7 @@ export class ViewManager {
       };
 
       this.recognition.onerror = (event: any) => {
-        console.warn('[Clawd View] Speech recognition error', event.error);
+        console.warn(`[${this.options.petName || 'Clawd'} View] Speech recognition error`, event.error);
         this.stopListening();
       };
 
@@ -542,7 +544,7 @@ export class ViewManager {
       this.container.style.setProperty('--crop-x', cropX.toString());
       this.container.style.setProperty('--crop-y', cropY.toString());
     } catch (e) {
-      console.warn('[Clawd View] Failed to apply custom color/formatter:', e);
+      console.warn(`[${this.options.petName || 'Clawd'} View] Failed to apply custom color/formatter:`, e);
       this.petImg.src = url;
     }
   }

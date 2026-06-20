@@ -15,6 +15,8 @@ import { isFocusActive, isSleeping } from './src/schedule';
 const BRIDGE_TOKEN = Math.random().toString(36).substring(2) + Date.now().toString(36);
 setBridgeToken(BRIDGE_TOKEN);
 
+let currentSettings: PetSettings = { size: 128, speed: 1.2, aiMode: false, apiKey: '', soundEnabled: true, soundVolume: 0.5, scheduleEnabled: true };
+
 (function injectMainWorld() {
   try {
     if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) return;
@@ -24,7 +26,7 @@ setBridgeToken(BRIDGE_TOKEN);
     script.onload = () => script.remove();
     (document.head || document.documentElement).appendChild(script);
   } catch (e) {
-    console.warn('[Clawd Content] Main world injection failed:', e);
+    console.warn(`[${currentSettings.name || "Clawd"} Content] Main world injection failed:`, e);
   }
 })();
 
@@ -146,7 +148,6 @@ function safeSendMessage(message: PetMessage, callback?: (response: any) => void
   }
 }
 
-let currentSettings: PetSettings = { size: 128, speed: 1.2, aiMode: false, apiKey: '', soundEnabled: true, soundVolume: 0.5, scheduleEnabled: true };
 let hasEvaluatedPageAi = false;
 let currentAiCategory: string | undefined = undefined;
 let currentAiSentiment: string | undefined = undefined;
@@ -321,6 +322,7 @@ function ensureInitialized(): void {
   const chatHistory: { role: string; content: string; }[] = [];
 
   view = new ViewManager({
+    petName: currentSettings.name,
     onPetClick: (e) => {
       e.stopPropagation();
       if (movement.wasDragged) {
@@ -387,7 +389,7 @@ function ensureInitialized(): void {
     const persona = currentSettings.persona || 'default';
     
     try {
-      const response = await getAiChatResponse(text, pageText, persona, statsContext, chatHistory);
+      const response = await getAiChatResponse(text, pageText, persona, statsContext, chatHistory, currentSettings.name);
       
       view.setChatLoading(false);
       
@@ -455,7 +457,7 @@ function ensureInitialized(): void {
         view.addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
       }
     } catch (e) {
-      console.error('[Clawd Chat] Error:', e);
+      console.error(`[${currentSettings.name || "Clawd"} Chat] Error:`, e);
       view.setChatLoading(false);
       view.addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
     }
@@ -560,14 +562,14 @@ async function loadPet(name: string): Promise<void> {
       if (e.message && e.message.includes('context invalidated')) {
         cleanupOrphanedScript();
       } else {
-        console.warn('[Clawd Content] storage.set error:', e);
+        console.warn(`[${currentSettings.name || "Clawd"} Content] storage.set error:`, e);
       }
     });
   } catch (e: any) {
     if (e.message && e.message.includes('context invalidated')) {
       cleanupOrphanedScript();
     } else {
-      console.warn('[Clawd Content] error:', e);
+      console.warn(`[${currentSettings.name || "Clawd"} Content] error:`, e);
     }
   }
 }
@@ -654,7 +656,7 @@ async function updateEmotion(): Promise<void> {
 
           const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
           const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
-          const result = await getAiEmotion(context.pageTitle, metaDesc, window.location.href, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity);
+          const result = await getAiEmotion(context.pageTitle, metaDesc, window.location.href, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity, currentSettings.name);
           nextEmotion = result.emotion;
           aiComment = result.comment;
           currentAiCategory = result.category;
@@ -673,7 +675,7 @@ async function updateEmotion(): Promise<void> {
           cleanupOrphanedScript();
           return;
         }
-        console.warn('[Clawd Content] updateEmotion AI error:', e);
+        console.warn(`[${currentSettings.name || "Clawd"} Content] updateEmotion AI error:`, e);
         hasEvaluatedPageAi = true;
         nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
       }
@@ -687,7 +689,7 @@ async function updateEmotion(): Promise<void> {
     // Optional: Add a subtle notification bubble if AI was intended but bypassed due to Lite Mode
     if (currentSettings.aiMode && useLiteMode && !hasEvaluatedPageAi && !getSessionItem('clawd-lite-mode-notified')) {
       const reason = isMetered ? "on a metered connection" : "still loading my big brain";
-      console.log(`[Clawd] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
+      console.log(`[${currentSettings.name || "Clawd"}] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
       setSessionItem('clawd-lite-mode-notified', 'true');
     }
   }
@@ -821,7 +823,7 @@ function handleShoo(e: Event) {
 
   try {
     view.getPetImg().getAnimations().forEach(anim => anim.cancel());
-  } catch (err) { console.warn('[Clawd Content] handleShoo animations cancel error:', err); }
+  } catch (err) { console.warn(`[${currentSettings.name || "Clawd"} Content] handleShoo animations cancel error:`, err); }
 
   isTemporarilyInteracting = true;
   personality.recordInteraction('shoo');
@@ -845,7 +847,7 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
 
   try {
     view.getPetImg().getAnimations().forEach(anim => anim.cancel());
-  } catch (err) { console.warn('[Clawd Content] triggerInteraction animations cancel error:', err); }
+  } catch (err) { console.warn(`[${currentSettings.name || "Clawd"} Content] triggerInteraction animations cancel error:`, err); }
 
   personality.recordInteraction(action);
   loadPet(temporaryMood);
@@ -1111,7 +1113,7 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
     if (isInitialized) {
       try {
         view.getPetImg().getAnimations().forEach(anim => anim.cancel());
-      } catch (err) { console.warn('[Clawd Content] handleRuntimeMessage shoo animations cancel error:', err); }
+      } catch (err) { console.warn(`[${currentSettings.name || "Clawd"} Content] handleRuntimeMessage shoo animations cancel error:`, err); }
 
       isTemporarilyInteracting = true;
       personality.recordInteraction('shoo');
@@ -1225,7 +1227,7 @@ async function init(): Promise<void> {
     actuallyInit();
   } else {
     // Basic setup so we can still receive messages or handle visibility changes
-    console.log("[Clawd Content] Tab is backgrounded. Delaying mascot initialization.");
+    console.log(`[${currentSettings.name || "Clawd"} Content] Tab is backgrounded. Delaying mascot initialization.`);
   }
 }
 
@@ -1303,7 +1305,6 @@ async function actuallyInit(): Promise<void> {
             ];
             const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
             view.showBubble(randomGreeting);
-            playSound('greeting');
             sessionStorage.setItem('clawd-has-greeted', 'true');
 
             // Lite Mode Notification (AI Downloading)

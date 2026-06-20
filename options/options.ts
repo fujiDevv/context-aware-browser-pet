@@ -21,6 +21,13 @@ function escapeHtml(unsafe: string): string {
     .replace(/'/g, "&#039;");
 }
 
+function updatePetNameDisplays(name: string) {
+  const safeName = name || 'Clawd';
+  document.querySelectorAll('.pet-name-display').forEach(el => {
+    el.textContent = safeName;
+  });
+}
+
 // Elements
 const petImg = document.getElementById('browser-pet-img') as HTMLImageElement;
 const playgroundStage = document.getElementById('playground-stage') as HTMLElement;
@@ -428,6 +435,7 @@ async function init() {
   nameInput.addEventListener('input', () => {
     const name = nameInput.value.trim() || 'Clawd';
     if (petNameEl) petNameEl.textContent = name;
+    updatePetNameDisplays(name);
     saveSettings();
   });
 
@@ -1168,6 +1176,7 @@ function applySettings(settings: PetSettings | undefined) {
 
   nameInput.value = activeSettings.name || 'Clawd';
   if (petNameEl) petNameEl.textContent = nameInput.value;
+  updatePetNameDisplays(nameInput.value);
 
   const size = activeSettings.size ?? 128;
   sizeSlider.value = String(size);
