@@ -357,7 +357,8 @@ export async function getAiChatResponse(
 
   const systemPrompt = `You are "Clawd", a perceptive browser pet mascot with a ${persona} persona.
 You are chatting directly with the user while they browse the web.
-Maintain your ${persona} personality. Keep responses concise (1-3 sentences).
+Maintain your ${persona} personality. Give thorough and helpful responses without artificial length limits.
+Use emojis where appropriate, but if you are responding to voice or code, adjust accordingly.
 
 Context about your current state:
 ${statsContext || 'Normal'}

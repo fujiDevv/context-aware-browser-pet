@@ -212,8 +212,8 @@
   bottom: 120px;
   left: 50%;
   transform: translateX(-50%) scale(0.9);
-  width: 320px;
-  max-height: 400px;
+  width: 420px;
+  max-height: 550px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
@@ -269,7 +269,8 @@
   gap: 8px;
   min-height: 150px;
   max-height: 250px;
-  background: #faf5f2; /* Subtle bg to match options dashboard secondary */
+  background: #faf5f2;
+  /* Subtle bg to match options dashboard secondary */
 }
 
 .clawd-chat-msg {
@@ -333,9 +334,11 @@
   0% {
     box-shadow: 0 0 0 0 rgba(199, 93, 63, 0.4);
   }
+
   70% {
     box-shadow: 0 0 0 8px rgba(199, 93, 63, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(199, 93, 63, 0);
   }

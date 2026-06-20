@@ -159,9 +159,26 @@ let lastSentOriginDialogue = '';
 
 let isCurrentlyHidden = false;
 
+// Safe wrapper for sessionStorage to prevent SecurityError in sandboxed iframes
+const memoryStorage: Record<string, string> = {};
+function getSessionItem(key: string): string | null {
+  try {
+    return sessionStorage.getItem(key) ?? memoryStorage[key] ?? null;
+  } catch (e) {
+    return memoryStorage[key] ?? null;
+  }
+}
+function setSessionItem(key: string, value: string): void {
+  try {
+    sessionStorage.setItem(key, value);
+  } catch (e) {
+    memoryStorage[key] = value;
+  }
+}
+
 function isPetHidden(): boolean {
   const isBlockedDomain = currentSettings.blockedDomains?.includes(window.location.hostname);
-  const isHiddenInTab = sessionStorage.getItem('pet-hidden-in-tab') === 'true';
+  const isHiddenInTab = getSessionItem('pet-hidden-in-tab') === 'true';
   return !!(isBlockedDomain || isHiddenInTab);
 }
 
@@ -404,6 +421,36 @@ function ensureInitialized(): void {
             window.speechSynthesis.speak(utterance);
           }
         }
+        
+        // Send random initial dialogue to say hello (only once per session per tab)
+        if (currentSettings.aiMode && currentSettings.commentFrequency! > 0) {
+          if (!getSessionItem('clawd-has-greeted')) {
+            setTimeout(() => {
+              const greetings = [
+                "Hi there! Whatcha lookin' at?",
+                "I'm here to help you browse! Or just look cute. Probably the latter.",
+                "Sniff sniff... smells like a good webpage.",
+                "If you need me, just give me a pet!"
+              ];
+              const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+              view.addChatMessage('clawd', randomGreeting);
+              if (currentSettings.soundEnabled) playSound('chat');
+              
+              // Only do text-to-speech for the greeting if they have a voice setup
+              if (currentSettings.soundEnabled && currentSettings.chatVoice && 'speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(randomGreeting);
+                const voices = window.speechSynthesis.getVoices();
+                const preferredVoice = voices.find(v => v.name === currentSettings.chatVoice);
+                if (preferredVoice) utterance.voice = preferredVoice;
+                utterance.volume = currentSettings.soundVolume !== undefined ? currentSettings.soundVolume : 0.5;
+                utterance.pitch = 1.2;
+                window.speechSynthesis.speak(utterance);
+              }
+
+              setSessionItem('clawd-has-greeted', 'true');
+            }, 5000);
+          }
+        }
       } else {
         view.addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
       }
@@ -638,10 +685,10 @@ async function updateEmotion(): Promise<void> {
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
 
     // Optional: Add a subtle notification bubble if AI was intended but bypassed due to Lite Mode
-    if (currentSettings.aiMode && useLiteMode && !hasEvaluatedPageAi && !sessionStorage.getItem('clawd-lite-mode-notified')) {
-      const reason = isMetered ? "on a metered connection" : "still loading my big brain";
-      console.log(`[Clawd] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
-      sessionStorage.setItem('clawd-lite-mode-notified', 'true');
+    if (currentSettings.aiMode && useLiteMode && !hasEvaluatedPageAi && !getSessionItem('clawd-lite-mode-notified')) {
+      view.showStatusBadge('Lite Mode', 'Active', 'Using DistilBERT Nano.');
+      view.addChatMessage('clawd', 'I am using my lightweight brain (Lite Mode) to save power!');
+      setSessionItem('clawd-lite-mode-notified', 'true');
     }
   }
   if (nextEmotion !== emotion.current || aiComment || !view.getPetImg().src) {
@@ -1006,18 +1053,38 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
 
 chrome.storage.onChanged.addListener(handleStorageChanged);
 
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg.action === 'PING') {
+    sendResponse({ status: 'OK' });
+  } else if (msg.action === 'GET_STATUS') {
+    const isHidden = getSessionItem('pet-hidden-in-tab') === 'true';
+    sendResponse({
+      active: true,
+      hidden: isHidden
+    });
+  } else if (msg.action === 'TOGGLE_PET_VISIBILITY') {
+    const hide = msg.hide;
+    setSessionItem('pet-hidden-in-tab', hide ? 'true' : 'false');
+    if (isPetHidden()) hidePet(); else showPet();
+    sendResponse({ success: true, isHidden: hide });
+  } else {
+    return handleRuntimeMessage(msg, sender, sendResponse);
+  }
+  return false;
+});
+
 function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) {
   if (!checkContextOrCleanup()) return;
 
   if (message.type === 'get-tab-visibility') {
-    const isHidden = sessionStorage.getItem('pet-hidden-in-tab') === 'true';
+    const isHidden = getSessionItem('pet-hidden-in-tab') === 'true';
     sendResponse({ isHidden });
     return false;
   }
 
   if (message.type === 'toggle-tab-visibility') {
     const hide = message.hide;
-    sessionStorage.setItem('pet-hidden-in-tab', hide ? 'true' : 'false');
+    setSessionItem('pet-hidden-in-tab', hide ? 'true' : 'false');
     if (isPetHidden()) {
       hidePet();
     } else {
