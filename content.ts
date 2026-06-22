@@ -1291,6 +1291,18 @@ async function actuallyInit(): Promise<void> {
   window.addEventListener('pet-console-error', handleConsoleError);
 
   window.addEventListener('keydown', handleKeydown);
+  
+  let ghostModeTimeout: ReturnType<typeof setTimeout> | null = null;
+  const handleGhostModeActivity = () => {
+    if (!currentSettings.ghostMode || !isInitialized || isPetHidden()) return;
+    view.getContainer().classList.add('ghost-mode-active');
+    if (ghostModeTimeout) clearTimeout(ghostModeTimeout);
+    ghostModeTimeout = setTimeout(() => {
+      view.getContainer().classList.remove('ghost-mode-active');
+    }, 2000);
+  };
+  document.addEventListener('keydown', handleGhostModeActivity, { passive: true });
+  document.addEventListener('scroll', handleGhostModeActivity, { passive: true });
 
   if (isPetHidden()) {
     hidePet();

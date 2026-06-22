@@ -74,6 +74,7 @@ export interface PetSettings {
   customColor?: string;
   chatVoice?: string;
   performanceMode?: boolean;
+  ghostMode?: boolean;
 }
 
 export interface SharedPetState {

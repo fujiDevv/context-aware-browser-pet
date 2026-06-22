@@ -29,6 +29,11 @@
   filter: drop-shadow(0px 2px 8px rgba(255, 105, 180, 0.4));
 }
 
+#browser-pet-root.ghost-mode-active #browser-pet-img {
+  opacity: 0.3 !important;
+  transition: opacity 0.5s ease;
+}
+
 .pet-speech-bubble {
   position: absolute;
   bottom: 75px;

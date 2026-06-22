@@ -421,10 +421,12 @@ async function init(): Promise<void> {
   const tabHideToggle = document.getElementById('tab-hide-toggle') as HTMLInputElement;
   const siteHideToggle = document.getElementById('site-hide-toggle') as HTMLInputElement;
   const performanceModeToggle = document.getElementById('performance-mode-toggle') as HTMLInputElement;
+  const ghostModeToggle = document.getElementById('ghost-mode-toggle') as HTMLInputElement;
   const siteSubtitle = document.getElementById('site-visibility-subtitle') as HTMLElement;
-  
+
   if (data[STORAGE_KEYS.SETTINGS]) {
     performanceModeToggle.checked = !!data[STORAGE_KEYS.SETTINGS].performanceMode;
+    ghostModeToggle.checked = !!data[STORAGE_KEYS.SETTINGS].ghostMode;
   }
   
   let currentTabId: number | undefined = undefined;
@@ -501,6 +503,14 @@ async function init(): Promise<void> {
     chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       settings.performanceMode = performanceModeToggle.checked;
+      chrome.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
+    });
+  });
+
+  ghostModeToggle.addEventListener('change', () => {
+    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
+      const settings = res[STORAGE_KEYS.SETTINGS] || {};
+      settings.ghostMode = ghostModeToggle.checked;
       chrome.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
     });
   });
