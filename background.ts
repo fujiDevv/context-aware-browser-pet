@@ -262,19 +262,35 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'check-tab-ai-availability') {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0];
-      if (!activeTab?.id) {
-        sendResponse({ success: false, error: 'No active tab found' });
-        return;
-      }
-      chrome.tabs.sendMessage(activeTab.id, { type: 'check-tab-ai-availability' }, (res) => {
-        if (chrome.runtime.lastError) {
-          sendResponse({ success: false, error: chrome.runtime.lastError.message });
-        } else {
-          sendResponse(res);
-        }
+    const tryTab = (tabId: number): Promise<any> => {
+      return new Promise((resolve) => {
+        chrome.tabs.sendMessage(tabId, { type: 'check-tab-ai-availability' }, (res) => {
+          if (chrome.runtime.lastError) resolve(null);
+          else resolve(res);
+        });
       });
+    };
+
+    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+      let activeTab = tabs[0];
+      let res = activeTab?.id ? await tryTab(activeTab.id) : null;
+      
+      if (!res) {
+        // Fallback: Check any other HTTP/HTTPS tab if the active one failed (e.g. options page)
+        const allTabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
+        for (const t of allTabs) {
+          if (t.id && t.id !== activeTab?.id) {
+            res = await tryTab(t.id);
+            if (res) break;
+          }
+        }
+      }
+
+      if (res) {
+        sendResponse(res);
+      } else {
+        sendResponse({ success: false, error: 'No compatible tab found to check AI availability' });
+      }
     });
     return true;
   }

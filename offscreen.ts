@@ -187,6 +187,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'check-offscreen-ai-status') {
+    if (modelLoadingState === 'idle') {
+      getClassifier().catch((e) => console.warn('[Clawd Offscreen] auto-init error:', e));
+    }
     sendResponse({ success: true, state: modelLoadingState, progress: modelDownloadProgress });
     return false;
   }
