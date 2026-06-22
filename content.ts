@@ -462,6 +462,53 @@ function ensureInitialized(): void {
     }
   };
 
+  view.onChatRedo = async (oldMsgEl: HTMLElement, lastUserMsg: string) => {
+    if (chatHistory.length > 0 && chatHistory[chatHistory.length - 1].role === 'assistant') {
+      chatHistory.pop();
+    }
+    
+    const textNode = oldMsgEl.querySelector('div:not(.clawd-control-btn)') as HTMLElement;
+    const controlsRow = oldMsgEl.querySelector('div[style*="flex"]') as HTMLElement;
+    const originalText = textNode ? textNode.textContent : "";
+    if (textNode) {
+      textNode.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+    }
+    if (controlsRow) {
+      controlsRow.style.display = 'none';
+    }
+    
+    view.setChatLoading(true, false);
+    
+    const pageText = document.body.innerText || '';
+    const trait = getDominantTrait(personality.stats.siteCategoryCounts);
+    const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
+    const persona = currentSettings.persona || 'default';
+    
+    try {
+      const response = await getAiChatResponse(lastUserMsg, pageText, persona, statsContext, chatHistory, currentSettings.name);
+      
+      view.setChatLoading(false);
+      
+      if (response) {
+        chatHistory.push({ role: 'assistant', content: response });
+        view.addChatMessage('clawd', response, oldMsgEl);
+        oldMsgEl.remove();
+        if (currentSettings.soundEnabled) playSound('chat');
+        loadPet('working-typing');
+      } else {
+        if (textNode) textNode.textContent = originalText;
+        if (controlsRow) controlsRow.style.display = 'flex';
+        view.addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
+      }
+    } catch (e) {
+      console.error(`[${currentSettings.name || "Clawd"} Chat] Error:`, e);
+      view.setChatLoading(false);
+      if (textNode) textNode.textContent = originalText;
+      if (controlsRow) controlsRow.style.display = 'flex';
+      view.addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
+    }
+  };
+
   movement = new MovementEngine(view.getContainer(), {
     size: currentSettings.size,
     speed: currentSettings.speed

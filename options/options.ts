@@ -280,7 +280,7 @@ async function init() {
 
   let chatHistory: { role: string; content: string }[] = [];
 
-  const addChatMessage = (role: 'user' | 'clawd', text: string) => {
+  const addChatMessage = (role: 'user' | 'clawd', text: string, insertBeforeEl?: Element | null) => {
     const el = document.createElement('div');
     el.className = `options-chat-msg ${role}`;
     
@@ -298,10 +298,11 @@ async function init() {
       controlsRow.style.marginTop = '6px';
       controlsRow.style.display = 'flex';
       controlsRow.style.justifyContent = 'flex-end';
+      controlsRow.style.gap = '8px';
 
       const playBtn = document.createElement('button');
-      playBtn.className = 'clawd-play-btn';
-      playBtn.innerHTML = '🔊 Play';
+      playBtn.className = 'clawd-control-btn';
+      playBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
       playBtn.title = 'Play voice';
       playBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -333,11 +334,79 @@ async function init() {
           window.speechSynthesis.speak(utterance);
         }
       });
+      
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'clawd-control-btn';
+      copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+      copyBtn.title = 'Copy Response';
+      copyBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText(displayText);
+        } catch (err) {
+          console.error('Failed to copy', err);
+        }
+      });
+
+      const redoBtn = document.createElement('button');
+      redoBtn.className = 'clawd-control-btn';
+      redoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
+      redoBtn.title = 'Redo';
+      redoBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const allMsgs = Array.from(chatMessages.children);
+        const myIndex = allMsgs.indexOf(el);
+        let lastUserMsg = "";
+        for(let i = myIndex - 1; i >= 0; i--) {
+          if (allMsgs[i].classList.contains('user')) {
+            lastUserMsg = allMsgs[i].textContent || "";
+            break;
+          }
+        }
+        if (lastUserMsg) {
+          if (chatHistory.length > 0 && chatHistory[chatHistory.length - 1].role === 'model') {
+            chatHistory.pop();
+          }
+          const originalText = textNode.textContent;
+          textNode.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+          controlsRow.style.display = 'none';
+
+          setChatLoading(true, false);
+          try {
+            const persona = personaSelect.value || 'default';
+            const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${getDominantTrait(personality.stats)}`;
+            const response = await getAiChatResponse(lastUserMsg, "User is currently looking at the Sanctuary Dashboard.", persona, statsContext, chatHistory);
+            
+            setChatLoading(false);
+
+            if (response) {
+              addChatMessage('clawd', response, el);
+              el.remove();
+              chatHistory.push({ role: 'model', content: response });
+            } else {
+              textNode.textContent = originalText;
+              controlsRow.style.display = 'flex';
+            }
+          } catch (e) {
+            setChatLoading(false);
+            textNode.textContent = originalText;
+            controlsRow.style.display = 'flex';
+            addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
+          }
+        }
+      });
+
       controlsRow.appendChild(playBtn);
+      controlsRow.appendChild(copyBtn);
+      controlsRow.appendChild(redoBtn);
       el.appendChild(controlsRow);
     }
 
-    chatMessages.appendChild(el);
+    if (insertBeforeEl && insertBeforeEl.parentNode === chatMessages) {
+      chatMessages.insertBefore(el, insertBeforeEl);
+    } else {
+      chatMessages.appendChild(el);
+    }
     chatMessages.scrollTop = chatMessages.scrollHeight;
   };
 
@@ -347,15 +416,17 @@ async function init() {
     setTimeout(() => chatInput.focus(), 50);
   });
 
-  const setChatLoading = (isLoading: boolean) => {
+  const setChatLoading = (isLoading: boolean, appendIndicator = true) => {
     chatSend.disabled = isLoading;
     chatInput.disabled = isLoading;
     if (isLoading) {
-      const loadingMsg = document.createElement('div');
-      loadingMsg.className = 'options-chat-msg clawd loading-indicator';
-      loadingMsg.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
-      chatMessages.appendChild(loadingMsg);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+      if (appendIndicator) {
+        const loadingMsg = document.createElement('div');
+        loadingMsg.className = 'options-chat-msg clawd loading-indicator';
+        loadingMsg.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+        chatMessages.appendChild(loadingMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
     } else {
       const loadingIndicator = chatMessages.querySelector('.loading-indicator');
       if (loadingIndicator) loadingIndicator.remove();
