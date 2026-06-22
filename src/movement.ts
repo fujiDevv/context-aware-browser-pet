@@ -160,6 +160,12 @@ export class MovementEngine {
     }
   }
 
+  public isFlying(): boolean {
+    const container = this.containerRef?.deref();
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+    return this.y < H - 5;
+  }
+
   _triggerFall(edgeX?: number): void {
     const el = this.el;
     if (!el) return;

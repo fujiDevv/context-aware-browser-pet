@@ -331,6 +331,7 @@ function ensureInitialized(): void {
         movement.wasDragged = false;
         return;
       }
+      if (movement.isFlying()) return;
       triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
       view.toggleChat();
     },
@@ -368,6 +369,9 @@ function ensureInitialized(): void {
       movement.paused = isOpen;
       const container = view.getContainer();
       if (isOpen) {
+        try {
+          view.getPetImg().getAnimations().forEach(anim => anim.cancel());
+        } catch (err) {}
         movement.hasFallen = true;
         movement.state = 'walk-bottom'; // Ensure pet knows it is at the bottom
         const bottomY = window.innerHeight - movement.size;
@@ -871,12 +875,14 @@ async function triggerContextDialogue(mood: string): Promise<void> {
 }
 
 let lastShooTime = 0;
-function handleShoo(e: Event) {
+function handleShoo(e: MouseEvent) {
   e.preventDefault();
   e.stopPropagation();
 
+  if (view && view.isChatOpen()) return;
+
   const now = Date.now();
-  if (now - lastShooTime < 500) return;
+  if (now - lastShooTime < 3000) return; // Cooldown
   lastShooTime = now;
 
   try {
@@ -1278,6 +1284,7 @@ function handleConsoleError() {
 function handleKeydown(e: KeyboardEvent) {
   if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'c') {
     if (view) {
+      if (movement.isFlying()) return;
       view.toggleChat();
     }
   }

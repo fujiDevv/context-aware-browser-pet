@@ -568,6 +568,10 @@ export class ViewManager {
     }
   }
 
+  public isChatOpen(): boolean {
+    return this.chatPanel.classList.contains('show');
+  }
+
   public onPlayVoice: ((text: string) => void) | null = null;
 
   public addChatMessage(role: 'user' | 'clawd', text: string, insertBeforeEl?: Element | null): void {
