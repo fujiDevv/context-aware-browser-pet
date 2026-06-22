@@ -512,11 +512,13 @@ function ensureInitialized(): void {
 
   movement = new MovementEngine(view.getContainer(), {
     size: currentSettings.size,
-    speed: currentSettings.speed
+    speed: currentSettings.speed,
+    performanceMode: currentSettings.performanceMode
   });
 
   personality.disabledEmotions = currentSettings.disabledEmotions || [];
   view.applyCostume(currentSettings.costume);
+  view.getContainer().classList.toggle('performance-mode', !!currentSettings.performanceMode);
 
   movement.onLanding = () => {
     if (isPetHidden()) return;
@@ -734,16 +736,19 @@ async function updateEmotion(): Promise<void> {
   }
 
   // Unified Consciousness: Broadcast state to other tabs of the same origin
-  const hostname = window.location.hostname;
-  if (nextEmotion !== lastSentOriginEmotion || (aiComment && aiComment !== lastSentOriginDialogue)) {
-    lastSentOriginEmotion = nextEmotion;
-    lastSentOriginDialogue = aiComment || '';
-    safeSendMessage({
-      type: 'update-origin-pet-state',
-      hostname,
-      emotion: nextEmotion,
-      dialogue: aiComment
-    });
+  // In Performance Mode, we disable this to save CPU cycles and message passing overhead
+  if (!currentSettings.performanceMode) {
+    const hostname = window.location.hostname;
+    if (nextEmotion !== lastSentOriginEmotion || (aiComment && aiComment !== lastSentOriginDialogue)) {
+      lastSentOriginEmotion = nextEmotion;
+      lastSentOriginDialogue = aiComment || '';
+      safeSendMessage({
+        type: 'update-origin-pet-state',
+        hostname,
+        emotion: nextEmotion,
+        dialogue: aiComment
+      });
+    }
   }
 
   if (nextEmotion !== emotion.current || aiComment) {
@@ -1046,9 +1051,11 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
         movement.updateSettings({
           size: currentSettings.size,
           speed: currentSettings.speed,
-          flightSpeed: currentSettings.flightSpeed
+          flightSpeed: currentSettings.flightSpeed,
+          performanceMode: currentSettings.performanceMode
         });
         view.applyCostume(currentSettings.costume);
+        view.getContainer().classList.toggle('performance-mode', !!currentSettings.performanceMode);
       }
       if (changes[STORAGE_KEYS.SETTINGS].oldValue?.aiMode !== newSettings.aiMode) {
         hasEvaluatedPageAi = false;
@@ -1172,11 +1179,11 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
       updateEmotion();
     }
   } else if (message.type === 'sync-pet-state') {
-    if (isInitialized && document.visibilityState === 'visible' && !document.hasFocus() && !movement.isDragging) {
+    if (isInitialized && document.visibilityState === 'visible' && !document.hasFocus() && !movement.isDragging && !currentSettings.performanceMode) {
       movement.syncState(message.state);
     }
   } else if (message.type === 'sync-origin-pet-state') {
-    if (isInitialized) {
+    if (isInitialized && !currentSettings.performanceMode) {
       const { emotion: syncedEmotion, dialogue: syncedDialogue } = message.state;
       if (syncedEmotion !== emotion.current) {
         emotion.current = syncedEmotion;

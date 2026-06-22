@@ -9,6 +9,7 @@ export class MovementEngine {
   size: number;
   speed: number;
   flightSpeed: number;
+  performanceMode: boolean;
   x: number;
   y: number;
   direction: number;
@@ -51,7 +52,7 @@ export class MovementEngine {
     this._apply();
   };
 
-  constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number; container?: HTMLElement; isSandbox?: boolean } = {}) {
+  constructor(el: HTMLElement, initialSettings: { size?: number; speed?: number; container?: HTMLElement; isSandbox?: boolean; performanceMode?: boolean } = {}) {
     this.elRef = new WeakRef(el);
     if (initialSettings.container) {
       this.containerRef = new WeakRef(initialSettings.container);
@@ -62,6 +63,7 @@ export class MovementEngine {
     this.size = initialSettings.size || 100;
     this.speed = initialSettings.speed || 1.2;
     this.flightSpeed = 1.0;
+    this.performanceMode = initialSettings.performanceMode || false;
 
     const container = initialSettings.container;
     const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
@@ -317,12 +319,15 @@ export class MovementEngine {
     return promise;
   }
 
-  updateSettings(settings: { size?: number; speed?: number; flightSpeed?: number }): void {
+  updateSettings(settings: { size?: number; speed?: number; flightSpeed?: number; performanceMode?: boolean }): void {
     if (settings.speed !== undefined) {
       this.speed = settings.speed;
     }
     if (settings.flightSpeed !== undefined) {
       this.flightSpeed = settings.flightSpeed;
+    }
+    if (settings.performanceMode !== undefined) {
+      this.performanceMode = settings.performanceMode;
     }
     const el = this.el;
     if (settings.size !== undefined) {
@@ -365,6 +370,13 @@ export class MovementEngine {
     if (currentTime) {
       if (!this.lastTime) this.lastTime = currentTime;
       const deltaTime = currentTime - this.lastTime;
+      
+      // Cap at 30fps in performance mode (skip frames if < 33ms)
+      if (this.performanceMode && deltaTime < 33) {
+        this._raf = requestAnimationFrame((time) => this._tick(time));
+        return;
+      }
+
       this.lastTime = currentTime;
       timeMultiplier = Math.min(deltaTime / 16.66, 3);
     }
@@ -787,6 +799,7 @@ export class MovementEngine {
 
   _safeSendMessage(msg: PetMessage): void {
     if (this.isSandbox) return;
+    if (this.performanceMode && msg.type === 'update-pet-state') return;
     try {
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
         chrome.runtime.sendMessage(msg).catch((e) => { console.warn('[Clawd Movement] runtime.sendMessage error:', e); });

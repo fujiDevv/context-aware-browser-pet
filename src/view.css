@@ -115,6 +115,14 @@
   }
 }
 
+/* ── Performance Mode overrides ── */
+.performance-mode .costume-detective,
+.performance-mode .costume-wizard,
+.performance-mode .costume-party {
+  filter: none !important;
+  animation: none !important;
+}
+
 /* ── Level-Up Achievement Banner CSS ── */
 .pet-levelup-banner {
   position: fixed;

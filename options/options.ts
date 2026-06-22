@@ -96,6 +96,7 @@ const soundToggle = document.getElementById('sound-toggle') as HTMLInputElement;
 const aiToggle = document.getElementById('ai-toggle') as HTMLInputElement;
 const scheduleToggle = document.getElementById('schedule-toggle') as HTMLInputElement;
 const seasonalToggle = document.getElementById('seasonal-toggle') as HTMLInputElement;
+const performanceModeToggle = document.getElementById('performance-mode-toggle') as HTMLInputElement;
 const volumeContainer = document.getElementById('volume-container') as HTMLElement;
 const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
 const volumeVal = document.getElementById('volume-val') as HTMLElement;
@@ -581,6 +582,7 @@ async function init() {
   focusActiveToggle.addEventListener('change', saveSettings);
   focusStartSelect.addEventListener('change', saveSettings);
   focusEndSelect.addEventListener('change', saveSettings);
+  performanceModeToggle.addEventListener('change', saveSettings);
 
   soundToggle.addEventListener('change', () => {
     if (soundToggle.checked) {
@@ -1376,6 +1378,7 @@ function applySettings(settings: PetSettings | undefined) {
 
   scheduleToggle.checked = activeSettings.scheduleEnabled ?? true;
   seasonalToggle.checked = activeSettings.seasonalEnabled ?? true;
+  performanceModeToggle.checked = activeSettings.performanceMode ?? false;
 
   // Apply planner settings to selectors
   sleepStartSelect.value = activeSettings.sleepStartHour !== undefined ? String(activeSettings.sleepStartHour) : '22';
@@ -1410,6 +1413,7 @@ function saveSettings() {
       blockedDomains: blockedDomains,
       scheduleEnabled: scheduleToggle.checked,
       seasonalEnabled: seasonalToggle.checked,
+      performanceMode: performanceModeToggle.checked,
       sleepStartHour: sleepStartSelect.value !== '' ? Number(sleepStartSelect.value) : undefined,
       sleepEndHour: sleepEndSelect.value !== '' ? Number(sleepEndSelect.value) : undefined,
       workStartHour: workStartSelect.value !== '' ? Number(workStartSelect.value) : undefined,
