@@ -419,7 +419,7 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
 ### How It Works
 
 1. **Context Extraction:** When you visit a tab, Clawd collects the page's `<title>` and `<meta name="description">`, truncating it to a maximum of 500 characters to optimize processing speeds.
-2. **Gemini Nano Summarization:** If available (via Chrome's built-in Prompt API), Clawd scans the full `<body>` of the page and generates a condensed 1-sentence semantic summary. This replaces the `<title>` logic to provide vastly smarter reactions without overflowing context windows!
+2. **Gemini Nano Summarization & Dialogue:** If available (via Chrome's built-in Prompt API), Clawd scans the full `<body>` of the page and generates a condensed 1-sentence semantic summary. Furthermore, Clawd leverages Gemini Nano to dynamically generate **100% unique, highly-contextual dialogue bubbles** on the fly! If Gemini Nano is unavailable, it gracefully degrades to a robust hardcoded persona dictionary.
 3. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
 4. **Local Sentiment Model:** The WebAssembly runtime evaluates the text using a quantized version of the **DistilBERT** model (`Xenova/distilbert-base-uncased-finetuned-sst-2-english`).
 5. **Dynamic Sentiment Threshold Mapping:**
