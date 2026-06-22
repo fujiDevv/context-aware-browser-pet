@@ -9,6 +9,10 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 </p>
 
 <p align="center">
+  <a href="https://www.producthunt.com/products/clawd-the-context-aware-browser-pet?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-clawd" target="_blank" rel="noopener noreferrer"><img alt="Clawd - A context-aware browser mascot with 100% local offline AI | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1174174&amp;theme=light&amp;t=1782133204859"></a>
+</p>
+
+<p align="center">
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript&logoColor=white" alt="TypeScript" /></a>
   <a href="#"><img src="https://img.shields.io/badge/Manifest-V3-orange?logo=google-chrome&logoColor=white" alt="Manifest V3" /></a>
   <a href="https://esbuild.github.io/"><img src="https://img.shields.io/badge/Bundler-esbuild-yellow?logo=esbuild&logoColor=black" alt="esbuild" /></a>
