@@ -20,6 +20,7 @@ let currentSettings: PetSettings = { size: 128, speed: 1.2, aiMode: false, apiKe
 (function injectMainWorld() {
   try {
     if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) return;
+    if (document.documentElement.tagName.toLowerCase() !== 'html') return;
     const script = document.createElement('script');
     script.src = chrome.runtime.getURL('main_world.js');
     script.dataset.token = BRIDGE_TOKEN;
@@ -1398,4 +1399,6 @@ async function getAiEmotionAvailability(): Promise<'readily' | 'after-download' 
   });
 }
 
-init();
+if (document.documentElement.tagName.toLowerCase() === 'html') {
+  init();
+}
