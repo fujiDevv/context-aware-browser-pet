@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Clawd: The Context-Aware Browser Pet",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "An interactive, context-aware browser mascot pet companion.",
   "permissions": [
     "storage",

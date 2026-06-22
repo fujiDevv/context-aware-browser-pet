@@ -535,7 +535,8 @@ export class ViewManager {
         svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
       }
 
-      const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
+      // Use direct URI encoding instead of deprecated unescape() and btoa() which can cause Latin1 encoding errors
+      const dataUri = `data:image/svg+xml,${encodeURIComponent(svgText)}`;
       
       const cacheObj = { dataUri, cropW, cropH, cropX, cropY };
       this.colorCache.set(cacheKey, cacheObj);
