@@ -330,7 +330,7 @@ function ensureInitialized(): void {
         movement.wasDragged = false;
         return;
       }
-      // triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
+      triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
       view.toggleChat();
     },
     onPetDoubleClick: (e) => {
@@ -473,12 +473,9 @@ function ensureInitialized(): void {
   movement.onLanding = () => {
     if (isPetHidden()) return;
 
-    isTemporarilyInteracting = true;
     if (interactionTimeout) clearTimeout(interactionTimeout);
-
-    // Play impact/crying sound and show initial "ouch" face
-    playSound('sad');
-    loadPet('crying');
+    isTemporarilyInteracting = false;
+    loadPet(emotion.current);
 
     const petImg = view.getPetImg();
     // Physical landing squash/stretch
@@ -488,27 +485,6 @@ function ensureInitialized(): void {
       { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1.1, 0.9)', offset: 0.6 },
       { transform: 'var(--pet-flip) rotate(var(--pet-rotation)) scale(1, 1)', offset: 1 }
     ], { duration: 500, easing: 'ease-out' });
-
-    // Daze for 1 second, then "dust off" (sweep)
-    // interactionTimeout = setTimeout(() => {
-    //   loadPet('working-sweeping');
-
-    //   // Reset after sweep duration
-    //   interactionTimeout = setTimeout(() => {
-    //     isTemporarilyInteracting = false;
-    //     loadPet(emotion.current);
-    //   }, 1500);
-    // }, 1000);
-
-    interactionTimeout = setTimeout(() => {
-      loadPet('crying');
-
-      // Reset after
-      interactionTimeout = setTimeout(() => {
-        isTemporarilyInteracting = false;
-        loadPet(emotion.current);
-      }, 1500);
-    }, 1000);
   };
 
   movement.onFlightStart = () => {

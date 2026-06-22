@@ -284,11 +284,21 @@ async function init() {
     const el = document.createElement('div');
     el.className = `options-chat-msg ${role}`;
     
-    const textNode = document.createElement('span');
-    textNode.textContent = text;
+    // Remove emojis for Clawd's responses
+    const displayText = role === 'clawd' 
+      ? text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim() 
+      : text;
+
+    const textNode = document.createElement('div');
+    textNode.textContent = displayText;
     el.appendChild(textNode);
 
     if (role === 'clawd') {
+      const controlsRow = document.createElement('div');
+      controlsRow.style.marginTop = '6px';
+      controlsRow.style.display = 'flex';
+      controlsRow.style.justifyContent = 'flex-end';
+
       const playBtn = document.createElement('button');
       playBtn.className = 'clawd-play-btn';
       playBtn.innerHTML = '🔊 Play';
@@ -298,8 +308,7 @@ async function init() {
         const soundEnabled = soundToggle.checked;
         if (soundEnabled && 'speechSynthesis' in window) {
           window.speechSynthesis.cancel();
-          const spokenResponse = text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
-          const utterance = new SpeechSynthesisUtterance(spokenResponse);
+          const utterance = new SpeechSynthesisUtterance(displayText);
           
           (window as any).__currentUtterance = utterance;
 
@@ -324,7 +333,8 @@ async function init() {
           window.speechSynthesis.speak(utterance);
         }
       });
-      el.appendChild(playBtn);
+      controlsRow.appendChild(playBtn);
+      el.appendChild(controlsRow);
     }
 
     chatMessages.appendChild(el);

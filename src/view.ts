@@ -571,11 +571,21 @@ export class ViewManager {
     const msg = document.createElement('div');
     msg.className = `clawd-chat-msg ${role}`;
 
-    const textNode = document.createElement('span');
-    textNode.textContent = text;
+    // Remove emojis for Clawd's responses
+    const displayText = role === 'clawd' 
+      ? text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim() 
+      : text;
+
+    const textNode = document.createElement('div');
+    textNode.textContent = displayText;
     msg.appendChild(textNode);
 
     if (role === 'clawd') {
+      const controlsRow = document.createElement('div');
+      controlsRow.style.marginTop = '6px';
+      controlsRow.style.display = 'flex';
+      controlsRow.style.justifyContent = 'flex-end';
+
       const playBtn = document.createElement('button');
       playBtn.className = 'clawd-play-btn';
       playBtn.innerHTML = '🔊 Play';
@@ -583,10 +593,12 @@ export class ViewManager {
       playBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (this.onPlayVoice) {
-          this.onPlayVoice(text);
+          this.onPlayVoice(displayText);
         }
       });
-      msg.appendChild(playBtn);
+      
+      controlsRow.appendChild(playBtn);
+      msg.appendChild(controlsRow);
     }
 
     this.chatMessages.appendChild(msg);
