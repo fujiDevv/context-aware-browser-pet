@@ -378,30 +378,34 @@ Click the extension icon or open the Options Dashboard to access comprehensive c
 - **Daily Schedule & Triggers**: Toggle off to put Clawd in Autonomous Mode, letting him choose his own emotes, move around, and analyze pages on his own terms.
 - **Sound Board**: Click buttons to preview chiptune sounds (greeting, feed, level-up, shoo, etc.).
 - **Visibility**: Toggle options to hide Clawd on the current tab or block him entirely on the active domain.
+- **Ghost Mode**: Dims opacity to 30% dynamically when you are actively typing or scrolling to prevent distraction without completely hiding the pet. (Note: **Focus Blocks** suppresses autonomous behavior and sounds while keeping 100% opacity, whereas **Ghost Mode** simply fades visual footprint dynamically).
+- **Performance Mode**: Halts cross-tab syncing, caps physics to 30fps, and disables CSS aura shaders for low-end machines or battery saving.
 - **Pet Name**: Give your pet a custom name (up to 12 characters).
 - **Pet Glow Effect**: Select costume auras unlocked at LVL 5, 10, and 15.
 - **Custom Mascot Color**: Pick a specific body color for your mascot (unlocked at LVL 15).
 - **Sliders**: Adjust size (48px - 256px), walking speed (0.1x - 3.0x), rocket flight speed (0.5x - 5.0x), and volume.
 - **AI Mood Analysis**: Toggle local sentiment evaluation and choose AI commentary persona.
 
-### � Interactive Schedule Planner
+### 📅 Interactive Schedule Planner
 Take control of Clawd's daily routine:
 - **Mascot Sleep/Wake Planner**: A time-block scheduler allowing you to custom-define Clawd's sleeping, waking, and working hours (e.g. setting sleep mode to trigger during your bedtime).
-- **Focus Blocks**: Set up custom focus blocks during work sprints where Clawd stays quiet or plays a typing/studying animation to prevent distraction.
+- **Focus Blocks vs. Ghost Mode**: 
+  - **Focus Blocks**: Time-based (e.g. 9 AM - 5 PM). Suppresses autonomous reactions, mutes sounds, and keeps Clawd in a quiet "working" animation loop at 100% opacity.
+  - **Ghost Mode**: Interaction-based. When you are actively typing or scrolling, Clawd's opacity instantly drops to 30% so he doesn't physically block the text you are reading or forms you are filling out.
 
-### � Website & Domain Triggers
+### 🎭 Website & Domain Triggers
 Configure how Clawd reacts to specific websites:
 - **Domain Reaction Dictionary**: A mapping table where you can bind site domains to Clawd's animations or comments. For example:
- - `stackoverflow.com` $\rightarrow$ Enter study mood + speak coding quotes.
- - `youtube.com` $\rightarrow$ Enter movie-watching animation with popcorn.
- - `duolingo.com` $\rightarrow$ Play encouraging chiptune track.
+  - `stackoverflow.com` $\rightarrow$ Enter study mood + speak coding quotes.
+  - `youtube.com` $\rightarrow$ Enter movie-watching animation with popcorn.
+  - `duolingo.com` $\rightarrow$ Play encouraging chiptune track.
 
-### � Local AI Fine-Tuning
+### 🎛 Local AI Fine-Tuning
 Fine-tune Clawd's offline sentiment classifier:
 - **Sentiment Sensitivity Threshold**: Adjust how easily the Local AI registers page sentiment to trigger positive or negative mood shifts.
 - **Comment Frequency**: A rate-limiting slider to control how often Clawd makes AI-derived observations (adjustable from once every 30 seconds to once every 5 minutes).
 
-### � Expanded Analytics & Charts
+### 📈 Expanded Analytics & Charts
 Dive into your browsing and pet metrics:
 - **Interests History Chart**: A clean bar chart visualizer breaking down site categories visited over the last 7 days (e.g. Development, Social, Leisure, Reading).
 - **Mood Over Time Tracker**: A dynamic line chart showing Clawd's average daily levels for all five core stats (Happiness, Energy, Curiosity, Focus, and Leisure).
@@ -415,9 +419,10 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
 ### How It Works
 
 1. **Context Extraction:** When you visit a tab, Clawd collects the page's `<title>` and `<meta name="description">`, truncating it to a maximum of 500 characters to optimize processing speeds.
-2. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
-3. **Local Sentiment Model:** The WebAssembly runtime evaluates the text using a quantized version of the **DistilBERT** model (`Xenova/distilbert-base-uncased-finetuned-sst-2-english`).
-4. **Dynamic Sentiment Threshold Mapping:**
+2. **Gemini Nano Summarization:** If available (via Chrome's built-in Prompt API), Clawd scans the full `<body>` of the page and generates a condensed 1-sentence semantic summary. This replaces the `<title>` logic to provide vastly smarter reactions without overflowing context windows!
+3. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
+4. **Local Sentiment Model:** The WebAssembly runtime evaluates the text using a quantized version of the **DistilBERT** model (`Xenova/distilbert-base-uncased-finetuned-sst-2-english`).
+5. **Dynamic Sentiment Threshold Mapping:**
  To classify a page as `POSITIVE` or `NEGATIVE`, the classification probability score must exceed a dynamic confidence threshold. This threshold is calculated from the user's **Sentiment Sensitivity Slider** (ranging from `0` to `100`) using the formula:
  $$\text{threshold} = 0.90 - \left(\frac{\text{sensitivity}}{100}\right) \times 0.40$$
  * At **0 sensitivity**, the threshold is a strict **0.90** (requires extremely high confidence to shift mood).
