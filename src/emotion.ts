@@ -82,12 +82,18 @@ export class EmotionEngine {
       return this.personality.defaultEmotion();
     }
 
-    // 1. High Priority Activity Indicators
+    // 1. Custom Sleep planner & Wake Routine
+    if (isSleeping(settings, hour)) return 'sleeping';
+
+    // 1.1 Yoga check right after waking up
+    if (isYogaTime(settings, hour)) return 'yoga';
+
+    // 2. High Priority Activity Indicators
     if (ctx.isVideoPlaying) return this._mediaEmotion(ctx);
     if (ctx.isTypingHeavy) return 'working-typing';
     if (ctx.isFormSubmitting) return 'celebrating';
 
-    // 2. Site Classification Custom Matches
+    // 3. Site Classification Custom Matches
     const category = detectPageCategory(ctx.hostname, ctx.pageTitle);
     if (category === 'coding') return this._codeEmotion(ctx);
     if (category === 'social') return 'love';
@@ -105,20 +111,14 @@ export class EmotionEngine {
       return FITNESS_EMOTES[index];
     }
 
-    // 3. Idle State Dynamic Choices
+    // 4. Idle State Dynamic Choices
     if (ctx.idleSeconds > 300) return 'sleeping';
     if (ctx.idleSeconds > 45) {
       const hash = Math.floor((ctx.idleSeconds + new Date().getMinutes()) % IDLE_CHOICES.length);
       return IDLE_CHOICES[hash];
     }
 
-    // 4. Custom Sleep planner
-    if (isSleeping(settings, hour)) return 'sleeping';
-
-    // 4.1 Yoga check right after waking up
-    if (isYogaTime(settings, hour)) return 'yoga';
-
-    // 4.2 Custom Active Work Hours
+    // 5. Custom Active Work Hours
     if (isWorking(settings, hour)) {
       const index = Math.floor(new Date().getMinutes() / 15) % WORK_EMOTIONS.length;
       return WORK_EMOTIONS[index];
