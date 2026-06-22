@@ -1,7 +1,7 @@
 import { PersonalitySystem } from '../src/personality';
 import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem } from '../src/types';
 import { STORAGE_KEYS } from '../src/constants';
-import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/shared-ui';
+import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName, parseMarkdown } from '../src/shared-ui';
 import { getDailyInsight, getAiChatResponse } from '../src/ai';
 import { MovementEngine } from '../src/movement';
 
@@ -290,7 +290,7 @@ async function init() {
       : text;
 
     const textNode = document.createElement('div');
-    textNode.textContent = displayText;
+    textNode.innerHTML = parseMarkdown(displayText);
     el.appendChild(textNode);
 
     if (role === 'clawd') {

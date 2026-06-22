@@ -1,5 +1,6 @@
 import { PetSettings } from './types';
 import viewStyles from './view.css';
+import { parseMarkdown } from './shared-ui';
 
 export interface ViewManagerOptions {
   petName?: string;
@@ -580,7 +581,7 @@ export class ViewManager {
       : text;
 
     const textNode = document.createElement('div');
-    textNode.textContent = displayText;
+    textNode.innerHTML = parseMarkdown(displayText);
     msg.appendChild(textNode);
 
     if (role === 'clawd') {

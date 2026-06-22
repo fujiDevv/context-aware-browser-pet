@@ -52,7 +52,8 @@ export const EMOTIONS_METADATA: Record<string, { name: string; emoji: string }> 
 };
 
 export function getDominantTrait(stats: PetStats | undefined): 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal' {
-  return getTrait(stats?.siteCategoryCounts);
+  const dominantTrait = getTrait(stats?.siteCategoryCounts);
+  return dominantTrait as 'developer' | 'gamer' | 'scholar' | 'socialite' | 'normal';
 }
 
 /**
@@ -108,4 +109,33 @@ export function getResolvedCostumeName(mood: string, costume: string | undefined
   }
 
   return allowedSvgNames.has(normalizedMood) ? normalizedMood : 'happy';
+}
+
+export function parseMarkdown(text: string): string {
+  // Escape HTML first to prevent XSS
+  let html = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+  // Code blocks: ```code```
+  html = html.replace(/```([\s\S]*?)```/g, '<pre style="background: rgba(0,0,0,0.1); padding: 8px; border-radius: 6px; overflow-x: auto; margin: 6px 0;"><code>$1</code></pre>');
+  
+  // Inline code: `code`
+  html = html.replace(/`([^`]+)`/g, '<code style="background: rgba(0,0,0,0.1); padding: 2px 4px; border-radius: 4px; font-family: monospace; font-size: 0.9em;">$1</code>');
+  
+  // Bold: **bold**
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  
+  // Italic: *italic* or _italic_
+  html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
+  
+  // Links: [text](url)
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: #3b82f6; text-decoration: underline;">$1</a>');
+  
+  // New lines
+  html = html.replace(/\n/g, '<br>');
+  
+  return html;
 }
