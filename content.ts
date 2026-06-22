@@ -77,6 +77,7 @@ function cleanupOrphanedScript(): void {
   if (idleTimer) clearTimeout(idleTimer);
   if (debounceTimeout) clearTimeout(debounceTimeout);
   if (pokeInterval) clearInterval(pokeInterval);
+  if (interactionTimeout) clearTimeout(interactionTimeout);
 
   if (isInitialized) {
     try {
@@ -434,8 +435,9 @@ function ensureInitialized(): void {
 
         // Send random initial dialogue to say hello (only once per session per tab)
         if (currentSettings.aiMode && currentSettings.commentFrequency! > 0) {
-          if (!getSessionItem('clawd-has-greeted')) {
+          if (!getSessionItem('clawd-ai-has-greeted')) {
             setTimeout(() => {
+              if (isOrphaned) return;
               const greetings = [
                 "Hi there! Whatcha lookin' at?",
                 "I'm here to help you browse! Or just look cute. Probably the latter.",
@@ -446,7 +448,7 @@ function ensureInitialized(): void {
               view.addChatMessage('clawd', randomGreeting);
               if (currentSettings.soundEnabled) playSound('chat');
 
-              setSessionItem('clawd-has-greeted', 'true');
+              setSessionItem('clawd-ai-has-greeted', 'true');
             }, 5000);
           }
         }
@@ -914,6 +916,8 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
   isTemporarilyInteracting = true;
   movement.paused = true;
 
+  if (interactionTimeout) clearTimeout(interactionTimeout);
+
   keyframeAnimate(toyEl, [
     { opacity: '1' },
     { opacity: '0' }
@@ -956,7 +960,7 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
     ], { duration: 800, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
   }
 
-  setTimeout(() => {
+  interactionTimeout = setTimeout(() => {
     isTemporarilyInteracting = false;
     movement.paused = false;
     loadPet(emotion.current);
@@ -1170,7 +1174,10 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
   return false;
 }
 
-chrome.runtime.onMessage.addListener(handleRuntimeMessage);
+// Ensure the listener is properly cleared if the script is orphaned
+if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage) {
+  // We don't add handleRuntimeMessage directly since it's called by the inline listener
+}
 
 function handleVisibilityChange() {
   if (!checkContextOrCleanup()) return;

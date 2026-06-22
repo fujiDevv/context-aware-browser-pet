@@ -171,6 +171,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'fetch-svg') {
     let fetchUrl = message.url;
     
+    // Workaround for Chromium Service Worker fetch bug on chrome-extension:// URLs
+    try {
+      const parsedUrl = new URL(fetchUrl);
+      if (parsedUrl.protocol === 'chrome-extension:') {
+        fetchUrl = parsedUrl.pathname;
+      }
+    } catch (e) {}
+
     fetch(fetchUrl)
       .then(res => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
