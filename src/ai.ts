@@ -130,6 +130,57 @@ RULE:
   return result ? result.trim().replace(/^["']|["']$/g, '') : getTemplateFallback(stats, persona);
 }
 
+export async function getAutonomousGenerativeDialogue(
+  persona: string,
+  statsContext: string,
+  mood: string,
+  pageTitle: string,
+  metaDescription: string | undefined,
+  petName: string = 'Clawd',
+  pageText?: string
+): Promise<string | null> {
+  const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
+  if (geminiNanoAvailable !== 'available' && geminiNanoAvailable !== 'downloadable' && geminiNanoAvailable !== 'downloading') {
+    return null; // Fall back to hardcoded dialogs
+  }
+
+  let summaryForPrompt = metaDescription;
+  
+  if (pageText) {
+    try {
+      const truncatedText = pageText.length > 3000 ? pageText.substring(0, 3000) + '...' : pageText;
+      const summaryPrompt = `Summarize the following webpage content into exactly one concise sentence:\n\n${truncatedText}`;
+      const generatedSummary = await promptGeminiNano("You are a helpful summarizer.", summaryPrompt, petName);
+      if (generatedSummary) {
+         summaryForPrompt = generatedSummary.trim();
+      }
+    } catch (e) {
+      console.warn(`[${petName} AI] Gemini Nano summarization failed:`, e);
+    }
+  }
+
+  const systemPrompt = `You are "${petName}", a perceptive browser pet with a ${persona} persona.
+The user is currently browsing the web. Provide a highly contextual 1-sentence thought bubble.
+
+CONTEXT:
+- Persona: ${persona}
+- Pet's current mood/state: ${mood}
+- Current Webpage Title: ${pageTitle}
+- Webpage Summary: ${summaryForPrompt || 'None'}
+- Pet's Current Stats: ${statsContext}
+
+RULE:
+- Speak as the pet.
+- Keep it under 150 characters.
+- Must directly relate to what the user is looking at.
+- Do NOT use emojis, markdown, or quotation marks.`;
+
+  const prompt = "What are you thinking right now?";
+
+  const result = await promptGeminiNano(systemPrompt, prompt, petName);
+  return result ? result.trim().replace(/^["']|["']$/g, '') : null;
+}
+
 /**
  * Orchestrates a prompt to Gemini Nano, handling both direct access and bridge-based communication.
  */

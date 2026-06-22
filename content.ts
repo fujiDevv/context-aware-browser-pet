@@ -2,7 +2,7 @@ import { MovementEngine } from './src/movement';
 import { EmotionEngine } from './src/emotion';
 import { TriggerDetector } from './src/triggers';
 import { PersonalitySystem } from './src/personality';
-import { getAiEmotion, setBridgeToken, getAiChatResponse } from './src/ai';
+import { getAiEmotion, setBridgeToken, getAiChatResponse, getAutonomousGenerativeDialogue } from './src/ai';
 import { PetSettings, SharedPetState, PetMessage } from './src/types';
 import { springAnimate, keyframeAnimate } from './src/animate';
 import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
@@ -769,13 +769,42 @@ async function updateEmotion(): Promise<void> {
   }
 }
 
-function triggerContextDialogue(mood: string): void {
+async function triggerContextDialogue(mood: string): Promise<void> {
   if (isFocusActive(currentSettings)) {
     return;
   }
 
-  const scheduleEnabled = currentSettings.scheduleEnabled !== false;
   const persona = currentSettings.persona || 'default';
+
+  // 1. Try Gemini Nano Generative Dialogue First
+  try {
+    const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement)?.content;
+    let pageText: string | undefined = undefined;
+    if (document.body && document.body.innerText) {
+      pageText = document.body.innerText;
+    }
+    
+    const statsContext = `Level: ${personality.stats.level}, Energy: ${Math.round(personality.stats.energy)}%, Focus: ${Math.round(personality.stats.focus)}%`;
+    const genDialogue = await getAutonomousGenerativeDialogue(
+      persona,
+      statsContext,
+      mood,
+      document.title,
+      metaDesc,
+      currentSettings.name,
+      pageText
+    );
+    
+    if (genDialogue) {
+      showBubbleWithSound(genDialogue);
+      return;
+    }
+  } catch (e) {
+    console.warn(`[${currentSettings.name || 'Clawd'} AI] Generative autonomous dialogue failed, falling back to hardcoded.`, e);
+  }
+
+  // 2. Fallback to Hardcoded Dialogues
+  const scheduleEnabled = currentSettings.scheduleEnabled !== false;
   const personaDialogs = PERSONA_AUTONOMOUS_DIALOGUES[persona] || PERSONA_AUTONOMOUS_DIALOGUES.default;
 
   if (scheduleEnabled) {
