@@ -1190,7 +1190,7 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
       row.innerHTML = `
         <div class="category-meta">
           <span>${escapeHtml(meta.name)}</span>
-          <span class="category-pct">${val} (${pct}%)</span>
+          <span class="category-pct">${Math.round(val)} (${pct}%)</span>
         </div>
         <div class="category-bar-wrapper">
           <div class="category-bar ${escapeHtml(meta.colorClass)}" style="width: ${pct}%"></div>
