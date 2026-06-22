@@ -678,8 +678,9 @@ async function updateEmotion(): Promise<void> {
           await chrome.storage.local.set({ [STORAGE_KEYS.LAST_AI_COMMENT_TIME]: now });
 
           const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
+          const pageText = document.body.innerText || '';
           const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
-          const result = await getAiEmotion(context.pageTitle, metaDesc, window.location.href, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity, currentSettings.name);
+          const result = await getAiEmotion(context.pageTitle, metaDesc, window.location.href, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity, currentSettings.name, pageText);
           nextEmotion = result.emotion;
           aiComment = result.comment;
           currentAiCategory = result.category;

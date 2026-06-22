@@ -17,7 +17,8 @@ export async function getAiEmotion(
   persona: string,
   statsContext?: string,
   sentimentSensitivity: number = 50,
-  petName: string = 'Clawd'
+  petName: string = 'Clawd',
+  pageText?: string
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   try {
     const ogType = (document.querySelector('meta[property="og:type"]') as HTMLMetaElement | null)?.content;
@@ -25,12 +26,29 @@ export async function getAiEmotion(
 
     // 1. Try Gemini Nano (Built-in Prompt API) first if available
     const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
+    
+    let summaryForDistilBert = metaDescription;
+
     if (geminiNanoAvailable === 'available' || geminiNanoAvailable === 'downloadable' || geminiNanoAvailable === 'downloading') {
       try {
         const result = await runGeminiNanoInference(pageTitle, metaDescription, category, persona, statsContext, petName);
         if (result) return result;
       } catch (e) {
         console.warn(`[${petName} AI] Gemini Nano inference failed, falling back to DistilBERT:`, e);
+      }
+
+      if (pageText) {
+        try {
+          console.log(`[${petName} AI] Summarizing DOM with Gemini Nano for DistilBERT context...`);
+          const truncatedText = pageText.length > 3000 ? pageText.substring(0, 3000) + '...' : pageText;
+          const summaryPrompt = `Summarize the following webpage content into exactly one concise sentence:\n\n${truncatedText}`;
+          const generatedSummary = await promptGeminiNano("You are a helpful summarizer.", summaryPrompt, petName);
+          if (generatedSummary) {
+             summaryForDistilBert = generatedSummary.trim();
+          }
+        } catch (e) {
+          console.warn(`[${petName} AI] Gemini Nano summarization failed:`, e);
+        }
       }
     }
 
@@ -40,7 +58,7 @@ export async function getAiEmotion(
         {
           type: 'get-local-ai-emotion',
           pageTitle,
-          metaDescription,
+          metaDescription: summaryForDistilBert,
           category,
           persona,
           statsContext,
