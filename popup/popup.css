@@ -7,7 +7,8 @@
   margin: 0;
 }
 
-html, body {
+html,
+body {
   width: 380px;
   height: 580px;
   margin: 0;
@@ -140,7 +141,7 @@ h2 {
   border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .header-top {
@@ -148,6 +149,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  gap: 6px;
 }
 
 .avatar-hero-container {
@@ -162,7 +164,7 @@ h2 {
   border: 1px solid var(--border-color);
   padding: 6px;
   margin-top: -4px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
 }
 
 .avatar-hero-container .avatar-glow {
@@ -170,7 +172,7 @@ h2 {
   width: 120%;
   height: 120%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
   z-index: 0;
 }
 
