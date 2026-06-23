@@ -69,6 +69,12 @@ export const extensionApi = {
     get onMessage() {
       return getExtensionRoot()?.runtime?.onMessage;
     },
+    get onInstalled() {
+      return getExtensionRoot()?.runtime?.onInstalled;
+    },
+    get onStartup() {
+      return getExtensionRoot()?.runtime?.onStartup;
+    },
     getURL(path: string): string {
       return getExtensionRoot()?.runtime?.getURL(path) ?? '';
     },
@@ -80,6 +86,14 @@ export const extensionApi = {
     },
     sendMessage<T = any>(message: unknown): Promise<T> {
       return toPromise<T>(getExtensionRoot()?.runtime, 'sendMessage', [message]);
+    },
+    getContexts(filter: any): Promise<any[] | undefined> {
+      const runtime = getExtensionRoot()?.runtime;
+      if (typeof runtime?.getContexts !== 'function') {
+        return Promise.resolve(undefined);
+      }
+
+      return toPromise<any[]>(runtime, 'getContexts', [filter]);
     }
   },
   storage: {
@@ -102,6 +116,9 @@ export const extensionApi = {
     }
   },
   tabs: {
+    get onRemoved() {
+      return getExtensionRoot()?.tabs?.onRemoved;
+    },
     query(queryInfo: chrome.tabs.QueryInfo): Promise<chrome.tabs.Tab[]> {
       return toPromise<chrome.tabs.Tab[]>(getExtensionRoot()?.tabs, 'query', [queryInfo]);
     },
@@ -110,6 +127,41 @@ export const extensionApi = {
     },
     create(createProperties: chrome.tabs.CreateProperties): Promise<chrome.tabs.Tab> {
       return toPromise<chrome.tabs.Tab>(getExtensionRoot()?.tabs, 'create', [createProperties]);
+    }
+  },
+  alarms: {
+    get onAlarm() {
+      return getExtensionRoot()?.alarms?.onAlarm;
+    },
+    create(name: string, alarmInfo: chrome.alarms.AlarmCreateInfo): void {
+      getExtensionRoot()?.alarms?.create?.(name, alarmInfo);
+    },
+    get(name: string): Promise<chrome.alarms.Alarm | undefined> {
+      return toPromise<chrome.alarms.Alarm | undefined>(getExtensionRoot()?.alarms, 'get', [name]);
+    }
+  },
+  webRequest: {
+    get onCompleted() {
+      return getExtensionRoot()?.webRequest?.onCompleted;
+    }
+  },
+  webNavigation: {
+    get onBeforeNavigate() {
+      return getExtensionRoot()?.webNavigation?.onBeforeNavigate;
+    },
+    get onCommitted() {
+      return getExtensionRoot()?.webNavigation?.onCommitted;
+    }
+  },
+  offscreen: {
+    get Reason() {
+      return getExtensionRoot()?.offscreen?.Reason;
+    },
+    createDocument(parameters: chrome.offscreen.CreateParameters): Promise<void> {
+      return toPromise<void>(getExtensionRoot()?.offscreen, 'createDocument', [parameters]);
+    },
+    closeDocument(): Promise<void> {
+      return toPromise<void>(getExtensionRoot()?.offscreen, 'closeDocument');
     }
   }
 };

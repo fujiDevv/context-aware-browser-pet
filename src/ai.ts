@@ -1,5 +1,6 @@
 import { detectPageCategory, mapActivityToEmotion, AI_COMMENTS } from './rules';
 import { CLAWD_KNOWLEDGE_BASE } from './knowledge';
+import { extensionApi } from './platform';
 
 interface AiEmotionResponse {
   success: boolean;
@@ -54,29 +55,20 @@ export async function getAiEmotion(
     }
 
     // 2. Fallback to Local DistilBERT (via Offscreen document)
-    const response = await new Promise<AiEmotionResponse>((resolve, reject) => {
-      chrome.runtime.sendMessage(
-        {
-          type: 'get-local-ai-emotion',
-          pageTitle,
-          metaDescription: summaryForDistilBert,
-          category,
-          persona,
-          statsContext,
-          sentimentSensitivity,
-          url
-        },
-        (res) => {
-          if (chrome.runtime.lastError) {
-            reject(new Error(chrome.runtime.lastError.message));
-          } else if (res && res.success) {
-            resolve(res);
-          } else {
-            reject(new Error(res?.error || 'Unknown error'));
-          }
-        }
-      );
+    const response = await extensionApi.runtime.sendMessage<AiEmotionResponse>({
+      type: 'get-local-ai-emotion',
+      pageTitle,
+      metaDescription: summaryForDistilBert,
+      category,
+      persona,
+      statsContext,
+      sentimentSensitivity,
+      url
     });
+
+    if (!response?.success) {
+      throw new Error(response?.error || 'Unknown error');
+    }
 
     return {
       emotion: response.emotion || 'happy',
@@ -228,7 +220,7 @@ async function promptGeminiNano(systemPrompt: string, prompt: string, petName: s
   // 2. Fallback to Content Script -> Main World bridge
   if (typeof window === 'undefined') return null;
   // Extension pages do not have main_world.js injected, so don't hang waiting for a response
-  if (window.location.protocol.startsWith('chrome-extension:')) return null;
+  if (window.location.protocol.startsWith('chrome-extension:') || window.location.protocol.startsWith('moz-extension:')) return null;
 
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);
@@ -339,7 +331,7 @@ async function checkGeminiNanoAvailability(petName: string = 'Clawd'): Promise<'
   // 2. Fallback to Content Script -> Main World bridge
   if (typeof window === 'undefined') return 'unavailable';
   // Extension pages do not have main_world.js injected, so don't hang waiting for a response
-  if (window.location.protocol.startsWith('chrome-extension:')) return 'unavailable';
+  if (window.location.protocol.startsWith('chrome-extension:') || window.location.protocol.startsWith('moz-extension:')) return 'unavailable';
 
   return new Promise((resolve) => {
     const requestId = Math.random().toString(36).substring(7);

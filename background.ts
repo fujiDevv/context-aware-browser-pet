@@ -38,7 +38,7 @@ function applyRuntimeFeatureSupport(settings: any = {}) {
   };
 }
 
-chrome.runtime.onInstalled.addListener((details) => {
+extensionApi.runtime.onInstalled?.addListener((details) => {
   if (details.reason === 'install') {
     // Initialize default settings with local AI disabled (off by default)
     extensionApi.storage.local.set({
@@ -69,15 +69,15 @@ chrome.runtime.onInstalled.addListener((details) => {
     });
   }
 
-  chrome.alarms.create('pet-decay', { periodInMinutes: 1 });
+  extensionApi.alarms.create('pet-decay', { periodInMinutes: 1 });
 });
 
-chrome.runtime.onStartup.addListener(() => {
-  chrome.alarms.get('pet-decay', (alarm) => {
+extensionApi.runtime.onStartup?.addListener(() => {
+  extensionApi.alarms.get('pet-decay').then((alarm) => {
     if (!alarm) {
-      chrome.alarms.create('pet-decay', { periodInMinutes: 1 });
+      extensionApi.alarms.create('pet-decay', { periodInMinutes: 1 });
     }
-  });
+  }).catch((e) => { console.warn('[Clawd Background] alarms.get pet-decay error:', e); });
 
   if (!supportsOffscreen) {
     extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((data) => {
@@ -91,7 +91,7 @@ chrome.runtime.onStartup.addListener(() => {
   }
 });
 
-chrome.alarms.onAlarm.addListener(async (alarm) => {
+extensionApi.alarms.onAlarm?.addListener(async (alarm) => {
   if (alarm.name === 'pet-decay') {
     try {
       const data = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
@@ -102,7 +102,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   }
 });
 
-chrome.webRequest.onCompleted.addListener(
+extensionApi.webRequest.onCompleted?.addListener(
   (details) => {
     if (details.statusCode >= 400 && details.frameId === 0) {
       tabHttpErrors[details.tabId] = details.statusCode;
@@ -117,17 +117,17 @@ chrome.webRequest.onCompleted.addListener(
   { urls: ['<all_urls>'], types: ['main_frame'] }
 );
 
-chrome.tabs.onRemoved.addListener((tabId) => {
+extensionApi.tabs.onRemoved?.addListener((tabId) => {
   delete tabHttpErrors[tabId];
 });
 
-chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+extensionApi.webNavigation.onBeforeNavigate?.addListener((details) => {
   if (details.frameId === 0) {
     delete tabHttpErrors[details.tabId];
   }
 });
 
-chrome.webNavigation.onCommitted.addListener((details) => {
+extensionApi.webNavigation.onCommitted?.addListener((details) => {
   if (details.frameId === 0) {
     extensionApi.tabs.sendMessage(details.tabId, { type: 'navigation' }).catch((e) => {
       console.debug('[Clawd Background] navigation message failed:', e);
@@ -139,7 +139,7 @@ chrome.webNavigation.onCommitted.addListener((details) => {
 let lastSyncTime = 0;
 let syncTimeout: ReturnType<typeof setTimeout> | null = null;
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
   if (message.type === 'get-tab-http-error') {
     const tabId = sender.tab?.id;
     const errorCode = tabId ? tabHttpErrors[tabId] : undefined;
@@ -407,7 +407,7 @@ async function setupOffscreen(): Promise<void> {
     throw new Error(unsupportedOffscreenMessage);
   }
 
-  const contexts = await chrome.runtime.getContexts?.({
+  const contexts = await extensionApi.runtime.getContexts({
     contextTypes: ['OFFSCREEN_DOCUMENT']
   });
   if (contexts && contexts.length > 0) {
@@ -419,9 +419,14 @@ async function setupOffscreen(): Promise<void> {
     return;
   }
 
-  creatingOffscreen = chrome.offscreen.createDocument({
+  const offscreenReason = extensionApi.offscreen.Reason;
+  if (!offscreenReason) {
+    throw new Error(unsupportedOffscreenMessage);
+  }
+
+  creatingOffscreen = extensionApi.offscreen.createDocument({
     url: 'offscreen.html',
-    reasons: [chrome.offscreen.Reason.DOM_PARSER, chrome.offscreen.Reason.AUDIO_PLAYBACK],
+    reasons: [offscreenReason.DOM_PARSER, offscreenReason.AUDIO_PLAYBACK],
     justification: 'Run local machine learning models and handle centralized audio playback for the pet companion'
   });
 
@@ -441,11 +446,11 @@ async function closeOffscreen(): Promise<void> {
     return;
   }
 
-  const contexts = await chrome.runtime.getContexts?.({
+  const contexts = await extensionApi.runtime.getContexts({
     contextTypes: ['OFFSCREEN_DOCUMENT']
   });
   if (contexts && contexts.length > 0) {
-    await chrome.offscreen.closeDocument();
+    await extensionApi.offscreen.closeDocument();
   }
 }
 
