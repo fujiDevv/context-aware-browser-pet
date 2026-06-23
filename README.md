@@ -65,7 +65,8 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   │   └── animate.ts         # viscus damping spring solver formulas
   ├── popup/                 # Mascot settings and status bar UI
   ├── assets/                # Mascot icons and chiptune sound effects
-  └── dist/                  # Output bundle for Chrome installation
+  ├── dist/                  # Output bundle for Chrome installation
+  └── dist-firefox/          # Output bundle for Firefox temporary installation
   ```
 
   ---
@@ -90,9 +91,13 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
    ```bash
    bun run type-check
    ```
-  4. Run the compiler build:
+  4. Run the compiler build for Chrome/Chromium:
    ```bash
    bun run build
+   ```
+  5. For Firefox, run the Firefox build:
+   ```bash
+   bun run build:firefox
    ```
 
   ### Loading the Extension in Chrome
@@ -102,6 +107,19 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   3. Click the **Load unpacked** button in the top-left corner.
   4. Select the `dist/` directory located inside the `context-aware-browser-pet` folder.
   5. Open any webpage (e.g. [github.com](https://github.com)) — your pet will slide onto the page! 🐾
+
+  ### Loading the Extension in Firefox
+
+  1. Build the Firefox bundle:
+   ```bash
+   bun run build:firefox
+   ```
+  2. Open **Firefox** and navigate to `about:debugging#/runtime/this-firefox`.
+  3. Click **Load Temporary Add-on...**.
+  4. Select `dist-firefox/manifest.json` inside the `context-aware-browser-pet` folder.
+  5. Open any normal HTTPS webpage (e.g. [github.com](https://github.com)) to verify that Clawd appears.
+
+  Firefox currently runs Clawd in Lite Mode. The local Brain Upgrade and centralized offscreen audio paths depend on Chrome offscreen documents, which Firefox does not support yet.
 
   ---
 
@@ -122,6 +140,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **Local Evaluation**: All website context evaluations, DOM parsing, activity tracking, and AI model inference happen entirely locally on your machine.
   * **No Telemetry**: Clawd does not collect, track, or transmit your browsing history, AI inputs, or personal data to external servers.
   * **Optional Brain Upgrade**: The local AI model is entirely optional. Lite Mode (Regex-based) is the default and requires no downloads. If you choose to enable the Brain Upgrade, the model weights are downloaded from Hugging Face and run entirely in your browser using local WebAssembly.
+  * **Firefox Lite Mode**: Firefox builds currently disable the Brain Upgrade and centralized offscreen audio because Firefox does not support Chrome offscreen documents. No remote AI fallback is used.
   * **Minimal Scope**: Even with the Brain Upgrade, Clawd only analyzes the webpage `title`, `meta description`, and specific semantic text elements (like headers and paragraphs). It does *not* scan raw DOM nodes or sensitive input fields.
 
   ---
@@ -129,4 +148,3 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   ## License
 
   This project is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). Commercial use and monetization are prohibited. Underlying mascot assets are used under the MIT License.
-
