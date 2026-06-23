@@ -139,7 +139,9 @@ You can interact with Clawd directly on the webpage to affect his stats, emotion
 ### Chatting with Clawd
 - **How**: Left-click on Clawd, click the **Chat** button in the popup panel, press `Ctrl + Shift + C` on any active page, or visit the **Chat with Clawd** tab in the Options Dashboard.
 - **Reaction**: Opens a sleek, interactive chat interface where you can have full conversations with Clawd based on his current active Persona and stats!
-- **Features**: Animated typing indicators, context-aware responses, **Rich Markdown Rendering** (bold, italic, code blocks), and **Persistent Chat History** (your conversation is saved across page reloads using `chrome.storage.local`).
+- **Features**: Animated typing indicators, context-aware responses, **Rich Markdown Rendering** (bold, italic, code blocks), and a **Hybrid Memory System**: 
+  - **Webpage Tabs**: Conversations are isolated per-tab using `sessionStorage` so Clawd stays focused on the current page's context.
+  - **Options Dashboard**: Your "Sanctuary" memory is persistently saved across browser restarts using `chrome.storage.local`.
 
 ### Hover Reaction
 - **How**: Move your mouse cursor over Clawd.
