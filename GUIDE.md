@@ -116,7 +116,7 @@ Clawd will then begin walking back and forth exclusively along the **floor** or 
 You can interact with Clawd directly on the webpage to affect his stats, emotions, and experience.
 
 ### Petting
-- **How**: Left-click on Clawd.
+- **How**: This is now mapped to specific interactive toys (like the Ball or Yarn).
 - **Reaction**: Clawd displays the `love` mood , accompanied by a bouncy squash-and-stretch animation.
 - **Effect**: +5 Happiness, +2 Energy, +5 Leisure, and +10 XP. Plays the Petting sound effect.
 
@@ -137,9 +137,9 @@ You can interact with Clawd directly on the webpage to affect his stats, emotion
 
 
 ### Chatting with Clawd
-- **How**: Click the **Chat** button in the popup panel, press `Ctrl + Shift + C` on any active page, or visit the **Chat with Clawd** tab in the Options Dashboard.
+- **How**: Left-click on Clawd, click the **Chat** button in the popup panel, press `Ctrl + Shift + C` on any active page, or visit the **Chat with Clawd** tab in the Options Dashboard.
 - **Reaction**: Opens a sleek, interactive chat interface where you can have full conversations with Clawd based on his current active Persona and stats!
-- **Features**: Animated typing indicators and context-aware responses (he knows if you're on a webpage or in the dashboard).
+- **Features**: Animated typing indicators, context-aware responses, **Rich Markdown Rendering** (bold, italic, code blocks), and **Persistent Chat History** (your conversation is saved across page reloads using `chrome.storage.local`).
 
 ### Hover Reaction
 - **How**: Move your mouse cursor over Clawd.
@@ -419,7 +419,7 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
 ### How It Works
 
 1. **Context Extraction:** When you visit a tab, Clawd collects the page's `<title>` and `<meta name="description">`, truncating it to a maximum of 500 characters to optimize processing speeds.
-2. **Gemini Nano Summarization & Dialogue:** If available (via Chrome's built-in Prompt API), Clawd scans the full `<body>` of the page and generates a condensed 1-sentence semantic summary. Furthermore, Clawd leverages Gemini Nano to dynamically generate **100% unique, highly-contextual dialogue bubbles** on the fly! If Gemini Nano is unavailable, it gracefully degrades to a robust hardcoded persona dictionary.
+2. **Gemini Nano Summarization & Dialogue:** If available (via Chrome's built-in Prompt API), Clawd scans the full `<body>` of the page and generates a condensed 1-sentence semantic summary. Furthermore, Clawd leverages Gemini Nano to dynamically generate **100% unique, highly-contextual dialogue bubbles** on the fly! This is powered by a **Dedicated Knowledge Base**, enforcing strict identity constraints so Clawd always stays in character as your virtual pet. If Gemini Nano is unavailable, it gracefully degrades to a robust hardcoded persona dictionary.
 3. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
 4. **Local Sentiment Model:** The WebAssembly runtime evaluates the text using a quantized version of the **DistilBERT** model (`Xenova/distilbert-base-uncased-finetuned-sst-2-english`).
 5. **Dynamic Sentiment Threshold Mapping:**
