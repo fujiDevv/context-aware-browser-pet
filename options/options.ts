@@ -284,12 +284,12 @@ async function init() {
   
   const saveChatHistory = () => {
     if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
-    chrome.storage.local.set({ clawdChatHistory: chatHistory });
+    chrome.storage.local.set({ clawdDashboardHistory: chatHistory });
   };
   
-  chrome.storage.local.get(['clawdChatHistory'], (result) => {
-    if (result.clawdChatHistory && Array.isArray(result.clawdChatHistory)) {
-      chatHistory = result.clawdChatHistory;
+  chrome.storage.local.get(['clawdDashboardHistory'], (result) => {
+    if (result.clawdDashboardHistory && Array.isArray(result.clawdDashboardHistory)) {
+      chatHistory = result.clawdDashboardHistory;
       chatHistory.forEach(msg => {
         addChatMessage(msg.role === 'user' ? 'user' : 'clawd', msg.content);
       });
