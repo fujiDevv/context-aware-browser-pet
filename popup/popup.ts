@@ -1,7 +1,7 @@
 import { PetStats, PetSettings } from '../src/types';
 import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/shared-ui';
 import { STORAGE_KEYS } from '../src/constants';
-import { isFirefoxRuntime, supportsOffscreenDocuments } from '../src/platform';
+import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/platform';
 
 const supportsLocalAiRuntime = supportsOffscreenDocuments();
 const isFirefoxBuild = isFirefoxRuntime();
@@ -30,13 +30,15 @@ async function init(): Promise<void> {
   const aiStatusText = document.getElementById('ai-status-text');
   const activeTabsText = document.getElementById('active-tabs-text');
 
-  const updateStatusIndicators = () => {
+  const updateStatusIndicators = async () => {
     // 1. Update Active Tabs Count
-    chrome.tabs.query({}, (tabs) => {
+    extensionApi.tabs.query({}).then((tabs) => {
       const count = tabs.length;
       if (activeTabsText) {
         activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
       }
+    }).catch((e) => {
+      console.warn('[Clawd Popup] tabs.query status error:', e);
     });
 
     // 2. Update AI Status
@@ -55,7 +57,10 @@ async function init(): Promise<void> {
       return;
     }
 
-    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
+    const res = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).catch((e): Record<string, any> => {
+      console.warn('[Clawd Popup] storage.get settings error:', e);
+      return {};
+    });
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       if (!settings.aiMode) {
         if (aiStatusBadge && aiStatusText) {
@@ -65,10 +70,10 @@ async function init(): Promise<void> {
         return;
       }
 
-      chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: any) => {
+      extensionApi.runtime.sendMessage<any>({ type: 'check-local-ai-status' }).then((response) => {
         if (!aiStatusBadge || !aiStatusText) return;
 
-        if (chrome.runtime.lastError || !response || !response.success) {
+        if (!response || !response.success) {
           aiStatusBadge.className = 'ai-status-badge status-unsupported';
           aiStatusText.textContent = 'BERT: Offline';
         } else {
@@ -87,9 +92,14 @@ async function init(): Promise<void> {
             aiStatusText.textContent = 'BERT: Checking';
           }
         }
+      }).catch(() => {
+        if (aiStatusBadge && aiStatusText) {
+          aiStatusBadge.className = 'ai-status-badge status-unsupported';
+          aiStatusText.textContent = 'BERT: Offline';
+        }
       });
 
-      chrome.runtime.sendMessage({ type: 'check-tab-ai-availability' }, (response: any) => {
+      extensionApi.runtime.sendMessage<any>({ type: 'check-tab-ai-availability' }).then((response) => {
         const nanoBadge = document.getElementById('nano-status-badge');
         const nanoText = document.getElementById('nano-status-text');
         if (!nanoBadge || !nanoText) return;
@@ -112,7 +122,7 @@ async function init(): Promise<void> {
           }
         };
 
-        if (chrome.runtime.lastError || !response || availability === 'no') {
+        if (!response || availability === 'no') {
           if ('ai' in window && (window as any).ai?.languageModel) {
             (window as any).ai.languageModel.capabilities().then((cap: any) => {
               applyAvailability(cap.available);
@@ -125,8 +135,14 @@ async function init(): Promise<void> {
         } else {
           applyAvailability(availability);
         }
+      }).catch(() => {
+        const nanoBadge = document.getElementById('nano-status-badge');
+        const nanoText = document.getElementById('nano-status-text');
+        if (nanoBadge && nanoText) {
+          nanoBadge.className = 'ai-status-badge status-unsupported';
+          nanoText.textContent = 'Nano: Unsupported';
+        }
       });
-    });
   };
 
   // Initial update and then every 5 seconds
@@ -153,21 +169,23 @@ async function init(): Promise<void> {
     const btnOpen = document.getElementById('btn-open-dashboard');
     if (btnOpen) {
       btnOpen.addEventListener('click', () => {
-        chrome.runtime.openOptionsPage();
+        extensionApi.runtime.openOptionsPage().catch((e) => {
+          console.warn('[Clawd Popup] openOptionsPage error:', e);
+        });
       });
     }
 
     const btnChat = document.getElementById('btn-open-chat');
     if (btnChat) {
       btnChat.addEventListener('click', async () => {
-        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        const [tab] = await extensionApi.tabs.query({ active: true, currentWindow: true });
         if (tab && tab.id) {
           try {
-            await chrome.tabs.sendMessage(tab.id, { type: 'toggle-chat' });
+            await extensionApi.tabs.sendMessage(tab.id, { type: 'toggle-chat' });
             window.close(); // Close popup
           } catch (e) {
             console.info('No content script in tab. Falling back to options page chat.');
-            await chrome.tabs.create({ url: chrome.runtime.getURL('options/options.html#chat') });
+            await extensionApi.tabs.create({ url: getRuntimeUrl('options/options.html#chat') });
             window.close();
           }
         }
@@ -175,8 +193,9 @@ async function init(): Promise<void> {
     }
 
     const versionEl = document.getElementById('version-display');
-    if (versionEl && typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) {
-      versionEl.textContent = `v${chrome.runtime.getManifest().version}`;
+    const manifest = extensionApi.runtime.getManifest();
+    if (versionEl && manifest) {
+      versionEl.textContent = `v${manifest.version}`;
     }
   };
   setupDashboardLink();
@@ -418,7 +437,7 @@ async function init(): Promise<void> {
     }
   });
 
-  const data = await chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
+  const data = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
   blockedDomains = data[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
   
   if (data[STORAGE_KEYS.SETTINGS]?.name) {
@@ -451,7 +470,7 @@ async function init(): Promise<void> {
   let currentTabId: number | undefined = undefined;
   let currentHostname = '';
 
-  chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+  extensionApi.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
     if (tab && tab.id) {
       currentTabId = tab.id;
       
@@ -473,26 +492,27 @@ async function init(): Promise<void> {
         siteHideToggle.disabled = true;
       }
 
-      chrome.tabs.sendMessage(tab.id, { type: 'get-tab-visibility' }, (response) => {
-        if (chrome.runtime.lastError) {
-          tabHideToggle.disabled = true;
-          siteHideToggle.disabled = true;
-          return;
-        }
+      extensionApi.tabs.sendMessage<any>(tab.id, { type: 'get-tab-visibility' }).then((response) => {
         if (response && typeof response.isHidden === 'boolean') {
           tabHideToggle.checked = response.isHidden;
           tabHideToggle.disabled = false;
         }
+      }).catch(() => {
+          tabHideToggle.disabled = true;
+          siteHideToggle.disabled = true;
       });
     } else {
       tabHideToggle.disabled = true;
       siteHideToggle.disabled = true;
     }
+  }).catch(() => {
+    tabHideToggle.disabled = true;
+    siteHideToggle.disabled = true;
   });
 
   tabHideToggle.addEventListener('change', () => {
     if (currentTabId !== undefined) {
-      chrome.tabs.sendMessage(currentTabId, {
+      extensionApi.tabs.sendMessage(currentTabId, {
         type: 'toggle-tab-visibility',
         hide: tabHideToggle.checked
       }).catch((e) => { console.warn('[Clawd Popup] executeScript error:', e); });
@@ -510,31 +530,31 @@ async function init(): Promise<void> {
       }
       
       // Save updated blocked domains
-      chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
+      extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((res) => {
         const settings = res[STORAGE_KEYS.SETTINGS] || {};
         settings.blockedDomains = blockedDomains;
-        chrome.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
+        extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
       });
     }
   });
 
   performanceModeToggle.addEventListener('change', () => {
-    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
+    extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((res) => {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       settings.performanceMode = performanceModeToggle.checked;
-      chrome.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
+      extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
     });
   });
 
   ghostModeToggle.addEventListener('change', () => {
-    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
+    extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((res) => {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       settings.ghostMode = ghostModeToggle.checked;
-      chrome.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
+      extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
     });
   });
 
-  chrome.storage.onChanged.addListener((changes) => {
+  extensionApi.storage.onChanged?.addListener((changes) => {
     let newStats = undefined;
     
     if (changes[STORAGE_KEYS.STATS]) {
@@ -550,7 +570,7 @@ async function init(): Promise<void> {
       currentCostume = newSettings?.costume;
       
       // Re-evaluate color on settings change
-      chrome.storage.local.get(STORAGE_KEYS.STATS, (res) => {
+      extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.STATS).then((res) => {
         const latestStats = newStats || res[STORAGE_KEYS.STATS];
         if (latestStats && (latestStats.level >= 15 || (latestStats.prestige && latestStats.prestige > 0))) {
           customColor = newSettings?.customColor;
@@ -558,7 +578,7 @@ async function init(): Promise<void> {
           customColor = undefined;
         }
         // Force mood update to apply new visual settings
-        chrome.storage.local.get(STORAGE_KEYS.MOOD, (moodRes) => {
+        extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.MOOD).then((moodRes) => {
           updateUIMood(moodRes[STORAGE_KEYS.MOOD] || 'happy', currentCostume, customColor);
         });
       });
@@ -570,9 +590,9 @@ async function init(): Promise<void> {
   });
 
   const sendToActiveTab = (type: string) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+    extensionApi.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
       if (tab && tab.id) {
-        chrome.tabs.sendMessage(tab.id, { type }).catch((e) => { console.warn('[Clawd Popup] sendMessage error:', e); });
+        extensionApi.tabs.sendMessage(tab.id, { type }).catch((e) => { console.warn('[Clawd Popup] sendMessage error:', e); });
       }
     });
   };
@@ -661,7 +681,7 @@ async function init(): Promise<void> {
 
     if (statsEl && statsEl.preview) {
       const svgName = getResolvedCostumeName(mood, costume);
-      const url = chrome.runtime.getURL(`assets/pets/clawd-${svgName}.svg`);
+      const url = getRuntimeUrl(`assets/pets/clawd-${svgName}.svg`);
 
       fetch(url).then(r => r.text()).then(svgText => {
         svgText = optimizeSvgStr(svgText);

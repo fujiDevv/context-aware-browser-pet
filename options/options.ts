@@ -4,7 +4,7 @@ import { STORAGE_KEYS } from '../src/constants';
 import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName, parseMarkdown } from '../src/shared-ui';
 import { getDailyInsight, getAiChatResponse } from '../src/ai';
 import { MovementEngine } from '../src/movement';
-import { isFirefoxRuntime, supportsOffscreenDocuments } from '../src/platform';
+import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/platform';
 
 let personality: PersonalitySystem;
 let playgroundMovement: MovementEngine;
@@ -200,7 +200,7 @@ async function init() {
   }
 
   // Load Settings and Stats from local storage
-  const storageData = await chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
+  const storageData = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
   blockedDomains = storageData[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
   domainReactions = storageData[STORAGE_KEYS.SETTINGS]?.domainReactions || [];
 
@@ -243,9 +243,10 @@ async function init() {
 
   // Inject version
   const versionEl = document.getElementById('version-display');
-  if (versionEl && typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) {
+  const manifest = extensionApi.runtime.getManifest();
+  if (versionEl && manifest) {
     const runtimeMode = supportsLocalAiRuntime ? 'Local AI' : 'Lite';
-    versionEl.textContent = `Version ${chrome.runtime.getManifest().version} (${runtimeMode})`;
+    versionEl.textContent = `Version ${manifest.version} (${runtimeMode})`;
   }
 
   // Polling for real-time indicators
@@ -288,10 +289,10 @@ async function init() {
   
   const saveChatHistory = () => {
     if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
-    chrome.storage.local.set({ clawdDashboardHistory: chatHistory });
+    extensionApi.storage.local.set({ clawdDashboardHistory: chatHistory });
   };
   
-  chrome.storage.local.get(['clawdDashboardHistory'], (result) => {
+  extensionApi.storage.local.get<Record<string, any>>(['clawdDashboardHistory']).then((result) => {
     if (result.clawdDashboardHistory && Array.isArray(result.clawdDashboardHistory)) {
       chatHistory = result.clawdDashboardHistory;
       chatHistory.forEach(msg => {
@@ -705,7 +706,7 @@ async function init() {
     const confirmed = confirm("WARNING: This will reset Clawd's stats, level, prestige, and activity history to defaults. Settings will not be touched. Continue?");
     if (!confirmed) return;
 
-    await chrome.storage.local.remove(STORAGE_KEYS.STATS);
+    await extensionApi.storage.local.remove(STORAGE_KEYS.STATS);
     window.location.reload();
   });
 
@@ -713,7 +714,7 @@ async function init() {
     const confirmed = confirm("CRITICAL WARNING: This will completely wipe all local extension data, options, and history for Clawd. This action is irreversible. Continue?");
     if (!confirmed) return;
 
-    await chrome.storage.local.clear();
+    await extensionApi.storage.local.clear();
     window.location.reload();
   });
 
@@ -757,15 +758,15 @@ async function init() {
       const confirmed = confirm("Are you sure you want to clear Clawd's history timeline?");
       if (!confirmed) return;
 
-      const data = await chrome.storage.local.get(STORAGE_KEYS.STATS);
+      const data = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.STATS);
       const stats = data[STORAGE_KEYS.STATS] || {};
       stats.moodHistory = [];
-      await chrome.storage.local.set({ [STORAGE_KEYS.STATS]: stats });
+      await extensionApi.storage.local.set({ [STORAGE_KEYS.STATS]: stats });
     });
   }
 
   // Storage listener to update UI in real time
-  chrome.storage.onChanged.addListener((changes) => {
+  extensionApi.storage.onChanged?.addListener((changes) => {
     if (changes[STORAGE_KEYS.STATS]) {
       updateUIStats(changes[STORAGE_KEYS.STATS].newValue);
     }
@@ -781,7 +782,7 @@ async function init() {
   });
 
   // Real-time State Synchronization for Sanctuary
-  chrome.runtime.onMessage.addListener((message) => {
+  extensionApi.runtime.onMessage?.addListener((message) => {
     if (message.type === 'sync-pet-state') {
       if (playgroundMovement && !playgroundMovement.isDragging) {
         playgroundMovement.syncState(message.state);
@@ -855,7 +856,7 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
   await personality.recordInteraction(action);
 
   setTimeout(async () => {
-    const currentMood = await chrome.storage.local.get(STORAGE_KEYS.MOOD);
+    const currentMood = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.MOOD);
     updateUIMood(currentMood[STORAGE_KEYS.MOOD] || 'happy');
 
     // Restore buttons after 3 seconds
@@ -892,7 +893,7 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
   if (!filename) return;
 
   try {
-    chrome.runtime.sendMessage({
+    extensionApi.runtime.sendMessage({
       type: 'play-sound',
       filename,
       volume
@@ -914,7 +915,7 @@ function updateUIMood(mood: string): void {
     const isUnlocked = personality.stats.level >= 15 || (personality.stats.prestige && personality.stats.prestige > 0);
     const activeColor = isUnlocked ? color : undefined;
     
-    const url = chrome.runtime.getURL(`assets/pets/clawd-${svgName}.svg`);
+    const url = getRuntimeUrl(`assets/pets/clawd-${svgName}.svg`);
     if (!activeColor || activeColor === '#DE886D') {
       if (petImg) petImg.src = url;
       return;
@@ -937,7 +938,7 @@ function updateUIMood(mood: string): void {
       if (petImg) petImg.src = dataUri;
     }).catch(e => {
       console.warn('[Clawd Dashboard] Failed to apply custom color/formatter:', e);
-      if (petImg) petImg.src = chrome.runtime.getURL('assets/pets/clawd-happy.svg');
+      if (petImg) petImg.src = getRuntimeUrl('assets/pets/clawd-happy.svg');
     });
   });
 }
@@ -1090,7 +1091,7 @@ async function updateSynapseUI(stats: PetStats) {
     // If there's no content or it's been more than 24 hours since the last one, generate it
     if (!stats.aiInsight?.content || !stats.aiInsight.isNew) {
       // Trigger AI generation
-      const settingsData = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+      const settingsData = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
       const persona = settingsData[STORAGE_KEYS.SETTINGS]?.persona || 'default';
 
       if (synapsePreviewText) synapsePreviewText.textContent = "Clawd is concentrating on your day...";
@@ -1431,7 +1432,7 @@ function applySettings(settings: PetSettings | undefined) {
 }
 
 function saveSettings() {
-  chrome.storage.local.set({
+  extensionApi.storage.local.set({
     [STORAGE_KEYS.SETTINGS]: {
       size: Number(sizeSlider.value),
       speed: Number(speedSlider.value) / 10,
@@ -1492,15 +1493,14 @@ function updateLocalAiStatus() {
     return;
   }
 
-  // 1. Check DistilBERT (Offscreen)
-  chrome.runtime.sendMessage({ type: 'check-local-ai-status' }, (response: { success: boolean; state: string; progress: number } | undefined) => {
+  const applyBrainStatus = (response: { success: boolean; state: string; progress: number } | undefined) => {
     let text = 'Brain: Checking...';
     let subtitle = 'Querying model...';
     let className = 'status-indicator status-checking';
     let bertLabel = 'Syncing...';
     let bertColor = 'var(--text-muted)';
 
-    if (chrome.runtime.lastError || !response || !response.success) {
+    if (!response || !response.success) {
       text = 'Brain: Offline';
       subtitle = 'AI Layer Disconnected';
       className = 'status-indicator status-unsupported';
@@ -1537,62 +1537,71 @@ function updateLocalAiStatus() {
       statusBert.textContent = bertLabel;
       statusBert.style.color = bertColor;
     }
+  };
 
-    // 2. Check Gemini Nano (Active Tab Bridge)
-    chrome.runtime.sendMessage({ type: 'check-tab-ai-availability' }, (nanoResponse: { success: boolean; availability: string } | undefined) => {
-      let sancClass = 'status-indicator status-checking';
-      let sancText = 'Nano: Checking...';
-      
-      if (!statusNano) return;
-      
-      let availability = nanoResponse?.availability;
-      
-      const applyAvailability = (avail: string | undefined) => {
-        if (!avail || avail === 'no' || avail === 'unavailable') {
-          statusNano.textContent = '❌ Unsupported';
-          statusNano.style.color = '#ef4444';
-          sancClass = 'status-indicator status-unsupported';
-          sancText = 'Nano: Offline';
-        } else if (avail === 'after-download' || avail === 'downloadable' || avail === 'downloading') {
-          statusNano.textContent = '⏳ Downloading...';
-          statusNano.style.color = 'var(--yellow)';
-          sancClass = 'status-indicator status-downloading';
-          sancText = 'Nano: Downloading...';
-        } else if (avail === 'readily' || avail === 'available') {
-          statusNano.textContent = '✅ Connected (Gemini Nano)';
-          statusNano.style.color = 'var(--green)';
-          sancClass = 'status-indicator status-ready';
-          sancText = 'Nano: Ready';
-        } else {
-          statusNano.textContent = 'Wait for web tab...';
-          statusNano.style.color = 'var(--text-muted)';
-          sancText = 'Wait for web tab...';
-        }
-
-        if (sancNanoBadge) sancNanoBadge.className = sancClass;
-        if (sancNanoText) sancNanoText.textContent = sancText;
-      };
-
-      if (chrome.runtime.lastError || !nanoResponse || availability === 'no') {
-        // Fallback to local check if the tab doesn't respond or says 'no'
-        if ('ai' in window && (window as any).ai?.languageModel) {
-          (window as any).ai.languageModel.capabilities({ expectedOutputs: [{ type: 'text', languages: ['en'] }] }).then((cap: any) => {
-            applyAvailability(cap.available);
-          }).catch(() => {
-            applyAvailability('no');
-          });
-        } else {
-          applyAvailability(availability || 'no');
-        }
+  const applyNanoStatus = (nanoResponse: { success: boolean; availability: string } | undefined) => {
+    let sancClass = 'status-indicator status-checking';
+    let sancText = 'Nano: Checking...';
+    
+    if (!statusNano) return;
+    
+    let availability = nanoResponse?.availability;
+    
+    const applyAvailability = (avail: string | undefined) => {
+      if (!avail || avail === 'no' || avail === 'unavailable') {
+        statusNano.textContent = '❌ Unsupported';
+        statusNano.style.color = '#ef4444';
+        sancClass = 'status-indicator status-unsupported';
+        sancText = 'Nano: Offline';
+      } else if (avail === 'after-download' || avail === 'downloadable' || avail === 'downloading') {
+        statusNano.textContent = '⏳ Downloading...';
+        statusNano.style.color = 'var(--yellow)';
+        sancClass = 'status-indicator status-downloading';
+        sancText = 'Nano: Downloading...';
+      } else if (avail === 'readily' || avail === 'available') {
+        statusNano.textContent = '✅ Connected (Gemini Nano)';
+        statusNano.style.color = 'var(--green)';
+        sancClass = 'status-indicator status-ready';
+        sancText = 'Nano: Ready';
       } else {
-        applyAvailability(availability);
+        statusNano.textContent = 'Wait for web tab...';
+        statusNano.style.color = 'var(--text-muted)';
+        sancText = 'Wait for web tab...';
       }
-    });
-  });
+
+      if (sancNanoBadge) sancNanoBadge.className = sancClass;
+      if (sancNanoText) sancNanoText.textContent = sancText;
+    };
+
+    if (!nanoResponse || availability === 'no') {
+      // Fallback to local check if the tab doesn't respond or says 'no'
+      if ('ai' in window && (window as any).ai?.languageModel) {
+        (window as any).ai.languageModel.capabilities({ expectedOutputs: [{ type: 'text', languages: ['en'] }] }).then((cap: any) => {
+          applyAvailability(cap.available);
+        }).catch(() => {
+          applyAvailability('no');
+        });
+      } else {
+        applyAvailability(availability || 'no');
+      }
+    } else {
+      applyAvailability(availability);
+    }
+  };
+
+  // 1. Check DistilBERT (Offscreen)
+  extensionApi.runtime.sendMessage<{ success: boolean; state: string; progress: number }>({ type: 'check-local-ai-status' })
+    .then(applyBrainStatus)
+    .catch(() => applyBrainStatus(undefined));
+
+  // 2. Check Gemini Nano (Active Tab Bridge)
+  extensionApi.runtime.sendMessage<{ success: boolean; availability: string }>({ type: 'check-tab-ai-availability' })
+    .then(applyNanoStatus)
+    .catch(() => applyNanoStatus(undefined));
 }
 
 function updatePresence() {
-  chrome.tabs.query({}, (tabs) => {
+  extensionApi.tabs.query({}).then((tabs) => {
     if (activeTabsText) {
       const count = tabs.length;
       activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
@@ -1751,7 +1760,7 @@ function removeDomainReaction(index: number) {
 
 // Backups
 function exportProfile() {
-  chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS], (data) => {
+  extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS]).then((data) => {
     const exportData = {
       version: 'v1.2.0',
       stats: data[STORAGE_KEYS.STATS] || {},
@@ -1784,7 +1793,7 @@ function importProfile(e: Event) {
         const confirmed = confirm("Are you sure you want to import this profile? This will overwrite your current settings, levels, and statistics.");
         if (!confirmed) return;
 
-        await chrome.storage.local.set({
+        await extensionApi.storage.local.set({
           [STORAGE_KEYS.STATS]: imported.stats,
           [STORAGE_KEYS.SETTINGS]: imported.settings
         });
