@@ -122,7 +122,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **Local Evaluation**: All website context evaluations, DOM parsing, activity tracking, and AI model inference happen entirely locally on your machine.
   * **No Telemetry**: Clawd does not collect, track, or transmit your browsing history, AI inputs, or personal data to external servers.
   * **Optional Brain Upgrade**: The local AI model is entirely optional. Lite Mode (Regex-based) is the default and requires no downloads. If you choose to enable the Brain Upgrade, the model weights are downloaded from Hugging Face and run entirely in your browser using local WebAssembly.
-  * **Minimal Scope**: Even with the Brain Upgrade, Clawd only analyzes the webpage `title` and `meta description`. It does *not* read or scan body content or sensitive inputs.
+  * **Minimal Scope**: Even with the Brain Upgrade, Clawd only analyzes the webpage `title`, `meta description`, and specific semantic text elements (like headers and paragraphs). It does *not* scan raw DOM nodes or sensitive input fields.
 
   ---
 

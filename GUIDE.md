@@ -553,7 +553,7 @@ All contextual parsing, idle detection, and scrolling evaluations happen entirel
 
 ### AI Mode Privacy
 If you opt into the local **AI Mood Analysis** feature:
-- Only the **Page Title** and **Meta Description** of your active tab are processed by the local DistilBERT model. 
+- The **Page Title**, **Meta Description**, and **semantic tags** (`h1`, `h2`, `p`, `article`) of your active tab are processed by the local models. 
 - The model runs entirely inside your browser's offscreen document WebAssembly thread. **No external network requests, server processing, or API key headers are ever used.**
 - 100% of your browsing data remains locally on your physical device.
 

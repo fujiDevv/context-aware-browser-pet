@@ -8,7 +8,7 @@ Clawd ("the Extension") is an open-source, interactive browser mascot companion.
 ## 2. Data Access & Usage
 To provide interactive and context-aware mascot behavior, the Extension accesses the following information locally within your browser:
 
-*   **Web History & Website Content:** The Extension reads the current tab’s URL, Page Title, and Meta Description. This is used solely to categorize the site type (e.g., Coding, Gaming, Social) and perform local sentiment analysis so the mascot can react emotionally to the page context.
+*   **Web History & Website Content:** The Extension reads the current tab’s URL, Page Title, Meta Description, and lightweight semantic tags (like headers and paragraphs). This is used solely to categorize the site type and perform local sentiment analysis so the mascot can react emotionally to the page context.
 *   **User Activity:** The Extension monitors local signals such as scroll depth, typing velocity, and mouse clicks. These signals are used to trigger real-time mascot animations (e.g., a "typing" animation when you are writing).
 
 ## 3. Local Processing (No Cloud AI)
