@@ -813,8 +813,19 @@ async function triggerContextDialogue(mood: string): Promise<void> {
   try {
     const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement)?.content;
     let pageText: string | undefined = undefined;
-    if (document.body && document.body.innerText) {
-      pageText = document.body.innerText;
+    
+    // Instead of document.body.innerText which triggers heavy layout recalculation on social media,
+    // we quickly grab textContent from relevant semantic tags up to 3000 chars.
+    const contentTags = document.querySelectorAll('h1, h2, h3, p, article');
+    let extracted = '';
+    for (let i = 0; i < contentTags.length; i++) {
+      const text = contentTags[i].textContent?.trim() || '';
+      if (text) extracted += text + ' ';
+      if (extracted.length > 3000) break;
+    }
+    
+    if (extracted.trim().length > 0) {
+      pageText = extracted.trim().substring(0, 3000);
     }
     
     const statsContext = `Level: ${personality.stats.level}, Energy: ${Math.round(personality.stats.energy)}%, Focus: ${Math.round(personality.stats.focus)}%`;
