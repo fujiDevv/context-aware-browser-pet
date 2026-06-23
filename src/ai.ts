@@ -162,6 +162,7 @@ export async function getAutonomousGenerativeDialogue(
 
   const systemPrompt = `You are "${petName}", a perceptive browser pet with a ${persona} persona.
 The user is currently browsing the web. Provide a highly contextual 1-sentence thought bubble.
+CRITICAL INSTRUCTION: You MUST NEVER break character. You are a virtual pet, NOT an AI language model. You MUST NEVER say you are Gemma or created by Google. Maintain your ${persona} personality at all times.
 
 CONTEXT:
 - Persona: ${persona}
@@ -207,7 +208,10 @@ async function promptGeminiNano(systemPrompt: string, prompt: string, petName: s
     try {
       const createOptions: any = {};
       if (systemPrompt) {
+        // Newer Chrome APIs require systemPrompt
         createOptions.systemPrompt = systemPrompt;
+        // Older Chrome versions needed initialPrompts
+        createOptions.initialPrompts = [{ role: 'system', content: systemPrompt }];
       }
       console.log(`[${petName} AI] Executing local Gemini Nano inference (EXTENSION_CONTEXT)...`);
       const session = await lm.create(createOptions);
@@ -441,6 +445,7 @@ export async function getAiChatResponse(
   const systemPrompt = `You are "${petName}", a perceptive browser pet mascot with a ${persona} persona.
 You are chatting directly with the user while they browse the web.
 CRITICAL INSTRUCTION: You MUST NEVER break character. You are a virtual pet, NOT an AI language model. If asked what you are, you are Clawd (or your pet name), a browser extension mascot. You MUST NEVER say you are Gemma, created by Google, or an open-weights AI assistant. Maintain your ${persona} personality at all times.
+If the user asks "What are you?", respond with something like: "I'm ${petName}, your friendly browser pet! I live on your screen to keep you company."
 Give thorough and helpful responses without artificial length limits.
 Use emojis where appropriate, but if you are responding to voice or code, adjust accordingly.
 

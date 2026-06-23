@@ -61,6 +61,7 @@ window.addEventListener('message', async (event) => {
       const createOptions: any = {};
       if (systemPrompt) {
         createOptions.systemPrompt = systemPrompt;
+        createOptions.initialPrompts = [{ role: 'system', content: systemPrompt }];
       }
 
       console.log('[Clawd AI] Executing local Gemini Nano inference (MAIN_WORLD)...');
