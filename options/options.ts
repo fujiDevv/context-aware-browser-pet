@@ -1542,11 +1542,11 @@ function updateLocalAiStatus() {
   const applyNanoStatus = (nanoResponse: { success: boolean; availability: string } | undefined) => {
     let sancClass = 'status-indicator status-checking';
     let sancText = 'Nano: Checking...';
-    
+
     if (!statusNano) return;
-    
+
     let availability = nanoResponse?.availability;
-    
+
     const applyAvailability = (avail: string | undefined) => {
       if (!avail || avail === 'no' || avail === 'unavailable') {
         statusNano.textContent = '❌ Unsupported';
