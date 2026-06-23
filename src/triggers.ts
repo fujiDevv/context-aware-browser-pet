@@ -68,14 +68,21 @@ export class TriggerDetector {
     this._hasConsoleError = false;
   }
 
+  private _lastMoveTime: number = 0;
+  private _lastScrollTime: number = 0;
+
   private _resetIdle = (): void => {
     this._lastInput = Date.now();
   };
 
   private _onMouseMove = (e: MouseEvent): void => {
+    const now = Date.now();
+    if (now - this._lastMoveTime < 100) return; // throttle to 100ms
+    this._lastMoveTime = now;
+    
     this._resetIdle();
     this._mouseX = e.clientX;
-    this._lastMouseMove = Date.now();
+    this._lastMouseMove = now;
   };
 
   private _onKeyDown = (): void => {
@@ -83,6 +90,10 @@ export class TriggerDetector {
   };
 
   private _onScroll = (): void => {
+    const now = Date.now();
+    if (now - this._lastScrollTime < 100) return; // throttle to 100ms
+    this._lastScrollTime = now;
+    
     this._resetIdle();
   };
 

@@ -93,6 +93,7 @@ export class MovementEngine {
 
     if (!this._isResizeBound) {
       window.addEventListener('resize', this._handleResize);
+      document.addEventListener('visibilitychange', this._handleVisibilityChange);
       this._isResizeBound = true;
     }
 
@@ -148,8 +149,15 @@ export class MovementEngine {
       this._raf = null;
     }
     window.removeEventListener('resize', this._handleResize);
+    document.removeEventListener('visibilitychange', this._handleVisibilityChange);
     this._isResizeBound = false;
   }
+
+  private _handleVisibilityChange = (): void => {
+    if (document.visibilityState === 'visible') {
+      this.resumeTick();
+    }
+  };
 
   _stopPosAnimation(): void {
     if (this._posAnimation) {
@@ -361,22 +369,28 @@ export class MovementEngine {
 
   _tick(currentTime?: number): void {
     if (this._paused || (typeof document !== 'undefined' && document.visibilityState === 'hidden')) {
-      this._raf = null;
-      this.lastTime = 0;
-      return;
-    }
-    const el = this.el;
-    if (!el) {
-      this._raf = null;
-      this.lastTime = 0;
+      this._raf = null; // Completely halt the loop to save CPU/Battery
       return;
     }
 
+    const el = this.el;
+    if (!el) {
+      this._raf = null;
+      return;
+    }
+
+    if (!currentTime) {
+      currentTime = performance.now();
+    }
+
+    if (!this.lastTime) {
+      this.lastTime = currentTime;
+    }
+
+    const deltaTime = currentTime - this.lastTime;
     let timeMultiplier = 1;
-    if (currentTime) {
-      if (!this.lastTime) this.lastTime = currentTime;
-      const deltaTime = currentTime - this.lastTime;
-      
+
+    if (deltaTime > 0) {
       // Cap at 30fps in performance mode (skip frames if < 33ms)
       if (this.performanceMode && deltaTime < 33) {
         this._raf = requestAnimationFrame((time) => this._tick(time));
@@ -400,10 +414,6 @@ export class MovementEngine {
   }
 
   _step(timeMultiplier: number = 1): void {
-    if (this._paused || (typeof document !== 'undefined' && document.visibilityState === 'hidden')) {
-      return;
-    }
-
     const container = this.containerRef?.deref();
     const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
     const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
