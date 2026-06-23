@@ -11,6 +11,7 @@ import { STORAGE_KEYS } from './src/constants';
 import { getDominantTrait, detectPageCategory } from './src/rules';
 import { getResolvedCostumeName } from './src/shared-ui';
 import { isFocusActive, isSleeping } from './src/schedule';
+import { extensionApi, getRuntimeUrl } from './src/platform';
 
 const BRIDGE_TOKEN = Math.random().toString(36).substring(2) + Date.now().toString(36);
 setBridgeToken(BRIDGE_TOKEN);
@@ -19,10 +20,10 @@ let currentSettings: PetSettings = { size: 128, speed: 1.2, aiMode: false, apiKe
 
 (function injectMainWorld() {
   try {
-    if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) return;
+    if (!extensionApi.runtime.id) return;
     if (document.documentElement.tagName.toLowerCase() !== 'html') return;
     const script = document.createElement('script');
-    script.src = chrome.runtime.getURL('main_world.js');
+    script.src = getRuntimeUrl('main_world.js');
     script.dataset.token = BRIDGE_TOKEN;
     script.onload = () => script.remove();
     (document.head || document.documentElement).appendChild(script);
@@ -106,15 +107,11 @@ function cleanupOrphanedScript(): void {
   window.removeEventListener('keydown', handleKeydown);
 
   try {
-    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
-      chrome.storage.onChanged.removeListener(handleStorageChanged);
-    }
+    extensionApi.storage.onChanged?.removeListener(handleStorageChanged);
   } catch (e) { /* ignore */ }
 
   try {
-    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage) {
-      chrome.runtime.onMessage.removeListener(handleRuntimeMessage);
-    }
+    extensionApi.runtime.onMessage?.removeListener(handleRuntimeMessage);
   } catch (e) { /* ignore */ }
 
   console.log("Browser Pet: Old extension context invalidated. Injected mascot cleaned up.");
@@ -122,7 +119,7 @@ function cleanupOrphanedScript(): void {
 
 function checkContextOrCleanup(): boolean {
   if (isOrphaned) return false;
-  if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+  if (!extensionApi.runtime.id) {
     cleanupOrphanedScript();
     return false;
   }
@@ -132,14 +129,12 @@ function checkContextOrCleanup(): boolean {
 function safeSendMessage(message: PetMessage, callback?: (response: any) => void): void {
   try {
     if (!checkContextOrCleanup()) return;
-    chrome.runtime.sendMessage(message, (response) => {
-      if (chrome.runtime.lastError) {
-        if (chrome.runtime.lastError.message && chrome.runtime.lastError.message.includes('context invalidated')) {
-          cleanupOrphanedScript();
-        }
-        return;
-      }
+    extensionApi.runtime.sendMessage(message).then((response) => {
       if (callback) callback(response);
+    }).catch((e: any) => {
+      if (e.message && e.message.includes('context invalidated')) {
+        cleanupOrphanedScript();
+      }
     });
   } catch (e: any) {
     if (e.message && e.message.includes('context invalidated')) {
@@ -621,7 +616,7 @@ async function loadPet(name: string): Promise<void> {
   if (!checkContextOrCleanup()) return;
 
   try {
-    chrome.storage.local.set({ [STORAGE_KEYS.MOOD]: name }).catch((e) => {
+    extensionApi.storage.local.set({ [STORAGE_KEYS.MOOD]: name }).catch((e) => {
       if (e.message && e.message.includes('context invalidated')) {
         cleanupOrphanedScript();
       } else {
@@ -708,14 +703,14 @@ async function updateEmotion(): Promise<void> {
       if (!checkContextOrCleanup()) return;
 
       try {
-        const storedTime = await chrome.storage.local.get(STORAGE_KEYS.LAST_AI_COMMENT_TIME);
+        const storedTime = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.LAST_AI_COMMENT_TIME);
         const lastCommentTime = storedTime[STORAGE_KEYS.LAST_AI_COMMENT_TIME] || 0;
         const freqSec = currentSettings.commentFrequency ?? 60;
         const now = Date.now();
 
         if (now - lastCommentTime >= freqSec * 1000) {
           if (!checkContextOrCleanup()) return;
-          await chrome.storage.local.set({ [STORAGE_KEYS.LAST_AI_COMMENT_TIME]: now });
+          await extensionApi.storage.local.set({ [STORAGE_KEYS.LAST_AI_COMMENT_TIME]: now });
 
           const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
           const pageText = document.body.innerText || '';
@@ -1100,7 +1095,7 @@ window.addEventListener('drop', handleDrop);
 async function loadAndApplySettings(): Promise<void> {
   if (!checkContextOrCleanup()) return;
   try {
-    const saved = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+    const saved = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
     if (saved[STORAGE_KEYS.SETTINGS]) {
       currentSettings = { ...currentSettings, ...saved[STORAGE_KEYS.SETTINGS] };
       if (isInitialized) {
@@ -1166,9 +1161,9 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
   }
 }
 
-chrome.storage.onChanged.addListener(handleStorageChanged);
+extensionApi.storage.onChanged?.addListener(handleStorageChanged);
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+extensionApi.runtime.onMessage?.addListener((msg, sender, sendResponse) => {
   if (msg.action === 'PING') {
     sendResponse({ status: 'OK' });
   } else if (msg.action === 'GET_STATUS') {
@@ -1286,10 +1281,7 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
   return false;
 }
 
-// Ensure the listener is properly cleared if the script is orphaned
-if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage) {
-  // We don't add handleRuntimeMessage directly since it's called by the inline listener
-}
+// Ensure the listener is properly cleared if the script is orphaned.
 
 function handleVisibilityChange() {
   if (!checkContextOrCleanup()) return;
@@ -1359,7 +1351,7 @@ async function actuallyInit(): Promise<void> {
   view.preloadAssets();
 
   try {
-    const savedMood = (await chrome.storage.local.get(STORAGE_KEYS.MOOD).catch(() => ({}))) as Record<string, any>;
+    const savedMood = (await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.MOOD).catch(() => ({}))) as Record<string, any>;
     const initialMood = savedMood[STORAGE_KEYS.MOOD] || 'happy';
     await loadPet(initialMood);
   } catch (e: any) {
