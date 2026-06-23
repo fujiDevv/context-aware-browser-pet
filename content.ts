@@ -330,7 +330,9 @@ function ensureInitialized(): void {
   const saveChatHistory = () => {
     // Keep max 20 messages to avoid token bloat
     if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
-    chrome.storage.local.set({ clawdChatHistory: chatHistory });
+    try {
+      sessionStorage.setItem('clawdChatHistory', JSON.stringify(chatHistory));
+    } catch(e) {}
   };
 
   view = new ViewManager({
@@ -396,14 +398,18 @@ function ensureInitialized(): void {
   });
 
   // Load saved history and populate UI
-  chrome.storage.local.get(['clawdChatHistory'], (result) => {
-    if (result.clawdChatHistory && Array.isArray(result.clawdChatHistory)) {
-      chatHistory = result.clawdChatHistory;
-      chatHistory.forEach(msg => {
-        view.addChatMessage(msg.role === 'user' ? 'user' : 'clawd', msg.content);
-      });
+  try {
+    const saved = sessionStorage.getItem('clawdChatHistory');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        chatHistory = parsed;
+        chatHistory.forEach(msg => {
+          view.addChatMessage(msg.role === 'user' ? 'user' : 'clawd', msg.content);
+        });
+      }
     }
-  });
+  } catch(e) {}
 
   view.onPlayVoice = (text: string) => {
     if ('speechSynthesis' in window) {
