@@ -27,7 +27,7 @@ export async function getAiEmotion(
 
     // 1. Try Gemini Nano (Built-in Prompt API) first if available
     const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
-    
+
     let summaryForDistilBert = metaDescription;
 
     if (geminiNanoAvailable === 'available' || geminiNanoAvailable === 'downloadable' || geminiNanoAvailable === 'downloading') {
@@ -45,7 +45,7 @@ export async function getAiEmotion(
           const summaryPrompt = `Summarize the following webpage content into exactly one concise sentence:\n\n${truncatedText}`;
           const generatedSummary = await promptGeminiNano("You are a helpful summarizer.", summaryPrompt, petName);
           if (generatedSummary) {
-             summaryForDistilBert = generatedSummary.trim();
+            summaryForDistilBert = generatedSummary.trim();
           }
         } catch (e) {
           console.warn(`[${petName} AI] Gemini Nano summarization failed:`, e);
@@ -146,14 +146,14 @@ export async function getAutonomousGenerativeDialogue(
   }
 
   let summaryForPrompt = metaDescription;
-  
+
   if (pageText) {
     try {
       const truncatedText = pageText.length > 3000 ? pageText.substring(0, 3000) + '...' : pageText;
       const summaryPrompt = `Summarize the following webpage content into exactly one concise sentence:\n\n${truncatedText}`;
       const generatedSummary = await promptGeminiNano("You are a helpful summarizer.", summaryPrompt, petName);
       if (generatedSummary) {
-         summaryForPrompt = generatedSummary.trim();
+        summaryForPrompt = generatedSummary.trim();
       }
     } catch (e) {
       console.warn(`[${petName} AI] Gemini Nano summarization failed:`, e);
@@ -172,14 +172,29 @@ CONTEXT:
 
 RULE:
 - Speak as the pet.
-- Keep it under 150 characters.
+- Your response MUST BE exactly 1 to 3 sentences. Maximum 50 words.
 - Must directly relate to what the user is looking at.
 - Do NOT use emojis, markdown, or quotation marks.`;
 
-  const prompt = "What are you thinking right now?";
+  const prompt = "Give me one short thought bubble sentence (under 10 words):";
 
   const result = await promptGeminiNano(systemPrompt, prompt, petName);
-  return result ? result.trim().replace(/^["']|["']$/g, '') : null;
+  if (!result) return null;
+
+  let cleaned = result.trim().replace(/^["']|["']$/g, '');
+
+  // Strictly truncate if the model ignores the length rule to prevent massive bubbles
+  if (cleaned.length > 100) {
+    cleaned = cleaned.substring(0, 97).trim() + '...';
+  }
+
+  // Escape basic HTML for safety, then format markdown bold and italics
+  cleaned = cleaned
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+    .replace(/\*(.*?)\*/g, '<i>$1</i>');
+
+  return cleaned;
 }
 
 /**
@@ -216,7 +231,7 @@ async function promptGeminiNano(systemPrompt: string, prompt: string, petName: s
     const handler = (event: MessageEvent) => {
       if (resolved) return;
       if (event.source !== window || !event.data || event.data.type !== 'PET_AI_PROMPT_RESPONSE' || event.data.id !== requestId || event.data.token !== bridgeToken) return;
-      
+
       resolved = true;
       window.removeEventListener('message', handler);
       if (event.data.error) {
@@ -225,7 +240,7 @@ async function promptGeminiNano(systemPrompt: string, prompt: string, petName: s
         resolve(event.data.resultText);
       }
     };
-    
+
     window.addEventListener('message', handler);
     window.postMessage({ type: 'PET_AI_PROMPT_REQUEST', id: requestId, systemPrompt, prompt, token: bridgeToken }, '*');
 
@@ -327,12 +342,12 @@ async function checkGeminiNanoAvailability(petName: string = 'Clawd'): Promise<'
     const handler = (event: MessageEvent) => {
       if (resolved) return;
       if (event.source !== window || !event.data || event.data.type !== 'PET_AI_AVAILABILITY_CHECK_RESPONSE' || event.data.id !== requestId || event.data.token !== bridgeToken) return;
-      
+
       resolved = true;
       window.removeEventListener('message', handler);
       resolve(event.data.availability);
     };
-    
+
     window.addEventListener('message', handler);
     window.postMessage({ type: 'PET_AI_AVAILABILITY_CHECK_REQUEST', id: requestId, token: bridgeToken }, '*');
 
@@ -417,7 +432,7 @@ export async function getAiChatResponse(
 
   // Truncate page text to avoid token limits
   const truncatedPageText = pageText.length > 3000 ? pageText.substring(0, 3000) + '...' : pageText;
-  
+
   let historyStr = '';
   if (chatHistory && chatHistory.length > 0) {
     historyStr = 'Recent Conversation History:\n' + chatHistory.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n') + '\n\n';

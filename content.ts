@@ -205,12 +205,16 @@ function showPet(): void {
   }
 }
 
-function showBubbleWithSound(text: string, duration = 3000): void {
+function showBubbleWithSound(text: string, duration?: number): void {
   if (document.visibilityState === 'visible' && !isPetHidden()) {
     playSound('chat');
   }
+  // Calculate dynamic duration based on text length (assume ~60ms per character for reading speed)
+  // Give at least 3 seconds, up to a max of 8 seconds.
+  const calcDuration = duration || Math.max(3000, Math.min(text.length * 60 + 1000, 8000));
+  
   // Even if focus blocks sound, it still shows the bubble
-  view.showBubble(text, duration);
+  view.showBubble(text, calcDuration);
 }
 
 function debouncedUpdateEmotion(delay = 500): void {

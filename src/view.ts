@@ -681,7 +681,7 @@ export class ViewManager {
 
   public showBubble(text: string, duration = 3000) {
     if (this.bubbleTimeout) clearTimeout(this.bubbleTimeout);
-    this.bubble.textContent = text;
+    this.bubble.innerHTML = text;
     this.bubble.classList.add('show');
     this.bubbleTimeout = setTimeout(() => {
       this.bubble.classList.remove('show');
