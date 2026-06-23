@@ -58,7 +58,9 @@ window.addEventListener('message', async (event) => {
         return;
       }
 
-      const createOptions: any = {};
+      const createOptions: any = {
+        expectedOutputs: [{ type: 'text', languages: ['en'] }]
+      };
       if (systemPrompt) {
         createOptions.systemPrompt = systemPrompt;
         createOptions.initialPrompts = [{ role: 'system', content: systemPrompt }];

@@ -206,7 +206,9 @@ async function promptGeminiNano(systemPrompt: string, prompt: string, petName: s
   const lm = (globalThis as any).ai?.languageModel || (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? ((window as any).ai?.languageModel || (window as any).LanguageModel) : null);
   if (lm) {
     try {
-      const createOptions: any = {};
+      const createOptions: any = {
+        expectedOutputs: [{ type: 'text', languages: ['en'] }]
+      };
       if (systemPrompt) {
         // Newer Chrome APIs require systemPrompt
         createOptions.systemPrompt = systemPrompt;
