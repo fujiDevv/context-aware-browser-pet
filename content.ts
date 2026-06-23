@@ -325,7 +325,13 @@ function ensureInitialized(): void {
     debouncedUpdateEmotion();
   }, BRIDGE_TOKEN);
 
-  const chatHistory: { role: string; content: string; }[] = [];
+  let chatHistory: { role: string; content: string; }[] = [];
+  
+  const saveChatHistory = () => {
+    // Keep max 20 messages to avoid token bloat
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+    chrome.storage.local.set({ clawdChatHistory: chatHistory });
+  };
 
   view = new ViewManager({
     petName: currentSettings.name,
@@ -389,6 +395,16 @@ function ensureInitialized(): void {
     }
   });
 
+  // Load saved history and populate UI
+  chrome.storage.local.get(['clawdChatHistory'], (result) => {
+    if (result.clawdChatHistory && Array.isArray(result.clawdChatHistory)) {
+      chatHistory = result.clawdChatHistory;
+      chatHistory.forEach(msg => {
+        view.addChatMessage(msg.role === 'user' ? 'user' : 'clawd', msg.content);
+      });
+    }
+  });
+
   view.onPlayVoice = (text: string) => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel(); // Stop any current speech
@@ -423,6 +439,7 @@ function ensureInitialized(): void {
 
   view.onChatSubmit = async (text: string) => {
     chatHistory.push({ role: 'user', content: text });
+    saveChatHistory();
     
     const pageText = document.body.innerText || '';
     const trait = getDominantTrait(personality.stats.siteCategoryCounts);
@@ -436,6 +453,7 @@ function ensureInitialized(): void {
       
       if (response) {
         chatHistory.push({ role: 'assistant', content: response });
+        saveChatHistory();
         view.addChatMessage('clawd', response);
         // Play chatting sound and animation
         playSound('chat');
@@ -473,6 +491,7 @@ function ensureInitialized(): void {
   view.onChatRedo = async (oldMsgEl: HTMLElement, lastUserMsg: string) => {
     if (chatHistory.length > 0 && chatHistory[chatHistory.length - 1].role === 'assistant') {
       chatHistory.pop();
+      saveChatHistory();
     }
     
     const textNode = oldMsgEl.querySelector('div:not(.clawd-control-btn)') as HTMLElement;
@@ -499,6 +518,7 @@ function ensureInitialized(): void {
       
       if (response) {
         chatHistory.push({ role: 'assistant', content: response });
+        saveChatHistory();
         view.addChatMessage('clawd', response, oldMsgEl);
         oldMsgEl.remove();
         if (currentSettings.soundEnabled) playSound('chat');

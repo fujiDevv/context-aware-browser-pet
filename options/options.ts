@@ -281,6 +281,20 @@ async function init() {
   const chatMessages = document.getElementById('options-chat-messages') as HTMLElement;
 
   let chatHistory: { role: string; content: string }[] = [];
+  
+  const saveChatHistory = () => {
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+    chrome.storage.local.set({ clawdChatHistory: chatHistory });
+  };
+  
+  chrome.storage.local.get(['clawdChatHistory'], (result) => {
+    if (result.clawdChatHistory && Array.isArray(result.clawdChatHistory)) {
+      chatHistory = result.clawdChatHistory;
+      chatHistory.forEach(msg => {
+        addChatMessage(msg.role === 'user' ? 'user' : 'clawd', msg.content);
+      });
+    }
+  });
 
   const addChatMessage = (role: 'user' | 'clawd', text: string, insertBeforeEl?: Element | null) => {
     const el = document.createElement('div');
@@ -368,6 +382,7 @@ async function init() {
         if (lastUserMsg) {
           if (chatHistory.length > 0 && chatHistory[chatHistory.length - 1].role === 'model') {
             chatHistory.pop();
+            saveChatHistory();
           }
           const originalText = textNode.textContent;
           textNode.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
@@ -383,8 +398,9 @@ async function init() {
 
             if (response) {
               addChatMessage('clawd', response, el);
-              el.remove();
               chatHistory.push({ role: 'model', content: response });
+              saveChatHistory();
+              el.remove();
             } else {
               textNode.textContent = originalText;
               controlsRow.style.display = 'flex';
@@ -445,6 +461,7 @@ async function init() {
     
     setChatLoading(true);
     chatHistory.push({ role: 'user', content: text });
+    saveChatHistory();
     
     try {
       const persona = personaSelect.value || 'default';
@@ -457,6 +474,7 @@ async function init() {
       if (response) {
         addChatMessage('clawd', response);
         chatHistory.push({ role: 'assistant', content: response });
+        saveChatHistory();
       } else {
         addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
       }
