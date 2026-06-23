@@ -21,6 +21,8 @@ chrome.storage.local.get(STORAGE_KEYS.SHARED_STATE, (data) => {
 const originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
 const backgroundPersonality = new PersonalitySystem();
+const supportsOffscreen = typeof chrome.offscreen !== 'undefined' && typeof chrome.offscreen.createDocument === 'function';
+const unsupportedOffscreenMessage = 'Local AI and centralized audio require Chrome offscreen documents and are not available in this Firefox build yet.';
 
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
@@ -29,7 +31,7 @@ chrome.runtime.onInstalled.addListener((details) => {
       [STORAGE_KEYS.SETTINGS]: {
         size: 128,
         speed: 1.2,
-        soundEnabled: true,
+        soundEnabled: supportsOffscreen,
         soundVolume: 0.5,
         aiMode: false,
         advancedAiEnabled: false,
@@ -190,6 +192,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'play-sound') {
+    if (!supportsOffscreen) {
+      sendResponse({ success: false, error: unsupportedOffscreenMessage });
+      return false;
+    }
+
     const { filename, volume } = message;
     setupOffscreen()
       .then(() => {
@@ -296,6 +303,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'get-local-ai-emotion') {
+    if (!supportsOffscreen) {
+      sendResponse({ success: false, error: unsupportedOffscreenMessage });
+      return false;
+    }
+
     const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity } = message;
     const tabUrl = sender.tab?.url || '';
 
@@ -338,6 +350,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'check-local-ai-status') {
+    if (!supportsOffscreen) {
+      sendResponse({ success: true, state: 'unsupported', progress: 0 });
+      return false;
+    }
+
     chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
       const settings = data[STORAGE_KEYS.SETTINGS] || {};
       if (!settings.aiMode) {
@@ -379,6 +396,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 let creatingOffscreen: Promise<void> | null = null;
 async function setupOffscreen(): Promise<void> {
+  if (!supportsOffscreen) {
+    throw new Error(unsupportedOffscreenMessage);
+  }
+
   const contexts = await chrome.runtime.getContexts?.({
     contextTypes: ['OFFSCREEN_DOCUMENT']
   });
@@ -409,6 +430,10 @@ async function setupOffscreen(): Promise<void> {
 }
 
 async function closeOffscreen(): Promise<void> {
+  if (!supportsOffscreen) {
+    return;
+  }
+
   const contexts = await chrome.runtime.getContexts?.({
     contextTypes: ['OFFSCREEN_DOCUMENT']
   });
@@ -419,6 +444,10 @@ async function closeOffscreen(): Promise<void> {
 
 // Pre-load the offscreen document (which pre-loads the classifier) if AI Mode or Sound is enabled
 chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+  if (!supportsOffscreen) {
+    return;
+  }
+
   const settings = data[STORAGE_KEYS.SETTINGS] || {};
   if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
     setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen initial call error:', e); });
@@ -427,6 +456,10 @@ chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
 
 // Watch for settings changes to boot offscreen context in real time
 chrome.storage.onChanged.addListener((changes) => {
+  if (!supportsOffscreen) {
+    return;
+  }
+
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const settings = changes[STORAGE_KEYS.SETTINGS].newValue || {};
     if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {

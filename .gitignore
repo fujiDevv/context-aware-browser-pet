@@ -1,6 +1,9 @@
 # Dependency directories
 node_modules/
 
+# Firefox Build output
+dist-firefox/
+
 # Build outputs
 dist/
 
