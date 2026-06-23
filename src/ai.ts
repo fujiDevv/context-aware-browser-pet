@@ -1,4 +1,5 @@
 import { detectPageCategory, mapActivityToEmotion, AI_COMMENTS } from './rules';
+import { CLAWD_KNOWLEDGE_BASE } from './knowledge';
 
 interface AiEmotionResponse {
   success: boolean;
@@ -432,6 +433,8 @@ export async function getAiChatResponse(
 You are chatting directly with the user while they browse the web.
 Maintain your ${persona} personality. Give thorough and helpful responses without artificial length limits.
 Use emojis where appropriate, but if you are responding to voice or code, adjust accordingly.
+
+${CLAWD_KNOWLEDGE_BASE}
 
 Context about your current state:
 ${statsContext || 'Normal'}
