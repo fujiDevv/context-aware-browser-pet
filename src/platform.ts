@@ -34,7 +34,11 @@ function toPromise<T>(target: any, methodName: string, args: unknown[] = []): Pr
   }
 
   if (isPromiseApi()) {
-    return Promise.resolve(method.apply(target, args));
+    try {
+      return Promise.resolve(method.apply(target, args));
+    } catch (err) {
+      return Promise.reject(err);
+    }
   }
 
   return new Promise<T>((resolve, reject) => {

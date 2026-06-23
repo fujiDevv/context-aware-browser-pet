@@ -437,7 +437,12 @@ async function init(): Promise<void> {
     }
   });
 
-  const data = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
+  let data: Record<string, any> = {};
+  try {
+    data = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
+  } catch (e) {
+    console.error('[Clawd Popup] Failed to load initial storage data:', e);
+  }
   blockedDomains = data[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
   
   if (data[STORAGE_KEYS.SETTINGS]?.name) {
@@ -533,8 +538,9 @@ async function init(): Promise<void> {
       extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((res) => {
         const settings = res[STORAGE_KEYS.SETTINGS] || {};
         settings.blockedDomains = blockedDomains;
-        extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
-      });
+        extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings })
+          .catch((e) => { console.warn('[Clawd Popup] Failed to save blocked domains:', e); });
+      }).catch((e) => { console.warn('[Clawd Popup] Failed to load settings for blocked domains:', e); });
     }
   });
 
@@ -542,16 +548,18 @@ async function init(): Promise<void> {
     extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((res) => {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       settings.performanceMode = performanceModeToggle.checked;
-      extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
-    });
+      extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings })
+        .catch((e) => { console.warn('[Clawd Popup] Failed to save performance mode:', e); });
+    }).catch((e) => { console.warn('[Clawd Popup] Failed to load settings for performance mode:', e); });
   });
 
   ghostModeToggle.addEventListener('change', () => {
     extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((res) => {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       settings.ghostMode = ghostModeToggle.checked;
-      extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings });
-    });
+      extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings })
+        .catch((e) => { console.warn('[Clawd Popup] Failed to save ghost mode:', e); });
+    }).catch((e) => { console.warn('[Clawd Popup] Failed to load settings for ghost mode:', e); });
   });
 
   extensionApi.storage.onChanged?.addListener((changes) => {
@@ -580,7 +588,11 @@ async function init(): Promise<void> {
         // Force mood update to apply new visual settings
         extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.MOOD).then((moodRes) => {
           updateUIMood(moodRes[STORAGE_KEYS.MOOD] || 'happy', currentCostume, customColor);
+        }).catch((e) => {
+          console.warn('[Clawd Popup] Failed to get mood for update:', e);
         });
+      }).catch((e) => {
+        console.warn('[Clawd Popup] Failed to get stats for color evaluation:', e);
       });
     }
 
@@ -594,6 +606,8 @@ async function init(): Promise<void> {
       if (tab && tab.id) {
         extensionApi.tabs.sendMessage(tab.id, { type }).catch((e) => { console.warn('[Clawd Popup] sendMessage error:', e); });
       }
+    }).catch((e) => {
+      console.warn('[Clawd Popup] Failed to query active tab:', e);
     });
   };
 

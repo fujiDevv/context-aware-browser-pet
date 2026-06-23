@@ -200,7 +200,12 @@ async function init() {
   }
 
   // Load Settings and Stats from local storage
-  const storageData = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
+  let storageData: Record<string, any> = {};
+  try {
+    storageData = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
+  } catch (e) {
+    console.error('[Clawd Options] Failed to load initial storage data:', e);
+  }
   blockedDomains = storageData[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
   domainReactions = storageData[STORAGE_KEYS.SETTINGS]?.domainReactions || [];
 
@@ -289,7 +294,8 @@ async function init() {
   
   const saveChatHistory = () => {
     if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
-    extensionApi.storage.local.set({ clawdDashboardHistory: chatHistory });
+    extensionApi.storage.local.set({ clawdDashboardHistory: chatHistory })
+      .catch((e) => { console.warn('[Clawd Options] Failed to save chat history:', e); });
   };
   
   extensionApi.storage.local.get<Record<string, any>>(['clawdDashboardHistory']).then((result) => {
@@ -299,7 +305,7 @@ async function init() {
         addChatMessage(msg.role === 'user' ? 'user' : 'clawd', msg.content);
       });
     }
-  });
+  }).catch((e) => { console.warn('[Clawd Options] Failed to load chat history:', e); });
 
   const addChatMessage = (role: 'user' | 'clawd', text: string, insertBeforeEl?: Element | null) => {
     const el = document.createElement('div');
@@ -1606,7 +1612,7 @@ function updatePresence() {
       const count = tabs.length;
       activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
     }
-  });
+  }).catch((e) => { console.warn('[Clawd Options] Failed to query active tabs:', e); });
 }
 
 // Blocklist table render
@@ -1777,6 +1783,9 @@ function exportProfile() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  }).catch((err) => {
+    console.warn('[Clawd Options] Failed to export profile:', err);
+    alert('Could not export profile.');
   });
 }
 

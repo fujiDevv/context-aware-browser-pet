@@ -17,7 +17,7 @@ extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SHARED_STATE).t
   if (data[STORAGE_KEYS.SHARED_STATE]) {
     sharedPetState = data[STORAGE_KEYS.SHARED_STATE];
   }
-});
+}).catch((e) => { console.warn('[Clawd Background] storage.get shared-pet-state error:', e); });
 
 const originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
@@ -87,6 +87,8 @@ extensionApi.runtime.onStartup?.addListener(() => {
           [STORAGE_KEYS.SETTINGS]: applyRuntimeFeatureSupport(currentSettings)
         }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set runtime support error:', e); });
       }
+    }).catch((e) => {
+      console.warn('[Clawd Background] Failed to get settings on startup:', e);
     });
   }
 });
@@ -171,6 +173,8 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
             });
           }
         });
+      }).catch((e) => {
+        console.debug('[Clawd Background] sync-pet-state tab query failed:', e);
       });
     };
 
@@ -283,6 +287,8 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
             } catch (e) { }
           }
         });
+      }).catch((e) => {
+        console.debug('[Clawd Background] sync-origin-pet-state tab query failed:', e);
       });
     }
     sendResponse({ success: true });
@@ -464,7 +470,7 @@ extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then(
   if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
     setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen initial call error:', e); });
   }
-});
+}).catch((e) => { console.warn('[Clawd Background] Failed to load initial settings:', e); });
 
 // Watch for settings changes to boot offscreen context in real time
 extensionApi.storage.onChanged?.addListener((changes) => {
