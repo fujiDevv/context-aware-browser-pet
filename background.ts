@@ -160,7 +160,7 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
       .catch((e) => { console.warn('[Clawd Background] storage.set shared-pet-state error:', e); });
 
     const broadcast = () => {
-      extensionApi.tabs.query({}).then((tabs) => {
+      extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] }).then((tabs) => {
         tabs.forEach((tab) => {
           if (sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
             extensionApi.tabs.sendMessage(tab.id, {
@@ -267,7 +267,7 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
       }
 
       // Broadcast to other tabs with the same hostname
-      extensionApi.tabs.query({}).then((tabs) => {
+      extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] }).then((tabs) => {
         tabs.forEach((tab) => {
           if (tab.url) {
             try {
