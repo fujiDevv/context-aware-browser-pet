@@ -4,6 +4,7 @@ import { STORAGE_KEYS } from '../src/constants';
 import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName, parseMarkdown } from '../src/shared-ui';
 import { getDailyInsight, getAiChatResponse } from '../src/ai';
 import { MovementEngine } from '../src/movement';
+import { isFirefoxRuntime, supportsOffscreenDocuments } from '../src/platform';
 
 let personality: PersonalitySystem;
 let playgroundMovement: MovementEngine;
@@ -11,6 +12,8 @@ let blockedDomains: string[] = [];
 let activeCostume: string = 'none';
 let domainReactions: DomainReaction[] = [];
 let currentMoodState: string = 'happy';
+const supportsLocalAiRuntime = supportsOffscreenDocuments();
+const isFirefoxBuild = isFirefoxRuntime();
 
 function escapeHtml(unsafe: string): string {
   return String(unsafe)
@@ -241,7 +244,8 @@ async function init() {
   // Inject version
   const versionEl = document.getElementById('version-display');
   if (versionEl && typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) {
-    versionEl.textContent = `Version ${chrome.runtime.getManifest().version} (Local AI)`;
+    const runtimeMode = supportsLocalAiRuntime ? 'Local AI' : 'Lite';
+    versionEl.textContent = `Version ${chrome.runtime.getManifest().version} (${runtimeMode})`;
   }
 
   // Polling for real-time indicators
@@ -682,7 +686,12 @@ async function init() {
   // Sound board preview listeners
   const soundPlayButtons = document.querySelectorAll('.sound-play-btn') as NodeListOf<HTMLButtonElement>;
   soundPlayButtons.forEach(btn => {
+    btn.disabled = !supportsLocalAiRuntime;
+    if (!supportsLocalAiRuntime) {
+      btn.title = 'Sound playback is unavailable in this Firefox build.';
+    }
     btn.addEventListener('click', () => {
+      if (!supportsLocalAiRuntime) return;
       const soundType = btn.getAttribute('data-sound');
       if (soundType) {
         const vol = Number(volumeSlider.value) / 100;
@@ -1367,8 +1376,10 @@ function applySettings(settings: PetSettings | undefined) {
     chatVoiceSelect.value = '';
   }
 
-  const sound = activeSettings.soundEnabled ?? true;
+  const sound = supportsLocalAiRuntime && (activeSettings.soundEnabled ?? true);
   soundToggle.checked = sound;
+  soundToggle.disabled = !supportsLocalAiRuntime;
+  soundToggle.title = supportsLocalAiRuntime ? '' : 'Sound playback requires Chrome offscreen documents.';
   if (sound) {
     volumeContainer.classList.remove('hidden');
   } else {
@@ -1383,7 +1394,9 @@ function applySettings(settings: PetSettings | undefined) {
     petColorInput.value = activeSettings.customColor || '#DE886D';
   }
 
-  aiToggle.checked = activeSettings.aiMode ?? false;
+  aiToggle.checked = supportsLocalAiRuntime && (activeSettings.aiMode ?? false);
+  aiToggle.disabled = !supportsLocalAiRuntime;
+  aiToggle.title = supportsLocalAiRuntime ? '' : 'Local AI requires Chrome offscreen documents.';
   if (aiToggle.checked) {
     aiTuningContainer.classList.remove('hidden');
   } else {
@@ -1423,9 +1436,9 @@ function saveSettings() {
       size: Number(sizeSlider.value),
       speed: Number(speedSlider.value) / 10,
       flightSpeed: Number(flightSpeedSlider.value) / 10,
-      soundEnabled: soundToggle.checked,
+      soundEnabled: supportsLocalAiRuntime && soundToggle.checked,
       soundVolume: Number(volumeSlider.value) / 100,
-      aiMode: aiToggle.checked,
+      aiMode: supportsLocalAiRuntime && aiToggle.checked,
       apiKey: '',
       name: nameInput.value.trim() || 'Clawd',
       costume: activeCostume,
@@ -1454,6 +1467,23 @@ function saveSettings() {
 // AI status update helper
 function updateLocalAiStatus() {
   const isEnabled = aiToggle.checked;
+
+  if (!supportsLocalAiRuntime) {
+    if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-unsupported';
+    if (aiStatusText) aiStatusText.textContent = isFirefoxBuild ? 'Brain: Firefox Lite' : 'Brain: Lite Mode';
+    if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Local AI requires Chrome offscreen documents';
+    if (statusBert) {
+      statusBert.textContent = 'Unavailable';
+      statusBert.style.color = '#ef4444';
+    }
+    if (statusNano) {
+      statusNano.textContent = 'Unsupported';
+      statusNano.style.color = '#ef4444';
+    }
+    if (sancNanoBadge) sancNanoBadge.className = 'status-indicator status-unsupported';
+    if (sancNanoText) sancNanoText.textContent = 'Nano: Unsupported';
+    return;
+  }
 
   if (!isEnabled) {
     if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-unsupported';

@@ -1,6 +1,10 @@
 import { PetStats, PetSettings } from '../src/types';
 import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/shared-ui';
 import { STORAGE_KEYS } from '../src/constants';
+import { isFirefoxRuntime, supportsOffscreenDocuments } from '../src/platform';
+
+const supportsLocalAiRuntime = supportsOffscreenDocuments();
+const isFirefoxBuild = isFirefoxRuntime();
 
 async function init(): Promise<void> {
   let blockedDomains: string[] = [];
@@ -36,6 +40,21 @@ async function init(): Promise<void> {
     });
 
     // 2. Update AI Status
+    if (!supportsLocalAiRuntime) {
+      if (aiStatusBadge && aiStatusText) {
+        aiStatusBadge.className = 'ai-status-badge status-unsupported';
+        aiStatusText.textContent = isFirefoxBuild ? 'Brain: Firefox Lite' : 'Brain: Lite';
+      }
+
+      const nanoBadge = document.getElementById('nano-status-badge');
+      const nanoText = document.getElementById('nano-status-text');
+      if (nanoBadge && nanoText) {
+        nanoBadge.className = 'ai-status-badge status-unsupported';
+        nanoText.textContent = 'Nano: Unsupported';
+      }
+      return;
+    }
+
     chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (res) => {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       if (!settings.aiMode) {

@@ -1,6 +1,7 @@
 import { SharedPetState, OriginPetState } from './src/types';
 import { STORAGE_KEYS } from './src/constants';
 import { PersonalitySystem } from './src/personality';
+import { supportsOffscreenDocuments } from './src/platform';
 
 let sharedPetState: SharedPetState = {
   x: 200,
@@ -21,17 +22,30 @@ chrome.storage.local.get(STORAGE_KEYS.SHARED_STATE, (data) => {
 const originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
 const backgroundPersonality = new PersonalitySystem();
-const supportsOffscreen = typeof chrome.offscreen !== 'undefined' && typeof chrome.offscreen.createDocument === 'function';
+const supportsOffscreen = supportsOffscreenDocuments();
 const unsupportedOffscreenMessage = 'Local AI and centralized audio require Chrome offscreen documents and are not available in this Firefox build yet.';
+
+function applyRuntimeFeatureSupport(settings: any = {}) {
+  if (supportsOffscreen) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    soundEnabled: false,
+    aiMode: false,
+    advancedAiEnabled: false
+  };
+}
 
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
     // Initialize default settings with local AI disabled (off by default)
     chrome.storage.local.set({
-      [STORAGE_KEYS.SETTINGS]: {
+      [STORAGE_KEYS.SETTINGS]: applyRuntimeFeatureSupport({
         size: 128,
         speed: 1.2,
-        soundEnabled: supportsOffscreen,
+        soundEnabled: true,
         soundVolume: 0.5,
         aiMode: false,
         advancedAiEnabled: false,
@@ -43,7 +57,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         disabledEmotions: [],
         scheduleEnabled: true,
         seasonalEnabled: true
-      },
+      }),
       [STORAGE_KEYS.SHARED_STATE]: sharedPetState
     }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set init error:', e); });
   }
@@ -64,6 +78,17 @@ chrome.runtime.onStartup.addListener(() => {
       chrome.alarms.create('pet-decay', { periodInMinutes: 1 });
     }
   });
+
+  if (!supportsOffscreen) {
+    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+      const currentSettings = data[STORAGE_KEYS.SETTINGS] || {};
+      if (currentSettings.soundEnabled || currentSettings.aiMode || currentSettings.advancedAiEnabled) {
+        chrome.storage.local.set({
+          [STORAGE_KEYS.SETTINGS]: applyRuntimeFeatureSupport(currentSettings)
+        }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set runtime support error:', e); });
+      }
+    });
+  }
 });
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
