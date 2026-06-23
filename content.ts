@@ -556,6 +556,11 @@ function ensureInitialized(): void {
   movement.onLanding = () => {
     if (isPetHidden()) return;
 
+    if (view.isChatOpen()) {
+      movement.paused = true;
+      return;
+    }
+
     if (interactionTimeout) clearTimeout(interactionTimeout);
     isTemporarilyInteracting = false;
     loadPet(emotion.current);
