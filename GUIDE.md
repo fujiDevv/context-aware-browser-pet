@@ -519,6 +519,10 @@ Clawd is designed to run 24/7 inside your browser without impacting computer per
 * **Throttled Activity Listeners**: Idle-tracking events (`mousemove` and `scroll`) are throttled to `100ms`, cutting JavaScript execution payload by over 90% without losing responsiveness.
 * **Layout Thrashing Prevention**: On infinite-scrolling social media sites, Clawd uses lightweight `textContent` extraction on specific semantic tags instead of `innerText`. This bypasses expensive CSS layout recalculations and prevents main-thread lag when generating AI dialogues.
 
+> [!NOTE]
+> **Can an average laptop handle 15+ tabs with Clawd? Yes.** 
+> Thanks to the **Zero-CPU Idle** optimization, background tabs are completely frozen and use 0% CPU. Furthermore, the AI models are centralized: the ONNX model runs in a single shared offscreen document, and Gemini Nano is built into the browser itself, meaning 15 tabs does **not** mean 15 AI models running at once. Only the single active tab uses resources. For older, low-spec laptops, **Performance Mode** can be enabled in the dashboard to cap physics at 30fps and disable CSS shaders.
+
 ### 2. Long-Term Progression & Stat Balance
 * **Balanced Decay**: Clawd's stat decay values (Happiness, Energy, Focus, etc.) are calculated once per minute to prevent sudden drop-offs.
 * **Linear XP Scaling**: Leveling up requires `Level * 100 XP`, establishing a balanced leveling curve.
