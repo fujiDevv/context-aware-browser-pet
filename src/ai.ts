@@ -187,18 +187,12 @@ RULE:
  */
 async function promptGeminiNano(systemPrompt: string, prompt: string, petName: string = 'Clawd'): Promise<string | null> {
   // 1. Direct Extension/Extension Context Attempt
-  const lm = (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? (window as any).LanguageModel : null);
+  const lm = (globalThis as any).ai?.languageModel || (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? ((window as any).ai?.languageModel || (window as any).LanguageModel) : null);
   if (lm) {
     try {
-      const createOptions: any = {
-        language: 'en',
-        expectedLanguage: 'en',
-        outputLanguage: 'en',
-        expectedOutputs: [{ type: 'text', languages: ['en'] }],
-        expectedInputs: [{ type: 'text', languages: ['en'] }]
-      };
+      const createOptions: any = {};
       if (systemPrompt) {
-        createOptions.initialPrompts = [{ role: 'system', content: systemPrompt }];
+        createOptions.systemPrompt = systemPrompt;
       }
       console.log(`[${petName} AI] Executing local Gemini Nano inference (EXTENSION_CONTEXT)...`);
       const session = await lm.create(createOptions);
