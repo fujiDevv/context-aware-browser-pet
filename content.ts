@@ -336,7 +336,6 @@ function ensureInitialized(): void {
         return;
       }
       if (movement.isFlying()) return;
-      triggerInteraction('pet', 'love', 2000, "Ah, thank you! ❤️");
       view.toggleChat();
     },
     onPetDoubleClick: (e) => {
