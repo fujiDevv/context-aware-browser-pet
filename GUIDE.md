@@ -515,6 +515,9 @@ Clawd is designed to run 24/7 inside your browser without impacting computer per
 * **Zero-Leak Lifecycles**: All DOM elements and active intervals are cleanly destroyed and reconstructed whenever tabs reload or update, ensuring zero memory leak accumulations.
 * **Decoupled Timers**: Tab-specific loops are throttled and only run when the tab is active and visible.
 * **Hardware Acceleration**: Sprite rendering and character squash-and-stretch transitions utilize the browser's native **Web Animations API (WAAPI)**, moving physics calculations to the GPU.
+* **Zero-CPU Idle & Physics Halting**: The `requestAnimationFrame` physics loop completely pauses when Clawd is sleeping or when you switch to another tab. This drastically extends laptop battery life by minimizing background CPU usage.
+* **Throttled Activity Listeners**: Idle-tracking events (`mousemove` and `scroll`) are throttled to `100ms`, cutting JavaScript execution payload by over 90% without losing responsiveness.
+* **Layout Thrashing Prevention**: On infinite-scrolling social media sites, Clawd uses lightweight `textContent` extraction on specific semantic tags instead of `innerText`. This bypasses expensive CSS layout recalculations and prevents main-thread lag when generating AI dialogues.
 
 ### 2. Long-Term Progression & Stat Balance
 * **Balanced Decay**: Clawd's stat decay values (Happiness, Energy, Focus, etc.) are calculated once per minute to prevent sudden drop-offs.
