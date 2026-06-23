@@ -21,3 +21,9 @@ bun-error.log*
 .env.*.local
 *.pem
 *.key
+
+# Local Agent Files
+AGENTS.md
+
+# Graphify
+graphify-out/
