@@ -1546,7 +1546,7 @@ function updateLocalAiStatus() {
       if (chrome.runtime.lastError || !nanoResponse || availability === 'no') {
         // Fallback to local check if the tab doesn't respond or says 'no'
         if ('ai' in window && (window as any).ai?.languageModel) {
-          (window as any).ai.languageModel.capabilities().then((cap: any) => {
+          (window as any).ai.languageModel.capabilities({ expectedOutputs: [{ type: 'text', languages: ['en'] }] }).then((cap: any) => {
             applyAvailability(cap.available);
           }).catch(() => {
             applyAvailability('no');

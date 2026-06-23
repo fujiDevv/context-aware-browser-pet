@@ -22,7 +22,7 @@ window.addEventListener('message', async (event) => {
         if (typeof lm.availability === 'function') {
           availability = await lm.availability();
         } else if (typeof lm.capabilities === 'function') {
-          const caps = await lm.capabilities();
+          const caps = await lm.capabilities({ expectedOutputs: [{ type: 'text', languages: ['en'] }] });
           availability = caps.available;
         }
       } catch (e) {
@@ -49,7 +49,7 @@ window.addEventListener('message', async (event) => {
       if (typeof lm.availability === 'function') {
         availability = await lm.availability();
       } else if (typeof lm.capabilities === 'function') {
-        const caps = await lm.capabilities();
+        const caps = await lm.capabilities({ expectedOutputs: [{ type: 'text', languages: ['en'] }] });
         availability = caps.available;
       }
 
