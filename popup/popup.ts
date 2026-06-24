@@ -44,15 +44,14 @@ async function init(): Promise<void> {
     // 2. Update AI Status
     if (!supportsLocalAiRuntime) {
       if (aiStatusBadge && aiStatusText) {
-        aiStatusBadge.className = 'ai-status-badge status-unsupported';
-        aiStatusText.textContent = isFirefoxBuild ? 'Brain: Firefox Lite' : 'Brain: Lite';
+        aiStatusBadge.className = 'ai-status-badge status-checking';
+        aiStatusText.textContent = isFirefoxBuild ? 'Firefox Lite' : 'Lite Mode';
+        aiStatusBadge.title = 'Rule-based evaluation active';
       }
 
       const nanoBadge = document.getElementById('nano-status-badge');
-      const nanoText = document.getElementById('nano-status-text');
-      if (nanoBadge && nanoText) {
-        nanoBadge.className = 'ai-status-badge status-unsupported';
-        nanoText.textContent = 'Nano: Unsupported';
+      if (nanoBadge) {
+        nanoBadge.style.display = 'none';
       }
       return;
     }

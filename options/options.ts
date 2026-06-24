@@ -1476,19 +1476,22 @@ function updateLocalAiStatus() {
   const isEnabled = aiToggle.checked;
 
   if (!supportsLocalAiRuntime) {
-    if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-unsupported';
+    if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-checking';
     if (aiStatusText) aiStatusText.textContent = isFirefoxBuild ? 'Brain: Firefox Lite' : 'Brain: Lite Mode';
-    if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Local AI requires Chrome offscreen documents';
+    if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Rule-based behavior active';
     if (statusBert) {
-      statusBert.textContent = 'Unavailable';
-      statusBert.style.color = '#ef4444';
+      statusBert.textContent = 'Firefox Lite Mode';
+      statusBert.style.color = 'var(--text-muted)';
     }
-    if (statusNano) {
-      statusNano.textContent = 'Unsupported';
-      statusNano.style.color = '#ef4444';
+    
+    const sancNanoRow = document.getElementById('sanc-nano-row');
+    if (sancNanoRow) sancNanoRow.style.display = 'none';
+
+    const notice = document.getElementById('ai-privacy-notice');
+    if (notice) {
+      notice.innerHTML = `<p style="margin-bottom: 8px;"><strong>Mode: Firefox Lite</strong> — Uses rule-based logic and Regex for fast, zero-download behavior analysis. <br><br><em>Note: Brain Upgrade and Generative Reflections are currently not available on Firefox as they require Chrome offscreen document APIs.</em></p>`;
     }
-    if (sancNanoBadge) sancNanoBadge.className = 'status-indicator status-unsupported';
-    if (sancNanoText) sancNanoText.textContent = 'Nano: Unsupported';
+
     return;
   }
 

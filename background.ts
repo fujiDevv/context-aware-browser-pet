@@ -112,11 +112,11 @@ extensionApi.webRequest.onCompleted?.addListener(
         type: 'http-error',
         code: details.statusCode,
       }).catch((e) => {
-        console.debug('[Clawd Background] http-error message failed:', e);
+        // Silently catch to avoid console spam
       });
     }
   },
-  { urls: ['<all_urls>'], types: ['main_frame'] }
+  { urls: ['http://*/*', 'https://*/*'], types: ['main_frame'] }
 );
 
 extensionApi.tabs.onRemoved?.addListener((tabId) => {
@@ -129,13 +129,16 @@ extensionApi.webNavigation.onBeforeNavigate?.addListener((details) => {
   }
 });
 
-extensionApi.webNavigation.onCommitted?.addListener((details) => {
-  if (details.frameId === 0) {
-    extensionApi.tabs.sendMessage(details.tabId, { type: 'navigation' }).catch((e) => {
-      console.debug('[Clawd Background] navigation message failed:', e);
-    });
-  }
-});
+extensionApi.webNavigation.onCommitted?.addListener(
+  (details) => {
+    if (details.frameId === 0) {
+      extensionApi.tabs.sendMessage(details.tabId, { type: 'navigation' }).catch((e) => {
+        // Silently catch to avoid console spam
+      });
+    }
+  },
+  { url: [{ schemes: ['http', 'https'] }] }
+);
 
 // Add a simple throttle to prevent dragging from spamming messages
 let lastSyncTime = 0;
