@@ -7,11 +7,13 @@
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.33",
     "@types/chrome": "^0.0.268",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^4.1.9"
   },
   "description": "Context-aware browser pet extension using clawd-pet SVGs.",
   "scripts": {
     "type-check": "node node_modules/typescript/bin/tsc --noEmit",
+    "test": "vitest",
     "dev": "vite build --watch",
     "build": "vite build",
     "build:firefox": "vite build && mkdir -p dist-firefox && cp -R dist/. dist-firefox/ && cp manifest.firefox.json dist-firefox/manifest.json"

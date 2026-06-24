@@ -30,3 +30,8 @@ AGENTS.md
 
 # Graphify
 graphify-out/
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__/
