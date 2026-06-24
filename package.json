@@ -12,7 +12,7 @@
   "description": "Context-aware browser pet extension using clawd-pet SVGs.",
   "scripts": {
     "type-check": "node node_modules/typescript/bin/tsc --noEmit",
-    "dev": "vite",
+    "dev": "vite build --watch",
     "build": "vite build",
     "build:firefox": "vite build && mkdir -p dist-firefox && cp -R dist/. dist-firefox/ && cp manifest.firefox.json dist-firefox/manifest.json"
   },
