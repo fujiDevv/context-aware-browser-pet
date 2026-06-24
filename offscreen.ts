@@ -1,11 +1,12 @@
 // Import pipeline and env from @huggingface/transformers
 import { pipeline, env } from '@huggingface/transformers';
 import { detectPageCategory, mapActivityToEmotion, AI_COMMENTS } from './src/rules';
+import { extensionApi, getRuntimeUrl } from './src/platform';
 
 // Configure ONNX Runtime to load WASM binaries locally from the extension
 const wasmConfig = (env as Record<string, any>).backends?.onnx?.wasm;
 if (wasmConfig) {
-  wasmConfig.wasmPaths = chrome.runtime.getURL('wasm/');
+  wasmConfig.wasmPaths = getRuntimeUrl('wasm/');
 }
 env.allowLocalModels = false; // Force fetching from Hugging Face Hub (cached locally in IndexedDB)
 
@@ -20,6 +21,11 @@ let classifier: ClassifierPipeline | null = null;
 let modelLoadingState: 'idle' | 'loading' | 'ready' | 'error' = 'idle';
 let modelDownloadProgress = 0;
 
+function reportAiProgress(state: typeof modelLoadingState, progress: number): void {
+  extensionApi.runtime.sendMessage({ type: 'update-ai-progress', state, progress })
+    .catch((e) => { console.warn('[Clawd Offscreen] update-ai-progress message failed:', e); });
+}
+
 // Initialize/fetch the classifier pipeline
 async function getClassifier(): Promise<ClassifierPipeline> {
   if (classifier) return classifier;
@@ -33,7 +39,7 @@ async function getClassifier(): Promise<ClassifierPipeline> {
 
   modelLoadingState = 'loading';
   modelDownloadProgress = 0;
-  chrome.runtime.sendMessage({ type: 'update-ai-progress', state: modelLoadingState, progress: modelDownloadProgress });
+  reportAiProgress(modelLoadingState, modelDownloadProgress);
 
   try {
     const pipelineInstance = await pipeline(
@@ -43,21 +49,21 @@ async function getClassifier(): Promise<ClassifierPipeline> {
         progress_callback: (data: any) => {
           if (data.status === 'progress') {
             modelDownloadProgress = Math.round(data.progress);
-            chrome.runtime.sendMessage({ type: 'update-ai-progress', state: 'loading', progress: modelDownloadProgress });
+            reportAiProgress('loading', modelDownloadProgress);
           } else if (data.status === 'ready') {
             modelDownloadProgress = 100;
-            chrome.runtime.sendMessage({ type: 'update-ai-progress', state: 'ready', progress: 100 });
+            reportAiProgress('ready', 100);
           }
         }
       }
     );
     classifier = pipelineInstance as unknown as ClassifierPipeline;
     modelLoadingState = 'ready';
-    chrome.runtime.sendMessage({ type: 'update-ai-progress', state: modelLoadingState, progress: 100 });
+    reportAiProgress(modelLoadingState, 100);
     return classifier;
   } catch (err) {
     modelLoadingState = 'error';
-    chrome.runtime.sendMessage({ type: 'update-ai-progress', state: modelLoadingState, progress: 0 });
+    reportAiProgress(modelLoadingState, 0);
     console.error('[Clawd Local AI] Failed to load pipeline:', err);
     throw err;
   }
@@ -148,7 +154,7 @@ async function playSound(filename: string, volume: number): Promise<void> {
 
     let buffer = audioBuffers[filename];
     if (!buffer) {
-      const soundUrl = chrome.runtime.getURL(`assets/${encodeURIComponent(filename)}`);
+      const soundUrl = getRuntimeUrl(`assets/${encodeURIComponent(filename)}`);
       const response = await fetch(soundUrl);
       const arrayBuffer = await response.arrayBuffer();
       buffer = await audioCtx.decodeAudioData(arrayBuffer);
@@ -167,8 +173,8 @@ async function playSound(filename: string, volume: number): Promise<void> {
   }
 }
 
-// Set up Chrome runtime message listener in the offscreen document
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+// Set up runtime message listener in the offscreen document
+extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
   if (message.type === 'run-local-ai-inference') {
     const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity, url } = message;
 

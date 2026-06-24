@@ -1,5 +1,6 @@
 import { SharedPetState, PetMessage } from './types';
 import { springAnimate, SpringAnimation } from './animate';
+import { extensionApi } from './platform';
 
 export class MovementEngine {
   elRef: WeakRef<HTMLElement>;
@@ -817,8 +818,8 @@ export class MovementEngine {
     if (this.isSandbox) return;
     if (this.performanceMode && msg.type === 'update-pet-state') return;
     try {
-      if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
-        chrome.runtime.sendMessage(msg).catch((e) => { console.warn('[Clawd Movement] runtime.sendMessage error:', e); });
+      if (extensionApi.runtime.id) {
+        extensionApi.runtime.sendMessage(msg).catch((e) => { console.warn('[Clawd Movement] runtime.sendMessage error:', e); });
       }
     } catch (e) { }
   }

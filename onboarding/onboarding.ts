@@ -1,3 +1,5 @@
+import { extensionApi } from '../src/platform';
+
 (function () {
   'use strict';
 
@@ -68,9 +70,7 @@
   });
 
   const params = new URLSearchParams(window.location.search);
-  const manifestVersion = (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest) 
-    ? chrome.runtime.getManifest().version 
-    : '1.1.0';
+  const manifestVersion = extensionApi.runtime.getManifest()?.version || '1.1.0';
   const version = params.get('version') || manifestVersion;
   const reason = params.get('reason') || 'install';
 

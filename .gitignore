@@ -1,6 +1,9 @@
 # Dependency directories
 node_modules/
 
+# Firefox Build output
+dist-firefox/
+
 # Build outputs
 dist/
 
@@ -21,3 +24,9 @@ bun-error.log*
 .env.*.local
 *.pem
 *.key
+
+# Local Agent Files
+AGENTS.md
+
+# Graphify
+graphify-out/

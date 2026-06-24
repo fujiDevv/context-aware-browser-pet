@@ -1,6 +1,7 @@
 import { PetSettings } from './types';
 import viewStyles from './view.css';
 import { parseMarkdown } from './shared-ui';
+import { extensionApi, getRuntimeUrl } from './platform';
 
 export interface ViewManagerOptions {
   petName?: string;
@@ -243,11 +244,11 @@ export class ViewManager {
   }
 
   public async setEmotion(assetName: string, customColor?: string) {
-    if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+    if (!extensionApi.runtime.id) {
       return;
     }
 
-    const url = chrome.runtime.getURL(`assets/pets/clawd-${assetName}.svg`);
+    const url = getRuntimeUrl(`assets/pets/clawd-${assetName}.svg`);
 
     this.lastAssetName = assetName;
     this._syncAura(assetName);
@@ -272,9 +273,7 @@ export class ViewManager {
       } catch (fetchErr) {
         // CSP on strict sites (e.g., GitHub, Twitter) blocks fetch() to chrome-extension://
         // Fallback to background service worker which has no such CSP restrictions
-        const bgRes = await new Promise<any>((resolve) => {
-          chrome.runtime.sendMessage({ type: 'fetch-svg', url }, resolve);
-        });
+        const bgRes = await extensionApi.runtime.sendMessage<any>({ type: 'fetch-svg', url });
         if (bgRes && bgRes.success) {
           svgText = bgRes.text;
         } else {
@@ -548,7 +547,7 @@ export class ViewManager {
       this.container.style.setProperty('--crop-y', cropY.toString());
     } catch (e) {
       console.warn(`[${this.options.petName || 'Clawd'} View] Failed to apply custom color/formatter:`, e);
-      this.petImg.src = chrome.runtime.getURL('assets/pets/clawd-happy.svg');
+      this.petImg.src = getRuntimeUrl('assets/pets/clawd-happy.svg');
     }
   }
 
@@ -775,7 +774,7 @@ export class ViewManager {
   }
 
   public preloadAssets() {
-    if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+    if (!extensionApi.runtime.id) {
       return;
     }
     const criticalAssets = [
@@ -783,7 +782,7 @@ export class ViewManager {
     ];
     criticalAssets.forEach(name => {
       const img = new Image();
-      img.src = chrome.runtime.getURL(`assets/pets/clawd-${name}.svg`);
+      img.src = getRuntimeUrl(`assets/pets/clawd-${name}.svg`);
     });
   }
 }

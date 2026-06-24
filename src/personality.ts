@@ -2,6 +2,7 @@ import { PetStats } from './types';
 import { STORAGE_KEYS } from './constants';
 import { getDominantTrait } from './rules';
 import { isSleeping, isYogaTime } from './schedule';
+import { extensionApi } from './platform';
 
 const DEFAULT_STATS: PetStats = {
   happiness: 50,
@@ -39,16 +40,14 @@ export class PersonalitySystem {
     this.onStatsChange = onStatsChange;
     this.isLoaded = this._load();
 
-    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
-      chrome.storage.onChanged.addListener((changes) => {
-        if (changes[STORAGE_KEYS.STATS]) {
-          const newVal = changes[STORAGE_KEYS.STATS].newValue;
-          if (newVal) {
-            this.stats = newVal;
-          }
+    extensionApi.storage.onChanged?.addListener((changes) => {
+      if (changes[STORAGE_KEYS.STATS]) {
+        const newVal = changes[STORAGE_KEYS.STATS].newValue;
+        if (newVal) {
+          this.stats = newVal;
         }
-      });
-    }
+      }
+    });
   }
 
   _applyDecay(settings?: import('./types').PetSettings): void {
@@ -178,10 +177,10 @@ export class PersonalitySystem {
 
   async _load(): Promise<PetStats> {
     try {
-      if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+      if (!extensionApi.runtime.id) {
         return this.stats;
       }
-      const saved = await chrome.storage.local.get([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS]);
+      const saved = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS]);
       if (saved[STORAGE_KEYS.STATS]) {
         this.stats = { ...DEFAULT_STATS, ...saved[STORAGE_KEYS.STATS] };
       }
@@ -205,11 +204,11 @@ export class PersonalitySystem {
 
   async _save(): Promise<void> {
     try {
-      if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+      if (!extensionApi.runtime.id) {
         return;
       }
       this.stats.lastUpdateTime = Date.now();
-      await chrome.storage.local.set({ [STORAGE_KEYS.STATS]: this.stats });
+      await extensionApi.storage.local.set({ [STORAGE_KEYS.STATS]: this.stats });
       if (this.onStatsChange) {
         this.onStatsChange(this.stats);
       }

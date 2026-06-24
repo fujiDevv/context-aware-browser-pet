@@ -1,6 +1,7 @@
 import { SharedPetState, OriginPetState } from './src/types';
 import { STORAGE_KEYS } from './src/constants';
 import { PersonalitySystem } from './src/personality';
+import { extensionApi, supportsOffscreenDocuments } from './src/platform';
 
 let sharedPetState: SharedPetState = {
   x: 200,
@@ -12,21 +13,36 @@ let sharedPetState: SharedPetState = {
 };
 
 // Initialize sharedPetState from storage to survive SW suspension
-chrome.storage.local.get(STORAGE_KEYS.SHARED_STATE, (data) => {
+extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SHARED_STATE).then((data) => {
   if (data[STORAGE_KEYS.SHARED_STATE]) {
     sharedPetState = data[STORAGE_KEYS.SHARED_STATE];
   }
-});
+}).catch((e) => { console.warn('[Clawd Background] storage.get shared-pet-state error:', e); });
 
 const originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
 const backgroundPersonality = new PersonalitySystem();
+const supportsOffscreen = supportsOffscreenDocuments();
+const unsupportedOffscreenMessage = 'Local AI and centralized audio require Chrome offscreen documents and are not available in this Firefox build yet.';
 
-chrome.runtime.onInstalled.addListener((details) => {
+function applyRuntimeFeatureSupport(settings: any = {}) {
+  if (supportsOffscreen) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    soundEnabled: false,
+    aiMode: false,
+    advancedAiEnabled: false
+  };
+}
+
+extensionApi.runtime.onInstalled?.addListener((details) => {
   if (details.reason === 'install') {
     // Initialize default settings with local AI disabled (off by default)
-    chrome.storage.local.set({
-      [STORAGE_KEYS.SETTINGS]: {
+    extensionApi.storage.local.set({
+      [STORAGE_KEYS.SETTINGS]: applyRuntimeFeatureSupport({
         size: 128,
         speed: 1.2,
         soundEnabled: true,
@@ -41,33 +57,46 @@ chrome.runtime.onInstalled.addListener((details) => {
         disabledEmotions: [],
         scheduleEnabled: true,
         seasonalEnabled: true
-      },
+      }),
       [STORAGE_KEYS.SHARED_STATE]: sharedPetState
     }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set init error:', e); });
   }
 
   if (details.reason === 'install' || details.reason === 'update') {
-    const version = chrome.runtime.getManifest().version;
-    chrome.tabs.create({
+    const version = extensionApi.runtime.getManifest()?.version || 'unknown';
+    extensionApi.tabs.create({
       url: `onboarding/onboarding.html?version=v${version}&reason=${details.reason}`
     });
   }
 
-  chrome.alarms.create('pet-decay', { periodInMinutes: 1 });
+  extensionApi.alarms.create('pet-decay', { periodInMinutes: 1 });
 });
 
-chrome.runtime.onStartup.addListener(() => {
-  chrome.alarms.get('pet-decay', (alarm) => {
+extensionApi.runtime.onStartup?.addListener(() => {
+  extensionApi.alarms.get('pet-decay').then((alarm) => {
     if (!alarm) {
-      chrome.alarms.create('pet-decay', { periodInMinutes: 1 });
+      extensionApi.alarms.create('pet-decay', { periodInMinutes: 1 });
     }
-  });
+  }).catch((e) => { console.warn('[Clawd Background] alarms.get pet-decay error:', e); });
+
+  if (!supportsOffscreen) {
+    extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((data) => {
+      const currentSettings = data[STORAGE_KEYS.SETTINGS] || {};
+      if (currentSettings.soundEnabled || currentSettings.aiMode || currentSettings.advancedAiEnabled) {
+        extensionApi.storage.local.set({
+          [STORAGE_KEYS.SETTINGS]: applyRuntimeFeatureSupport(currentSettings)
+        }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set runtime support error:', e); });
+      }
+    }).catch((e) => {
+      console.warn('[Clawd Background] Failed to get settings on startup:', e);
+    });
+  }
 });
 
-chrome.alarms.onAlarm.addListener(async (alarm) => {
+extensionApi.alarms.onAlarm?.addListener(async (alarm) => {
   if (alarm.name === 'pet-decay') {
     try {
-      const data = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+      const data = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
       await backgroundPersonality._periodicDecay(data[STORAGE_KEYS.SETTINGS]);
     } catch (e) {
       console.warn('[Clawd Background] Failed to apply periodic decay:', e);
@@ -75,44 +104,47 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   }
 });
 
-chrome.webRequest.onCompleted.addListener(
+extensionApi.webRequest.onCompleted?.addListener(
   (details) => {
     if (details.statusCode >= 400 && details.frameId === 0) {
       tabHttpErrors[details.tabId] = details.statusCode;
-      chrome.tabs.sendMessage(details.tabId, {
+      extensionApi.tabs.sendMessage(details.tabId, {
         type: 'http-error',
         code: details.statusCode,
       }).catch((e) => {
-        console.debug('[Clawd Background] http-error message failed:', e);
+        // Silently catch to avoid console spam
       });
     }
   },
-  { urls: ['<all_urls>'], types: ['main_frame'] }
+  { urls: ['http://*/*', 'https://*/*'], types: ['main_frame'] }
 );
 
-chrome.tabs.onRemoved.addListener((tabId) => {
+extensionApi.tabs.onRemoved?.addListener((tabId) => {
   delete tabHttpErrors[tabId];
 });
 
-chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+extensionApi.webNavigation.onBeforeNavigate?.addListener((details) => {
   if (details.frameId === 0) {
     delete tabHttpErrors[details.tabId];
   }
 });
 
-chrome.webNavigation.onCommitted.addListener((details) => {
-  if (details.frameId === 0) {
-    chrome.tabs.sendMessage(details.tabId, { type: 'navigation' }).catch((e) => {
-      console.debug('[Clawd Background] navigation message failed:', e);
-    });
-  }
-});
+extensionApi.webNavigation.onCommitted?.addListener(
+  (details) => {
+    if (details.frameId === 0) {
+      extensionApi.tabs.sendMessage(details.tabId, { type: 'navigation' }).catch((e) => {
+        // Silently catch to avoid console spam
+      });
+    }
+  },
+  { url: [{ schemes: ['http', 'https'] }] }
+);
 
 // Add a simple throttle to prevent dragging from spamming messages
 let lastSyncTime = 0;
 let syncTimeout: ReturnType<typeof setTimeout> | null = null;
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
   if (message.type === 'get-tab-http-error') {
     const tabId = sender.tab?.id;
     const errorCode = tabId ? tabHttpErrors[tabId] : undefined;
@@ -129,14 +161,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sharedPetState = { ...sharedPetState, ...message.state };
     
     // Persist shared state to storage
-    chrome.storage.local.set({ [STORAGE_KEYS.SHARED_STATE]: sharedPetState })
+    extensionApi.storage.local.set({ [STORAGE_KEYS.SHARED_STATE]: sharedPetState })
       .catch((e) => { console.warn('[Clawd Background] storage.set shared-pet-state error:', e); });
 
     const broadcast = () => {
-      chrome.tabs.query({}, (tabs) => {
+      extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] }).then((tabs) => {
         tabs.forEach((tab) => {
           if (sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
-            chrome.tabs.sendMessage(tab.id, {
+            extensionApi.tabs.sendMessage(tab.id, {
               type: 'sync-pet-state',
               state: sharedPetState
             }).catch((e) => {
@@ -144,6 +176,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             });
           }
         });
+      }).catch((e) => {
+        console.debug('[Clawd Background] sync-pet-state tab query failed:', e);
       });
     };
 
@@ -190,16 +224,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'play-sound') {
+    if (!supportsOffscreen) {
+      sendResponse({ success: false, error: unsupportedOffscreenMessage });
+      return false;
+    }
+
     const { filename, volume } = message;
     setupOffscreen()
       .then(() => {
-        chrome.runtime.sendMessage({ type: 'play-sound-offscreen', filename, volume }, (res) => {
-          if (chrome.runtime.lastError) {
-            sendResponse({ success: false, error: chrome.runtime.lastError.message });
-          } else {
-            sendResponse(res);
-          }
-        });
+        extensionApi.runtime.sendMessage({ type: 'play-sound-offscreen', filename, volume })
+          .then((res) => sendResponse(res))
+          .catch((err) => sendResponse({ success: false, error: err.message }));
       })
       .catch((err) => {
         console.error('Failed to setup offscreen context for audio:', err);
@@ -239,13 +274,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
 
       // Broadcast to other tabs with the same hostname
-      chrome.tabs.query({}, (tabs) => {
+      extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] }).then((tabs) => {
         tabs.forEach((tab) => {
           if (tab.url) {
             try {
               const tabHostname = new URL(tab.url).hostname;
               if (tabHostname === hostname && sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
-                chrome.tabs.sendMessage(tab.id, {
+                extensionApi.tabs.sendMessage(tab.id, {
                   type: 'sync-origin-pet-state',
                   state: newState
                 }).catch((e) => {
@@ -255,6 +290,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             } catch (e) { }
           }
         });
+      }).catch((e) => {
+        console.debug('[Clawd Background] sync-origin-pet-state tab query failed:', e);
       });
     }
     sendResponse({ success: true });
@@ -263,21 +300,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'check-tab-ai-availability') {
     const tryTab = (tabId: number): Promise<any> => {
-      return new Promise((resolve) => {
-        chrome.tabs.sendMessage(tabId, { type: 'check-tab-ai-availability' }, (res) => {
-          if (chrome.runtime.lastError) resolve(null);
-          else resolve(res);
-        });
-      });
+      return extensionApi.tabs.sendMessage(tabId, { type: 'check-tab-ai-availability' }).catch(() => null);
     };
 
-    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+    extensionApi.tabs.query({ active: true, currentWindow: true }).then(async (tabs) => {
       let activeTab = tabs[0];
       let res = activeTab?.id ? await tryTab(activeTab.id) : null;
       
       if (!res) {
         // Fallback: Check any other HTTP/HTTPS tab if the active one failed (e.g. options page)
-        const allTabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
+        const allTabs = await extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] });
         for (const t of allTabs) {
           if (t.id && t.id !== activeTab?.id) {
             res = await tryTab(t.id);
@@ -291,15 +323,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       } else {
         sendResponse({ success: false, error: 'No compatible tab found to check AI availability' });
       }
+    }).catch((err) => {
+      sendResponse({ success: false, error: err.message });
     });
     return true;
   }
 
   if (message.type === 'get-local-ai-emotion') {
+    if (!supportsOffscreen) {
+      sendResponse({ success: false, error: unsupportedOffscreenMessage });
+      return false;
+    }
+
     const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity } = message;
     const tabUrl = sender.tab?.url || '';
 
-    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+    extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((data) => {
       const settings = data[STORAGE_KEYS.SETTINGS] || {};
       if (!settings.aiMode) {
         sendResponse({ success: false, error: 'AI Mode is disabled' });
@@ -308,37 +347,35 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       setupOffscreen()
         .then(() => {
-          chrome.runtime.sendMessage(
-            {
-              type: 'run-local-ai-inference',
-              pageTitle,
-              metaDescription,
-              category,
-              persona,
-              statsContext,
-              sentimentSensitivity,
-              url: tabUrl
-            },
-            (res) => {
-              if (chrome.runtime.lastError) {
-                sendResponse({ success: false, error: chrome.runtime.lastError.message });
-              } else {
-                sendResponse(res);
-              }
-            }
-          );
+          extensionApi.runtime.sendMessage({
+            type: 'run-local-ai-inference',
+            pageTitle,
+            metaDescription,
+            category,
+            persona,
+            statsContext,
+            sentimentSensitivity,
+            url: tabUrl
+          })
+            .then((res) => sendResponse(res))
+            .catch((err) => sendResponse({ success: false, error: err.message }));
         })
         .catch((err) => {
           console.error('Failed to setup offscreen context for emotion:', err);
           sendResponse({ success: false, error: err.message });
         });
-    });
+    }).catch((err) => sendResponse({ success: false, error: err.message }));
 
     return true;
   }
 
   if (message.type === 'check-local-ai-status') {
-    chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+    if (!supportsOffscreen) {
+      sendResponse({ success: true, state: 'unsupported', progress: 0 });
+      return false;
+    }
+
+    extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((data) => {
       const settings = data[STORAGE_KEYS.SETTINGS] || {};
       if (!settings.aiMode) {
         sendResponse({ success: true, state: 'idle', progress: 0 });
@@ -347,25 +384,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       setupOffscreen()
         .then(() => {
-          chrome.runtime.sendMessage({ type: 'check-offscreen-ai-status' }, (res) => {
-            if (chrome.runtime.lastError) {
-              sendResponse({ success: false, error: chrome.runtime.lastError.message });
-            } else {
-              sendResponse(res);
-            }
-          });
+          extensionApi.runtime.sendMessage({ type: 'check-offscreen-ai-status' })
+            .then((res) => sendResponse(res))
+            .catch((err) => sendResponse({ success: false, error: err.message }));
         })
         .catch((err) => {
           console.error('Failed to setup offscreen context for status:', err);
           sendResponse({ success: false, error: err.message });
         });
-    });
+    }).catch((err) => sendResponse({ success: false, error: err.message }));
 
     return true;
   }
 
   if (message.type === 'update-ai-progress') {
-    chrome.storage.local.set({
+    extensionApi.storage.local.set({
       [STORAGE_KEYS.MODEL_LOADING_STATE]: message.state,
       [STORAGE_KEYS.MODEL_DOWNLOAD_PROGRESS]: message.progress
     }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set update-ai-progress error:', e); });
@@ -379,7 +412,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 let creatingOffscreen: Promise<void> | null = null;
 async function setupOffscreen(): Promise<void> {
-  const contexts = await chrome.runtime.getContexts?.({
+  if (!supportsOffscreen) {
+    throw new Error(unsupportedOffscreenMessage);
+  }
+
+  const contexts = await extensionApi.runtime.getContexts({
     contextTypes: ['OFFSCREEN_DOCUMENT']
   });
   if (contexts && contexts.length > 0) {
@@ -391,9 +428,14 @@ async function setupOffscreen(): Promise<void> {
     return;
   }
 
-  creatingOffscreen = chrome.offscreen.createDocument({
+  const offscreenReason = extensionApi.offscreen.Reason;
+  if (!offscreenReason) {
+    throw new Error(unsupportedOffscreenMessage);
+  }
+
+  creatingOffscreen = extensionApi.offscreen.createDocument({
     url: 'offscreen.html',
-    reasons: [chrome.offscreen.Reason.DOM_PARSER, chrome.offscreen.Reason.AUDIO_PLAYBACK],
+    reasons: [offscreenReason.DOM_PARSER, offscreenReason.AUDIO_PLAYBACK],
     justification: 'Run local machine learning models and handle centralized audio playback for the pet companion'
   });
 
@@ -409,24 +451,36 @@ async function setupOffscreen(): Promise<void> {
 }
 
 async function closeOffscreen(): Promise<void> {
-  const contexts = await chrome.runtime.getContexts?.({
+  if (!supportsOffscreen) {
+    return;
+  }
+
+  const contexts = await extensionApi.runtime.getContexts({
     contextTypes: ['OFFSCREEN_DOCUMENT']
   });
   if (contexts && contexts.length > 0) {
-    await chrome.offscreen.closeDocument();
+    await extensionApi.offscreen.closeDocument();
   }
 }
 
 // Pre-load the offscreen document (which pre-loads the classifier) if AI Mode or Sound is enabled
-chrome.storage.local.get(STORAGE_KEYS.SETTINGS, (data) => {
+extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((data) => {
+  if (!supportsOffscreen) {
+    return;
+  }
+
   const settings = data[STORAGE_KEYS.SETTINGS] || {};
   if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
     setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen initial call error:', e); });
   }
-});
+}).catch((e) => { console.warn('[Clawd Background] Failed to load initial settings:', e); });
 
 // Watch for settings changes to boot offscreen context in real time
-chrome.storage.onChanged.addListener((changes) => {
+extensionApi.storage.onChanged?.addListener((changes) => {
+  if (!supportsOffscreen) {
+    return;
+  }
+
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const settings = changes[STORAGE_KEYS.SETTINGS].newValue || {};
     if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
