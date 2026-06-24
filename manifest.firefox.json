@@ -15,7 +15,7 @@
   ],
   "background": {
     "scripts": [
-      "background.ts"
+      "background.js"
     ]
   },
   "content_scripts": [
@@ -24,7 +24,7 @@
         "<all_urls>"
       ],
       "js": [
-        "content.ts"
+        "content.js"
       ],
       "run_at": "document_start"
     }

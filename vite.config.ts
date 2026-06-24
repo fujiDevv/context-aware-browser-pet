@@ -1,36 +1,24 @@
 import { defineConfig } from 'vite';
 import { crx } from '@crxjs/vite-plugin';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 import manifest from './manifest.json';
 import { resolve } from 'path';
 
-import fs from 'fs';
-
-function copyWasmPlugin() {
-  return {
-    name: 'copy-wasm',
-    closeBundle() {
-      const srcDir = resolve(__dirname, 'node_modules/onnxruntime-web/dist');
-      const destDir = resolve(__dirname, 'dist/wasm');
-      if (!fs.existsSync(destDir)) {
-        fs.mkdirSync(destDir, { recursive: true });
-      }
-      if (fs.existsSync(srcDir)) {
-        const files = fs.readdirSync(srcDir);
-        for (const file of files) {
-          if (file.startsWith('ort-wasm') && (file.endsWith('.wasm') || file.endsWith('.mjs'))) {
-            fs.copyFileSync(resolve(srcDir, file), resolve(destDir, file));
-          }
-        }
-      }
-    }
-  };
-}
-
 export default defineConfig({
   plugins: [
     crx({ manifest }),
-    copyWasmPlugin()
+    viteStaticCopy({
+      targets: [
+        {
+          src: [
+            'node_modules/onnxruntime-web/dist/ort-wasm*.wasm',
+            'node_modules/onnxruntime-web/dist/ort-wasm*.mjs'
+          ],
+          dest: 'wasm'
+        }
+      ]
+    })
   ],
   build: {
     modulePreload: false,
