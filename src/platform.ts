@@ -91,6 +91,9 @@ export const extensionApi = {
     sendMessage<T = any>(message: unknown): Promise<T> {
       return toPromise<T>(getExtensionRoot()?.runtime, 'sendMessage', [message]);
     },
+    setUninstallURL(url: string): Promise<void> {
+      return toPromise<void>(getExtensionRoot()?.runtime, 'setUninstallURL', [url]);
+    },
     getContexts(filter: any): Promise<any[] | undefined> {
       const runtime = getExtensionRoot()?.runtime;
       if (typeof runtime?.getContexts !== 'function') {

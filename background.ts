@@ -62,6 +62,11 @@ extensionApi.runtime.onInstalled?.addListener((details) => {
     }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set init error:', e); });
   }
 
+  // Set the survey/feedback URL that opens when the user uninstalls the extension
+  if (extensionApi.runtime.setUninstallURL) {
+    extensionApi.runtime.setUninstallURL('https://meetclawd.com/uninstall');
+  }
+
   if (details.reason === 'install' || details.reason === 'update') {
     const version = extensionApi.runtime.getManifest()?.version || 'unknown';
     extensionApi.tabs.create({
@@ -159,7 +164,7 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'update-pet-state') {
     sharedPetState = { ...sharedPetState, ...message.state };
-    
+
     // Persist shared state to storage
     extensionApi.storage.local.set({ [STORAGE_KEYS.SHARED_STATE]: sharedPetState })
       .catch((e) => { console.warn('[Clawd Background] storage.set shared-pet-state error:', e); });
@@ -204,14 +209,14 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'fetch-svg') {
     let fetchUrl = message.url;
-    
+
     // Workaround for Chromium Service Worker fetch bug on chrome-extension:// URLs
     try {
       const parsedUrl = new URL(fetchUrl);
       if (parsedUrl.protocol === 'chrome-extension:') {
         fetchUrl = parsedUrl.pathname;
       }
-    } catch (e) {}
+    } catch (e) { }
 
     fetch(fetchUrl)
       .then(res => {
@@ -306,7 +311,7 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
     extensionApi.tabs.query({ active: true, currentWindow: true }).then(async (tabs) => {
       let activeTab = tabs[0];
       let res = activeTab?.id ? await tryTab(activeTab.id) : null;
-      
+
       if (!res) {
         // Fallback: Check any other HTTP/HTTPS tab if the active one failed (e.g. options page)
         const allTabs = await extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] });
