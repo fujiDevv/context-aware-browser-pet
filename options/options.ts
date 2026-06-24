@@ -927,7 +927,10 @@ function updateUIMood(mood: string): void {
       return;
     }
 
-    fetch(url).then(r => r.text()).then(svgText => {
+    extensionApi.runtime.sendMessage({ type: 'fetch-svg', url }).then((res: any) => {
+      if (!res.success) throw new Error(res.error || 'Unknown fetch error');
+      let svgText = res.text;
+
       // Architectural Fix: Instead of fragile string replacement of exact hex codes,
       // we inject a style block into the SVG that targets our base colors.
       if (activeColor && activeColor !== '#DE886D') {
