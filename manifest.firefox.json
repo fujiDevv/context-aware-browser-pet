@@ -47,7 +47,8 @@
       "resources": [
         "assets/*",
         "assets/pets/*",
-        "onboarding/*",
+        "onboarding/onboarding.html",
+        "offscreen.html",
         "main_world.js"
       ],
       "matches": [

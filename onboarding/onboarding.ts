@@ -70,7 +70,7 @@ import { extensionApi } from '../src/platform';
   });
 
   const params = new URLSearchParams(window.location.search);
-  const manifestVersion = extensionApi.runtime.getManifest()?.version || '1.1.0';
+  const manifestVersion = extensionApi.runtime.getManifest()?.version || '1.2.7';
   const version = params.get('version') || manifestVersion;
   const reason = params.get('reason') || 'install';
 
@@ -81,6 +81,38 @@ import { extensionApi } from '../src/platform';
   }
 
   const VERSION_FEATURES: Record<string, Feature[]> = {
+    '1.2.7': [
+      {
+        title: 'Interactive Toys',
+        description: 'Drop bouncy balls, laser pointers, and yarn directly onto the page. Clawd chases and plays with them using real-time spring physics!',
+        icon: '../assets/pets/clawd-celebrating.svg'
+      },
+      {
+        title: '24-Hour AI Synapse',
+        description: 'Clawd uses local AI to generate a unique, persona-driven daily reflection based on your browsing journey and habits over the last 24 hours.',
+        icon: '../assets/pets/clawd-mindblown.svg'
+      },
+      {
+        title: 'Ghost Mode & Schedules',
+        description: 'Define Focus Blocks to suppress distractions, or use Ghost Mode which dynamically drops Clawd to 30% opacity when you type or scroll.',
+        icon: '../assets/pets/clawd-ninja.svg'
+      },
+      {
+        title: 'Milestones & Traits',
+        description: 'Track long-term achievements! Clawd now adapts his dominant personality trait (e.g. Gamer, Developer) based on the websites you visit.',
+        icon: '../assets/pets/clawd-working-building.svg'
+      },
+      {
+        title: 'Console Error Watcher',
+        description: 'If a JavaScript runtime error or crashed promise occurs on the webpage, Clawd immediately enters "debugger" mode to alert you.',
+        icon: '../assets/pets/clawd-working-debugger.svg'
+      },
+      {
+        title: 'Unified Consciousness',
+        description: 'Personality, emotions, and physical location are flawlessly synchronized across all active tabs in real-time.',
+        icon: '../assets/pets/clawd-cool.svg'
+      }
+    ],
     '1.1.0': [
       {
         title: 'Gravity Physics Engine',
@@ -135,7 +167,7 @@ import { extensionApi } from '../src/platform';
     }
 
     const featuresGrid = document.querySelector('.features-grid') as HTMLElement | null;
-    const features = VERSION_FEATURES[version] || VERSION_FEATURES['1.1.0'];
+    const features = VERSION_FEATURES[version] || VERSION_FEATURES['1.2.7'];
 
     if (featuresGrid && features) {
       featuresGrid.innerHTML = features.map(f => `
@@ -163,7 +195,7 @@ import { extensionApi } from '../src/platform';
     const badge = document.querySelector('.version-badge') as HTMLElement | null;
     if (badge) {
       const statusText = reason === 'update' ? 'Successfully Updated' : 'Successfully Installed';
-      badge.innerHTML = `<span class="dot"></span> v${escapeHtml(version)} — ${statusText}`;
+      badge.innerHTML = `<span class="dot"></span> ${escapeHtml(version)} — ${statusText}`;
     }
   }
 })();

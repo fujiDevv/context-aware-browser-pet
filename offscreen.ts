@@ -7,6 +7,8 @@ import { extensionApi, getRuntimeUrl } from './src/platform';
 const wasmConfig = (env as Record<string, any>).backends?.onnx?.wasm;
 if (wasmConfig) {
   wasmConfig.wasmPaths = getRuntimeUrl('wasm/');
+  wasmConfig.numThreads = 1;
+  wasmConfig.proxy = false;
 }
 env.allowLocalModels = false; // Force fetching from Hugging Face Hub (cached locally in IndexedDB)
 
