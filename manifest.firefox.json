@@ -47,6 +47,7 @@
       "resources": [
         "assets/*",
         "assets/pets/*",
+        "wasm/*",
         "onboarding/onboarding.html",
         "offscreen.html",
         "main_world.js"

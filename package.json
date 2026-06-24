@@ -7,8 +7,7 @@
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.33",
     "@types/chrome": "^0.0.268",
-    "typescript": "^5.4.5",
-    "vite-plugin-static-copy": "^4.1.1"
+    "typescript": "^5.4.5"
   },
   "description": "Context-aware browser pet extension using clawd-pet SVGs.",
   "scripts": {
