@@ -499,7 +499,7 @@ function ensureInitialized(): void {
     const controlsRow = oldMsgEl.querySelector('div[style*="flex"]') as HTMLElement;
     const originalText = textNode ? textNode.textContent : "";
     if (textNode) {
-      textNode.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+      textNode.innerHTML = '<div class="ld-dots"><i></i><i></i><i></i></div>';
     }
     if (controlsRow) {
       controlsRow.style.display = 'none';

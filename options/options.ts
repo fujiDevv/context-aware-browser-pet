@@ -396,7 +396,7 @@ async function init() {
             saveChatHistory();
           }
           const originalText = textNode.textContent;
-          textNode.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+          textNode.innerHTML = '<div class="ld-dots"><i></i><i></i><i></i></div>';
           controlsRow.style.display = 'none';
 
           setChatLoading(true, false);
@@ -452,7 +452,7 @@ async function init() {
       if (appendIndicator) {
         const loadingMsg = document.createElement('div');
         loadingMsg.className = 'options-chat-msg clawd loading-indicator';
-        loadingMsg.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+        loadingMsg.innerHTML = '<div class="ld-dots"><i></i><i></i><i></i></div>';
         chatMessages.appendChild(loadingMsg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
       }

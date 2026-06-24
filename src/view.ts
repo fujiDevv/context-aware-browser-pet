@@ -667,7 +667,7 @@ export class ViewManager {
       if (appendIndicator) {
         const loadingMsg = document.createElement('div');
         loadingMsg.className = 'clawd-chat-msg clawd loading-indicator';
-        loadingMsg.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+        loadingMsg.innerHTML = '<div class="ld-dots"><i></i><i></i><i></i></div>';
         this.chatMessages.appendChild(loadingMsg);
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
       }
