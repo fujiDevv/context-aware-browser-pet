@@ -15,7 +15,7 @@
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.ts"
   },
   "content_scripts": [
     {
@@ -23,7 +23,7 @@
         "<all_urls>"
       ],
       "js": [
-        "content.js"
+        "content.ts"
       ],
       "run_at": "document_start"
     }
@@ -46,7 +46,8 @@
       "resources": [
         "assets/*",
         "assets/pets/*",
-        "onboarding/*",
+        "onboarding/onboarding.html",
+        "offscreen.html",
         "wasm/*",
         "main_world.js"
       ],

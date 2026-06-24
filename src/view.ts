@@ -1,5 +1,5 @@
 import { PetSettings } from './types';
-import viewStyles from './view.css';
+import viewStyles from './view.css?raw';
 import { parseMarkdown } from './shared-ui';
 import { extensionApi, getRuntimeUrl } from './platform';
 

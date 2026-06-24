@@ -15,7 +15,7 @@
   ],
   "background": {
     "scripts": [
-      "background.js"
+      "background.ts"
     ]
   },
   "content_scripts": [
@@ -24,7 +24,7 @@
         "<all_urls>"
       ],
       "js": [
-        "content.js"
+        "content.ts"
       ],
       "run_at": "document_start"
     }
@@ -47,7 +47,8 @@
       "resources": [
         "assets/*",
         "assets/pets/*",
-        "onboarding/*",
+        "onboarding/onboarding.html",
+        "offscreen.html",
         "main_world.js"
       ],
       "matches": [
