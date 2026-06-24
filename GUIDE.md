@@ -93,10 +93,15 @@ To install and build the extension:
  ```bash
  bun run build
  ```
-5. Open **Google Chrome** and go to `chrome://extensions`.
-6. Enable **Developer mode** using the toggle in the top-right corner.
-7. Click **Load unpacked** in the top-left corner and select the `dist/` folder inside the project directory.
-8. Open any regular website (e.g., [github.com](https://github.com)) — Clawd will slide onto the page and say hello! 
+5. **For Google Chrome:**
+   - Go to `chrome://extensions`.
+   - Enable **Developer mode** using the toggle in the top-right corner.
+   - Click **Load unpacked** and select the `dist/` folder inside the project directory.
+6. **For Mozilla Firefox:**
+   - Go to `about:debugging#/runtime/this-firefox`.
+   - Click **Load Temporary Add-on...**
+   - Select the `manifest.json` file inside the `dist/` folder.
+7. Open any regular website (e.g., [github.com](https://github.com)) — Clawd will slide onto the page and say hello!
 
 ---
 
@@ -421,8 +426,8 @@ Clawd features a local, privacy-centric AI layer that reads page context and gen
 ### How It Works
 
 1. **Context Extraction:** When you visit a tab, Clawd collects the page's `<title>` and `<meta name="description">`, truncating it to a maximum of 500 characters to optimize processing speeds.
-2. **Gemini Nano Summarization & Dialogue:** If available (via Chrome's built-in Prompt API), Clawd extracts lightweight text directly from semantic tags (`h1`, `h2`, `p`, `article`) instead of scanning the full `<body>`. This prevents expensive CSS layout thrashing on heavy social media sites while generating a condensed semantic summary. Furthermore, Clawd leverages Gemini Nano to dynamically generate **100% unique, highly-contextual dialogue bubbles** on the fly! This is powered by a **Dedicated Knowledge Base**, enforcing strict identity constraints so Clawd always stays in character as your virtual pet. If Gemini Nano is unavailable, it gracefully degrades to a robust hardcoded persona dictionary.
-3. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
+2. **Gemini Nano Summarization & Dialogue:** If available (via Chrome's built-in Prompt API), Clawd extracts lightweight text directly from semantic tags (`h1`, `h2`, `p`, `article`) instead of scanning the full `<body>`. This prevents expensive CSS layout thrashing on heavy social media sites while generating a condensed semantic summary. Furthermore, Clawd leverages Gemini Nano to dynamically generate **100% unique, highly-contextual dialogue bubbles** on the fly! This is powered by a **Dedicated Knowledge Base**, enforcing strict identity constraints so Clawd always stays in character as your virtual pet. If Gemini Nano is unavailable, it gracefully degrades to a robust hardcoded persona dictionary. *(Note: Gemini Nano and the ONNX Brain Upgrade are currently exclusive to Chromium browsers due to offscreen document API requirements. On Firefox, Clawd operates exclusively in the fast, rule-based Lite Mode).*
+3. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** (Chrome-only) hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
 4. **Local Sentiment Model:** The WebAssembly runtime evaluates the text using a quantized version of the **DistilBERT** model (`Xenova/distilbert-base-uncased-finetuned-sst-2-english`).
 5. **Dynamic Sentiment Threshold Mapping:**
  To classify a page as `POSITIVE` or `NEGATIVE`, the classification probability score must exceed a dynamic confidence threshold. This threshold is calculated from the user's **Sentiment Sensitivity Slider** (ranging from `0` to `100`) using the formula:
@@ -569,7 +574,7 @@ The extension requests only the permissions necessary to render the pet (`active
 ## Frequently Asked Questions
 
 **Q: Clawd has disappeared! How do I get him back?**
-Open the popup and verify that "Hide on this Tab" and "Hide on this Site" are unchecked. Also, note that Clawd cannot run on internal Chrome pages (like `chrome://` or the Chrome Web Store) or pages that block script injections.
+Open the popup and verify that "Hide on this Tab" and "Hide on this Site" are unchecked. Also, note that Clawd cannot run on internal browser pages (like `chrome://`, `about:`, or the Chrome Web Store / Firefox Add-ons site) or pages that block script injections.
 
 **Q: Does Clawd use a lot of resources?**
 No. Clawd's animations are powered by native Web Animations API (WAAPI) and lightweight CSS keyframes. Position updates use high-performance `requestAnimationFrame` loops.
