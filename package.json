@@ -5,8 +5,8 @@
     "@huggingface/transformers": "^4.2.0"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0",
-    "typescript": "^5.4.5",
+    "esbuild": "^0.28.1",
+    "typescript": "^6.0.3",
     "@types/chrome": "^0.0.268"
   },
   "description": "Context-aware browser pet extension using clawd-pet SVGs.",
