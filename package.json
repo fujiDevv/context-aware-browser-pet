@@ -16,7 +16,7 @@
     "test": "vitest",
     "dev": "vite build --watch",
     "build": "vite build",
-    "build:firefox": "vite build && mkdir -p dist-firefox && cp -R dist/. dist-firefox/ && cp manifest.firefox.json dist-firefox/manifest.json"
+    "build:firefox": "vite build && node build-firefox.mjs"
   },
   "type": "module"
 }
