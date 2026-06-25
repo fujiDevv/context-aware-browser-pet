@@ -25,7 +25,7 @@ function escapeHtml(unsafe: string): string {
 }
 
 function updatePetNameDisplays(name: string) {
-  const safeName = name || 'Clawd';
+  const safeName = name || 'Arcrawls';
   document.querySelectorAll('.pet-name-display').forEach(el => {
     el.textContent = safeName;
   });
@@ -204,7 +204,7 @@ async function init() {
   try {
     storageData = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
   } catch (e) {
-    console.error('[Clawd Options] Failed to load initial storage data:', e);
+    console.error('[Arcrawls Options] Failed to load initial storage data:', e);
   }
   blockedDomains = storageData[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
   domainReactions = storageData[STORAGE_KEYS.SETTINGS]?.domainReactions || [];
@@ -294,25 +294,25 @@ async function init() {
   
   const saveChatHistory = () => {
     if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
-    extensionApi.storage.local.set({ clawdDashboardHistory: chatHistory })
-      .catch((e) => { console.warn('[Clawd Options] Failed to save chat history:', e); });
+    extensionApi.storage.local.set({ arcrawlsDashboardHistory: chatHistory })
+      .catch((e) => { console.warn('[Arcrawls Options] Failed to save chat history:', e); });
   };
   
-  extensionApi.storage.local.get<Record<string, any>>(['clawdDashboardHistory']).then((result) => {
-    if (result.clawdDashboardHistory && Array.isArray(result.clawdDashboardHistory)) {
-      chatHistory = result.clawdDashboardHistory;
+  extensionApi.storage.local.get<Record<string, any>>(['arcrawlsDashboardHistory']).then((result) => {
+    if (result.arcrawlsDashboardHistory && Array.isArray(result.arcrawlsDashboardHistory)) {
+      chatHistory = result.arcrawlsDashboardHistory;
       chatHistory.forEach(msg => {
-        addChatMessage(msg.role === 'user' ? 'user' : 'clawd', msg.content);
+        addChatMessage(msg.role === 'user' ? 'user' : 'arcrawls', msg.content);
       });
     }
-  }).catch((e) => { console.warn('[Clawd Options] Failed to load chat history:', e); });
+  }).catch((e) => { console.warn('[Arcrawls Options] Failed to load chat history:', e); });
 
-  const addChatMessage = (role: 'user' | 'clawd', text: string, insertBeforeEl?: Element | null) => {
+  const addChatMessage = (role: 'user' | 'arcrawls', text: string, insertBeforeEl?: Element | null) => {
     const el = document.createElement('div');
     el.className = `options-chat-msg ${role}`;
     
-    // Remove emojis for Clawd's responses
-    const displayText = role === 'clawd' 
+    // Remove emojis for Arcrawls's responses
+    const displayText = role === 'arcrawls' 
       ? text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim() 
       : text;
 
@@ -320,7 +320,7 @@ async function init() {
     textNode.innerHTML = parseMarkdown(displayText);
     el.appendChild(textNode);
 
-    if (role === 'clawd') {
+    if (role === 'arcrawls') {
       const controlsRow = document.createElement('div');
       controlsRow.style.marginTop = '6px';
       controlsRow.style.display = 'flex';
@@ -328,7 +328,7 @@ async function init() {
       controlsRow.style.gap = '8px';
 
       const playBtn = document.createElement('button');
-      playBtn.className = 'clawd-control-btn';
+      playBtn.className = 'arcrawls-control-btn';
       playBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
       playBtn.title = 'Play voice';
       playBtn.addEventListener('click', (e) => {
@@ -363,7 +363,7 @@ async function init() {
       });
       
       const copyBtn = document.createElement('button');
-      copyBtn.className = 'clawd-control-btn';
+      copyBtn.className = 'arcrawls-control-btn';
       copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
       copyBtn.title = 'Copy Response';
       copyBtn.addEventListener('click', async (e) => {
@@ -376,7 +376,7 @@ async function init() {
       });
 
       const redoBtn = document.createElement('button');
-      redoBtn.className = 'clawd-control-btn';
+      redoBtn.className = 'arcrawls-control-btn';
       redoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
       redoBtn.title = 'Redo';
       redoBtn.addEventListener('click', async (e) => {
@@ -408,7 +408,7 @@ async function init() {
             setChatLoading(false);
 
             if (response) {
-              addChatMessage('clawd', response, el);
+              addChatMessage('arcrawls', response, el);
               chatHistory.push({ role: 'model', content: response });
               saveChatHistory();
               el.remove();
@@ -420,7 +420,7 @@ async function init() {
             setChatLoading(false);
             textNode.textContent = originalText;
             controlsRow.style.display = 'flex';
-            addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
+            addChatMessage('arcrawls', "Oops! Something went wrong connecting to my brain.");
           }
         }
       });
@@ -451,7 +451,7 @@ async function init() {
     if (isLoading) {
       if (appendIndicator) {
         const loadingMsg = document.createElement('div');
-        loadingMsg.className = 'options-chat-msg clawd loading-indicator';
+        loadingMsg.className = 'options-chat-msg arcrawls loading-indicator';
         loadingMsg.innerHTML = '<div class="ld-dots"><i></i><i></i><i></i></div>';
         chatMessages.appendChild(loadingMsg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -483,15 +483,15 @@ async function init() {
       setChatLoading(false);
 
       if (response) {
-        addChatMessage('clawd', response);
+        addChatMessage('arcrawls', response);
         chatHistory.push({ role: 'assistant', content: response });
         saveChatHistory();
       } else {
-        addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
+        addChatMessage('arcrawls', "Oops! My brain froze. Could you repeat that?");
       }
     } catch (e) {
-      console.error('[Clawd Dashboard Chat] Error:', e);
-      addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
+      console.error('[Arcrawls Dashboard Chat] Error:', e);
+      addChatMessage('arcrawls', "Oops! Something went wrong connecting to my brain.");
     } finally {
       chatInput.disabled = false;
       chatInput.focus();
@@ -567,7 +567,7 @@ async function init() {
 
   // Setting bindings
   nameInput.addEventListener('input', () => {
-    const name = nameInput.value.trim() || 'Clawd';
+    const name = nameInput.value.trim() || 'Arcrawls';
     if (petNameEl) petNameEl.textContent = name;
     updatePetNameDisplays(name);
     saveSettings();
@@ -672,7 +672,7 @@ async function init() {
 
   // Rebirth Prestige
   btnPrestige.addEventListener('click', async () => {
-    const confirmed = confirm("Are you sure you want to rebirth Clawd? This resets his level to 1, but increases his prestige rank. You'll unlock permanent rewards!");
+    const confirmed = confirm("Are you sure you want to rebirth Arcrawls? This resets his level to 1, but increases his prestige rank. You'll unlock permanent rewards!");
     if (!confirmed) return;
 
     if (personality.stats.level >= 50) {
@@ -681,7 +681,7 @@ async function init() {
       personality.stats.xp = 0;
       await personality._save();
       updateUIStats(personality.stats);
-      alert(`Clawd has reborn! He is now Prestige ${personality.stats.prestige}! 🎉`);
+      alert(`Arcrawls has reborn! He is now Prestige ${personality.stats.prestige}! 🎉`);
     }
   });
 
@@ -709,7 +709,7 @@ async function init() {
 
   // Resets
   btnResetStats.addEventListener('click', async () => {
-    const confirmed = confirm("WARNING: This will reset Clawd's stats, level, prestige, and activity history to defaults. Settings will not be touched. Continue?");
+    const confirmed = confirm("WARNING: This will reset Arcrawls's stats, level, prestige, and activity history to defaults. Settings will not be touched. Continue?");
     if (!confirmed) return;
 
     await extensionApi.storage.local.remove(STORAGE_KEYS.STATS);
@@ -717,7 +717,7 @@ async function init() {
   });
 
   btnHardReset.addEventListener('click', async () => {
-    const confirmed = confirm("CRITICAL WARNING: This will completely wipe all local extension data, options, and history for Clawd. This action is irreversible. Continue?");
+    const confirmed = confirm("CRITICAL WARNING: This will completely wipe all local extension data, options, and history for Arcrawls. This action is irreversible. Continue?");
     if (!confirmed) return;
 
     await extensionApi.storage.local.clear();
@@ -742,7 +742,7 @@ async function init() {
         <p style="font-size: 15px; line-height: 1.6; color: var(--text-primary); font-style: italic; margin-bottom: 24px;">
           "${escapeHtml(personality.stats.aiInsight.content)}"
         </p>
-        <button id="close-insight-modal" class="btn btn-primary" style="width: 100%;">Got it, Clawd!</button>
+        <button id="close-insight-modal" class="btn btn-primary" style="width: 100%;">Got it, Arcrawls!</button>
       </div>
     `;
     document.body.appendChild(modal);
@@ -761,7 +761,7 @@ async function init() {
   const btnClearLogs = document.getElementById('btn-clear-logs-ui');
   if (btnClearLogs) {
     btnClearLogs.addEventListener('click', async () => {
-      const confirmed = confirm("Are you sure you want to clear Clawd's history timeline?");
+      const confirmed = confirm("Are you sure you want to clear Arcrawls's history timeline?");
       if (!confirmed) return;
 
       const data = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.STATS);
@@ -868,7 +868,7 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
     // Restore buttons after 3 seconds
     if (btnPet) {
       btnPet.disabled = false;
-      btnPet.textContent = 'Pet Clawd';
+      btnPet.textContent = 'Pet Arcrawls';
     }
     if (btnFeed) {
       btnFeed.disabled = false;
@@ -921,7 +921,7 @@ function updateUIMood(mood: string): void {
     const isUnlocked = personality.stats.level >= 15 || (personality.stats.prestige && personality.stats.prestige > 0);
     const activeColor = isUnlocked ? color : undefined;
     
-    const url = getRuntimeUrl(`assets/pets/clawd-${svgName}.svg`);
+    const url = getRuntimeUrl(`assets/pets/arcrawls-${svgName}.svg`);
     if (!activeColor || activeColor === '#DE886D') {
       if (petImg) petImg.src = url;
       return;
@@ -946,8 +946,8 @@ function updateUIMood(mood: string): void {
       const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
       if (petImg) petImg.src = dataUri;
     }).catch(e => {
-      console.warn('[Clawd Dashboard] Failed to apply custom color/formatter:', e);
-      if (petImg) petImg.src = getRuntimeUrl('assets/pets/clawd-happy.svg');
+      console.warn('[Arcrawls Dashboard] Failed to apply custom color/formatter:', e);
+      if (petImg) petImg.src = getRuntimeUrl('assets/pets/arcrawls-happy.svg');
     });
   });
 }
@@ -1103,7 +1103,7 @@ async function updateSynapseUI(stats: PetStats) {
       const settingsData = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
       const persona = settingsData[STORAGE_KEYS.SETTINGS]?.persona || 'default';
 
-      if (synapsePreviewText) synapsePreviewText.textContent = "Clawd is concentrating on your day...";
+      if (synapsePreviewText) synapsePreviewText.textContent = "Arcrawls is concentrating on your day...";
 
       const insight = await getDailyInsight(stats, persona);
 
@@ -1128,7 +1128,7 @@ function renderMilestones(stats: PetStats) {
   const milestones = [];
 
   // Level Milestones
-  if (stats.level >= 1) milestones.push({ title: 'New Beginning', desc: 'Clawd has entered your browser sanctuary.', icon: '🐾', date: 'Level 1' });
+  if (stats.level >= 1) milestones.push({ title: 'New Beginning', desc: 'Arcrawls has entered your browser sanctuary.', icon: '🐾', date: 'Level 1' });
   if (stats.level >= 3) milestones.push({ title: 'Expressive Mind', desc: 'Unlocked Advanced Emotions (Coding, Dancing, etc).', icon: '🧠', date: 'Level 3' });
   if (stats.level >= 5) milestones.push({ title: 'Aura of Mystery', desc: 'Unlocked Detective Costume & Blue Aura.', icon: '🕵️', date: 'Level 5' });
   if (stats.level >= 10) milestones.push({ title: 'Ultimate Companion', desc: 'All standard emotions and Magic Purple Aura unlocked.', icon: '✨', date: 'Level 10' });
@@ -1213,7 +1213,7 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
   const total = Object.values(mergedCounts).reduce((a, b) => a + b, 0);
 
   if (total === 0) {
-    categoriesList.innerHTML = `<p class="empty-blocklist">No categories evaluated yet. Clawd will learn as you browse!</p>`;
+    categoriesList.innerHTML = `<p class="empty-blocklist">No categories evaluated yet. Arcrawls will learn as you browse!</p>`;
     return;
   }
 
@@ -1263,7 +1263,7 @@ function renderTimeline(history: MoodHistoryItem[] | undefined) {
   };
 
   if (list.length === 0) {
-    timelineList.innerHTML = `<p class="empty-blocklist">No timeline entries yet. Spend some time browsing with Clawd!</p>`;
+    timelineList.innerHTML = `<p class="empty-blocklist">No timeline entries yet. Spend some time browsing with Arcrawls!</p>`;
     return;
   }
 
@@ -1304,7 +1304,7 @@ function applySettings(settings: PetSettings | undefined) {
     soundVolume: 0.8,
     aiMode: false,
     apiKey: '',
-    name: 'Clawd',
+    name: 'Arcrawls',
     costume: 'none',
     persona: 'default',
     blockedDomains: [],
@@ -1318,7 +1318,7 @@ function applySettings(settings: PetSettings | undefined) {
   };
   const activeSettings = { ...defaults, ...settings };
 
-  nameInput.value = activeSettings.name || 'Clawd';
+  nameInput.value = activeSettings.name || 'Arcrawls';
   if (petNameEl) petNameEl.textContent = nameInput.value;
   updatePetNameDisplays(nameInput.value);
 
@@ -1368,7 +1368,7 @@ function applySettings(settings: PetSettings | undefined) {
   // Ensure preview image reflects costume on load
   const lastKnownMood = petMoodBadge?.textContent?.split(' ').slice(1).join(' ').toLowerCase() || 'happy';
   const svgName = getResolvedCostumeName(lastKnownMood, activeCostume);
-  if (petImg) petImg.src = `../assets/pets/clawd-${svgName}.svg`;
+  if (petImg) petImg.src = `../assets/pets/arcrawls-${svgName}.svg`;
 
   // Update playground movement settings
   if (playgroundMovement) {
@@ -1450,7 +1450,7 @@ function saveSettings() {
       soundVolume: Number(volumeSlider.value) / 100,
       aiMode: supportsLocalAiRuntime && aiToggle.checked,
       apiKey: '',
-      name: nameInput.value.trim() || 'Clawd',
+      name: nameInput.value.trim() || 'Arcrawls',
       costume: activeCostume,
       persona: personaSelect.value,
       chatVoice: chatVoiceSelect.value,
@@ -1618,7 +1618,7 @@ function updatePresence() {
       const count = tabs.length;
       activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
     }
-  }).catch((e) => { console.warn('[Clawd Options] Failed to query active tabs:', e); });
+  }).catch((e) => { console.warn('[Arcrawls Options] Failed to query active tabs:', e); });
 }
 
 // Blocklist table render
@@ -1783,14 +1783,14 @@ function exportProfile() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const petName = exportData.settings.name || 'clawd';
+    const petName = exportData.settings.name || 'arcrawls';
     a.download = `${petName.toLowerCase()}-profile.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }).catch((err) => {
-    console.warn('[Clawd Options] Failed to export profile:', err);
+    console.warn('[Arcrawls Options] Failed to export profile:', err);
     alert('Could not export profile.');
   });
 }
@@ -1826,7 +1826,7 @@ function importProfile(e: Event) {
 }
 
 const COSTUMES_METADATA = [
-  { id: 'none', name: 'Default', desc: 'Original Clawd', unlockLevel: 0, seasonal: false, image: 'happy' },
+  { id: 'none', name: 'Default', desc: 'Original Arcrawls', unlockLevel: 0, seasonal: false, image: 'happy' },
   { id: 'detective', name: 'Detective Blue', desc: 'Blue Detective Aura', unlockLevel: 5, seasonal: false, image: 'detective' },
   { id: 'wizard', name: 'Wizard Purple', desc: 'Magic Purple Aura', unlockLevel: 10, seasonal: false, image: 'magic' },
   { id: 'party', name: 'Rainbow Party', desc: 'Color Shift Aura', unlockLevel: 15, seasonal: false, image: 'rainbow' },
@@ -1865,7 +1865,7 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string, se
 
     card.innerHTML = `
       <div class="wardrobe-thumbnail-container">
-        <img class="wardrobe-thumbnail ${item.id !== 'none' && ['detective', 'wizard', 'party'].includes(item.id) ? 'costume-' + item.id : ''}" src="../assets/pets/clawd-${item.image}.svg" alt="${item.name}">
+        <img class="wardrobe-thumbnail ${item.id !== 'none' && ['detective', 'wizard', 'party'].includes(item.id) ? 'costume-' + item.id : ''}" src="../assets/pets/arcrawls-${item.image}.svg" alt="${item.name}">
         ${badgeHtml}
       </div>
       <div class="wardrobe-info">

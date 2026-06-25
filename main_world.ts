@@ -26,7 +26,7 @@ window.addEventListener('message', async (event) => {
           availability = caps.available;
         }
       } catch (e) {
-        console.error('[Clawd Local AI] Availability check failed:', e);
+        console.error('[Arcrawls Local AI] Availability check failed:', e);
       }
     }
     
@@ -66,7 +66,7 @@ window.addEventListener('message', async (event) => {
         createOptions.initialPrompts = [{ role: 'system', content: systemPrompt }];
       }
 
-      console.log('[Clawd AI] Executing local Gemini Nano inference (MAIN_WORLD)...');
+      console.log('[Arcrawls AI] Executing local Gemini Nano inference (MAIN_WORLD)...');
       session = await lm.create(createOptions);
 
       const resultText = await session.prompt(prompt);
@@ -82,7 +82,7 @@ window.addEventListener('message', async (event) => {
           } else if (typeof session.close === 'function') {
             await session.close();
           }
-        } catch (err) { console.warn('[Clawd Main World] WAAPI cancellation error:', err); }
+        } catch (err) { console.warn('[Arcrawls Main World] WAAPI cancellation error:', err); }
       }
     }
   }

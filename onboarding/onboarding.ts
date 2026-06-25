@@ -84,65 +84,65 @@ import { extensionApi } from '../src/platform';
     '1.2.7': [
       {
         title: 'Interactive Toys',
-        description: 'Drop bouncy balls, laser pointers, and yarn directly onto the page. Clawd chases and plays with them using real-time spring physics!',
-        icon: '../assets/pets/clawd-celebrating.svg'
+        description: 'Drop bouncy balls, laser pointers, and yarn directly onto the page. Arcrawls chases and plays with them using real-time spring physics!',
+        icon: '../assets/pets/arcrawls-celebrating.svg'
       },
       {
         title: '24-Hour AI Synapse',
-        description: 'Clawd uses local AI to generate a unique, persona-driven daily reflection based on your browsing journey and habits over the last 24 hours.',
-        icon: '../assets/pets/clawd-mindblown.svg'
+        description: 'Arcrawls uses local AI to generate a unique, persona-driven daily reflection based on your browsing journey and habits over the last 24 hours.',
+        icon: '../assets/pets/arcrawls-mindblown.svg'
       },
       {
         title: 'Ghost Mode & Schedules',
-        description: 'Define Focus Blocks to suppress distractions, or use Ghost Mode which dynamically drops Clawd to 30% opacity when you type or scroll.',
-        icon: '../assets/pets/clawd-ninja.svg'
+        description: 'Define Focus Blocks to suppress distractions, or use Ghost Mode which dynamically drops Arcrawls to 30% opacity when you type or scroll.',
+        icon: '../assets/pets/arcrawls-ninja.svg'
       },
       {
         title: 'Milestones & Traits',
-        description: 'Track long-term achievements! Clawd now adapts his dominant personality trait (e.g. Gamer, Developer) based on the websites you visit.',
-        icon: '../assets/pets/clawd-working-building.svg'
+        description: 'Track long-term achievements! Arcrawls now adapts his dominant personality trait (e.g. Gamer, Developer) based on the websites you visit.',
+        icon: '../assets/pets/arcrawls-working-building.svg'
       },
       {
         title: 'Console Error Watcher',
-        description: 'If a JavaScript runtime error or crashed promise occurs on the webpage, Clawd immediately enters "debugger" mode to alert you.',
-        icon: '../assets/pets/clawd-working-debugger.svg'
+        description: 'If a JavaScript runtime error or crashed promise occurs on the webpage, Arcrawls immediately enters "debugger" mode to alert you.',
+        icon: '../assets/pets/arcrawls-working-debugger.svg'
       },
       {
         title: 'Unified Consciousness',
         description: 'Personality, emotions, and physical location are flawlessly synchronized across all active tabs in real-time.',
-        icon: '../assets/pets/clawd-cool.svg'
+        icon: '../assets/pets/arcrawls-cool.svg'
       }
     ],
     '1.1.0': [
       {
         title: 'Gravity Physics Engine',
-        description: 'Clawd features a new physics engine restricting him exclusively to the floor and ceiling with smooth spring-based edge snapping.',
-        icon: '../assets/pets/clawd-climbing.svg'
+        description: 'Arcrawls features a new physics engine restricting him exclusively to the floor and ceiling with smooth spring-based edge snapping.',
+        icon: '../assets/pets/arcrawls-climbing.svg'
       },
       {
         title: 'AI Intent Detection',
         description: 'Enhanced AI context awareness with high-fidelity intent detection for smarter, more relevant dialogue.',
-        icon: '../assets/pets/clawd-mindblown.svg'
+        icon: '../assets/pets/arcrawls-mindblown.svg'
       },
       {
         title: 'Unified Consciousness',
         description: 'Personality, emotions, and movement are now synchronized across all same-origin tabs in real-time.',
-        icon: '../assets/pets/clawd-happy.svg'
+        icon: '../assets/pets/arcrawls-happy.svg'
       },
       {
         title: 'Visual UI Redesign',
         description: 'Redesigned card-based stats grid and glassmorphic popup with new AI and tab status indicators.',
-        icon: '../assets/pets/clawd-working-building.svg'
+        icon: '../assets/pets/arcrawls-working-building.svg'
       },
       {
         title: 'Lite Mode & Performance',
         description: 'Default Lite Mode ensures zero-download speed, with an optional "Brain Upgrade" for power users.',
-        icon: '../assets/pets/clawd-cool.svg'
+        icon: '../assets/pets/arcrawls-cool.svg'
       },
       {
         title: 'Battery Optimization',
         description: 'Shifted to event-driven updates and lazy initialization for significantly better battery life.',
-        icon: '../assets/pets/clawd-charging.svg'
+        icon: '../assets/pets/arcrawls-charging.svg'
       }
     ]
   };
@@ -150,7 +150,7 @@ import { extensionApi } from '../src/platform';
   if (reason === 'update') {
     const step1Title = document.querySelector('#step-1 .step-title') as HTMLElement | null;
     if (step1Title) {
-      step1Title.innerHTML = `<span class="brand">Clawd</span> Updated!`;
+      step1Title.innerHTML = `<span class="brand">Arcrawls</span> Updated!`;
     }
     const step1Subtitle = document.querySelector('#step-1 .step-subtitle') as HTMLElement | null;
     if (step1Subtitle) {
@@ -159,7 +159,7 @@ import { extensionApi } from '../src/platform';
 
     const step2Title = document.querySelector('#step-2 .step-title') as HTMLElement | null;
     if (step2Title) {
-      step2Title.innerHTML = `What's New in <span class="brand">Clawd</span>`;
+      step2Title.innerHTML = `What's New in <span class="brand">Arcrawls</span>`;
     }
     const step2Subtitle = document.querySelector('#step-2 .step-subtitle') as HTMLElement | null;
     if (step2Subtitle) {

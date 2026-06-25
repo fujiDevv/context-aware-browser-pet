@@ -1,9 +1,9 @@
-# Privacy Policy for Clawd
+# Privacy Policy for Arcrawls
 
 **Effective Date:** June 14, 2026
 
 ## 1. Overview
-Clawd ("the Extension") is an open-source, interactive browser mascot companion. We are committed to protecting your privacy. Our core principle is: **Your data never leaves your device.**
+Arcrawls ("the Extension") is an open-source, interactive browser mascot companion. We are committed to protecting your privacy. Our core principle is: **Your data never leaves your device.**
 
 ## 2. Data Access & Usage
 To provide interactive and context-aware mascot behavior, the Extension accesses the following information locally within your browser:

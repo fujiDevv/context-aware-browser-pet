@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: url('./assets/font/PixelifySans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Pixelify Sans', 'Outfit', sans-serif;
+}
+
 /* Shared Design Tokens and Global Variables */
 :root {
   --accent: #C75D3F;
@@ -164,7 +175,7 @@ body::after {
   background-color: var(--indigo);
   background-image: linear-gradient(90deg, var(--indigo) 0%, #818cf8 100%);
 }
-.clawd-control-btn {
+.arcrawls-control-btn {
   background: white;
   border: none;
   cursor: pointer;
@@ -177,7 +188,7 @@ body::after {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
 }
-.clawd-control-btn:hover {
+.arcrawls-control-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
   color: #3b82f6;

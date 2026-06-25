@@ -17,7 +17,7 @@ extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SHARED_STATE).t
   if (data[STORAGE_KEYS.SHARED_STATE]) {
     sharedPetState = data[STORAGE_KEYS.SHARED_STATE];
   }
-}).catch((e) => { console.warn('[Clawd Background] storage.get shared-pet-state error:', e); });
+}).catch((e) => { console.warn('[Arcrawls Background] storage.get shared-pet-state error:', e); });
 
 const originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
@@ -50,7 +50,7 @@ extensionApi.runtime.onInstalled?.addListener((details) => {
         aiMode: false,
         advancedAiEnabled: false,
         apiKey: '',
-        name: 'Clawd',
+        name: 'Arcrawls',
         costume: 'none',
         persona: 'default',
         blockedDomains: [],
@@ -59,7 +59,7 @@ extensionApi.runtime.onInstalled?.addListener((details) => {
         seasonalEnabled: true
       }),
       [STORAGE_KEYS.SHARED_STATE]: sharedPetState
-    }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set init error:', e); });
+    }).catch((e) => { console.warn('[Arcrawls Background] chrome.storage.local.set init error:', e); });
   }
 
   // Set the survey/feedback URL that opens when the user uninstalls the extension
@@ -67,7 +67,7 @@ extensionApi.runtime.onInstalled?.addListener((details) => {
     const manifest = extensionApi.runtime.getManifest();
     const version = manifest?.version || 'unknown';
     const browser = isFirefoxRuntime() ? 'firefox' : 'chrome';
-    extensionApi.runtime.setUninstallURL(`https://meetclawd.com/uninstall?version=${version}&browser=${browser}`);
+    extensionApi.runtime.setUninstallURL(`https://arcrawls.com/uninstall?version=${version}&browser=${browser}`);
   }
 
   if (details.reason === 'install' || details.reason === 'update') {
@@ -85,7 +85,7 @@ extensionApi.runtime.onStartup?.addListener(() => {
     if (!alarm) {
       extensionApi.alarms.create('pet-decay', { periodInMinutes: 1 });
     }
-  }).catch((e) => { console.warn('[Clawd Background] alarms.get pet-decay error:', e); });
+  }).catch((e) => { console.warn('[Arcrawls Background] alarms.get pet-decay error:', e); });
 
   if (!supportsOffscreen) {
     extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((data) => {
@@ -93,10 +93,10 @@ extensionApi.runtime.onStartup?.addListener(() => {
       if (currentSettings.soundEnabled || currentSettings.aiMode || currentSettings.advancedAiEnabled) {
         extensionApi.storage.local.set({
           [STORAGE_KEYS.SETTINGS]: applyRuntimeFeatureSupport(currentSettings)
-        }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set runtime support error:', e); });
+        }).catch((e) => { console.warn('[Arcrawls Background] chrome.storage.local.set runtime support error:', e); });
       }
     }).catch((e) => {
-      console.warn('[Clawd Background] Failed to get settings on startup:', e);
+      console.warn('[Arcrawls Background] Failed to get settings on startup:', e);
     });
   }
 });
@@ -107,7 +107,7 @@ extensionApi.alarms.onAlarm?.addListener(async (alarm) => {
       const data = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
       await backgroundPersonality._periodicDecay(data[STORAGE_KEYS.SETTINGS]);
     } catch (e) {
-      console.warn('[Clawd Background] Failed to apply periodic decay:', e);
+      console.warn('[Arcrawls Background] Failed to apply periodic decay:', e);
     }
   }
 });
@@ -170,7 +170,7 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
 
     // Persist shared state to storage
     extensionApi.storage.local.set({ [STORAGE_KEYS.SHARED_STATE]: sharedPetState })
-      .catch((e) => { console.warn('[Clawd Background] storage.set shared-pet-state error:', e); });
+      .catch((e) => { console.warn('[Arcrawls Background] storage.set shared-pet-state error:', e); });
 
     const broadcast = () => {
       extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] }).then((tabs) => {
@@ -180,12 +180,12 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
               type: 'sync-pet-state',
               state: sharedPetState
             }).catch((e) => {
-              console.debug('[Clawd Background] sync-pet-state broadcast failed:', e);
+              console.debug('[Arcrawls Background] sync-pet-state broadcast failed:', e);
             });
           }
         });
       }).catch((e) => {
-        console.debug('[Clawd Background] sync-pet-state tab query failed:', e);
+        console.debug('[Arcrawls Background] sync-pet-state tab query failed:', e);
       });
     };
 
@@ -292,14 +292,14 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
                   type: 'sync-origin-pet-state',
                   state: newState
                 }).catch((e) => {
-                  console.debug('[Clawd Background] sync-origin-pet-state broadcast failed:', e);
+                  console.debug('[Arcrawls Background] sync-origin-pet-state broadcast failed:', e);
                 });
               }
             } catch (e) { }
           }
         });
       }).catch((e) => {
-        console.debug('[Clawd Background] sync-origin-pet-state tab query failed:', e);
+        console.debug('[Arcrawls Background] sync-origin-pet-state tab query failed:', e);
       });
     }
     sendResponse({ success: true });
@@ -409,10 +409,10 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
     extensionApi.storage.local.set({
       [STORAGE_KEYS.MODEL_LOADING_STATE]: message.state,
       [STORAGE_KEYS.MODEL_DOWNLOAD_PROGRESS]: message.progress
-    }).catch((e) => { console.warn('[Clawd Background] chrome.storage.local.set update-ai-progress error:', e); });
+    }).catch((e) => { console.warn('[Arcrawls Background] chrome.storage.local.set update-ai-progress error:', e); });
 
     if (message.state === 'error') {
-      closeOffscreen().catch((e) => { console.warn('[Clawd Background] closeOffscreen on error failed:', e); });
+      closeOffscreen().catch((e) => { console.warn('[Arcrawls Background] closeOffscreen on error failed:', e); });
     }
     return false;
   }
@@ -479,9 +479,9 @@ extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then(
 
   const settings = data[STORAGE_KEYS.SETTINGS] || {};
   if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
-    setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen initial call error:', e); });
+    setupOffscreen().catch((e) => { console.warn('[Arcrawls Background] setupOffscreen initial call error:', e); });
   }
-}).catch((e) => { console.warn('[Clawd Background] Failed to load initial settings:', e); });
+}).catch((e) => { console.warn('[Arcrawls Background] Failed to load initial settings:', e); });
 
 // Watch for settings changes to boot offscreen context in real time
 extensionApi.storage.onChanged?.addListener((changes) => {
@@ -492,9 +492,9 @@ extensionApi.storage.onChanged?.addListener((changes) => {
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const settings = changes[STORAGE_KEYS.SETTINGS].newValue || {};
     if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
-      setupOffscreen().catch((e) => { console.warn('[Clawd Background] setupOffscreen re-call error:', e); });
+      setupOffscreen().catch((e) => { console.warn('[Arcrawls Background] setupOffscreen re-call error:', e); });
     } else {
-      closeOffscreen().catch((e) => { console.warn('[Clawd Background] closeOffscreen re-call error:', e); });
+      closeOffscreen().catch((e) => { console.warn('[Arcrawls Background] closeOffscreen re-call error:', e); });
     }
   }
 });

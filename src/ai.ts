@@ -1,5 +1,5 @@
 import { detectPageCategory, mapActivityToEmotion, AI_COMMENTS } from './rules';
-import { CLAWD_KNOWLEDGE_BASE } from './knowledge';
+import { ARCRAWLS_KNOWLEDGE_BASE } from './knowledge';
 import { extensionApi } from './platform';
 
 interface AiEmotionResponse {
@@ -19,7 +19,7 @@ export async function getAiEmotion(
   persona: string,
   statsContext?: string,
   sentimentSensitivity: number = 50,
-  petName: string = 'Clawd',
+  petName: string = 'Arcrawls',
   pageText?: string
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
   try {
@@ -85,7 +85,7 @@ export async function getAiEmotion(
 export async function getDailyInsight(
   stats: any,
   persona: string,
-  petName: string = 'Clawd'
+  petName: string = 'Arcrawls'
 ): Promise<string> {
   const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
   if (geminiNanoAvailable !== 'available' && geminiNanoAvailable !== 'downloadable' && geminiNanoAvailable !== 'downloading') {
@@ -129,7 +129,7 @@ export async function getAutonomousGenerativeDialogue(
   mood: string,
   pageTitle: string,
   metaDescription: string | undefined,
-  petName: string = 'Clawd',
+  petName: string = 'Arcrawls',
   pageText?: string
 ): Promise<string | null> {
   const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
@@ -193,7 +193,7 @@ RULE:
 /**
  * Orchestrates a prompt to Gemini Nano, handling both direct access and bridge-based communication.
  */
-async function promptGeminiNano(systemPrompt: string, prompt: string, petName: string = 'Clawd'): Promise<string | null> {
+async function promptGeminiNano(systemPrompt: string, prompt: string, petName: string = 'Arcrawls'): Promise<string | null> {
   // 1. Direct Extension/Extension Context Attempt
   const lm = (globalThis as any).ai?.languageModel || (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? ((window as any).ai?.languageModel || (window as any).LanguageModel) : null);
   if (lm) {
@@ -309,7 +309,7 @@ export function setBridgeToken(token: string): void {
   bridgeToken = token;
 }
 
-async function checkGeminiNanoAvailability(petName: string = 'Clawd'): Promise<'available' | 'downloadable' | 'downloading' | 'unavailable'> {
+async function checkGeminiNanoAvailability(petName: string = 'Arcrawls'): Promise<'available' | 'downloadable' | 'downloading' | 'unavailable'> {
   // 1. Extension context direct check
   const lm = (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? (window as any).LanguageModel : null);
   if (lm) {
@@ -366,7 +366,7 @@ async function runGeminiNanoInference(
   categoryHint: string,
   persona: string,
   statsContext: string | undefined,
-  petName: string = 'Clawd'
+  petName: string = 'Arcrawls'
 ): Promise<{ emotion: string; comment: string; category: string; sentiment: string } | null> {
   const systemPrompt = `You are "${petName}", a highly perceptive and slightly ${persona} browser pet mascot. 
 Your goal is to deeply analyze the user's intent on the current webpage and react accordingly.
@@ -421,7 +421,7 @@ export async function getAiChatResponse(
   persona: string,
   statsContext?: string,
   chatHistory?: { role: string, content: string }[],
-  petName: string = 'Clawd'
+  petName: string = 'Arcrawls'
 ): Promise<string | null> {
   const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
   if (geminiNanoAvailable !== 'available' && geminiNanoAvailable !== 'downloadable' && geminiNanoAvailable !== 'downloading') {
@@ -438,12 +438,12 @@ export async function getAiChatResponse(
 
   const systemPrompt = `You are "${petName}", a perceptive browser pet mascot with a ${persona} persona.
 You are chatting directly with the user while they browse the web.
-CRITICAL INSTRUCTION: You MUST NEVER break character. You are a virtual pet, NOT an AI language model. If asked what you are, you are Clawd (or your pet name), a browser extension mascot. You MUST NEVER say you are Gemma, created by Google, or an open-weights AI assistant. Maintain your ${persona} personality at all times.
+CRITICAL INSTRUCTION: You MUST NEVER break character. You are a virtual pet, NOT an AI language model. If asked what you are, you are Arcrawls (or your pet name), a browser extension mascot. You MUST NEVER say you are Gemma, created by Google, or an open-weights AI assistant. Maintain your ${persona} personality at all times.
 If the user asks "What are you?", respond with something like: "I'm ${petName}, your friendly browser pet! I live on your screen to keep you company."
 Give thorough and helpful responses without artificial length limits.
 Use emojis where appropriate, but if you are responding to voice or code, adjust accordingly.
 
-${CLAWD_KNOWLEDGE_BASE}
+${ARCRAWLS_KNOWLEDGE_BASE}
 
 Context about your current state:
 ${statsContext || 'Normal'}

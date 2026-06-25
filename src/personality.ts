@@ -66,7 +66,7 @@ export class PersonalitySystem {
     }
 
     if (elapsedSeconds > 3600) {
-      console.debug(`[Clawd Personality] Applying catch-up decay for ${Math.round(elapsedSeconds / 3600)} hours of inactivity (Softened).`);
+      console.debug(`[Arcrawls Personality] Applying catch-up decay for ${Math.round(elapsedSeconds / 3600)} hours of inactivity (Softened).`);
     }
 
     // Default Decay rates per second
@@ -91,7 +91,7 @@ export class PersonalitySystem {
       }
     }
 
-    // Clamp stats at MIN_STAT_VALUE so Clawd is never fully depleted/unusable offline
+    // Clamp stats at MIN_STAT_VALUE so Arcrawls is never fully depleted/unusable offline
     // Fix: Remove Math.round to prevent "Ghost Decay" rounding bug where stats never drop
     this.stats.happiness = Math.max(this.stats.happiness <= MIN_STAT_VALUE ? 0 : MIN_STAT_VALUE, Math.min(100, this.stats.happiness - happinessDecay));
     this.stats.energy = Math.max(this.stats.energy <= MIN_STAT_VALUE ? 0 : MIN_STAT_VALUE, Math.min(100, this.stats.energy - energyDecay));
