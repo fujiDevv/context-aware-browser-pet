@@ -10,7 +10,7 @@
     "typescript": "^5.4.5",
     "vitest": "^4.1.9"
   },
-  "description": "Context-aware browser pet extension using clawd-pet SVGs.",
+  "description": "Context-aware browser pet extension using arcrawls-pet SVGs.",
   "scripts": {
     "type-check": "node node_modules/typescript/bin/tsc --noEmit",
     "test": "vitest",

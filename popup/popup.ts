@@ -38,7 +38,7 @@ async function init(): Promise<void> {
         activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
       }
     }).catch((e) => {
-      console.warn('[Clawd Popup] tabs.query status error:', e);
+      console.warn('[Arcrawls Popup] tabs.query status error:', e);
     });
 
     // 2. Update AI Status
@@ -57,7 +57,7 @@ async function init(): Promise<void> {
     }
 
     const res = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).catch((e): Record<string, any> => {
-      console.warn('[Clawd Popup] storage.get settings error:', e);
+      console.warn('[Arcrawls Popup] storage.get settings error:', e);
       return {};
     });
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
@@ -169,7 +169,7 @@ async function init(): Promise<void> {
     if (btnOpen) {
       btnOpen.addEventListener('click', () => {
         extensionApi.runtime.openOptionsPage().catch((e) => {
-          console.warn('[Clawd Popup] openOptionsPage error:', e);
+          console.warn('[Arcrawls Popup] openOptionsPage error:', e);
         });
       });
     }
@@ -431,7 +431,7 @@ async function init(): Promise<void> {
         const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(optimizedSvg)))}`;
         icon.src = dataUri;
       }).catch(e => {
-        console.warn('[Clawd Popup] Failed to optimize stat icon:', e);
+        console.warn('[Arcrawls Popup] Failed to optimize stat icon:', e);
       });
     }
   });
@@ -440,7 +440,7 @@ async function init(): Promise<void> {
   try {
     data = await extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.SETTINGS, STORAGE_KEYS.MOOD]);
   } catch (e) {
-    console.error('[Clawd Popup] Failed to load initial storage data:', e);
+    console.error('[Arcrawls Popup] Failed to load initial storage data:', e);
   }
   blockedDomains = data[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
   
@@ -483,7 +483,7 @@ async function init(): Promise<void> {
           const url = new URL(tab.url);
           currentHostname = url.hostname;
           if (currentHostname) {
-            siteSubtitle.textContent = `Disable Clawd on ${currentHostname}`;
+            siteSubtitle.textContent = `Disable Arcrawls on ${currentHostname}`;
             siteHideToggle.checked = blockedDomains.includes(currentHostname);
             siteHideToggle.disabled = false;
           } else {
@@ -519,7 +519,7 @@ async function init(): Promise<void> {
       extensionApi.tabs.sendMessage(currentTabId, {
         type: 'toggle-tab-visibility',
         hide: tabHideToggle.checked
-      }).catch((e) => { console.warn('[Clawd Popup] executeScript error:', e); });
+      }).catch((e) => { console.warn('[Arcrawls Popup] executeScript error:', e); });
     }
   });
 
@@ -538,8 +538,8 @@ async function init(): Promise<void> {
         const settings = res[STORAGE_KEYS.SETTINGS] || {};
         settings.blockedDomains = blockedDomains;
         extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings })
-          .catch((e) => { console.warn('[Clawd Popup] Failed to save blocked domains:', e); });
-      }).catch((e) => { console.warn('[Clawd Popup] Failed to load settings for blocked domains:', e); });
+          .catch((e) => { console.warn('[Arcrawls Popup] Failed to save blocked domains:', e); });
+      }).catch((e) => { console.warn('[Arcrawls Popup] Failed to load settings for blocked domains:', e); });
     }
   });
 
@@ -548,8 +548,8 @@ async function init(): Promise<void> {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       settings.performanceMode = performanceModeToggle.checked;
       extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings })
-        .catch((e) => { console.warn('[Clawd Popup] Failed to save performance mode:', e); });
-    }).catch((e) => { console.warn('[Clawd Popup] Failed to load settings for performance mode:', e); });
+        .catch((e) => { console.warn('[Arcrawls Popup] Failed to save performance mode:', e); });
+    }).catch((e) => { console.warn('[Arcrawls Popup] Failed to load settings for performance mode:', e); });
   });
 
   ghostModeToggle.addEventListener('change', () => {
@@ -557,8 +557,8 @@ async function init(): Promise<void> {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       settings.ghostMode = ghostModeToggle.checked;
       extensionApi.storage.local.set({ [STORAGE_KEYS.SETTINGS]: settings })
-        .catch((e) => { console.warn('[Clawd Popup] Failed to save ghost mode:', e); });
-    }).catch((e) => { console.warn('[Clawd Popup] Failed to load settings for ghost mode:', e); });
+        .catch((e) => { console.warn('[Arcrawls Popup] Failed to save ghost mode:', e); });
+    }).catch((e) => { console.warn('[Arcrawls Popup] Failed to load settings for ghost mode:', e); });
   });
 
   extensionApi.storage.onChanged?.addListener((changes) => {
@@ -588,10 +588,10 @@ async function init(): Promise<void> {
         extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.MOOD).then((moodRes) => {
           updateUIMood(moodRes[STORAGE_KEYS.MOOD] || 'happy', currentCostume, customColor);
         }).catch((e) => {
-          console.warn('[Clawd Popup] Failed to get mood for update:', e);
+          console.warn('[Arcrawls Popup] Failed to get mood for update:', e);
         });
       }).catch((e) => {
-        console.warn('[Clawd Popup] Failed to get stats for color evaluation:', e);
+        console.warn('[Arcrawls Popup] Failed to get stats for color evaluation:', e);
       });
     }
 
@@ -603,10 +603,10 @@ async function init(): Promise<void> {
   const sendToActiveTab = (type: string) => {
     extensionApi.tabs.query({ active: true, currentWindow: true }).then(([tab]) => {
       if (tab && tab.id) {
-        extensionApi.tabs.sendMessage(tab.id, { type }).catch((e) => { console.warn('[Clawd Popup] sendMessage error:', e); });
+        extensionApi.tabs.sendMessage(tab.id, { type }).catch((e) => { console.warn('[Arcrawls Popup] sendMessage error:', e); });
       }
     }).catch((e) => {
-      console.warn('[Clawd Popup] Failed to query active tab:', e);
+      console.warn('[Arcrawls Popup] Failed to query active tab:', e);
     });
   };
 
@@ -694,7 +694,7 @@ async function init(): Promise<void> {
 
     if (statsEl && statsEl.preview) {
       const svgName = getResolvedCostumeName(mood, costume);
-      const url = getRuntimeUrl(`assets/pets/clawd-${svgName}.svg`);
+      const url = getRuntimeUrl(`assets/pets/arcrawls-${svgName}.svg`);
 
       fetch(url).then(r => r.text()).then(svgText => {
         svgText = optimizeSvgStr(svgText);
@@ -712,7 +712,7 @@ async function init(): Promise<void> {
         const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
         statsEl.preview.src = dataUri;
       }).catch(e => {
-        console.warn('[Clawd Popup] Failed to apply SVG formatter/color:', e);
+        console.warn('[Arcrawls Popup] Failed to apply SVG formatter/color:', e);
         statsEl.preview.src = url;
       });
     }

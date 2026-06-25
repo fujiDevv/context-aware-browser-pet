@@ -25,7 +25,7 @@ let modelDownloadProgress = 0;
 
 function reportAiProgress(state: typeof modelLoadingState, progress: number): void {
   extensionApi.runtime.sendMessage({ type: 'update-ai-progress', state, progress })
-    .catch((e) => { console.warn('[Clawd Offscreen] update-ai-progress message failed:', e); });
+    .catch((e) => { console.warn('[Arcrawls Offscreen] update-ai-progress message failed:', e); });
 }
 
 // Initialize/fetch the classifier pipeline
@@ -66,7 +66,7 @@ async function getClassifier(): Promise<ClassifierPipeline> {
   } catch (err) {
     modelLoadingState = 'error';
     reportAiProgress(modelLoadingState, 0);
-    console.error('[Clawd Local AI] Failed to load pipeline:', err);
+    console.error('[Arcrawls Local AI] Failed to load pipeline:', err);
     throw err;
   }
 }
@@ -124,7 +124,7 @@ async function getLocalAiEmotion(
       }
     }
   } catch (err) {
-    console.warn('[Clawd Local AI] Pipeline classification failed, falling back to NEUTRAL:', err);
+    console.warn('[Arcrawls Local AI] Pipeline classification failed, falling back to NEUTRAL:', err);
   }
 
   // Map to final pet emotion using shared rules
@@ -171,7 +171,7 @@ async function playSound(filename: string, volume: number): Promise<void> {
     gainNode.connect(audioCtx.destination);
     source.start(0);
   } catch (err) {
-    console.error('[Clawd Offscreen] Failed to play sound:', err);
+    console.error('[Arcrawls Offscreen] Failed to play sound:', err);
   }
 }
 
@@ -181,7 +181,7 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
     const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity, url } = message;
 
     if (modelLoadingState === 'idle') {
-      getClassifier().catch((e) => console.warn('[Clawd Offscreen] auto-init error:', e));
+      getClassifier().catch((e) => console.warn('[Arcrawls Offscreen] auto-init error:', e));
     }
 
     getLocalAiEmotion(pageTitle, metaDescription, url, category, persona || 'default', statsContext, sentimentSensitivity)
@@ -196,7 +196,7 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'check-offscreen-ai-status') {
     if (modelLoadingState === 'idle') {
-      getClassifier().catch((e) => console.warn('[Clawd Offscreen] auto-init error:', e));
+      getClassifier().catch((e) => console.warn('[Arcrawls Offscreen] auto-init error:', e));
     }
     sendResponse({ success: true, state: modelLoadingState, progress: modelDownloadProgress });
     return false;

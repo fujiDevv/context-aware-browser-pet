@@ -28,7 +28,7 @@ let currentSettings: PetSettings = { size: 128, speed: 1.2, aiMode: false, apiKe
     script.onload = () => script.remove();
     (document.head || document.documentElement).appendChild(script);
   } catch (e) {
-    console.warn(`[${currentSettings.name || "Clawd"} Content] Main world injection failed:`, e);
+    console.warn(`[${currentSettings.name || "Arcrawls"} Content] Main world injection failed:`, e);
   }
 })();
 
@@ -326,7 +326,7 @@ function ensureInitialized(): void {
     // Keep max 20 messages to avoid token bloat
     if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
     try {
-      sessionStorage.setItem('clawdChatHistory', JSON.stringify(chatHistory));
+      sessionStorage.setItem('arcrawlsChatHistory', JSON.stringify(chatHistory));
     } catch(e) {}
   };
 
@@ -394,13 +394,13 @@ function ensureInitialized(): void {
 
   // Load saved history and populate UI
   try {
-    const saved = sessionStorage.getItem('clawdChatHistory');
+    const saved = sessionStorage.getItem('arcrawlsChatHistory');
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed)) {
         chatHistory = parsed;
         chatHistory.forEach(msg => {
-          view.addChatMessage(msg.role === 'user' ? 'user' : 'clawd', msg.content);
+          view.addChatMessage(msg.role === 'user' ? 'user' : 'arcrawls', msg.content);
         });
       }
     }
@@ -455,14 +455,14 @@ function ensureInitialized(): void {
       if (response) {
         chatHistory.push({ role: 'assistant', content: response });
         saveChatHistory();
-        view.addChatMessage('clawd', response);
+        view.addChatMessage('arcrawls', response);
         // Play chatting sound and animation
         playSound('chat');
         loadPet('working-typing');
 
         // Send random initial dialogue to say hello (only once per session per tab)
         if (currentSettings.aiMode && currentSettings.commentFrequency! > 0) {
-          if (!getSessionItem('clawd-ai-has-greeted')) {
+          if (!getSessionItem('arcrawls-ai-has-greeted')) {
             setTimeout(() => {
               if (isOrphaned) return;
               const greetings = [
@@ -472,20 +472,20 @@ function ensureInitialized(): void {
                 "If you need me, just give me a pet!"
               ];
               const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-              view.addChatMessage('clawd', randomGreeting);
+              view.addChatMessage('arcrawls', randomGreeting);
               if (currentSettings.soundEnabled) playSound('chat');
 
-              setSessionItem('clawd-ai-has-greeted', 'true');
+              setSessionItem('arcrawls-ai-has-greeted', 'true');
             }, 5000);
           }
         }
       } else {
-        view.addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
+        view.addChatMessage('arcrawls', "Oops! My brain froze. Could you repeat that?");
       }
     } catch (e) {
-      console.error(`[${currentSettings.name || "Clawd"} Chat] Error:`, e);
+      console.error(`[${currentSettings.name || "Arcrawls"} Chat] Error:`, e);
       view.setChatLoading(false);
-      view.addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
+      view.addChatMessage('arcrawls', "Oops! Something went wrong connecting to my brain.");
     }
   };
 
@@ -495,7 +495,7 @@ function ensureInitialized(): void {
       saveChatHistory();
     }
     
-    const textNode = oldMsgEl.querySelector('div:not(.clawd-control-btn)') as HTMLElement;
+    const textNode = oldMsgEl.querySelector('div:not(.arcrawls-control-btn)') as HTMLElement;
     const controlsRow = oldMsgEl.querySelector('div[style*="flex"]') as HTMLElement;
     const originalText = textNode ? textNode.textContent : "";
     if (textNode) {
@@ -520,21 +520,21 @@ function ensureInitialized(): void {
       if (response) {
         chatHistory.push({ role: 'assistant', content: response });
         saveChatHistory();
-        view.addChatMessage('clawd', response, oldMsgEl);
+        view.addChatMessage('arcrawls', response, oldMsgEl);
         oldMsgEl.remove();
         if (currentSettings.soundEnabled) playSound('chat');
         loadPet('working-typing');
       } else {
         if (textNode) textNode.textContent = originalText;
         if (controlsRow) controlsRow.style.display = 'flex';
-        view.addChatMessage('clawd', "Oops! My brain froze. Could you repeat that?");
+        view.addChatMessage('arcrawls', "Oops! My brain froze. Could you repeat that?");
       }
     } catch (e) {
-      console.error(`[${currentSettings.name || "Clawd"} Chat] Error:`, e);
+      console.error(`[${currentSettings.name || "Arcrawls"} Chat] Error:`, e);
       view.setChatLoading(false);
       if (textNode) textNode.textContent = originalText;
       if (controlsRow) controlsRow.style.display = 'flex';
-      view.addChatMessage('clawd', "Oops! Something went wrong connecting to my brain.");
+      view.addChatMessage('arcrawls', "Oops! Something went wrong connecting to my brain.");
     }
   };
 
@@ -620,14 +620,14 @@ async function loadPet(name: string): Promise<void> {
       if (e.message && e.message.includes('context invalidated')) {
         cleanupOrphanedScript();
       } else {
-        console.warn(`[${currentSettings.name || "Clawd"} Content] storage.set error:`, e);
+        console.warn(`[${currentSettings.name || "Arcrawls"} Content] storage.set error:`, e);
       }
     });
   } catch (e: any) {
     if (e.message && e.message.includes('context invalidated')) {
       cleanupOrphanedScript();
     } else {
-      console.warn(`[${currentSettings.name || "Clawd"} Content] error:`, e);
+      console.warn(`[${currentSettings.name || "Arcrawls"} Content] error:`, e);
     }
   }
 }
@@ -734,7 +734,7 @@ async function updateEmotion(): Promise<void> {
           cleanupOrphanedScript();
           return;
         }
-        console.warn(`[${currentSettings.name || "Clawd"} Content] updateEmotion AI error:`, e);
+        console.warn(`[${currentSettings.name || "Arcrawls"} Content] updateEmotion AI error:`, e);
         hasEvaluatedPageAi = true;
         nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
       }
@@ -746,10 +746,10 @@ async function updateEmotion(): Promise<void> {
     nextEmotion = await emotion.evaluate(context, scheduleEnabled, currentSettings.seasonalEnabled !== false, currentSettings);
 
     // Optional: Add a subtle notification bubble if AI was intended but bypassed due to Lite Mode
-    if (currentSettings.aiMode && useLiteMode && !hasEvaluatedPageAi && !getSessionItem('clawd-lite-mode-notified')) {
+    if (currentSettings.aiMode && useLiteMode && !hasEvaluatedPageAi && !getSessionItem('arcrawls-lite-mode-notified')) {
       const reason = isMetered ? "on a metered connection" : "still loading my big brain";
-      console.log(`[${currentSettings.name || "Clawd"}] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
-      setSessionItem('clawd-lite-mode-notified', 'true');
+      console.log(`[${currentSettings.name || "Arcrawls"}] Lite Mode active because you are ${reason}. Using regex-based detection instead!`);
+      setSessionItem('arcrawls-lite-mode-notified', 'true');
     }
   }
   if (nextEmotion !== emotion.current || aiComment || !view.getPetImg().src) {
@@ -844,7 +844,7 @@ async function triggerContextDialogue(mood: string): Promise<void> {
       return;
     }
   } catch (e) {
-    console.warn(`[${currentSettings.name || 'Clawd'} AI] Generative autonomous dialogue failed, falling back to hardcoded.`, e);
+    console.warn(`[${currentSettings.name || 'Arcrawls'} AI] Generative autonomous dialogue failed, falling back to hardcoded.`, e);
   }
 
   // 2. Fallback to Hardcoded Dialogues
@@ -927,7 +927,7 @@ function handleShoo(e: MouseEvent) {
 
   try {
     view.getPetImg().getAnimations().forEach(anim => anim.cancel());
-  } catch (err) { console.warn(`[${currentSettings.name || "Clawd"} Content] handleShoo animations cancel error:`, err); }
+  } catch (err) { console.warn(`[${currentSettings.name || "Arcrawls"} Content] handleShoo animations cancel error:`, err); }
 
   isTemporarilyInteracting = true;
   personality.recordInteraction('shoo');
@@ -951,7 +951,7 @@ function triggerInteraction(action: string, temporaryMood: string, duration: num
 
   try {
     view.getPetImg().getAnimations().forEach(anim => anim.cancel());
-  } catch (err) { console.warn(`[${currentSettings.name || "Clawd"} Content] triggerInteraction animations cancel error:`, err); }
+  } catch (err) { console.warn(`[${currentSettings.name || "Arcrawls"} Content] triggerInteraction animations cancel error:`, err); }
 
   personality.recordInteraction(action);
   loadPet(temporaryMood);
@@ -1148,7 +1148,7 @@ function handleStorageChanged(changes: Record<string, chrome.storage.StorageChan
     if (newStats) {
       const oldLevel = oldStats ? oldStats.level : 1;
       if (isInitialized && document.visibilityState === 'visible' && !isPetHidden() && newStats.level > oldLevel) {
-        view.showLevelUpBanner(newStats.level, currentSettings.name || 'Clawd');
+        view.showLevelUpBanner(newStats.level, currentSettings.name || 'Arcrawls');
         loadPet('celebrating');
         playSound('levelUp');
         isTemporarilyInteracting = true;
@@ -1221,7 +1221,7 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
     if (isInitialized) {
       try {
         view.getPetImg().getAnimations().forEach(anim => anim.cancel());
-      } catch (err) { console.warn(`[${currentSettings.name || "Clawd"} Content] handleRuntimeMessage shoo animations cancel error:`, err); }
+      } catch (err) { console.warn(`[${currentSettings.name || "Arcrawls"} Content] handleRuntimeMessage shoo animations cancel error:`, err); }
 
       isTemporarilyInteracting = true;
       personality.recordInteraction('shoo');
@@ -1336,7 +1336,7 @@ async function init(): Promise<void> {
     actuallyInit();
   } else {
     // Basic setup so we can still receive messages or handle visibility changes
-    console.log(`[${currentSettings.name || "Clawd"} Content] Tab is backgrounded. Delaying mascot initialization.`);
+    console.log(`[${currentSettings.name || "Arcrawls"} Content] Tab is backgrounded. Delaying mascot initialization.`);
   }
 }
 
@@ -1411,8 +1411,8 @@ async function actuallyInit(): Promise<void> {
           hidePet();
         } else {
           movement.start();
-          if (!sessionStorage.getItem('clawd-has-greeted')) {
-            const petName = currentSettings.name || 'Clawd';
+          if (!sessionStorage.getItem('arcrawls-has-greeted')) {
+            const petName = currentSettings.name || 'Arcrawls';
             const greetings = [
               `Hi, I'm ${petName}! Let's explore!`,
               `Meet ${petName}, your guide!`,
@@ -1426,7 +1426,7 @@ async function actuallyInit(): Promise<void> {
             ];
             const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
             view.showBubble(randomGreeting);
-            sessionStorage.setItem('clawd-has-greeted', 'true');
+            sessionStorage.setItem('arcrawls-has-greeted', 'true');
 
             // Lite Mode Notification (AI Downloading)
             if (currentSettings.aiMode) {

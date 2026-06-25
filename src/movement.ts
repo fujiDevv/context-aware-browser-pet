@@ -164,7 +164,7 @@ export class MovementEngine {
     if (this._posAnimation) {
       try {
         this._posAnimation.stop();
-      } catch (e) { console.warn('[Clawd Movement] handleWindowResize error:', e); }
+      } catch (e) { console.warn('[Arcrawls Movement] handleWindowResize error:', e); }
       this._posAnimation = null;
     }
   }
@@ -501,7 +501,7 @@ export class MovementEngine {
       if (element) {
         try {
           element.remove();
-        } catch (e) { console.warn('[Clawd Movement] toy removal error:', e); }
+        } catch (e) { console.warn('[Arcrawls Movement] toy removal error:', e); }
       }
     });
     this.toyTargets = [];
@@ -819,7 +819,7 @@ export class MovementEngine {
     if (this.performanceMode && msg.type === 'update-pet-state') return;
     try {
       if (extensionApi.runtime.id) {
-        extensionApi.runtime.sendMessage(msg).catch((e) => { console.warn('[Clawd Movement] runtime.sendMessage error:', e); });
+        extensionApi.runtime.sendMessage(msg).catch((e) => { console.warn('[Arcrawls Movement] runtime.sendMessage error:', e); });
       }
     } catch (e) { }
   }

@@ -1,15 +1,15 @@
-# Clawd: The Context-Aware Browser Pet
+# Arcrawls: The Context-Aware Browser Pet
 
-An open-source, interactive, context-aware browser mascot pet companion extension built using the [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) SVG library. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
+An open-source, interactive, context-aware browser mascot pet companion extension built using the [arcrawls-pet](https://github.com/abderrahimghazali/arcrawls-pet) SVG library. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
 
-*Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
+*Mascot SVG assets are adapted from the open-source [arcrawls-pet](https://github.com/abderrahimghazali/arcrawls-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
 <p align="center">
-   <img src="assets/clawd-gif2.gif" alt="Clawd in Action" width="600" />
+   <img src="assets/arcrawls-gif2.gif" alt="Arcrawls in Action" width="600" />
 </p>
 
 <p align="center">
-  <a href="https://www.producthunt.com/products/clawd-the-context-aware-browser-pet?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-clawd" target="_blank" rel="noopener noreferrer"><img alt="Clawd - A context-aware browser mascot with 100% local offline AI | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1174174&amp;theme=light&amp;t=1782133204859"></a>
+  <a href="https://www.producthunt.com/products/arcrawls-the-context-aware-browser-pet?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-arcrawls" target="_blank" rel="noopener noreferrer"><img alt="Arcrawls - A context-aware browser mascot with 100% local offline AI | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1174174&amp;theme=light&amp;t=1782133204859"></a>
 </p>
 
 <p align="center">
@@ -28,7 +28,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **Context-Aware Emotions**: Real-time expressions that react to typing speed, scroll depth, media playback, intent detection, and site errors.
   * **Lite Mode (Default)**: Efficient, rule-based behavior analysis using Regex and meta-tag analysis—zero downloads or API keys required.
   * **Brain Upgrade (Optional AI)**: Privacy-first, high-fidelity sentiment analysis using an on-device DistilBERT model. Features **Gemini Nano** integration to summarize full page DOM bodies natively without context-window overflow.
-  * **Distraction-Free UI**: Schedule **Focus Blocks** to force Clawd into a quiet studying animation, or use **Ghost Mode** to automatically fade his opacity down to 30% whenever you are actively typing or scrolling.
+  * **Distraction-Free UI**: Schedule **Focus Blocks** to force Arcrawls into a quiet studying animation, or use **Ghost Mode** to automatically fade his opacity down to 30% whenever you are actively typing or scrolling.
   * **Performance Mode**: Halts cross-tab syncing, caps physics to 30fps, and disables CSS aura shaders to save memory and CPU on low-end machines.
   * **Virtual Pet Progression**: Level up your pet through interactions, unlock costumes, and develop unique personality traits based on your browsing habits.
   * **Mascot Milestones**: Track significant growth markers, interaction records, and trait evolutions in a dedicated achievement dashboard.
@@ -117,9 +117,9 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   2. Open **Firefox** and navigate to `about:debugging#/runtime/this-firefox`.
   3. Click **Load Temporary Add-on...**.
   4. Select `dist-firefox/manifest.json` inside the `context-aware-browser-pet` folder.
-  5. Open any normal HTTPS webpage (e.g. [github.com](https://github.com)) to verify that Clawd appears.
+  5. Open any normal HTTPS webpage (e.g. [github.com](https://github.com)) to verify that Arcrawls appears.
 
-  Firefox currently runs Clawd in Lite Mode. The local Brain Upgrade and centralized offscreen audio paths depend on Chrome offscreen documents, which Firefox does not support yet.
+  Firefox currently runs Arcrawls in Lite Mode. The local Brain Upgrade and centralized offscreen audio paths depend on Chrome offscreen documents, which Firefox does not support yet.
 
   ---
 
@@ -128,20 +128,20 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **Pet (Left Click)**: Boost Happiness and see the 'love' mood.
   * **Feed (Double Click)**: Restore Energy and celebrate.
   * **Shoo (Right Click)**: Relocate the pet to a random spot.
-  * **Chat with Clawd**: Open the interactive chat panel in the Dashboard or press `Ctrl+Shift+C` on any page to talk directly to your pet! Features include animated typing indicators and persona-specific AI responses.
+  * **Chat with Arcrawls**: Open the interactive chat panel in the Dashboard or press `Ctrl+Shift+C` on any page to talk directly to your pet! Features include animated typing indicators and persona-specific AI responses.
   * **Play (Drag-and-Drop Toys)**: Drop items like Balls, Yarn, or Ducks from the popup to play.
   * **Settings**: Customize names, sizes, speeds, and personas in the dashboard.
-  * **AI Vibe Check**: Enable AI Mode to let Clawd analyze page sentiment and comment on your browsing.
+  * **AI Vibe Check**: Enable AI Mode to let Arcrawls analyze page sentiment and comment on your browsing.
 
   ---
 
   ## Security & Privacy
 
   * **Local Evaluation**: All website context evaluations, DOM parsing, activity tracking, and AI model inference happen entirely locally on your machine.
-  * **No Telemetry**: Clawd does not collect, track, or transmit your browsing history, AI inputs, or personal data to external servers.
+  * **No Telemetry**: Arcrawls does not collect, track, or transmit your browsing history, AI inputs, or personal data to external servers.
   * **Optional Brain Upgrade**: The local AI model is entirely optional. Lite Mode (Regex-based) is the default and requires no downloads. If you choose to enable the Brain Upgrade, the model weights are downloaded from Hugging Face and run entirely in your browser using local WebAssembly.
   * **Firefox Lite Mode**: Firefox builds currently disable the Brain Upgrade and centralized offscreen audio because Firefox does not support Chrome offscreen documents. No remote AI fallback is used.
-  * **Minimal Scope**: Even with the Brain Upgrade, Clawd only analyzes the webpage `title`, `meta description`, and specific semantic text elements (like headers and paragraphs). It does *not* scan raw DOM nodes or sensitive input fields.
+  * **Minimal Scope**: Even with the Brain Upgrade, Arcrawls only analyzes the webpage `title`, `meta description`, and specific semantic text elements (like headers and paragraphs). It does *not* scan raw DOM nodes or sensitive input fields.
 
   ---
 

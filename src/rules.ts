@@ -1,5 +1,5 @@
 /**
- * Clawd Rule Configuration
+ * Arcrawls Rule Configuration
  * This file contains hardcoded site classifications, emotion fallbacks,
  * and specific reaction pools to keep core logic clean.
  */

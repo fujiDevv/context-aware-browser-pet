@@ -132,7 +132,7 @@ export function keyframeAnimate(
 
   return {
     then(cb: () => void) {
-      animation.finished.then(cb).catch((e) => { console.warn('[Clawd Animate] animation finish error:', e); });
+      animation.finished.then(cb).catch((e) => { console.warn('[Arcrawls Animate] animation finish error:', e); });
     },
     stop() {
       animation.cancel();

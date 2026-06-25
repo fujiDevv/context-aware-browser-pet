@@ -41,7 +41,7 @@ export class ViewManager {
     this.options = options;
 
     this.shadowHost = document.createElement('div');
-    this.shadowHost.id = 'clawd-companion-host';
+    this.shadowHost.id = 'arcrawls-companion-host';
 
     this.shadowRoot = this.shadowHost.attachShadow({ mode: 'closed' });
 
@@ -67,30 +67,30 @@ export class ViewManager {
 
     // Initialize Chat Panel
     this.chatPanel = document.createElement('div');
-    this.chatPanel.id = 'clawd-chat-panel';
-    const petName = this.options.petName || 'Clawd';
+    this.chatPanel.id = 'arcrawls-chat-panel';
+    const petName = this.options.petName || 'Arcrawls';
     this.chatPanel.innerHTML = `
-      <div class="clawd-chat-header">
+      <div class="arcrawls-chat-header">
         <span>Chat with ${petName}</span>
-        <button class="clawd-chat-close">×</button>
+        <button class="arcrawls-chat-close">×</button>
       </div>
-      <div class="clawd-chat-messages">
-        <div class="clawd-chat-msg clawd">Hi there! I'm ${petName}. Click me if you want to chat.</div>
+      <div class="arcrawls-chat-messages">
+        <div class="arcrawls-chat-msg arcrawls">Hi there! I'm ${petName}. Click me if you want to chat.</div>
       </div>
-      <div class="clawd-chat-input-container">
-        <button id="clawd-chat-mic" title="Voice Chat">🎤</button>
-        <input type="text" id="clawd-chat-input" placeholder="Ask me anything..." autocomplete="off">
-        <button id="clawd-chat-send">Send</button>
+      <div class="arcrawls-chat-input-container">
+        <button id="arcrawls-chat-mic" title="Voice Chat">🎤</button>
+        <input type="text" id="arcrawls-chat-input" placeholder="Ask me anything..." autocomplete="off">
+        <button id="arcrawls-chat-send">Send</button>
       </div>
     `;
     this.container.appendChild(this.chatPanel);
 
-    this.chatMessages = this.chatPanel.querySelector('.clawd-chat-messages') as HTMLElement;
-    this.chatInput = this.chatPanel.querySelector('#clawd-chat-input') as HTMLInputElement;
-    this.chatSend = this.chatPanel.querySelector('#clawd-chat-send') as HTMLButtonElement;
-    this.chatMic = this.chatPanel.querySelector('#clawd-chat-mic') as HTMLButtonElement;
+    this.chatMessages = this.chatPanel.querySelector('.arcrawls-chat-messages') as HTMLElement;
+    this.chatInput = this.chatPanel.querySelector('#arcrawls-chat-input') as HTMLInputElement;
+    this.chatSend = this.chatPanel.querySelector('#arcrawls-chat-send') as HTMLButtonElement;
+    this.chatMic = this.chatPanel.querySelector('#arcrawls-chat-mic') as HTMLButtonElement;
 
-    this.chatPanel.querySelector('.clawd-chat-close')?.addEventListener('click', (e) => {
+    this.chatPanel.querySelector('.arcrawls-chat-close')?.addEventListener('click', (e) => {
       e.stopPropagation();
       this.toggleChat(false);
     });
@@ -139,7 +139,7 @@ export class ViewManager {
       };
 
       this.recognition.onerror = (event: any) => {
-        console.warn(`[${this.options.petName || 'Clawd'} View] Speech recognition error`, event.error);
+        console.warn(`[${this.options.petName || 'Arcrawls'} View] Speech recognition error`, event.error);
         this.stopListening();
       };
 
@@ -248,7 +248,7 @@ export class ViewManager {
       return;
     }
 
-    const url = getRuntimeUrl(`assets/pets/clawd-${assetName}.svg`);
+    const url = getRuntimeUrl(`assets/pets/arcrawls-${assetName}.svg`);
 
     this.lastAssetName = assetName;
     this._syncAura(assetName);
@@ -546,8 +546,8 @@ export class ViewManager {
       this.container.style.setProperty('--crop-x', cropX.toString());
       this.container.style.setProperty('--crop-y', cropY.toString());
     } catch (e) {
-      console.warn(`[${this.options.petName || 'Clawd'} View] Failed to apply custom color/formatter:`, e);
-      this.petImg.src = getRuntimeUrl('assets/pets/clawd-happy.svg');
+      console.warn(`[${this.options.petName || 'Arcrawls'} View] Failed to apply custom color/formatter:`, e);
+      this.petImg.src = getRuntimeUrl('assets/pets/arcrawls-happy.svg');
     }
   }
 
@@ -573,14 +573,14 @@ export class ViewManager {
 
   public onPlayVoice: ((text: string) => void) | null = null;
 
-  public addChatMessage(role: 'user' | 'clawd', text: string, insertBeforeEl?: Element | null): void {
+  public addChatMessage(role: 'user' | 'arcrawls', text: string, insertBeforeEl?: Element | null): void {
     if (!this.chatMessages) return;
 
     const msg = document.createElement('div');
-    msg.className = `clawd-chat-msg ${role}`;
+    msg.className = `arcrawls-chat-msg ${role}`;
 
-    // Remove emojis for Clawd's responses
-    const displayText = role === 'clawd' 
+    // Remove emojis for Arcrawls's responses
+    const displayText = role === 'arcrawls' 
       ? text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim() 
       : text;
 
@@ -588,7 +588,7 @@ export class ViewManager {
     textNode.innerHTML = parseMarkdown(displayText);
     msg.appendChild(textNode);
 
-    if (role === 'clawd') {
+    if (role === 'arcrawls') {
       const controlsRow = document.createElement('div');
       controlsRow.style.marginTop = '6px';
       controlsRow.style.display = 'flex';
@@ -596,7 +596,7 @@ export class ViewManager {
       controlsRow.style.gap = '8px';
 
       const playBtn = document.createElement('button');
-      playBtn.className = 'clawd-control-btn';
+      playBtn.className = 'arcrawls-control-btn';
       playBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
       playBtn.title = 'Play';
       playBtn.addEventListener('click', (e) => {
@@ -607,7 +607,7 @@ export class ViewManager {
       });
       
       const copyBtn = document.createElement('button');
-      copyBtn.className = 'clawd-control-btn';
+      copyBtn.className = 'arcrawls-control-btn';
       copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
       copyBtn.title = 'Copy Response';
       copyBtn.addEventListener('click', async (e) => {
@@ -620,7 +620,7 @@ export class ViewManager {
       });
 
       const redoBtn = document.createElement('button');
-      redoBtn.className = 'clawd-control-btn';
+      redoBtn.className = 'arcrawls-control-btn';
       redoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
       redoBtn.title = 'Redo';
       redoBtn.addEventListener('click', (e) => {
@@ -666,7 +666,7 @@ export class ViewManager {
     if (isLoading) {
       if (appendIndicator) {
         const loadingMsg = document.createElement('div');
-        loadingMsg.className = 'clawd-chat-msg clawd loading-indicator';
+        loadingMsg.className = 'arcrawls-chat-msg arcrawls loading-indicator';
         loadingMsg.innerHTML = '<div class="ld-dots"><i></i><i></i><i></i></div>';
         this.chatMessages.appendChild(loadingMsg);
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
@@ -782,7 +782,7 @@ export class ViewManager {
     ];
     criticalAssets.forEach(name => {
       const img = new Image();
-      img.src = getRuntimeUrl(`assets/pets/clawd-${name}.svg`);
+      img.src = getRuntimeUrl(`assets/pets/arcrawls-${name}.svg`);
     });
   }
 }

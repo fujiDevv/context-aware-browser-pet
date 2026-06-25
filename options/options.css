@@ -1922,7 +1922,7 @@ input:checked+.switch-slider:before {
   border-bottom-right-radius: 4px;
 }
 
-.options-chat-msg.clawd {
+.options-chat-msg.arcrawls {
   align-self: flex-start;
   background: var(--bg-hover);
   color: var(--text-primary);
