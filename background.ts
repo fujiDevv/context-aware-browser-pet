@@ -1,7 +1,7 @@
 import { SharedPetState, OriginPetState } from './src/types';
 import { STORAGE_KEYS } from './src/constants';
 import { PersonalitySystem } from './src/personality';
-import { extensionApi, supportsOffscreenDocuments } from './src/platform';
+import { extensionApi, supportsOffscreenDocuments, isFirefoxRuntime } from './src/platform';
 
 let sharedPetState: SharedPetState = {
   x: 200,
@@ -64,7 +64,10 @@ extensionApi.runtime.onInstalled?.addListener((details) => {
 
   // Set the survey/feedback URL that opens when the user uninstalls the extension
   if (extensionApi.runtime.setUninstallURL) {
-    extensionApi.runtime.setUninstallURL('https://meetclawd.com/uninstall');
+    const manifest = extensionApi.runtime.getManifest();
+    const version = manifest?.version || 'unknown';
+    const browser = isFirefoxRuntime() ? 'firefox' : 'chrome';
+    extensionApi.runtime.setUninstallURL(`https://meetclawd.com/uninstall?version=${version}&browser=${browser}`);
   }
 
   if (details.reason === 'install' || details.reason === 'update') {
