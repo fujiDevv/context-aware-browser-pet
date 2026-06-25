@@ -67,7 +67,7 @@ extensionApi.runtime.onInstalled?.addListener((details) => {
     const manifest = extensionApi.runtime.getManifest();
     const version = manifest?.version || 'unknown';
     const browser = isFirefoxRuntime() ? 'firefox' : 'chrome';
-    extensionApi.runtime.setUninstallURL(`https://meetarcrawls.com/uninstall?version=${version}&browser=${browser}`);
+    extensionApi.runtime.setUninstallURL(`https://arcrawls.com/uninstall?version=${version}&browser=${browser}`);
   }
 
   if (details.reason === 'install' || details.reason === 'update') {

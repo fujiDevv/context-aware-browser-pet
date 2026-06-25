@@ -84,8 +84,7 @@ body {
 
 .step-title .brand {
   color: var(--accent);
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
+  font-family: 'Pixelify Sans', 'Outfit', sans-serif;
 }
 
 .step-subtitle {

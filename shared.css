@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: url('./assets/font/PixelifySans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Pixelify Sans', 'Outfit', sans-serif;
+}
+
 /* Shared Design Tokens and Global Variables */
 :root {
   --accent: #C75D3F;
