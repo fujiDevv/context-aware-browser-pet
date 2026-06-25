@@ -217,7 +217,7 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
     try {
       const parsedUrl = new URL(fetchUrl);
       if (parsedUrl.protocol === 'chrome-extension:') {
-        fetchUrl = parsedUrl.pathname;
+        fetchUrl = parsedUrl.pathname.replace(/^\//, '');
       }
     } catch (e) { }
 
