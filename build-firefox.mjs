@@ -15,6 +15,15 @@ if (manifest.content_security_policy && manifest.content_security_policy.extensi
   manifest.content_security_policy.extension_pages = "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://storage.ko-fi.com";
 }
 
+delete manifest.cross_origin_embedder_policy;
+delete manifest.cross_origin_opener_policy;
+
+if (manifest.web_accessible_resources) {
+  manifest.web_accessible_resources.forEach((resource) => {
+    delete resource.use_dynamic_url;
+  });
+}
+
 manifest.browser_specific_settings = {
   gecko: {
     strict_min_version: "121.0"
