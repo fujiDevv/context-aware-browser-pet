@@ -1,8 +1,8 @@
 # Arcrawls: The Context-Aware Browser Pet
 
-An open-source, interactive, context-aware browser mascot pet companion extension built using the [arcrawls-pet](https://github.com/abderrahimghazali/arcrawls-pet) SVG library. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
+An open-source, interactive, context-aware browser mascot pet companion extension built using the [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) SVG library. The pet crawls along the edges of your browser viewport, monitors your activity, and updates its expression in response to your browsing context and site errors!
 
-*Mascot SVG assets are adapted from the open-source [arcrawls-pet](https://github.com/abderrahimghazali/arcrawls-pet) library by Abderrahim Ghazali, used under the MIT License.*
+*Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
 <p align="center">
    <img src="assets/arcrawls-gif2.gif" alt="Arcrawls in Action" width="600" />
