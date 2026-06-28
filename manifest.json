@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Arcrawls: The Context-Aware Browser Pet",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "An interactive, context-aware browser mascot pet companion with 100% local offline AI.",
   "permissions": [
     "storage",
@@ -47,8 +47,6 @@
         "assets/*",
         "assets/pets/*",
         "wasm/*",
-        "onboarding/onboarding.html",
-        "offscreen.html",
         "main_world.js"
       ],
       "matches": [
