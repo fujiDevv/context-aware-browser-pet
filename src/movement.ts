@@ -555,10 +555,20 @@ export class MovementEngine {
     }
 
     const flip = (flipValue === -1) ? 'scaleX(-1)' : 'scaleX(1)';
-    const finalY = this.y + offsetY;
 
-    // A single DOM write per frame using GPU-composited translate3d
-    el.style.transform = `translate3d(${this.x}px, ${finalY}px, 0)`;
+    el.style.setProperty('--pet-x', `${this.x}px`);
+    el.style.setProperty('--pet-y', `${this.y}px`);
+    el.style.setProperty('--pet-offset-y', `${offsetY}px`);
+    
+    // Only set rotation and flip if we are NOT in an active flight/fall animation
+    // The posAnimation sets its own rotation to animate smoothly.
+    if (!this.paused || this.isDragging) {
+      el.style.setProperty('--pet-rotation', rotate);
+      el.style.setProperty('--pet-flip', flip);
+    }
+
+    // A single DOM write per frame using GPU-composited translate3d reading from CSS variables
+    el.style.transform = `translate3d(var(--pet-x), calc(var(--pet-y) + var(--pet-offset-y, 0px)), 0)`;
 
     // Position resets (Should only be set once during init, not every frame)
     if (!this.wasDragged) {
@@ -571,9 +581,9 @@ export class MovementEngine {
     const img = this.imgRef?.deref() || (el.querySelector('#browser-pet-img') as HTMLImageElement | null);
     if (img && !this.imgRef) this.imgRef = new WeakRef(img);
     if (img) {
-      // Apply internal rotation directly to the image
+      // Apply internal rotation directly to the image using the variables so animations can tweak it
       img.style.transformOrigin = 'center center';
-      img.style.transform = `${flip} rotate(${rotate})`;
+      img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
       img.style.width = `calc(${this.size}px * var(--crop-w, 1))`;
       img.style.height = `auto`;
       img.style.marginLeft = `calc(${this.size}px * var(--crop-x, 0))`;
@@ -726,7 +736,7 @@ export class MovementEngine {
       offsetY = `calc(${this.size}px - (var(--crop-y, 0) + var(--crop-h, 1)) * ${this.size}px)`;
     }
     el.style.setProperty('--pet-offset-y', offsetY);
-    el.style.transform = `translate(var(--pet-x), calc(var(--pet-y) + var(--pet-offset-y, 0px)))`;
+    el.style.transform = `translate3d(var(--pet-x), calc(var(--pet-y) + var(--pet-offset-y, 0px)), 0)`;
     el.style.left = '0px';
     el.style.top = '0px';
     el.style.bottom = 'auto';
