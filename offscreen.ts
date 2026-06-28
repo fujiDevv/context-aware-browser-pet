@@ -28,47 +28,51 @@ function reportAiProgress(state: typeof modelLoadingState, progress: number): vo
     .catch((e) => { console.warn('[Arcrawls Offscreen] update-ai-progress message failed:', e); });
 }
 
+let classifierPromise: Promise<ClassifierPipeline> | null = null;
+
 // Initialize/fetch the classifier pipeline
 async function getClassifier(): Promise<ClassifierPipeline> {
   if (classifier) return classifier;
 
-  if (modelLoadingState === 'loading') {
-    while (modelLoadingState === 'loading') {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
-    if (classifier) return classifier;
+  if (classifierPromise) {
+    return classifierPromise;
   }
 
   modelLoadingState = 'loading';
   modelDownloadProgress = 0;
   reportAiProgress(modelLoadingState, modelDownloadProgress);
 
-  try {
-    const pipelineInstance = await pipeline(
-      'text-classification',
-      'Xenova/distilbert-base-uncased-finetuned-sst-2-english',
-      {
-        progress_callback: (data: any) => {
-          if (data.status === 'progress') {
-            modelDownloadProgress = Math.round(data.progress);
-            reportAiProgress('loading', modelDownloadProgress);
-          } else if (data.status === 'ready') {
-            modelDownloadProgress = 100;
-            reportAiProgress('ready', 100);
+  classifierPromise = (async () => {
+    try {
+      const pipelineInstance = await pipeline(
+        'text-classification',
+        'Xenova/distilbert-base-uncased-finetuned-sst-2-english',
+        {
+          progress_callback: (data: any) => {
+            if (data.status === 'progress') {
+              modelDownloadProgress = Math.round(data.progress);
+              reportAiProgress('loading', modelDownloadProgress);
+            } else if (data.status === 'ready') {
+              modelDownloadProgress = 100;
+              reportAiProgress('ready', 100);
+            }
           }
         }
-      }
-    );
-    classifier = pipelineInstance as unknown as ClassifierPipeline;
-    modelLoadingState = 'ready';
-    reportAiProgress(modelLoadingState, 100);
-    return classifier;
-  } catch (err) {
-    modelLoadingState = 'error';
-    reportAiProgress(modelLoadingState, 0);
-    console.error('[Arcrawls Local AI] Failed to load pipeline:', err);
-    throw err;
-  }
+      );
+      classifier = pipelineInstance as unknown as ClassifierPipeline;
+      modelLoadingState = 'ready';
+      reportAiProgress(modelLoadingState, 100);
+      return classifier;
+    } catch (err) {
+      modelLoadingState = 'error';
+      reportAiProgress(modelLoadingState, 0);
+      console.error('[Arcrawls Local AI] Failed to load pipeline:', err);
+      classifierPromise = null;
+      throw err;
+    }
+  })();
+
+  return classifierPromise;
 }
 
 // Initialize/fetch the classifier pipeline is now lazily triggered on first request

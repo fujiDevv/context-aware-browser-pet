@@ -424,35 +424,39 @@ async function setupOffscreen(): Promise<void> {
     throw new Error(unsupportedOffscreenMessage);
   }
 
-  const contexts = await extensionApi.runtime.getContexts({
-    contextTypes: ['OFFSCREEN_DOCUMENT']
-  });
-  if (contexts && contexts.length > 0) {
-    return;
-  }
-
   if (creatingOffscreen) {
     await creatingOffscreen;
     return;
   }
 
-  const offscreenReason = extensionApi.offscreen.Reason;
-  if (!offscreenReason) {
-    throw new Error(unsupportedOffscreenMessage);
-  }
+  creatingOffscreen = (async () => {
+    const contexts = await extensionApi.runtime.getContexts({
+      contextTypes: ['OFFSCREEN_DOCUMENT']
+    });
+    if (contexts && contexts.length > 0) {
+      return;
+    }
 
-  creatingOffscreen = extensionApi.offscreen.createDocument({
-    url: 'offscreen.html',
-    reasons: [offscreenReason.DOM_PARSER, offscreenReason.AUDIO_PLAYBACK],
-    justification: 'Run local machine learning models and handle centralized audio playback for the pet companion'
-  });
+    const offscreenReason = extensionApi.offscreen.Reason;
+    if (!offscreenReason) {
+      throw new Error(unsupportedOffscreenMessage);
+    }
+
+    try {
+      await extensionApi.offscreen.createDocument({
+        url: 'offscreen.html',
+        reasons: [offscreenReason.DOM_PARSER, offscreenReason.AUDIO_PLAYBACK],
+        justification: 'Run local machine learning models and handle centralized audio playback for the pet companion'
+      });
+    } catch (err: any) {
+      if (!err.message.includes('Only a single offscreen document may be created')) {
+        throw err;
+      }
+    }
+  })();
 
   try {
     await creatingOffscreen;
-  } catch (err: any) {
-    if (!err.message.includes('Only a single offscreen document may be created')) {
-      throw err;
-    }
   } finally {
     creatingOffscreen = null;
   }
