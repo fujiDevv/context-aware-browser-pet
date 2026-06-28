@@ -105,6 +105,8 @@ function cleanupOrphanedScript(): void {
   window.removeEventListener('focus', handleWindowFocus);
   window.removeEventListener('pet-console-error', handleConsoleError);
   window.removeEventListener('keydown', handleKeydown);
+  document.removeEventListener('keydown', handleGhostModeActivity);
+  document.removeEventListener('scroll', handleGhostModeActivity);
 
   try {
     extensionApi.storage.onChanged?.removeListener(handleStorageChanged);
@@ -1335,6 +1337,16 @@ function handleKeydown(e: KeyboardEvent) {
   }
 }
 
+let ghostModeTimeout: ReturnType<typeof setTimeout> | null = null;
+function handleGhostModeActivity() {
+  if (!currentSettings.ghostMode || !isInitialized || isPetHidden()) return;
+  view.getContainer().classList.add('ghost-mode-active');
+  if (ghostModeTimeout) clearTimeout(ghostModeTimeout);
+  ghostModeTimeout = setTimeout(() => {
+    view.getContainer().classList.remove('ghost-mode-active');
+  }, 2000);
+}
+
 async function init(): Promise<void> {
   await loadAndApplySettings();
 
@@ -1373,15 +1385,6 @@ async function actuallyInit(): Promise<void> {
 
   window.addEventListener('keydown', handleKeydown);
   
-  let ghostModeTimeout: ReturnType<typeof setTimeout> | null = null;
-  const handleGhostModeActivity = () => {
-    if (!currentSettings.ghostMode || !isInitialized || isPetHidden()) return;
-    view.getContainer().classList.add('ghost-mode-active');
-    if (ghostModeTimeout) clearTimeout(ghostModeTimeout);
-    ghostModeTimeout = setTimeout(() => {
-      view.getContainer().classList.remove('ghost-mode-active');
-    }, 2000);
-  };
   document.addEventListener('keydown', handleGhostModeActivity, { passive: true });
   document.addEventListener('scroll', handleGhostModeActivity, { passive: true });
 

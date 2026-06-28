@@ -529,12 +529,20 @@ export class MovementEngine {
 
     let rotate = '0deg';
     let flipValue = this.direction;
+    let offsetY = 0;
+
+    // Cache crop values to avoid CSS queries during animation
+    const cropYStr = el.style.getPropertyValue('--crop-y');
+    const cropY = cropYStr ? parseFloat(cropYStr) : 0;
+    const cropHStr = el.style.getPropertyValue('--crop-h');
+    const cropH = cropHStr ? parseFloat(cropHStr) : 1;
 
     if (this.state === 'walk-top') {
       rotate = '180deg';
-      flipValue = this.direction;
+      offsetY = -1 * cropY * this.size;
     } else if (this.state === 'walk-bottom') {
       flipValue = -this.direction;
+      offsetY = this.size - ((cropY + cropH) * this.size);
     } else {
       // Legacy catch-all handling in the event a network sync forces a left/right edge
       if (this.state === 'walk-left') {
@@ -547,35 +555,27 @@ export class MovementEngine {
     }
 
     const flip = (flipValue === -1) ? 'scaleX(-1)' : 'scaleX(1)';
+    const finalY = this.y + offsetY;
 
-    el.style.setProperty('--pet-x', `${this.x}px`);
-    el.style.setProperty('--pet-y', `${this.y}px`);
-    el.style.setProperty('--pet-rotation', rotate);
-    el.style.setProperty('--pet-flip', flip);
-    let offsetY = '0px';
-    if (this.state === 'walk-top') {
-      offsetY = `calc(-1 * var(--crop-y, 0) * ${this.size}px)`;
-    } else if (this.state === 'walk-bottom') {
-      offsetY = `calc(${this.size}px - (var(--crop-y, 0) + var(--crop-h, 1)) * ${this.size}px)`;
+    // A single DOM write per frame using GPU-composited translate3d
+    el.style.transform = `translate3d(${this.x}px, ${finalY}px, 0)`;
+
+    // Position resets (Should only be set once during init, not every frame)
+    if (!this.wasDragged) {
+      el.style.left = '0px';
+      el.style.top = '0px';
+      el.style.bottom = 'auto';
+      el.style.position = 'absolute';
     }
-    el.style.setProperty('--pet-offset-y', offsetY);
-    el.style.transform = `translate(var(--pet-x), calc(var(--pet-y) + var(--pet-offset-y, 0px)))`;
-    el.style.left = '0px';
-    el.style.top = '0px';
-    el.style.bottom = 'auto';
-    el.style.position = 'absolute';
 
     const img = this.imgRef?.deref() || (el.querySelector('#browser-pet-img') as HTMLImageElement | null);
     if (img && !this.imgRef) this.imgRef = new WeakRef(img);
     if (img) {
-      img.style.transformOrigin = 'center center';
-      img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
-      img.style.width = `calc(${this.size}px * var(--crop-w, 1))`;
-      img.style.height = `auto`;
-      img.style.marginLeft = `calc(${this.size}px * var(--crop-x, 0))`;
-      img.style.marginTop = `calc(${this.size}px * var(--crop-y, 0))`;
+      // Apply internal rotation directly to the image
+      img.style.transform = `${flip} rotate(${rotate})`;
     }
 
+    // Speech bubble positioning
     const bubble = this.bubbleRef?.deref() || (el.parentElement?.querySelector('.pet-speech-bubble') as HTMLElement | null);
     if (bubble && !this.bubbleRef) this.bubbleRef = new WeakRef(bubble);
     if (bubble) {
@@ -584,19 +584,15 @@ export class MovementEngine {
       let bubbleX = '-50%';
 
       if (this.state === 'walk-top') {
-        counterRotate = '0deg';
         bubbleY = `${this.size + 15}px`;
       } else if (this.state === 'walk-left') {
-        counterRotate = '0deg';
         bubbleX = '10%';
         bubbleY = `${this.size / 2 - 10}px`;
       } else if (this.state === 'walk-right') {
-        counterRotate = '0deg';
         bubbleX = '-110%';
         bubbleY = `${this.size / 2 - 10}px`;
       }
 
-      bubble.style.bottom = 'auto';
       bubble.style.top = bubbleY;
       bubble.style.transform = `translateX(${bubbleX}) rotate(${counterRotate}) scale(var(--bubble-scale, 1))`;
 

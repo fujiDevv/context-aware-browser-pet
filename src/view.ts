@@ -37,6 +37,22 @@ export class ViewManager {
   public onChatSubmit: ((message: string) => void) | null = null;
   public onChatRedo: ((oldMsgEl: HTMLElement, lastUserMsg: string) => void) | null = null;
 
+  // Bound event listeners for cleanup
+  private handleDocumentKeydown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && this.chatPanel.classList.contains('show')) {
+      this.toggleChat(false);
+    }
+  };
+
+  private handleDocumentMousedown = (e: MouseEvent) => {
+    if (this.chatPanel.classList.contains('show')) {
+      const path = e.composedPath();
+      if (!path.includes(this.shadowHost)) {
+        this.toggleChat(false);
+      }
+    }
+  };
+
   constructor(options: ViewManagerOptions) {
     this.options = options;
 
@@ -161,20 +177,8 @@ export class ViewManager {
       this.chatMic.style.display = 'none'; // Hide if not supported
     }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.chatPanel.classList.contains('show')) {
-        this.toggleChat(false);
-      }
-    });
-
-    document.addEventListener('mousedown', (e) => {
-      if (this.chatPanel.classList.contains('show')) {
-        const path = e.composedPath();
-        if (!path.includes(this.shadowHost)) {
-          this.toggleChat(false);
-        }
-      }
-    });
+    document.addEventListener('keydown', this.handleDocumentKeydown);
+    document.addEventListener('mousedown', this.handleDocumentMousedown);
 
     this.bindEvents();
     this.injectHost();
@@ -770,6 +774,8 @@ export class ViewManager {
   }
 
   public destroy() {
+    document.removeEventListener('keydown', this.handleDocumentKeydown);
+    document.removeEventListener('mousedown', this.handleDocumentMousedown);
     this.shadowHost.remove();
   }
 
