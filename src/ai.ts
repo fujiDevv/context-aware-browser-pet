@@ -209,7 +209,16 @@ async function promptGeminiNano(systemPrompt: string, prompt: string, petName: s
       }
       console.log(`[${petName} AI] Executing local Gemini Nano inference (EXTENSION_CONTEXT)...`);
       const session = await lm.create(createOptions);
-      const resultText = await session.prompt(prompt);
+      
+      const timeoutPromise = new Promise<null>((_, reject) => 
+        setTimeout(() => reject(new Error("Gemini Nano Inference Timeout")), 8000)
+      );
+
+      const resultText = await Promise.race([
+        session.prompt(prompt),
+        timeoutPromise
+      ]);
+      
       await session.destroy();
       return resultText;
     } catch (e) {

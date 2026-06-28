@@ -120,6 +120,20 @@ export const extensionApi = {
       clear(): Promise<void> {
         return toPromise<void>(getExtensionRoot()?.storage?.local, 'clear');
       }
+    },
+    session: {
+      get<T = Record<string, any>>(keys?: string | string[] | Record<string, any> | null): Promise<T> {
+        return toPromise<T>(getExtensionRoot()?.storage?.session, 'get', keys === undefined ? [] : [keys]);
+      },
+      set(items: Record<string, any>): Promise<void> {
+        return toPromise<void>(getExtensionRoot()?.storage?.session, 'set', [items]);
+      },
+      remove(keys: string | string[]): Promise<void> {
+        return toPromise<void>(getExtensionRoot()?.storage?.session, 'remove', [keys]);
+      },
+      clear(): Promise<void> {
+        return toPromise<void>(getExtensionRoot()?.storage?.session, 'clear');
+      }
     }
   },
   tabs: {

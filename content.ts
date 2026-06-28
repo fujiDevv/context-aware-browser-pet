@@ -174,6 +174,14 @@ function setSessionItem(key: string, value: string): void {
   }
 }
 
+function getSemanticPageText(): string {
+  // Prioritize actual content over navigation/footers
+  const mainContent = document.querySelector('main, article, [role="main"], #content') as HTMLElement | null;
+  const text = (mainContent || document.body).innerText || '';
+  // Strip excessive whitespace/newlines to maximize token density
+  return text.replace(/\s+/g, ' ').trim().substring(0, 3000);
+}
+
 function isPetHidden(): boolean {
   const isBlockedDomain = currentSettings.blockedDomains?.includes(window.location.hostname);
   const isHiddenInTab = getSessionItem('pet-hidden-in-tab') === 'true';
@@ -507,7 +515,7 @@ function ensureInitialized(): void {
     
     view.setChatLoading(true, false);
     
-    const pageText = document.body.innerText || '';
+    const pageText = getSemanticPageText();
     const trait = getDominantTrait(personality.stats.siteCategoryCounts);
     const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
     const persona = currentSettings.persona || 'default';
@@ -713,7 +721,7 @@ async function updateEmotion(): Promise<void> {
           await extensionApi.storage.local.set({ [STORAGE_KEYS.LAST_AI_COMMENT_TIME]: now });
 
           const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content;
-          const pageText = document.body.innerText || '';
+          const pageText = getSemanticPageText();
           const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
           const result = await getAiEmotion(context.pageTitle, metaDesc, window.location.href, currentSettings.apiKey, currentSettings.persona || 'default', statsContext, currentSettings.sentimentSensitivity, currentSettings.name, pageText);
           nextEmotion = result.emotion;

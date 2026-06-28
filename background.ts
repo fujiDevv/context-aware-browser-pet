@@ -19,8 +19,17 @@ extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SHARED_STATE).t
   }
 }).catch((e) => { console.warn('[Arcrawls Background] storage.get shared-pet-state error:', e); });
 
-const originPetStates: Record<string, OriginPetState> = {};
+let originPetStates: Record<string, OriginPetState> = {};
 const tabHttpErrors: Record<number, number> = {};
+
+// Load origin states from session storage to survive Service Worker suspension
+try {
+  extensionApi.storage.session?.get<Record<string, any>>('originPetStates').then((data) => {
+    if (data && data.originPetStates) {
+      originPetStates = data.originPetStates;
+    }
+  }).catch(() => { /* Ignore session storage errors */ });
+} catch (e) { /* Ignore */ }
 const backgroundPersonality = new PersonalitySystem();
 const supportsOffscreen = supportsOffscreenDocuments();
 const unsupportedOffscreenMessage = 'Local AI and centralized audio require Chrome offscreen documents and are not available in this Firefox build yet.';
@@ -166,19 +175,20 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'update-pet-state') {
-    sharedPetState = { ...sharedPetState, ...message.state };
+    const newState = { ...sharedPetState, ...message.state };
+    sharedPetState = newState;
 
     // Persist shared state to storage
     extensionApi.storage.local.set({ [STORAGE_KEYS.SHARED_STATE]: sharedPetState })
       .catch((e) => { console.warn('[Arcrawls Background] storage.set shared-pet-state error:', e); });
 
-    const broadcast = () => {
+    const broadcast = (stateToBroadcast: SharedPetState) => {
       extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] }).then((tabs) => {
         tabs.forEach((tab) => {
           if (sender.tab && tab.id !== sender.tab.id && tab.id !== undefined) {
             extensionApi.tabs.sendMessage(tab.id, {
               type: 'sync-pet-state',
-              state: sharedPetState
+              state: stateToBroadcast
             }).catch((e) => {
               console.debug('[Arcrawls Background] sync-pet-state broadcast failed:', e);
             });
@@ -196,12 +206,12 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
         clearTimeout(syncTimeout);
         syncTimeout = null;
       }
-      broadcast();
+      broadcast(newState);
     } else {
       if (syncTimeout) clearTimeout(syncTimeout);
       syncTimeout = setTimeout(() => {
         lastSyncTime = Date.now();
-        broadcast();
+        broadcast(sharedPetState);
         syncTimeout = null;
       }, 500 - (now - lastSyncTime));
     }
@@ -280,6 +290,11 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
           delete originPetStates[sortedKeys[i]];
         }
       }
+
+      // Persist to session storage
+      try {
+        extensionApi.storage.session?.set({ originPetStates }).catch(() => {});
+      } catch (e) { /* ignore */ }
 
       // Broadcast to other tabs with the same hostname
       extensionApi.tabs.query({ url: ['http://*/*', 'https://*/*'] }).then((tabs) => {
