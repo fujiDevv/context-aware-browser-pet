@@ -1,4 +1,5 @@
 // Captured in the webpage's MAIN world context to bypass Content Security Policies
+(() => {
 const currentScript = document.currentScript as HTMLScriptElement;
 const BRIDGE_TOKEN = currentScript?.dataset.token;
 
@@ -87,3 +88,4 @@ window.addEventListener('message', async (event) => {
     }
   }
 });
+})();
