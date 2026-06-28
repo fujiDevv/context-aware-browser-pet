@@ -5,6 +5,8 @@ import { extensionApi } from './platform';
 export class MovementEngine {
   elRef: WeakRef<HTMLElement>;
   containerRef?: WeakRef<HTMLElement>;
+  imgRef?: WeakRef<HTMLImageElement>;
+  bubbleRef?: WeakRef<HTMLElement>;
   isSandbox: boolean;
   state: string;
   size: number;
@@ -563,7 +565,8 @@ export class MovementEngine {
     el.style.bottom = 'auto';
     el.style.position = 'absolute';
 
-    const img = el.querySelector('#browser-pet-img') as HTMLImageElement | null;
+    const img = this.imgRef?.deref() || (el.querySelector('#browser-pet-img') as HTMLImageElement | null);
+    if (img && !this.imgRef) this.imgRef = new WeakRef(img);
     if (img) {
       img.style.transformOrigin = 'center center';
       img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
@@ -573,7 +576,8 @@ export class MovementEngine {
       img.style.marginTop = `calc(${this.size}px * var(--crop-y, 0))`;
     }
 
-    const bubble = el.parentElement?.querySelector('.pet-speech-bubble') as HTMLElement | null;
+    const bubble = this.bubbleRef?.deref() || (el.parentElement?.querySelector('.pet-speech-bubble') as HTMLElement | null);
+    if (bubble && !this.bubbleRef) this.bubbleRef = new WeakRef(bubble);
     if (bubble) {
       let counterRotate = '0deg';
       let bubbleY = '65px';
