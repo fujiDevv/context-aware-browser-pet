@@ -2,7 +2,7 @@
 
 > Your context-aware browser pet companion.
 > 
-> *Mascot SVG assets are adapted from the open-source [arcrawls-pet](https://github.com/abderrahimghazali/arcrawls-pet) library by Abderrahim Ghazali, used under the MIT License.*
+> *Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
 ---
 
