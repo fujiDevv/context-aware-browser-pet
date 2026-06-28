@@ -190,12 +190,28 @@ RULE:
   return cleaned;
 }
 
+export interface ILanguageModelSession {
+  prompt(text: string): Promise<string>;
+  destroy(): Promise<void>;
+}
+
+export interface ILanguageModel {
+  create(options: any): Promise<ILanguageModelSession>;
+  capabilities?(): Promise<any>;
+  availability?(): Promise<string>;
+}
+
 /**
  * Orchestrates a prompt to Gemini Nano, handling both direct access and bridge-based communication.
  */
-async function promptGeminiNano(systemPrompt: string, prompt: string, petName: string = 'Arcrawls'): Promise<string | null> {
+export async function promptGeminiNano(
+  systemPrompt: string, 
+  prompt: string, 
+  petName: string = 'Arcrawls',
+  lmProvider?: ILanguageModel
+): Promise<string | null> {
   // 1. Direct Extension/Extension Context Attempt
-  const lm = (globalThis as any).ai?.languageModel || (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? ((window as any).ai?.languageModel || (window as any).LanguageModel) : null);
+  const lm = lmProvider || (globalThis as any).ai?.languageModel || (globalThis as any).LanguageModel || (typeof window !== 'undefined' ? ((window as any).ai?.languageModel || (window as any).LanguageModel) : null);
   if (lm) {
     try {
       const createOptions: any = {
