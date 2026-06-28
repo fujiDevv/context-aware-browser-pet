@@ -227,7 +227,8 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
     try {
       const parsedUrl = new URL(fetchUrl);
       if (parsedUrl.protocol === 'chrome-extension:') {
-        fetchUrl = parsedUrl.pathname.replace(/^\//, '');
+        // Must use leading slash for absolute path from extension root
+        fetchUrl = '/' + parsedUrl.pathname.replace(/^\//, '');
       }
     } catch (e) { }
 
