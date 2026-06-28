@@ -27,9 +27,9 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **Gravity-Driven Physics Engine**: Reliable floor/ceiling crawling with a built-in Gravity Engine, spring-physics, and intelligent edge-snapping (no more wall-sticking).
   * **Context-Aware Emotions**: Real-time expressions that react to typing speed, scroll depth, media playback, intent detection, and site errors.
   * **Lite Mode (Default)**: Efficient, rule-based behavior analysis using Regex and meta-tag analysis—zero downloads or API keys required.
-  * **Brain Upgrade (Optional AI)**: Privacy-first, high-fidelity sentiment analysis using an on-device DistilBERT model. Features **Gemini Nano** integration to summarize full page DOM bodies natively without context-window overflow.
+  * **Brain Upgrade (Optional AI)**: Privacy-first, high-fidelity sentiment analysis using an on-device DistilBERT model. Features **Gemini Nano** integration to summarize full page DOM bodies natively, specifically targeting semantic `<main>` and `<article>` tags to prevent context-window overflow, complete with an 8-second safety timeout.
   * **Distraction-Free UI**: Schedule **Focus Blocks** to force Arcrawls into a quiet studying animation, or use **Ghost Mode** to automatically fade his opacity down to 30% whenever you are actively typing or scrolling.
-  * **Performance Mode**: Halts cross-tab syncing, caps physics to 30fps, and disables CSS aura shaders to save memory and CPU on low-end machines.
+  * **Performance Mode**: Halts cross-tab syncing and disables CSS aura shaders to save memory and CPU on low-end machines. Movement now utilizes a single GPU-composited `translate3d` update per frame to eliminate layout thrashing.
   * **Virtual Pet Progression**: Level up your pet through interactions, unlock costumes, and develop unique personality traits based on your browsing habits.
   * **Mascot Milestones**: Track significant growth markers, interaction records, and trait evolutions in a dedicated achievement dashboard.
   * **24-Hour AI Synapse**: Get daily generative reflections on your browsing habits synthesized by Gemini Nano (Brain Upgrade required).
@@ -40,7 +40,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   ## Directory Structure
 
   ```
-  context-aware-browser-pet/
+  context-aware-pet/
   ├── package.json           # Build scripts and dependency configurations
   ├── tsconfig.json          # TypeScript compilation settings
   ├── manifest.json          # Manifest V3 extension metadata
@@ -81,7 +81,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   1. Navigate to the extension directory:
    ```bash
-   cd context-aware-browser-pet
+   cd context-aware-pet
    ```
   2. Install the dev dependencies:
    ```bash
@@ -105,7 +105,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   1. Open **Chrome** and navigate to `chrome://extensions`.
   2. Toggle on **Developer mode** in the top-right corner.
   3. Click the **Load unpacked** button in the top-left corner.
-  4. Select the `dist/` directory located inside the `context-aware-browser-pet` folder.
+  4. Select the `dist/` directory located inside the `context-aware-pet` folder.
   5. Open any webpage (e.g. [github.com](https://github.com)) — your pet will slide onto the page! 🐾
 
   ### Loading the Extension in Firefox
@@ -116,7 +116,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
    ```
   2. Open **Firefox** and navigate to `about:debugging#/runtime/this-firefox`.
   3. Click **Load Temporary Add-on...**.
-  4. Select `dist-firefox/manifest.json` inside the `context-aware-browser-pet` folder.
+  4. Select `dist-firefox/manifest.json` inside the `context-aware-pet` folder.
   5. Open any normal HTTPS webpage (e.g. [github.com](https://github.com)) to verify that Arcrawls appears.
 
   Firefox currently runs Arcrawls in Lite Mode. The local Brain Upgrade and centralized offscreen audio paths depend on Chrome offscreen documents, which Firefox does not support yet.
