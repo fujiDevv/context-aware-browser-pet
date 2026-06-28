@@ -572,7 +572,12 @@ export class MovementEngine {
     if (img && !this.imgRef) this.imgRef = new WeakRef(img);
     if (img) {
       // Apply internal rotation directly to the image
+      img.style.transformOrigin = 'center center';
       img.style.transform = `${flip} rotate(${rotate})`;
+      img.style.width = `calc(${this.size}px * var(--crop-w, 1))`;
+      img.style.height = `auto`;
+      img.style.marginLeft = `calc(${this.size}px * var(--crop-x, 0))`;
+      img.style.marginTop = `calc(${this.size}px * var(--crop-y, 0))`;
     }
 
     // Speech bubble positioning
