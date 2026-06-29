@@ -99,6 +99,7 @@ function cleanupOrphanedScript(): void {
   if (debounceTimeout) clearTimeout(debounceTimeout);
   if (pokeInterval) clearInterval(pokeInterval);
   if (interactionTimeout) clearTimeout(interactionTimeout);
+  if (ghostModeTimeout) clearTimeout(ghostModeTimeout);
 
   if (isInitialized) {
     try {
@@ -198,7 +199,8 @@ function setSessionItem(key: string, value: string): void {
 function getSemanticPageText(): string {
   // Prioritize actual content over navigation/footers
   const mainContent = document.querySelector('main, article, [role="main"], #content') as HTMLElement | null;
-  const text = (mainContent || document.body).innerText || '';
+  // Use textContent instead of innerText to prevent massive forced synchronous layout (layout thrashing)
+  const text = (mainContent || document.body).textContent || '';
   // Strip excessive whitespace/newlines to maximize token density
   return text.replace(/\s+/g, ' ').trim().substring(0, 3000);
 }

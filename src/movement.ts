@@ -683,7 +683,7 @@ export class MovementEngine {
             direction: this.direction,
             paused: this.paused
           }
-        });
+        }, true);
       } else {
         this.paused = false;
         this.wasDragged = false;
@@ -809,9 +809,19 @@ export class MovementEngine {
     this._apply();
   }
 
-  _safeSendMessage(msg: PetMessage): void {
+  private _lastIpcSyncTime: number = 0;
+
+  _safeSendMessage(msg: PetMessage, force: boolean = false): void {
     if (this.isSandbox) return;
     if (this.performanceMode && msg.type === 'update-pet-state') return;
+
+    // Throttle IPC messages to prevent massive overhead during drag/frequent updates
+    if (msg.type === 'update-pet-state' && !force) {
+      const now = Date.now();
+      if (now - this._lastIpcSyncTime < 100) return;
+      this._lastIpcSyncTime = now;
+    }
+
     try {
       if (extensionApi.runtime.id) {
         extensionApi.runtime.sendMessage(msg).catch((e) => { console.warn('[Arcrawls Movement] runtime.sendMessage error:', e); });
