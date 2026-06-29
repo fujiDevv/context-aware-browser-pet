@@ -105,22 +105,10 @@ export class MovementEngine {
       const container = this.containerRef?.deref();
       const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
 
-      const r = Math.random();
-      let targetY: number;
-      let startY: number;
-      let startState: string;
-
-      if (r < 0.6) {
-        // 60% Ground
-        targetY = H;
-        startY = H - 150;
-        startState = 'walk-bottom';
-      } else {
-        // 40% Ceiling
-        targetY = 0;
-        startY = 150;
-        startState = 'walk-top';
-      }
+      // Always Ground for initial spawn
+      const targetY = H;
+      const startY = H - 150;
+      const startState = 'walk-bottom';
 
       this.y = startY;
       this.state = startState;
@@ -529,20 +517,11 @@ export class MovementEngine {
 
     let rotate = '0deg';
     let flipValue = this.direction;
-    let offsetY = 0;
-
-    // Cache crop values to avoid CSS queries during animation
-    const cropYStr = el.style.getPropertyValue('--crop-y');
-    const cropY = cropYStr ? parseFloat(cropYStr) : 0;
-    const cropHStr = el.style.getPropertyValue('--crop-h');
-    const cropH = cropHStr ? parseFloat(cropHStr) : 1;
 
     if (this.state === 'walk-top') {
       rotate = '180deg';
-      offsetY = -1 * cropY * this.size;
     } else if (this.state === 'walk-bottom') {
       flipValue = -this.direction;
-      offsetY = this.size - ((cropY + cropH) * this.size);
     } else {
       // Legacy catch-all handling in the event a network sync forces a left/right edge
       if (this.state === 'walk-left') {
@@ -556,9 +535,12 @@ export class MovementEngine {
 
     const flip = (flipValue === -1) ? 'scaleX(-1)' : 'scaleX(1)';
 
+    // Ensure the container exactly matches this.size so it anchors perfectly to the screen bounds
+    el.style.width = `${this.size}px`;
+    el.style.height = `${this.size}px`;
     el.style.setProperty('--pet-x', `${this.x}px`);
     el.style.setProperty('--pet-y', `${this.y}px`);
-    el.style.setProperty('--pet-offset-y', `${offsetY}px`);
+    el.style.setProperty('--pet-offset-y', `0px`);
     
     // Only set rotation and flip if we are NOT in an active flight/fall animation
     // The posAnimation sets its own rotation to animate smoothly.
@@ -568,7 +550,7 @@ export class MovementEngine {
     }
 
     // A single DOM write per frame using GPU-composited translate3d reading from CSS variables
-    el.style.transform = `translate3d(var(--pet-x), calc(var(--pet-y) + var(--pet-offset-y, 0px)), 0)`;
+    el.style.transform = `translate3d(var(--pet-x), var(--pet-y), 0)`;
 
     // Position resets (Should only be set once during init, not every frame)
     if (!this.wasDragged) {
@@ -586,8 +568,16 @@ export class MovementEngine {
       img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
       img.style.width = `calc(${this.size}px * var(--crop-w, 1))`;
       img.style.height = `auto`;
-      img.style.marginLeft = `calc(${this.size}px * var(--crop-x, 0))`;
-      img.style.marginTop = `calc(${this.size}px * var(--crop-y, 0))`;
+      img.style.left = `calc(${this.size}px * var(--crop-x, 0))`;
+      
+      // Pin the cropped image directly to the edges of the container for pixel-perfect ground/ceiling contact
+      if (this.state === 'walk-top') {
+        img.style.top = '0px';
+        img.style.bottom = 'auto';
+      } else {
+        img.style.top = 'auto';
+        img.style.bottom = '0px';
+      }
     }
 
     // Speech bubble positioning
@@ -705,18 +695,14 @@ export class MovementEngine {
     const dragRotate = '0deg';
     const dragFlip = this.x >= W / 2 ? 'scaleX(1)' : 'scaleX(-1)';
 
+    el.style.width = `${this.size}px`;
+    el.style.height = `${this.size}px`;
     el.style.setProperty('--pet-x', `${this.x}px`);
     el.style.setProperty('--pet-y', `${this.y}px`);
     el.style.setProperty('--pet-rotation', dragRotate);
     el.style.setProperty('--pet-flip', dragFlip);
-    let offsetY = '0px';
-    if (this.state === 'walk-top') {
-      offsetY = `calc(-1 * var(--crop-y, 0) * ${this.size}px)`;
-    } else if (this.state === 'walk-bottom') {
-      offsetY = `calc(${this.size}px - (var(--crop-y, 0) + var(--crop-h, 1)) * ${this.size}px)`;
-    }
-    el.style.setProperty('--pet-offset-y', offsetY);
-    el.style.transform = `translate3d(var(--pet-x), calc(var(--pet-y) + var(--pet-offset-y, 0px)), 0)`;
+    el.style.setProperty('--pet-offset-y', `0px`);
+    el.style.transform = `translate3d(var(--pet-x), var(--pet-y), 0)`;
     el.style.left = '0px';
     el.style.top = '0px';
     el.style.bottom = 'auto';
@@ -725,6 +711,15 @@ export class MovementEngine {
     if (img) {
       img.style.transformOrigin = 'center center';
       img.style.transform = `var(--pet-flip) rotate(var(--pet-rotation))`;
+      
+      // Update image anchor based on current drag state
+      if (this.state === 'walk-top') {
+        img.style.top = '0px';
+        img.style.bottom = 'auto';
+      } else {
+        img.style.top = 'auto';
+        img.style.bottom = '0px';
+      }
     }
   }
 
