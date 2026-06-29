@@ -594,28 +594,8 @@ export class MovementEngine {
     const bubble = this.bubbleRef?.deref() || (el.parentElement?.querySelector('.pet-speech-bubble') as HTMLElement | null);
     if (bubble && !this.bubbleRef) this.bubbleRef = new WeakRef(bubble);
     if (bubble) {
-      let counterRotate = '0deg';
-      let bubbleY = '65px';
-      let bubbleX = '-50%';
-
-      if (this.state === 'walk-top') {
-        bubbleY = `${this.size + 15}px`;
-      } else if (this.state === 'walk-left') {
-        bubbleX = '10%';
-        bubbleY = `${this.size / 2 - 10}px`;
-      } else if (this.state === 'walk-right') {
-        bubbleX = '-110%';
-        bubbleY = `${this.size / 2 - 10}px`;
-      }
-
-      bubble.style.top = bubbleY;
-      bubble.style.transform = `translateX(${bubbleX}) rotate(${counterRotate}) scale(var(--bubble-scale, 1))`;
-
-      if (bubble.classList.contains('show')) {
-        bubble.style.setProperty('--bubble-scale', '1');
-      } else {
-        bubble.style.setProperty('--bubble-scale', '0.8');
-      }
+      const isShowing = bubble.classList.contains('show') || (bubble as any)._isShowing;
+      bubble.className = `pet-speech-bubble state-${this.state}${isShowing ? ' show' : ''}`;
     }
   }
 
