@@ -13,7 +13,9 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 </p>
 
 <p align="center">
-  <iframe src="https://chrome-stats.com/embed/mhblnkjcihkkeihkpnjpicnpoidgckfe/basic?theme=dark" width="400" height="200" frameborder="0"></iframe>
+  <a href="https://chrome-stats.com/chrome/trending/trending-week" target="_blank">
+    <img src="https://img.shields.io/badge/Chrome_Stats-Top_1_Week_Growth_(49%2C900%25)-C75D3F?logo=googlechrome&logoColor=white&style=for-the-badge" alt="Chrome Stats - Top 1 Week Growth" />
+  </a>
 </p>
 
 <p align="center">
