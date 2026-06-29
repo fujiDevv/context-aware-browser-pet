@@ -896,16 +896,14 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
   };
 
   const filename = sounds[type];
-  if (!filename) return;
-
-  try {
-    extensionApi.runtime.sendMessage({
-      type: 'play-sound',
-      filename,
-      volume
-    });
-  } catch (e) {
-    console.warn("Failed to play sound preview:", e);
+  if (filename) {
+    try {
+      const audio = new Audio(extensionApi.runtime.getURL(`assets/${filename}`));
+      audio.volume = volume;
+      audio.play().catch(e => console.warn('[Arcrawls Dashboard] Audio playback blocked:', e));
+    } catch (e) {
+      console.error('[Arcrawls Dashboard] Failed to play sound:', e);
+    }
   }
 }
 

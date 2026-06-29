@@ -145,38 +145,30 @@ async function getLocalAiEmotion(
   return { emotion, comment, category: finalCategory, sentiment };
 }
 
-let audioCtx: AudioContext | null = null;
-const audioBuffers: Record<string, AudioBuffer> = {};
-
 async function playSound(filename: string, volume: number): Promise<void> {
-  try {
-    if (!audioCtx) {
-      audioCtx = new AudioContext();
-    }
-
-    if (audioCtx.state === 'suspended') {
-      await audioCtx.resume();
-    }
-
-    let buffer = audioBuffers[filename];
-    if (!buffer) {
+  return new Promise((resolve, reject) => {
+    try {
       const soundUrl = getRuntimeUrl(`assets/${encodeURIComponent(filename)}`);
-      const response = await fetch(soundUrl);
-      const arrayBuffer = await response.arrayBuffer();
-      buffer = await audioCtx.decodeAudioData(arrayBuffer);
-      audioBuffers[filename] = buffer;
+      const audio = new Audio(soundUrl);
+      document.body.appendChild(audio);
+      audio.volume = volume;
+      
+      audio.play()
+        .then(() => {
+          // Cleanup after audio finishes
+          audio.onended = () => audio.remove();
+          resolve();
+        })
+        .catch((err) => {
+          console.warn('[Arcrawls Offscreen] Failed to play sound natively:', err);
+          audio.remove();
+          reject(err);
+        });
+    } catch (err) {
+      console.error('[Arcrawls Offscreen] Error initializing audio:', err);
+      reject(err);
     }
-
-    const source = audioCtx.createBufferSource();
-    source.buffer = buffer;
-    const gainNode = audioCtx.createGain();
-    gainNode.gain.value = volume;
-    source.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    source.start(0);
-  } catch (err) {
-    console.error('[Arcrawls Offscreen] Failed to play sound:', err);
-  }
+  });
 }
 
 // Set up runtime message listener in the offscreen document

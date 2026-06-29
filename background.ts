@@ -32,16 +32,18 @@ try {
 } catch (e) { /* Ignore */ }
 const backgroundPersonality = new PersonalitySystem();
 const supportsOffscreen = supportsOffscreenDocuments();
+const supportsAudioInBackground = typeof Audio !== 'undefined';
 const unsupportedOffscreenMessage = 'Local AI and centralized audio require Chrome offscreen documents and are not available in this Firefox build yet.';
 
 function applyRuntimeFeatureSupport(settings: any = {}) {
+  const canPlaySound = supportsOffscreen || supportsAudioInBackground;
   if (supportsOffscreen) {
     return settings;
   }
 
   return {
     ...settings,
-    soundEnabled: false,
+    soundEnabled: canPlaySound ? settings.soundEnabled : false,
     aiMode: false,
     advancedAiEnabled: false
   };
@@ -244,6 +246,17 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'play-sound') {
     if (!supportsOffscreen) {
+      if (supportsAudioInBackground) {
+        try {
+          const audio = new Audio(extensionApi.runtime.getURL(`assets/${message.filename}`));
+          audio.volume = message.volume;
+          audio.play().catch(e => console.warn('[Arcrawls Background] Audio playback failed', e));
+          sendResponse({ success: true });
+        } catch (e: any) {
+          sendResponse({ success: false, error: e.message });
+        }
+        return false;
+      }
       sendResponse({ success: false, error: unsupportedOffscreenMessage });
       return false;
     }
