@@ -38,7 +38,7 @@ describe('AI Orchestration', () => {
       mockLmProvider
     );
 
-    await vi.advanceTimersByTimeAsync(25000);
+    await vi.advanceTimersByTimeAsync(35000);
     const result = await resultPromise;
 
     expect(result).toBeNull();
