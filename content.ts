@@ -71,9 +71,17 @@ async function playSound(type: string): Promise<void> {
     if (response && response.success === false) {
       // Fallback: Play audio directly in the content script if background/offscreen fails
       try {
+        // Only attempt fallback playback if the user has interacted with the page to avoid console spam
+        if (navigator.userActivation && !navigator.userActivation.hasBeenActive) {
+          return;
+        }
         const audio = new Audio(getRuntimeUrl(`assets/${filename}`));
         audio.volume = volume;
-        audio.play().catch(e => console.warn(`[${currentSettings.name || "Arcrawls"}] Content script audio fallback blocked:`, e));
+        audio.play().catch(e => {
+          if (e.name !== 'NotAllowedError') {
+            console.warn(`[${currentSettings.name || "Arcrawls"}] Content script audio fallback blocked:`, e);
+          }
+        });
       } catch (e) {
         console.warn(`[${currentSettings.name || "Arcrawls"}] Content script audio fallback failed:`, e);
       }

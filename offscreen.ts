@@ -160,7 +160,9 @@ async function playSound(filename: string, volume: number): Promise<void> {
           resolve();
         })
         .catch((err) => {
-          console.warn('[Arcrawls Offscreen] Failed to play sound natively:', err);
+          if (err.name !== 'NotAllowedError') {
+            console.warn('[Arcrawls Offscreen] Failed to play sound natively:', err);
+          }
           audio.remove();
           reject(err);
         });
