@@ -13,6 +13,10 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 </p>
 
 <p align="center">
+  <iframe src="https://chrome-stats.com/embed/mhblnkjcihkkeihkpnjpicnpoidgckfe/basic?theme=dark" width="400" height="200" frameborder="0"></iframe>
+</p>
+
+<p align="center">
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript&logoColor=white" alt="TypeScript" /></a>
   <a href="#"><img src="https://img.shields.io/badge/Manifest-V3-orange?logo=google-chrome&logoColor=white" alt="Manifest V3" /></a>
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Bundler-Vite-646CFF?logo=vite&logoColor=white" alt="Vite" /></a>
