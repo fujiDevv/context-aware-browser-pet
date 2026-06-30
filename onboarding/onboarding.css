@@ -21,7 +21,7 @@ body {
 body {
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-primary);
-  background: #ffffff;
+  background: #FDFBF7;
   display: flex;
   align-items: center;
   justify-content: center;

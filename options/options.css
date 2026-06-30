@@ -1,9 +1,9 @@
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #faf5f2;
+  --bg-primary: #FDFBF7;
+  --bg-secondary: #F6F5F1;
   --bg-card: #ffffff;
-  --bg-hover: #f8fafc;
-  --border-color: #e2e8f0;
+  --bg-hover: rgba(42, 31, 26, 0.04);
+  --border-color: rgba(42, 31, 26, 0.08);
 }
 
 * {

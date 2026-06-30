@@ -14,6 +14,8 @@ function wasmPlugin() {
           const fileName = req.url.split('?')[0].replace(/^\//, '');
           const filePath = resolve(__dirname, 'node_modules/onnxruntime-web/dist', fileName);
           if (fs.existsSync(filePath)) {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
             if (filePath.endsWith('.wasm')) res.setHeader('Content-Type', 'application/wasm');
             if (filePath.endsWith('.mjs')) res.setHeader('Content-Type', 'application/javascript');
             res.end(fs.readFileSync(filePath));
