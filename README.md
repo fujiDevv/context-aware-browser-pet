@@ -153,3 +153,15 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   ## License
 
   This project is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). Commercial use and monetization are prohibited. Underlying mascot assets are used under the MIT License.
+
+  ---
+
+  ## Star History
+
+  <a href="https://www.star-history.com/?repos=fujiDevv%2Fcontext-aware-browser-pet&type=date&legend=top-left">
+   <picture>
+     <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=fujiDevv/context-aware-browser-pet&type=date&theme=dark&legend=top-left" />
+     <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=fujiDevv/context-aware-browser-pet&type=date&legend=top-left" />
+     <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=fujiDevv/context-aware-browser-pet&type=date&legend=top-left" />
+   </picture>
+  </a>
