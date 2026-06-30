@@ -21,6 +21,7 @@ let currentSettings: PetSettings = { size: 128, speed: 1.2, aiMode: false, apiKe
 (function injectMainWorld() {
   try {
     if (!extensionApi.runtime.id) return;
+    if (window !== window.top) return;
     if (document.documentElement.tagName.toLowerCase() !== 'html') return;
     const script = document.createElement('script');
     script.src = getRuntimeUrl('main_world.js');
@@ -1524,6 +1525,6 @@ async function getAiEmotionAvailability(): Promise<'readily' | 'after-download' 
   });
 }
 
-if (document.documentElement.tagName.toLowerCase() === 'html') {
+if (document.documentElement.tagName.toLowerCase() === 'html' && window === window.top) {
   init();
 }
