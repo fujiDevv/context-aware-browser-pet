@@ -94,9 +94,22 @@ export class ViewManager {
         <div class="arcrawls-chat-msg arcrawls">Hi there! I'm ${petName}. Click me if you want to chat.</div>
       </div>
       <div class="arcrawls-chat-input-container">
-        <button id="arcrawls-chat-mic" title="Voice Chat">🎤</button>
-        <input type="text" id="arcrawls-chat-input" placeholder="Ask me anything..." autocomplete="off">
-        <button id="arcrawls-chat-send">Send</button>
+        <div class="arcrawls-chat-input-wrapper">
+          <button id="arcrawls-chat-mic" title="Voice Chat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+              <line x1="12" x2="12" y1="19" y2="22" />
+            </svg>
+          </button>
+          <input type="text" id="arcrawls-chat-input" placeholder="Message ${petName}..." autocomplete="off">
+          <button id="arcrawls-chat-send">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m22 2-7 20-4-9-9-4Z" />
+              <path d="M22 2 11 13" />
+            </svg>
+          </button>
+        </div>
       </div>
     `;
     this.container.appendChild(this.chatPanel);

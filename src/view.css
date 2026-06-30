@@ -418,30 +418,48 @@
 }
 
 .arcrawls-chat-input-container {
-  padding: 12px;
+  padding: 16px 20px;
   display: flex;
-  gap: 8px;
+  justify-content: center;
   background: #ffffff;
   border-top: 1px solid #e2e8f0;
   align-items: center;
 }
 
+.arcrawls-chat-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 28px;
+  padding: 6px 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.arcrawls-chat-input-wrapper:focus-within {
+  border-color: #94a3b8;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
 #arcrawls-chat-mic {
   background: none;
   border: none;
-  font-size: 16px;
   cursor: pointer;
-  padding: 6px;
+  padding: 8px;
   border-radius: 50%;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748b;
+  color: #94a3b8;
 }
 
 #arcrawls-chat-mic:hover {
   background: #f1f5f9;
+  color: #1e293b;
 }
 
 #arcrawls-chat-mic.listening-pulse {
@@ -451,55 +469,38 @@
 }
 
 @keyframes pulse-mic {
-  0% {
-    box-shadow: 0 0 0 0 rgba(199, 93, 63, 0.4);
-  }
-
-  70% {
-    box-shadow: 0 0 0 8px rgba(199, 93, 63, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(199, 93, 63, 0);
-  }
+  0% { box-shadow: 0 0 0 0 rgba(199, 93, 63, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(199, 93, 63, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(199, 93, 63, 0); }
 }
 
 #arcrawls-chat-input {
   flex: 1;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  padding: 8px 4px;
   color: #1e293b;
-  font-size: 13px;
+  font-size: 14px;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.2s;
 }
 
 #arcrawls-chat-input::placeholder {
   color: #94a3b8;
 }
 
-#arcrawls-chat-input:focus {
-  border-color: #C75D3F;
-}
-
 #arcrawls-chat-send {
   background: #C75D3F;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 8px 14px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-weight: 600;
-  font-family: inherit;
-  font-size: 13px;
-  transition: background 0.2s, transform 0.1s;
-}
-
-#arcrawls-chat-send:hover {
-  background: #b04c31;
+  transition: all 0.2s;
 }
 
 #arcrawls-chat-send:active {
@@ -508,6 +509,7 @@
 
 #arcrawls-chat-send:disabled {
   background: #cbd5e1;
+  color: #f1f5f9;
   cursor: not-allowed;
   transform: none;
 }
