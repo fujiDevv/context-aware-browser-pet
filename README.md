@@ -41,39 +41,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **24-Hour AI Synapse**: Get daily generative reflections on your browsing habits synthesized by Gemini Nano (Brain Upgrade required).
   * **Comprehensive Dashboard**: Track 7-day interest analytics, manage work/sleep schedules, and customize domain-specific reactions.
 
-  ---
 
-  ## Directory Structure
-
-  ```
-  context-aware-pet/
-  ├── package.json           # Build scripts and dependency configurations
-  ├── tsconfig.json          # TypeScript compilation settings
-  ├── manifest.json          # Manifest V3 extension metadata
-  ├── background.ts          # State synchronizer and offscreen manager
-  ├── offscreen.html         # Container for local AI and Audio playback
-  ├── offscreen.ts           # Centralized runtime for ONNX AI and audio systems
-  ├── content.ts             # Main content script injected into viewports
-  ├── main_world.ts          # MAIN world bridge for CSP-blocked API access
-  ├── src/
-  │   ├── types.ts           # Shared state and settings interfaces
-  │   ├── movement.ts        # Edge-crawling machine, rotation, and snapping
-  │   ├── triggers.ts        # User interaction monitors (scroll, typing, video)
-  │   ├── emotion.ts         # Reaction gates, emotes, and milestone locks
-  │   ├── personality.ts     # Stat management & decay logic
-  │   ├── rules.ts           # Centralized site & emotion classification rules
-  │   ├── constants.ts       # Centralized storage keys and shared constants
-  │   ├── ai.ts              # Gemini Nano & Offscreen AI orchestration
-  │   ├── view.ts            # Shadow DOM ViewManager & UI injection
-  │   ├── shared-ui.ts       # Common glassmorphic UI components
-  │   ├── dialogues.ts       # Intent-based speech bubble collections
-  │   ├── personas/          # Modular persona dialogue collections
-  │   └── animate.ts         # viscus damping spring solver formulas
-  ├── popup/                 # Mascot settings and status bar UI
-  ├── assets/                # Mascot icons and chiptune sound effects
-  ├── dist/                  # Output bundle for Chrome installation
-  └── dist-firefox/          # Output bundle for Firefox temporary installation
-  ```
 
   ---
 
@@ -125,28 +93,6 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   5. Open any normal HTTPS webpage (e.g. [github.com](https://github.com)) to verify that Arcrawls appears.
 
   Firefox currently runs Arcrawls in Lite Mode. The local Brain Upgrade and centralized offscreen audio paths depend on Chrome offscreen documents, which Firefox does not support yet.
-
-  ---
-
-  ## Interactions & Controls
-
-  * **Pet (Left Click)**: Boost Happiness and see the 'love' mood.
-  * **Feed (Double Click)**: Restore Energy and celebrate.
-  * **Shoo (Right Click)**: Relocate the pet to a random spot.
-  * **Chat with Arcrawls**: Open the interactive chat panel in the Dashboard or press `Ctrl+Shift+C` on any page to talk directly to your pet! Features include animated typing indicators and persona-specific AI responses.
-  * **Play (Drag-and-Drop Toys)**: Drop items like Balls, Yarn, or Ducks from the popup to play.
-  * **Settings**: Customize names, sizes, speeds, and personas in the dashboard.
-  * **AI Vibe Check**: Enable AI Mode to let Arcrawls analyze page sentiment and comment on your browsing.
-
-  ---
-
-  ## Security & Privacy
-
-  * **Local Evaluation**: All website context evaluations, DOM parsing, activity tracking, and AI model inference happen entirely locally on your machine.
-  * **No Telemetry**: Arcrawls does not collect, track, or transmit your browsing history, AI inputs, or personal data to external servers.
-  * **Optional Brain Upgrade**: The local AI model is entirely optional. Lite Mode (Regex-based) is the default and requires no downloads. If you choose to enable the Brain Upgrade, the model weights are downloaded from Hugging Face and run entirely in your browser using local WebAssembly.
-  * **Firefox Lite Mode**: Firefox builds currently disable the Brain Upgrade and centralized offscreen audio because Firefox does not support Chrome offscreen documents. No remote AI fallback is used.
-  * **Minimal Scope**: Even with the Brain Upgrade, Arcrawls only analyzes the webpage `title`, `meta description`, and specific semantic text elements (like headers and paragraphs). It does *not* scan raw DOM nodes or sensitive input fields.
 
   ---
 
