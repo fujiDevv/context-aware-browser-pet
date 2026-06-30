@@ -203,6 +203,13 @@ body {
   overflow-y: auto;
   height: 100%;
   background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.content-area:has(#page-chat.active) {
+  overflow: hidden;
+  padding: 0;
 }
 
 @media (max-width: 900px) {
@@ -1847,7 +1854,8 @@ input:checked+.switch-slider:before {
 #page-chat.active {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px);
+  height: 100%;
+  flex: 1;
 }
 
 /* ── Options Chat UI ── */
@@ -1933,10 +1941,30 @@ input:checked+.switch-slider:before {
 .options-chat-input-container {
   padding: 24px 40px;
   display: flex;
-  gap: 12px;
+  justify-content: center;
   background: var(--bg-primary);
   border-top: 1px solid var(--border-color);
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.chat-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 800px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 28px;
+  padding: 8px 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.chat-input-wrapper:focus-within {
+  border-color: var(--text-muted);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 #options-chat-mic {
@@ -1955,6 +1983,7 @@ input:checked+.switch-slider:before {
 
 #options-chat-mic:hover {
   background: var(--bg-hover);
+  color: var(--text-primary);
 }
 
 #options-chat-mic.listening-pulse {
@@ -1971,42 +2000,31 @@ input:checked+.switch-slider:before {
 
 #options-chat-input {
   flex: 1;
-  background: var(--bg-hover);
-  border: 1px solid transparent;
-  border-radius: 20px;
-  padding: 14px 20px;
+  background: transparent;
+  border: none;
+  padding: 12px 8px;
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 15px;
   font-family: inherit;
   outline: none;
-  transition: all 0.2s;
 }
 
 #options-chat-input::placeholder {
   color: var(--text-muted);
 }
 
-#options-chat-input:focus {
-  background: var(--bg-body);
-  border-color: var(--border-color);
-  box-shadow: 0 0 0 2px var(--accent-bg);
-}
-
 #options-chat-send {
   background: var(--accent);
   color: #fff;
   border: none;
-  border-radius: 20px;
-  padding: 14px 24px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-weight: 600;
-  font-family: inherit;
-  font-size: 14px;
-  transition: background 0.2s, transform 0.1s;
-}
-
-#options-chat-send:hover {
-  background: #b04c31;
+  transition: all 0.2s;
 }
 
 #options-chat-send:active {
@@ -2018,4 +2036,74 @@ input:checked+.switch-slider:before {
   color: var(--text-muted);
   cursor: not-allowed;
   transform: none;
+}
+
+#options-chat-send:not(:disabled):hover {
+  filter: brightness(1.1);
+  transform: scale(1.05);
+}
+
+/* ── Chat Empty State Hero ── */
+.chat-hero {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  gap: 24px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.chat-hero-logo img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(42, 31, 26, 0.1);
+}
+
+.chat-hero h1 {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.chat-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 600px;
+}
+
+.chat-starter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 12px 20px;
+  border-radius: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.chat-starter-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--text-muted);
+  transform: translateY(-1px);
+}
+
+/* Empty State Logic using :has() */
+.options-chat-panel:has(.options-chat-messages:empty) .chat-hero {
+  display: flex;
+}
+.options-chat-panel:has(.options-chat-messages:empty) .options-chat-messages {
+  display: none;
+}
+.options-chat-panel:has(.options-chat-messages:empty) .options-chat-input-container {
+  border-top: none;
+  background: transparent;
+  padding-bottom: 60px;
 }

@@ -261,23 +261,50 @@
 
       <!-- PAGE: Chat with Arcrawls -->
       <section id="page-chat" class="page-pane">
-        <header class="page-header">
+        <!-- <header class="page-header">
           <h1>Chat with <span class="pet-name-display">Arcrawls</span></h1>
           <p>Talk to your context-aware virtual companion!</p>
-        </header>
+        </header> -->
 
-        <div class="chat-tab-layout">
+              <div class="chat-tab-layout">
           <!-- Options Chat Panel -->
           <div id="options-chat-panel" class="options-chat-panel">
-            <div class="options-chat-messages" id="options-chat-messages">
-              <div class="options-chat-msg arcrawls">Hi! I'm <span class="pet-name-display">Arcrawls</span>. What's on
-                your
-                mind?</div>
+            <div class="chat-hero" id="chat-hero">
+              <div class="chat-hero-logo">
+                <img id="chat-hero-pet-image" src="../assets/pets/arcrawls-happy.svg" alt="Arcrawls" />
+              </div>
+              <h1>What can I help with?</h1>
+              <div class="chat-starters">
+                <button class="chat-starter-btn">Tell
+                  me a fun fact about web browsers</button>
+                <button class="chat-starter-btn">Explain
+                  how context awareness works</button>
+                <button class="chat-starter-btn">How
+                  can I customize my pet?</button>
+              </div>
             </div>
+
+            <div class="options-chat-messages" id="options-chat-messages"></div>
+
             <div class="options-chat-input-container">
-              <button id="options-chat-mic" title="Voice Chat">🎤</button>
-              <input type="text" id="options-chat-input" placeholder="Type a message..." autocomplete="off">
-              <button id="options-chat-send" disabled>Send</button>
+              <div class="chat-input-wrapper">
+                <button id="options-chat-mic" title="Voice Chat">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" x2="12" y1="19" y2="22" />
+                  </svg>
+                </button>
+                <input type="text" id="options-chat-input" placeholder="Message Arcrawls..." autocomplete="off">
+                <button id="options-chat-send" disabled>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m22 2-7 20-4-9-9-4Z" />
+                    <path d="M22 2 11 13" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
