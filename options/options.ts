@@ -324,7 +324,7 @@ async function init() {
   }
 
   let chatHistory: { role: string; content: string }[] = [];
-  
+
   const starterBtns = document.querySelectorAll('.chat-starter-btn');
   starterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -336,13 +336,13 @@ async function init() {
       }
     });
   });
-  
+
   const saveChatHistory = () => {
     if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
     extensionApi.storage.local.set({ arcrawlsDashboardHistory: chatHistory })
       .catch((e) => { console.warn('[Arcrawls Options] Failed to save chat history:', e); });
   };
-  
+
   extensionApi.storage.local.get<Record<string, any>>(['arcrawlsDashboardHistory']).then((result) => {
     if (result.arcrawlsDashboardHistory && Array.isArray(result.arcrawlsDashboardHistory)) {
       chatHistory = result.arcrawlsDashboardHistory;
@@ -355,10 +355,10 @@ async function init() {
   const addChatMessage = (role: 'user' | 'arcrawls', text: string, insertBeforeEl?: Element | null) => {
     const el = document.createElement('div');
     el.className = `options-chat-msg ${role}`;
-    
+
     // Remove emojis for Arcrawls's responses
-    const displayText = role === 'arcrawls' 
-      ? text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim() 
+    const displayText = role === 'arcrawls'
+      ? text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim()
       : text;
 
     const textNode = document.createElement('div');
@@ -374,7 +374,7 @@ async function init() {
 
       const playBtn = document.createElement('button');
       playBtn.className = 'arcrawls-control-btn';
-      playBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
+      playBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
       playBtn.title = 'Play voice';
       playBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -382,7 +382,7 @@ async function init() {
         if (soundEnabled && 'speechSynthesis' in window) {
           window.speechSynthesis.cancel();
           const utterance = new SpeechSynthesisUtterance(displayText);
-          
+
           (window as any).__currentUtterance = utterance;
 
           const voices = window.speechSynthesis.getVoices();
@@ -391,7 +391,7 @@ async function init() {
             preferredVoice = voices.find(v => v.name === chatVoiceSelect.value);
           }
           if (!preferredVoice) {
-            preferredVoice = voices.find(v => 
+            preferredVoice = voices.find(v =>
               v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')
             );
           }
@@ -406,10 +406,10 @@ async function init() {
           window.speechSynthesis.speak(utterance);
         }
       });
-      
+
       const copyBtn = document.createElement('button');
       copyBtn.className = 'arcrawls-control-btn';
-      copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+      copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
       copyBtn.title = 'Copy Response';
       copyBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
@@ -422,14 +422,14 @@ async function init() {
 
       const redoBtn = document.createElement('button');
       redoBtn.className = 'arcrawls-control-btn';
-      redoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
+      redoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
       redoBtn.title = 'Redo';
       redoBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const allMsgs = Array.from(chatMessages.children);
         const myIndex = allMsgs.indexOf(el);
         let lastUserMsg = "";
-        for(let i = myIndex - 1; i >= 0; i--) {
+        for (let i = myIndex - 1; i >= 0; i--) {
           if (allMsgs[i].classList.contains('user')) {
             lastUserMsg = allMsgs[i].textContent || "";
             break;
@@ -449,7 +449,7 @@ async function init() {
             const persona = personaSelect.value || 'default';
             const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${getDominantTrait(personality.stats)}`;
             const response = await getAiChatResponse(lastUserMsg, "User is currently looking at the Sanctuary Dashboard.", persona, statsContext, chatHistory);
-            
+
             setChatLoading(false);
 
             if (response) {
@@ -511,7 +511,7 @@ async function init() {
   const submitOptionsChat = async () => {
     const text = chatInput.value.trim();
     if (!text) return;
-    
+
     // Check if Brain Upgrade is enabled
     const aiToggle = document.getElementById('ai-toggle') as HTMLInputElement;
     if (aiToggle && !aiToggle.checked) {
@@ -520,7 +520,7 @@ async function init() {
       addChatMessage('arcrawls', "Brain Upgrade is currently disabled. Please toggle it on in the Settings to chat with me!");
       return;
     }
-    
+
     // Check if Gemini Nano is available
     try {
       const nanoResponse = await extensionApi.runtime.sendMessage<{ success: boolean; availability: string }>({ type: 'check-tab-ai-availability' });
@@ -533,20 +533,20 @@ async function init() {
     } catch (e) {
       console.warn("Failed to check Nano status:", e);
     }
-    
+
     addChatMessage('user', text);
     chatInput.value = '';
-    
+
     setChatLoading(true);
     chatHistory.push({ role: 'user', content: text });
     saveChatHistory();
-    
+
     try {
       const persona = personaSelect.value || 'default';
       const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${getDominantTrait(personality.stats)}`;
       // Passing a dummy page context since we are in the dashboard
       const response = await getAiChatResponse(text, "User is currently looking at the Sanctuary Dashboard.", persona, statsContext, chatHistory);
-      
+
       setChatLoading(false);
 
       if (response) {
@@ -979,41 +979,44 @@ function updateUIMood(mood: string): void {
   const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
   if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
   const svgName = getResolvedCostumeName(mood, activeCostume);
-  
+
   // Apply custom color if set
   const color = petColorInput.value;
   personality.isLoaded.then(() => {
     const isUnlocked = personality.stats.level >= 15 || (personality.stats.prestige && personality.stats.prestige > 0);
     const activeColor = isUnlocked ? color : undefined;
-    
+
     const url = getRuntimeUrl(`assets/pets/arcrawls-${svgName}.svg`);
     if (!activeColor || activeColor === '#DE886D') {
       if (petImg) petImg.src = url;
       return;
     }
 
-    extensionApi.runtime.sendMessage({ type: 'fetch-svg', url }).then((res: any) => {
-      if (!res.success) throw new Error(res.error || 'Unknown fetch error');
-      let svgText = res.text;
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.text();
+      })
+      .then((svgText: string) => {
+        // Architectural Fix: Instead of fragile string replacement of exact hex codes,
+        // we inject a style block into the SVG that targets our base colors.
+        if (activeColor && activeColor !== '#DE886D') {
+          const styleBlock = `<style>
+            :root { --pet-core-color: ${activeColor}; }
+            [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
+              fill: var(--pet-core-color) !important; 
+            }
+          </style>`;
+          svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
+        }
 
-      // Architectural Fix: Instead of fragile string replacement of exact hex codes,
-      // we inject a style block into the SVG that targets our base colors.
-      if (activeColor && activeColor !== '#DE886D') {
-        const styleBlock = `<style>
-          :root { --pet-core-color: ${activeColor}; }
-          [fill^="#DE886D" i], [fill^="#CF7B61" i], [fill^="#C77A5E" i], [fill^="#C9745A" i], [fill^="#A85B45" i], [fill^="#C75D3F" i] { 
-            fill: var(--pet-core-color) !important; 
-          }
-        </style>`;
-        svgText = svgText.replace(/<svg([^>]*)>/i, `<svg$1>${styleBlock}`);
-      }
-      
-      const dataUri = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgText)))}`;
-      if (petImg) petImg.src = dataUri;
-    }).catch(e => {
-      console.warn('[Arcrawls Dashboard] Failed to apply custom color/formatter:', e);
-      if (petImg) petImg.src = getRuntimeUrl('assets/pets/arcrawls-happy.svg');
-    });
+        const dataUri = `data:image/svg+xml,${encodeURIComponent(svgText)}`;
+        if (petImg) petImg.src = dataUri;
+      })
+      .catch(e => {
+        console.warn('[Arcrawls Dashboard] Failed to apply custom color/formatter:', e);
+        if (petImg) petImg.src = getRuntimeUrl('assets/pets/arcrawls-happy.svg');
+      });
   });
 }
 
@@ -1407,7 +1410,7 @@ function applySettings(settings: PetSettings | undefined) {
     const displayHour = h % 12 === 0 ? 12 : h % 12;
     return `${displayHour} ${ampm}`;
   };
-  
+
   const uiScheduleSleep = document.getElementById('ui-schedule-sleep');
   const uiScheduleYoga = document.getElementById('ui-schedule-yoga');
   const sleepStart = activeSettings.sleepStartHour ?? 22;
@@ -1551,7 +1554,7 @@ function updateLocalAiStatus() {
       statusBert.textContent = 'Firefox Lite Mode';
       statusBert.style.color = 'var(--text-muted)';
     }
-    
+
     const sancNanoRow = document.getElementById('sanc-nano-row');
     if (sancNanoRow) sancNanoRow.style.display = 'none';
 
@@ -2148,17 +2151,17 @@ function populateVoices() {
   if (!('speechSynthesis' in window)) return;
   const voices = window.speechSynthesis.getVoices();
   if (voices.length === 0) return;
-  
+
   const currentValue = chatVoiceSelect.value;
   chatVoiceSelect.innerHTML = '<option value="">Default (Browser Choice)</option>';
-  
+
   voices.forEach(voice => {
     const option = document.createElement('option');
     option.value = voice.name;
     option.textContent = `${voice.name} (${voice.lang})`;
     chatVoiceSelect.appendChild(option);
   });
-  
+
   if (currentValue) {
     chatVoiceSelect.value = currentValue;
   }
