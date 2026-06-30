@@ -141,7 +141,7 @@ export async function getAutonomousGenerativeDialogue(
 
   if (pageText) {
     try {
-      const truncatedText = pageText.length > 3000 ? pageText.substring(0, 3000) + '...' : pageText;
+      const truncatedText = pageText.length > 1500 ? pageText.substring(0, 1500) + '...' : pageText;
       const summaryPrompt = `Summarize the following webpage content into exactly one concise sentence:\n\n${truncatedText}`;
       const generatedSummary = await promptGeminiNano("You are a helpful summarizer.", summaryPrompt, petName);
       if (generatedSummary) {
