@@ -87,24 +87,23 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   1. Navigate to the extension directory:
    ```bash
-   cd context-aware-pet
+   cd context-aware-browser-pet
    ```
   2. Install the dev dependencies:
    ```bash
    bun install
    ```
-  3. Type-check the source files:
-   ```bash
-   bun run type-check
-   ```
-  4. Run the compiler build for Chrome/Chromium:
-   ```bash
-   bun run build
-   ```
-  5. For Firefox, run the Firefox build:
-   ```bash
-   bun run build:firefox
-   ```
+
+  ### Available Scripts
+  You can run the following scripts using Bun:
+
+  - `bun run dev` - Starts Vite in watch mode for local development.
+  - `bun run build` - Builds the extension for Chrome/Chromium to the `dist/` folder.
+  - `bun run build:firefox` - Builds the extension for Firefox to the `dist-firefox/` folder.
+  - `bun run test` - Runs the Vitest unit test suite.
+  - `bun run test:e2e` - Runs Playwright end-to-end browser tests.
+  - `bun run verify` - Runs TypeScript type-checking, unit tests, and E2E tests.
+  - `bun run all` - Compiles the Chrome build, runs all verifications, and compiles the Firefox build.
 
   ### Loading the Extension in Chrome
 

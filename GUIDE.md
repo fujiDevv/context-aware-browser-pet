@@ -85,14 +85,19 @@ To install and build the extension:
  ```bash
  bun install
  ```
-3. Type-check the source files to ensure no errors:
- ```bash
- bun run type-check
- ```
-4. Run the production build command:
- ```bash
- bun run build
- ```
+
+### Available Scripts
+You can run the following scripts using Bun:
+
+- `bun run dev` - Starts Vite in watch mode for local development.
+- `bun run build` - Builds the extension for Chrome/Chromium to the `dist/` folder.
+- `bun run build:firefox` - Builds the extension for Firefox to the `dist-firefox/` folder.
+- `bun run test` - Runs the Vitest unit test suite.
+- `bun run test:e2e` - Runs Playwright end-to-end browser tests.
+- `bun run verify` - Runs TypeScript type-checking, unit tests, and E2E tests.
+- `bun run all` - Compiles the Chrome build, runs all verifications, and compiles the Firefox build.
+
+### Loading the Extension
 5. **For Google Chrome:**
    - Go to `chrome://extensions`.
    - Enable **Developer mode** using the toggle in the top-right corner.
