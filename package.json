@@ -22,7 +22,7 @@
     "build": "vite build",
     "build:firefox": "vite build && node build-firefox.mjs",
     "verify": "bun run type-check && bun run test:unit && bun run test:e2e",
-    "all": "bun run verify && bun run build && bun run build:firefox"
+    "all": "bun run build && bun run verify && bun run build:firefox"
   },
   "type": "module"
 }

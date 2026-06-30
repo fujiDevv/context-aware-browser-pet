@@ -290,7 +290,52 @@ async function init() {
   const chatMic = document.getElementById('options-chat-mic') as HTMLButtonElement;
   const chatMessages = document.getElementById('options-chat-messages') as HTMLElement;
 
+  const chatHeroPetImage = document.getElementById('chat-hero-pet-image') as HTMLImageElement;
+  if (chatHeroPetImage) {
+    const petAssets = [
+      'arcrawls-angry.svg', 'arcrawls-astronaut.svg', 'arcrawls-autumn.svg', 'arcrawls-battery-low.svg',
+      'arcrawls-birthday.svg', 'arcrawls-bored.svg', 'arcrawls-bowling.svg', 'arcrawls-camping.svg',
+      'arcrawls-charging.svg', 'arcrawls-chef.svg', 'arcrawls-christmas.svg', 'arcrawls-clapping.svg',
+      'arcrawls-climbing.svg', 'arcrawls-coding.svg', 'arcrawls-coffee.svg', 'arcrawls-confused.svg',
+      'arcrawls-cool.svg', 'arcrawls-crab-walking.svg', 'arcrawls-crafting.svg', 'arcrawls-crying.svg',
+      'arcrawls-dancing.svg', 'arcrawls-detective.svg', 'arcrawls-dizzy.svg', 'arcrawls-dj.svg',
+      'arcrawls-driving.svg', 'arcrawls-drumming.svg', 'arcrawls-eating.svg', 'arcrawls-error.svg',
+      'arcrawls-evil.svg', 'arcrawls-facepalm.svg', 'arcrawls-fire.svg', 'arcrawls-fishing.svg',
+      'arcrawls-flexing.svg', 'arcrawls-flying.svg', 'arcrawls-gaming.svg', 'arcrawls-gardening.svg',
+      'arcrawls-gift.svg', 'arcrawls-grumpy.svg', 'arcrawls-halloween.svg', 'arcrawls-happy.svg',
+      'arcrawls-hopeful.svg', 'arcrawls-ice-cream.svg', 'arcrawls-idea.svg', 'arcrawls-jealous.svg',
+      'arcrawls-king.svg', 'arcrawls-laughing.svg', 'arcrawls-lifting.svg', 'arcrawls-loading.svg',
+      'arcrawls-love.svg', 'arcrawls-magic.svg', 'arcrawls-mail.svg', 'arcrawls-meditating.svg',
+      'arcrawls-mindblown.svg', 'arcrawls-money.svg', 'arcrawls-music.svg', 'arcrawls-new-year.svg',
+      'arcrawls-ninja.svg', 'arcrawls-painting.svg', 'arcrawls-peeking.svg', 'arcrawls-photography.svg',
+      'arcrawls-pirate.svg', 'arcrawls-podcast.svg', 'arcrawls-praying.svg', 'arcrawls-rainbow.svg',
+      'arcrawls-reading.svg', 'arcrawls-rocket.svg', 'arcrawls-running.svg', 'arcrawls-sad.svg',
+      'arcrawls-scared.svg', 'arcrawls-security.svg', 'arcrawls-shipping.svg', 'arcrawls-shrug.svg',
+      'arcrawls-sick.svg', 'arcrawls-singing.svg', 'arcrawls-skateboard.svg', 'arcrawls-skeptical.svg',
+      'arcrawls-sleeping.svg', 'arcrawls-smile.svg', 'arcrawls-snow.svg', 'arcrawls-spring.svg',
+      'arcrawls-star.svg', 'arcrawls-studying.svg', 'arcrawls-summer.svg', 'arcrawls-superhero.svg',
+      'arcrawls-surfing.svg', 'arcrawls-surprised.svg', 'arcrawls-swimming.svg', 'arcrawls-telescope.svg',
+      'arcrawls-thanksgiving.svg', 'arcrawls-time-travel.svg', 'arcrawls-trophy.svg', 'arcrawls-umbrella.svg',
+      'arcrawls-valentine.svg', 'arcrawls-waving.svg', 'arcrawls-winter.svg', 'arcrawls-yawning.svg',
+      'arcrawls-yoga.svg'
+    ];
+    const randomAsset = petAssets[Math.floor(Math.random() * petAssets.length)];
+    chatHeroPetImage.src = `../assets/pets/${randomAsset}`;
+  }
+
   let chatHistory: { role: string; content: string }[] = [];
+  
+  const starterBtns = document.querySelectorAll('.chat-starter-btn');
+  starterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.textContent?.trim() || '';
+      if (text) {
+        chatInput.value = text;
+        chatSend.disabled = false;
+        chatSend.click();
+      }
+    });
+  });
   
   const saveChatHistory = () => {
     if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
@@ -466,6 +511,28 @@ async function init() {
   const submitOptionsChat = async () => {
     const text = chatInput.value.trim();
     if (!text) return;
+    
+    // Check if Brain Upgrade is enabled
+    const aiToggle = document.getElementById('ai-toggle') as HTMLInputElement;
+    if (aiToggle && !aiToggle.checked) {
+      addChatMessage('user', text);
+      chatInput.value = '';
+      addChatMessage('arcrawls', "Brain Upgrade is currently disabled. Please toggle it on in the Settings to chat with me!");
+      return;
+    }
+    
+    // Check if Gemini Nano is available
+    try {
+      const nanoResponse = await extensionApi.runtime.sendMessage<{ success: boolean; availability: string }>({ type: 'check-tab-ai-availability' });
+      if (!nanoResponse?.availability || nanoResponse.availability === 'no' || nanoResponse.availability === 'unavailable') {
+        addChatMessage('user', text);
+        chatInput.value = '';
+        addChatMessage('arcrawls', "Gemini Nano is not currently available or supported on your browser. Please check chrome://flags or your browser version.");
+        return;
+      }
+    } catch (e) {
+      console.warn("Failed to check Nano status:", e);
+    }
     
     addChatMessage('user', text);
     chatInput.value = '';

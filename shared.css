@@ -16,12 +16,12 @@ h1, h2, h3, h4, h5, h6 {
   --accent-bg: rgba(199, 93, 63, 0.08);
   --accent-border: rgba(199, 93, 63, 0.25);
 
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --text-primary: #2A1F1A;
+  --text-secondary: #4A3B32;
+  --text-muted: #8C7A6B;
 
-  --border-color: #e2e8f0;
-  --bg-hover: #f8fafc;
+  --border-color: rgba(42, 31, 26, 0.08);
+  --bg-hover: rgba(42, 31, 26, 0.04);
 
   --xp-color: #10b981;
   --xp-bg: rgba(16, 185, 129, 0.08);
