@@ -3,7 +3,7 @@ import { EmotionEngine } from './src/emotion';
 import { TriggerDetector } from './src/triggers';
 import { PersonalitySystem } from './src/personality';
 import { getAiEmotion, setBridgeToken, getAiChatResponse, getAutonomousGenerativeDialogue } from './src/ai';
-import { PetSettings, SharedPetState, PetMessage } from './src/types';
+import { PetSettings, SharedPetState, PetMessage, StorageChange } from './src/types';
 import { springAnimate, keyframeAnimate } from './src/animate';
 import { PERSONA_AUTONOMOUS_DIALOGUES } from './src/dialogues';
 import { ViewManager } from './src/view';
@@ -1147,7 +1147,7 @@ async function loadAndApplySettings(): Promise<void> {
   }
 }
 
-function handleStorageChanged(changes: Record<string, chrome.storage.StorageChange>) {
+function handleStorageChanged(changes: Record<string, StorageChange>) {
   if (!checkContextOrCleanup()) return;
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const newSettings = changes[STORAGE_KEYS.SETTINGS].newValue;

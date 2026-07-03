@@ -106,6 +106,11 @@ export interface TriggerSnapshot {
   isCursorActive: boolean;
 }
 
+export interface StorageChange {
+  oldValue?: any;
+  newValue?: any;
+}
+
 export interface PetMessage {
   type: string;
   [key: string]: any;

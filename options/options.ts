@@ -1,5 +1,5 @@
 import { PersonalitySystem } from '../src/personality';
-import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem } from '../src/types';
+import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem, PetMessage, StorageChange } from '../src/types';
 import { STORAGE_KEYS } from '../src/constants';
 import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName, parseMarkdown } from '../src/shared-ui';
 import { getDailyInsight, getAiChatResponse } from '../src/ai';
@@ -839,7 +839,7 @@ async function init() {
   }
 
   // Storage listener to update UI in real time
-  extensionApi.storage.onChanged?.addListener((changes) => {
+  extensionApi.storage.onChanged?.addListener((changes: Record<string, StorageChange>) => {
     if (changes[STORAGE_KEYS.STATS]) {
       updateUIStats(changes[STORAGE_KEYS.STATS].newValue);
     }
@@ -855,7 +855,7 @@ async function init() {
   });
 
   // Real-time State Synchronization for Sanctuary
-  extensionApi.runtime.onMessage?.addListener((message) => {
+  extensionApi.runtime.onMessage?.addListener((message: PetMessage) => {
     if (message.type === 'sync-pet-state') {
       if (playgroundMovement && !playgroundMovement.isDragging) {
         playgroundMovement.syncState(message.state);
@@ -1517,6 +1517,7 @@ function saveSettings() {
       soundEnabled: supportsLocalAiRuntime && soundToggle.checked,
       soundVolume: Number(volumeSlider.value) / 100,
       aiMode: supportsLocalAiRuntime && aiToggle.checked,
+      advancedAiEnabled: supportsLocalAiRuntime && aiToggle.checked,
       apiKey: '',
       name: nameInput.value.trim() || 'Arcrawls',
       costume: activeCostume,

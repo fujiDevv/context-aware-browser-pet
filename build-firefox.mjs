@@ -32,5 +32,11 @@ manifest.browser_specific_settings = {
 
 fs.mkdirSync('dist-firefox', { recursive: true });
 fs.cpSync('dist', 'dist-firefox', { recursive: true });
+
+const firefoxWasmDir = 'dist-firefox/wasm';
+if (fs.existsSync(firefoxWasmDir)) {
+  fs.rmSync(firefoxWasmDir, { recursive: true, force: true });
+}
+
 fs.writeFileSync('dist-firefox/manifest.json', JSON.stringify(manifest, null, 2));
 console.log('Successfully built dist-firefox/manifest.json');

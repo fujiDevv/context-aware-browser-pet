@@ -5,7 +5,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 *Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
 <p align="center">
-   <img src="assets/arcrawls-gif2.gif" alt="Arcrawls in Action" width="600" />
+   <img src="marketing/arcrawls-gif2.gif" alt="Arcrawls in Action" width="600" />
 </p>
 
 <p align="center">
@@ -41,7 +41,17 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **24-Hour AI Synapse**: Get daily generative reflections on your browsing habits synthesized by Gemini Nano (Brain Upgrade required).
   * **Comprehensive Dashboard**: Track 7-day interest analytics, manage work/sleep schedules, and customize domain-specific reactions.
 
+  ### Install Size
 
+  | Component | Size | When |
+  |-----------|------|------|
+  | **Chrome Web Store download** | **~10 MB** | Compressed install package |
+  | **Installed on disk (Chrome details)** | **~22–25 MB** | Pet assets + bundled ONNX WASM |
+  | Lite Mode core (assets + UI) | ~2 MB unpacked | Active by default (Regex rules) |
+  | ONNX WASM runtime (bundled) | ~22 MB unpacked | Included; initialized when Brain Upgrade is on |
+  | DistilBERT model weights | ~67 MB | Downloaded once from Hugging Face after you opt in |
+
+  Lite Mode works immediately with no network downloads. The optional Brain Upgrade initializes the bundled WASM runtime and adds a one-time ~67 MB model fetch to your browser cache — your browsing text never leaves the device.
 
   ---
 

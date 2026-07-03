@@ -3,12 +3,20 @@ import { pipeline, env } from '@huggingface/transformers';
 import { detectPageCategory, mapActivityToEmotion, AI_COMMENTS } from './src/rules';
 import { extensionApi, getRuntimeUrl } from './src/platform';
 
-// Configure ONNX Runtime to load WASM binaries locally from the extension
+// Configure ONNX Runtime to load WASM binaries locally from the extension.
+// Must point at the asyncify variant — Chrome offscreen docs are not cross-origin isolated.
+const wasmBase = getRuntimeUrl('wasm/');
 const wasmConfig = (env as Record<string, any>).backends?.onnx?.wasm;
 if (wasmConfig) {
-  wasmConfig.wasmPaths = getRuntimeUrl('wasm/');
+  wasmConfig.wasmPaths = {
+    mjs: `${wasmBase}ort-wasm-simd-threaded.asyncify.mjs`,
+    wasm: `${wasmBase}ort-wasm-simd-threaded.asyncify.wasm`,
+  };
   wasmConfig.proxy = false;
+  wasmConfig.numThreads = 1;
 }
+// Cache API cannot store chrome-extension:// URLs (transformers.js #1532).
+env.useWasmCache = false;
 env.allowLocalModels = false; // Force fetching from Hugging Face Hub (cached locally in IndexedDB)
 
 interface TextClassificationResult {
@@ -66,7 +74,7 @@ async function getClassifier(): Promise<ClassifierPipeline> {
       modelLoadingState = 'error';
       reportAiProgress(modelLoadingState, 0);
       console.error('[Arcrawls Local AI] Failed to load pipeline:', err);
-      classifierPromise = null;
+      // Keep the rejected promise so polling does not re-trigger load attempts.
       throw err;
     }
   })();
@@ -83,8 +91,16 @@ async function getLocalAiEmotion(
   category: string,
   persona: string,
   statsContext?: string,
-  sentimentSensitivity: number = 50
+  sentimentSensitivity: number = 50,
+  advancedAiEnabled: boolean = true
 ): Promise<{ emotion: string; comment?: string; category?: string; sentiment?: string }> {
+  if (!advancedAiEnabled) {
+    return {
+      emotion: 'happy',
+      comment: 'Brain Upgrade is disabled. Enable it in Settings to use local DistilBERT.',
+    };
+  }
+
   if (modelLoadingState === 'loading' || modelLoadingState === 'idle') {
     return {
       emotion: 'working-thinking',
@@ -175,13 +191,13 @@ async function playSound(filename: string, volume: number): Promise<void> {
 // Set up runtime message listener in the offscreen document
 extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
   if (message.type === 'run-local-ai-inference') {
-    const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity, url } = message;
+    const { pageTitle, metaDescription, category, persona, statsContext, sentimentSensitivity, url, advancedAiEnabled } = message;
 
-    if (modelLoadingState === 'idle') {
+    if (advancedAiEnabled !== false && modelLoadingState === 'idle' && !classifierPromise) {
       getClassifier().catch((e) => console.warn('[Arcrawls Offscreen] auto-init error:', e));
     }
 
-    getLocalAiEmotion(pageTitle, metaDescription, url, category, persona || 'default', statsContext, sentimentSensitivity)
+    getLocalAiEmotion(pageTitle, metaDescription, url, category, persona || 'default', statsContext, sentimentSensitivity, advancedAiEnabled !== false)
       .then((result) => sendResponse({ success: true, emotion: result.emotion, comment: result.comment, category: result.category, sentiment: result.sentiment }))
       .catch((err) => {
         console.error('Error in local AI emotion processing:', err);
@@ -192,10 +208,14 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === 'check-offscreen-ai-status') {
-    if (modelLoadingState === 'idle') {
+    if (message.advancedAiEnabled !== false && modelLoadingState === 'idle' && !classifierPromise) {
       getClassifier().catch((e) => console.warn('[Arcrawls Offscreen] auto-init error:', e));
     }
-    sendResponse({ success: true, state: modelLoadingState, progress: modelDownloadProgress });
+    sendResponse({
+      success: true,
+      state: message.advancedAiEnabled === false ? 'disabled' : modelLoadingState,
+      progress: modelDownloadProgress,
+    });
     return false;
   }
 

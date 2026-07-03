@@ -28,7 +28,8 @@ This data is stored locally on your computer (or in temporary session memory) an
 ## 5. Data Sharing & Third Parties
 *   **No Sale of Data:** We do not sell, trade, or rent user data to anyone.
 *   **No Tracking:** The Extension does not contain any telemetry, analytics scripts (like Google Analytics), or tracking pixels.
-*   **Model Downloads:** Upon first use of AI mode, the Extension downloads pre-trained model weights from Hugging Face. This is a standard file download; no personal data is sent during this process.
+*   **Install Size:** The Chrome Web Store download is ~10 MB compressed (~22–25 MB unpacked in Chrome details). Lite Mode is the default; DistilBERT model weights are not fetched until you explicitly enable Brain Upgrade in Settings.
+*   **Model Downloads:** When Brain Upgrade is enabled, the Extension downloads pre-trained DistilBERT weights (~67 MB, one-time) from Hugging Face into your browser's IndexedDB. This is a standard file download; no personal data is sent during this process.
 
 ## 6. User Control & Data Deletion
 You have complete control over your data:

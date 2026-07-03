@@ -718,13 +718,11 @@
               </div>
               <div id="ai-privacy-notice"
                 style="font-size: 11px; color: var(--text-muted); margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px; line-height: 1.5;">
-                <p style="margin-bottom: 8px;"><strong>Mode: Lite (Default)</strong> — Uses rule-based logic and Regex
-                  for fast, zero-download behavior analysis.</p>
+                <p style="margin-bottom: 8px;"><strong>Mode: Lite (Default)</strong> — ~10 MB store download (~22–25 MB on disk). Uses rule-based logic and Regex
+                  for fast behavior analysis with no network downloads.</p>
                 <strong style="color: var(--text-color); display: block; margin-bottom: 4px;">Privacy & Resource
                   Notice (Brain Upgrade):</strong>
-                Enabling the Brain Upgrade will download pre-trained machine learning weights (~67MB) directly to your
-                browser's
-                local storage via Hugging Face.
+                Enabling Brain Upgrade initializes the bundled ONNX asyncify runtime (~22 MB unpacked, already in the package) and downloads DistilBERT weights (~67 MB once) from Hugging Face into your browser's IndexedDB.
                 All page analysis is performed <strong>strictly on your device</strong>—your browsing data is processed
                 locally and is never sent to external servers.
               </div>

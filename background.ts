@@ -377,8 +377,9 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
 
     extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((data) => {
       const settings = data[STORAGE_KEYS.SETTINGS] || {};
-      if (!settings.aiMode) {
-        sendResponse({ success: false, error: 'AI Mode is disabled' });
+      const brainUpgradeEnabled = settings.aiMode && (settings.advancedAiEnabled ?? settings.aiMode);
+      if (!brainUpgradeEnabled) {
+        sendResponse({ success: false, error: 'Brain Upgrade is disabled' });
         return;
       }
 
@@ -392,7 +393,8 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
             persona,
             statsContext,
             sentimentSensitivity,
-            url: tabUrl
+            url: tabUrl,
+            advancedAiEnabled: settings.advancedAiEnabled ?? settings.aiMode,
           })
             .then((res) => sendResponse(res))
             .catch((err) => sendResponse({ success: false, error: err.message }));
@@ -414,14 +416,18 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
 
     extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then((data) => {
       const settings = data[STORAGE_KEYS.SETTINGS] || {};
-      if (!settings.aiMode) {
+      const brainUpgradeEnabled = settings.aiMode && (settings.advancedAiEnabled ?? settings.aiMode);
+      if (!brainUpgradeEnabled) {
         sendResponse({ success: true, state: 'idle', progress: 0 });
         return;
       }
 
       setupOffscreen()
         .then(() => {
-          extensionApi.runtime.sendMessage({ type: 'check-offscreen-ai-status' })
+          extensionApi.runtime.sendMessage({
+            type: 'check-offscreen-ai-status',
+            advancedAiEnabled: true,
+          })
             .then((res) => sendResponse(res))
             .catch((err) => sendResponse({ success: false, error: err.message }));
         })
@@ -440,9 +446,8 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
       [STORAGE_KEYS.MODEL_DOWNLOAD_PROGRESS]: message.progress
     }).catch((e) => { console.warn('[Arcrawls Background] chrome.storage.local.set update-ai-progress error:', e); });
 
-    if (message.state === 'error') {
-      closeOffscreen().catch((e) => { console.warn('[Arcrawls Background] closeOffscreen on error failed:', e); });
-    }
+    // Keep the offscreen document open on error so status stays "error" instead of
+    // resetting to idle and re-triggering a load loop on the next status poll.
     return false;
   }
 });
@@ -511,7 +516,7 @@ extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then(
   }
 
   const settings = data[STORAGE_KEYS.SETTINGS] || {};
-  if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
+  if ((settings.aiMode && (settings.advancedAiEnabled ?? settings.aiMode)) || settings.soundEnabled) {
     setupOffscreen().catch((e) => { console.warn('[Arcrawls Background] setupOffscreen initial call error:', e); });
   }
 }).catch((e) => { console.warn('[Arcrawls Background] Failed to load initial settings:', e); });
@@ -524,7 +529,7 @@ extensionApi.storage.onChanged?.addListener((changes) => {
 
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const settings = changes[STORAGE_KEYS.SETTINGS].newValue || {};
-    if ((settings.aiMode && settings.advancedAiEnabled) || settings.soundEnabled) {
+    if ((settings.aiMode && (settings.advancedAiEnabled ?? settings.aiMode)) || settings.soundEnabled) {
       setupOffscreen().catch((e) => { console.warn('[Arcrawls Background] setupOffscreen re-call error:', e); });
     } else {
       closeOffscreen().catch((e) => { console.warn('[Arcrawls Background] closeOffscreen re-call error:', e); });

@@ -426,13 +426,25 @@ Dive into your browsing and pet metrics:
 
 ## Brain Upgrade (Local AI) — Optional
 
-Arcrawls features a local, privacy-centric AI layer that reads page context and generates customized comments and expressions completely offline. By default, Arcrawls runs in **Lite Mode**, which uses efficient Regex rules to determine site categories and emotions with zero downloads.
+Arcrawls features a local, privacy-centric AI layer that reads page context and generates customized comments and expressions completely offline. By default, Arcrawls runs in **Lite Mode**, which uses efficient Regex rules to determine site categories and emotions with no network downloads.
+
+### Install & Download Sizes
+
+| What | Size | Notes |
+|------|------|-------|
+| Chrome Web Store download | ~10 MB | Compressed install package |
+| Installed on disk (Chrome details) | ~22–25 MB | Pet assets + bundled ONNX WASM |
+| Lite Mode core (assets + UI) | ~2 MB unpacked | Active by default — Regex rules, Brain Upgrade off |
+| ONNX WASM runtime (bundled) | ~22 MB unpacked | Asyncify backend; initialized when Brain Upgrade is on |
+| DistilBERT weights | ~67 MB | One-time Hugging Face download after you enable Brain Upgrade |
+
+The Chrome Web Store shows the **compressed** zip size (~10 MB). Chrome's extension details page shows **unpacked** disk use (~22–25 MB) because the ONNX WASM backend is bundled locally. Total disk use after enabling Brain Upgrade and caching DistilBERT is roughly **~90 MB** — still far below the old ~28 MB store listing caused by four redundant WASM copies.
 
 ### How It Works
 
 1. **Context Extraction:** When you visit a tab, Arcrawls collects the page's `<title>` and `<meta name="description">`, truncating it to a maximum of 500 characters to optimize processing speeds.
 2. **Gemini Nano Summarization & Dialogue:** If available (via Chrome's built-in Prompt API), Arcrawls extracts lightweight text directly from semantic tags (`h1`, `h2`, `p`, `article`, `main`) instead of scanning the full `<body>`. This prevents expensive CSS layout thrashing on heavy social media sites while generating a condensed semantic summary. Furthermore, Arcrawls leverages Gemini Nano to dynamically generate **100% unique, highly-contextual dialogue bubbles** on the fly! This includes a built-in 8-second safety timeout to ensure your browser never hangs even if the model is busy. It is powered by a **Dedicated Knowledge Base**, enforcing strict identity constraints so Arcrawls always stays in character as your virtual pet. If Gemini Nano is unavailable, it gracefully degrades to a robust hardcoded persona dictionary. *(Note: Gemini Nano and the ONNX Brain Upgrade are currently exclusive to Chromium browsers due to offscreen document API requirements. On Firefox, Arcrawls operates exclusively in the fast, rule-based Lite Mode).*
-3. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** (Chrome-only) hosting `@huggingface/transformers` linked to a local WebAssembly-compiled ONNX Runtime (`ort-wasm.wasm`).
+3. **Offscreen WebAssembly Pipeline:** This text is piped to an **Offscreen Document** (Chrome-only) hosting `@huggingface/transformers` linked to a local ONNX Runtime asyncify WASM backend (`ort-wasm-simd-threaded.asyncify.wasm`).
 4. **Local Sentiment Model:** The WebAssembly runtime evaluates the text using a quantized version of the **DistilBERT** model (`Xenova/distilbert-base-uncased-finetuned-sst-2-english`).
 5. **Dynamic Sentiment Threshold Mapping:**
  To classify a page as `POSITIVE` or `NEGATIVE`, the classification probability score must exceed a dynamic confidence threshold. This threshold is calculated from the user's **Sentiment Sensitivity Slider** (ranging from `0` to `100`) using the formula:
@@ -540,7 +552,8 @@ Arcrawls is designed to run 24/7 inside your browser without impacting computer 
 
 ### 3. Storage Optimization & Habit Lifespan
 * **Rolling Summaries**: To prevent storage leaks, the extension does not save every website you visit. Instead, it aggregates your visits into a compact rolling summary inside `chrome.storage.local`.
-* **Sustained Traits**: Habit tracking updates are throttled and capped to prevent local database growth, keeping the extension's storage footprint under 5KB total.
+* **Sustained Traits**: Habit tracking updates are throttled and capped to prevent local database growth, keeping the extension's settings footprint small.
+* **Slim Package Build**: The extension ships one ONNX Runtime WASM binary (not four variants) and excludes marketing-only GIFs from the install bundle (~10 MB store download vs ~28 MB previously).
 
 ---
 
