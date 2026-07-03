@@ -227,7 +227,7 @@ export async function promptGeminiNano(
       const session = await lm.create(createOptions);
       
       const timeoutPromise = new Promise<null>((_, reject) => 
-        setTimeout(() => reject(new Error("Gemini Nano Inference Timeout")), 30000)
+        setTimeout(() => reject(new Error("Gemini Nano Inference Timeout")), 60000)
       );
 
       const resultText = await Promise.race([
