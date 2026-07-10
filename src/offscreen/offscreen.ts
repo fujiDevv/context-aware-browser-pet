@@ -163,7 +163,7 @@ async function getLocalAiEmotion(
 async function playSound(filename: string, volume: number): Promise<void> {
   return new Promise((resolve, reject) => {
     try {
-      const soundUrl = getRuntimeUrl(`assets/${encodeURIComponent(filename)}`);
+      const soundUrl = getRuntimeUrl(`assets/${filename}`);
       const audio = new Audio(soundUrl);
       document.body.appendChild(audio);
       audio.volume = volume;

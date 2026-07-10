@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: center;
   will-change: transform;
-  contain: layout style paint;
+  contain: layout style;
 }
 
 #browser-pet-img {
@@ -82,6 +82,13 @@
   z-index: 2147483647;
 }
 
+.pet-speech-bubble.state-walk-bottom {
+  bottom: 100%;
+  top: auto;
+  margin-bottom: 10px;
+  transform: translateX(-50%) scale(0.8);
+}
+
 .pet-speech-bubble.state-walk-top {
   bottom: auto;
   top: 75%;
@@ -111,6 +118,10 @@
 
 .pet-speech-bubble.show {
   opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.pet-speech-bubble.show.state-walk-bottom {
   transform: translateX(-50%) scale(1);
 }
 
