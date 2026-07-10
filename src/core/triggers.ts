@@ -13,6 +13,7 @@ export class TriggerDetector {
   _onStateChange?: () => void;
 
   private _bridgeToken: string | null = null;
+  private _activeVideos = new Set<HTMLVideoElement>();
 
   constructor(onStateChange?: () => void, bridgeToken?: string) {
     this._lastInput = Date.now();
@@ -140,16 +141,13 @@ export class TriggerDetector {
     const target = e?.target as HTMLVideoElement;
     if (target && target.tagName === 'VIDEO') {
       if (e?.type === 'play' || e?.type === 'playing') {
-        this._isVideo = true;
-        if (this._onStateChange) this._onStateChange();
-        return;
+        this._activeVideos.add(target);
+      } else if (e?.type === 'pause' || e?.type === 'ended') {
+        this._activeVideos.delete(target);
       }
     }
-    const videos = document.querySelectorAll('video');
-    const newState = Array.from(videos).some(video => {
-      return !video.paused && !video.ended && video.readyState > 2;
-    });
 
+    const newState = this._activeVideos.size > 0;
     if (newState !== this._isVideo) {
       this._isVideo = newState;
       if (this._onStateChange) this._onStateChange();

@@ -37,11 +37,15 @@ export class MovementEngine {
   onFlightStart?: () => void;
   onFlightEnd?: () => void;
   private _isResizeBound = false;
+  private _cachedW = 0;
+  private _cachedH = 0;
+  private _stylesInitialized = false;
+  private _resizeObserver: ResizeObserver | null = null;
 
   _handleResize = () => {
-    const container = this.containerRef?.deref();
-    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
-    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+    this._updateCachedDimensions();
+    const W = this._cachedW;
+    const H = this._cachedH;
     this.x = Math.max(0, Math.min(this.x, W));
     this.y = Math.max(0, Math.min(this.y, H));
 
@@ -68,12 +72,10 @@ export class MovementEngine {
     this.flightSpeed = 1.0;
     this.performanceMode = initialSettings.performanceMode || false;
 
-    const container = initialSettings.container;
-    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
-    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+    this._updateCachedDimensions();
 
-    this.x = Math.random() * W;
-    this.y = H;
+    this.x = Math.random() * this._cachedW;
+    this.y = this._cachedH;
     this.direction = 1;
 
     this._paused = false;
@@ -84,6 +86,14 @@ export class MovementEngine {
     this.lastTime = 0;
 
     this._setupDrag();
+  }
+
+  private _updateCachedDimensions(): void {
+    const container = this.containerRef?.deref();
+    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
+    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+    this._cachedW = Math.max(100, W);
+    this._cachedH = Math.max(100, H);
   }
 
   get el(): HTMLElement | null {
@@ -98,12 +108,21 @@ export class MovementEngine {
       window.addEventListener('resize', this._handleResize);
       document.addEventListener('visibilitychange', this._handleVisibilityChange);
       this._isResizeBound = true;
+
+      // Setup ResizeObserver to update dimensions asynchronously on layout changes
+      const container = this.containerRef?.deref() || document.body;
+      if (container && typeof ResizeObserver !== 'undefined') {
+        this._resizeObserver = new ResizeObserver(() => {
+          this._updateCachedDimensions();
+        });
+        this._resizeObserver.observe(container);
+      }
     }
 
     if (!this.hasFallen) {
       this.hasFallen = true;
-      const container = this.containerRef?.deref();
-      const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+      this._updateCachedDimensions();
+      const H = this._cachedH;
 
       // Always Ground for initial spawn
       const targetY = H;
@@ -141,6 +160,8 @@ export class MovementEngine {
     }
     window.removeEventListener('resize', this._handleResize);
     document.removeEventListener('visibilitychange', this._handleVisibilityChange);
+    this._resizeObserver?.disconnect();
+    this._resizeObserver = null;
     this._isResizeBound = false;
   }
 
@@ -334,18 +355,13 @@ export class MovementEngine {
     if (settings.performanceMode !== undefined) {
       this.performanceMode = settings.performanceMode;
     }
-    const el = this.el;
     if (settings.size !== undefined) {
       this.size = settings.size;
+      this._stylesInitialized = false; // Re-initialize styles in _apply on the next tick
+      this._updateCachedDimensions();
 
-      if (el) {
-        el.style.width = `${this.size}px`;
-        el.style.height = `auto`;
-      }
-
-      const container = this.containerRef?.deref();
-      const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
-      const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+      const W = this._cachedW;
+      const H = this._cachedH;
       this.x = Math.max(0, Math.min(this.x, W));
       this.y = Math.max(0, Math.min(this.y, H));
 
@@ -405,9 +421,8 @@ export class MovementEngine {
   }
 
   _step(timeMultiplier: number = 1): void {
-    const container = this.containerRef?.deref();
-    const W = (container ? container.offsetWidth : window.innerWidth) - this.size;
-    const H = (container ? container.offsetHeight : window.innerHeight) - this.size;
+    const W = this._cachedW;
+    const H = this._cachedH;
 
     // Hardcoded night speed removed. Rely on content.ts to set this.speed via updateSettings
     const currentSpeed = this.speed * timeMultiplier;
@@ -535,9 +550,19 @@ export class MovementEngine {
 
     const flip = (flipValue === -1) ? 'scaleX(-1)' : 'scaleX(1)';
 
-    // Ensure the container exactly matches this.size so it anchors perfectly to the screen bounds
-    el.style.width = `${this.size}px`;
-    el.style.height = `${this.size}px`;
+    // Ensure static properties are only written once (prevents continuous reflows)
+    if (!this._stylesInitialized) {
+      el.style.width = `${this.size}px`;
+      el.style.height = `${this.size}px`;
+      if (!this.wasDragged) {
+        el.style.left = '0px';
+        el.style.top = '0px';
+        el.style.bottom = 'auto';
+        el.style.position = 'absolute';
+      }
+      this._stylesInitialized = true;
+    }
+
     el.style.setProperty('--pet-x', `${this.x}px`);
     el.style.setProperty('--pet-y', `${this.y}px`);
     el.style.setProperty('--pet-offset-y', `0px`);
@@ -551,14 +576,6 @@ export class MovementEngine {
 
     // A single DOM write per frame using GPU-composited translate3d reading from CSS variables
     el.style.transform = `translate3d(var(--pet-x), var(--pet-y), 0)`;
-
-    // Position resets (Should only be set once during init, not every frame)
-    if (!this.wasDragged) {
-      el.style.left = '0px';
-      el.style.top = '0px';
-      el.style.bottom = 'auto';
-      el.style.position = 'absolute';
-    }
 
     const img = this.imgRef?.deref() || (el.querySelector('#browser-pet-img') as HTMLImageElement | null);
     if (img && !this.imgRef) this.imgRef = new WeakRef(img);

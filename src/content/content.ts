@@ -36,6 +36,7 @@ let currentSettings: PetSettings = { size: 128, speed: 1.2, aiMode: false, apiKe
 let idleTimer: ReturnType<typeof setTimeout> | null = null;
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 let pokeInterval: ReturnType<typeof setInterval> | null = null;
+let cachedAiAvailability: 'readily' | 'after-download' | 'no' | null = null;
 
 async function playSound(type: string): Promise<void> {
   const sounds: Record<string, string> = {
@@ -1525,7 +1526,12 @@ async function actuallyInit(): Promise<void> {
 }
 
 async function checkTabAiAvailability(): Promise<'readily' | 'after-download' | 'no'> {
-  return getAiEmotionAvailability();
+  if (cachedAiAvailability !== null) {
+    return cachedAiAvailability;
+  }
+  const status = await getAiEmotionAvailability();
+  cachedAiAvailability = status;
+  return status;
 }
 
 async function getAiEmotionAvailability(): Promise<'readily' | 'after-download' | 'no'> {
