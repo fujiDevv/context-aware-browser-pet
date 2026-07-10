@@ -486,7 +486,7 @@ async function setupOffscreen(): Promise<void> {
 
     try {
       await extensionApi.offscreen.createDocument({
-        url: 'offscreen.html',
+        url: 'src/offscreen/offscreen.html',
         reasons: [offscreenReason.DOM_PARSER, offscreenReason.AUDIO_PLAYBACK],
         justification: 'Run local machine learning models and handle centralized audio playback for the pet companion'
       });
