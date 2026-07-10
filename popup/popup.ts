@@ -1,7 +1,7 @@
-import { PetStats, PetSettings } from '../src/types';
-import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/shared-ui';
-import { STORAGE_KEYS } from '../src/constants';
-import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/platform';
+import { PetStats, PetSettings } from '../src/shared/types';
+import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/ui/shared-ui';
+import { STORAGE_KEYS } from '../src/shared/constants';
+import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/shared/platform';
 
 const supportsLocalAiRuntime = supportsOffscreenDocuments();
 const isFirefoxBuild = isFirefoxRuntime();

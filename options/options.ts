@@ -1,10 +1,10 @@
-import { PersonalitySystem } from '../src/personality';
-import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem, PetMessage, StorageChange } from '../src/types';
-import { STORAGE_KEYS } from '../src/constants';
-import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName, parseMarkdown } from '../src/shared-ui';
-import { getDailyInsight, getAiChatResponse } from '../src/ai';
-import { MovementEngine } from '../src/movement';
-import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/platform';
+import { PersonalitySystem } from '../src/core/personality';
+import { PetStats, PetSettings, DomainReaction, DailyMoodRecord, MoodHistoryItem, PetMessage, StorageChange } from '../src/shared/types';
+import { STORAGE_KEYS } from '../src/shared/constants';
+import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName, parseMarkdown } from '../src/ui/shared-ui';
+import { getDailyInsight, getAiChatResponse } from '../src/core/ai';
+import { MovementEngine } from '../src/core/movement';
+import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/shared/platform';
 
 let personality: PersonalitySystem;
 let playgroundMovement: MovementEngine;

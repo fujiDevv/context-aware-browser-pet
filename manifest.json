@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Arcrawls: The Context-Aware Browser Pet",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "An interactive, context-aware browser mascot pet companion with 100% local offline AI.",
   "permissions": [
     "storage",
@@ -15,7 +15,7 @@
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "background.ts"
+    "service_worker": "src/background/background.ts"
   },
   "content_scripts": [
     {
@@ -23,7 +23,7 @@
         "<all_urls>"
       ],
       "js": [
-        "content.ts"
+        "src/content/content.ts"
       ],
       "run_at": "document_start"
     }
@@ -31,20 +31,22 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "assets/logo16.png",
-      "48": "assets/logo48.png",
-      "128": "assets/logo128.png"
+      "16": "assets/icons/logo16.png",
+      "48": "assets/icons/logo48.png",
+      "128": "assets/icons/logo128.png"
     }
   },
   "icons": {
-    "16": "assets/logo16.png",
-    "48": "assets/logo48.png",
-    "128": "assets/logo128.png"
+    "16": "assets/icons/logo16.png",
+    "48": "assets/icons/logo48.png",
+    "128": "assets/icons/logo128.png"
   },
   "web_accessible_resources": [
     {
       "resources": [
         "assets/*",
+        "assets/icons/*",
+        "assets/sounds/*",
         "assets/pets/*",
         "wasm/*",
         "main_world.js"

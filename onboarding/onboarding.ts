@@ -1,4 +1,4 @@
-import { extensionApi } from '../src/platform';
+import { extensionApi } from '../src/shared/platform';
 
 (function () {
   'use strict';

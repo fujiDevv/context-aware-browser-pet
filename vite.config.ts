@@ -85,8 +85,8 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       input: {
-        main_world: resolve(__dirname, 'main_world.ts'),
-        offscreen: resolve(__dirname, 'offscreen.html'),
+        main_world: resolve(__dirname, 'src/content/main_world.ts'),
+        offscreen: resolve(__dirname, 'src/offscreen/offscreen.html'),
         onboarding: resolve(__dirname, 'onboarding/onboarding.html'),
       },
       output: {

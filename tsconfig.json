@@ -10,5 +10,13 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": ["src/**/*", "content.ts", "main_world.ts", "background.ts", "popup/popup.ts", "offscreen.ts", "options/options.ts", "onboarding/onboarding.ts", "e2e/**/*", "__tests__/**/*", "playwright.config.ts"]
+  "include": [
+    "src/**/*",
+    "popup/**/*",
+    "options/**/*",
+    "onboarding/**/*",
+    "tests/**/*",
+    "scripts/**/*",
+    "playwright.config.ts"
+  ]
 }
