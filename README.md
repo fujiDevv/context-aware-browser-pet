@@ -5,7 +5,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 *Mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library by Abderrahim Ghazali, used under the MIT License.*
 
 <p align="center">
-   <img src="marketing/arcrawls-gif2.gif" alt="Arcrawls in Action" width="600" />
+   <img src="docs/arcrawls-gif2.gif" alt="Arcrawls in Action" width="600" />
 </p>
 
 <p align="center">
