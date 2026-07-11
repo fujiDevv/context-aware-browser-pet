@@ -585,7 +585,10 @@ If you opt into the local **AI Mood Analysis** feature:
 - **CPU Throttling:** Background state synchronization and interactions are strictly throttled. Arcrawls will not unnecessarily broadcast update events or stack overlapping animation frames, keeping CPU overhead extremely low even with dozens of tabs open.
 
 ### Permissions
-The extension requests only the permissions necessary to render the pet (`activeTab`), store settings (`storage`), track navigation events (`webNavigation`), and run local AI computations (`offscreen`). No external host permissions are required for the AI layer.
+The extension requests only the minimum permissions necessary to function: settings storage (`storage`), navigation events (`webNavigation`), main-frame HTTP error observation (`webRequest`), alarms for statistics decay (`alarms`), and local AI operations (`offscreen`), alongside host permissions (`<all_urls>`) to run on web pages.
+
+### User Consent & Passive Gating
+In compliance with the Chrome Web Store Developer Program Policies, Arcrawls remains completely passive on your first run. The extension will not inject its mascot, monitor page content, or evaluate script diagnostics until you have reviewed the onboarding documentation and checked the privacy consent agreement box.
 
 ---
 

@@ -39,6 +39,9 @@ You have complete control over your data:
 ## 7. Changes to This Policy
 We may update this policy from time to time to reflect changes in our practices. Any changes will be updated on this page.
 
-## 8. Contact
+## 8. Chrome Web Store Limited Use Compliance
+The Extension's use of information received from Google APIs will adhere to the Chrome Web Store User Data Policy, including the Limited Use requirements.
+
+## 9. Contact
 If you have any questions regarding this privacy policy or the Extension's data practices, please open an issue on our GitHub repository:
-[https://github.com/joshuasarmiento/contextual-pet-extension/issues](https://github.com/joshuasarmiento/contextual-pet-extension/issues)
+https://github.com/joshuasarmiento/contextual-pet-extension/issues

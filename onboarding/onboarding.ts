@@ -3,7 +3,7 @@ import { extensionApi } from '../src/shared/platform';
 (function () {
   'use strict';
 
-  const TOTAL_STEPS = 3;
+  const TOTAL_STEPS = 4;
   let currentStep = 0;
 
   const track = document.getElementById('steps-track') as HTMLElement;
@@ -11,11 +11,26 @@ import { extensionApi } from '../src/shared/platform';
   const btnNext = document.getElementById('btn-next') as HTMLButtonElement;
   const dotsContainer = document.getElementById('step-dots') as HTMLElement;
   const dots = dotsContainer.querySelectorAll('.step-dot') as NodeListOf<HTMLButtonElement>;
+  const consentCheckbox = document.getElementById('consent-checkbox') as HTMLInputElement | null;
+
+  let isConsented = false;
+  extensionApi.storage.local.get<{ consentAccepted?: boolean }>('consentAccepted').then((data) => {
+    if (data && data.consentAccepted) {
+      isConsented = true;
+      if (consentCheckbox) consentCheckbox.checked = true;
+    }
+  }).catch(() => {});
 
   function goToStep(index: number): void {
     if (index < 0 || index >= TOTAL_STEPS) return;
-    currentStep = index;
 
+    // Block moving past Step 3 (index 2) if consent is not accepted
+    if (index > 2 && consentCheckbox && !consentCheckbox.checked) {
+      alert("Please accept the privacy terms to proceed.");
+      return;
+    }
+
+    currentStep = index;
     track.style.transform = `translateX(-${currentStep * 100}%)`;
 
     dots.forEach((dot, i) => {
@@ -28,16 +43,39 @@ import { extensionApi } from '../src/shared/platform';
       btnBack.classList.remove('hidden');
     }
 
+    if (currentStep === 2 && consentCheckbox) {
+      // Step 3: Privacy & Consent
+      btnNext.disabled = !consentCheckbox.checked;
+      btnNext.style.opacity = consentCheckbox.checked ? '1' : '0.5';
+    } else {
+      btnNext.disabled = false;
+      btnNext.style.opacity = '1';
+    }
+
     if (currentStep === TOTAL_STEPS - 1) {
-      btnNext.innerHTML = 'Close <span class="arrow">✓</span>';
+      btnNext.innerHTML = 'Finish <span class="arrow">✓</span>';
     } else {
       btnNext.innerHTML = 'Next <span class="arrow">→</span>';
     }
   }
 
+  if (consentCheckbox) {
+    consentCheckbox.addEventListener('change', () => {
+      if (currentStep === 2) {
+        btnNext.disabled = !consentCheckbox.checked;
+        btnNext.style.opacity = consentCheckbox.checked ? '1' : '0.5';
+      }
+    });
+  }
+
   btnNext.addEventListener('click', () => {
     if (currentStep === TOTAL_STEPS - 1) {
-      window.close();
+      // Save consent to storage
+      extensionApi.storage.local.set({ consentAccepted: true }).then(() => {
+        window.close();
+      }).catch(() => {
+        window.close();
+      });
     } else {
       goToStep(currentStep + 1);
     }
@@ -60,6 +98,10 @@ import { extensionApi } from '../src/shared/platform';
   document.addEventListener('keydown', (e: KeyboardEvent) => {
     if (e.key === 'ArrowRight' || e.key === 'Enter') {
       if (currentStep < TOTAL_STEPS - 1) {
+        // Prevent keyboard shortcut bypass on step 3 if not checked
+        if (currentStep === 2 && consentCheckbox && !consentCheckbox.checked) {
+          return;
+        }
         goToStep(currentStep + 1);
       }
     } else if (e.key === 'ArrowLeft') {

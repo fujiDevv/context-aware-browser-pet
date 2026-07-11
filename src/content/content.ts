@@ -1180,6 +1180,14 @@ async function loadAndApplySettings(): Promise<void> {
 
 function handleStorageChanged(changes: Record<string, StorageChange>) {
   if (!checkContextOrCleanup()) return;
+  if (changes['consentAccepted']) {
+    const accepted = changes['consentAccepted'].newValue;
+    if (accepted && !isInitialized) {
+      if (document.visibilityState === 'visible') {
+        actuallyInit();
+      }
+    }
+  }
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const newSettings = changes[STORAGE_KEYS.SETTINGS].newValue;
     if (newSettings) {
@@ -1404,6 +1412,15 @@ async function init(): Promise<void> {
   await loadAndApplySettings();
 
   if (!checkContextOrCleanup()) return;
+
+  const savedConsent = await extensionApi.storage.local.get<{ consentAccepted?: boolean }>('consentAccepted').catch(() => ({ consentAccepted: false }));
+  const settingsExist = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then(data => !!data[STORAGE_KEYS.SETTINGS]).catch(() => false);
+  const consentAccepted = !!(savedConsent.consentAccepted || settingsExist);
+
+  if (!consentAccepted) {
+    console.log(`[${currentSettings.name || "Arcrawls"} Content] User has not accepted privacy consent yet. Mascot is disabled.`);
+    return;
+  }
 
   if (document.visibilityState === 'visible') {
     actuallyInit();

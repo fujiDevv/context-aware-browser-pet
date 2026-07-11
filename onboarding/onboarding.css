@@ -455,3 +455,77 @@ body {
     font-size: 0.82rem;
   }
 }
+
+/* Privacy & Consent Styles */
+.privacy-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 485px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.privacy-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.65);
+  background-image: var(--noise-grain);
+  border: 1px solid var(--card-border);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.privacy-item:hover {
+  transform: translateX(4px);
+  border-color: var(--accent-border);
+}
+
+.privacy-bullet {
+  color: #10b981; /* emerald green */
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.privacy-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.privacy-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.consent-form {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.consent-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  user-select: none;
+  font-weight: 500;
+}
+
+.consent-checkbox-label input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
