@@ -493,6 +493,12 @@ function ensureInitialized(): void {
     chatHistory.push({ role: 'user', content: text });
     saveChatHistory();
     
+    if (!currentSettings.aiMode) {
+      view.setChatLoading(false);
+      view.addChatMessage('arcrawls', "Brain Upgrade is currently disabled. Please toggle it on in the Settings to chat with me!");
+      return;
+    }
+    
     const pageText = document.body.innerText || '';
     const trait = getDominantTrait(personality.stats.siteCategoryCounts);
     const statsContext = `Happiness: ${personality.stats.happiness}%, Energy: ${personality.stats.energy}%, Focus: ${personality.stats.focus}%, Personality Trait: ${trait}`;
@@ -544,6 +550,12 @@ function ensureInitialized(): void {
     if (chatHistory.length > 0 && chatHistory[chatHistory.length - 1].role === 'assistant') {
       chatHistory.pop();
       saveChatHistory();
+    }
+    
+    if (!currentSettings.aiMode) {
+      view.setChatLoading(false);
+      view.addChatMessage('arcrawls', "Brain Upgrade is currently disabled. Please toggle it on in the Settings to chat with me!");
+      return;
     }
     
     const textNode = oldMsgEl.querySelector('div:not(.arcrawls-control-btn)') as HTMLElement;
@@ -873,41 +885,43 @@ async function triggerContextDialogue(mood: string): Promise<void> {
   const persona = currentSettings.persona || 'default';
 
   // 1. Try Gemini Nano Generative Dialogue First
-  try {
-    const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement)?.content;
-    let pageText: string | undefined = undefined;
-    
-    // Instead of document.body.innerText which triggers heavy layout recalculation on social media,
-    // we quickly grab textContent from relevant semantic tags up to 3000 chars.
-    const contentTags = document.querySelectorAll('h1, h2, h3, p, article');
-    let extracted = '';
-    for (let i = 0; i < contentTags.length; i++) {
-      const text = contentTags[i].textContent?.trim() || '';
-      if (text) extracted += text + ' ';
-      if (extracted.length > 3000) break;
+  if (currentSettings.aiMode) {
+    try {
+      const metaDesc = (document.querySelector('meta[name="description"]') as HTMLMetaElement)?.content;
+      let pageText: string | undefined = undefined;
+      
+      // Instead of document.body.innerText which triggers heavy layout recalculation on social media,
+      // we quickly grab textContent from relevant semantic tags up to 3000 chars.
+      const contentTags = document.querySelectorAll('h1, h2, h3, p, article');
+      let extracted = '';
+      for (let i = 0; i < contentTags.length; i++) {
+        const text = contentTags[i].textContent?.trim() || '';
+        if (text) extracted += text + ' ';
+        if (extracted.length > 3000) break;
+      }
+      
+      if (extracted.trim().length > 0) {
+        pageText = extracted.trim().substring(0, 3000);
+      }
+      
+      const statsContext = `Level: ${personality.stats.level}, Energy: ${Math.round(personality.stats.energy)}%, Focus: ${Math.round(personality.stats.focus)}%`;
+      const genDialogue = await getAutonomousGenerativeDialogue(
+        persona,
+        statsContext,
+        mood,
+        document.title,
+        metaDesc,
+        currentSettings.name,
+        pageText
+      );
+      
+      if (genDialogue) {
+        showBubbleWithSound(genDialogue);
+        return;
+      }
+    } catch (e) {
+      console.warn(`[${currentSettings.name || 'Arcrawls'} AI] Generative autonomous dialogue failed, falling back to hardcoded.`, e);
     }
-    
-    if (extracted.trim().length > 0) {
-      pageText = extracted.trim().substring(0, 3000);
-    }
-    
-    const statsContext = `Level: ${personality.stats.level}, Energy: ${Math.round(personality.stats.energy)}%, Focus: ${Math.round(personality.stats.focus)}%`;
-    const genDialogue = await getAutonomousGenerativeDialogue(
-      persona,
-      statsContext,
-      mood,
-      document.title,
-      metaDesc,
-      currentSettings.name,
-      pageText
-    );
-    
-    if (genDialogue) {
-      showBubbleWithSound(genDialogue);
-      return;
-    }
-  } catch (e) {
-    console.warn(`[${currentSettings.name || 'Arcrawls'} AI] Generative autonomous dialogue failed, falling back to hardcoded.`, e);
   }
 
   // 2. Fallback to Hardcoded Dialogues

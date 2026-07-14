@@ -951,15 +951,15 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
 
 async function playPreviewSound(type: string, volume: number): Promise<void> {
   const sounds: Record<string, string> = {
-    greeting: 'greeting.mp3',
-    levelUp: 'level-up.mp3',
-    petting: 'petting-love.mp3',
-    sad: 'sad-crying.mp3',
-    shoo: 'shoo-run.mp3',
-    sleeping: 'sleeping.mp3',
-    thinking: 'thinking-coding-work.mp3',
-    feeding: 'feeding-celebrating.mp3',
-    chat: 'chat-message.mp3'
+    greeting: 'sounds/greeting.mp3',
+    levelUp: 'sounds/level-up.mp3',
+    petting: 'sounds/petting-love.mp3',
+    sad: 'sounds/sad-crying.mp3',
+    shoo: 'sounds/shoo-run.mp3',
+    sleeping: 'sounds/sleeping.mp3',
+    thinking: 'sounds/thinking-coding-work.mp3',
+    feeding: 'sounds/feeding-celebrating.mp3',
+    chat: 'sounds/chat-message.mp3'
   };
 
   const filename = sounds[type];
@@ -1173,7 +1173,15 @@ async function updateSynapseUI(stats: PetStats) {
     if (!stats.aiInsight?.content || !stats.aiInsight.isNew) {
       // Trigger AI generation
       const settingsData = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
-      const persona = settingsData[STORAGE_KEYS.SETTINGS]?.persona || 'default';
+      const settings = settingsData[STORAGE_KEYS.SETTINGS] || {};
+      const persona = settings.persona || 'default';
+
+      if (!settings.aiMode) {
+        if (synapsePreviewText) {
+          synapsePreviewText.textContent = "Brain Upgrade is currently disabled. Please toggle it on in the Settings to generate daily insights!";
+        }
+        return;
+      }
 
       if (synapsePreviewText) synapsePreviewText.textContent = "Arcrawls is concentrating on your day...";
 
