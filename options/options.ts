@@ -967,7 +967,11 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
     try {
       const audio = new Audio(extensionApi.runtime.getURL(`assets/${filename}`));
       audio.volume = volume;
-      audio.play().catch(e => console.warn('[Arcrawls Dashboard] Audio playback blocked:', e));
+      audio.play().catch(e => {
+        if (e.name !== 'NotAllowedError') {
+          console.warn('[Arcrawls Dashboard] Audio playback blocked:', e);
+        }
+      });
     } catch (e) {
       console.error('[Arcrawls Dashboard] Failed to play sound:', e);
     }
@@ -1571,6 +1575,16 @@ function updateLocalAiStatus() {
     if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-unsupported';
     if (aiStatusText) aiStatusText.textContent = 'Brain: Lite Mode';
     if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Using backup instincts';
+    if (statusBert) {
+      statusBert.textContent = 'Offline';
+      statusBert.style.color = '#ef4444';
+    }
+    if (statusNano) {
+      statusNano.textContent = '❌ Offline';
+      statusNano.style.color = '#ef4444';
+    }
+    if (sancNanoBadge) sancNanoBadge.className = 'status-indicator status-unsupported';
+    if (sancNanoText) sancNanoText.textContent = 'Nano: Offline';
     return;
   }
 

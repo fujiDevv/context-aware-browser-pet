@@ -258,7 +258,11 @@ extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
         try {
           const audio = new Audio(extensionApi.runtime.getURL(`assets/${message.filename}`));
           audio.volume = message.volume;
-          audio.play().catch(e => console.warn('[Arcrawls Background] Audio playback failed', e));
+          audio.play().catch(e => {
+            if (e.name !== 'NotAllowedError') {
+              console.warn('[Arcrawls Background] Audio playback failed', e);
+            }
+          });
           sendResponse({ success: true });
         } catch (e: any) {
           sendResponse({ success: false, error: e.message });

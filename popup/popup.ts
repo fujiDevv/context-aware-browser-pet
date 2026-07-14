@@ -63,8 +63,14 @@ async function init(): Promise<void> {
       const settings = res[STORAGE_KEYS.SETTINGS] || {};
       if (!settings.aiMode) {
         if (aiStatusBadge && aiStatusText) {
-          aiStatusBadge.className = 'ai-status-badge status-checking';
+          aiStatusBadge.className = 'ai-status-badge status-unsupported';
           aiStatusText.textContent = 'Brain: Lite';
+        }
+        const nanoBadge = document.getElementById('nano-status-badge');
+        const nanoText = document.getElementById('nano-status-text');
+        if (nanoBadge && nanoText) {
+          nanoBadge.className = 'ai-status-badge status-unsupported';
+          nanoText.textContent = 'Nano: Offline';
         }
         return;
       }
