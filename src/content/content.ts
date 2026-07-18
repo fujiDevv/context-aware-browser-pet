@@ -251,8 +251,13 @@ function showPet(): void {
   }
 }
 
+let isInitialPageLoad = true;
+setTimeout(() => {
+  isInitialPageLoad = false;
+}, 3000);
+
 function showBubbleWithSound(text: string, duration?: number): void {
-  if (document.visibilityState === 'visible' && !isPetHidden()) {
+  if (document.visibilityState === 'visible' && !isPetHidden() && !isInitialPageLoad) {
     playSound('chat');
   }
   // Calculate dynamic duration based on text length (assume ~60ms per character for reading speed)
@@ -530,7 +535,6 @@ function ensureInitialized(): void {
               ];
               const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
               view.addChatMessage('arcrawls', randomGreeting);
-              if (currentSettings.soundEnabled) playSound('chat');
 
               setSessionItem('arcrawls-ai-has-greeted', 'true');
             }, 5000);
