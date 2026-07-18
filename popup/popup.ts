@@ -180,20 +180,11 @@ async function init(): Promise<void> {
       });
     }
 
-    const btnChat = document.getElementById('btn-open-chat');
-    if (btnChat) {
-      btnChat.addEventListener('click', async () => {
-        const [tab] = await extensionApi.tabs.query({ active: true, currentWindow: true });
-        if (tab && tab.id) {
-          try {
-            await extensionApi.tabs.sendMessage(tab.id, { type: 'toggle-chat' });
-            window.close(); // Close popup
-          } catch (e) {
-            console.info('No content script in tab. Falling back to options page chat.');
-            await extensionApi.tabs.create({ url: getRuntimeUrl('options/options.html#chat') });
-            window.close();
-          }
-        }
+    const btnDonate = document.getElementById('btn-donate');
+    if (btnDonate) {
+      btnDonate.addEventListener('click', async () => {
+        await extensionApi.tabs.create({ url: 'https://arcrawls.com/donate' });
+        window.close();
       });
     }
 
