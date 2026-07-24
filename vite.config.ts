@@ -41,7 +41,8 @@ function wasmPlugin() {
     writeBundle() {
       const srcDir = resolve(__dirname, 'node_modules/onnxruntime-web/dist');
       const destDir = resolve(__dirname, 'dist/wasm');
-      if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+      if (fs.existsSync(destDir)) fs.rmSync(destDir, { recursive: true, force: true });
+      fs.mkdirSync(destDir, { recursive: true });
 
       if (fs.existsSync(srcDir)) {
         for (const file of ONNX_WASM_FILES) {
