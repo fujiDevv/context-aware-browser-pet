@@ -5,13 +5,13 @@
     "@huggingface/transformers": "^4.2.0"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "^2.0.0-beta.33",
+    "@crxjs/vite-plugin": "^2.7.1",
     "@playwright/test": "^1.61.1",
-    "@types/chrome": "^0.0.268",
-    "@types/node": "^26.0.1",
+    "@types/chrome": "^0.2.2",
+    "@types/node": "^26.1.1",
     "sirv-cli": "^3.0.0",
-    "typescript": "^5.4.5",
-    "vitest": "^4.1.9"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   },
   "description": "Context-aware browser pet extension using arcrawls-pet SVGs.",
   "scripts": {
