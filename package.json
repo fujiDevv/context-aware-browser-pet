@@ -5,7 +5,7 @@
     "@huggingface/transformers": "^4.2.0"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "^2.0.0-beta.33",
+    "@crxjs/vite-plugin": "^2.7.1",
     "@playwright/test": "^1.61.1",
     "@types/chrome": "^0.0.268",
     "@types/node": "^26.0.1",
