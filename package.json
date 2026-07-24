@@ -20,7 +20,7 @@
     "test:unit": "vitest run tests/unit",
     "test:e2e": "playwright test",
     "dev": "vite build --watch",
-    "build": "node -e \"import('fs').then(f=>{try{f.rmSync('dist',{recursive:true,force:true});f.rmSync('dist-package.zip',{force:true})}catch(e){}})\" && vite build",
+    "build": "node scripts/clean.mjs && vite build",
     "build:firefox": "vite build && node scripts/build-firefox.mjs",
     "verify": "bun run type-check && bun run test:unit && bun run test:e2e",
     "all": "bun run build && bun run verify && bun run build:firefox"

@@ -55,6 +55,9 @@ function wasmPlugin() {
 
       slimDistBundle(resolve(__dirname, 'dist'));
     },
+    closeBundle() {
+      slimDistBundle(resolve(__dirname, 'dist'));
+    },
   };
 }
 
@@ -74,16 +77,16 @@ function slimDistBundle(distDir: string) {
     }
   }
 
-  // Remove duplicate macOS Finder copy files across dist (e.g., " 2", " 3", " 4")
+  // Remove duplicate macOS Finder copy files across dist (e.g., " 2", " 3", " 5")
   const removeDuplicates = (dir: string) => {
     if (!fs.existsSync(dir)) return;
     for (const item of fs.readdirSync(dir)) {
       const fullPath = resolve(dir, item);
-      if (/\s\d+(\.[a-z0-9]+)?$/i.test(item) || item.includes(' 2') || item.includes(' 3') || item.includes(' 4')) {
+      if (/\s\d+/i.test(item) || item.toLowerCase().includes('copy')) {
         fs.rmSync(fullPath, { recursive: true, force: true });
         continue;
       }
-      if (fs.statSync(fullPath).isDirectory()) {
+      if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
         removeDuplicates(fullPath);
       }
     }
