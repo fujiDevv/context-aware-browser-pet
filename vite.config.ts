@@ -59,19 +59,36 @@ function wasmPlugin() {
 
 function slimDistBundle(distDir: string) {
   const assetsDir = resolve(distDir, 'assets');
-  if (!fs.existsSync(assetsDir)) return;
+  if (fs.existsSync(assetsDir)) {
+    for (const file of fs.readdirSync(assetsDir)) {
+      const fullPath = resolve(assetsDir, file);
+      if (!fs.statSync(fullPath).isFile()) continue;
 
-  for (const file of fs.readdirSync(assetsDir)) {
-    const fullPath = resolve(assetsDir, file);
-    if (!fs.statSync(fullPath).isFile()) continue;
-
-    if (file.includes('ort-wasm') && (file.endsWith('.wasm') || file.endsWith('.mjs'))) {
-      fs.unlinkSync(fullPath);
-    }
-    if (/^arcrawls-gif\d*\.gif$/i.test(file)) {
-      fs.unlinkSync(fullPath);
+      if (file.includes('ort-wasm') && (file.endsWith('.wasm') || file.endsWith('.mjs'))) {
+        fs.unlinkSync(fullPath);
+      }
+      if (/^arcrawls-gif\d*\.gif$/i.test(file)) {
+        fs.unlinkSync(fullPath);
+      }
     }
   }
+
+  // Remove duplicate macOS Finder copy files across dist (e.g., " 2", " 3", " 4")
+  const removeDuplicates = (dir: string) => {
+    if (!fs.existsSync(dir)) return;
+    for (const item of fs.readdirSync(dir)) {
+      const fullPath = resolve(dir, item);
+      if (/\s\d+(\.[a-z0-9]+)?$/i.test(item) || item.includes(' 2') || item.includes(' 3') || item.includes(' 4')) {
+        fs.rmSync(fullPath, { recursive: true, force: true });
+        continue;
+      }
+      if (fs.statSync(fullPath).isDirectory()) {
+        removeDuplicates(fullPath);
+      }
+    }
+  };
+
+  removeDuplicates(distDir);
 }
 
 export default defineConfig({
@@ -80,6 +97,7 @@ export default defineConfig({
     wasmPlugin(),
   ],
   build: {
+    emptyOutDir: true,
     modulePreload: false,
     assetsInlineLimit: 0,
     chunkSizeWarningLimit: 1000,
