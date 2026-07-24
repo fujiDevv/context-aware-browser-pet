@@ -178,7 +178,7 @@ import { extensionApi } from '../src/shared/platform';
       },
       {
         title: 'Lite Mode & Performance',
-        description: 'Lite Mode uses Regex rules with no network downloads. The ~10 MB install includes bundled WASM; Brain Upgrade adds a one-time ~67 MB model fetch.',
+        description: 'Lite Mode uses Regex rules with no network downloads. The ~6 MB install includes bundled WASM; Brain Upgrade adds a one-time ~67 MB model fetch.',
         icon: '../assets/pets/arcrawls-cool.svg'
       },
       {

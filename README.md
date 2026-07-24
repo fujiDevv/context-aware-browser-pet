@@ -45,7 +45,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   | Component | Size | When |
   |-----------|------|------|
-  | **Chrome Web Store download** | **~10 MB** | Compressed install package |
+  | **Chrome Web Store download** | **~6 MB** | Compressed install package |
   | **Installed on disk (Chrome details)** | **~22–25 MB** | Pet assets + bundled ONNX WASM |
   | Lite Mode core (assets + UI) | ~2 MB unpacked | Active by default (Regex rules) |
   | ONNX WASM runtime (bundled) | ~22 MB unpacked | Included; initialized when Brain Upgrade is on |
