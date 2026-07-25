@@ -106,9 +106,21 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   ---
 
-  ## License
+  ## License & Noncommercial Usage
 
-  This project is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). Commercial use and monetization are prohibited. Underlying mascot assets are used under the MIT License.
+This project is open-source under the **[PolyForm Noncommercial License 1.0.0](LICENSE)**.
+
+> ⚠️ **PolyForm Noncommercial License Notice:**  
+> Free for personal use, hobby projects, educational institutions, public research, and noncommercial pursuits.  
+> **Commercial distribution, resale, or monetization of this software or derivative works is strictly prohibited** without explicit written permission from the author (`fujidevv@duck.com`).
+
+*Underlying mascot SVG assets are adapted from the open-source [clawd-pet](https://github.com/abderrahimghazali/clawd-pet) library and used under the MIT License.*
+
+---
+
+## Privacy & Security
+
+Arcrawls is engineered to be **100% on-device** with **zero server uploads** and zero telemetry. Read our full [Privacy Policy](PRIVACY.md) for a detailed breakdown of host permissions, local ONNX/Gemini model downloads, private-page exclusions, and user data controls.
 
   ---
 
