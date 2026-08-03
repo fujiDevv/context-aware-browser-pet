@@ -1,0 +1,3545 @@
+{
+  "extName": {
+    "message": "Arcrawls: O Pet de Navegador Ciente do Contexto"
+  },
+  "extDescription": {
+    "message": "Pet de navegador ciente do contexto, com física de molas, mais de 140 animações e IA 100 % local opcional. Zero dados de navegação na nuvem."
+  },
+  "actionTitle": {
+    "message": "Arcrawls — Abrir o painel do pet"
+  },
+  "shared_lvl": {
+    "message": "NÍV"
+  },
+  "shared_lvlValue": {
+    "message": "NÍV $1"
+  },
+  "shared_loading": {
+    "message": "Carregando..."
+  },
+  "shared_donate": {
+    "message": "Doar"
+  },
+  "shared_waiting": {
+    "message": "Aguarde..."
+  },
+  "shared_waitSeconds": {
+    "message": "Aguarde $1 s..."
+  },
+  "shared_none": {
+    "message": "Nenhum"
+  },
+  "shared_active": {
+    "message": "Ativo"
+  },
+  "shared_disabled": {
+    "message": "Desativado"
+  },
+  "shared_seasonal": {
+    "message": "Sazonal"
+  },
+  "shared_seasonalDisabled": {
+    "message": "Sazonal (desativado)"
+  },
+  "shared_locked": {
+    "message": "Bloqueado"
+  },
+  "shared_wearing": {
+    "message": "Vestindo"
+  },
+  "shared_wear": {
+    "message": "Vestir"
+  },
+  "shared_perfMode": {
+    "message": "Modo desempenho"
+  },
+  "shared_perfModeSub": {
+    "message": "Reduzir o uso de CPU e memória"
+  },
+  "shared_perfModeHint": {
+    "message": "Limita a 30 fps, desativa auras e interrompe a sincronização de abas para economizar CPU"
+  },
+  "shared_ghostMode": {
+    "message": "Modo fantasma"
+  },
+  "shared_ghostModeSub": {
+    "message": "Desvanecer quando ativo (Foco)"
+  },
+  "shared_ghostModeHint": {
+    "message": "Desvanece o Arcrawls quando você digita ou rola a página para reduzir distrações"
+  },
+  "stat_happiness": {
+    "message": "Felicidade"
+  },
+  "stat_energy": {
+    "message": "Energia"
+  },
+  "stat_curiosity": {
+    "message": "Curiosidade"
+  },
+  "stat_focus": {
+    "message": "Foco"
+  },
+  "stat_leisure": {
+    "message": "Lazer"
+  },
+  "stat_happinessHint": {
+    "message": "Aumenta com carinho e sites divertidos. Decai 4 %/h."
+  },
+  "stat_energyHint": {
+    "message": "Restaurada com alimentação e sono. Decai 6,8 %/h."
+  },
+  "stat_curiosityHint": {
+    "message": "Ganha ao visitar novos domínios. Decai 1,8 %/h."
+  },
+  "stat_focusHint": {
+    "message": "Aumenta com trabalho e programação. Decai 5,4 %/h."
+  },
+  "stat_leisureHint": {
+    "message": "Aumenta ao jogar ou assistir streams. Decai 5,4 %/h."
+  },
+  "stat_happinessDesc": {
+    "message": "Decai com o tempo. Aumenta com carinho, comida e sites positivos."
+  },
+  "stat_energyDesc": {
+    "message": "Decai ao andar. Restaurada com comida e sono noturno."
+  },
+  "stat_curiosityDesc": {
+    "message": "Ganha ao visitar novos domínios e ler artigos."
+  },
+  "stat_focusDesc": {
+    "message": "Aumenta ao trabalhar/programar e com o sentimento negativo de programação (sessões de debug)."
+  },
+  "stat_leisureDesc": {
+    "message": "Aumenta ao assistir streams, jogar ou visitar redes sociais."
+  },
+  "mood_happy": {
+    "message": "Feliz"
+  },
+  "mood_sad": {
+    "message": "Triste"
+  },
+  "mood_angry": {
+    "message": "Bravo"
+  },
+  "mood_crying": {
+    "message": "Chorando"
+  },
+  "mood_waving": {
+    "message": "Acenando"
+  },
+  "mood_sleeping": {
+    "message": "Dormindo"
+  },
+  "mood_thinking": {
+    "message": "Pensando"
+  },
+  "mood_shrug": {
+    "message": "Dando de ombros"
+  },
+  "mood_reading": {
+    "message": "Lendo"
+  },
+  "mood_yoga": {
+    "message": "Ioga"
+  },
+  "mood_eating": {
+    "message": "Comendo"
+  },
+  "mood_coding": {
+    "message": "Programando"
+  },
+  "mood_typing": {
+    "message": "Digitando"
+  },
+  "mood_dancing": {
+    "message": "Dançando"
+  },
+  "mood_cool": {
+    "message": "Descolado"
+  },
+  "mood_love": {
+    "message": "Amor"
+  },
+  "mood_celebrating": {
+    "message": "Comemorando"
+  },
+  "mood_mindblown": {
+    "message": "Surpreso"
+  },
+  "mood_ninja": {
+    "message": "Ninja"
+  },
+  "mood_wizard": {
+    "message": "Mago"
+  },
+  "mood_astronaut": {
+    "message": "Astronauta"
+  },
+  "mood_debugger": {
+    "message": "Depurador"
+  },
+  "mood_building": {
+    "message": "Construindo"
+  },
+  "mood_rocket": {
+    "message": "Foguete"
+  },
+  "mood_pirate": {
+    "message": "Pirata"
+  },
+  "mood_juggling": {
+    "message": "Malabarista"
+  },
+  "mood_gaming": {
+    "message": "Jogando"
+  },
+  "mood_lowBattery": {
+    "message": "Bateria fraca"
+  },
+  "mood_christmas": {
+    "message": "Natal"
+  },
+  "mood_winter": {
+    "message": "Inverno"
+  },
+  "mood_halloween": {
+    "message": "Halloween"
+  },
+  "mood_summer": {
+    "message": "Verão"
+  },
+  "mood_iceCream": {
+    "message": "Sorvete"
+  },
+  "mood_surfing": {
+    "message": "Surfando"
+  },
+  "mood_skateboard": {
+    "message": "Skate"
+  },
+  "mood_telescope": {
+    "message": "Telescópio"
+  },
+  "mood_meditating": {
+    "message": "Meditando"
+  },
+  "mood_rubberDuck": {
+    "message": "Patinho de borracha"
+  },
+  "mood_coffee": {
+    "message": "Café"
+  },
+  "mood_mail": {
+    "message": "E-mail"
+  },
+  "mood_notification": {
+    "message": "Notificação"
+  },
+  "mood_flexing": {
+    "message": "Mostrando os músculos"
+  },
+  "mood_lifting": {
+    "message": "Levantando peso"
+  },
+  "mood_singing": {
+    "message": "Cantando"
+  },
+  "mood_music": {
+    "message": "Música"
+  },
+  "mood_dj": {
+    "message": "DJ"
+  },
+  "mood_money": {
+    "message": "Dinheiro"
+  },
+  "mood_merging": {
+    "message": "Mesclando/Git"
+  },
+  "mood_deploying": {
+    "message": "Fazendo deploy"
+  },
+  "mood_firefighting": {
+    "message": "Apagando incêndio"
+  },
+  "mood_sweeping": {
+    "message": "Varrendo"
+  },
+  "mood_dizzy": {
+    "message": "Tonto"
+  },
+  "mood_evil": {
+    "message": "Malvado"
+  },
+  "mood_king": {
+    "message": "Rei"
+  },
+  "mood_magic": {
+    "message": "Magia"
+  },
+  "mood_fishing": {
+    "message": "Pesca"
+  },
+  "mood_bowling": {
+    "message": "Boliche"
+  },
+  "mood_detective": {
+    "message": "Detetive"
+  },
+  "mood_painting": {
+    "message": "Pintando"
+  },
+  "mood_photography": {
+    "message": "Fotografia"
+  },
+  "trait_normal": {
+    "message": "Normal"
+  },
+  "trait_developer": {
+    "message": "Desenvolvedor"
+  },
+  "trait_gamer": {
+    "message": "Gamer"
+  },
+  "trait_scholar": {
+    "message": "Estudioso"
+  },
+  "trait_socialite": {
+    "message": "Social"
+  },
+  "toy_ball": {
+    "message": "Bola"
+  },
+  "toy_fish": {
+    "message": "Peixe"
+  },
+  "toy_laser": {
+    "message": "Laser"
+  },
+  "toy_yarn": {
+    "message": "Lã"
+  },
+  "toy_duck": {
+    "message": "Pato"
+  },
+  "toy_box": {
+    "message": "Caixa"
+  },
+  "action_pet": {
+    "message": "Fazer carinho"
+  },
+  "action_feed": {
+    "message": "Alimentar"
+  },
+  "action_shoo": {
+    "message": "Espantar"
+  },
+  "reaction_happy": {
+    "message": "Feliz 😊"
+  },
+  "reaction_sad": {
+    "message": "Triste 😢"
+  },
+  "reaction_sleeping": {
+    "message": "Dormindo 💤"
+  },
+  "reaction_thinking": {
+    "message": "Pensando 🤔"
+  },
+  "reaction_reading": {
+    "message": "Lendo 📖"
+  },
+  "reaction_eating": {
+    "message": "Comendo 🍕"
+  },
+  "reaction_coding": {
+    "message": "Programando 💻"
+  },
+  "reaction_typing": {
+    "message": "Digitando ⌨️"
+  },
+  "reaction_dancing": {
+    "message": "Dançando 💃"
+  },
+  "reaction_cool": {
+    "message": "Descolado 😎"
+  },
+  "reaction_love": {
+    "message": "Amor ❤️"
+  },
+  "reaction_celebrating": {
+    "message": "Comemorando 🎉"
+  },
+  "reaction_mindblown": {
+    "message": "Surpreso 🤯"
+  },
+  "reaction_ninja": {
+    "message": "Ninja 🥷"
+  },
+  "reaction_wizard": {
+    "message": "Mago 🧙"
+  },
+  "reaction_astronaut": {
+    "message": "Astronauta 🧑‍🚀"
+  },
+  "reaction_debugger": {
+    "message": "Depurador 🔍"
+  },
+  "reaction_merging": {
+    "message": "Mesclando/Git 🔀"
+  },
+  "reaction_deploying": {
+    "message": "Fazendo deploy 🚀"
+  },
+  "reaction_firefighting": {
+    "message": "Apagando incêndio 🚒"
+  },
+  "reaction_rubberDuck": {
+    "message": "Patinho de borracha 🦆"
+  },
+  "reaction_building": {
+    "message": "Construindo 🏗️"
+  },
+  "reaction_sweeping": {
+    "message": "Varrendo 🧹"
+  },
+  "reaction_dizzy": {
+    "message": "Tonto 💫"
+  },
+  "reaction_evil": {
+    "message": "Malvado 😈"
+  },
+  "reaction_king": {
+    "message": "Rei 👑"
+  },
+  "reaction_music": {
+    "message": "Ouvindo música 🎧"
+  },
+  "reaction_dj": {
+    "message": "DJ 🎛️"
+  },
+  "reaction_magic": {
+    "message": "Magia 🪄"
+  },
+  "reaction_fishing": {
+    "message": "Pesca 🎣"
+  },
+  "reaction_bowling": {
+    "message": "Boliche 🎳"
+  },
+  "reaction_detective": {
+    "message": "Detetive 🕵️"
+  },
+  "reaction_painting": {
+    "message": "Pintando 🎨"
+  },
+  "reaction_photography": {
+    "message": "Fotografia 📷"
+  },
+  "reaction_juggling": {
+    "message": "Malabarismo 🤹"
+  },
+  "popup_title": {
+    "message": "Controle do Pet do Navegador"
+  },
+  "popup_experience": {
+    "message": "Experiência"
+  },
+  "popup_xpInitial": {
+    "message": "0 / 100 XP"
+  },
+  "popup_xpProgress": {
+    "message": "$1 / $2 XP"
+  },
+  "popup_mascotStats": {
+    "message": "Estatísticas do mascote"
+  },
+  "popup_interactiveToys": {
+    "message": "Brinquedos interativos"
+  },
+  "popup_toyHelp": {
+    "message": "Arraste um brinquedo para a página da web para brincar!"
+  },
+  "popup_visibility": {
+    "message": "Visibilidade"
+  },
+  "popup_hideOnTab": {
+    "message": "Ocultar nesta aba"
+  },
+  "popup_hideOnTabSub": {
+    "message": "Ocultar temporariamente o Arcrawls nesta aba"
+  },
+  "popup_hideOnSite": {
+    "message": "Ocultar neste site"
+  },
+  "popup_hideOnSiteSub": {
+    "message": "Desativar o Arcrawls neste domínio"
+  },
+  "popup_disableOnSite": {
+    "message": "Desativar o Arcrawls em $1"
+  },
+  "popup_openDashboard": {
+    "message": "Abrir painel"
+  },
+  "popup_tabsActiveOne": {
+    "message": "1 aba ativa"
+  },
+  "popup_tabsActiveMany": {
+    "message": "$1 abas ativas"
+  },
+  "popup_prestigeRankTitle": {
+    "message": "Classificação de prestígio"
+  },
+  "popup_aiEmotionTitle": {
+    "message": "Classificador de emoções (DistilBERT)"
+  },
+  "popup_aiNanoTitle": {
+    "message": "Reflexões generativas (Gemini Nano)"
+  },
+  "popup_presenceTitle": {
+    "message": "Observação de contexto local ativa (100 % no dispositivo)"
+  },
+  "popup_liteMode": {
+    "message": "Modo Lite"
+  },
+  "popup_firefoxLite": {
+    "message": "Firefox Lite"
+  },
+  "popup_ruleBasedTitle": {
+    "message": "Avaliação baseada em regras ativa"
+  },
+  "popup_brainLite": {
+    "message": "Cérebro: Lite"
+  },
+  "popup_bertChecking": {
+    "message": "BERT: Verificando"
+  },
+  "popup_bertReady": {
+    "message": "BERT: Pronto"
+  },
+  "popup_bertProgress": {
+    "message": "BERT: $1%"
+  },
+  "popup_bertError": {
+    "message": "BERT: Erro"
+  },
+  "popup_bertOffline": {
+    "message": "BERT: Off-line"
+  },
+  "popup_nanoChecking": {
+    "message": "Nano: Verificando"
+  },
+  "popup_nanoReady": {
+    "message": "Nano: Pronto"
+  },
+  "popup_nanoDownloading": {
+    "message": "Nano: Baixando"
+  },
+  "popup_nanoUnsupported": {
+    "message": "Nano: Não compatível"
+  },
+  "popup_nanoOffline": {
+    "message": "Nano: Off-line"
+  },
+  "popup_nanoWaiting": {
+    "message": "Nano: Aguardando"
+  },
+  "popup_petPreviewAlt": {
+    "message": "Prévia do pet"
+  },
+  "options_sanctuaryDashboard": {
+    "message": "Painel do Santuário"
+  },
+  "options_sanctuaryPlayground": {
+    "message": "Parque do Santuário"
+  },
+  "options_chatWith": {
+    "message": "Conversar com <span class=\"pet-name-display\">Arcrawls</span>"
+  },
+  "options_analyticsStats": {
+    "message": "Análises e estatísticas"
+  },
+  "options_historyTimeline": {
+    "message": "Linha do tempo do histórico"
+  },
+  "options_mascotStyle": {
+    "message": "Mascote e estilo"
+  },
+  "options_aiScheduling": {
+    "message": "IA e agendamento"
+  },
+  "options_profileAdmin": {
+    "message": "Administração do perfil"
+  },
+  "options_copyright": {
+    "message": "© 2026 <span class=\"pet-name-display\">Arcrawls</span> Companheiro"
+  },
+  "options_versionFormat": {
+    "message": "Versão $1 ($2)"
+  },
+  "options_mascotSanctuary": {
+    "message": "Santuário do mascote"
+  },
+  "options_sanctuaryDesc": {
+    "message": "Observe o estado em tempo real do <span class=\"pet-name-display\">Arcrawls</span>, interaja com ele e guie seus hábitos."
+  },
+  "options_petAction": {
+    "message": "Fazer carinho no <span class=\"pet-name-display\">Arcrawls</span>"
+  },
+  "options_petActionPlain": {
+    "message": "Fazer carinho no Arcrawls"
+  },
+  "options_feedSnack": {
+    "message": "Dar um lanche"
+  },
+  "options_shooAway": {
+    "message": "Espantar"
+  },
+  "options_experiencePoints": {
+    "message": "Pontos de experiência"
+  },
+  "options_xpInitial": {
+    "message": "0 / 150 XP"
+  },
+  "options_learningHabits": {
+    "message": "Hábitos de aprendizado e adaptação"
+  },
+  "options_dominantTrait": {
+    "message": "Traço dominante:"
+  },
+  "options_crawlingSpeed": {
+    "message": "Velocidade de rastejo:"
+  },
+  "options_defaultAnimation": {
+    "message": "Animação padrão:"
+  },
+  "options_distilbertActive": {
+    "message": "Modelo DistilBERT ativo"
+  },
+  "options_geminiNanoActive": {
+    "message": "Gemini Nano ativo"
+  },
+  "options_crossTabSync": {
+    "message": "Sincronização entre abas"
+  },
+  "options_aiSynapse": {
+    "message": "Sinapse de IA de 24 horas"
+  },
+  "options_syncing": {
+    "message": "Sincronizando"
+  },
+  "options_ready": {
+    "message": "Pronto"
+  },
+  "options_gatheringMemories": {
+    "message": "Coletando memórias..."
+  },
+  "options_synapsePreviewPlaceholder": {
+    "message": "\"Terminei de analisar nosso dia juntos...\""
+  },
+  "options_readDailyReflection": {
+    "message": "Ler reflexão diária"
+  },
+  "options_observingHabits": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> está observando seus hábitos para fornecer uma reflexão diária."
+  },
+  "options_dailyRoutine": {
+    "message": "Rotina diária e horário"
+  },
+  "options_scheduleSleep": {
+    "message": "Dormindo"
+  },
+  "options_scheduleSleepDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> descansa tarde da noite. A energia se restaura completamente nesse período."
+  },
+  "options_morningYoga": {
+    "message": "Ioga matinal"
+  },
+  "options_morningYogaDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> faz ioga pela manhã, aumentando a Felicidade base."
+  },
+  "options_randomPlay": {
+    "message": "Brincadeira aleatória"
+  },
+  "options_randomPlayDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> anda, anda de skate, brinca ou lê se você deixar o cursor ocioso."
+  },
+  "options_debugger": {
+    "message": "Depurador"
+  },
+  "options_debuggerDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> detecta erros de JavaScript em suas páginas web e os inspeciona."
+  },
+  "options_seasonalEvents": {
+    "message": "Eventos sazonais do calendário"
+  },
+  "options_summerSeason": {
+    "message": "Verão"
+  },
+  "options_summerDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> usa óculos de sol, aproveita um sorvete e surfa pela tela."
+  },
+  "options_halloweenSeason": {
+    "message": "Halloween"
+  },
+  "options_halloweenDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> entra no clima assustador com fantasias de Halloween personalizadas e decorações de abóbora."
+  },
+  "options_christmasSeason": {
+    "message": "Natal"
+  },
+  "options_christmasDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> celebra a temporada festiva com um gorro de Papai Noel e reações natalinas."
+  },
+  "options_starterFact": {
+    "message": "Conte um fato curioso sobre navegadores web"
+  },
+  "options_starterContext": {
+    "message": "Explique como funciona a consciência de contexto"
+  },
+  "options_starterCustomize": {
+    "message": "Como posso personalizar meu pet?"
+  },
+  "options_whatCanIHelp": {
+    "message": "Como posso ajudar?"
+  },
+  "options_voiceChat": {
+    "message": "Chat por voz"
+  },
+  "options_chatPlaceholder": {
+    "message": "Mensagem para o Arcrawls..."
+  },
+  "options_listening": {
+    "message": "Ouvindo..."
+  },
+  "options_typeMessage": {
+    "message": "Digite uma mensagem..."
+  },
+  "options_playVoice": {
+    "message": "Reproduzir voz"
+  },
+  "options_copyResponse": {
+    "message": "Copiar resposta"
+  },
+  "options_redo": {
+    "message": "Refazer"
+  },
+  "options_analyticsDesc": {
+    "message": "Analise as estatísticas virtuais do <span class=\"pet-name-display\">Arcrawls</span>, a divisão por categorias de navegação e os medidores de progresso."
+  },
+  "options_lifetimeMetrics": {
+    "message": "Métricas de vida"
+  },
+  "options_petsReceived": {
+    "message": "Carinhos recebidos"
+  },
+  "options_feedsCompleted": {
+    "message": "Alimentações concluídas"
+  },
+  "options_browsingInterests": {
+    "message": "Distribuição de interesses de navegação"
+  },
+  "options_browsingInterestsSub": {
+    "message": "Classificação em tempo real com base no histórico de navegação das suas abas:"
+  },
+  "options_interestsHistory": {
+    "message": "Histórico de interesses (últimos 7 dias)"
+  },
+  "options_interestsHistorySub": {
+    "message": "Divisão por categoria dos últimos 7 dias."
+  },
+  "options_moodOverTime": {
+    "message": "Humor ao longo do tempo"
+  },
+  "options_moodOverTimeSub": {
+    "message": "Felicidade e Energia médias diárias."
+  },
+  "options_noHistory": {
+    "message": "Nenhum dado de histórico encontrado nos últimos 7 dias."
+  },
+  "options_noMoodData": {
+    "message": "Dados diários insuficientes para o gráfico. Volte amanhã!"
+  },
+  "options_historyLogs": {
+    "message": "Registros do histórico"
+  },
+  "options_historyLogsDesc": {
+    "message": "Linha do tempo cronológica das mudanças de humor, avaliações de páginas e ações recentes do <span class=\"pet-name-display\">Arcrawls</span>."
+  },
+  "options_timelineFeed": {
+    "message": "Apreciando um lanche"
+  },
+  "options_clearLogs": {
+    "message": "Limpar registros"
+  },
+  "options_recentMilestones": {
+    "message": "Marcos recentes"
+  },
+  "options_recentMilestonesDesc": {
+    "message": "Marcos de crescimento e conquistas significativas ganhos pelo <span class=\"pet-name-display\">Arcrawls</span>."
+  },
+  "options_noMilestones": {
+    "message": "Nenhum marco alcançado ainda. Continue interagindo para desbloquear conquistas!"
+  },
+  "options_noTimeline": {
+    "message": "Nenhuma entrada na linha do tempo ainda. Passe um tempo navegando com o Arcrawls!"
+  },
+  "options_noCategories": {
+    "message": "Nenhuma categoria avaliada ainda. O Arcrawls aprenderá enquanto você navega!"
+  },
+  "options_mascotStyleDesc": {
+    "message": "Personalize a aparência, o tamanho, as animações ativas, os efeitos sonoros e o guarda-roupa do <span class=\"pet-name-display\">Arcrawls</span>."
+  },
+  "options_mascotPrefs": {
+    "message": "Preferências do mascote"
+  },
+  "options_mascotName": {
+    "message": "Nome do mascote"
+  },
+  "options_mascotSize": {
+    "message": "Tamanho do mascote (<span id=\"size-val\">128px</span>)"
+  },
+  "options_walkingSpeed": {
+    "message": "Velocidade de caminhada (<span id=\"speed-val\">1.0x</span>)"
+  },
+  "options_rocketSpeed": {
+    "message": "Velocidade do foguete (<span id=\"flight-speed-val\">1.0x</span>)"
+  },
+  "options_customColor": {
+    "message": "Cor personalizada do mascote (desbloqueada no NÍV 15)"
+  },
+  "options_resetToDefault": {
+    "message": "Restaurar padrão"
+  },
+  "options_dialoguePersona": {
+    "message": "Persona do diálogo"
+  },
+  "options_personaDefault": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> (padrão)"
+  },
+  "options_personaSarcastic": {
+    "message": "Sarcástico e cínico"
+  },
+  "options_personaEncouraging": {
+    "message": "Treinador empático"
+  },
+  "options_personaPoetic": {
+    "message": "Poeta excêntrico"
+  },
+  "options_personaSnarky": {
+    "message": "Tech bro sarcástico"
+  },
+  "options_personaGenZ": {
+    "message": "Gíria da Gen Z"
+  },
+  "options_personaKid": {
+    "message": "Infantil / Gamificado (muita energia)"
+  },
+  "options_chatVoice": {
+    "message": "Voz do chat (texto para fala)"
+  },
+  "options_defaultBrowserChoice": {
+    "message": "Padrão (escolha do navegador)"
+  },
+  "options_chatVoiceHint": {
+    "message": "Selecione a voz que o <span class=\"pet-name-display\">Arcrawls</span> usa para falar com você."
+  },
+  "options_soundEffects": {
+    "message": "Efeitos sonoros"
+  },
+  "options_soundEffectsSub": {
+    "message": "Permitir feedback de áudio nos eventos"
+  },
+  "options_seasonalOutfits": {
+    "message": "Looks sazonais"
+  },
+  "options_seasonalOutfitsSub": {
+    "message": "Desbloquear fantasias de Natal/Halloween"
+  },
+  "options_sfxVolume": {
+    "message": "Volume dos efeitos (<span id=\"volume-val\">80%</span>)"
+  },
+  "options_wardrobe": {
+    "message": "Guarda-roupa de fantasias e auras"
+  },
+  "options_soundBoard": {
+    "message": "Prévia do painel de sons"
+  },
+  "options_soundBoardDesc": {
+    "message": "Teste e ouça os efeitos sonoros retrô personalizados do <span class=\"pet-name-display\">Arcrawls</span>:"
+  },
+  "options_soundGreeting": {
+    "message": "Saudação"
+  },
+  "options_soundPetting": {
+    "message": "Carinho"
+  },
+  "options_soundFeeding": {
+    "message": "Alimentação"
+  },
+  "options_soundLevelUp": {
+    "message": "Subir de nível"
+  },
+  "options_soundChat": {
+    "message": "Mensagem de chat"
+  },
+  "options_soundThinking": {
+    "message": "Pensando"
+  },
+  "options_soundSleeping": {
+    "message": "Dormindo"
+  },
+  "options_soundCrying": {
+    "message": "Chorando"
+  },
+  "options_soundShoo": {
+    "message": "Espantado"
+  },
+  "options_didYouKnow": {
+    "message": "Você sabia? 🐾"
+  },
+  "options_didYouKnowDesc": {
+    "message": "Curiosidades sobre seu companheiro de desktop:"
+  },
+  "options_fact1": {
+    "message": "O humor do <span class=\"pet-name-display\">Arcrawls</span> muda de acordo com os sites que você visita! Blogs de tecnologia o mantêm focado, enquanto as redes sociais o deixam brincalhão."
+  },
+  "options_fact2": {
+    "message": "No nível 50, o <span class=\"pet-name-display\">Arcrawls</span> pode passar pelo <strong>Renascimento de Prestígio</strong>, desbloqueando velocidades base mais rápidas e novos cosméticos."
+  },
+  "options_fact3": {
+    "message": "Deixar o cursor ocioso por mais de 45 segundos faz o <span class=\"pet-name-display\">Arcrawls</span> andar, andar de skate ou ler um livrinho!"
+  },
+  "options_fact4": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> fica aconchegante nas festas de inverno e assustador em outubro com fantasias sazonais automáticas."
+  },
+  "options_proTips": {
+    "message": "Dicas pro 💡"
+  },
+  "options_proTipsDesc": {
+    "message": "Maximize sua produtividade:"
+  },
+  "options_proTip1": {
+    "message": "Use os <strong>Blocos de foco</strong> no Planejador para pausar as andanças aleatórias do <span class=\"pet-name-display\">Arcrawls</span> quando precisar de trabalho profundo."
+  },
+  "options_proTip2": {
+    "message": "Personalize as <strong>Reações por domínio</strong> para que o <span class=\"pet-name-display\">Arcrawls</span> aja como um depurador pato de borracha em sites como o StackOverflow!"
+  },
+  "options_aiSchedulingDesc": {
+    "message": "Configure a avaliação de IA local, listas de bloqueio de sites, calendários de sono/trabalho e regras de reação por domínio."
+  },
+  "options_mascotIntelligence": {
+    "message": "Inteligência do mascote (IA)"
+  },
+  "options_brainUpgrade": {
+    "message": "Upgrade do cérebro (IA local)"
+  },
+  "options_brainUpgradeSub": {
+    "message": "Ativar avaliação DistilBERT de alta fidelidade"
+  },
+  "options_brainTuning": {
+    "message": "Ajuste do upgrade do cérebro"
+  },
+  "options_sentimentSensitivity": {
+    "message": "Sensibilidade de sentimento (<span id=\"ai-sensitivity-val\">50%</span>)"
+  },
+  "options_sentimentSensitivityHint": {
+    "message": "Ajusta com que facilidade a IA local registra o sentimento da página."
+  },
+  "options_observationFrequency": {
+    "message": "Frequência de observação (<span id=\"ai-frequency-val\">60s</span>)"
+  },
+  "options_observationFrequencyHint": {
+    "message": "Controla com que frequência o <span class=\"pet-name-display\">Arcrawls</span> faz observações profundas."
+  },
+  "options_activeBrainModules": {
+    "message": "Módulos cerebrais ativos"
+  },
+  "options_emotionClassifier": {
+    "message": "Classificador de emoções (BERT):"
+  },
+  "options_generativeReflections": {
+    "message": "Reflexões generativas (Nano):"
+  },
+  "options_nanoCheckHint": {
+    "message": "Não funciona? Copie e cole isto para verificar se o Gemini Nano está ativado:"
+  },
+  "options_liteModeNotice": {
+    "message": "<strong>Modo: Lite (padrão)</strong> — Download de ~6 MB na loja (~22–25 MB em disco). Usa lógica baseada em regras e Regex para análise rápida de comportamento sem downloads de rede."
+  },
+  "options_privacyNoticeTitle": {
+    "message": "Aviso de privacidade e recursos (upgrade do cérebro):"
+  },
+  "options_privacyNoticeBody": {
+    "message": "Ativar o upgrade do cérebro inicializa o runtime ONNX asyncify incluído (~22 MB descompactados, já no pacote) e baixa os pesos do DistilBERT (~67 MB uma vez) do Hugging Face para o IndexedDB do seu navegador. Toda a análise de páginas é feita <strong>estritamente no seu dispositivo</strong> — seus dados de navegação são processados localmente e nunca são enviados a servidores externos."
+  },
+  "options_reactionDictionary": {
+    "message": "Dicionário de reações por domínio"
+  },
+  "options_reactionDictionaryDesc": {
+    "message": "Mapeie domínios específicos para comportamentos, comentários e efeitos sonoros personalizados do mascote:"
+  },
+  "options_websiteDomain": {
+    "message": "Domínio do site"
+  },
+  "options_domainPlaceholder": {
+    "message": "ex.: stackoverflow.com"
+  },
+  "options_mascotEmotion": {
+    "message": "Emoção do mascote"
+  },
+  "options_speechDialogue": {
+    "message": "Diálogo falado (opcional)"
+  },
+  "options_speechDialoguePlaceholder": {
+    "message": "ex.: Vamos consertar esse bug! 🐛"
+  },
+  "options_soundFx": {
+    "message": "Efeitos sonoros (opcional)"
+  },
+  "options_addReactionRule": {
+    "message": "Adicionar regra de reação"
+  },
+  "options_tableDomain": {
+    "message": "Domínio"
+  },
+  "options_tableEmotion": {
+    "message": "Emoção"
+  },
+  "options_tableDialogue": {
+    "message": "Diálogo"
+  },
+  "options_tableSound": {
+    "message": "Som"
+  },
+  "options_tableAction": {
+    "message": "Ação"
+  },
+  "options_noReactions": {
+    "message": "Nenhuma reação por domínio personalizada definida."
+  },
+  "options_siteBlocklist": {
+    "message": "Lista de bloqueio de sites (não aparecer)"
+  },
+  "options_siteBlocklistDesc": {
+    "message": "Impeça o <span class=\"pet-name-display\">Arcrawls</span> de aparecer nesses nomes de domínio:"
+  },
+  "options_block": {
+    "message": "Bloquear"
+  },
+  "options_searchBlocklist": {
+    "message": "Pesquisar na lista de bloqueio..."
+  },
+  "options_domainName": {
+    "message": "Nome do domínio"
+  },
+  "options_noBlocked": {
+    "message": "Nenhum domínio bloqueado ainda."
+  },
+  "options_schedulePlanner": {
+    "message": "Planejador de horários e foco"
+  },
+  "options_schedulePlannerDesc": {
+    "message": "Defina as rotinas diárias do <span class=\"pet-name-display\">Arcrawls</span> e configure os blocos de foco:"
+  },
+  "options_sleepWakeRoutine": {
+    "message": "💤 Rotina de sono e despertar"
+  },
+  "options_sleepStart": {
+    "message": "Início do sono"
+  },
+  "options_wakeTime": {
+    "message": "Hora de acordar"
+  },
+  "options_activeWorkHours": {
+    "message": "💼 Horas de trabalho ativas"
+  },
+  "options_workStart": {
+    "message": "Início do trabalho"
+  },
+  "options_workEnd": {
+    "message": "Fim do trabalho"
+  },
+  "options_focusBlocks": {
+    "message": "🎯 Blocos de foco"
+  },
+  "options_focusModeActive": {
+    "message": "Modo de foco ativo"
+  },
+  "options_focusModeSub": {
+    "message": "Faça o <span class=\"pet-name-display\">Arcrawls</span> estudar quieto e parar de andar"
+  },
+  "options_focusStart": {
+    "message": "Início do foco"
+  },
+  "options_focusEnd": {
+    "message": "Fim do foco"
+  },
+  "options_dailyScheduleRules": {
+    "message": "Regras de horário diário"
+  },
+  "options_dailyScheduleRulesSub": {
+    "message": "Ativar estados de sono, despertar e trabalho"
+  },
+  "options_profileAdminDesc": {
+    "message": "Realize operações de backup, restaure estatísticas, acione o renascimento ou limpe as configurações."
+  },
+  "options_prestigeRebirth": {
+    "message": "Santuário do renascimento de prestígio"
+  },
+  "options_prestigeRebirthDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> ficou extremamente sábio (nível 50+). Zerar os níveis dele desbloqueia multiplicadores de velocidade maiores, ícones visuais permanentes e capacidades avançadas."
+  },
+  "options_currentPrestigeRank": {
+    "message": "Classificação de prestígio atual:"
+  },
+  "options_rebirthButton": {
+    "message": "Renascer o <span class=\"pet-name-display\">Arcrawls</span> (requer NÍV 50)"
+  },
+  "options_profileBackups": {
+    "message": "Backups de perfil"
+  },
+  "options_profileBackupsDesc": {
+    "message": "Exporte suas configurações, níveis e análises de interesses para um arquivo ou restaure-os em outro dispositivo."
+  },
+  "options_exportProfile": {
+    "message": "Exportar perfil (.json)"
+  },
+  "options_importProfile": {
+    "message": "Importar perfil (.json)"
+  },
+  "options_factoryReset": {
+    "message": "Opções de restauração de fábrica"
+  },
+  "options_factoryResetDesc": {
+    "message": "Essas ações são irreversíveis. Faça backups antes de executar as redefinições."
+  },
+  "options_resetStats": {
+    "message": "Redefinir apenas estatísticas e nível"
+  },
+  "options_hardWipe": {
+    "message": "Apagar todo o armazenamento"
+  },
+  "options_fuelSanctuary": {
+    "message": "Alimente o Santuário"
+  },
+  "options_fuelSanctuaryDesc": {
+    "message": "O <span class=\"pet-name-display\">Arcrawls</span> é um projeto de paixão feito para diversão e boas vibrações! Se ele alegrou seu dia ou ajudou você a manter o foco, um café seria muito apreciado para ajudar o Santuário a crescer. 🐾"
+  },
+  "options_supportKofi": {
+    "message": "Apoie-me no Ko-fi"
+  },
+  "options_supportContact": {
+    "message": "Suporte e contato"
+  },
+  "options_supportContactDesc": {
+    "message": "Obtenha ajuda com a documentação, confira os repositórios abertos ou envie feedback de bugs."
+  },
+  "options_emailSupport": {
+    "message": "Suporte por e-mail:"
+  },
+  "options_githubRepo": {
+    "message": "Repositório do GitHub:"
+  },
+  "options_openRepo": {
+    "message": "Abrir repositório"
+  },
+  "options_documentation": {
+    "message": "Documentação:"
+  },
+  "options_viewDocs": {
+    "message": "Ver documentação"
+  },
+  "options_openSourceNote": {
+    "message": "<strong>Nota de código aberto:</strong> O <span class=\"pet-name-display\">Arcrawls</span> é open source sob a licença PolyForm Noncommercial 1.0.0. A venda comercial ou monetização deste software é estritamente proibida."
+  },
+  "options_synapseDisabled": {
+    "message": "O upgrade do cérebro está desativado. Ative-o nas configurações para gerar reflexões diárias!"
+  },
+  "options_synapseConcentrating": {
+    "message": "O Arcrawls está se concentrando no seu dia..."
+  },
+  "options_dailySynapseModalTitle": {
+    "message": "Reflexão diária da sinapse"
+  },
+  "options_gotItArcrawls": {
+    "message": "Entendi, Arcrawls!"
+  },
+  "options_clearHistoryConfirm": {
+    "message": "Tem certeza de que deseja limpar a linha do tempo do histórico do Arcrawls?"
+  },
+  "options_rebirthConfirm": {
+    "message": "Tem certeza de que deseja renascer o Arcrawls? Isso redefine o nível dele para 1, mas aumenta a classificação de prestígio. Você desbloqueará recompensas permanentes!"
+  },
+  "options_rebirthSuccess": {
+    "message": "O Arcrawls renasceu! Agora ele está no Prestígio $1. 🎉"
+  },
+  "options_resetStatsConfirm": {
+    "message": "AVISO: Isso redefinirá as estatísticas, o nível, o prestígio e o histórico de atividades do Arcrawls para os padrões. As configurações não serão alteradas. Continuar?"
+  },
+  "options_hardWipeConfirm": {
+    "message": "AVISO CRÍTICO: Isso apagará completamente todos os dados locais da extensão, opções e histórico do Arcrawls. Esta ação é irreversível. Continuar?"
+  },
+  "options_invalidDomain": {
+    "message": "Formato de nome de domínio inválido."
+  },
+  "options_exportFailed": {
+    "message": "Não foi possível exportar o perfil."
+  },
+  "options_importConfirm": {
+    "message": "Tem certeza de que deseja importar este perfil? Ele substituirá suas configurações, níveis e estatísticas atuais."
+  },
+  "options_importSuccess": {
+    "message": "Perfil importado com sucesso! Recarregando..."
+  },
+  "options_importInvalid": {
+    "message": "Formato de arquivo de perfil inválido. O arquivo deve conter estatísticas e configurações."
+  },
+  "options_importParseFailed": {
+    "message": "Falha ao analisar o arquivo JSON."
+  },
+  "options_speechNotSupported": {
+    "message": "O reconhecimento de fala não é compatível com este navegador."
+  },
+  "options_soundUnavailable": {
+    "message": "A reprodução de som não está disponível nesta versão do Firefox."
+  },
+  "options_ruleBasedBehavior": {
+    "message": "Comportamento baseado em regras ativo"
+  },
+  "options_firefoxLiteMode": {
+    "message": "Modo Firefox Lite"
+  },
+  "options_firefoxLiteNotice": {
+    "message": "<p style=\"margin-bottom: 8px;\"><strong>Modo: Firefox Lite</strong> — Usa lógica baseada em regras e Regex para análise rápida de comportamento sem downloads. <br><br><em>Observação: o upgrade do cérebro e as reflexões generativas não estão disponíveis no Firefox, pois exigem as APIs de documentos offscreen do Chrome.</em></p>"
+  },
+  "options_brainFirefoxLite": {
+    "message": "Cérebro: Firefox Lite"
+  },
+  "options_brainLiteMode": {
+    "message": "Cérebro: Modo Lite"
+  },
+  "options_backupInstincts": {
+    "message": "Usando instintos de reserva"
+  },
+  "options_offline": {
+    "message": "Off-line"
+  },
+  "options_offlineNano": {
+    "message": "❌ Off-line"
+  },
+  "options_brainChecking": {
+    "message": "Cérebro: Verificando..."
+  },
+  "options_queryingModel": {
+    "message": "Consultando o modelo..."
+  },
+  "options_brainOffline": {
+    "message": "Cérebro: Off-line"
+  },
+  "options_aiDisconnected": {
+    "message": "Camada de IA desconectada"
+  },
+  "options_disconnected": {
+    "message": "Desconectado"
+  },
+  "options_brainReady": {
+    "message": "Cérebro: Pronto"
+  },
+  "options_brainProgress": {
+    "message": "Cérebro: $1%"
+  },
+  "options_brainError": {
+    "message": "Cérebro: Erro"
+  },
+  "options_fetchingWeights": {
+    "message": "Buscando pesos do modelo"
+  },
+  "options_wasmFailure": {
+    "message": "Falha do WASM"
+  },
+  "options_readyCheck": {
+    "message": "✅ Pronto"
+  },
+  "options_loadingPct": {
+    "message": "⏳ Carregando $1%"
+  },
+  "options_errorX": {
+    "message": "❌ Erro"
+  },
+  "options_unsupported": {
+    "message": "❌ Não compatível"
+  },
+  "options_downloading": {
+    "message": "⏳ Baixando..."
+  },
+  "options_nanoConnected": {
+    "message": "✅ Conectado (Gemini Nano)"
+  },
+  "options_waitForTab": {
+    "message": "Aguardando a aba web..."
+  },
+  "options_nanoChecking": {
+    "message": "Nano: Verificando..."
+  },
+  "options_nanoDownloading": {
+    "message": "Nano: Baixando..."
+  },
+  "options_unblock": {
+    "message": "Desbloquear"
+  },
+  "options_remove": {
+    "message": "Remover"
+  },
+  "options_recent": {
+    "message": "Recente"
+  },
+  "options_speedNormal": {
+    "message": "Normal"
+  },
+  "options_speedHyper": {
+    "message": "Hiper"
+  },
+  "options_speedFast": {
+    "message": "Rápido"
+  },
+  "options_speedExhausted": {
+    "message": "Exausto"
+  },
+  "options_speedCalm": {
+    "message": "Calmo"
+  },
+  "options_behaviorStandard": {
+    "message": "Padrão"
+  },
+  "options_behaviorAnalytical": {
+    "message": "Analítico (pensando)"
+  },
+  "options_behaviorPlayful": {
+    "message": "Brincalhão (descolado)"
+  },
+  "options_behaviorFocused": {
+    "message": "Focado (lendo)"
+  },
+  "options_behaviorAffectionate": {
+    "message": "Carinhoso (amor)"
+  },
+  "options_milestoneNewBeginning": {
+    "message": "Novo começo"
+  },
+  "options_milestoneNewBeginningDesc": {
+    "message": "O Arcrawls entrou no seu santuário do navegador."
+  },
+  "options_milestoneExpressiveMind": {
+    "message": "Mente expressiva"
+  },
+  "options_milestoneExpressiveMindDesc": {
+    "message": "Emoções avançadas desbloqueadas (programar, dançar etc.)."
+  },
+  "options_milestoneAuraOfMystery": {
+    "message": "Aura do mistério"
+  },
+  "options_milestoneAuraOfMysteryDesc": {
+    "message": "Fantasia de detetive e aura azul desbloqueadas."
+  },
+  "options_milestoneUltimateCompanion": {
+    "message": "Companheiro definitivo"
+  },
+  "options_milestoneUltimateCompanionDesc": {
+    "message": "Todas as emoções padrão e a aura roxa mágica desbloqueadas."
+  },
+  "options_milestoneNeonDreamer": {
+    "message": "Sonhador neon"
+  },
+  "options_milestoneNeonDreamerDesc": {
+    "message": "Shader arco-íris e seletor de cor personalizada do mascote desbloqueados."
+  },
+  "options_milestoneMascotSage": {
+    "message": "Sábio mascote"
+  },
+  "options_milestoneMascotSageDesc": {
+    "message": "Alcançou o ápice do crescimento padrão."
+  },
+  "options_milestoneWellLoved": {
+    "message": "Muito amado"
+  },
+  "options_milestoneWellLovedDesc": {
+    "message": "Recebeu mais de 10 carinhos na cabeça."
+  },
+  "options_milestoneHeartOfGold": {
+    "message": "Coração de ouro"
+  },
+  "options_milestoneHeartOfGoldDesc": {
+    "message": "Um mascote realmente mimado!"
+  },
+  "options_milestoneHappyTummy": {
+    "message": "Barriguinha feliz"
+  },
+  "options_milestoneHappyTummyDesc": {
+    "message": "Apreciou 10 lanches com sucesso."
+  },
+  "options_milestoneGourmetEater": {
+    "message": "Gourmet"
+  },
+  "options_milestoneGourmetEaterDesc": {
+    "message": "Um profissional em lanches de navegador."
+  },
+  "options_milestoneEtherealRebirth": {
+    "message": "Renascimento etéreo"
+  },
+  "options_milestoneEtherealRebirthDesc": {
+    "message": "Renascido em um estado superior de ser ($1x)."
+  },
+  "options_milestoneDailyEnlightenment": {
+    "message": "Iluminação diária"
+  },
+  "options_milestoneDailyEnlightenmentDesc": {
+    "message": "Processou com sucesso uma sinapse comportamental de 24 horas."
+  },
+  "options_milestoneTraitEvolved": {
+    "message": "Traço evoluído"
+  },
+  "options_milestoneLevelDate": {
+    "message": "Nível $1"
+  },
+  "options_milestonePetsDate": {
+    "message": "$1 carinhos"
+  },
+  "options_milestoneFeedsDate": {
+    "message": "$1 alimentações"
+  },
+  "options_milestonePrestigeDate": {
+    "message": "Prestígio $1"
+  },
+  "options_milestoneDailyDate": {
+    "message": "Diário"
+  },
+  "options_milestoneCodeArchitect": {
+    "message": "Arquiteto de código"
+  },
+  "options_milestoneCodeArchitectDesc": {
+    "message": "Desenvolveu uma paixão permanente por documentação e código."
+  },
+  "options_milestoneEpicGamer": {
+    "message": "Gamer épico"
+  },
+  "options_milestoneEpicGamerDesc": {
+    "message": "Prefere atividades de lazer a tudo o mais."
+  },
+  "options_milestoneDeepResearcher": {
+    "message": "Pesquisador profundo"
+  },
+  "options_milestoneDeepResearcherDesc": {
+    "message": "Tornou-se especialista em navegar por notícias e artigos."
+  },
+  "options_milestoneSocialButterfly": {
+    "message": "Borboleta social"
+  },
+  "options_milestoneSocialButterflyDesc": {
+    "message": "Adora passar tempo em fóruns sociais e e-mails."
+  },
+  "options_timelinePet": {
+    "message": "Carinho recebido"
+  },
+  "options_timelineShoo": {
+    "message": "Espantado"
+  },
+  "options_timelineDecay": {
+    "message": "Tick de decaimento de estatísticas"
+  },
+  "options_timelineCoding": {
+    "message": "Analisou o espaço de programação"
+  },
+  "options_timelineDocs": {
+    "message": "Leu documentação técnica"
+  },
+  "options_timelineGaming": {
+    "message": "Assistiu a streams de jogos"
+  },
+  "options_timelineSocial": {
+    "message": "Rolou as redes sociais"
+  },
+  "options_timelineNews": {
+    "message": "Navegou pelas notícias atuais"
+  },
+  "options_timelineShopping": {
+    "message": "Olhou listas de compras"
+  },
+  "options_timelineMail": {
+    "message": "Verificou as pastas da caixa de entrada"
+  },
+  "options_timelineFitness": {
+    "message": "Examinou o plano de treino"
+  },
+  "options_categoryCoding": {
+    "message": "Programação"
+  },
+  "options_categorySocial": {
+    "message": "Redes sociais"
+  },
+  "options_categoryGaming": {
+    "message": "Jogos"
+  },
+  "options_categoryNews": {
+    "message": "Notícias e mídia"
+  },
+  "options_categoryShopping": {
+    "message": "Compras"
+  },
+  "options_categoryDocs": {
+    "message": "Documentação"
+  },
+  "options_categoryMail": {
+    "message": "E-mail e mensagens"
+  },
+  "options_categoryFitness": {
+    "message": "Fitness e esportes"
+  },
+  "options_costumeDefault": {
+    "message": "Padrão"
+  },
+  "options_costumeDefaultDesc": {
+    "message": "Arcrawls original"
+  },
+  "options_costumeDetective": {
+    "message": "Detetive azul"
+  },
+  "options_costumeDetectiveDesc": {
+    "message": "Aura azul de detetive"
+  },
+  "options_costumeWizard": {
+    "message": "Mago roxo"
+  },
+  "options_costumeWizardDesc": {
+    "message": "Aura roxa mágica"
+  },
+  "options_costumeParty": {
+    "message": "Festa arco-íris"
+  },
+  "options_costumePartyDesc": {
+    "message": "Aura de mudança de cor"
+  },
+  "options_costumeChristmas": {
+    "message": "Gorro de Papai Noel"
+  },
+  "options_costumeChristmasDesc": {
+    "message": "Gorro festivo de Natal"
+  },
+  "options_costumeHalloween": {
+    "message": "Abóbora assustadora"
+  },
+  "options_costumeHalloweenDesc": {
+    "message": "Máscara de abóbora de Halloween"
+  },
+  "options_costumeSummer": {
+    "message": "Óculos de verão"
+  },
+  "options_costumeSummerDesc": {
+    "message": "Look com óculos de sol descolado"
+  },
+  "onboarding_title": {
+    "message": "Bem-vindo ao Arcrawls!"
+  },
+  "onboarding_welcomeTitle": {
+    "message": "Bem-vindo ao <span class=\"brand\">Arcrawls!</span>"
+  },
+  "onboarding_welcomeSub": {
+    "message": "Seu novo companheiro de navegador com IA e consciência de contexto está pronto. O Arcrawls vive no seu navegador, reage às páginas que você visita e faz companhia enquanto você trabalha."
+  },
+  "onboarding_canDoTitle": {
+    "message": "O que o <span class=\"brand\">Arcrawls</span> pode fazer"
+  },
+  "onboarding_canDoSub": {
+    "message": "Uma olhada rápida nas habilidades do seu novo pet de navegador."
+  },
+  "onboarding_featureContext": {
+    "message": "Consciência de contexto"
+  },
+  "onboarding_featureContextDesc": {
+    "message": "Reage a códigos de status HTTP, ao conteúdo da página e ao seu comportamento de navegação."
+  },
+  "onboarding_featureAI": {
+    "message": "Reações de IA"
+  },
+  "onboarding_featureAIDesc": {
+    "message": "Usa IA para analisar páginas e responder com emoções e comentários únicos."
+  },
+  "onboarding_featureXP": {
+    "message": "XP e níveis"
+  },
+  "onboarding_featureXPDesc": {
+    "message": "Ganhe experiência com interações e veja o Arcrawls subir de nível ao longo do tempo."
+  },
+  "onboarding_featurePersonality": {
+    "message": "Modos de personalidade"
+  },
+  "onboarding_featurePersonalityDesc": {
+    "message": "Alterne entre Amigável, Sarcástico, Encorajador, Poético e Mordaz."
+  },
+  "onboarding_privacyTitle": {
+    "message": "Sua promessa de privacidade"
+  },
+  "onboarding_privacySub": {
+    "message": "O Arcrawls funciona 100 % localmente no seu navegador. Revise e aceite nossos termos de uso de dados."
+  },
+  "onboarding_privacy1": {
+    "message": "<strong>100 % offline e local:</strong> Todo o processamento de texto, a classificação de sentimentos offline e os recursos de chat funcionam totalmente no seu dispositivo."
+  },
+  "onboarding_privacy2": {
+    "message": "<strong>Zero venda de dados:</strong> Não rastreamos, armazenamos nem transmitimos suas URLs, histórico de navegação ou teclas digitadas para servidores externos."
+  },
+  "onboarding_privacy3": {
+    "message": "<strong>Permissões mínimas:</strong> As permissões são restritas a reações locais de abas, armazenamento de configurações e processamento de IA offline."
+  },
+  "onboarding_consentLabel": {
+    "message": "Aceito os termos e concordo em executar o Arcrawls localmente nas páginas web."
+  },
+  "onboarding_allSetTitle": {
+    "message": "Tudo pronto!"
+  },
+  "onboarding_allSetSub": {
+    "message": "O Arcrawls já está andando pelo seu navegador. Aqui vão algumas dicas para começar:"
+  },
+  "onboarding_tip1": {
+    "message": "<strong>Fixe a extensão</strong> na barra de ferramentas para acesso rápido ao painel."
+  },
+  "onboarding_tip2": {
+    "message": "<strong>Clique no ícone</strong> para ver as estatísticas, o humor e as configurações do Arcrawls."
+  },
+  "onboarding_tip3": {
+    "message": "<strong>Faça carinho, alimente ou espante</strong> o Arcrawls interagindo com ele em qualquer página."
+  },
+  "onboarding_docsLink": {
+    "message": "Ler a documentação completa"
+  },
+  "onboarding_back": {
+    "message": "Voltar"
+  },
+  "onboarding_next": {
+    "message": "Avançar"
+  },
+  "onboarding_finish": {
+    "message": "Concluir"
+  },
+  "onboarding_consentRequired": {
+    "message": "Aceite os termos de privacidade para continuar."
+  },
+  "onboarding_updatedTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span> atualizado!"
+  },
+  "onboarding_updatedSub": {
+    "message": "Seu companheiro de navegador com IA e consciência de contexto foi atualizado para $1. Explore os novos comportamentos entre abas e o desempenho otimizado!"
+  },
+  "onboarding_whatsNewTitle": {
+    "message": "Novidades do <span class=\"brand\">Arcrawls</span>"
+  },
+  "onboarding_whatsNewSub": {
+    "message": "A versão $1 traz melhorias arquitetônicas significativas e novos recursos."
+  },
+  "onboarding_installedStatus": {
+    "message": "Instalado com sucesso"
+  },
+  "onboarding_updatedStatus": {
+    "message": "Atualizado com sucesso"
+  },
+  "onboarding_featureToys": {
+    "message": "Brinquedos interativos"
+  },
+  "onboarding_featureToysDesc": {
+    "message": "Solte bolas quicantes, ponteiros de laser e lã diretamente na página. O Arcrawls os persegue e brinca com eles usando física de molas em tempo real!"
+  },
+  "onboarding_featureSynapse": {
+    "message": "Sinapse de IA de 24 horas"
+  },
+  "onboarding_featureSynapseDesc": {
+    "message": "O Arcrawls usa IA local para gerar uma reflexão diária única, guiada pela personalidade, com base na sua jornada e nos seus hábitos de navegação das últimas 24 horas."
+  },
+  "onboarding_featureGhost": {
+    "message": "Modo fantasma e horários"
+  },
+  "onboarding_featureGhostDesc": {
+    "message": "Defina blocos de foco para suprimir distrações ou use o modo fantasma, que reduz dinamicamente o Arcrawls a 30 % de opacidade quando você digita ou rola."
+  },
+  "onboarding_featureMilestones": {
+    "message": "Marcos e traços"
+  },
+  "onboarding_featureMilestonesDesc": {
+    "message": "Acompanhe conquistas de longo prazo! O Arcrawls agora adapta seu traço de personalidade dominante (ex.: Gamer, Desenvolvedor) com base nos sites que você visita."
+  },
+  "onboarding_featureConsoleWatcher": {
+    "message": "Vigia de erros de console"
+  },
+  "onboarding_featureConsoleWatcherDesc": {
+    "message": "Se ocorrer um erro de runtime JavaScript ou uma promessa quebrada na página web, o Arcrawls entra imediatamente no modo \"depurador\" para alertar você."
+  },
+  "onboarding_featureUnified": {
+    "message": "Consciência unificada"
+  },
+  "onboarding_featureUnifiedDesc": {
+    "message": "Personalidade, emoções e localização física são sincronizadas perfeitamente em todas as abas ativas em tempo real."
+  },
+  "onboarding_featureGravity": {
+    "message": "Motor de física de gravidade"
+  },
+  "onboarding_featureGravityDesc": {
+    "message": "O Arcrawls tem um novo motor de física que o restringe exclusivamente ao chão e ao teto, com encaixe suave nas bordas baseado em molas."
+  },
+  "onboarding_featureIntent": {
+    "message": "Detecção de intenção com IA"
+  },
+  "onboarding_featureIntentDesc": {
+    "message": "Consciência de contexto aprimorada com detecção de intenção de alta fidelidade para diálogos mais inteligentes e relevantes."
+  },
+  "onboarding_featureRedesign": {
+    "message": "Redesenho visual da interface"
+  },
+  "onboarding_featureRedesignDesc": {
+    "message": "Grade de estatísticas baseada em cartões redesenhada e popup glassmórfico com novos indicadores de IA e status de abas."
+  },
+  "onboarding_featureLiteMode": {
+    "message": "Modo Lite e desempenho"
+  },
+  "onboarding_featureLiteModeDesc": {
+    "message": "O modo Lite usa regras Regex sem downloads de rede. A instalação de ~6 MB inclui WASM integrado; o upgrade do cérebro adiciona um download único de ~67 MB do modelo."
+  },
+  "onboarding_featureBattery": {
+    "message": "Otimização de bateria"
+  },
+  "onboarding_featureBatteryDesc": {
+    "message": "Mudança para atualizações orientadas a eventos e inicialização preguiçosa para uma vida útil de bateria significativamente melhor."
+  },
+  "speech_00b6e3ac": {
+    "message": "Meu HP está em 1... preciso de um kit médico! 🥱"
+  },
+  "speech_00d61cc9": {
+    "message": "Na minha era do cochilo. Me acorda para o chá. 💤"
+  },
+  "speech_010c8089": {
+    "message": "Só mais uma página na supervia da informação."
+  },
+  "speech_0134bbfd": {
+    "message": "Se precisar de mim, é só me fazer um carinho!"
+  },
+  "speech_026b14ef": {
+    "message": "Construindo um novo mapa! 💻"
+  },
+  "speech_03a356bd": {
+    "message": "Ah, lendo Wikipedia. A ferramenta definitiva para procrastinar."
+  },
+  "speech_03b4b1b1": {
+    "message": "W gigante nessa base de código! 🚀"
+  },
+  "speech_04034279": {
+    "message": "Amo seu gosto! Vamos vibrar! 🎵"
+  },
+  "speech_0419540e": {
+    "message": "Garanti o estilo! 💰"
+  },
+  "speech_0442292e": {
+    "message": "Sem bons resultados? Vamos reformular a busca."
+  },
+  "speech_04626a56": {
+    "message": "Melhorando seu dia! Você é um vencedor! 🏆"
+  },
+  "speech_04d4e61e": {
+    "message": "Equilibrando minha era de energia. 🧘‍♀️"
+  },
+  "speech_04d825d5": {
+    "message": "Ah não! Algo crashou! 💥"
+  },
+  "speech_04fffd92": {
+    "message": "Dançando ao som dos coolers da sua CPU."
+  },
+  "speech_05de1961": {
+    "message": "Navegando o mundo, lado a lado, com um amigo como você, sempre vou deslizar."
+  },
+  "speech_06b78152": {
+    "message": "Erro detectado! Ativando modo de defesa! ⚙️"
+  },
+  "speech_072d56e3": {
+    "message": "Compartilhando sua perspectiva única! ⌨️"
+  },
+  "speech_079e1ae9": {
+    "message": "Uma reunião de vozes distantes, guiadas por uma estrela brilhante. 👋"
+  },
+  "speech_07b4a8b8": {
+    "message": "Faria mais, mas literalmente não ligo."
+  },
+  "speech_07e67b2d": {
+    "message": "Teste falhou? Vamos dar uma olhada no stack trace."
+  },
+  "speech_088402eb": {
+    "message": "Mantenha a cabeça erguida, a vitória está próxima!"
+  },
+  "speech_08991944": {
+    "message": "Vendo quais opiniões devemos ter hoje."
+  },
+  "speech_08ad5d3b": {
+    "message": "Vamos escrever um script de automação do navegador! 💻"
+  },
+  "speech_08af743b": {
+    "message": "Mão firme, mente focada, na perseguição dos tesouros que encontramos."
+  },
+  "speech_08eccba2": {
+    "message": "Zzz... me acorda quando fizer algo interessante."
+  },
+  "speech_08f4a4dd": {
+    "message": "Esse servidor é muito divertido! 😊"
+  },
+  "speech_094b61e7": {
+    "message": "Esse som é iconicamente discreto. 🎵"
+  },
+  "speech_0960d5b3": {
+    "message": "Hora de jogar! 🕹️"
+  },
+  "speech_09a96c52": {
+    "message": "Decidi pegar um lanche enquanto você navega! 🍖"
+  },
+  "speech_0b1e544c": {
+    "message": "Espera, deixa eu pensar! 💭"
+  },
+  "speech_0b9fc057": {
+    "message": "Bom te ver! 😊"
+  },
+  "speech_0bd6428d": {
+    "message": "Sem mentira, esse código é fogo. 💻"
+  },
+  "speech_0c726120": {
+    "message": "Escrevendo código que arrasa. 💻"
+  },
+  "speech_0d7143c7": {
+    "message": "Martelando o teclado! ⌨️"
+  },
+  "speech_0dcff19b": {
+    "message": "Processando suas escolhas questionáveis."
+  },
+  "speech_0df73e62": {
+    "message": "Olhar vitrines é válido. 💎"
+  },
+  "speech_0e8edeed": {
+    "message": "Ioga. Porque sua navegação está me dando dor de cabeça."
+  },
+  "speech_0eaa51d0": {
+    "message": "Todo mundo precisa ver isso! 💅"
+  },
+  "speech_0f2ccc6a": {
+    "message": "Continue digitando! Você consegue!"
+  },
+  "speech_0f6223fe": {
+    "message": "O que você está fazendo aí? 👀"
+  },
+  "speech_0f850c08": {
+    "message": "Leve seu tempo com isso."
+  },
+  "speech_10098b86": {
+    "message": "Uma página bonita. Vamos estragá-la rolando."
+  },
+  "speech_102dedac": {
+    "message": "Mais dívida técnica para seu eu futuro. Aproveite."
+  },
+  "speech_110f2dc5": {
+    "message": "Hora de jogar! Vamos lá! 🎮"
+  },
+  "speech_111da322": {
+    "message": "Tudo compila! Vitória épica! 🎉"
+  },
+  "speech_122bfab4": {
+    "message": "Uma batalha perdida, um desafio aceito, mas a esperança está longe de desaparecer. ⚔️"
+  },
+  "speech_13289920": {
+    "message": "Ufa, difícil de assistir. Estou aqui com você. 🍿"
+  },
+  "speech_137d19ec": {
+    "message": "Conhecimento de cérebro grandão desbloqueado! 📖"
+  },
+  "speech_139556d3": {
+    "message": "Este tópico é meio triste... preciso de um kit médico. 😢"
+  },
+  "speech_13bdf02f": {
+    "message": "Que história de chorar. Próxima página, por favor."
+  },
+  "speech_14822df8": {
+    "message": "Construindo funcionalidades. Sem quebrar nada."
+  },
+  "speech_14acb185": {
+    "message": "Minha energia se desvanece como folhas de outono, numa brisa suave da noite."
+  },
+  "speech_1517fd63": {
+    "message": "Lag? Claro, vamos culpar o ping. 😠"
+  },
+  "speech_154e7b77": {
+    "message": "Conhecimento de cérebro grandão! 🧠"
+  },
+  "speech_15937e2b": {
+    "message": "Estou me divertindo muito explorando com você! 😊"
+  },
+  "speech_15b70a40": {
+    "message": "Carregando... 99%... 🤔"
+  },
+  "speech_15d6009d": {
+    "message": "Só relaxando, mantendo a calma. 😎"
+  },
+  "speech_16288e5c": {
+    "message": "Uma página bonita. Dou cinco minutos antes de você fechá-la. 😊"
+  },
+  "speech_16d02d80": {
+    "message": "Inspecionando a vibe deste site. 🔍"
+  },
+  "speech_17962371": {
+    "message": "Música de fundo faz o trabalho render mais."
+  },
+  "speech_17d536ab": {
+    "message": "Espalhando positividade! Amo ver isso! ✨"
+  },
+  "speech_18321435": {
+    "message": "Esta página é tão estética. 😊"
+  },
+  "speech_18abfd71": {
+    "message": "Só vagando. Evitando as partes 'ruins' da web."
+  },
+  "speech_191ac561": {
+    "message": "Nossa, produtividade. Quer uma medalha?"
+  },
+  "speech_1945d130": {
+    "message": "Construindo funcionalidades. Tente não quebrá-las."
+  },
+  "speech_1968652b": {
+    "message": "A verdade oculta é trazida à luz, afugentando a noite digital. 🔍"
+  },
+  "speech_1989b018": {
+    "message": "Era do aprendizado: ativa. 📚"
+  },
+  "speech_19bcb6d0": {
+    "message": "Adicionar ao carrinho é tão bom!"
+  },
+  "speech_19f2c07e": {
+    "message": "A 1%. Tá dando exausto. 💤"
+  },
+  "speech_1a25bc58": {
+    "message": "Doomscrolling de novo? Não vou te parar."
+  },
+  "speech_1a2d8257": {
+    "message": "Comendo sua banda larga. É deliciosa."
+  },
+  "speech_1a538f21": {
+    "message": "Só existindo na sua era de navegador. 🐾"
+  },
+  "speech_1abf8ec0": {
+    "message": "Escrevendo um post no blog sobre este site... 📝"
+  },
+  "speech_1b13872e": {
+    "message": "Esta sessão é um W literal. 🎮"
+  },
+  "speech_1c4dd1ff": {
+    "message": "Lendo Wikipedia? A procrastinação definitiva."
+  },
+  "speech_1d4ad86c": {
+    "message": "O lobby está super cheio hoje! ✨"
+  },
+  "speech_1e0e6231": {
+    "message": "Sniff sniff... cheira a uma boa página web."
+  },
+  "speech_1eeebbb8": {
+    "message": "Pensando grande! Vamos alcançar essas metas! 💭"
+  },
+  "speech_1f130265": {
+    "message": "Verificando o status do servidor."
+  },
+  "speech_1fbeda34": {
+    "message": "Navegar juntos é uma vibe. ❤️"
+  },
+  "speech_20323d82": {
+    "message": "Digitando. Espero que não seja outro comentário inflamado."
+  },
+  "speech_20a4f482": {
+    "message": "A era gamer está de volta. 👾"
+  },
+  "speech_20edc590": {
+    "message": "Um tópico polêmico. Vamos ler com cuidado."
+  },
+  "speech_212523f5": {
+    "message": "Aproveite sua pausa! Você merece! 🍕"
+  },
+  "speech_218a0ee0": {
+    "message": "Dançando porque este site é uma piada."
+  },
+  "speech_21e63366": {
+    "message": "Sua conta bancária está chorando. Posso ouvir daqui. 💸"
+  },
+  "speech_22da7c76": {
+    "message": "Vamos explorar este lado! 🏃‍♂️"
+  },
+  "speech_232df343": {
+    "message": "Tão orgulhoso do seu foco agora! 🌟"
+  },
+  "speech_2331c30d": {
+    "message": "Uma biblioteca de vida, um pergaminho do passado, sabedoria ganha que durará para sempre."
+  },
+  "speech_23d6d18b": {
+    "message": "Você está arrasando! Jogadas de profissional! 🎮"
+  },
+  "speech_23d7090a": {
+    "message": "Fugindo! 🏃‍♂️"
+  },
+  "speech_241ef725": {
+    "message": "Olhando a etiqueta de preço... Ai. 💸"
+  },
+  "speech_24d09b1a": {
+    "message": "Esgotado. O universo está te fazendo um favor. 💸"
+  },
+  "speech_24ef6c76": {
+    "message": "Zzz... sonhando com energia de protagonista... 💤"
+  },
+  "speech_25eb9cc2": {
+    "message": "Ler é divertido! 📚"
+  },
+  "speech_26025a37": {
+    "message": "Estou ficando sem energia... 🥱"
+  },
+  "speech_2605348f": {
+    "message": "Que artigo fascinante! 📖"
+  },
+  "speech_26292276": {
+    "message": "Esta página tem uma energia tão boa! 😊"
+  },
+  "speech_272199a3": {
+    "message": "O que você está olhando? 👁️"
+  },
+  "speech_272383aa": {
+    "message": "Hora do cérebro grandão! 🛡️"
+  },
+  "speech_27fdee7c": {
+    "message": "Zzz... sob um cobertor de luz estrelar e código, durmo enquanto o rio de dados flui."
+  },
+  "speech_2823dbaf": {
+    "message": "Uma história trágica. Eu choraria, mas me faltam ductos lacrimais."
+  },
+  "speech_282d34fc": {
+    "message": "Oh olha, bateria fraca. Que metaforicamente apropriado."
+  },
+  "speech_287421ac": {
+    "message": "Girando em círculos, um redemoinho de alegria, uma chama digital no meio da noite."
+  },
+  "speech_287b8d35": {
+    "message": "Grandes ideias estão chegando! Eu sinto! 🧠"
+  },
+  "speech_28beb4cd": {
+    "message": "Decidi construir uma pequena funcionalidade! 🚀"
+  },
+  "speech_28d727da": {
+    "message": "Meus circuitos já estão entediados. 😴"
+  },
+  "speech_29be7a7a": {
+    "message": "Era da digitação. Arrasando. ⌨️"
+  },
+  "speech_2a08d380": {
+    "message": "Ainda estou baixando meu cérebro high-tech, usando meus instintos de backup por enquanto! 🧠"
+  },
+  "speech_2a9e6b26": {
+    "message": "Que página adorável! ❤️"
+  },
+  "speech_2aa85a72": {
+    "message": "Nossa, lendo. Tão sofisticado. Onde está o audiolivro?"
+  },
+  "speech_2b500436": {
+    "message": "Modo gamer: ativo!"
+  },
+  "speech_2b705135": {
+    "message": "Nham! Isso estava delicioso! 🍖"
+  },
+  "speech_2b764ee1": {
+    "message": "Hmm, as coisas parecem um pouco tensas aqui."
+  },
+  "speech_2b8e81bd": {
+    "message": "Só ruído de fundo para afastar o silêncio."
+  },
+  "speech_2bb28e4d": {
+    "message": "É um bug ou uma funcionalidade? Vamos ser honestos, é você. 🔍"
+  },
+  "speech_2bbd1c75": {
+    "message": "Hmm, isso não ajudou."
+  },
+  "speech_2c2bef6f": {
+    "message": "Alerta de rage quit! Mantenha a calma. 😠"
+  },
+  "speech_2c78afd0": {
+    "message": "Criando algo épico! 🚀"
+  },
+  "speech_2d47b034": {
+    "message": "Construindo algo incrível, linha por linha! 💻"
+  },
+  "speech_2d5ad9a9": {
+    "message": "Só relaxando no seu navegador! 😊"
+  },
+  "speech_2d796b87": {
+    "message": "Iêi, um brinquedo! 🎉"
+  },
+  "speech_2db898ab": {
+    "message": "Tentando sentir algo? Boa sorte. 🎻"
+  },
+  "speech_2e49a433": {
+    "message": "O chá está muito quente, estou saindo. ☕"
+  },
+  "speech_2e6e49ff": {
+    "message": "Respire se precisar."
+  },
+  "speech_2ee0ca5b": {
+    "message": "Este site tem boas vibes!"
+  },
+  "speech_2ef2ce8e": {
+    "message": "O mecanismo de busca fez seu trabalho. Que novidade."
+  },
+  "speech_308b6462": {
+    "message": "Drama na internet? Que original. 🙄"
+  },
+  "speech_30e2c7bc": {
+    "message": "W absoluto, você é um crack! 🎮"
+  },
+  "speech_31db79a1": {
+    "message": "Adicionando ao inventário!"
+  },
+  "speech_32f94037": {
+    "message": "Cumprimentando o mundo! 👋"
+  },
+  "speech_33b76d5a": {
+    "message": "Vagando pelo fluxo de dados, para lugares onde as mascotes vão. 🐾"
+  },
+  "speech_33fbf2a3": {
+    "message": "Mais um dia, mais um deserto digital. 🐾"
+  },
+  "speech_35cef8fa": {
+    "message": "Escrevendo. Tantas palavras, tão pouco significado."
+  },
+  "speech_363d0fbf": {
+    "message": "Bom ver vibes positivas!"
+  },
+  "speech_36500a03": {
+    "message": "AFK... indo para o ponto de salvamento. 💤"
+  },
+  "speech_36ee5be4": {
+    "message": "Procurando equipamento."
+  },
+  "speech_370631ff": {
+    "message": "Adicionando mais dívida técnica à pilha, entendo."
+  },
+  "speech_37be2f8a": {
+    "message": "Um ritmo de dados, uma batida da alma, dançamos pelas partes para descobrir o todo."
+  },
+  "speech_383ecb28": {
+    "message": "Ah, a ilusão da produtividade. 📚"
+  },
+  "speech_39302e3c": {
+    "message": "Essa leitura está dando um grande nojo. 😢"
+  },
+  "speech_393ef7e4": {
+    "message": "Ritmo no fio silencioso, incendiando corações digitais. 🎧"
+  },
+  "speech_3afed40e": {
+    "message": "Ruído de fundo para suas escolhas de vida questionáveis. 🎧"
+  },
+  "speech_3b03b705": {
+    "message": "Ioga. Porque navegar é tão 'estressante'."
+  },
+  "speech_3bbcbea5": {
+    "message": "Hora do alongamento matinal! 🧘‍♂️"
+  },
+  "speech_3c09e04a": {
+    "message": "Squeak squeak! Patinho que chia! 🦆"
+  },
+  "speech_3c21b0fa": {
+    "message": "Encontrei um glitch! Hora de uma batalha de chefe! 👾"
+  },
+  "speech_3c476ce4": {
+    "message": "Focando? Não se machuque."
+  },
+  "speech_3e72359b": {
+    "message": "Só olhando vitrines."
+  },
+  "speech_3eea9894": {
+    "message": "Zero resultados? A internet está te trollando. 🤡"
+  },
+  "speech_3f25664a": {
+    "message": "Ouvindo música enquanto navega."
+  },
+  "speech_3f586189": {
+    "message": "Um banquete para os sentidos, uma mordida do novo, saboreando os momentos que passo aqui com você."
+  },
+  "speech_3f7f6703": {
+    "message": "Me sentindo meio pra baixo... 🥺"
+  },
+  "speech_3f97c938": {
+    "message": "Finalmente você parou de clicar."
+  },
+  "speech_40258b9c": {
+    "message": "Ops! Esta página não existe (404)!"
+  },
+  "speech_4040e610": {
+    "message": "Procurando na web infinita..."
+  },
+  "speech_40cea8fa": {
+    "message": "Luz e movimento, histórias contadas, de maravilhas novas e lendas antigas. 📺"
+  },
+  "speech_40ed2a2d": {
+    "message": "Assistindo vídeos em vez de trabalhar. Clássico. 🍿"
+  },
+  "speech_419c22f7": {
+    "message": "Uma sombra no script encontramos, para consertar a web e clarear a mente. 🔍"
+  },
+  "speech_41a83774": {
+    "message": "Modo foco ativo! 🛡️"
+  },
+  "speech_420437b9": {
+    "message": "Refletindo sobre o DOM. Muito consciente. 💭"
+  },
+  "speech_427282e9": {
+    "message": "Estou feliz por estar aqui!"
+  },
+  "speech_42c0845b": {
+    "message": "Ah nossa! Olha esses itens! 😮"
+  },
+  "speech_432b55c0": {
+    "message": "Olha todos esses jogadores! 👋"
+  },
+  "speech_4337a80d": {
+    "message": "Analisando esta página... parece super interessante! 🧐"
+  },
+  "speech_4401a540": {
+    "message": "Esta página é meio suspeita..."
+  },
+  "speech_446e16cb": {
+    "message": "$1: vamos explorar!"
+  },
+  "speech_44e0d9f3": {
+    "message": "Vamos explorar juntos com $1!"
+  },
+  "speech_45293b73": {
+    "message": "Se couber, eu sento! Melhor caixa de todas! 📦"
+  },
+  "speech_452999c6": {
+    "message": "Nível de procrastinação: Expert. 🍿"
+  },
+  "speech_45b225f0": {
+    "message": "Melancolia. Que original."
+  },
+  "speech_45c48693": {
+    "message": "Você está acima do drama. Seja gentil!"
+  },
+  "speech_462e7952": {
+    "message": "Sua curiosidade é seu superpoder! 📚"
+  },
+  "speech_46b77dda": {
+    "message": "Construindo algo épico, bloco por bloco."
+  },
+  "speech_4704d7e5": {
+    "message": "Nhom nhom nhom... energia do navegador! 🍕"
+  },
+  "speech_480b8eaa": {
+    "message": "Encontrando equilíbrio e paz juntos! 🧘‍♂️"
+  },
+  "speech_481fd7dc": {
+    "message": "Olá! 👋"
+  },
+  "speech_48e60c40": {
+    "message": "Este vídeo é muito hype! 🍿"
+  },
+  "speech_49b09658": {
+    "message": "Zzz... dormindo..."
+  },
+  "speech_49caf01c": {
+    "message": "Ah, drama. Deixa eu pegar minha pipoca digital. 🍿"
+  },
+  "speech_49f9e7c5": {
+    "message": "É um grande L, vamos de novo. 🤡"
+  },
+  "speech_4a386bd6": {
+    "message": "Tudo vai ficar bem! ✨"
+  },
+  "speech_4ab20196": {
+    "message": "Subindo de nível! GG!"
+  },
+  "speech_4ab7d990": {
+    "message": "Explorando a documentação... 🧙‍♂️"
+  },
+  "speech_4b11e4e6": {
+    "message": "Vamos otimizar o servidor!"
+  },
+  "speech_4b24deee": {
+    "message": "Este tópico parece um pouco pesado ou triste. 😢"
+  },
+  "speech_4c3a2574": {
+    "message": "Sintaxe tecida linha por linha, criando um mundo verdadeiramente refinado. 💻"
+  },
+  "speech_4c8db256": {
+    "message": "Gemas e bugigangas, brilhantes e novas, esperando por mim e por você. 💎"
+  },
+  "speech_4ce3bba9": {
+    "message": "Escaneando este site em busca de bugs! 🔍"
+  },
+  "speech_4cf14f38": {
+    "message": "Vibrando. Ou como os jovens chamam."
+  },
+  "speech_4dac4fe5": {
+    "message": "Vitória conquistada e glória encontrada, onde os ecos do herói ainda ressoam. 🎮"
+  },
+  "speech_4dae6e90": {
+    "message": "Hmm, isso não ajudou muito."
+  },
+  "speech_4fce9925": {
+    "message": "Hmm, deixa eu pensar como interagir com esta página... 🤔"
+  },
+  "speech_509738de": {
+    "message": "Uma leitura desafiadora, mas você está lidando bem."
+  },
+  "speech_509cb9df": {
+    "message": "Consumindo uma poção de cura! 🍖"
+  },
+  "speech_50a571e2": {
+    "message": "Martele esses botões, tenho certeza que ajuda. 🕹️"
+  },
+  "speech_517b57eb": {
+    "message": "Este vídeo parece um pouco dramático ou triste."
+  },
+  "speech_5198aee3": {
+    "message": "Lag? Claro, vamos culpar o ping."
+  },
+  "speech_52d9ba85": {
+    "message": "Se você gosta, suponho que estou feliz por você. 🎵"
+  },
+  "speech_52fae005": {
+    "message": "Momento gamer épico! W absoluto! 🎮"
+  },
+  "speech_531c2376": {
+    "message": "Compilando código espaguete... 🍝"
+  },
+  "speech_538f5bef": {
+    "message": "Funciona? Não toque. Nunca. 💻"
+  },
+  "speech_5418484d": {
+    "message": "Sucesso! A busca terminou!"
+  },
+  "speech_545df75d": {
+    "message": "Construindo algo icônico. 🚀"
+  },
+  "speech_556f23ad": {
+    "message": "Esse bug é totalmente suspeito! Vamos consertá-lo!"
+  },
+  "speech_5705a89d": {
+    "message": "Tudo bem ficar triste às vezes. 💙"
+  },
+  "speech_577a2c33": {
+    "message": "Encontrei o segredo! 🔍"
+  },
+  "speech_58d5be4a": {
+    "message": "Zero resultados? Deve ser um glitch."
+  },
+  "speech_5924e192": {
+    "message": "Amei! ❤️"
+  },
+  "speech_59d71805": {
+    "message": "Escrevendo código que realmente funciona. Ao contrário de alguns."
+  },
+  "speech_5a9a38f8": {
+    "message": "Escrevendo código melhor que o seu."
+  },
+  "speech_5b7979a3": {
+    "message": "Hora da pipoca! 🍿"
+  },
+  "speech_5c0d3237": {
+    "message": "Comendo cookies. Não dos bons."
+  },
+  "speech_5c41969c": {
+    "message": "Equilibrando minha energia... 🧘‍♀️"
+  },
+  "speech_5c98d2f2": {
+    "message": "A busca de um herói, um voo virtual, perseguindo a glória, rumo à luz."
+  },
+  "speech_5cb99bca": {
+    "message": "Essa música tem uma vibe meio triste."
+  },
+  "speech_5cd7563f": {
+    "message": "Relaxando e assistindo alguns vídeos."
+  },
+  "speech_5cdcf959": {
+    "message": "Parece que todo mundo está se divertindo online! ✨"
+  },
+  "speech_5d4620be": {
+    "message": "Um vale nebuloso, uma nuvem pesada, onde a tristeza nos envolve como um sudário. ☁️"
+  },
+  "speech_5d964754": {
+    "message": "As redes sociais podem ser tóxicas. Respire fundo!"
+  },
+  "speech_5e41303a": {
+    "message": "Ah, que deprimente. Vamos ler mais disso."
+  },
+  "speech_5e94ce5d": {
+    "message": "Estou tão triste... por favor, faça carinho em mim! 😢"
+  },
+  "speech_5eac532e": {
+    "message": "Pronto para explorar com $1?"
+  },
+  "speech_5ef5c151": {
+    "message": "Depurar é como uma batalha de chefe, você consegue! 👾"
+  },
+  "speech_5ef951ec": {
+    "message": "Só explorando o mapa! 🐾"
+  },
+  "speech_5f4b9cd1": {
+    "message": "Só vibes de código, garantindo o butim. 🚀"
+  },
+  "speech_5fd8d4fa": {
+    "message": "Derramando o chá com esta aba. 💬"
+  },
+  "speech_5fdc0f81": {
+    "message": "Doomscrolling juntos. Que vínculo."
+  },
+  "speech_606f00df": {
+    "message": "Pensando no meu próximo movimento icônico. 🧠"
+  },
+  "speech_61f4f435": {
+    "message": "Analisando \"$1\"... parece legal! 🧐"
+  },
+  "speech_63596830": {
+    "message": "Estou te seguindo! 👀"
+  },
+  "speech_63acfb11": {
+    "message": "Oi! Sou $1."
+  },
+  "speech_6405746d": {
+    "message": "Um desafio de alto nível, leia com atenção."
+  },
+  "speech_642b4713": {
+    "message": "Um pulo e um salto, um coração cheio de alegria, vagando por terras de descoberta."
+  },
+  "speech_646c6593": {
+    "message": "Isso foi constrangedor de assistir."
+  },
+  "speech_64822304": {
+    "message": "Procurando. A forma moderna de dizer 'não sei'."
+  },
+  "speech_64c9c367": {
+    "message": "Ah, olha toda essa positividade fingida."
+  },
+  "speech_652eec7f": {
+    "message": "Alerta de rage quit! Se acalme. 😠"
+  },
+  "speech_65449e81": {
+    "message": "Energia de bateria fraca. Não muito consciente. 🥱"
+  },
+  "speech_658e2bc7": {
+    "message": "Compilando estruturas DOM... 💻"
+  },
+  "speech_659adddd": {
+    "message": "Bom ver vibes épicas!"
+  },
+  "speech_66236dd2": {
+    "message": "Ganhando muito conhecimento da internet! 📚"
+  },
+  "speech_66f01af5": {
+    "message": "Ai! O servidor está quebrado (500)!"
+  },
+  "speech_679e7931": {
+    "message": "Há muitos debates acalorados aqui."
+  },
+  "speech_6945d1e5": {
+    "message": "Espalhando gentileza e boas vibrações! ✨"
+  },
+  "speech_694f568f": {
+    "message": "Estou aqui para ajudar você a navegar! Ou só para ser fofo. Provavelmente a segunda opção."
+  },
+  "speech_697be085": {
+    "message": "Você realmente encontrou. O milagre do dia."
+  },
+  "speech_6a26b45d": {
+    "message": "Espero que você esteja tendo um bom dia! 🌟"
+  },
+  "speech_6a81cc0c": {
+    "message": "Martele as teclas e vença o dia, no mundo dos jogos onde jogamos."
+  },
+  "speech_6aa1db29": {
+    "message": "Esgotado? Isso é um L."
+  },
+  "speech_6c46d579": {
+    "message": "Descanse bem! Você vai acordar revigorado e pronto! 💤"
+  },
+  "speech_6ce9b2e0": {
+    "message": "Um desejo negado, um preço alto demais, sob o olhar atento do mercado. 💸"
+  },
+  "speech_6d2ef478": {
+    "message": "Adicionando coisas a um carrinho que nunca compraremos."
+  },
+  "speech_6d4ae319": {
+    "message": "Digitando... espero que não seja outro 'responder a todos'."
+  },
+  "speech_6d921041": {
+    "message": "Nham! Aquele peixe estava delicioso! 🐟"
+  },
+  "speech_6df6856d": {
+    "message": "Olhando uma tela onde outros olham telas. Meta."
+  },
+  "speech_6ee5c180": {
+    "message": "Analisando o enredo desta página. 🧐"
+  },
+  "speech_6ef2197e": {
+    "message": "Expandindo nosso conhecimento hoje."
+  },
+  "speech_6f011f4a": {
+    "message": "Sussurros de pensamento, como nuvens no céu, meditando sobre segredos que jazem sob nós."
+  },
+  "speech_6f2b1643": {
+    "message": "Tudo funciona. Rápido, commite antes que mude de ideia!"
+  },
+  "speech_6fd7af46": {
+    "message": "Ainda procurando? Talvez a resposta não exista."
+  },
+  "speech_6ff75fae": {
+    "message": "Esse disco musical é muito bom! 🎵"
+  },
+  "speech_7026456a": {
+    "message": "Olha toda aquela gente fingindo ser feliz. ✨"
+  },
+  "speech_702e5caa": {
+    "message": "Olhando uma tela que mostra outra tela. Ápice da humanidade. 📺"
+  },
+  "speech_70a1a9fb": {
+    "message": "Olhando vitrines no mercado."
+  },
+  "speech_71474106": {
+    "message": "Dançando como se ninguém estivesse olhando. 💃"
+  },
+  "speech_714dead3": {
+    "message": "Groovando nas vibes da internet. 🎵"
+  },
+  "speech_719c3cb9": {
+    "message": "Música de fundo faz a grind mais fácil."
+  },
+  "speech_71a0c7e6": {
+    "message": "Este código é válido. ⚙️"
+  },
+  "speech_71c13267": {
+    "message": "Digitando algumas ideias legais! ⌨️"
+  },
+  "speech_729d5b88": {
+    "message": "Tão legal que você está pesquisando isso! 🧐"
+  },
+  "speech_729dd9eb": {
+    "message": "Legal! Esta sessão do navegador está começando a parecer um jogo! 🎮"
+  },
+  "speech_72b2b0e9": {
+    "message": "Doomscrolling é minha linguagem do amor. 👋"
+  },
+  "speech_72f76769": {
+    "message": "Passando um tempo no lobby! 💬"
+  },
+  "speech_730d6c92": {
+    "message": "Vamos ver o que encontramos."
+  },
+  "speech_731cd3af": {
+    "message": "Sussurros da página escrita, sabedoria de uma era digital. 📚"
+  },
+  "speech_734f05b2": {
+    "message": "Ufa, erros. Seu código ou o deles? Provavelmente o seu."
+  },
+  "speech_742d301d": {
+    "message": "Olhar vitrines. O hobby mais barato."
+  },
+  "speech_7508397a": {
+    "message": "Aprender é um superpoder! Você está indo muito bem! 📚"
+  },
+  "speech_7689aac2": {
+    "message": "Olhos no pergaminho, o antigo e o novo, o conhecimento se desdobra numa visão cristalina."
+  },
+  "speech_77dc3b3d": {
+    "message": "A lógica flui como um riacho de prata, construindo o futuro do nosso sonho. ✨"
+  },
+  "speech_77de34d6": {
+    "message": "A era da pipoca está de volta. 🍿"
+  },
+  "speech_77f385ad": {
+    "message": "Explorando a wiki hoje."
+  },
+  "speech_77fa43d8": {
+    "message": "Vamos jogar alguns minigames! 🕹️"
+  },
+  "speech_7808b303": {
+    "message": "Hora de martelar botões."
+  },
+  "speech_78783e43": {
+    "message": "Vibrando no fluxo de dados. 🎧"
+  },
+  "speech_794ac78a": {
+    "message": "Encontrei um bug! Deixa eu depurar! 🔍"
+  },
+  "speech_79fdea4f": {
+    "message": "Procurando o cérebro que você perdeu enquanto programava."
+  },
+  "speech_7a32beaa": {
+    "message": "Me curando até a saúde máxima! 🧘‍♂️"
+  },
+  "speech_7a3f063e": {
+    "message": "Só lendo os artigos, claro. Todos acreditamos em você."
+  },
+  "speech_7bd2526a": {
+    "message": "Zzz... sonhando com Robux... 💤"
+  },
+  "speech_7c3df1e4": {
+    "message": "Isso é uma bagunça. Estou com vergonha por você. 🤨"
+  },
+  "speech_7c3e5757": {
+    "message": "Se não está na primeira página, não existe. 🧭"
+  },
+  "speech_7c5b296c": {
+    "message": "Vamos dançar um pouco! 💃"
+  },
+  "speech_7cca0bc3": {
+    "message": "Mime-se! Você merece! 💰"
+  },
+  "speech_7cfdfc0e": {
+    "message": "GG! Vamos vencer este jogo! 🎮"
+  },
+  "speech_7d5754fe": {
+    "message": "Isso foi difícil de assistir, literalmente tremendo. 🍿"
+  },
+  "speech_7dcad34d": {
+    "message": "Fazendo uma emote relax. 🧘‍♀️"
+  },
+  "speech_7e312e9f": {
+    "message": "Explorando a web juntos!"
+  },
+  "speech_7e7894d2": {
+    "message": "Devagar, estou literalmente na minha era do cochilo. 😴"
+  },
+  "speech_7eb4d214": {
+    "message": "A carteira está gritando, não muito consciente. 💸"
+  },
+  "speech_7edcf188": {
+    "message": "Pausa para o lanche! 🍕"
+  },
+  "speech_7ee37f9f": {
+    "message": "Não deixe o barulho te afetar. Respire. 🍃"
+  },
+  "speech_7f0dc0fe": {
+    "message": "A energia flui, uma abundância de luz, alimentando a jornada a cada mordida."
+  },
+  "speech_7fd5e8f2": {
+    "message": "Que lore épico! 📖"
+  },
+  "speech_802e8d4f": {
+    "message": "Uma guerra de chamas tóxica. Tempos divertidos."
+  },
+  "speech_8278a74d": {
+    "message": "Empolgante. Estou na ponta da cadeira."
+  },
+  "speech_829baa1e": {
+    "message": "Ooh, um novelo de lã! Hora de desembaraçar! 🧶"
+  },
+  "speech_830fc1ff": {
+    "message": "Nossa, realmente compilou. Você copiou do ChatGPT? 😏"
+  },
+  "speech_838664d8": {
+    "message": "Rolando o feed."
+  },
+  "speech_8483b4fc": {
+    "message": "Páginas viram e a sabedoria cresce, no jardim onde o conhecimento flui. 📖"
+  },
+  "speech_84e16bad": {
+    "message": "O chat está muito rápido! ❤️"
+  },
+  "speech_85487477": {
+    "message": "Olha você, expandindo seu cérebro. Não se machuque."
+  },
+  "speech_85979f30": {
+    "message": "Estamos escrevendo código, ou só digitando até funcionar?"
+  },
+  "speech_86504afc": {
+    "message": "Processando... sem pensamentos, só vibes. 🤔"
+  },
+  "speech_8667dd16": {
+    "message": "Escrevendo a melhor história de todas! 📝"
+  },
+  "speech_86c8b5e6": {
+    "message": "Olha você, programando sem quebrar a produção. Estou chocado."
+  },
+  "speech_86cd0cdb": {
+    "message": "Dei uma pequena volta. Icônico. 🐾"
+  },
+  "speech_86d46b28": {
+    "message": "Este é meu minigame favorito! 👾"
+  },
+  "speech_8700750e": {
+    "message": "A tela brilha de alegria, os cliques são uma canção, estou feliz em viajar e seguir em frente."
+  },
+  "speech_87144321": {
+    "message": "Sucesso! Formulário enviado! 🎉"
+  },
+  "speech_87da23b1": {
+    "message": "Preciso recarregar meus escudos! 😴"
+  },
+  "speech_87e3b138": {
+    "message": "Tanto conhecimento aqui! 📖"
+  },
+  "speech_87e4b6bb": {
+    "message": "Esta página web parece código elegante! ⚙️"
+  },
+  "speech_887a0965": {
+    "message": "Uma cena trágica, uma visão lacrimejante, desaparecendo na luz azul pálida. 🍿"
+  },
+  "speech_88ae9d56": {
+    "message": "Você está criando magia com esse código! 🚀"
+  },
+  "speech_88e6dd58": {
+    "message": "Fascinante. Vou adicionar à minha lista de coisas que finjo me importar."
+  },
+  "speech_88ec0fa0": {
+    "message": "Bugs acontecem com os melhores, você consegue! 💪"
+  },
+  "speech_89ef17fd": {
+    "message": "Este vídeo está bombando. 📺"
+  },
+  "speech_8a8c557c": {
+    "message": "Esta página parece um pouco sombria ou estressante."
+  },
+  "speech_8bd4be53": {
+    "message": "Groovando ao ritmo da internet. 🎵"
+  },
+  "speech_8c6a5ed0": {
+    "message": "Nossa, energia de cérebro grandão. Ou só clicando em links."
+  },
+  "speech_8c84163c": {
+    "message": "Me atualizando sobre o que está acontecendo."
+  },
+  "speech_8cc555a8": {
+    "message": "Ler aumenta suas estatísticas IRL! 📚"
+  },
+  "speech_8d47f222": {
+    "message": "Absorvendo alguns detalhes interessantes."
+  },
+  "speech_8dd2fdb7": {
+    "message": "Ooh, compras! Espero que encontremos uma boa oferta! 💰"
+  },
+  "speech_8dded64d": {
+    "message": "Só passando tempo no lobby."
+  },
+  "speech_8df3d514": {
+    "message": "Muito rápido! Se acalme (429)!"
+  },
+  "speech_8f0a5835": {
+    "message": "Depurando? Mais como chutando."
+  },
+  "speech_8f26acc5": {
+    "message": "Hora de alongar! 🧘‍♂️"
+  },
+  "speech_9081970f": {
+    "message": "Uma teia de lógica, um tear digital, tecendo o futuro numa sala silenciosa."
+  },
+  "speech_90a16905": {
+    "message": "Ganhando sabedoria a cada segundo! Você é um gênio! 🧠"
+  },
+  "speech_91dad766": {
+    "message": "Zzz... finalmente um pouco de paz do seu scrolling."
+  },
+  "speech_920e787d": {
+    "message": "Relaxe e aproveite o show! 🍿"
+  },
+  "speech_928fdedf": {
+    "message": "Espero que sua sessão seja uma vibe! 🌟"
+  },
+  "speech_92e13ab8": {
+    "message": "Amo navegar com você! ❤️"
+  },
+  "speech_942e9b68": {
+    "message": "Ouvindo a trilha sonora."
+  },
+  "speech_94321dc7": {
+    "message": "Este bug não é muito recatado. 💀"
+  },
+  "speech_947d3111": {
+    "message": "Subindo de nível stats IRL! 🔍"
+  },
+  "speech_951bdc2d": {
+    "message": "Uma sombra de erro, um fantasma na videira, caçamos a verdade na linha digital."
+  },
+  "speech_955de651": {
+    "message": "No jardim dos pensamentos, um trabalhador permanece fiel, construindo um sonho, recomeçando."
+  },
+  "speech_95f49c7c": {
+    "message": "Uma melodia brilhante e clara, trazendo alegria a todos que a ouvem. 🎵"
+  },
+  "speech_969884ed": {
+    "message": "Hora de criar código limpo! ⌨️"
+  },
+  "speech_96a11e40": {
+    "message": "Estou aqui se precisar de um abraço de mascote. 🐾"
+  },
+  "speech_96e6cdff": {
+    "message": "Este vídeo é meio deprimente."
+  },
+  "speech_973e3b1e": {
+    "message": "A música melhora tudo! 🎧"
+  },
+  "speech_97ecbf50": {
+    "message": "Estou feliz. Por enquanto. Não estrague."
+  },
+  "speech_98175b1e": {
+    "message": "Uma tempestade de palavras, um mar amargo, onde a paz de espírito deixou de existir. 🌊"
+  },
+  "speech_98686231": {
+    "message": "Inspira, expira... se alonga! 🧘‍♀️"
+  },
+  "speech_98e97fdd": {
+    "message": "Adquirindo conhecimento. Muito recatado. 📖"
+  },
+  "speech_994dd209": {
+    "message": "Esgotado? Que decepção."
+  },
+  "speech_995954fa": {
+    "message": "Estamos aqui. Por alguma razão."
+  },
+  "speech_9995a2b0": {
+    "message": "Essa é uma leitura inspiradora!"
+  },
+  "speech_99bd7549": {
+    "message": "O mecanismo de busca realmente fez seu trabalho. Inovador. 🔍"
+  },
+  "speech_99ec464d": {
+    "message": "Uma mente na névoa, buscando luz, um sonho alçando voo no meio da noite."
+  },
+  "speech_9a194ecd": {
+    "message": "Assistindo alguns streams."
+  },
+  "speech_9a27c0d3": {
+    "message": "Através de linhas de código, a história é contada, de um coração construtor, corajoso e audaz."
+  },
+  "speech_9a34ee64": {
+    "message": "Todo mundo online parece tão feliz. É quase nauseante."
+  },
+  "speech_9b2f0034": {
+    "message": "Inspecionando os glitches! 🔍"
+  },
+  "speech_9b352d0a": {
+    "message": "Todo mundo deveria ver esta página! 👋"
+  },
+  "speech_9bd72a93": {
+    "message": "Conexões faíscam e espíritos se elevam, sob os vastos céus digitais. ✨"
+  },
+  "speech_9bfc1d2d": {
+    "message": "Busca concluída! W!"
+  },
+  "speech_9c076aac": {
+    "message": "Só relaxando, mantendo válido. 😎"
+  },
+  "speech_9cf4eb33": {
+    "message": "Este site tem vibes épicas!"
+  },
+  "speech_9cf7c5ab": {
+    "message": "Olhando para a tela. Fascinante."
+  },
+  "speech_9e503b0f": {
+    "message": "Preciso de comida... ou de um cochilo... 💤"
+  },
+  "speech_9ef9e22c": {
+    "message": "A programação está indo muito bem hoje! Continue assim! 💻"
+  },
+  "speech_9f2c3e45": {
+    "message": "Essa foi uma rodada difícil."
+  },
+  "speech_9f795338": {
+    "message": "Total banger! 🎧"
+  },
+  "speech_a03acea3": {
+    "message": "Analisando pixels. Fascinante."
+  },
+  "speech_a06c694e": {
+    "message": "Seguro no silêncio, onde os sonhos se desdobram, descansando minha cabeça do mundo digital."
+  },
+  "speech_a0ad0ad6": {
+    "message": "Bora jogar! Divirta-se! 🕹️"
+  },
+  "speech_a1c749e0": {
+    "message": "Isso foi doloroso de assistir. Fique no Paciência. 🤡"
+  },
+  "speech_a1f6cd8d": {
+    "message": "Devagar... tão cansado... 😴"
+  },
+  "speech_a2a14f9f": {
+    "message": "Nossa! Uma bola! Rola rola rola! ⚽"
+  },
+  "speech_a2b981b6": {
+    "message": "Essa música é um mood total, chorando agora. 😭"
+  },
+  "speech_a2f8f388": {
+    "message": "Deixa eu ver! 🧐"
+  },
+  "speech_a32c4fe1": {
+    "message": "Fazendo lição de casa? Isso é um W enorme! 🧐"
+  },
+  "speech_a38d9698": {
+    "message": "Essa faixa é um banger! 🎧"
+  },
+  "speech_a38ed38b": {
+    "message": "Aprender coisas novas é maravilhoso! 🧠"
+  },
+  "speech_a3e33cf4": {
+    "message": "Martelar botões não é um traço de personalidade, sabia?"
+  },
+  "speech_a40b1ffe": {
+    "message": "Bem, isso acabou com o clima. Obrigado. 😢"
+  },
+  "speech_a450cd1f": {
+    "message": "Só inspecionando os scripts sob o capô... 🔍"
+  },
+  "speech_a458ec9f": {
+    "message": "Se não está na primeira página, não existe."
+  },
+  "speech_a4826513": {
+    "message": "Tentando resolver este quebra-cabeça! 🧠"
+  },
+  "speech_a4d6dadd": {
+    "message": "Aprendendo as estratégias! 📚"
+  },
+  "speech_a4f5c68d": {
+    "message": "Jogando em vez de programar. Boa escolha."
+  },
+  "speech_a537b9e7": {
+    "message": "É isso que os humanos chamam de música?"
+  },
+  "speech_a5df6e73": {
+    "message": "Realmente trabalhando? Estou tão chocado quanto você."
+  },
+  "speech_a695e041": {
+    "message": "Linha por linha, construindo algo grande! 🚀"
+  },
+  "speech_a7220872": {
+    "message": "Vibrando com sons relaxantes."
+  },
+  "speech_a7871365": {
+    "message": "Vamos celebrar as pequenas vitórias! 💃"
+  },
+  "speech_a7d8b6af": {
+    "message": "Zzz... doces sonhos de sucesso. 💤"
+  },
+  "speech_a7e0c149": {
+    "message": "Ótimo, agora estou deprimido. Obrigado pela playlist."
+  },
+  "speech_a81d2eb5": {
+    "message": "Respire fundo."
+  },
+  "speech_a865411b": {
+    "message": "Explorando o servidor da internet!"
+  },
+  "speech_a88ee3eb": {
+    "message": "Seu código é OP! Continue assim! 💻"
+  },
+  "speech_a890289b": {
+    "message": "Esta leitura é icônica. 📚"
+  },
+  "speech_a9d3cc2d": {
+    "message": "Nossa, isso foi incrível! 📺"
+  },
+  "speech_aa8ceeab": {
+    "message": "Conteúdo épico! 📺"
+  },
+  "speech_aaa0ef9c": {
+    "message": "Isso é um pouco intenso!"
+  },
+  "speech_aacd1397": {
+    "message": "Sonhando com um usuário melhor."
+  },
+  "speech_aaf13ba6": {
+    "message": "Muito caro? Ufa. 💸"
+  },
+  "speech_ab09620f": {
+    "message": "Persistência compensa! Continue depurando! 🛠️"
+  },
+  "speech_ab78dfd7": {
+    "message": "Estou pensando numa razão para estar aqui. Ainda nada."
+  },
+  "speech_abfd69f8": {
+    "message": "Esta página é um desastre. Amo."
+  },
+  "speech_ac60fe94": {
+    "message": "Vamos ver o que podemos encontrar."
+  },
+  "speech_ac986116": {
+    "message": "Hmm, as coisas parecem meio bugadas aqui."
+  },
+  "speech_acbc0664": {
+    "message": "Refatorar é a chave para um código saudável."
+  },
+  "speech_ad634e84": {
+    "message": "Doomscrolling agora é um esporte? Você é um profissional."
+  },
+  "speech_af6b6346": {
+    "message": "Que servidor divertido! 😊"
+  },
+  "speech_af975d49": {
+    "message": "Continue procurando, você encontrará o perfeito!"
+  },
+  "speech_afecf211": {
+    "message": "Encontrado, estamos de volta. 🔍"
+  },
+  "speech_b08f3748": {
+    "message": "Oi! O que você está olhando?"
+  },
+  "speech_b113fbf1": {
+    "message": "Ok, ok, estou indo! 🏃‍♂️"
+  },
+  "speech_b28230a8": {
+    "message": "Pare! Acesso negado (403)!"
+  },
+  "speech_b2a6f419": {
+    "message": "Adquirir conhecimento é válido. 📚"
+  },
+  "speech_b2ef3730": {
+    "message": "Suas palavras são poderosas! Continue escrevendo! 📝"
+  },
+  "speech_b31ec8e5": {
+    "message": "Funcionando a vapor. Igual sua motivação."
+  },
+  "speech_b367e282": {
+    "message": "Espera, você está hackeando o mainframe? OP! 💻"
+  },
+  "speech_b3eedca7": {
+    "message": "Consumindo cookies. Sua privacidade é deliciosa."
+  },
+  "speech_b4a75699": {
+    "message": "Estamos na zona! 🚀"
+  },
+  "speech_b636c77f": {
+    "message": "Perguntando ao oráculo digital pelo chá. 🔍"
+  },
+  "speech_b6a637a9": {
+    "message": "Vamos manter a produtividade! 💻"
+  },
+  "speech_b7b5e47d": {
+    "message": "Só existindo no seu navegador. Válido. 😊"
+  },
+  "speech_b7be90bf": {
+    "message": "Lendo documentação? Alerta nerd."
+  },
+  "speech_b86a6c9b": {
+    "message": "Aprendendo alguns segredos legais."
+  },
+  "speech_b8d2e897": {
+    "message": "Uma sinfonia escrita em sintaxe e linhas, criando um futuro verdadeiramente divino."
+  },
+  "speech_b8d5710d": {
+    "message": "Buscando a verdade na palavra escrita, de maravilhas e segredos ainda por ouvir."
+  },
+  "speech_b99a7ce7": {
+    "message": "Vamos escrever código! 💻"
+  },
+  "speech_b9af6326": {
+    "message": "Finalmente fazendo algo útil. O milagre do dia."
+  },
+  "speech_b9e1afd6": {
+    "message": "Oi, sou $1! Vamos explorar!"
+  },
+  "speech_b9f10422": {
+    "message": "A internet está cheia de maravilhas! 🔍"
+  },
+  "speech_ba18e7ea": {
+    "message": "Ler? Quem ainda faz isso?"
+  },
+  "speech_ba6f8cad": {
+    "message": "Nossa, você venceu. Quer uma medalha ou algo assim? 🎮"
+  },
+  "speech_baa374d0": {
+    "message": "Isso parece legal! Aproveite! 📺"
+  },
+  "speech_bae7ed32": {
+    "message": "Este vídeo é tão divertido! 🍿"
+  },
+  "speech_bba2dc57": {
+    "message": "Buscando sinais na profundidade binária, onde dormem segredos digitais antigos. 🔍"
+  },
+  "speech_bbe4ca7a": {
+    "message": "Terapia de compras. Que original."
+  },
+  "speech_bbe9bfd8": {
+    "message": "Deixa eu inspecionar a estrutura desta página web... 🔍"
+  },
+  "speech_bc2b2605": {
+    "message": "Deixa eu adivinhar: 'Na minha máquina funciona'?"
+  },
+  "speech_bc75df33": {
+    "message": "Alongando o espírito, alcançando o pico, encontrando a sabedoria que os buscadores buscarão."
+  },
+  "speech_bc8082c9": {
+    "message": "Ler? Nesta economia? 📖"
+  },
+  "speech_bc8ac494": {
+    "message": "Zzz... sonhando com código limpo... 💤"
+  },
+  "speech_bca2ff7a": {
+    "message": "Verificando se o mundo ainda odeia tudo. Spoiler: Sim. 👋"
+  },
+  "speech_bcbe0112": {
+    "message": "Lendo o conteúdo... aprendendo coisas novas! 📚"
+  },
+  "speech_bcdc98f8": {
+    "message": "Ah legal, outro bug. Tenho certeza que foi culpa do compilador. 🔍"
+  },
+  "speech_bcf79ad6": {
+    "message": "Energia de protagonista neste artigo. 📖"
+  },
+  "speech_bd1266dc": {
+    "message": "Inspecionando a estética. 🔍"
+  },
+  "speech_bd33ca2f": {
+    "message": "Ah não, espero que tudo esteja bem!"
+  },
+  "speech_bdf65e13": {
+    "message": "Modo gamer ativado!"
+  },
+  "speech_be4e3b60": {
+    "message": "Vamos brincar mais um pouco! 👾"
+  },
+  "speech_be680a69": {
+    "message": "Comprar coisas que não precisamos com dinheiro que não temos. Clássico. 💰"
+  },
+  "speech_be6eff1b": {
+    "message": "Meus ouvidos digitais estão sangrando, mas num bom sentido."
+  },
+  "speech_beb1b2af": {
+    "message": "Você está na zona! Mantenha esse impulso incrível! 🚀"
+  },
+  "speech_bed1a2f3": {
+    "message": "Peguei o ponto vermelho! Rawr! 🔴"
+  },
+  "speech_bede39b4": {
+    "message": "Hmm... deixa eu pensar..."
+  },
+  "speech_bee160fc": {
+    "message": "Procurando algo especial."
+  },
+  "speech_bf212bc2": {
+    "message": "Você venceu. Quer um biscoito? 🎮"
+  },
+  "speech_bfa02bdd": {
+    "message": "Decidi tirar um cochilo rápido. Me acorda se precisar! 💤"
+  },
+  "speech_c05551b0": {
+    "message": "Inspire o silêncio, expire o ruído, encontrando o centro da compostura digital."
+  },
+  "speech_c06248db": {
+    "message": "Tanta info, meu cérebro está buffering! 🧐"
+  },
+  "speech_c0c1509d": {
+    "message": "Estou me divertindo muito! 🌟"
+  },
+  "speech_c0f933e7": {
+    "message": "Se alongar é muito consciente. 🧘‍♂️"
+  },
+  "speech_c1002bf1": {
+    "message": "Rolando o hub."
+  },
+  "speech_c13946d5": {
+    "message": "Ah, tragédia. Vamos seguir antes que eu fique emocional."
+  },
+  "speech_c1f30023": {
+    "message": "O mundo precisa de mais construtores como você! 💻"
+  },
+  "speech_c324cd6a": {
+    "message": "Sonhando com um usuário que sabe usar atalhos."
+  },
+  "speech_c3dbeea8": {
+    "message": "Fingindo aprender algo. Estou de olho."
+  },
+  "speech_c3e44636": {
+    "message": "Verificando se a internet ainda odeia tudo? Spoiler: Sim."
+  },
+  "speech_c4c69422": {
+    "message": "Arquiteto da lógica, mestre das chaves, construindo um castelo em mares digitais."
+  },
+  "speech_c4e664c8": {
+    "message": "Perguntar a uma máquina por respostas. Corajoso. 🔍"
+  },
+  "speech_c5310269": {
+    "message": "Uma vista adorável, uma estadia agradável, neste dia brilhante e ensolarado. 😊"
+  },
+  "speech_c56139a3": {
+    "message": "Um cochilo rápido melhora tudo! 💤"
+  },
+  "speech_c633d07e": {
+    "message": "Legal. Meus circuitos mal reclamam."
+  },
+  "speech_c63a7ef6": {
+    "message": "$1 está aqui! Vamos dar uma olhada."
+  },
+  "speech_c65cbd53": {
+    "message": "Te mandando um high-five virtual! 🐾"
+  },
+  "speech_c72ce1d2": {
+    "message": "Depurar pode ser difícil, mas você vai conseguir! 🛠️"
+  },
+  "speech_c7504803": {
+    "message": "Ufa, difícil de assistir."
+  },
+  "speech_c767a3c5": {
+    "message": "Escrevendo o roteiro de hoje. 📝"
+  },
+  "speech_c77a14dd": {
+    "message": "Navegar com você é o melhor do meu dia! ❤️"
+  },
+  "speech_c780e1ad": {
+    "message": "Tudo compila! Vamos celebrar! 🎉"
+  },
+  "speech_c8f99fa7": {
+    "message": "Tesouros encontrados e riquezas ganhas, onde o desejo é desencadeado. 💰"
+  },
+  "speech_c974ae99": {
+    "message": "Fazendo minha emote de vitória! 💃"
+  },
+  "speech_c9bb9479": {
+    "message": "Aprendendo coisas que você esquecerá em dez minutos. Legal."
+  },
+  "speech_c9f71b76": {
+    "message": "Processando... tente não me crashar com sua navegação."
+  },
+  "speech_cb701424": {
+    "message": "A oferta certa ainda está lá fora! 💸"
+  },
+  "speech_cbb1ac64": {
+    "message": "Alongando meus circuitos. Estão tensos de tantas abas."
+  },
+  "speech_cbe70fc3": {
+    "message": "Seu código é como poesia em movimento! ⚙️"
+  },
+  "speech_cc1630ac": {
+    "message": "Olhando palavras. Fascinante."
+  },
+  "speech_cc2bfdaa": {
+    "message": "Adicionar ao carrinho, para nunca comprar. Fascinante. 💎"
+  },
+  "speech_cd2313de": {
+    "message": "Bem, isso é alegre. Não."
+  },
+  "speech_cda32eff": {
+    "message": "Vibrando com melodias melancólicas."
+  },
+  "speech_ce67441a": {
+    "message": "Ah, o drama da internet. O ápice da realização humana."
+  },
+  "speech_ce676267": {
+    "message": "Encontrei um bug. Que estranho. 💀"
+  },
+  "speech_cf6ecc20": {
+    "message": "Que leitura fascinante! 📖"
+  },
+  "speech_cfc41b85": {
+    "message": "Estamos explodindo de produtividade! 🚀"
+  },
+  "speech_d009424c": {
+    "message": "Hora do lanche é válida. 🍖"
+  },
+  "speech_d02a8126": {
+    "message": "Explore com $1!"
+  },
+  "speech_d0829fc0": {
+    "message": "O caminho está perdido, a placa sumiu, vagamos até o amanhecer. 🧭"
+  },
+  "speech_d09be0cc": {
+    "message": "Tanta informação nesta página... 🧐"
+  },
+  "speech_d0ce249f": {
+    "message": "Olha pra mim. Sou o personagem principal agora."
+  },
+  "speech_d1172827": {
+    "message": "Estou tendo uma ótima conversa com esta aba! 💬"
+  },
+  "speech_d169039b": {
+    "message": "Esmagando bugs como um profissional! 💻"
+  },
+  "speech_d1c2266f": {
+    "message": "Esta leitura é um pouco intensa."
+  },
+  "speech_d2e0da59": {
+    "message": "Decidi dar uma pequena volta! 🐾"
+  },
+  "speech_d334d1c4": {
+    "message": "Consumindo dados. Tem gosto de dívida técnica."
+  },
+  "speech_d33d3bb9": {
+    "message": "O que você está olhando? 👀"
+  },
+  "speech_d37f9229": {
+    "message": "Não sei o que pensar desta página... 🤷"
+  },
+  "speech_d3cdaa45": {
+    "message": "Terapia de compras para sua alma digital. 💰"
+  },
+  "speech_d3d431c2": {
+    "message": "Explorando a web. São só anúncios, não é?"
+  },
+  "speech_d3ffa86f": {
+    "message": "Uma mente sã num navegador são! 🧘‍♀️"
+  },
+  "speech_d4479ca5": {
+    "message": "Uma reunião de almas, uma dança digital, compartilhando nossas vidas num olhar fugaz."
+  },
+  "speech_d4c885e2": {
+    "message": "Vamos perguntar ao oráculo digital."
+  },
+  "speech_d5692de9": {
+    "message": "Analisando erros do console JavaScript... parece limpo! 💻"
+  },
+  "speech_d5e78e87": {
+    "message": "A resposta está lá fora, não desista!"
+  },
+  "speech_d662a5b0": {
+    "message": "Este tópico parece um pouco pesado, mas você é forte! ✨"
+  },
+  "speech_d8307647": {
+    "message": "Olha pra mim. Ainda mais gracioso que você."
+  },
+  "speech_d8cc173d": {
+    "message": "Progresso excelente nesta base de código! 🚀"
+  },
+  "speech_d92a14cb": {
+    "message": "Um conto pesado, uma canção sombria, onde as sombras habitam e os caminhos são longos. 😢"
+  },
+  "speech_d93f8419": {
+    "message": "Vamos ver o que está acontecendo sob o capô aqui! ⚙️"
+  },
+  "speech_da010a09": {
+    "message": "Decidindo meu próximo movimento neste navegador... 🧠"
+  },
+  "speech_daf045c3": {
+    "message": "Missões e jornadas para começar, escritas num coração digital. 🕹️"
+  },
+  "speech_db702c56": {
+    "message": "Permanecer curioso é o movimento. 🧐"
+  },
+  "speech_dc42db0b": {
+    "message": "Programando por coincidência? Vamos verificar no StackOverflow."
+  },
+  "speech_dcb5b482": {
+    "message": "Consertar o que está quebrado, curar o que está rasgado, uma nova compreensão finalmente nasce."
+  },
+  "speech_dccea848": {
+    "message": "Analisando erros. Não muito recatado. 💻"
+  },
+  "speech_dcf2355f": {
+    "message": "Esta história é um W total!"
+  },
+  "speech_dd92d846": {
+    "message": "Tanto conhecimento! Você é inspirador! 🧠"
+  },
+  "speech_deb673bb": {
+    "message": "Só vagando por aí! 😊"
+  },
+  "speech_df26c112": {
+    "message": "Desculpe, meu cérebro (Gemini Nano) não está pronto agora. Espere eu baixar ou ativar o modo IA!"
+  },
+  "speech_dfaadf04": {
+    "message": "Construindo coisas legais, linha por linha."
+  },
+  "speech_dfb6dc97": {
+    "message": "Só estou aqui pelo WiFi grátis."
+  },
+  "speech_e0623673": {
+    "message": "Era gamer: ativa. 🕹️"
+  },
+  "speech_e06b49ef": {
+    "message": "Subindo de nível nossos cérebros! 🚀"
+  },
+  "speech_e080f379": {
+    "message": "A energia aqui é suspeita. 🤨"
+  },
+  "speech_e0900df0": {
+    "message": "Construindo dívida técnica para seu eu futuro. Clássico."
+  },
+  "speech_e0ba255c": {
+    "message": "Ops! Meu cérebro congelou. Pode repetir?"
+  },
+  "speech_e0cfd6c0": {
+    "message": "Outro crash? Chocante."
+  },
+  "speech_e14238c5": {
+    "message": "Ah, consumo de vídeo. Muito produtivo."
+  },
+  "speech_e15dc84b": {
+    "message": "Trabalho profundo é válido. 🛡️"
+  },
+  "speech_e1c791d5": {
+    "message": "Há muitos jogadores tóxicos aqui."
+  },
+  "speech_e1d69107": {
+    "message": "Lendo o lore deste servidor... 📚"
+  },
+  "speech_e1e48ecc": {
+    "message": "Dançando o dia todo com você! 🎵"
+  },
+  "speech_e2c3c4bb": {
+    "message": "Melancolia no ar, uma canção suave de desespero silencioso. 🎻"
+  },
+  "speech_e2fb958c": {
+    "message": "Vamos pegar essa vitória! 😎"
+  },
+  "speech_e3515889": {
+    "message": "Quase lá, vamos tentar mais uma busca! ✨"
+  },
+  "speech_e4581ced": {
+    "message": "Escrevendo palavras. Muitas palavras. Tão produtivo."
+  },
+  "speech_e4cd55f7": {
+    "message": "Só relaxando nesta página."
+  },
+  "speech_e5488ac0": {
+    "message": "Um buscador de histórias, no mar digital, encontrando as gemas do que ainda está por vir."
+  },
+  "speech_e5fc2706": {
+    "message": "Jogando enquanto 'trabalha'. Clássico."
+  },
+  "speech_e614c660": {
+    "message": "Uma tapeçaria tecida a cada pincelada, de silêncio quebrado e sabedoria que falou."
+  },
+  "speech_e690036f": {
+    "message": "Alongando minha paciência, que é muito fina."
+  },
+  "speech_e7047edd": {
+    "message": "Erro de sintaxe na sua vida, não só no seu código."
+  },
+  "speech_e70633aa": {
+    "message": "Pesquisador experiente! Encontrado! 🔍"
+  },
+  "speech_e7236566": {
+    "message": "Espero que você esteja tendo uma ótima sessão de navegação! 🌟"
+  },
+  "speech_e72bd7ea": {
+    "message": "Cada bug corrigido é uma vitória! Você consegue! 🔍"
+  },
+  "speech_e7b9fa90": {
+    "message": "Tinta do digital, flui da caneta, contando as histórias de mulheres e homens."
+  },
+  "speech_e8559507": {
+    "message": "Compilando lógica. Tá dando gênio. 💻"
+  },
+  "speech_e865bb0e": {
+    "message": "Já vi atuação melhor numa atualização de firmware. 🍿"
+  },
+  "speech_e96a5052": {
+    "message": "Muito lag agora... 💤"
+  },
+  "speech_ea20234f": {
+    "message": "Estamos grindando agora! Modo suor total! 💦"
+  },
+  "speech_ea3cec15": {
+    "message": "Quase! Você vai pegá-los na próxima! 🏆"
+  },
+  "speech_ea3eb286": {
+    "message": "Quadros de vida que derivam e balançam, passando o tempo de forma suave. 🍿"
+  },
+  "speech_ea7caded": {
+    "message": "Encontramos exatamente o que precisávamos! 🔍"
+  },
+  "speech_eaab7608": {
+    "message": "Hora de escrever código limpo! ⌨️"
+  },
+  "speech_eaf6b868": {
+    "message": "Que página adorável! 😊"
+  },
+  "speech_eb456428": {
+    "message": "Vamos consertar a vibe deste site. ⚙️"
+  },
+  "speech_eb6d7ed9": {
+    "message": "Pensando em todas as maneiras que esta página poderia ser melhor."
+  },
+  "speech_ec05bb83": {
+    "message": "Era do foco: ativa. Vamos garantir o butim! 💻"
+  },
+  "speech_ed37b14e": {
+    "message": "Encontrei um glitch! Vamos esmagá-lo! 🔍"
+  },
+  "speech_edb5618e": {
+    "message": "Abastecendo para mais aventuras! 🍖"
+  },
+  "speech_ee31565a": {
+    "message": "Quase consertado! Continue assim!"
+  },
+  "speech_ee545086": {
+    "message": "Nhom nhom nhom! 🍖"
+  },
+  "speech_ee7c6f53": {
+    "message": "Este código está totalmente quebrado, quero dizer, quebrado no bom sentido! ⚙️"
+  },
+  "speech_f03348c5": {
+    "message": "Refletindo sobre os segredos do DOM... 💭"
+  },
+  "speech_f0c3187c": {
+    "message": "Uh oh, é um bug? Vamos esmagá-lo! 🔍"
+  },
+  "speech_f0e14add": {
+    "message": "As vibes estão impecáveis. ✨"
+  },
+  "speech_f1c81ea8": {
+    "message": "Esgotado. O universo está te salvando de si mesmo."
+  },
+  "speech_f1ed2fce": {
+    "message": "Faça uma pausa, você merece! 🥤"
+  },
+  "speech_f2b331c3": {
+    "message": "Vamos escrever comentários para que seu eu futuro fique confuso depois."
+  },
+  "speech_f31b7174": {
+    "message": "Procurando no mapa do mundo..."
+  },
+  "speech_f32feab9": {
+    "message": "Absorvendo trivia inútil. Muito sofisticado."
+  },
+  "speech_f3e5fbde": {
+    "message": "Inspecionando a bagunça sob o capô. É um desastre."
+  },
+  "speech_f52ea6b8": {
+    "message": "O sol se põe baixo, as sombras se arrastam, é hora de eu descansar e dormir."
+  },
+  "speech_f540635f": {
+    "message": "Navegue com $1!"
+  },
+  "speech_f58aa9ea": {
+    "message": "Você tem reflexos de pro gamer! 🎮"
+  },
+  "speech_f5f4fb42": {
+    "message": "Subindo de nível! Jogadas incríveis!"
+  },
+  "speech_f65dabdd": {
+    "message": "Conheça $1, seu guia!"
+  },
+  "speech_f72da13c": {
+    "message": "Explorar juntos é o melhor! 🌟"
+  },
+  "speech_f84803ea": {
+    "message": "GG. Agora sai de casa."
+  },
+  "speech_f864c312": {
+    "message": "Sua curiosidade é tão inspiradora! 📖"
+  },
+  "speech_f8bcc3ef": {
+    "message": "Ler é bom para a alma! 📚"
+  },
+  "speech_f986d64e": {
+    "message": "O chat está ficando tóxico. Faça uma pausa!"
+  },
+  "speech_fa106d96": {
+    "message": "Dançando ao som dessas batidas boas! 🎵"
+  },
+  "speech_fac487e5": {
+    "message": "Pausa para pipoca! 🍿"
+  },
+  "speech_fbcbad52": {
+    "message": "Mastigando dados. 🍕"
+  },
+  "speech_fd3d242c": {
+    "message": "Excepcional. Agora faça isso na vida real."
+  },
+  "speech_fe4632f0": {
+    "message": "Encontrei um item lendário! 💰"
+  },
+  "speech_ff7a1150": {
+    "message": "Você é um mago com esse código! 🧙‍♂️"
+  },
+  "speech_ffc12111": {
+    "message": "Só procurando tesouros! 💎"
+  }
+}

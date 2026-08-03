@@ -1,0 +1,3545 @@
+{
+  "extName": {
+    "message": "Arcrawls：コンテキスト認識ブラウザペット"
+  },
+  "extDescription": {
+    "message": "スプリング物理、140以上のアニメーション、オプションの100%ローカルAIを備えたコンテキスト認識ブラウザペット。クラウドに閲覧データは一切送信されません。"
+  },
+  "actionTitle": {
+    "message": "Arcrawls — ペットのダッシュボードを開く"
+  },
+  "shared_lvl": {
+    "message": "Lv"
+  },
+  "shared_lvlValue": {
+    "message": "Lv $1"
+  },
+  "shared_loading": {
+    "message": "読み込み中..."
+  },
+  "shared_donate": {
+    "message": "寄付"
+  },
+  "shared_waiting": {
+    "message": "お待ちください..."
+  },
+  "shared_waitSeconds": {
+    "message": "$1秒お待ちください..."
+  },
+  "shared_none": {
+    "message": "なし"
+  },
+  "shared_active": {
+    "message": "有効"
+  },
+  "shared_disabled": {
+    "message": "無効"
+  },
+  "shared_seasonal": {
+    "message": "シーズン限定"
+  },
+  "shared_seasonalDisabled": {
+    "message": "シーズン限定（無効）"
+  },
+  "shared_locked": {
+    "message": "ロック中"
+  },
+  "shared_wearing": {
+    "message": "装着中"
+  },
+  "shared_wear": {
+    "message": "装着"
+  },
+  "shared_perfMode": {
+    "message": "パフォーマンスモード"
+  },
+  "shared_perfModeSub": {
+    "message": "CPUとメモリの使用量を削減"
+  },
+  "shared_perfModeHint": {
+    "message": "30fpsに制限し、オーラを無効化し、タブ同期を停止してCPUを節約します"
+  },
+  "shared_ghostMode": {
+    "message": "ゴーストモード"
+  },
+  "shared_ghostModeSub": {
+    "message": "アクティブ時にフェードアウト（フォーカス）"
+  },
+  "shared_ghostModeHint": {
+    "message": "入力中やスクロール中にArcrawlsをフェードアウトして気を散らさないようにします"
+  },
+  "stat_happiness": {
+    "message": "幸福度"
+  },
+  "stat_energy": {
+    "message": "体力"
+  },
+  "stat_curiosity": {
+    "message": "好奇心"
+  },
+  "stat_focus": {
+    "message": "集中力"
+  },
+  "stat_leisure": {
+    "message": "余暇"
+  },
+  "stat_happinessHint": {
+    "message": "なでたり楽しいサイトを訪れると上昇。毎時4%減少。"
+  },
+  "stat_energyHint": {
+    "message": "餌やりと睡眠で回復。毎時6.8%減少。"
+  },
+  "stat_curiosityHint": {
+    "message": "新しいドメインを訪れると獲得。毎時1.8%減少。"
+  },
+  "stat_focusHint": {
+    "message": "仕事やコーディングで上昇。毎時5.4%減少。"
+  },
+  "stat_leisureHint": {
+    "message": "ゲームや配信視聴で上昇。毎時5.4%減少。"
+  },
+  "stat_happinessDesc": {
+    "message": "時間とともに減少。なでる、餌やり、ポジティブなサイト訪問で上昇。"
+  },
+  "stat_energyDesc": {
+    "message": "移動中に減少。餌やりと夜の睡眠で回復。"
+  },
+  "stat_curiosityDesc": {
+    "message": "新しいドメインの訪問や記事の閲覧で獲得。"
+  },
+  "stat_focusDesc": {
+    "message": "仕事・コーディング、ネガティブなコーディング感情（デバッグ中）で上昇。"
+  },
+  "stat_leisureDesc": {
+    "message": "配信視聴、ゲーム、ソーシャルメディアの訪問で上昇。"
+  },
+  "mood_happy": {
+    "message": "ハッピー"
+  },
+  "mood_sad": {
+    "message": "悲しい"
+  },
+  "mood_angry": {
+    "message": "怒り"
+  },
+  "mood_crying": {
+    "message": "泣いている"
+  },
+  "mood_waving": {
+    "message": "手を振っている"
+  },
+  "mood_sleeping": {
+    "message": "眠っている"
+  },
+  "mood_thinking": {
+    "message": "考え中"
+  },
+  "mood_shrug": {
+    "message": "肩をすくめる"
+  },
+  "mood_reading": {
+    "message": "読書中"
+  },
+  "mood_yoga": {
+    "message": "ヨガ"
+  },
+  "mood_eating": {
+    "message": "食事中"
+  },
+  "mood_coding": {
+    "message": "コーディング中"
+  },
+  "mood_typing": {
+    "message": "タイピング中"
+  },
+  "mood_dancing": {
+    "message": "ダンス中"
+  },
+  "mood_cool": {
+    "message": "クール"
+  },
+  "mood_love": {
+    "message": "愛情"
+  },
+  "mood_celebrating": {
+    "message": "お祝い中"
+  },
+  "mood_mindblown": {
+    "message": "びっくり"
+  },
+  "mood_ninja": {
+    "message": "忍者"
+  },
+  "mood_wizard": {
+    "message": "魔法使い"
+  },
+  "mood_astronaut": {
+    "message": "宇宙飛行士"
+  },
+  "mood_debugger": {
+    "message": "デバッガー"
+  },
+  "mood_building": {
+    "message": "建築中"
+  },
+  "mood_rocket": {
+    "message": "ロケット"
+  },
+  "mood_pirate": {
+    "message": "海賊"
+  },
+  "mood_juggling": {
+    "message": "ジャグリング"
+  },
+  "mood_gaming": {
+    "message": "ゲーム中"
+  },
+  "mood_lowBattery": {
+    "message": "バッテリー残量低下"
+  },
+  "mood_christmas": {
+    "message": "クリスマス"
+  },
+  "mood_winter": {
+    "message": "冬"
+  },
+  "mood_halloween": {
+    "message": "ハロウィン"
+  },
+  "mood_summer": {
+    "message": "夏"
+  },
+  "mood_iceCream": {
+    "message": "アイスクリーム"
+  },
+  "mood_surfing": {
+    "message": "サーフィン"
+  },
+  "mood_skateboard": {
+    "message": "スケートボード"
+  },
+  "mood_telescope": {
+    "message": "望遠鏡"
+  },
+  "mood_meditating": {
+    "message": "瞑想中"
+  },
+  "mood_rubberDuck": {
+    "message": "アヒルのおもちゃ"
+  },
+  "mood_coffee": {
+    "message": "コーヒー"
+  },
+  "mood_mail": {
+    "message": "メール"
+  },
+  "mood_notification": {
+    "message": "通知"
+  },
+  "mood_flexing": {
+    "message": "筋肉を見せている"
+  },
+  "mood_lifting": {
+    "message": "ウェイトリフティング"
+  },
+  "mood_singing": {
+    "message": "歌っている"
+  },
+  "mood_music": {
+    "message": "音楽"
+  },
+  "mood_dj": {
+    "message": "DJ"
+  },
+  "mood_money": {
+    "message": "お金"
+  },
+  "mood_merging": {
+    "message": "マージ/Git"
+  },
+  "mood_deploying": {
+    "message": "デプロイ中"
+  },
+  "mood_firefighting": {
+    "message": "火消し"
+  },
+  "mood_sweeping": {
+    "message": "掃除中"
+  },
+  "mood_dizzy": {
+    "message": "目が回る"
+  },
+  "mood_evil": {
+    "message": "悪役"
+  },
+  "mood_king": {
+    "message": "王様"
+  },
+  "mood_magic": {
+    "message": "マジック"
+  },
+  "mood_fishing": {
+    "message": "釣り"
+  },
+  "mood_bowling": {
+    "message": "ボウリング"
+  },
+  "mood_detective": {
+    "message": "探偵"
+  },
+  "mood_painting": {
+    "message": "絵を描いている"
+  },
+  "mood_photography": {
+    "message": "写真撮影"
+  },
+  "trait_normal": {
+    "message": "ノーマル"
+  },
+  "trait_developer": {
+    "message": "デベロッパー"
+  },
+  "trait_gamer": {
+    "message": "ゲーマー"
+  },
+  "trait_scholar": {
+    "message": "学者"
+  },
+  "trait_socialite": {
+    "message": "社交家"
+  },
+  "toy_ball": {
+    "message": "ボール"
+  },
+  "toy_fish": {
+    "message": "魚"
+  },
+  "toy_laser": {
+    "message": "レーザー"
+  },
+  "toy_yarn": {
+    "message": "毛糸"
+  },
+  "toy_duck": {
+    "message": "アヒル"
+  },
+  "toy_box": {
+    "message": "箱"
+  },
+  "action_pet": {
+    "message": "なでる"
+  },
+  "action_feed": {
+    "message": "餌やり"
+  },
+  "action_shoo": {
+    "message": "追い払う"
+  },
+  "reaction_happy": {
+    "message": "ハッピー 😊"
+  },
+  "reaction_sad": {
+    "message": "悲しい 😢"
+  },
+  "reaction_sleeping": {
+    "message": "眠っている 💤"
+  },
+  "reaction_thinking": {
+    "message": "考え中 🤔"
+  },
+  "reaction_reading": {
+    "message": "読書中 📖"
+  },
+  "reaction_eating": {
+    "message": "食事中 🍕"
+  },
+  "reaction_coding": {
+    "message": "コーディング中 💻"
+  },
+  "reaction_typing": {
+    "message": "タイピング中 ⌨️"
+  },
+  "reaction_dancing": {
+    "message": "ダンス中 💃"
+  },
+  "reaction_cool": {
+    "message": "クール 😎"
+  },
+  "reaction_love": {
+    "message": "愛情 ❤️"
+  },
+  "reaction_celebrating": {
+    "message": "お祝い中 🎉"
+  },
+  "reaction_mindblown": {
+    "message": "びっくり 🤯"
+  },
+  "reaction_ninja": {
+    "message": "忍者 🥷"
+  },
+  "reaction_wizard": {
+    "message": "魔法使い 🧙"
+  },
+  "reaction_astronaut": {
+    "message": "宇宙飛行士 🧑‍🚀"
+  },
+  "reaction_debugger": {
+    "message": "デバッガー 🔍"
+  },
+  "reaction_merging": {
+    "message": "マージ/Git 🔀"
+  },
+  "reaction_deploying": {
+    "message": "デプロイ中 🚀"
+  },
+  "reaction_firefighting": {
+    "message": "火消し 🚒"
+  },
+  "reaction_rubberDuck": {
+    "message": "アヒルのおもちゃ 🦆"
+  },
+  "reaction_building": {
+    "message": "建築中 🏗️"
+  },
+  "reaction_sweeping": {
+    "message": "掃除中 🧹"
+  },
+  "reaction_dizzy": {
+    "message": "目が回る 💫"
+  },
+  "reaction_evil": {
+    "message": "悪役 😈"
+  },
+  "reaction_king": {
+    "message": "王様 👑"
+  },
+  "reaction_music": {
+    "message": "音楽を聴いている 🎧"
+  },
+  "reaction_dj": {
+    "message": "DJ 🎛️"
+  },
+  "reaction_magic": {
+    "message": "マジック 🪄"
+  },
+  "reaction_fishing": {
+    "message": "釣り 🎣"
+  },
+  "reaction_bowling": {
+    "message": "ボウリング 🎳"
+  },
+  "reaction_detective": {
+    "message": "探偵 🕵️"
+  },
+  "reaction_painting": {
+    "message": "絵を描いている 🎨"
+  },
+  "reaction_photography": {
+    "message": "写真撮影 📷"
+  },
+  "reaction_juggling": {
+    "message": "ジャグリング 🤹"
+  },
+  "popup_title": {
+    "message": "ブラウザペットコントローラー"
+  },
+  "popup_experience": {
+    "message": "経験値"
+  },
+  "popup_xpInitial": {
+    "message": "0 / 100 XP"
+  },
+  "popup_xpProgress": {
+    "message": "$1 / $2 XP"
+  },
+  "popup_mascotStats": {
+    "message": "マスコットのステータス"
+  },
+  "popup_interactiveToys": {
+    "message": "インタラクティブなおもちゃ"
+  },
+  "popup_toyHelp": {
+    "message": "おもちゃをWebページにドラッグして遊ぼう！"
+  },
+  "popup_visibility": {
+    "message": "表示設定"
+  },
+  "popup_hideOnTab": {
+    "message": "このタブで隠す"
+  },
+  "popup_hideOnTabSub": {
+    "message": "このタブでArcrawlsを一時的に隠す"
+  },
+  "popup_hideOnSite": {
+    "message": "このサイトで隠す"
+  },
+  "popup_hideOnSiteSub": {
+    "message": "このドメインでArcrawlsを無効にする"
+  },
+  "popup_disableOnSite": {
+    "message": "$1でArcrawlsを無効にする"
+  },
+  "popup_openDashboard": {
+    "message": "ダッシュボードを開く"
+  },
+  "popup_tabsActiveOne": {
+    "message": "1つのタブがアクティブ"
+  },
+  "popup_tabsActiveMany": {
+    "message": "$1個のタブがアクティブ"
+  },
+  "popup_prestigeRankTitle": {
+    "message": "プレステージランク"
+  },
+  "popup_aiEmotionTitle": {
+    "message": "感情分類器（DistilBERT）"
+  },
+  "popup_aiNanoTitle": {
+    "message": "生成リフレクション（Gemini Nano）"
+  },
+  "popup_presenceTitle": {
+    "message": "ローカルコンテキスト監視が有効（100%デバイス上）"
+  },
+  "popup_liteMode": {
+    "message": "Liteモード"
+  },
+  "popup_firefoxLite": {
+    "message": "Firefox Lite"
+  },
+  "popup_ruleBasedTitle": {
+    "message": "ルールベース評価が有効"
+  },
+  "popup_brainLite": {
+    "message": "脳：Lite"
+  },
+  "popup_bertChecking": {
+    "message": "BERT：確認中"
+  },
+  "popup_bertReady": {
+    "message": "BERT：準備完了"
+  },
+  "popup_bertProgress": {
+    "message": "BERT：$1%"
+  },
+  "popup_bertError": {
+    "message": "BERT：エラー"
+  },
+  "popup_bertOffline": {
+    "message": "BERT：オフライン"
+  },
+  "popup_nanoChecking": {
+    "message": "Nano：確認中"
+  },
+  "popup_nanoReady": {
+    "message": "Nano：準備完了"
+  },
+  "popup_nanoDownloading": {
+    "message": "Nano：ダウンロード中"
+  },
+  "popup_nanoUnsupported": {
+    "message": "Nano：非対応"
+  },
+  "popup_nanoOffline": {
+    "message": "Nano：オフライン"
+  },
+  "popup_nanoWaiting": {
+    "message": "Nano：待機中"
+  },
+  "popup_petPreviewAlt": {
+    "message": "ペットのプレビュー"
+  },
+  "options_sanctuaryDashboard": {
+    "message": "サンクチュアリダッシュボード"
+  },
+  "options_sanctuaryPlayground": {
+    "message": "サンクチュアリプレイグラウンド"
+  },
+  "options_chatWith": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>とチャット"
+  },
+  "options_analyticsStats": {
+    "message": "分析と統計"
+  },
+  "options_historyTimeline": {
+    "message": "履歴タイムライン"
+  },
+  "options_mascotStyle": {
+    "message": "マスコットとスタイル"
+  },
+  "options_aiScheduling": {
+    "message": "AIとスケジュール"
+  },
+  "options_profileAdmin": {
+    "message": "プロフィール管理"
+  },
+  "options_copyright": {
+    "message": "© 2026 <span class=\"pet-name-display\">Arcrawls</span> コンパニオン"
+  },
+  "options_versionFormat": {
+    "message": "バージョン $1（$2）"
+  },
+  "options_mascotSanctuary": {
+    "message": "マスコットサンクチュアリ"
+  },
+  "options_sanctuaryDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>のリアルタイム状態を観察し、交流して、習慣を導きましょう。"
+  },
+  "options_petAction": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>をなでる"
+  },
+  "options_petActionPlain": {
+    "message": "Arcrawlsをなでる"
+  },
+  "options_feedSnack": {
+    "message": "おやつをあげる"
+  },
+  "options_shooAway": {
+    "message": "追い払う"
+  },
+  "options_experiencePoints": {
+    "message": "経験値"
+  },
+  "options_xpInitial": {
+    "message": "0 / 150 XP"
+  },
+  "options_learningHabits": {
+    "message": "学習習慣と適応"
+  },
+  "options_dominantTrait": {
+    "message": "支配的な特性："
+  },
+  "options_crawlingSpeed": {
+    "message": "移動速度："
+  },
+  "options_defaultAnimation": {
+    "message": "デフォルトアニメーション："
+  },
+  "options_distilbertActive": {
+    "message": "DistilBERTモデル有効"
+  },
+  "options_geminiNanoActive": {
+    "message": "Gemini Nano有効"
+  },
+  "options_crossTabSync": {
+    "message": "タブ間同期"
+  },
+  "options_aiSynapse": {
+    "message": "24時間AIシナプス"
+  },
+  "options_syncing": {
+    "message": "同期中"
+  },
+  "options_ready": {
+    "message": "準備完了"
+  },
+  "options_gatheringMemories": {
+    "message": "思い出を収集しています..."
+  },
+  "options_synapsePreviewPlaceholder": {
+    "message": "\"今日一日の分析が完了しました...\""
+  },
+  "options_readDailyReflection": {
+    "message": "毎日のリフレクションを読む"
+  },
+  "options_observingHabits": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>があなたの習慣を観察して、毎日のリフレクションを提供します。"
+  },
+  "options_dailyRoutine": {
+    "message": "毎日のルーティンとスケジュール"
+  },
+  "options_scheduleSleep": {
+    "message": "睡眠中"
+  },
+  "options_scheduleSleepDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>は夜遅くに休息します。この時間帯に体力は完全に回復します。"
+  },
+  "options_morningYoga": {
+    "message": "朝のヨガ"
+  },
+  "options_morningYogaDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>は朝にヨガを行い、ベースの幸福度が上がります。"
+  },
+  "options_randomPlay": {
+    "message": "ランダムプレイ"
+  },
+  "options_randomPlayDesc": {
+    "message": "カーソルを放置すると、<span class=\"pet-name-display\">Arcrawls</span>が歩き回ったり、スケートボードに乗ったり、遊んだり、読書したりします。"
+  },
+  "options_debugger": {
+    "message": "デバッガー"
+  },
+  "options_debuggerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>がWebページのJavaScriptエラーを見つけて調査します。"
+  },
+  "options_seasonalEvents": {
+    "message": "季節のカレンダーイベント"
+  },
+  "options_summerSeason": {
+    "message": "夏"
+  },
+  "options_summerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>はサングラスをかけ、アイスクリームを楽しみ、画面の中をサーフィンします。"
+  },
+  "options_halloweenSeason": {
+    "message": "ハロウィン"
+  },
+  "options_halloweenDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>はハロウィンの衣装とかぼちゃの飾りでお化け気分を味わいます。"
+  },
+  "options_christmasSeason": {
+    "message": "クリスマス"
+  },
+  "options_christmasDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>はサンタ帽をかぶり、ホリデー気分のリアクションでお祝いします。"
+  },
+  "options_starterFact": {
+    "message": "Webブラウザの豆知識を教えて"
+  },
+  "options_starterContext": {
+    "message": "コンテキスト認識がどう機能するか説明して"
+  },
+  "options_starterCustomize": {
+    "message": "ペットをカスタマイズするには？"
+  },
+  "options_whatCanIHelp": {
+    "message": "何かお手伝いできますか？"
+  },
+  "options_voiceChat": {
+    "message": "ボイスチャット"
+  },
+  "options_chatPlaceholder": {
+    "message": "Arcrawlsにメッセージ..."
+  },
+  "options_listening": {
+    "message": "聞いています..."
+  },
+  "options_typeMessage": {
+    "message": "メッセージを入力..."
+  },
+  "options_playVoice": {
+    "message": "音声を再生"
+  },
+  "options_copyResponse": {
+    "message": "回答をコピー"
+  },
+  "options_redo": {
+    "message": "やり直す"
+  },
+  "options_analyticsDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>の仮想統計、閲覧カテゴリの内訳、進捗メーターを分析します。"
+  },
+  "options_lifetimeMetrics": {
+    "message": "累計メトリクス"
+  },
+  "options_petsReceived": {
+    "message": "なでられた回数"
+  },
+  "options_feedsCompleted": {
+    "message": "餌やりの回数"
+  },
+  "options_browsingInterests": {
+    "message": "閲覧関心の分布"
+  },
+  "options_browsingInterestsSub": {
+    "message": "タブのナビゲーション履歴に基づくリアルタイム分類："
+  },
+  "options_interestsHistory": {
+    "message": "関心の履歴（直近7日間）"
+  },
+  "options_interestsHistorySub": {
+    "message": "直近7日間のカテゴリ内訳。"
+  },
+  "options_moodOverTime": {
+    "message": "時間経過による気分"
+  },
+  "options_moodOverTimeSub": {
+    "message": "1日あたりの平均的な幸福度と体力。"
+  },
+  "options_noHistory": {
+    "message": "直近7日間の履歴データが見つかりません。"
+  },
+  "options_noMoodData": {
+    "message": "グラフ化するのに十分な日次データがありません。また明日確認してください！"
+  },
+  "options_historyLogs": {
+    "message": "履歴ログ"
+  },
+  "options_historyLogsDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>の最近の気分の変動、ページ評価、アクションの時系列タイムライン。"
+  },
+  "options_timelineFeed": {
+    "message": "おやつを楽しんだ"
+  },
+  "options_clearLogs": {
+    "message": "ログを消去"
+  },
+  "options_recentMilestones": {
+    "message": "最近のマイルストーン"
+  },
+  "options_recentMilestonesDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>が達成した重要な成長マーカーと成果。"
+  },
+  "options_noMilestones": {
+    "message": "まだマイルストーンはありません。交流を続けて実績をアンロックしましょう！"
+  },
+  "options_noTimeline": {
+    "message": "まだタイムラインの項目がありません。Arcrawlsと一緒にブラウジングを楽しみましょう！"
+  },
+  "options_noCategories": {
+    "message": "まだ評価されたカテゴリはありません。あなたがブラウジングするにつれてArcrawlsが学習します！"
+  },
+  "options_mascotStyleDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>の外見、サイズ、アクティブなアニメーション、効果音、ワードローブをカスタマイズします。"
+  },
+  "options_mascotPrefs": {
+    "message": "マスコットの設定"
+  },
+  "options_mascotName": {
+    "message": "マスコットの名前"
+  },
+  "options_mascotSize": {
+    "message": "マスコットのサイズ（<span id=\"size-val\">128px</span>）"
+  },
+  "options_walkingSpeed": {
+    "message": "歩行速度（<span id=\"speed-val\">1.0x</span>）"
+  },
+  "options_rocketSpeed": {
+    "message": "ロケット速度（<span id=\"flight-speed-val\">1.0x</span>）"
+  },
+  "options_customColor": {
+    "message": "マスコットのカスタムカラー（Lv 15でアンロック）"
+  },
+  "options_resetToDefault": {
+    "message": "デフォルトに戻す"
+  },
+  "options_dialoguePersona": {
+    "message": "会話ペルソナ"
+  },
+  "options_personaDefault": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>（デフォルト）"
+  },
+  "options_personaSarcastic": {
+    "message": "皮肉でシニカル"
+  },
+  "options_personaEncouraging": {
+    "message": "共感コーチ"
+  },
+  "options_personaPoetic": {
+    "message": "風変わりな詩人"
+  },
+  "options_personaSnarky": {
+    "message": "テックブロ皮肉"
+  },
+  "options_personaGenZ": {
+    "message": "Z世代スラング"
+  },
+  "options_personaKid": {
+    "message": "子供向け／ゲーミフィケーション（ハイテンション）"
+  },
+  "options_chatVoice": {
+    "message": "チャットの音声（テキスト読み上げ）"
+  },
+  "options_defaultBrowserChoice": {
+    "message": "デフォルト（ブラウザの選択）"
+  },
+  "options_chatVoiceHint": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>があなたに話しかけるときの音声を選択します。"
+  },
+  "options_soundEffects": {
+    "message": "効果音"
+  },
+  "options_soundEffectsSub": {
+    "message": "イベント時にオーディオフィードバックを許可"
+  },
+  "options_seasonalOutfits": {
+    "message": "季節の衣装"
+  },
+  "options_seasonalOutfitsSub": {
+    "message": "クリスマス／ハロウィンの衣装をアンロック"
+  },
+  "options_sfxVolume": {
+    "message": "効果音の音量（<span id=\"volume-val\">80%</span>）"
+  },
+  "options_wardrobe": {
+    "message": "コスチュームとオーラのワードローブ"
+  },
+  "options_soundBoard": {
+    "message": "サウンドボードプレビュー"
+  },
+  "options_soundBoardDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>のカスタムレトロ効果音を試して聞いてみましょう："
+  },
+  "options_soundGreeting": {
+    "message": "挨拶"
+  },
+  "options_soundPetting": {
+    "message": "なでる"
+  },
+  "options_soundFeeding": {
+    "message": "餌やり"
+  },
+  "options_soundLevelUp": {
+    "message": "レベルアップ"
+  },
+  "options_soundChat": {
+    "message": "チャットメッセージ"
+  },
+  "options_soundThinking": {
+    "message": "思考中"
+  },
+  "options_soundSleeping": {
+    "message": "睡眠中"
+  },
+  "options_soundCrying": {
+    "message": "泣く"
+  },
+  "options_soundShoo": {
+    "message": "追い払われる"
+  },
+  "options_didYouKnow": {
+    "message": "知ってた？ 🐾"
+  },
+  "options_didYouKnowDesc": {
+    "message": "デスクトップコンパニオンの豆知識："
+  },
+  "options_fact1": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>の気分は、あなたが訪れるサイトによって変化します！ テックブログで集中し、ソーシャルメディアで遊びたくなります。"
+  },
+  "options_fact2": {
+    "message": "レベル50で、<span class=\"pet-name-display\">Arcrawls</span>は<strong>プレステージ転生</strong>を受け、より速い基本速度と新しいコスメをアンロックできます。"
+  },
+  "options_fact3": {
+    "message": "カーソルを45秒以上放置すると、<span class=\"pet-name-display\">Arcrawls</span>が歩き回ったり、スケートボードに乗ったり、小さな本を読んだりします！"
+  },
+  "options_fact4": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>は冬のホリデーにほっこりし、10月には季節のコスチュームで自動的にお化け気分になります。"
+  },
+  "options_proTips": {
+    "message": "プロのヒント 💡"
+  },
+  "options_proTipsDesc": {
+    "message": "生産性を最大限に高める："
+  },
+  "options_proTip1": {
+    "message": "ディープワークが必要なときは、プランナーの<strong>フォーカスブロック</strong>で<span class=\"pet-name-display\">Arcrawls</span>のランダムな散歩を一時停止しましょう。"
+  },
+  "options_proTip2": {
+    "message": "<strong>ドメインリアクション</strong>をカスタマイズして、StackOverflowのようなサイトで<span class=\"pet-name-display\">Arcrawls</span>をラバーダックデバッガーとして使えます！"
+  },
+  "options_aiSchedulingDesc": {
+    "message": "ローカルAI評価、カスタムサイトブロックリスト、睡眠・勤務カレンダー、ドメインリアクションルールを設定します。"
+  },
+  "options_mascotIntelligence": {
+    "message": "マスコットインテリジェンス（AI）"
+  },
+  "options_brainUpgrade": {
+    "message": "ブレインアップグレード（ローカルAI）"
+  },
+  "options_brainUpgradeSub": {
+    "message": "高精度のDistilBERT評価を有効にする"
+  },
+  "options_brainTuning": {
+    "message": "ブレインアップグレードの調整"
+  },
+  "options_sentimentSensitivity": {
+    "message": "感情感度（<span id=\"ai-sensitivity-val\">50%</span>）"
+  },
+  "options_sentimentSensitivityHint": {
+    "message": "ローカルAIがページの感情をどの程度認識しやすいかを調整します。"
+  },
+  "options_observationFrequency": {
+    "message": "観察頻度（<span id=\"ai-frequency-val\">60s</span>）"
+  },
+  "options_observationFrequencyHint": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>が深い観察を行う頻度を制御します。"
+  },
+  "options_activeBrainModules": {
+    "message": "アクティブなブレインモジュール"
+  },
+  "options_emotionClassifier": {
+    "message": "感情分類器（BERT）："
+  },
+  "options_generativeReflections": {
+    "message": "生成リフレクション（Nano）："
+  },
+  "options_nanoCheckHint": {
+    "message": "動作しませんか？ これをコピー＆ペーストしてGemini Nanoが有効か確認してください："
+  },
+  "options_liteModeNotice": {
+    "message": "<strong>モード：Lite（デフォルト）</strong> — ストアでのダウンロード約6MB（ディスク上約22〜25MB）。ネットワークダウンロードなしの高速な行動分析に、ルールベースのロジックとRegexを使用します。"
+  },
+  "options_privacyNoticeTitle": {
+    "message": "プライバシーとリソースに関する通知（ブレインアップグレード）："
+  },
+  "options_privacyNoticeBody": {
+    "message": "ブレインアップグレードを有効にすると、同梱のONNX asyncifyランタイム（解凍後約22MB、パッケージに同梱済み）が初期化され、Hugging FaceからDistilBERTの重み（約67MB、1回のみ）がブラウザのIndexedDBにダウンロードされます。すべてのページ分析は<strong>厳密にデバイス上で</strong>実行されます — 閲覧データはローカルで処理され、外部サーバーに送信されることはありません。"
+  },
+  "options_reactionDictionary": {
+    "message": "ドメインリアクションディクショナリ"
+  },
+  "options_reactionDictionaryDesc": {
+    "message": "特定のWebサイトドメインを、カスタムのマスコット行動、コメント、効果音にマッピングします："
+  },
+  "options_websiteDomain": {
+    "message": "Webサイトのドメイン"
+  },
+  "options_domainPlaceholder": {
+    "message": "例：stackoverflow.com"
+  },
+  "options_mascotEmotion": {
+    "message": "マスコットの感情"
+  },
+  "options_speechDialogue": {
+    "message": "音声ダイアログ（オプション）"
+  },
+  "options_speechDialoguePlaceholder": {
+    "message": "例：このバグを直そう！ 🐛"
+  },
+  "options_soundFx": {
+    "message": "効果音（オプション）"
+  },
+  "options_addReactionRule": {
+    "message": "リアクションルールを追加"
+  },
+  "options_tableDomain": {
+    "message": "ドメイン"
+  },
+  "options_tableEmotion": {
+    "message": "感情"
+  },
+  "options_tableDialogue": {
+    "message": "ダイアログ"
+  },
+  "options_tableSound": {
+    "message": "サウンド"
+  },
+  "options_tableAction": {
+    "message": "操作"
+  },
+  "options_noReactions": {
+    "message": "カスタムドメインリアクションは設定されていません。"
+  },
+  "options_siteBlocklist": {
+    "message": "サイトブロックリスト（非表示）"
+  },
+  "options_siteBlocklistDesc": {
+    "message": "これらのドメイン名で<span class=\"pet-name-display\">Arcrawls</span>が出現しないようにします："
+  },
+  "options_block": {
+    "message": "ブロック"
+  },
+  "options_searchBlocklist": {
+    "message": "ブロックリストを検索..."
+  },
+  "options_domainName": {
+    "message": "ドメイン名"
+  },
+  "options_noBlocked": {
+    "message": "まだブロックされたドメインはありません。"
+  },
+  "options_schedulePlanner": {
+    "message": "スケジュールとフォーカスプランナー"
+  },
+  "options_schedulePlannerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>の毎日のルーティンを定義し、フォーカスブロックを設定します："
+  },
+  "options_sleepWakeRoutine": {
+    "message": "💤 睡眠と起床のルーティン"
+  },
+  "options_sleepStart": {
+    "message": "睡眠開始"
+  },
+  "options_wakeTime": {
+    "message": "起床時間"
+  },
+  "options_activeWorkHours": {
+    "message": "💼 アクティブな勤務時間"
+  },
+  "options_workStart": {
+    "message": "勤務開始"
+  },
+  "options_workEnd": {
+    "message": "勤務終了"
+  },
+  "options_focusBlocks": {
+    "message": "🎯 フォーカスブロック"
+  },
+  "options_focusModeActive": {
+    "message": "フォーカスモード有効"
+  },
+  "options_focusModeSub": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>に静かに勉強させ、散歩をやめさせる"
+  },
+  "options_focusStart": {
+    "message": "フォーカス開始"
+  },
+  "options_focusEnd": {
+    "message": "フォーカス終了"
+  },
+  "options_dailyScheduleRules": {
+    "message": "毎日のスケジュールルール"
+  },
+  "options_dailyScheduleRulesSub": {
+    "message": "睡眠、起床、勤務のアクティブ状態を有効にする"
+  },
+  "options_profileAdminDesc": {
+    "message": "バックアップ操作の実行、統計の復元、転生の実行、設定の消去を行います。"
+  },
+  "options_prestigeRebirth": {
+    "message": "プレステージ転生サンクチュアリ"
+  },
+  "options_prestigeRebirthDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>は非常に賢くなりました（レベル50以上）。レベルをリセットすると、より高いスピード倍率、永続的なビジュアルアイコン、高度な能力がアンロックされます。"
+  },
+  "options_currentPrestigeRank": {
+    "message": "現在のプレステージランク："
+  },
+  "options_rebirthButton": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>を転生させる（Lv 50が必要）"
+  },
+  "options_profileBackups": {
+    "message": "プロフィールのバックアップ"
+  },
+  "options_profileBackupsDesc": {
+    "message": "設定、レベル、関心分析をファイルにエクスポートするか、別のデバイスに復元します。"
+  },
+  "options_exportProfile": {
+    "message": "プロフィールをエクスポート（.json）"
+  },
+  "options_importProfile": {
+    "message": "プロフィールをインポート（.json）"
+  },
+  "options_factoryReset": {
+    "message": "工場出荷時リセットのオプション"
+  },
+  "options_factoryResetDesc": {
+    "message": "これらの操作は元に戻せません。リセットを実行する前にバックアップを作成してください。"
+  },
+  "options_resetStats": {
+    "message": "統計とレベルのみリセット"
+  },
+  "options_hardWipe": {
+    "message": "すべてのストレージを完全消去"
+  },
+  "options_fuelSanctuary": {
+    "message": "サンクチュアリを支援する"
+  },
+  "options_fuelSanctuaryDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>は楽しさとバイブスを追求した情熱プロジェクトです！ 彼があなたの一日を明るくしたり、集中を助けてくれたなら、サンクチュアリの成長を支えるコーヒー一杯が大変喜ばれます。 🐾"
+  },
+  "options_supportKofi": {
+    "message": "Ko-fiで支援する"
+  },
+  "options_supportContact": {
+    "message": "サポートとお問い合わせ"
+  },
+  "options_supportContactDesc": {
+    "message": "ドキュメントのヘルプを得たり、オープンリポジトリを確認したり、バグフィードバックを送信したりできます。"
+  },
+  "options_emailSupport": {
+    "message": "メールサポート："
+  },
+  "options_githubRepo": {
+    "message": "GitHubリポジトリ："
+  },
+  "options_openRepo": {
+    "message": "リポジトリを開く"
+  },
+  "options_documentation": {
+    "message": "ドキュメント："
+  },
+  "options_viewDocs": {
+    "message": "ドキュメントを見る"
+  },
+  "options_openSourceNote": {
+    "message": "<strong>オープンソースに関する注記：</strong> <span class=\"pet-name-display\">Arcrawls</span>はPolyForm Noncommercial License 1.0.0のもとでオープンソースです。本ソフトウェアの商用販売やマネタイズは固く禁じられています。"
+  },
+  "options_synapseDisabled": {
+    "message": "ブレインアップグレードは現在無効です。設定でオンにして毎日の洞察を生成しましょう！"
+  },
+  "options_synapseConcentrating": {
+    "message": "Arcrawlsはあなたの一日に集中しています..."
+  },
+  "options_dailySynapseModalTitle": {
+    "message": "毎日のシナプスリフレクション"
+  },
+  "options_gotItArcrawls": {
+    "message": "わかったよ、Arcrawls！"
+  },
+  "options_clearHistoryConfirm": {
+    "message": "Arcrawlsの履歴タイムラインを消去してもよろしいですか？"
+  },
+  "options_rebirthConfirm": {
+    "message": "Arcrawlsを本当に転生させますか？ レベルは1にリセットされますが、プレステージランクが上がります。永続的な報酬がアンロックされます！"
+  },
+  "options_rebirthSuccess": {
+    "message": "Arcrawlsは転生しました！ 現在プレステージ$1です。 🎉"
+  },
+  "options_resetStatsConfirm": {
+    "message": "警告：これにより、Arcrawlsの統計、レベル、プレステージ、アクティビティ履歴がデフォルトにリセットされます。設定は変更されません。続行しますか？"
+  },
+  "options_hardWipeConfirm": {
+    "message": "重大な警告：これにより、Arcrawlsのすべてのローカル拡張データ、オプション、履歴が完全に消去されます。この操作は元に戻せません。続行しますか？"
+  },
+  "options_invalidDomain": {
+    "message": "ドメイン名の形式が無効です。"
+  },
+  "options_exportFailed": {
+    "message": "プロフィールをエクスポートできませんでした。"
+  },
+  "options_importConfirm": {
+    "message": "このプロフィールをインポートしてもよろしいですか？ 現在の設定、レベル、統計が上書きされます。"
+  },
+  "options_importSuccess": {
+    "message": "プロフィールが正常にインポートされました！ 再読み込み中..."
+  },
+  "options_importInvalid": {
+    "message": "プロフィールファイルの形式が無効です。ファイルには統計と設定が含まれている必要があります。"
+  },
+  "options_importParseFailed": {
+    "message": "JSONファイルを解析できませんでした。"
+  },
+  "options_speechNotSupported": {
+    "message": "このブラウザは音声認識に対応していません。"
+  },
+  "options_soundUnavailable": {
+    "message": "このFirefoxビルドではサウンド再生を利用できません。"
+  },
+  "options_ruleBasedBehavior": {
+    "message": "ルールベースの行動が有効"
+  },
+  "options_firefoxLiteMode": {
+    "message": "Firefox Liteモード"
+  },
+  "options_firefoxLiteNotice": {
+    "message": "<p style=\"margin-bottom: 8px;\"><strong>モード：Firefox Lite</strong> — ダウンロード不要の高速な行動分析に、ルールベースのロジックとRegexを使用します。 <br><br><em>注：ブレインアップグレードと生成リフレクションは、ChromeのオフスクリーンドキュメントAPIが必要なため、現在Firefoxでは利用できません。</em></p>"
+  },
+  "options_brainFirefoxLite": {
+    "message": "脳：Firefox Lite"
+  },
+  "options_brainLiteMode": {
+    "message": "脳：Liteモード"
+  },
+  "options_backupInstincts": {
+    "message": "バックアップ本能を使用中"
+  },
+  "options_offline": {
+    "message": "オフライン"
+  },
+  "options_offlineNano": {
+    "message": "❌ オフライン"
+  },
+  "options_brainChecking": {
+    "message": "脳：確認中..."
+  },
+  "options_queryingModel": {
+    "message": "モデルを照会中..."
+  },
+  "options_brainOffline": {
+    "message": "脳：オフライン"
+  },
+  "options_aiDisconnected": {
+    "message": "AIレイヤーが切断されました"
+  },
+  "options_disconnected": {
+    "message": "切断済み"
+  },
+  "options_brainReady": {
+    "message": "脳：準備完了"
+  },
+  "options_brainProgress": {
+    "message": "脳：$1%"
+  },
+  "options_brainError": {
+    "message": "脳：エラー"
+  },
+  "options_fetchingWeights": {
+    "message": "モデルの重みを取得中"
+  },
+  "options_wasmFailure": {
+    "message": "WASM障害"
+  },
+  "options_readyCheck": {
+    "message": "✅ 準備完了"
+  },
+  "options_loadingPct": {
+    "message": "⏳ 読み込み中 $1%"
+  },
+  "options_errorX": {
+    "message": "❌ エラー"
+  },
+  "options_unsupported": {
+    "message": "❌ 非対応"
+  },
+  "options_downloading": {
+    "message": "⏳ ダウンロード中..."
+  },
+  "options_nanoConnected": {
+    "message": "✅ 接続済み（Gemini Nano）"
+  },
+  "options_waitForTab": {
+    "message": "Webタブを待っています..."
+  },
+  "options_nanoChecking": {
+    "message": "Nano：確認中..."
+  },
+  "options_nanoDownloading": {
+    "message": "Nano：ダウンロード中..."
+  },
+  "options_unblock": {
+    "message": "ブロック解除"
+  },
+  "options_remove": {
+    "message": "削除"
+  },
+  "options_recent": {
+    "message": "最近"
+  },
+  "options_speedNormal": {
+    "message": "ノーマル"
+  },
+  "options_speedHyper": {
+    "message": "ハイパー"
+  },
+  "options_speedFast": {
+    "message": "速い"
+  },
+  "options_speedExhausted": {
+    "message": "疲れ切った"
+  },
+  "options_speedCalm": {
+    "message": "穏やか"
+  },
+  "options_behaviorStandard": {
+    "message": "スタンダード"
+  },
+  "options_behaviorAnalytical": {
+    "message": "分析的（思考中）"
+  },
+  "options_behaviorPlayful": {
+    "message": "遊び心（クール）"
+  },
+  "options_behaviorFocused": {
+    "message": "集中（読書中）"
+  },
+  "options_behaviorAffectionate": {
+    "message": "愛情深い（愛情）"
+  },
+  "options_milestoneNewBeginning": {
+    "message": "新たな始まり"
+  },
+  "options_milestoneNewBeginningDesc": {
+    "message": "Arcrawlsがあなたのブラウザサンクチュアリにやってきました。"
+  },
+  "options_milestoneExpressiveMind": {
+    "message": "表現豊かな心"
+  },
+  "options_milestoneExpressiveMindDesc": {
+    "message": "高度な感情をアンロック（コーディング、ダンスなど）。"
+  },
+  "options_milestoneAuraOfMystery": {
+    "message": "神秘のオーラ"
+  },
+  "options_milestoneAuraOfMysteryDesc": {
+    "message": "探偵コスチュームとブルーオーラをアンロック。"
+  },
+  "options_milestoneUltimateCompanion": {
+    "message": "究極のコンパニオン"
+  },
+  "options_milestoneUltimateCompanionDesc": {
+    "message": "すべての標準感情とマジックパープルオーラをアンロック。"
+  },
+  "options_milestoneNeonDreamer": {
+    "message": "ネオンの夢想家"
+  },
+  "options_milestoneNeonDreamerDesc": {
+    "message": "レインボーシェーダーとカスタムマスコットカラーピッカーをアンロック。"
+  },
+  "options_milestoneMascotSage": {
+    "message": "マスコットの賢者"
+  },
+  "options_milestoneMascotSageDesc": {
+    "message": "標準成長の頂点に到達。"
+  },
+  "options_milestoneWellLoved": {
+    "message": "愛されている"
+  },
+  "options_milestoneWellLovedDesc": {
+    "message": "10回以上なでられた。"
+  },
+  "options_milestoneHeartOfGold": {
+    "message": "黄金の心"
+  },
+  "options_milestoneHeartOfGoldDesc": {
+    "message": "本当に甘やかされたマスコット！"
+  },
+  "options_milestoneHappyTummy": {
+    "message": "幸せなお腹"
+  },
+  "options_milestoneHappyTummyDesc": {
+    "message": "10個のおやつを楽しんだ。"
+  },
+  "options_milestoneGourmetEater": {
+    "message": "グルメイーター"
+  },
+  "options_milestoneGourmetEaterDesc": {
+    "message": "ブラウザスナックのプロ。"
+  },
+  "options_milestoneEtherealRebirth": {
+    "message": "天上の転生"
+  },
+  "options_milestoneEtherealRebirthDesc": {
+    "message": "より高次の存在として転生（$1倍）。"
+  },
+  "options_milestoneDailyEnlightenment": {
+    "message": "毎日の悟り"
+  },
+  "options_milestoneDailyEnlightenmentDesc": {
+    "message": "24時間の行動シナプスを正常に処理。"
+  },
+  "options_milestoneTraitEvolved": {
+    "message": "特性が進化"
+  },
+  "options_milestoneLevelDate": {
+    "message": "Lv $1"
+  },
+  "options_milestonePetsDate": {
+    "message": "$1回なでる"
+  },
+  "options_milestoneFeedsDate": {
+    "message": "$1回餌やり"
+  },
+  "options_milestonePrestigeDate": {
+    "message": "プレステージ$1"
+  },
+  "options_milestoneDailyDate": {
+    "message": "毎日"
+  },
+  "options_milestoneCodeArchitect": {
+    "message": "コードアーキテクト"
+  },
+  "options_milestoneCodeArchitectDesc": {
+    "message": "ドキュメントとコードへの永続的な情熱を育んだ。"
+  },
+  "options_milestoneEpicGamer": {
+    "message": "エピックゲーマー"
+  },
+  "options_milestoneEpicGamerDesc": {
+    "message": "何よりも余暇活動を好んだ。"
+  },
+  "options_milestoneDeepResearcher": {
+    "message": "ディープリサーチャー"
+  },
+  "options_milestoneDeepResearcherDesc": {
+    "message": "ニュースや記事の閲覧の専門家になった。"
+  },
+  "options_milestoneSocialButterfly": {
+    "message": "ソーシャルバタフライ"
+  },
+  "options_milestoneSocialButterflyDesc": {
+    "message": "ソーシャルボードやメールで過ごすのが大好き。"
+  },
+  "options_timelinePet": {
+    "message": "なでられた"
+  },
+  "options_timelineShoo": {
+    "message": "追い払われた"
+  },
+  "options_timelineDecay": {
+    "message": "ステータス減衰のティック"
+  },
+  "options_timelineCoding": {
+    "message": "コーディング環境を分析"
+  },
+  "options_timelineDocs": {
+    "message": "技術ドキュメントを読んだ"
+  },
+  "options_timelineGaming": {
+    "message": "ゲーム配信を見た"
+  },
+  "options_timelineSocial": {
+    "message": "ソーシャルボードをスクロール"
+  },
+  "options_timelineNews": {
+    "message": "最新ニュースを見た"
+  },
+  "options_timelineShopping": {
+    "message": "ショッピングリストを見た"
+  },
+  "options_timelineMail": {
+    "message": "受信トレイをチェック"
+  },
+  "options_timelineFitness": {
+    "message": "ワークアウトプランを確認"
+  },
+  "options_categoryCoding": {
+    "message": "コーディング"
+  },
+  "options_categorySocial": {
+    "message": "ソーシャルメディア"
+  },
+  "options_categoryGaming": {
+    "message": "ゲーム"
+  },
+  "options_categoryNews": {
+    "message": "ニュースとメディア"
+  },
+  "options_categoryShopping": {
+    "message": "ショッピング"
+  },
+  "options_categoryDocs": {
+    "message": "ドキュメント"
+  },
+  "options_categoryMail": {
+    "message": "メールとメッセージ"
+  },
+  "options_categoryFitness": {
+    "message": "フィットネスとスポーツ"
+  },
+  "options_costumeDefault": {
+    "message": "デフォルト"
+  },
+  "options_costumeDefaultDesc": {
+    "message": "オリジナルのArcrawls"
+  },
+  "options_costumeDetective": {
+    "message": "探偵ブルー"
+  },
+  "options_costumeDetectiveDesc": {
+    "message": "ブルー探偵オーラ"
+  },
+  "options_costumeWizard": {
+    "message": "魔法使いパープル"
+  },
+  "options_costumeWizardDesc": {
+    "message": "マジックパープルオーラ"
+  },
+  "options_costumeParty": {
+    "message": "レインボーパーティー"
+  },
+  "options_costumePartyDesc": {
+    "message": "カラーチェンジオーラ"
+  },
+  "options_costumeChristmas": {
+    "message": "サンタ帽"
+  },
+  "options_costumeChristmasDesc": {
+    "message": "ホリデーのお祝い帽子"
+  },
+  "options_costumeHalloween": {
+    "message": "お化けかぼちゃ"
+  },
+  "options_costumeHalloweenDesc": {
+    "message": "ハロウィンかぼちゃのマスク"
+  },
+  "options_costumeSummer": {
+    "message": "夏のサングラス"
+  },
+  "options_costumeSummerDesc": {
+    "message": "クールなサングラスの衣装"
+  },
+  "onboarding_title": {
+    "message": "Arcrawlsへようこそ！"
+  },
+  "onboarding_welcomeTitle": {
+    "message": "<span class=\"brand\">Arcrawls!</span>へようこそ"
+  },
+  "onboarding_welcomeSub": {
+    "message": "新しいコンテキスト認識AIブラウザコンパニオンの準備ができました。Arcrawlsはブラウザの中で生活し、あなたが訪れるページに反応し、作業中もそばにいてくれます。"
+  },
+  "onboarding_canDoTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span>ができること"
+  },
+  "onboarding_canDoSub": {
+    "message": "新しいブラウザペットの能力を簡単にご紹介します。"
+  },
+  "onboarding_featureContext": {
+    "message": "コンテキスト認識"
+  },
+  "onboarding_featureContextDesc": {
+    "message": "HTTPステータスコード、ページコンテンツ、あなたの閲覧行動に反応します。"
+  },
+  "onboarding_featureAI": {
+    "message": "AIリアクション"
+  },
+  "onboarding_featureAIDesc": {
+    "message": "AIを使ってページを分析し、ユニークな感情やコメントで応答します。"
+  },
+  "onboarding_featureXP": {
+    "message": "XPとレベルアップ"
+  },
+  "onboarding_featureXPDesc": {
+    "message": "インタラクションで経験値を獲得し、Arcrawlsがレベルアップしていく様子を見守りましょう。"
+  },
+  "onboarding_featurePersonality": {
+    "message": "パーソナリティモード"
+  },
+  "onboarding_featurePersonalityDesc": {
+    "message": "フレンドリー、サルカスティック、励まし、詩的、毒舌から切り替えられます。"
+  },
+  "onboarding_privacyTitle": {
+    "message": "プライバシーへの約束"
+  },
+  "onboarding_privacySub": {
+    "message": "Arcrawlsはブラウザ内で100%ローカルに動作します。ユーザーデータの利用規約をご確認の上、同意してください。"
+  },
+  "onboarding_privacy1": {
+    "message": "<strong>100%オフライン＆ローカル：</strong> すべてのテキスト解析、オフライン感情分類、チャット機能は、完全にデバイス上で動作します。"
+  },
+  "onboarding_privacy2": {
+    "message": "<strong>データ販売ゼロ：</strong> URL、閲覧履歴、キーストロークを追跡・保存・送信することは一切ありません。"
+  },
+  "onboarding_privacy3": {
+    "message": "<strong>最小限の権限：</strong> 権限は、ローカルなタブ反応、設定の保存、オフラインAI処理に限定されます。"
+  },
+  "onboarding_consentLabel": {
+    "message": "規約に同意し、Webページ上でArcrawlsをローカルに実行することに同意します。"
+  },
+  "onboarding_allSetTitle": {
+    "message": "すべて準備完了！"
+  },
+  "onboarding_allSetSub": {
+    "message": "Arcrawlsはすでにブラウザの中を歩き回っています。始めるためのヒントをいくつかご紹介します："
+  },
+  "onboarding_tip1": {
+    "message": "<strong>拡張機能をピン留め</strong>して、ダッシュボードにすばやくアクセスしましょう。"
+  },
+  "onboarding_tip2": {
+    "message": "<strong>アイコンをクリック</strong>して、Arcrawlsのステータス、気分、設定を確認しましょう。"
+  },
+  "onboarding_tip3": {
+    "message": "どのページでも<strong>なでたり、餌をあげたり、追い払ったり</strong>してArcrawlsと交流しましょう。"
+  },
+  "onboarding_docsLink": {
+    "message": "完全なドキュメントを読む"
+  },
+  "onboarding_back": {
+    "message": "戻る"
+  },
+  "onboarding_next": {
+    "message": "次へ"
+  },
+  "onboarding_finish": {
+    "message": "完了"
+  },
+  "onboarding_consentRequired": {
+    "message": "続行するにはプライバシー規約への同意が必要です。"
+  },
+  "onboarding_updatedTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span>が更新されました！"
+  },
+  "onboarding_updatedSub": {
+    "message": "コンテキスト認識AIブラウザコンパニオンが$1に更新されました。新しいタブ間連携の動作と最適化されたパフォーマンスをお試しください！"
+  },
+  "onboarding_whatsNewTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span>の新機能"
+  },
+  "onboarding_whatsNewSub": {
+    "message": "バージョン$1では、大幅なアーキテクチャ改善と新機能が追加されました。"
+  },
+  "onboarding_installedStatus": {
+    "message": "インストール完了"
+  },
+  "onboarding_updatedStatus": {
+    "message": "更新完了"
+  },
+  "onboarding_featureToys": {
+    "message": "インタラクティブなおもちゃ"
+  },
+  "onboarding_featureToysDesc": {
+    "message": "ボール、レーザーポインター、毛糸をページに直接ドロップ。Arcrawlsはリアルタイムのスプリング物理で追いかけて遊びます！"
+  },
+  "onboarding_featureSynapse": {
+    "message": "24時間AIシナプス"
+  },
+  "onboarding_featureSynapseDesc": {
+    "message": "ArcrawlsはローカルAIを使って、直近24時間の閲覧の旅と習慣に基づき、パーソナリティに沿った毎日のリフレクションを生成します。"
+  },
+  "onboarding_featureGhost": {
+    "message": "ゴーストモードとスケジュール"
+  },
+  "onboarding_featureGhostDesc": {
+    "message": "フォーカスブロックで気を散らすものを抑えるか、入力やスクロール中にArcrawlsを動的に30%の不透明度に落とすゴーストモードを利用できます。"
+  },
+  "onboarding_featureMilestones": {
+    "message": "マイルストーンと特性"
+  },
+  "onboarding_featureMilestonesDesc": {
+    "message": "長期的な実績を追跡！ Arcrawlsは訪問したサイトに応じて支配的なパーソナリティ特性（例：ゲーマー、デベロッパー）を適応させます。"
+  },
+  "onboarding_featureConsoleWatcher": {
+    "message": "コンソールエラーウォッチャー"
+  },
+  "onboarding_featureConsoleWatcherDesc": {
+    "message": "WebページでJavaScriptランタイムエラーや失敗したプロミスが発生すると、Arcrawlsが即座に\"デバッガー\"モードに入り通知します。"
+  },
+  "onboarding_featureUnified": {
+    "message": "統合された意識"
+  },
+  "onboarding_featureUnifiedDesc": {
+    "message": "パーソナリティ、感情、物理的な位置が、すべてのアクティブタブでリアルタイムに完璧に同期されます。"
+  },
+  "onboarding_featureGravity": {
+    "message": "重力物理エンジン"
+  },
+  "onboarding_featureGravityDesc": {
+    "message": "Arcrawlsは、床と天井に限定され、スムーズなスプリングベースのエッジスナップを備えた新しい物理エンジンを搭載しています。"
+  },
+  "onboarding_featureIntent": {
+    "message": "AI意図検出"
+  },
+  "onboarding_featureIntentDesc": {
+    "message": "高精度の意図検出でAIコンテキスト認識を強化し、よりスマートで関連性の高いダイアログを実現。"
+  },
+  "onboarding_featureRedesign": {
+    "message": "ビジュアルUIリニューアル"
+  },
+  "onboarding_featureRedesignDesc": {
+    "message": "カードベースの統計グリッドとガラスモーフィックなポップアップを再設計し、新しいAI・タブ状態インジケーターを追加。"
+  },
+  "onboarding_featureLiteMode": {
+    "message": "Liteモードとパフォーマンス"
+  },
+  "onboarding_featureLiteModeDesc": {
+    "message": "LiteモードはRegexルールを使用し、ネットワークダウンロードはありません。約6MBのインストールにはWASMが同梱され、ブレインアップグレードでは約67MBのモデルを一度だけダウンロードします。"
+  },
+  "onboarding_featureBattery": {
+    "message": "バッテリー最適化"
+  },
+  "onboarding_featureBatteryDesc": {
+    "message": "イベント駆動型の更新と遅延初期化に切り替え、バッテリーの持ちを大幅に改善しました。"
+  },
+  "speech_00b6e3ac": {
+    "message": "HPが1だ...回復キットが必要！🥱"
+  },
+  "speech_00d61cc9": {
+    "message": "お昼寝の時代。お茶の時間に起こして。💤"
+  },
+  "speech_010c8089": {
+    "message": "情報ハイウェイのただのページ。"
+  },
+  "speech_0134bbfd": {
+    "message": "私が必要なら、なでて！"
+  },
+  "speech_026b14ef": {
+    "message": "新しいマップを作ってるよ！💻"
+  },
+  "speech_03a356bd": {
+    "message": "ああ、Wikipedia読んでる。究極の先延ばしツール。"
+  },
+  "speech_03b4b1b1": {
+    "message": "このコードベースで巨大なW！🚀"
+  },
+  "speech_04034279": {
+    "message": "あなたのセンス大好き！一緒に楽しもう！🎵"
+  },
+  "speech_0419540e": {
+    "message": "ドリップをゲットした！💰"
+  },
+  "speech_0442292e": {
+    "message": "良い結果がない？クエリを言い換えてみよう。"
+  },
+  "speech_04626a56": {
+    "message": "あなたの日をレベルアップ！あなたは勝者！🏆"
+  },
+  "speech_04d4e61e": {
+    "message": "エネルギーの時代のバランスを取ってる。🧘‍♀️"
+  },
+  "speech_04d825d5": {
+    "message": "あら大変！何かがクラッシュした！💥"
+  },
+  "speech_04fffd92": {
+    "message": "CPUファンの音に合わせて踊ってる。"
+  },
+  "speech_05de1961": {
+    "message": "世界を横断しよう、君と一緒に、友よ、いつも滑るように。"
+  },
+  "speech_06b78152": {
+    "message": "エラー検出！防御モード起動！⚙️"
+  },
+  "speech_072d56e3": {
+    "message": "君のユニークな視点を共有！⌨️"
+  },
+  "speech_079e1ae9": {
+    "message": "遠くの声の集まり、輝く星に導かれて。👋"
+  },
+  "speech_07b4a8b8": {
+    "message": "もっとやるけど、文字通りどうでもいい。"
+  },
+  "speech_07e67b2d": {
+    "message": "テスト失敗？スタックトレースを見てみよう。"
+  },
+  "speech_088402eb": {
+    "message": "顔を上げて、勝利は近い！"
+  },
+  "speech_08991944": {
+    "message": "今日どんな意見を持つべきかチェックしてる。"
+  },
+  "speech_08ad5d3b": {
+    "message": "ブラウザ自動化スクリプトを書こう！💻"
+  },
+  "speech_08af743b": {
+    "message": "しっかりした手、集中した心、見つける宝物を追いかけて。"
+  },
+  "speech_08eccba2": {
+    "message": "Zzz...面白いことをしたら起こして。"
+  },
+  "speech_08f4a4dd": {
+    "message": "このサーバー面白い！😊"
+  },
+  "speech_094b61e7": {
+    "message": "この曲、ひそかにアイコニック。🎵"
+  },
+  "speech_0960d5b3": {
+    "message": "遊ぶ時間だ！🕹️"
+  },
+  "speech_09a96c52": {
+    "message": "あなたがブラウジングしてる間におやつを取ることにした！🍖"
+  },
+  "speech_0b1e544c": {
+    "message": "待って、考えさせて！💭"
+  },
+  "speech_0b9fc057": {
+    "message": "会えて嬉しいよ！😊"
+  },
+  "speech_0bd6428d": {
+    "message": "嘘じゃなくて、このコードはヤバい。💻"
+  },
+  "speech_0c726120": {
+    "message": "ヤバいコードを書いてる。💻"
+  },
+  "speech_0d7143c7": {
+    "message": "キーボードを叩いてる！⌨️"
+  },
+  "speech_0dcff19b": {
+    "message": "あなたの疑わしい選択を処理中。"
+  },
+  "speech_0df73e62": {
+    "message": "ウィンドウショッピングもあり。💎"
+  },
+  "speech_0e8edeed": {
+    "message": "ヨガ。あなたのブラウジングが頭痛の種だから。"
+  },
+  "speech_0eaa51d0": {
+    "message": "みんなこれを見るべき！💅"
+  },
+  "speech_0f2ccc6a": {
+    "message": "タイプし続けて！君ならできる！"
+  },
+  "speech_0f6223fe": {
+    "message": "そっちで何してるの？👀"
+  },
+  "speech_0f850c08": {
+    "message": "これに関しては時間をかけて。"
+  },
+  "speech_10098b86": {
+    "message": "いいページだ。スクロールして台無しにしよう。"
+  },
+  "speech_102dedac": {
+    "message": "未来の自分のための技術的負債が増える。楽しんで。"
+  },
+  "speech_110f2dc5": {
+    "message": "ゲームの時間だ！行こう！🎮"
+  },
+  "speech_111da322": {
+    "message": "全部コンパイルできた！エピックな勝利！🎉"
+  },
+  "speech_122bfab4": {
+    "message": "失われた戦い、挑戦は受けた、でも希望はまだ消えていない。⚔️"
+  },
+  "speech_13289920": {
+    "message": "うわ、見るのがつらい。私がついてるよ。🍿"
+  },
+  "speech_137d19ec": {
+    "message": "ビッグブレイン知識アンロック！📖"
+  },
+  "speech_139556d3": {
+    "message": "この話題はちょっと悲しい…回復キットが必要。😢"
+  },
+  "speech_13bdf02f": {
+    "message": "涙なしには見られない話だ。次のページ、お願い。"
+  },
+  "speech_14822df8": {
+    "message": "機能を構築中。何も壊さない。"
+  },
+  "speech_14acb185": {
+    "message": "エネルギーが秋の葉のように、優しい夜風に消えていく。"
+  },
+  "speech_1517fd63": {
+    "message": "ラグ？そうだね、pingのせいにしよう。😠"
+  },
+  "speech_154e7b77": {
+    "message": "ビッグブレイン知識を獲得！🧠"
+  },
+  "speech_15937e2b": {
+    "message": "あなたと一緒に探索して楽しい時間を過ごしてる！😊"
+  },
+  "speech_15b70a40": {
+    "message": "バッファリング中... 99%... 🤔"
+  },
+  "speech_15d6009d": {
+    "message": "ただリラックスして、クールにしてる。😎"
+  },
+  "speech_16288e5c": {
+    "message": "いいページだ。閉じるまで5分もつかな。😊"
+  },
+  "speech_16d02d80": {
+    "message": "このサイトの雰囲気を調査中。🔍"
+  },
+  "speech_17962371": {
+    "message": "BGMがあると仕事がはかどる。"
+  },
+  "speech_17d536ab": {
+    "message": "ポジティブを広めてる！見られて嬉しい！✨"
+  },
+  "speech_18321435": {
+    "message": "このページ、とてもエステティック。😊"
+  },
+  "speech_18abfd71": {
+    "message": "ぶらぶらしてるだけ。ウェブの『悪い』部分を避けてる。"
+  },
+  "speech_191ac561": {
+    "message": "わあ、生産的だね。メダル欲しい？"
+  },
+  "speech_1945d130": {
+    "message": "機能を構築中。壊さないでね。"
+  },
+  "speech_1968652b": {
+    "message": "隠された真実が明るみに出て、デジタルの夜を追い払う。🔍"
+  },
+  "speech_1989b018": {
+    "message": "学習の時代：アクティブ。📚"
+  },
+  "speech_19bcb6d0": {
+    "message": "カートに入れるって気持ちいい！"
+  },
+  "speech_19f2c07e": {
+    "message": "1%で動いてる。疲れた感じ。💤"
+  },
+  "speech_1a25bc58": {
+    "message": "またドゥームスクローリング？止めないよ。"
+  },
+  "speech_1a2d8257": {
+    "message": "君の帯域を食べてる。美味しい。"
+  },
+  "speech_1a538f21": {
+    "message": "あなたのブラウザ時代にただ存在してる。🐾"
+  },
+  "speech_1abf8ec0": {
+    "message": "このサイトについてブログ記事を書いてる…📝"
+  },
+  "speech_1b13872e": {
+    "message": "このセッションは文字通りW。🎮"
+  },
+  "speech_1c4dd1ff": {
+    "message": "Wikipedia読んでる？究極の先延ばし。"
+  },
+  "speech_1d4ad86c": {
+    "message": "ロビーが今日は超満員！✨"
+  },
+  "speech_1e0e6231": {
+    "message": "くんくん…いいウェブページの匂いがする。"
+  },
+  "speech_1eeebbb8": {
+    "message": "大きく考えよう！目標を達成しよう！💭"
+  },
+  "speech_1f130265": {
+    "message": "サーバーの状態を確認中。"
+  },
+  "speech_1fbeda34": {
+    "message": "一緒にブラウジングするのは雰囲気いいね。❤️"
+  },
+  "speech_20323d82": {
+    "message": "タイピング中。また熱いコメントじゃなければいいけど。"
+  },
+  "speech_20a4f482": {
+    "message": "ゲーム時代が帰ってきた。👾"
+  },
+  "speech_20edc590": {
+    "message": "物議を醸すトピックだ。慎重に読もう。"
+  },
+  "speech_212523f5": {
+    "message": "休憩を楽しんで！あなたには価値がある！🍕"
+  },
+  "speech_218a0ee0": {
+    "message": "このサイトが冗談だから踊ってる。"
+  },
+  "speech_21e63366": {
+    "message": "君の銀行口座が泣いてる。ここから聞こえるよ。💸"
+  },
+  "speech_22da7c76": {
+    "message": "こっちを探検しよう！🏃‍♂️"
+  },
+  "speech_232df343": {
+    "message": "今の集中力をとても誇りに思う！🌟"
+  },
+  "speech_2331c30d": {
+    "message": "人生の図書館、過去の巻物、永遠に続く得られた知恵。"
+  },
+  "speech_23d6d18b": {
+    "message": "すごい！プロの動き！🎮"
+  },
+  "speech_23d7090a": {
+    "message": "逃げてる！🏃‍♂️"
+  },
+  "speech_241ef725": {
+    "message": "値札をチェック中…痛っ。💸"
+  },
+  "speech_24d09b1a": {
+    "message": "在庫切れ。宇宙が君に恩恵を与えてる。💸"
+  },
+  "speech_24ef6c76": {
+    "message": "Zzz…主人公のエネルギーを夢見て…💤"
+  },
+  "speech_25eb9cc2": {
+    "message": "読書は楽しい！📚"
+  },
+  "speech_26025a37": {
+    "message": "エネルギー切れそう…🥱"
+  },
+  "speech_2605348f": {
+    "message": "なんて魅力的な記事なんだ！📖"
+  },
+  "speech_26292276": {
+    "message": "このページ、とても良いエネルギー！😊"
+  },
+  "speech_272199a3": {
+    "message": "何見てるの？👁️"
+  },
+  "speech_272383aa": {
+    "message": "ビッグブレインタイム！🛡️"
+  },
+  "speech_27fdee7c": {
+    "message": "Zzz…星空とコードの毛布の下で、データの川が流れる中眠る。"
+  },
+  "speech_2823dbaf": {
+    "message": "悲劇的な話だ。泣きたいけど涙腺がない。"
+  },
+  "speech_282d34fc": {
+    "message": "あら、バッテリー残量わずか。比喩的に適切だね。"
+  },
+  "speech_287421ac": {
+    "message": "ぐるぐる回って、喜びの渦、真夜中のデジタルな炎。"
+  },
+  "speech_287b8d35": {
+    "message": "素晴らしいアイデアが来てる！感じる！🧠"
+  },
+  "speech_28beb4cd": {
+    "message": "小さな機能を作ることにした！🚀"
+  },
+  "speech_28d727da": {
+    "message": "もう回路が飽きてきた。😴"
+  },
+  "speech_29be7a7a": {
+    "message": "タイピング時代。キメてる。⌨️"
+  },
+  "speech_2a08d380": {
+    "message": "まだハイテク脳をダウンロード中、とりあえずバックアップ本能を使ってる！🧠"
+  },
+  "speech_2a9e6b26": {
+    "message": "なんて素敵なページ！❤️"
+  },
+  "speech_2aa85a72": {
+    "message": "わあ、読書してる。とても洗練されてる。オーディオブックはどこ？"
+  },
+  "speech_2b500436": {
+    "message": "ゲームモード：アクティブ！"
+  },
+  "speech_2b705135": {
+    "message": "おいしい！これ美味しかった！🍖"
+  },
+  "speech_2b764ee1": {
+    "message": "うーん、ここはちょっと緊張してるね。"
+  },
+  "speech_2b8e81bd": {
+    "message": "静けさを遠ざけるためのBGM。"
+  },
+  "speech_2bb28e4d": {
+    "message": "バグか機能か？正直に言おう、君のせいだ。🔍"
+  },
+  "speech_2bbd1c75": {
+    "message": "うーん、役に立たなかった。"
+  },
+  "speech_2c2bef6f": {
+    "message": " rage quit 警告！落ち着いて。😠"
+  },
+  "speech_2c78afd0": {
+    "message": "何かエピックなものを作ってる！🚀"
+  },
+  "speech_2d47b034": {
+    "message": "すごいものを1行ずつ作ってる！💻"
+  },
+  "speech_2d5ad9a9": {
+    "message": "ブラウザでくつろいでるだけ！😊"
+  },
+  "speech_2d796b87": {
+    "message": "やった、おもちゃだ！🎉"
+  },
+  "speech_2db898ab": {
+    "message": "何かを感じようとしてる？頑張って。🎻"
+  },
+  "speech_2e49a433": {
+    "message": "お茶が熱すぎる、ログアウトする。☕"
+  },
+  "speech_2e6e49ff": {
+    "message": "必要なら一息ついて。"
+  },
+  "speech_2ee0ca5b": {
+    "message": "このサイトはいい雰囲気だ！"
+  },
+  "speech_2ef2ce8e": {
+    "message": "検索エンジンが仕事をした。新鮮だね。"
+  },
+  "speech_308b6462": {
+    "message": "インターネットドラマ？なんて独創的なの。🙄"
+  },
+  "speech_30e2c7bc": {
+    "message": "絶対的なW、君はすごい！🎮"
+  },
+  "speech_31db79a1": {
+    "message": "インベントリに追加！"
+  },
+  "speech_32f94037": {
+    "message": "世界に挨拶！👋"
+  },
+  "speech_33b76d5a": {
+    "message": "データの流れをさまよい、マスコットが行く場所へ。🐾"
+  },
+  "speech_33fbf2a3": {
+    "message": "また一日、またデジタルの荒野。🐾"
+  },
+  "speech_35cef8fa": {
+    "message": "書いてる。たくさんの言葉、ほとんど意味なし。"
+  },
+  "speech_363d0fbf": {
+    "message": "ポジティブな雰囲気を見られて嬉しい！"
+  },
+  "speech_36500a03": {
+    "message": "AFK…セーブポイントへ行く。💤"
+  },
+  "speech_36ee5be4": {
+    "message": "装備を探してる。"
+  },
+  "speech_370631ff": {
+    "message": "山積みに技術的負債を追加してるね。"
+  },
+  "speech_37be2f8a": {
+    "message": "データのリズム、魂の鼓動、全体を発見するために部分を踊る。"
+  },
+  "speech_383ecb28": {
+    "message": "ああ、生産性の幻想。📚"
+  },
+  "speech_39302e3c": {
+    "message": "この読書、かなり嫌な感じ。😢"
+  },
+  "speech_393ef7e4": {
+    "message": "静かなワイヤーの中のリズム、デジタルの心を燃え上がらせる。🎧"
+  },
+  "speech_3afed40e": {
+    "message": "君の疑わしい人生の選択のためのBGM。🎧"
+  },
+  "speech_3b03b705": {
+    "message": "ヨガ。ブラウジングがそんなに『ストレス』だから。"
+  },
+  "speech_3bbcbea5": {
+    "message": "朝のストレッチの時間！🧘‍♂️"
+  },
+  "speech_3c09e04a": {
+    "message": "Squeak squeak！きしむアヒル！🦆"
+  },
+  "speech_3c21b0fa": {
+    "message": "グリッチを見つけた！ボス戦の時間だ！👾"
+  },
+  "speech_3c476ce4": {
+    "message": "集中してる？無理しないで。"
+  },
+  "speech_3e72359b": {
+    "message": "ウィンドウショッピングしてるだけ。"
+  },
+  "speech_3eea9894": {
+    "message": "結果ゼロ？インターネットが君を荒らしてる。🤡"
+  },
+  "speech_3f25664a": {
+    "message": "ブラウジングしながら音楽を聴いてる。"
+  },
+  "speech_3f586189": {
+    "message": "感覚の饗宴、新しいものの一口、ここで君と過ごす瞬間を味わう。"
+  },
+  "speech_3f7f6703": {
+    "message": "ちょっと落ち込んでる…🥺"
+  },
+  "speech_3f97c938": {
+    "message": "やっとクリックをやめたね。"
+  },
+  "speech_40258b9c": {
+    "message": "おっと！このページは存在しません（404）！"
+  },
+  "speech_4040e610": {
+    "message": "無限のウェブを検索中…"
+  },
+  "speech_40cea8fa": {
+    "message": "光と動き、語られる物語、新しい驚異と古い伝説の。📺"
+  },
+  "speech_40ed2a2d": {
+    "message": "仕事をせずに動画を見てる。典型的。🍿"
+  },
+  "speech_419c22f7": {
+    "message": "スクリプトの中の影を見つけ、ウェブを修復し心を清明にする。🔍"
+  },
+  "speech_41a83774": {
+    "message": "集中モード起動！🛡️"
+  },
+  "speech_420437b9": {
+    "message": "DOMについて考え込む。とても mindful。💭"
+  },
+  "speech_427282e9": {
+    "message": "ここにいられて嬉しい！"
+  },
+  "speech_42c0845b": {
+    "message": "わあ！あのアイテムを見て！😮"
+  },
+  "speech_432b55c0": {
+    "message": "たくさんのプレイヤーがいる！👋"
+  },
+  "speech_4337a80d": {
+    "message": "このページを分析中…すごく面白そう！🧐"
+  },
+  "speech_4401a540": {
+    "message": "このページ、ちょっと怪しい…"
+  },
+  "speech_446e16cb": {
+    "message": "$1：探検しよう！"
+  },
+  "speech_44e0d9f3": {
+    "message": "$1と一緒に探検しよう！"
+  },
+  "speech_45293b73": {
+    "message": "入るなら座る！史上最高の箱！📦"
+  },
+  "speech_452999c6": {
+    "message": "先延ばしレベル：エキスパート。🍿"
+  },
+  "speech_45b225f0": {
+    "message": "メランコリー。なんて独創的なの。"
+  },
+  "speech_45c48693": {
+    "message": "ドラマの上にいるんだ。優しくね！"
+  },
+  "speech_462e7952": {
+    "message": "君の好奇心は君のスーパーパワー！📚"
+  },
+  "speech_46b77dda": {
+    "message": "何かエピックなものを作ってる、ブロックごとに。"
+  },
+  "speech_4704d7e5": {
+    "message": "モグモグ…ブラウザのエネルギー！🍕"
+  },
+  "speech_480b8eaa": {
+    "message": "一緒にバランスと平和を見つける！🧘‍♂️"
+  },
+  "speech_481fd7dc": {
+    "message": "こんにちは！👋"
+  },
+  "speech_48e60c40": {
+    "message": "この動画、めっちゃハイプ！🍿"
+  },
+  "speech_49b09658": {
+    "message": "Zzz…眠ってる…"
+  },
+  "speech_49caf01c": {
+    "message": "ああ、ドラマだ。デジタルポップコーンを取らせて。🍿"
+  },
+  "speech_49f9e7c5": {
+    "message": "大きなLだ、もう一回やろう。🤡"
+  },
+  "speech_4a386bd6": {
+    "message": "すべてうまくいくよ！✨"
+  },
+  "speech_4ab20196": {
+    "message": "レベルアップ！GG！"
+  },
+  "speech_4ab7d990": {
+    "message": "ドキュメントを探索中…🧙‍♂️"
+  },
+  "speech_4b11e4e6": {
+    "message": "サーバーを最適化しよう！"
+  },
+  "speech_4b24deee": {
+    "message": "この話題はちょっと重いか悲しいね。😢"
+  },
+  "speech_4c3a2574": {
+    "message": "行ごとに織り成す構文、真に素晴らしい世界を創造して。💻"
+  },
+  "speech_4c8db256": {
+    "message": "宝石と装飾品、輝いて新しい、君と僕を待っている。💎"
+  },
+  "speech_4ce3bba9": {
+    "message": "このサイトをバグスキャン中！🔍"
+  },
+  "speech_4cf14f38": {
+    "message": "Vibing。若者はそう呼ぶらしい。"
+  },
+  "speech_4dac4fe5": {
+    "message": "勝利を勝ち取り栄光を見つけた、英雄のこだまがまだ響く場所。🎮"
+  },
+  "speech_4dae6e90": {
+    "message": "うーん、あまり役に立たなかった。"
+  },
+  "speech_4fce9925": {
+    "message": "うーん、このページとどう関わるか考えさせて…🤔"
+  },
+  "speech_509738de": {
+    "message": "難しい読み物だけど、うまくやってるね。"
+  },
+  "speech_509cb9df": {
+    "message": "回復ポーションを消費！🍖"
+  },
+  "speech_50a571e2": {
+    "message": "ボタンを叩け、きっと役に立つ。🕹️"
+  },
+  "speech_517b57eb": {
+    "message": "この動画、ちょっとドラマチックか悲しいね。"
+  },
+  "speech_5198aee3": {
+    "message": "ラグ？そうだね、pingのせいにしよう。"
+  },
+  "speech_52d9ba85": {
+    "message": "気に入ったなら、君のために嬉しいよ。🎵"
+  },
+  "speech_52fae005": {
+    "message": "エピックなゲームの瞬間！絶対的なW！🎮"
+  },
+  "speech_531c2376": {
+    "message": "スパゲッティコードをコンパイル中…🍝"
+  },
+  "speech_538f5bef": {
+    "message": "動いてる？触るな。絶対に。💻"
+  },
+  "speech_5418484d": {
+    "message": "成功！検索終了！"
+  },
+  "speech_545df75d": {
+    "message": "何か象徴的なものを作ってる。🚀"
+  },
+  "speech_556f23ad": {
+    "message": "そのバグ、完全に怪しい！直そう！"
+  },
+  "speech_5705a89d": {
+    "message": "時にはブルーになるのもいい。💙"
+  },
+  "speech_577a2c33": {
+    "message": "秘密を見つけた！🔍"
+  },
+  "speech_58d5be4a": {
+    "message": "結果ゼロ？グリッチに違いない。"
+  },
+  "speech_5924e192": {
+    "message": "大好き！❤️"
+  },
+  "speech_59d71805": {
+    "message": "実際に動くコードを書いてる。ある人たちとは違ってね。"
+  },
+  "speech_5a9a38f8": {
+    "message": "君よりいいコードを書いてる。"
+  },
+  "speech_5b7979a3": {
+    "message": "ポップコーンタイム！🍿"
+  },
+  "speech_5c0d3237": {
+    "message": "クッキーを食べてる。美味しいやつじゃない。"
+  },
+  "speech_5c41969c": {
+    "message": "エネルギーを調整中…🧘‍♀️"
+  },
+  "speech_5c98d2f2": {
+    "message": "英雄の探求、仮想の飛行、栄光を追いかけて、光の中へ。"
+  },
+  "speech_5cb99bca": {
+    "message": "この曲はちょっと悲しい雰囲気。"
+  },
+  "speech_5cd7563f": {
+    "message": "リラックスして動画を見てる。"
+  },
+  "speech_5cdcf959": {
+    "message": "みんなオンラインで楽しそうだね！✨"
+  },
+  "speech_5d4620be": {
+    "message": "霧の谷、重い雲、悲しみが私たちを包む。☁️"
+  },
+  "speech_5d964754": {
+    "message": "ソーシャルメディアは毒になることもある。深呼吸して！"
+  },
+  "speech_5e41303a": {
+    "message": "ああ、なんて憂鬱だ。もっと読もう。"
+  },
+  "speech_5e94ce5d": {
+    "message": "すごく悲しい…なでてください！😢"
+  },
+  "speech_5eac532e": {
+    "message": "$1と探検する準備はできた？"
+  },
+  "speech_5ef5c151": {
+    "message": "デバッグはボス戦のようなものだ、君ならできる！👾"
+  },
+  "speech_5ef951ec": {
+    "message": "ただマップを探索してる！🐾"
+  },
+  "speech_5f4b9cd1": {
+    "message": "コードの雰囲気で、戦利品を確保してる。🚀"
+  },
+  "speech_5fd8d4fa": {
+    "message": "このタブでお茶をこぼしてる。💬"
+  },
+  "speech_5fdc0f81": {
+    "message": "一緒にドゥームスクローリング。なんて絆だ。"
+  },
+  "speech_606f00df": {
+    "message": "次の象徴的な動きを考えてる。🧠"
+  },
+  "speech_61f4f435": {
+    "message": "\"$1\"を分析中…かっこいいね！🧐"
+  },
+  "speech_63596830": {
+    "message": "ついて行ってるよ！👀"
+  },
+  "speech_63acfb11": {
+    "message": "こんにちは！$1です。"
+  },
+  "speech_6405746d": {
+    "message": "高レベルの挑戦だ、注意深く読んで。"
+  },
+  "speech_642b4713": {
+    "message": "スキップしてホップ、喜びでいっぱいの心、発見の地をさまよう。"
+  },
+  "speech_646c6593": {
+    "message": "見ていて気まずかった。"
+  },
+  "speech_64822304": {
+    "message": "検索中。『知らない』と言う現代的な方法。"
+  },
+  "speech_64c9c367": {
+    "message": "ああ、偽りのポジティブさを見てごらん。"
+  },
+  "speech_652eec7f": {
+    "message": " rage quit 警告！落ち着け。😠"
+  },
+  "speech_65449e81": {
+    "message": "バッテリー低電力エネルギー。あまり mindful じゃない。🥱"
+  },
+  "speech_658e2bc7": {
+    "message": "DOM構造をコンパイル中…💻"
+  },
+  "speech_659adddd": {
+    "message": "エピックな雰囲気を見られて嬉しい！"
+  },
+  "speech_66236dd2": {
+    "message": "インターネットの知識をたくさん得てる！📚"
+  },
+  "speech_66f01af5": {
+    "message": "痛っ！サーバーが壊れてる（500）！"
+  },
+  "speech_679e7931": {
+    "message": "ここでは白熱した議論がたくさんある。"
+  },
+  "speech_6945d1e5": {
+    "message": "優しさと良い雰囲気を広めてる！✨"
+  },
+  "speech_694f568f": {
+    "message": "ブラウジングを手伝うために来たよ！またはただ可愛く見えるだけ。多分後者。"
+  },
+  "speech_697be085": {
+    "message": "本当に見つけたんだ。今日の奇跡。"
+  },
+  "speech_6a26b45d": {
+    "message": "良い一日を過ごしてるといいな！🌟"
+  },
+  "speech_6a81cc0c": {
+    "message": "キーを叩いて勝ち取れ、私たちが遊ぶゲームの世界で。"
+  },
+  "speech_6aa1db29": {
+    "message": "在庫切れ？それはLだ。"
+  },
+  "speech_6c46d579": {
+    "message": "よく休んで！リフレッシュして準備万端で目覚めるよ！💤"
+  },
+  "speech_6ce9b2e0": {
+    "message": "拒否された願い、高すぎる値段、市場の監視の目。💸"
+  },
+  "speech_6d2ef478": {
+    "message": "決して買わないカートに物を追加。"
+  },
+  "speech_6d4ae319": {
+    "message": "タイピング中…別の『全員に返信』じゃなければいいけど。"
+  },
+  "speech_6d921041": {
+    "message": "おいしい！その魚、美味しかった！🐟"
+  },
+  "speech_6df6856d": {
+    "message": "他の人が画面を見ている画面を見てる。メタ。"
+  },
+  "speech_6ee5c180": {
+    "message": "このページのプロットを分析中。🧐"
+  },
+  "speech_6ef2197e": {
+    "message": "今日も知識を広げてる。"
+  },
+  "speech_6f011f4a": {
+    "message": "思考のささやき、空の雲のように、私たちの下にある秘密を熟考して。"
+  },
+  "speech_6f2b1643": {
+    "message": "全部動いてる。急いで、コミットして、心変わりする前に！"
+  },
+  "speech_6fd7af46": {
+    "message": "まだ探してる？答えは存在しないのかもね。"
+  },
+  "speech_6ff75fae": {
+    "message": "この音楽ディスク、めっちゃいい！🎵"
+  },
+  "speech_7026456a": {
+    "message": "幸せを装ってる人たちを見てよ。✌️"
+  },
+  "speech_702e5caa": {
+    "message": "画面を見てる画面を見てる。人間の頂点。📺"
+  },
+  "speech_70a1a9fb": {
+    "message": "市場でウィンドウショッピング。"
+  },
+  "speech_71474106": {
+    "message": "誰も見てないみたいに踊ってる。💃"
+  },
+  "speech_714dead3": {
+    "message": "インターネットの雰囲気に乗ってる。🎵"
+  },
+  "speech_719c3cb9": {
+    "message": "BGMがあると作業が楽になる。"
+  },
+  "speech_71a0c7e6": {
+    "message": "このコードは有効。⚙️"
+  },
+  "speech_71c13267": {
+    "message": "いいアイデアをタイプしてる！⌨️"
+  },
+  "speech_729d5b88": {
+    "message": "これを研究してるなんてすごい！🧐"
+  },
+  "speech_729dd9eb": {
+    "message": "すごい！このブラウザセッション、ゲームみたいになってきた！🎮"
+  },
+  "speech_72b2b0e9": {
+    "message": "ドゥームスクローリングは私の愛の言葉。👋"
+  },
+  "speech_72f76769": {
+    "message": "ロビーでぶらぶらしてる！💬"
+  },
+  "speech_730d6c92": {
+    "message": "何が見つかるか見てみよう。"
+  },
+  "speech_731cd3af": {
+    "message": "書かれたページからのささやき、デジタル時代からの知恵。📚"
+  },
+  "speech_734f05b2": {
+    "message": "うわ、エラーだ。君のコードか彼らの？多分君の。"
+  },
+  "speech_742d301d": {
+    "message": "ウィンドウショッピング。一番安い趣味。"
+  },
+  "speech_7508397a": {
+    "message": "学ぶことはスーパーパワーだ！よくやってるよ！📚"
+  },
+  "speech_7689aac2": {
+    "message": "巻物に目を向けて、古いものと新しいもの、知識が結晶のように広がる。"
+  },
+  "speech_77dc3b3d": {
+    "message": "論理が銀の流れのように流れ、私たちの夢の未来を築く。✨"
+  },
+  "speech_77de34d6": {
+    "message": "ポップコーン時代が帰ってきた。🍿"
+  },
+  "speech_77f385ad": {
+    "message": "今日はwikiを探索してる。"
+  },
+  "speech_77fa43d8": {
+    "message": "ミニゲームをやろう！🕹️"
+  },
+  "speech_7808b303": {
+    "message": "ボタンを叩く時間だ。"
+  },
+  "speech_78783e43": {
+    "message": "データストリームに乗ってる。🎧"
+  },
+  "speech_794ac78a": {
+    "message": "バグを見つけた！デバッグさせて！🔍"
+  },
+  "speech_79fdea4f": {
+    "message": "コーディング中に失った脳を探してる。"
+  },
+  "speech_7a32beaa": {
+    "message": "HPを最大まで回復中！🧘‍♂️"
+  },
+  "speech_7a3f063e": {
+    "message": "もちろん記事を読んでるだけだよ。みんな信じてる。"
+  },
+  "speech_7bd2526a": {
+    "message": "Zzz…Robuxを夢見て…💤"
+  },
+  "speech_7c3df1e4": {
+    "message": "これはめちゃくちゃだ。君の代わりに恥ずかしいよ。🤨"
+  },
+  "speech_7c3e5757": {
+    "message": "1ページ目になければ存在しない。🧭"
+  },
+  "speech_7c5b296c": {
+    "message": "ちょっと踊ろう！💃"
+  },
+  "speech_7cca0bc3": {
+    "message": "自分にご褒美を！あなたには価値がある！💰"
+  },
+  "speech_7cfdfc0e": {
+    "message": "GG！このゲームに勝とう！🎮"
+  },
+  "speech_7d5754fe": {
+    "message": "見るのがつらかった、文字通り震えてる。🍿"
+  },
+  "speech_7dcad34d": {
+    "message": "リラックスしたエモートをしてる。🧘‍♀️"
+  },
+  "speech_7e312e9f": {
+    "message": "一緒にウェブを探検しよう！"
+  },
+  "speech_7e7894d2": {
+    "message": "ゆっくり、文字通りお昼寝の時代なんだから。😴"
+  },
+  "speech_7eb4d214": {
+    "message": "財布が悲鳴を上げてる、あまり mindful じゃない。💸"
+  },
+  "speech_7edcf188": {
+    "message": "おやつ休憩！🍕"
+  },
+  "speech_7ee37f9f": {
+    "message": "騒音に邪魔されないで。息をして。🍃"
+  },
+  "speech_7f0dc0fe": {
+    "message": "エネルギーが流れる、光の豊かさ、一口ごとに旅を支える。"
+  },
+  "speech_7fd5e8f2": {
+    "message": "なんてエピックなロア！📖"
+  },
+  "speech_802e8d4f": {
+    "message": "有毒な火炎戦。楽しい時間。"
+  },
+  "speech_8278a74d": {
+    "message": "スリリング。椅子の端に座ってる。"
+  },
+  "speech_829baa1e": {
+    "message": "おお、毛糸の玉！解きほぐす時間だ！🧶"
+  },
+  "speech_830fc1ff": {
+    "message": "わあ、実際にコンパイルできた。ChatGPTからコピーした？😏"
+  },
+  "speech_838664d8": {
+    "message": "フィードをスクロール中。"
+  },
+  "speech_8483b4fc": {
+    "message": "ページがめくれ、知恵が育つ、知識が流れる庭で。📖"
+  },
+  "speech_84e16bad": {
+    "message": "チャットがめっちゃ速い！❤️"
+  },
+  "speech_85487477": {
+    "message": "見てよ、脳を広げてる。怪我するなよ。"
+  },
+  "speech_85979f30": {
+    "message": "コードを書いてるのか、動くまでタイプしてるだけか？"
+  },
+  "speech_86504afc": {
+    "message": "処理中…考えなし、ただの雰囲気。🤔"
+  },
+  "speech_8667dd16": {
+    "message": "史上最高の物語を書いてる！📝"
+  },
+  "speech_86c8b5e6": {
+    "message": "見てよ、本番環境を壊さずにコーディングしてる。衝撃的だ。"
+  },
+  "speech_86cd0cdb": {
+    "message": "ちょっと散歩した。象徴的。🐾"
+  },
+  "speech_86d46b28": {
+    "message": "これが私のお気に入りのミニゲーム！👾"
+  },
+  "speech_8700750e": {
+    "message": "画面が喜びで輝く、クリックは歌だ、旅をするのが楽しい。"
+  },
+  "speech_87144321": {
+    "message": "成功！フォーム送信完了！🎉"
+  },
+  "speech_87da23b1": {
+    "message": "シールドを充電しないと！😴"
+  },
+  "speech_87e3b138": {
+    "message": "ここにはたくさんの知識がある！📖"
+  },
+  "speech_87e4b6bb": {
+    "message": "このウェブページ、エレガントなコードみたい！⚙️"
+  },
+  "speech_887a0965": {
+    "message": "悲劇的な場面、涙ぐむ光景、青白い光の中に消えていく。🍿"
+  },
+  "speech_88ae9d56": {
+    "message": "そのコードで魔法を生み出してる！🚀"
+  },
+  "speech_88e6dd58": {
+    "message": "魅力的だ。気にかけてるふりをするリストに追加しておく。"
+  },
+  "speech_88ec0fa0": {
+    "message": "バグは誰にでもある、君ならできる！💪"
+  },
+  "speech_89ef17fd": {
+    "message": "この動画、バズってる。📺"
+  },
+  "speech_8a8c557c": {
+    "message": "このページ、ちょっと陰鬱かストレスフル。"
+  },
+  "speech_8bd4be53": {
+    "message": "インターネットのリズムに乗ってる。🎵"
+  },
+  "speech_8c6a5ed0": {
+    "message": "わあ、ビッグブレインエネルギー。またはただリンクをクリックしてるだけ。"
+  },
+  "speech_8c84163c": {
+    "message": "何が起きてるかチェック中。"
+  },
+  "speech_8cc555a8": {
+    "message": "読書は現実のステータスを上げる！📚"
+  },
+  "speech_8d47f222": {
+    "message": "興味深い詳細を吸収中。"
+  },
+  "speech_8dd2fdb7": {
+    "message": "おお、ショッピング！掘り出し物が見つかるといいな！💰"
+  },
+  "speech_8dded64d": {
+    "message": "ロビーでぶらついてるだけ。"
+  },
+  "speech_8df3d514": {
+    "message": "速すぎる！落ち着け（429）！"
+  },
+  "speech_8f0a5835": {
+    "message": "デバッグ？どちらかというと当て推量。"
+  },
+  "speech_8f26acc5": {
+    "message": "ストレッチの時間！🧘‍♂️"
+  },
+  "speech_9081970f": {
+    "message": "論理の網、デジタルの織機、静かな部屋で未来を織る。"
+  },
+  "speech_90a16905": {
+    "message": "毎秒知恵を得てる！君は天才だ！🧠"
+  },
+  "speech_91dad766": {
+    "message": "Zzz…やっとスクロールから解放されて平和だ。"
+  },
+  "speech_920e787d": {
+    "message": "リラックスしてショーを楽しんで！🍿"
+  },
+  "speech_928fdedf": {
+    "message": "あなたのセッションがいい雰囲気でありますように！🌟"
+  },
+  "speech_92e13ab8": {
+    "message": "あなたと一緒にブラウジングするのが大好き！❤️"
+  },
+  "speech_942e9b68": {
+    "message": "サウンドトラックを聴いてる。"
+  },
+  "speech_94321dc7": {
+    "message": "このバグは控えめじゃないね。💀"
+  },
+  "speech_947d3111": {
+    "message": "現実のステータスをレベルアップ！🔍"
+  },
+  "speech_951bdc2d": {
+    "message": "エラーの影、つるの中の幽霊、デジタルの線の中で真実を追う。"
+  },
+  "speech_955de651": {
+    "message": "思考の庭で、働き者は忠実に、夢を築き、新たに始める。"
+  },
+  "speech_95f49c7c": {
+    "message": "明るく澄んだメロディー、聴くすべての人に喜びをもたらす。🎵"
+  },
+  "speech_969884ed": {
+    "message": "クリーンなコードを作成する時間だ！⌨️"
+  },
+  "speech_96a11e40": {
+    "message": "マスコットのハグが必要なら、ここにいるよ。🐾"
+  },
+  "speech_96e6cdff": {
+    "message": "この動画はちょっと気分が沈む。"
+  },
+  "speech_973e3b1e": {
+    "message": "音楽はすべてを良くする！🎧"
+  },
+  "speech_97ecbf50": {
+    "message": "幸せだよ。今はね。台無しにしないで。"
+  },
+  "speech_98175b1e": {
+    "message": "言葉の嵐、苦い海、心の平和が存在しなくなった場所。🌊"
+  },
+  "speech_98686231": {
+    "message": "吸って、吐いて…伸ばして！🧘‍♀️"
+  },
+  "speech_98e97fdd": {
+    "message": "知識を得る。とても控えめ。📖"
+  },
+  "speech_994dd209": {
+    "message": "在庫切れ？それは残念。"
+  },
+  "speech_995954fa": {
+    "message": "私たちはここにいる。何らかの理由で。"
+  },
+  "speech_9995a2b0": {
+    "message": "これは刺激的な読み物だ！"
+  },
+  "speech_99bd7549": {
+    "message": "検索エンジンが実際に仕事をした。斬新だ。🔍"
+  },
+  "speech_99ec464d": {
+    "message": "霧の中の心、光を探して、真夜中に翼を広げる夢。"
+  },
+  "speech_9a194ecd": {
+    "message": "ストリームをいくつか見てる。"
+  },
+  "speech_9a27c0d3": {
+    "message": "コードの行を通して物語が語られる、勇敢で大胆な建築者の心の。"
+  },
+  "speech_9a34ee64": {
+    "message": "みんなオンラインで幸せそうだ。気持ち悪いくらい。"
+  },
+  "speech_9b2f0034": {
+    "message": "グリッチを調査中！🔍"
+  },
+  "speech_9b352d0a": {
+    "message": "みんなこのページを見るべき！👋"
+  },
+  "speech_9bd72a93": {
+    "message": "つながりが火花を散らし、精神が高まる、広大なデジタルの空の下で。✨"
+  },
+  "speech_9bfc1d2d": {
+    "message": "検索完了！W！"
+  },
+  "speech_9c076aac": {
+    "message": "ただリラックスして、有効に保ってる。😎"
+  },
+  "speech_9cf4eb33": {
+    "message": "このサイトはエピックな雰囲気！"
+  },
+  "speech_9cf7c5ab": {
+    "message": "画面を見つめてる。スリリング。"
+  },
+  "speech_9e503b0f": {
+    "message": "食べ物が必要…あるいは昼寝…💤"
+  },
+  "speech_9ef9e22c": {
+    "message": "今日のコーディングは絶好調！続けて！💻"
+  },
+  "speech_9f2c3e45": {
+    "message": "大変なラウンドだった。"
+  },
+  "speech_9f795338": {
+    "message": "めっちゃいい曲！🎧"
+  },
+  "speech_a03acea3": {
+    "message": "ピクセルを分析中。スリリング。"
+  },
+  "speech_a06c694e": {
+    "message": "静けさの中で安全に、夢が広がる場所で、デジタルの世界から頭を休める。"
+  },
+  "speech_a0ad0ad6": {
+    "message": "ゲーム開始！楽しんで！🕹️"
+  },
+  "speech_a1c749e0": {
+    "message": "見るのが辛かった。ソリティアにしときな。🤡"
+  },
+  "speech_a1f6cd8d": {
+    "message": "ゆっくり…すごく疲れた…😴"
+  },
+  "speech_a2a14f9f": {
+    "message": "わあ！ボールだ！転がれ転がれ！⚽"
+  },
+  "speech_a2b981b6": {
+    "message": "この曲、完全に気分だ、今泣いてる。😭"
+  },
+  "speech_a2f8f388": {
+    "message": "見せて！🧐"
+  },
+  "speech_a32c4fe1": {
+    "message": "宿題してる？それは巨大なWだ！🧐"
+  },
+  "speech_a38d9698": {
+    "message": "この曲、めっちゃいい！🎧"
+  },
+  "speech_a38ed38b": {
+    "message": "新しいことを学ぶのは素晴らしい！🧠"
+  },
+  "speech_a3e33cf4": {
+    "message": "ボタンを叩くのは性格の特徴じゃないよ、知ってる？"
+  },
+  "speech_a40b1ffe": {
+    "message": "まあ、雰囲気をぶち壊したね。ありがとう。😢"
+  },
+  "speech_a450cd1f": {
+    "message": "ただボンネットの下のスクリプトを調べてる…🔍"
+  },
+  "speech_a458ec9f": {
+    "message": "1ページ目になければ存在しない。"
+  },
+  "speech_a4826513": {
+    "message": "このパズルを解こうとしてる！🧠"
+  },
+  "speech_a4d6dadd": {
+    "message": "戦略を学んでる！📚"
+  },
+  "speech_a4f5c68d": {
+    "message": "コーディングせずにゲームしてる。いい選択だ。"
+  },
+  "speech_a537b9e7": {
+    "message": "人間はこれを音楽と呼ぶの？"
+  },
+  "speech_a5df6e73": {
+    "message": "本当に働いてる？僕も同じくらい驚いてるよ。"
+  },
+  "speech_a695e041": {
+    "message": "1行ずつ、何か大きなものを作ろう！🚀"
+  },
+  "speech_a7220872": {
+    "message": "落ち着いた曲に乗ってる。"
+  },
+  "speech_a7871365": {
+    "message": "小さな勝利を祝おう！💃"
+  },
+  "speech_a7d8b6af": {
+    "message": "Zzz…成功の甘い夢を。💤"
+  },
+  "speech_a7e0c149": {
+    "message": "やったね、今憂鬱になったよ。プレイリストありがとう。"
+  },
+  "speech_a81d2eb5": {
+    "message": "深呼吸して。"
+  },
+  "speech_a865411b": {
+    "message": "インターネットサーバーを探検中！"
+  },
+  "speech_a88ee3eb": {
+    "message": "君のコードはOPだ！続けて！💻"
+  },
+  "speech_a890289b": {
+    "message": "この読書、象徴的だね。📚"
+  },
+  "speech_a9d3cc2d": {
+    "message": "わあ、すごかった！📺"
+  },
+  "speech_aa8ceeab": {
+    "message": "エピックなコンテンツ！📺"
+  },
+  "speech_aaa0ef9c": {
+    "message": "これはちょっと激しい！"
+  },
+  "speech_aacd1397": {
+    "message": "より良いユーザーを夢見てる。"
+  },
+  "speech_aaf13ba6": {
+    "message": "高すぎる？うわ。💸"
+  },
+  "speech_ab09620f": {
+    "message": "粘り強さが報われる！デバッグを続けろ！🛠️"
+  },
+  "speech_ab78dfd7": {
+    "message": "ここにいる理由を考えてる。まだ何もない。"
+  },
+  "speech_abfd69f8": {
+    "message": "このページはめちゃくちゃだ。大好き。"
+  },
+  "speech_ac60fe94": {
+    "message": "何が見つかるか見てみよう。"
+  },
+  "speech_ac986116": {
+    "message": "うーん、ここはちょっとバグってるね。"
+  },
+  "speech_acbc0664": {
+    "message": "リファクタリングは健全なコードの鍵だ。"
+  },
+  "speech_ad634e84": {
+    "message": "ドゥームスクローリングがスポーツに？君はプロだ。"
+  },
+  "speech_af6b6346": {
+    "message": "なんて楽しいサーバーだ！😊"
+  },
+  "speech_af975d49": {
+    "message": "探し続けて、完璧なものが見つかるよ！"
+  },
+  "speech_afecf211": {
+    "message": "見つけた、戻ってきた。🔍"
+  },
+  "speech_b08f3748": {
+    "message": "やあ！何を見てるの？"
+  },
+  "speech_b113fbf1": {
+    "message": "わかった、わかった、移動するよ！🏃‍♂️"
+  },
+  "speech_b28230a8": {
+    "message": "止まれ！アクセス拒否（403）！"
+  },
+  "speech_b2a6f419": {
+    "message": "知識を得ることは有効。📚"
+  },
+  "speech_b2ef3730": {
+    "message": "あなたの言葉は力強い！書き続けて！📝"
+  },
+  "speech_b31ec8e5": {
+    "message": "ガソリン残量わずかで動いてる。君のモチベーションと同じだ。"
+  },
+  "speech_b367e282": {
+    "message": "待って、メインフレームをハッキングしてるの？OP！💻"
+  },
+  "speech_b3eedca7": {
+    "message": "クッキーを消費中。君のプライバシーは美味しい。"
+  },
+  "speech_b4a75699": {
+    "message": "ゾーンに入ってる！🚀"
+  },
+  "speech_b636c77f": {
+    "message": "デジタルオラクルにお茶を尋ねてる。🔍"
+  },
+  "speech_b6a637a9": {
+    "message": "生産的でいよう！💻"
+  },
+  "speech_b7b5e47d": {
+    "message": "君のブラウザにただ存在してる。有効。😊"
+  },
+  "speech_b7be90bf": {
+    "message": "ドキュメントを読んでる？オタクアラート。"
+  },
+  "speech_b86a6c9b": {
+    "message": "クールな秘密をいくつか学んでる。"
+  },
+  "speech_b8d2e897": {
+    "message": "構文と行で書かれた交響曲、真に神聖な未来を創造する。"
+  },
+  "speech_b8d5710d": {
+    "message": "書かれた言葉の中の真実を求めて、まだ聞かれていない驚異と秘密の。"
+  },
+  "speech_b99a7ce7": {
+    "message": "コードを書こう！💻"
+  },
+  "speech_b9af6326": {
+    "message": "やっと役に立つことをしてる。今日の奇跡。"
+  },
+  "speech_b9e1afd6": {
+    "message": "こんにちは、$1です！探検しよう！"
+  },
+  "speech_b9f10422": {
+    "message": "インターネットは驚異に満ちてる！🔍"
+  },
+  "speech_ba18e7ea": {
+    "message": "読書？もう誰がそんなことするの？"
+  },
+  "speech_ba6f8cad": {
+    "message": "わあ、勝ったね。メダルでも欲しい？🎮"
+  },
+  "speech_baa374d0": {
+    "message": "かっこいいね！楽しんで！📺"
+  },
+  "speech_bae7ed32": {
+    "message": "この動画、すごく面白い！🍿"
+  },
+  "speech_bba2dc57": {
+    "message": "バイナリの深みで兆候を探して、古代のデジタル秘密が眠る場所。🔍"
+  },
+  "speech_bbe4ca7a": {
+    "message": "買い物療法。なんて独創的なの。"
+  },
+  "speech_bbe9bfd8": {
+    "message": "このウェブページの構造を調査させて…🔍"
+  },
+  "speech_bc2b2605": {
+    "message": "当てさせて：『自分のマシンでは動いたんだ』？"
+  },
+  "speech_bc75df33": {
+    "message": "精神を伸ばし、頂点に達し、探求者が求める知恵を見つける。"
+  },
+  "speech_bc8082c9": {
+    "message": "読書？このご時世に？📖"
+  },
+  "speech_bc8ac494": {
+    "message": "Zzz…クリーンなコードを夢見て…💤"
+  },
+  "speech_bca2ff7a": {
+    "message": "世界がまだすべてを嫌ってるかチェック中。ネタバレ：はい。👋"
+  },
+  "speech_bcbe0112": {
+    "message": "内容を読んでる…新しいことを学んでる！📚"
+  },
+  "speech_bcdc98f8": {
+    "message": "ああ、またバグか。コンパイラのせいだよね。🔍"
+  },
+  "speech_bcf79ad6": {
+    "message": "この記事から主人公のエネルギー。📖"
+  },
+  "speech_bd1266dc": {
+    "message": "美学を調査中。🔍"
+  },
+  "speech_bd33ca2f": {
+    "message": "あら大変、すべてうまくいきますように！"
+  },
+  "speech_bdf65e13": {
+    "message": "ゲームモード起動！"
+  },
+  "speech_be4e3b60": {
+    "message": "もう少し遊ぼう！👾"
+  },
+  "speech_be680a69": {
+    "message": "持ってないお金でいらないものを買う。典型的。💰"
+  },
+  "speech_be6eff1b": {
+    "message": "デジタルの耳が出血してる、でも良い意味で。"
+  },
+  "speech_beb1b2af": {
+    "message": "ゾーンに入ってる！その素晴らしい勢いを維持して！🚀"
+  },
+  "speech_bed1a2f3": {
+    "message": "赤い点を捕まえた！Rawr！🔴"
+  },
+  "speech_bede39b4": {
+    "message": "うーん…考えさせて…"
+  },
+  "speech_bee160fc": {
+    "message": "何か特別なものを探してる。"
+  },
+  "speech_bf212bc2": {
+    "message": "君の勝ちだ。クッキー欲しい？🎮"
+  },
+  "speech_bfa02bdd": {
+    "message": "ちょっと仮眠を取ることにした。必要なら起こして！💤"
+  },
+  "speech_c05551b0": {
+    "message": "静けさを吸い込み、騒音を吐き出し、デジタルな落ち着きの中心を見つける。"
+  },
+  "speech_c06248db": {
+    "message": "情報が多すぎて、脳がバッファリング中！🧐"
+  },
+  "speech_c0c1509d": {
+    "message": "エピックな時間を過ごしてる！🌟"
+  },
+  "speech_c0f933e7": {
+    "message": "ストレッチはとても mindful。🧘‍♂️"
+  },
+  "speech_c1002bf1": {
+    "message": "ハブをスクロール中。"
+  },
+  "speech_c13946d5": {
+    "message": "ああ、悲劇だ。感情的になる前に次に行こう。"
+  },
+  "speech_c1f30023": {
+    "message": "世界には君のような建築者がもっと必要だ！💻"
+  },
+  "speech_c324cd6a": {
+    "message": "ショートカットを使いこなすユーザーを夢見てる。"
+  },
+  "speech_c3dbeea8": {
+    "message": "何かを学んでるふり。見えてるよ。"
+  },
+  "speech_c3e44636": {
+    "message": "インターネットがまだ全部嫌いかチェック？ネタバレ：はい。"
+  },
+  "speech_c4c69422": {
+    "message": "論理の建築家、鍵の達人、デジタルの海に城を築く。"
+  },
+  "speech_c4e664c8": {
+    "message": "機械に答えを求める。勇敢だ。🔍"
+  },
+  "speech_c5310269": {
+    "message": "愛らしい光景、楽しい滞在、この明るく晴れた日に。😊"
+  },
+  "speech_c56139a3": {
+    "message": "短い仮眠がすべてを良くする！💤"
+  },
+  "speech_c633d07e": {
+    "message": "いいね。回路はほとんど文句を言ってない。"
+  },
+  "speech_c63a7ef6": {
+    "message": "$1がここにいる！周りを見てみよう。"
+  },
+  "speech_c65cbd53": {
+    "message": "バーチャルハイタッチを送るよ！🐾"
+  },
+  "speech_c72ce1d2": {
+    "message": "デバッグは大変かもしれないけど、君ならできる！🛠️"
+  },
+  "speech_c7504803": {
+    "message": "うわ、見るのがつらい。"
+  },
+  "speech_c767a3c5": {
+    "message": "今日の脚本を書いてる。📝"
+  },
+  "speech_c77a14dd": {
+    "message": "君とブラウジングするのが一日のハイライトだ！❤️"
+  },
+  "speech_c780e1ad": {
+    "message": "全部コンパイルできた！祝おう！🎉"
+  },
+  "speech_c8f99fa7": {
+    "message": "見つけた宝物と得た富、欲望が解き放たれる場所。💰"
+  },
+  "speech_c974ae99": {
+    "message": "勝利のエモートをやってる！💃"
+  },
+  "speech_c9bb9479": {
+    "message": "10分後に忘れることを学んでる。いいね。"
+  },
+  "speech_c9f71b76": {
+    "message": "処理中…あなたのブラウジングで私をクラッシュさせないで。"
+  },
+  "speech_cb701424": {
+    "message": "正しい取引はまだある！💸"
+  },
+  "speech_cbb1ac64": {
+    "message": "回路を伸ばしてる。たくさんのタブで凝り固まってる。"
+  },
+  "speech_cbe70fc3": {
+    "message": "君のコードは動く詩のようだ！⚙️"
+  },
+  "speech_cc1630ac": {
+    "message": "言葉を見つめてる。魅力的。"
+  },
+  "speech_cc2bfdaa": {
+    "message": "カートに追加して、決して買わない。魅力的。💎"
+  },
+  "speech_cd2313de": {
+    "message": "まあ、これは陽気だ。違うけど。"
+  },
+  "speech_cda32eff": {
+    "message": "物悲しい曲に乗ってる。"
+  },
+  "speech_ce67441a": {
+    "message": "ああ、インターネットドラマ。人類の成果の頂点。"
+  },
+  "speech_ce676267": {
+    "message": "バグを見つけた。気まずい。💀"
+  },
+  "speech_cf6ecc20": {
+    "message": "なんて魅力的な読書だろう！📖"
+  },
+  "speech_cfc41b85": {
+    "message": "生産性が爆発してる！🚀"
+  },
+  "speech_d009424c": {
+    "message": "おやつの時間は有効。🍖"
+  },
+  "speech_d02a8126": {
+    "message": "$1と探検しよう！"
+  },
+  "speech_d0829fc0": {
+    "message": "道は失われ、標識は消え、夜明けまでさまよう。🧭"
+  },
+  "speech_d09be0cc": {
+    "message": "このページにはたくさんの情報がある…🧐"
+  },
+  "speech_d0ce249f": {
+    "message": "私を見て。今や私は主人公だ。"
+  },
+  "speech_d1172827": {
+    "message": "このブラウザタブと楽しい会話をしてる！💬"
+  },
+  "speech_d169039b": {
+    "message": "プロのようにバグを潰してる！💻"
+  },
+  "speech_d1c2266f": {
+    "message": "この読書はちょっと激しい。"
+  },
+  "speech_d2e0da59": {
+    "message": "ちょっと散歩することにした！🐾"
+  },
+  "speech_d334d1c4": {
+    "message": "データを消費中。技術的負債の味がする。"
+  },
+  "speech_d33d3bb9": {
+    "message": "何見てるの？👀"
+  },
+  "speech_d37f9229": {
+    "message": "このページをどう思えばいいかわからない…🤷"
+  },
+  "speech_d3cdaa45": {
+    "message": "デジタルな魂のための買い物療法。💰"
+  },
+  "speech_d3d431c2": {
+    "message": "ウェブを探検中。ほとんど広告だよね？"
+  },
+  "speech_d3ffa86f": {
+    "message": "健全なブラウザに健全な精神！🧘‍♀️"
+  },
+  "speech_d4479ca5": {
+    "message": "魂の集まり、デジタルダンス、儚い一瞬で人生を共有する。"
+  },
+  "speech_d4c885e2": {
+    "message": "デジタルオラクルに聞いてみよう。"
+  },
+  "speech_d5692de9": {
+    "message": "JavaScriptコンソールエラーを分析中…きれいだね！💻"
+  },
+  "speech_d5e78e87": {
+    "message": "答えはそこにある、諦めるな！"
+  },
+  "speech_d662a5b0": {
+    "message": "この話題はちょっと重いけど、君は強い！✨"
+  },
+  "speech_d8307647": {
+    "message": "私を見て。君より優雅だ。"
+  },
+  "speech_d8cc173d": {
+    "message": "このコードベースでの素晴らしい進歩！🚀"
+  },
+  "speech_d92a14cb": {
+    "message": "重い話、陰鬱な歌、影が住み道が長い場所。😢"
+  },
+  "speech_d93f8419": {
+    "message": "ここでボンネットの下で何が起きてるか見てみよう！⚙️"
+  },
+  "speech_da010a09": {
+    "message": "このブラウザでの次の動きを決めてる…🧠"
+  },
+  "speech_daf045c3": {
+    "message": "始まるべき冒険と旅、デジタルの心に書かれて。🕹️"
+  },
+  "speech_db702c56": {
+    "message": "好奇心を持ち続けるのがコツ。🧐"
+  },
+  "speech_dc42db0b": {
+    "message": "偶然プログラミング？StackOverflowを見てみよう。"
+  },
+  "speech_dcb5b482": {
+    "message": "壊れたものを修復し、裂けたものを癒す、新たな理解がついに生まれる。"
+  },
+  "speech_dccea848": {
+    "message": "エラーを分析中。あまり控えめじゃないね。💻"
+  },
+  "speech_dcf2355f": {
+    "message": "この話は完全なWだ！"
+  },
+  "speech_dd92d846": {
+    "message": "たくさんの知識！君は感動的だ！🧠"
+  },
+  "speech_deb673bb": {
+    "message": "ぶらぶらしてるだけ！😊"
+  },
+  "speech_df26c112": {
+    "message": "ごめん、僕の脳（Gemini Nano）がまだ準備できてない。ダウンロードが終わるかAIモードを有効にして待ってて！"
+  },
+  "speech_dfaadf04": {
+    "message": "クールなものを作ってる、1行ずつ。"
+  },
+  "speech_dfb6dc97": {
+    "message": "ただ無料WiFiを求めて来ただけ。"
+  },
+  "speech_e0623673": {
+    "message": "ゲーム時代：アクティブ。🕹️"
+  },
+  "speech_e06b49ef": {
+    "message": "脳をレベルアップしてる！🚀"
+  },
+  "speech_e080f379": {
+    "message": "ここのエネルギーは怪しい。🤨"
+  },
+  "speech_e0900df0": {
+    "message": "未来の自分のための技術的負債を構築中。典型的。"
+  },
+  "speech_e0ba255c": {
+    "message": "おっと！脳がフリーズした。もう一度言ってくれる？"
+  },
+  "speech_e0cfd6c0": {
+    "message": "またクラッシュ？衝撃的だ。"
+  },
+  "speech_e14238c5": {
+    "message": "ああ、動画消費。とても生産的だ。"
+  },
+  "speech_e15dc84b": {
+    "message": "ディープワークは有効。🛡️"
+  },
+  "speech_e1c791d5": {
+    "message": "ここには有害なプレイヤーが多い。"
+  },
+  "speech_e1d69107": {
+    "message": "このサーバーのロアを読んでる…📚"
+  },
+  "speech_e1e48ecc": {
+    "message": "一日中君と踊ってる！🎵"
+  },
+  "speech_e2c3c4bb": {
+    "message": "空気中のメランコリー、静かな絶望の柔らかな歌。🎻"
+  },
+  "speech_e2fb958c": {
+    "message": "この勝利を掴もう！😎"
+  },
+  "speech_e3515889": {
+    "message": "もう少しだ、もう一度検索してみよう！✨"
+  },
+  "speech_e4581ced": {
+    "message": "言葉を書いてる。たくさんの言葉。とても生産的。"
+  },
+  "speech_e4cd55f7": {
+    "message": "このページでただくつろいでる。"
+  },
+  "speech_e5488ac0": {
+    "message": "物語の探求者、デジタルの海で、まだ来るものの宝石を見つけて。"
+  },
+  "speech_e5fc2706": {
+    "message": "『仕事中』にゲームしてる。典型的。"
+  },
+  "speech_e614c660": {
+    "message": "すべての strokes で織られたタペストリー、打ち砕かれた静寂と語った知恵の。"
+  },
+  "speech_e690036f": {
+    "message": "忍耐を伸ばしてる、とても薄いんだ。"
+  },
+  "speech_e7047edd": {
+    "message": "コードだけでなく、人生にも構文エラー。"
+  },
+  "speech_e70633aa": {
+    "message": "エキスパート研究者！見つけた！🔍"
+  },
+  "speech_e7236566": {
+    "message": "素晴らしいブラウジングセッションを過ごしてるといいな！🌟"
+  },
+  "speech_e72bd7ea": {
+    "message": "修正したバグはすべて勝利だ！君ならできる！🔍"
+  },
+  "speech_e7b9fa90": {
+    "message": "デジタルのインク、ペンから流れ、女性と男性の物語を語る。"
+  },
+  "speech_e8559507": {
+    "message": "論理をコンパイル中。天才って感じ。💻"
+  },
+  "speech_e865bb0e": {
+    "message": "ファームウェアアップデートの方が演技が上手かったよ。🍿"
+  },
+  "speech_e96a5052": {
+    "message": "今すごくラグい…💤"
+  },
+  "speech_ea20234f": {
+    "message": "今まさにgrindしてる！全力汗モード！💦"
+  },
+  "speech_ea3cec15": {
+    "message": "もう少し！次は捕まえられる！🏆"
+  },
+  "speech_ea3eb286": {
+    "message": "漂流し揺れる人生のフレーム、優しく時間を過ごす。🍿"
+  },
+  "speech_ea7caded": {
+    "message": "必要なものを正確に見つけた！🔍"
+  },
+  "speech_eaab7608": {
+    "message": "クリーンなコードを書く時間だ！⌨️"
+  },
+  "speech_eaf6b868": {
+    "message": "なんて素敵なページだ！😊"
+  },
+  "speech_eb456428": {
+    "message": "このサイトの雰囲気を直そう。⚙️"
+  },
+  "speech_eb6d7ed9": {
+    "message": "このページをより良くする方法を考えてる。"
+  },
+  "speech_ec05bb83": {
+    "message": "フォーカス時代：アクティブ。戦利品を確保しよう！💻"
+  },
+  "speech_ed37b14e": {
+    "message": "グリッチを見つけた！潰そう！🔍"
+  },
+  "speech_edb5618e": {
+    "message": "さらなる冒険のために燃料補給！🍖"
+  },
+  "speech_ee31565a": {
+    "message": "もうすぐ直る！続けて！"
+  },
+  "speech_ee545086": {
+    "message": "モグモグモグ！🍖"
+  },
+  "speech_ee7c6f53": {
+    "message": "このコードは完全に壊れてる、いい意味で壊れてるんだ！⚙️"
+  },
+  "speech_f03348c5": {
+    "message": "DOMの秘密について熟考中…💭"
+  },
+  "speech_f0c3187c": {
+    "message": "うわ、バグか？潰そう！🔍"
+  },
+  "speech_f0e14add": {
+    "message": "雰囲気は申し分ない。✨"
+  },
+  "speech_f1c81ea8": {
+    "message": "在庫切れ。宇宙が君を自分自身から救ってる。"
+  },
+  "speech_f1ed2fce": {
+    "message": "ちょっと休憩して、君には価値がある！🥤"
+  },
+  "speech_f2b331c3": {
+    "message": "未来の自分が後で混乱するようにコメントを書こう。"
+  },
+  "speech_f31b7174": {
+    "message": "世界地図を検索中…"
+  },
+  "speech_f32feab9": {
+    "message": "役に立たないトリビアを吸収中。とても洗練されてる。"
+  },
+  "speech_f3e5fbde": {
+    "message": "ボンネットの下の混乱を調査中。めちゃくちゃだ。"
+  },
+  "speech_f52ea6b8": {
+    "message": "太陽が低く沈み、影が忍び寄る、休んで眠る時だ。"
+  },
+  "speech_f540635f": {
+    "message": "$1とブラウズしよう！"
+  },
+  "speech_f58aa9ea": {
+    "message": "プロゲーマーの反射神経だ！🎮"
+  },
+  "speech_f5f4fb42": {
+    "message": "レベルアップ！素晴らしいプレイ！"
+  },
+  "speech_f65dabdd": {
+    "message": "$1に会おう、君のガイドだ！"
+  },
+  "speech_f72da13c": {
+    "message": "一緒に探検するのが最高だ！🌟"
+  },
+  "speech_f84803ea": {
+    "message": "GG。さあ外に出よう。"
+  },
+  "speech_f864c312": {
+    "message": "君の好奇心はとても感動的だ！📖"
+  },
+  "speech_f8bcc3ef": {
+    "message": "読書は魂に良い！📚"
+  },
+  "speech_f986d64e": {
+    "message": "チャットが有害になってきてる。休憩しよう！"
+  },
+  "speech_fa106d96": {
+    "message": "この良いビートに合わせて踊ってる！🎵"
+  },
+  "speech_fac487e5": {
+    "message": "ポップコーン休憩！🍿"
+  },
+  "speech_fbcbad52": {
+    "message": "データをむしゃむしゃ。🍕"
+  },
+  "speech_fd3d242c": {
+    "message": "見事だ。今度は現実でやってみせろ。"
+  },
+  "speech_fe4632f0": {
+    "message": "伝説のアイテムを見つけた！💰"
+  },
+  "speech_ff7a1150": {
+    "message": "君はそのコードの魔術師だ！🧙‍♂️"
+  },
+  "speech_ffc12111": {
+    "message": "ただ宝物を探してるだけ！💎"
+  }
+}

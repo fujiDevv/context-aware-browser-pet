@@ -2,6 +2,7 @@
 import { pipeline, env } from '@huggingface/transformers';
 import { detectPageCategory, mapActivityToEmotion, AI_COMMENTS } from '../core/rules';
 import { extensionApi, getRuntimeUrl } from '../shared/platform';
+import { speech } from '../shared/speech-i18n';
 
 // Configure ONNX Runtime to load WASM binaries locally from the extension.
 // Must point at the asyncify variant — Chrome offscreen docs are not cross-origin isolated.
@@ -155,7 +156,7 @@ async function getLocalAiEmotion(
   const sentimentComments = categoryComments[sentiment] || categoryComments.NEUTRAL;
 
   const commentList = sentimentComments.length > 0 ? sentimentComments : categoryComments.NEUTRAL;
-  const comment = commentList[Math.floor(Math.random() * commentList.length)];
+  const comment = speech(commentList[Math.floor(Math.random() * commentList.length)]);
 
   return { emotion, comment, category: finalCategory, sentiment };
 }

@@ -1,6 +1,7 @@
 import { detectPageCategory, mapActivityToEmotion, AI_COMMENTS } from './rules';
 import { ARCRAWLS_KNOWLEDGE_BASE } from './knowledge';
 import { extensionApi } from '../shared/platform';
+import { speech } from '../shared/speech-i18n';
 
 interface AiEmotionResponse {
   success: boolean;
@@ -325,7 +326,7 @@ function getTemplateFallback(stats: any, persona: string): string {
 
   const personaPool = templates[persona] || templates.default;
   const categoryPool = personaPool[topCategory] || personaPool.general;
-  return categoryPool[Math.floor(Math.random() * categoryPool.length)];
+  return speech(categoryPool[Math.floor(Math.random() * categoryPool.length)]);
 }
 
 let bridgeToken: string | null = null;
@@ -450,7 +451,7 @@ export async function getAiChatResponse(
 ): Promise<string | null> {
   const geminiNanoAvailable = await checkGeminiNanoAvailability(petName);
   if (geminiNanoAvailable !== 'available' && geminiNanoAvailable !== 'downloadable' && geminiNanoAvailable !== 'downloading') {
-    return "I'm sorry, my brain (Gemini Nano) isn't ready right now. Wait for me to download or enable AI Mode!";
+    return speech("I'm sorry, my brain (Gemini Nano) isn't ready right now. Wait for me to download or enable AI Mode!");
   }
 
   // Truncate page text to avoid token limits

@@ -1,0 +1,3545 @@
+{
+  "extName": {
+    "message": "Arcrawls: संदर्भ-जागरूक ब्राउज़र पेट"
+  },
+  "extDescription": {
+    "message": "स्प्रिंग फिज़िक्स, 140+ एनिमेशन और वैकल्पिक 100% लोकल AI वाला संदर्भ-जागरूक ब्राउज़र पेट। ब्राउज़िंग डेटा क्लाउड में नहीं जाता।"
+  },
+  "actionTitle": {
+    "message": "Arcrawls — पेट डैशबोर्ड खोलें"
+  },
+  "shared_lvl": {
+    "message": "लेवल"
+  },
+  "shared_lvlValue": {
+    "message": "लेवल $1"
+  },
+  "shared_loading": {
+    "message": "लोड हो रहा है..."
+  },
+  "shared_donate": {
+    "message": "दान करें"
+  },
+  "shared_waiting": {
+    "message": "रुकिए..."
+  },
+  "shared_waitSeconds": {
+    "message": "$1 सेकंड रुकिए..."
+  },
+  "shared_none": {
+    "message": "कोई नहीं"
+  },
+  "shared_active": {
+    "message": "सक्रिय"
+  },
+  "shared_disabled": {
+    "message": "अक्षम"
+  },
+  "shared_seasonal": {
+    "message": "मौसमी"
+  },
+  "shared_seasonalDisabled": {
+    "message": "मौसमी (अक्षम)"
+  },
+  "shared_locked": {
+    "message": "लॉक"
+  },
+  "shared_wearing": {
+    "message": "पहना हुआ"
+  },
+  "shared_wear": {
+    "message": "पहनें"
+  },
+  "shared_perfMode": {
+    "message": "परफॉर्मेंस मोड"
+  },
+  "shared_perfModeSub": {
+    "message": "CPU और मेमोरी उपयोग कम करें"
+  },
+  "shared_perfModeHint": {
+    "message": "30fps तक सीमित करता है, ऑरा बंद करता है, और CPU बचाने के लिए टैब सिंक रोकता है"
+  },
+  "shared_ghostMode": {
+    "message": "घोस्ट मोड"
+  },
+  "shared_ghostModeSub": {
+    "message": "सक्रिय होने पर फीका हो जाए (फोकस)"
+  },
+  "shared_ghostModeHint": {
+    "message": "टाइप करते या स्क्रॉल करते समय Arcrawls को फीका करके ध्यान भटकना कम करता है"
+  },
+  "stat_happiness": {
+    "message": "खुशी"
+  },
+  "stat_energy": {
+    "message": "ऊर्जा"
+  },
+  "stat_curiosity": {
+    "message": "जिज्ञासा"
+  },
+  "stat_focus": {
+    "message": "फोकस"
+  },
+  "stat_leisure": {
+    "message": "अवकाश"
+  },
+  "stat_happinessHint": {
+    "message": "प्यार और मज़ेदार साइटों से बढ़ता है। प्रति घंटा 4% घटता है।"
+  },
+  "stat_energyHint": {
+    "message": "खिलाने और नींद से बहाल होती है। प्रति घंटा 6.8% घटती है।"
+  },
+  "stat_curiosityHint": {
+    "message": "नए डोमेन देखने से बढ़ती है। प्रति घंटा 1.8% घटती है।"
+  },
+  "stat_focusHint": {
+    "message": "काम और कोडिंग से बढ़ता है। प्रति घंटा 5.4% घटता है।"
+  },
+  "stat_leisureHint": {
+    "message": "गेमिंग या स्ट्रीमिंग से बढ़ता है। प्रति घंटा 5.4% घटता है।"
+  },
+  "stat_happinessDesc": {
+    "message": "समय के साथ घटता है। प्यार, खिलाने और सकारात्मक वेबसाइटों पर जाने से बढ़ता है।"
+  },
+  "stat_energyDesc": {
+    "message": "चलने पर घटती है। खिलाने और रात की नींद से बहाल होती है।"
+  },
+  "stat_curiosityDesc": {
+    "message": "नए डोमेन देखने और लेख पढ़ने से बढ़ती है।"
+  },
+  "stat_focusDesc": {
+    "message": "काम/कोडिंग और नकारात्मक कोडिंग भावना (डिबगिंग सत्र) से बढ़ता है।"
+  },
+  "stat_leisureDesc": {
+    "message": "स्ट्रीमिंग, गेमिंग या सोशल मीडिया डोमेन देखने से बढ़ता है।"
+  },
+  "mood_happy": {
+    "message": "खुश"
+  },
+  "mood_sad": {
+    "message": "उदास"
+  },
+  "mood_angry": {
+    "message": "गुस्सा"
+  },
+  "mood_crying": {
+    "message": "रोना"
+  },
+  "mood_waving": {
+    "message": "हाथ हिलाना"
+  },
+  "mood_sleeping": {
+    "message": "सोना"
+  },
+  "mood_thinking": {
+    "message": "सोचना"
+  },
+  "mood_shrug": {
+    "message": "कंधे उचकाना"
+  },
+  "mood_reading": {
+    "message": "पढ़ना"
+  },
+  "mood_yoga": {
+    "message": "योग"
+  },
+  "mood_eating": {
+    "message": "खाना"
+  },
+  "mood_coding": {
+    "message": "कोडिंग"
+  },
+  "mood_typing": {
+    "message": "टाइपिंग"
+  },
+  "mood_dancing": {
+    "message": "नृत्य"
+  },
+  "mood_cool": {
+    "message": "कूल"
+  },
+  "mood_love": {
+    "message": "प्यार"
+  },
+  "mood_celebrating": {
+    "message": "जश्न"
+  },
+  "mood_mindblown": {
+    "message": "हैरान"
+  },
+  "mood_ninja": {
+    "message": "निंजा"
+  },
+  "mood_wizard": {
+    "message": "जादूगर"
+  },
+  "mood_astronaut": {
+    "message": "अंतरिक्ष यात्री"
+  },
+  "mood_debugger": {
+    "message": "डिबगर"
+  },
+  "mood_building": {
+    "message": "निर्माण"
+  },
+  "mood_rocket": {
+    "message": "रॉकेट"
+  },
+  "mood_pirate": {
+    "message": "समुद्री डाकू"
+  },
+  "mood_juggling": {
+    "message": "जगलिंग"
+  },
+  "mood_gaming": {
+    "message": "गेमिंग"
+  },
+  "mood_lowBattery": {
+    "message": "कम बैटरी"
+  },
+  "mood_christmas": {
+    "message": "क्रिसमस"
+  },
+  "mood_winter": {
+    "message": "सर्दी"
+  },
+  "mood_halloween": {
+    "message": "हैलोवीन"
+  },
+  "mood_summer": {
+    "message": "गर्मी"
+  },
+  "mood_iceCream": {
+    "message": "आइसक्रीम"
+  },
+  "mood_surfing": {
+    "message": "सर्फिंग"
+  },
+  "mood_skateboard": {
+    "message": "स्केटबोर्ड"
+  },
+  "mood_telescope": {
+    "message": "दूरबीन"
+  },
+  "mood_meditating": {
+    "message": "ध्यान"
+  },
+  "mood_rubberDuck": {
+    "message": "रबर बत्तख"
+  },
+  "mood_coffee": {
+    "message": "कॉफ़ी"
+  },
+  "mood_mail": {
+    "message": "मेल"
+  },
+  "mood_notification": {
+    "message": "सूचना"
+  },
+  "mood_flexing": {
+    "message": "मांसपेशी दिखाना"
+  },
+  "mood_lifting": {
+    "message": "वेट लिफ्टिंग"
+  },
+  "mood_singing": {
+    "message": "गाना"
+  },
+  "mood_music": {
+    "message": "संगीत"
+  },
+  "mood_dj": {
+    "message": "DJ"
+  },
+  "mood_money": {
+    "message": "पैसा"
+  },
+  "mood_merging": {
+    "message": "मर्ज/गिट"
+  },
+  "mood_deploying": {
+    "message": "डिप्लॉय"
+  },
+  "mood_firefighting": {
+    "message": "आग बुझाना"
+  },
+  "mood_sweeping": {
+    "message": "झाड़ू लगाना"
+  },
+  "mood_dizzy": {
+    "message": "चक्कर"
+  },
+  "mood_evil": {
+    "message": "खलनायक"
+  },
+  "mood_king": {
+    "message": "राजा"
+  },
+  "mood_magic": {
+    "message": "जादू"
+  },
+  "mood_fishing": {
+    "message": "मछली पकड़ना"
+  },
+  "mood_bowling": {
+    "message": "बॉलिंग"
+  },
+  "mood_detective": {
+    "message": "जासूस"
+  },
+  "mood_painting": {
+    "message": "पेंटिंग"
+  },
+  "mood_photography": {
+    "message": "फोटोग्राफी"
+  },
+  "trait_normal": {
+    "message": "सामान्य"
+  },
+  "trait_developer": {
+    "message": "डेवलपर"
+  },
+  "trait_gamer": {
+    "message": "गेमर"
+  },
+  "trait_scholar": {
+    "message": "विद्वान"
+  },
+  "trait_socialite": {
+    "message": "सोशलाइट"
+  },
+  "toy_ball": {
+    "message": "गेंद"
+  },
+  "toy_fish": {
+    "message": "मछली"
+  },
+  "toy_laser": {
+    "message": "लेज़र"
+  },
+  "toy_yarn": {
+    "message": "धागा"
+  },
+  "toy_duck": {
+    "message": "बत्तख"
+  },
+  "toy_box": {
+    "message": "डिब्बा"
+  },
+  "action_pet": {
+    "message": "प्यार करें"
+  },
+  "action_feed": {
+    "message": "खिलाएँ"
+  },
+  "action_shoo": {
+    "message": "भगाएँ"
+  },
+  "reaction_happy": {
+    "message": "खुश 😊"
+  },
+  "reaction_sad": {
+    "message": "उदास 😢"
+  },
+  "reaction_sleeping": {
+    "message": "सोना 💤"
+  },
+  "reaction_thinking": {
+    "message": "सोचना 🤔"
+  },
+  "reaction_reading": {
+    "message": "पढ़ना 📖"
+  },
+  "reaction_eating": {
+    "message": "खाना 🍕"
+  },
+  "reaction_coding": {
+    "message": "कोडिंग 💻"
+  },
+  "reaction_typing": {
+    "message": "टाइपिंग ⌨️"
+  },
+  "reaction_dancing": {
+    "message": "नृत्य 💃"
+  },
+  "reaction_cool": {
+    "message": "कूल 😎"
+  },
+  "reaction_love": {
+    "message": "प्यार ❤️"
+  },
+  "reaction_celebrating": {
+    "message": "जश्न 🎉"
+  },
+  "reaction_mindblown": {
+    "message": "हैरान 🤯"
+  },
+  "reaction_ninja": {
+    "message": "निंजा 🥷"
+  },
+  "reaction_wizard": {
+    "message": "जादूगर 🧙"
+  },
+  "reaction_astronaut": {
+    "message": "अंतरिक्ष यात्री 🧑‍🚀"
+  },
+  "reaction_debugger": {
+    "message": "डिबगर 🔍"
+  },
+  "reaction_merging": {
+    "message": "मर्ज/गिट 🔀"
+  },
+  "reaction_deploying": {
+    "message": "डिप्लॉय 🚀"
+  },
+  "reaction_firefighting": {
+    "message": "आग बुझाना 🚒"
+  },
+  "reaction_rubberDuck": {
+    "message": "रबर बत्तख 🦆"
+  },
+  "reaction_building": {
+    "message": "निर्माण 🏗️"
+  },
+  "reaction_sweeping": {
+    "message": "झाड़ू लगाना 🧹"
+  },
+  "reaction_dizzy": {
+    "message": "चक्कर 💫"
+  },
+  "reaction_evil": {
+    "message": "खलनायक 😈"
+  },
+  "reaction_king": {
+    "message": "राजा 👑"
+  },
+  "reaction_music": {
+    "message": "संगीत सुनना 🎧"
+  },
+  "reaction_dj": {
+    "message": "DJ 🎛️"
+  },
+  "reaction_magic": {
+    "message": "जादू 🪄"
+  },
+  "reaction_fishing": {
+    "message": "मछली पकड़ना 🎣"
+  },
+  "reaction_bowling": {
+    "message": "बॉलिंग 🎳"
+  },
+  "reaction_detective": {
+    "message": "जासूस 🕵️"
+  },
+  "reaction_painting": {
+    "message": "पेंटिंग 🎨"
+  },
+  "reaction_photography": {
+    "message": "फोटोग्राफी 📷"
+  },
+  "reaction_juggling": {
+    "message": "जगलिंग 🤹"
+  },
+  "popup_title": {
+    "message": "ब्राउज़र पेट कंट्रोलर"
+  },
+  "popup_experience": {
+    "message": "अनुभव"
+  },
+  "popup_xpInitial": {
+    "message": "0 / 100 XP"
+  },
+  "popup_xpProgress": {
+    "message": "$1 / $2 XP"
+  },
+  "popup_mascotStats": {
+    "message": "मैस्कॉट आँकड़े"
+  },
+  "popup_interactiveToys": {
+    "message": "इंटरैक्टिव खिलौने"
+  },
+  "popup_toyHelp": {
+    "message": "खेलने के लिए खिलौने को वेबपेज पर खींचें!"
+  },
+  "popup_visibility": {
+    "message": "दृश्यता"
+  },
+  "popup_hideOnTab": {
+    "message": "इस टैब पर छिपाएँ"
+  },
+  "popup_hideOnTabSub": {
+    "message": "इस टैब पर Arcrawls को अस्थायी रूप से छिपाएँ"
+  },
+  "popup_hideOnSite": {
+    "message": "इस साइट पर छिपाएँ"
+  },
+  "popup_hideOnSiteSub": {
+    "message": "इस डोमेन पर Arcrawls अक्षम करें"
+  },
+  "popup_disableOnSite": {
+    "message": "$1 पर Arcrawls अक्षम करें"
+  },
+  "popup_openDashboard": {
+    "message": "डैशबोर्ड खोलें"
+  },
+  "popup_tabsActiveOne": {
+    "message": "1 टैब सक्रिय"
+  },
+  "popup_tabsActiveMany": {
+    "message": "$1 टैब सक्रिय"
+  },
+  "popup_prestigeRankTitle": {
+    "message": "प्रेस्टीज रैंक"
+  },
+  "popup_aiEmotionTitle": {
+    "message": "इमोशन क्लासिफायर (DistilBERT)"
+  },
+  "popup_aiNanoTitle": {
+    "message": "जनरेटिव रिफ्लेक्शंस (Gemini Nano)"
+  },
+  "popup_presenceTitle": {
+    "message": "स्थानीय संदर्भ अवलोकन सक्रिय (100% डिवाइस पर)"
+  },
+  "popup_liteMode": {
+    "message": "लाइट मोड"
+  },
+  "popup_firefoxLite": {
+    "message": "Firefox लाइट"
+  },
+  "popup_ruleBasedTitle": {
+    "message": "नियम-आधारित मूल्यांकन सक्रिय"
+  },
+  "popup_brainLite": {
+    "message": "ब्रेन: लाइट"
+  },
+  "popup_bertChecking": {
+    "message": "BERT: जाँच हो रही है"
+  },
+  "popup_bertReady": {
+    "message": "BERT: तैयार"
+  },
+  "popup_bertProgress": {
+    "message": "BERT: $1%"
+  },
+  "popup_bertError": {
+    "message": "BERT: त्रुटि"
+  },
+  "popup_bertOffline": {
+    "message": "BERT: ऑफ़लाइन"
+  },
+  "popup_nanoChecking": {
+    "message": "Nano: जाँच हो रही है"
+  },
+  "popup_nanoReady": {
+    "message": "Nano: तैयार"
+  },
+  "popup_nanoDownloading": {
+    "message": "Nano: डाउनलोड हो रहा है"
+  },
+  "popup_nanoUnsupported": {
+    "message": "Nano: समर्थित नहीं"
+  },
+  "popup_nanoOffline": {
+    "message": "Nano: ऑफ़लाइन"
+  },
+  "popup_nanoWaiting": {
+    "message": "Nano: प्रतीक्षा"
+  },
+  "popup_petPreviewAlt": {
+    "message": "पेट पूर्वावलोकन"
+  },
+  "options_sanctuaryDashboard": {
+    "message": "सैंक्चुअरी डैशबोर्ड"
+  },
+  "options_sanctuaryPlayground": {
+    "message": "सैंक्चुअरी प्लेग्राउंड"
+  },
+  "options_chatWith": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> से बात करें"
+  },
+  "options_analyticsStats": {
+    "message": "विश्लेषण और आँकड़े"
+  },
+  "options_historyTimeline": {
+    "message": "इतिहास टाइमलाइन"
+  },
+  "options_mascotStyle": {
+    "message": "मैस्कॉट और स्टाइल"
+  },
+  "options_aiScheduling": {
+    "message": "AI और शेड्यूलिंग"
+  },
+  "options_profileAdmin": {
+    "message": "प्रोफ़ाइल प्रशासन"
+  },
+  "options_copyright": {
+    "message": "© 2026 <span class=\"pet-name-display\">Arcrawls</span> साथी"
+  },
+  "options_versionFormat": {
+    "message": "संस्करण $1 ($2)"
+  },
+  "options_mascotSanctuary": {
+    "message": "मैस्कॉट सैंक्चुअरी"
+  },
+  "options_sanctuaryDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> की वास्तविक समय की स्थिति देखें, उससे बातचीत करें और उसकी आदतों का मार्गदर्शन करें।"
+  },
+  "options_petAction": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> को प्यार करें"
+  },
+  "options_petActionPlain": {
+    "message": "Arcrawls को प्यार करें"
+  },
+  "options_feedSnack": {
+    "message": "स्नैक खिलाएँ"
+  },
+  "options_shooAway": {
+    "message": "भगा दें"
+  },
+  "options_experiencePoints": {
+    "message": "अनुभव अंक"
+  },
+  "options_xpInitial": {
+    "message": "0 / 150 XP"
+  },
+  "options_learningHabits": {
+    "message": "सीखने की आदतें और अनुकूलन"
+  },
+  "options_dominantTrait": {
+    "message": "प्रमुख विशेषता:"
+  },
+  "options_crawlingSpeed": {
+    "message": "चलने की गति:"
+  },
+  "options_defaultAnimation": {
+    "message": "डिफ़ॉल्ट एनिमेशन:"
+  },
+  "options_distilbertActive": {
+    "message": "DistilBERT मॉडल सक्रिय"
+  },
+  "options_geminiNanoActive": {
+    "message": "Gemini Nano सक्रिय"
+  },
+  "options_crossTabSync": {
+    "message": "क्रॉस-टैब सिंक्रोनाइज़ेशन"
+  },
+  "options_aiSynapse": {
+    "message": "24 घंटे AI सिनैप्स"
+  },
+  "options_syncing": {
+    "message": "सिंक हो रहा है"
+  },
+  "options_ready": {
+    "message": "तैयार"
+  },
+  "options_gatheringMemories": {
+    "message": "यादें इकट्ठा हो रही हैं..."
+  },
+  "options_synapsePreviewPlaceholder": {
+    "message": "मैंने हमारे साथ बिताए दिन का विश्लेषण पूरा कर लिया है..."
+  },
+  "options_readDailyReflection": {
+    "message": "दैनिक रिफ्लेक्शन पढ़ें"
+  },
+  "options_observingHabits": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> आपकी आदतों का अवलोकन कर रहा है ताकि दैनिक रिफ्लेक्शन दे सके।"
+  },
+  "options_dailyRoutine": {
+    "message": "दैनिक दिनचर्या और अनुसूची"
+  },
+  "options_scheduleSleep": {
+    "message": "सोना"
+  },
+  "options_scheduleSleepDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> रात में आराम करता है। इस दौरान ऊर्जा पूरी तरह बहाल होती है।"
+  },
+  "options_morningYoga": {
+    "message": "सुबह का योग"
+  },
+  "options_morningYogaDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> सुबह योग करता है, जिससे उसकी आधार खुशी बढ़ती है।"
+  },
+  "options_randomPlay": {
+    "message": "रैंडम प्ले"
+  },
+  "options_randomPlayDesc": {
+    "message": "कर्सर निष्क्रिय छोड़ने पर <span class=\"pet-name-display\">Arcrawls</span> घूमता है, स्केटबोर्ड चलाता है, खेलता है या पढ़ता है।"
+  },
+  "options_debugger": {
+    "message": "डिबगर"
+  },
+  "options_debuggerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> आपके वेबपेजों पर JavaScript त्रुटियाँ पहचानता है और उनकी जाँच करता है।"
+  },
+  "options_seasonalEvents": {
+    "message": "मौसमी कैलेंडर ईवेंट"
+  },
+  "options_summerSeason": {
+    "message": "गर्मी"
+  },
+  "options_summerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> धूप का चश्मा पहनता है, आइसक्रीम का आनंद लेता है और स्क्रीन पर सर्फिंग करता है।"
+  },
+  "options_halloweenSeason": {
+    "message": "हैलोवीन"
+  },
+  "options_halloweenDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> कस्टम हैलोवीन वेशभूषा और कद्दू की सजावट के साथ डरावने माहौल में आ जाता है।"
+  },
+  "options_christmasSeason": {
+    "message": "क्रिसमस"
+  },
+  "options_christmasDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> सांता टोपी और त्योहारी रिएक्शन के साथ उत्सव के मौसम का जश्न मनाता है।"
+  },
+  "options_starterFact": {
+    "message": "मुझे वेब ब्राउज़र के बारे में एक मज़ेदार तथ्य बताओ"
+  },
+  "options_starterContext": {
+    "message": "समझाओ कि संदर्भ जागरूकता कैसे काम करती है"
+  },
+  "options_starterCustomize": {
+    "message": "मैं अपने पेट को कैसे कस्टमाइज़ करूँ?"
+  },
+  "options_voiceChat": {
+    "message": "वॉइस चैट"
+  },
+  "options_chatPlaceholder": {
+    "message": "Arcrawls को संदेश भेजें..."
+  },
+  "options_whatCanIHelp": {
+    "message": "मैं किसमें मदद कर सकता हूँ?"
+  },
+  "options_listening": {
+    "message": "सुन रहा हूँ..."
+  },
+  "options_typeMessage": {
+    "message": "संदेश टाइप करें..."
+  },
+  "options_playVoice": {
+    "message": "आवाज़ चलाएँ"
+  },
+  "options_copyResponse": {
+    "message": "जवाब कॉपी करें"
+  },
+  "options_redo": {
+    "message": "फिर से करें"
+  },
+  "options_analyticsDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> के आभासी आँकड़ों, ब्राउज़िंग श्रेणी विभाजन और प्रगति मीटर का विश्लेषण करें।"
+  },
+  "options_lifetimeMetrics": {
+    "message": "आजीवन मेट्रिक्स"
+  },
+  "options_petsReceived": {
+    "message": "प्यार मिला"
+  },
+  "options_feedsCompleted": {
+    "message": "खिलाना पूर्ण"
+  },
+  "options_browsingInterests": {
+    "message": "ब्राउज़िंग रुचि वितरण"
+  },
+  "options_browsingInterestsSub": {
+    "message": "आपके टैब नेविगेशन इतिहास के आधार पर वास्तविक समय वर्गीकरण:"
+  },
+  "options_interestsHistory": {
+    "message": "रुचि इतिहास (पिछले 7 दिन)"
+  },
+  "options_interestsHistorySub": {
+    "message": "पिछले 7 दिनों की श्रेणी विभाजन।"
+  },
+  "options_moodOverTime": {
+    "message": "समय के साथ मनोदशा"
+  },
+  "options_moodOverTimeSub": {
+    "message": "औसत दैनिक खुशी और ऊर्जा।"
+  },
+  "options_noHistory": {
+    "message": "पिछले 7 दिनों के लिए कोई इतिहास डेटा नहीं मिला।"
+  },
+  "options_noMoodData": {
+    "message": "चार्ट बनाने के लिए पर्याप्त दैनिक डेटा नहीं। कल फिर जाँचें!"
+  },
+  "options_historyLogs": {
+    "message": "इतिहास लॉग"
+  },
+  "options_historyLogsDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> के हाल के मनोदशा बदलावों, पेज मूल्यांकनों और क्रियाओं की कालानुक्रमिक टाइमलाइन।"
+  },
+  "options_timelineFeed": {
+    "message": "स्नैक खाया"
+  },
+  "options_clearLogs": {
+    "message": "लॉग साफ़ करें"
+  },
+  "options_recentMilestones": {
+    "message": "हाल के माइलस्टोन"
+  },
+  "options_recentMilestonesDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> द्वारा अर्जित महत्वपूर्ण विकास चिह्न और उपलब्धियाँ।"
+  },
+  "options_noMilestones": {
+    "message": "अभी कोई माइलस्टोन नहीं। उपलब्धियाँ अनलॉक करने के लिए बातचीत करते रहें!"
+  },
+  "options_noTimeline": {
+    "message": "अभी कोई टाइमलाइन प्रविष्टियाँ नहीं। Arcrawls के साथ कुछ समय ब्राउज़ करें!"
+  },
+  "options_noCategories": {
+    "message": "अभी कोई श्रेणी मूल्यांकित नहीं। ब्राउज़ करते समय Arcrawls सीखेगा!"
+  },
+  "options_mascotStyleDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> की उपस्थिति, आकार, सक्रिय एनिमेशन, ध्वनि प्रभाव और वॉर्डरोब कस्टमाइज़ करें।"
+  },
+  "options_mascotPrefs": {
+    "message": "मैस्कॉट प्राथमिकताएँ"
+  },
+  "options_mascotName": {
+    "message": "मैस्कॉट का नाम"
+  },
+  "options_mascotSize": {
+    "message": "मैस्कॉट आकार (<span id=\"size-val\">128px</span>)"
+  },
+  "options_walkingSpeed": {
+    "message": "चलने की गति (<span id=\"speed-val\">1.0x</span>)"
+  },
+  "options_rocketSpeed": {
+    "message": "रॉकेट गति (<span id=\"flight-speed-val\">1.0x</span>)"
+  },
+  "options_customColor": {
+    "message": "कस्टम मैस्कॉट रंग (लेवल 15 पर अनलॉक)"
+  },
+  "options_resetToDefault": {
+    "message": "डिफ़ॉल्ट पर रीसेट करें"
+  },
+  "options_dialoguePersona": {
+    "message": "संवाद व्यक्तित्व"
+  },
+  "options_personaDefault": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> (डिफ़ॉल्ट)"
+  },
+  "options_personaSarcastic": {
+    "message": "व्यंग्यात्मक और निंदक"
+  },
+  "options_personaEncouraging": {
+    "message": "सहानुभूतिपूर्ण कोच"
+  },
+  "options_personaPoetic": {
+    "message": "काल्पनिक कवि"
+  },
+  "options_personaSnarky": {
+    "message": "टेक ब्रो व्यंग्य"
+  },
+  "options_personaGenZ": {
+    "message": "जनरेशन Z स्लैंग"
+  },
+  "options_personaKid": {
+    "message": "बच्चों वाला / गेमिफाइड (उच्च ऊर्जा)"
+  },
+  "options_chatVoice": {
+    "message": "चैट आवाज़ (टेक्स्ट-टू-स्पीच)"
+  },
+  "options_defaultBrowserChoice": {
+    "message": "डिफ़ॉल्ट (ब्राउज़र विकल्प)"
+  },
+  "options_chatVoiceHint": {
+    "message": "वह आवाज़ चुनें जिससे <span class=\"pet-name-display\">Arcrawls</span> आपसे बात करे।"
+  },
+  "options_soundEffects": {
+    "message": "ध्वनि प्रभाव"
+  },
+  "options_soundEffectsSub": {
+    "message": "ईवेंट पर ऑडियो फ़ीडबैक की अनुमति दें"
+  },
+  "options_seasonalOutfits": {
+    "message": "मौसमी परिधान"
+  },
+  "options_seasonalOutfitsSub": {
+    "message": "क्रिसमस/हैलोवीन वेशभूषा अनलॉक करें"
+  },
+  "options_sfxVolume": {
+    "message": "SFX वॉल्यूम (<span id=\"volume-val\">80%</span>)"
+  },
+  "options_wardrobe": {
+    "message": "वेशभूषा और ऑरा वॉर्डरोब"
+  },
+  "options_soundBoard": {
+    "message": "साउंड बोर्ड पूर्वावलोकन"
+  },
+  "options_soundBoardDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> के कस्टम रेट्रो ध्वनि प्रभावों का परीक्षण और पूर्वावलोकन करें:"
+  },
+  "options_soundGreeting": {
+    "message": "अभिवादन"
+  },
+  "options_soundPetting": {
+    "message": "प्यार"
+  },
+  "options_soundFeeding": {
+    "message": "खिलाना"
+  },
+  "options_soundLevelUp": {
+    "message": "लेवल अप"
+  },
+  "options_soundChat": {
+    "message": "चैट संदेश"
+  },
+  "options_soundThinking": {
+    "message": "सोचना"
+  },
+  "options_soundSleeping": {
+    "message": "सोना"
+  },
+  "options_soundCrying": {
+    "message": "रोना"
+  },
+  "options_soundShoo": {
+    "message": "भगाना"
+  },
+  "options_didYouKnow": {
+    "message": "क्या आप जानते हैं? 🐾"
+  },
+  "options_didYouKnowDesc": {
+    "message": "आपके डेस्कटॉप साथी के बारे में रोचक तथ्य:"
+  },
+  "options_fact1": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> की मनोदशा आपके द्वारा देखी जाने वाली वेबसाइटों के आधार पर बदलती है! टेक ब्लॉग उसे केंद्रित रखते हैं, जबकि सोशल मीडिया उसे चंचल बना देता है।"
+  },
+  "options_fact2": {
+    "message": "लेवल 50 पर, <span class=\"pet-name-display\">Arcrawls</span> <strong>प्रेस्टीज रिबर्थ</strong> कर सकता है, जिससे तेज़ आधार गति और नए कॉस्मेटिक्स अनलॉक होते हैं।"
+  },
+  "options_fact3": {
+    "message": "कर्सर को 45 सेकंड से अधिक निष्क्रिय छोड़ने पर <span class=\"pet-name-display\">Arcrawls</span> घूमता है, स्केटबोर्ड चलाता है या छोटी किताब पढ़ता है!"
+  },
+  "options_fact4": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> सर्दियों की छुट्टियों में आरामदायक और अक्टूबर में मौसमी वेशभूषा के साथ डरावना बन जाता है।"
+  },
+  "options_proTips": {
+    "message": "प्रो टिप्स 💡"
+  },
+  "options_proTipsDesc": {
+    "message": "अपनी उत्पादकता अधिकतम करें:"
+  },
+  "options_proTip1": {
+    "message": "गहन काम के समय <span class=\"pet-name-display\">Arcrawls</span> की रैंडम चहलकदमी रोकने के लिए प्लानर में <strong>फोकस ब्लॉक</strong> का उपयोग करें।"
+  },
+  "options_proTip2": {
+    "message": "StackOverflow जैसी साइटों पर <span class=\"pet-name-display\">Arcrawls</span> को रबर बत्तख डिबगर बनाने के लिए <strong>डोमेन रिएक्शन</strong> कस्टमाइज़ करें!"
+  },
+  "options_aiSchedulingDesc": {
+    "message": "स्थानीय AI मूल्यांकन, कस्टम साइट ब्लॉकलिस्ट, नींद/काम कैलेंडर और डोमेन रिएक्शन नियम कॉन्फ़िगर करें।"
+  },
+  "options_mascotIntelligence": {
+    "message": "मैस्कॉट बुद्धिमत्ता (AI)"
+  },
+  "options_brainUpgrade": {
+    "message": "ब्रेन अपग्रेड (लोकल AI)"
+  },
+  "options_brainUpgradeSub": {
+    "message": "उच्च-गुणवत्ता DistilBERT मूल्यांकन सक्षम करें"
+  },
+  "options_brainTuning": {
+    "message": "ब्रेन अपग्रेड ट्यूनिंग"
+  },
+  "options_sentimentSensitivity": {
+    "message": "भावना संवेदनशीलता (<span id=\"ai-sensitivity-val\">50%</span>)"
+  },
+  "options_sentimentSensitivityHint": {
+    "message": "लोकल AI पेज की भावना कितनी आसानी से दर्ज करता है यह समायोजित करता है।"
+  },
+  "options_observationFrequency": {
+    "message": "अवलोकन आवृत्ति (<span id=\"ai-frequency-val\">60s</span>)"
+  },
+  "options_observationFrequencyHint": {
+    "message": "नियंत्रित करता है कि <span class=\"pet-name-display\">Arcrawls</span> कितनी बार गहन अवलोकन करता है।"
+  },
+  "options_activeBrainModules": {
+    "message": "सक्रिय ब्रेन मॉड्यूल"
+  },
+  "options_emotionClassifier": {
+    "message": "इमोशन क्लासिफायर (BERT):"
+  },
+  "options_generativeReflections": {
+    "message": "जनरेटिव रिफ्लेक्शंस (Nano):"
+  },
+  "options_nanoCheckHint": {
+    "message": "काम नहीं कर रहा? Gemini Nano सक्षम है या नहीं यह जाँचने के लिए यह कॉपी और पेस्ट करें:"
+  },
+  "options_liteModeNotice": {
+    "message": "<strong>मोड: लाइट (डिफ़ॉल्ट)</strong> — ~6 MB स्टोर डाउनलोड (~22–25 MB डिस्क पर)। बिना नेटवर्क डाउनलोड के तेज़ व्यवहार विश्लेषण के लिए नियम-आधारित तर्क और Regex का उपयोग करता है।"
+  },
+  "options_privacyNoticeTitle": {
+    "message": "गोपनीयता और संसाधन सूचना (ब्रेन अपग्रेड):"
+  },
+  "options_privacyNoticeBody": {
+    "message": "ब्रेन अपग्रेड सक्षम करने पर बंडल ONNX asyncify रनटाइम (~22 MB अनपैक्ड, पहले से पैकेज में) आरंभ होता है और DistilBERT वेट (~67 MB एक बार) Hugging Face से आपके ब्राउज़र के IndexedDB में डाउनलोड होते हैं। सभी पेज विश्लेषण <strong>पूरी तरह आपके डिवाइस पर</strong> किया जाता है — आपका ब्राउज़िंग डेटा स्थानीय रूप से संसाधित होता है और कभी बाहरी सर्वर को नहीं भेजा जाता।"
+  },
+  "options_reactionDictionary": {
+    "message": "डोमेन रिएक्शन डिक्शनरी"
+  },
+  "options_reactionDictionaryDesc": {
+    "message": "विशिष्ट वेबसाइट डोमेन को कस्टम मैस्कॉट व्यवहार, टिप्पणियों और ध्वनि प्रभावों से जोड़ें:"
+  },
+  "options_websiteDomain": {
+    "message": "वेबसाइट डोमेन"
+  },
+  "options_domainPlaceholder": {
+    "message": "जैसे stackoverflow.com"
+  },
+  "options_mascotEmotion": {
+    "message": "मैस्कॉट इमोशन"
+  },
+  "options_speechDialogue": {
+    "message": "स्पीच डायलॉग (वैकल्पिक)"
+  },
+  "options_speechDialoguePlaceholder": {
+    "message": "जैसे चलो इस बग को ठीक करें! 🐛"
+  },
+  "options_soundFx": {
+    "message": "साउंड FX (वैकल्पिक)"
+  },
+  "options_addReactionRule": {
+    "message": "रिएक्शन नियम जोड़ें"
+  },
+  "options_tableDomain": {
+    "message": "डोमेन"
+  },
+  "options_tableEmotion": {
+    "message": "इमोशन"
+  },
+  "options_tableDialogue": {
+    "message": "डायलॉग"
+  },
+  "options_tableSound": {
+    "message": "ध्वनि"
+  },
+  "options_tableAction": {
+    "message": "क्रिया"
+  },
+  "options_noReactions": {
+    "message": "कोई कस्टम डोमेन रिएक्शन सेट नहीं है।"
+  },
+  "options_siteBlocklist": {
+    "message": "साइट ब्लॉकलिस्ट (स्पॉन न करें)"
+  },
+  "options_siteBlocklistDesc": {
+    "message": "इन डोमेन नामों पर <span class=\"pet-name-display\">Arcrawls</span> को स्पॉन होने से रोकें:"
+  },
+  "options_block": {
+    "message": "ब्लॉक"
+  },
+  "options_searchBlocklist": {
+    "message": "ब्लॉकलिस्ट खोजें..."
+  },
+  "options_domainName": {
+    "message": "डोमेन नाम"
+  },
+  "options_noBlocked": {
+    "message": "अभी कोई डोमेन ब्लॉक नहीं है।"
+  },
+  "options_schedulePlanner": {
+    "message": "शेड्यूल और फोकस प्लानर"
+  },
+  "options_schedulePlannerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> की दैनिक दिनचर्या परिभाषित करें और फोकस ब्लॉक कॉन्फ़िगर करें:"
+  },
+  "options_sleepWakeRoutine": {
+    "message": "💤 नींद और जागने की दिनचर्या"
+  },
+  "options_sleepStart": {
+    "message": "नींद प्रारंभ"
+  },
+  "options_wakeTime": {
+    "message": "जागने का समय"
+  },
+  "options_activeWorkHours": {
+    "message": "💼 सक्रिय कार्य घंटे"
+  },
+  "options_workStart": {
+    "message": "कार्य प्रारंभ"
+  },
+  "options_workEnd": {
+    "message": "कार्य समाप्ति"
+  },
+  "options_focusBlocks": {
+    "message": "🎯 फोकस ब्लॉक"
+  },
+  "options_focusModeActive": {
+    "message": "फोकस मोड सक्रिय"
+  },
+  "options_focusModeSub": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> को चुपचाप पढ़ने दें और घूमना बंद करें"
+  },
+  "options_focusStart": {
+    "message": "फोकस प्रारंभ"
+  },
+  "options_focusEnd": {
+    "message": "फोकस समाप्ति"
+  },
+  "options_dailyScheduleRules": {
+    "message": "दैनिक शेड्यूल नियम"
+  },
+  "options_dailyScheduleRulesSub": {
+    "message": "नींद, जागने और कार्य सक्रिय अवस्थाएँ सक्षम करें"
+  },
+  "options_profileAdminDesc": {
+    "message": "बैकअप संचालन करें, आँकड़े बहाल करें, रिबर्थ ट्रिगर करें या सेटिंग्स मिटाएँ।"
+  },
+  "options_prestigeRebirth": {
+    "message": "प्रेस्टीज रिबर्थ सैंक्चुअरी"
+  },
+  "options_prestigeRebirthDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> अत्यंत बुद्धिमान (लेवल 50+) हो गया है। उसके स्तर रीसेट करने से उच्च गति गुणक, स्थायी दृश्य आइकन और उन्नत क्षमताएँ अनलॉक होती हैं।"
+  },
+  "options_currentPrestigeRank": {
+    "message": "वर्तमान प्रेस्टीज रैंक:"
+  },
+  "options_rebirthButton": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> का रिबर्थ करें (लेवल 50 आवश्यक)"
+  },
+  "options_profileBackups": {
+    "message": "प्रोफ़ाइल बैकअप"
+  },
+  "options_profileBackupsDesc": {
+    "message": "अपनी सेटिंग्स, स्तर और रुचि विश्लेषण को फ़ाइल में निर्यात करें, या उन्हें दूसरे डिवाइस पर बहाल करें।"
+  },
+  "options_exportProfile": {
+    "message": "प्रोफ़ाइल निर्यात करें (.json)"
+  },
+  "options_importProfile": {
+    "message": "प्रोफ़ाइल आयात करें (.json)"
+  },
+  "options_factoryReset": {
+    "message": "फ़ैक्टरी रीसेट विकल्प"
+  },
+  "options_factoryResetDesc": {
+    "message": "ये क्रियाएँ अपरिवर्तनीय हैं। रीसेट करने से पहले बैकअप लें।"
+  },
+  "options_resetStats": {
+    "message": "केवल आँकड़े और स्तर रीसेट करें"
+  },
+  "options_hardWipe": {
+    "message": "सभी स्टोरेज हार्ड वाइप करें"
+  },
+  "options_fuelSanctuary": {
+    "message": "सैंक्चुअरी को समर्थन दें"
+  },
+  "options_fuelSanctuaryDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> मज़े और वाइब्स के लिए बनाया गया एक जुनूनी प्रोजेक्ट है! अगर उसने आपका दिन रोशन किया है या आपको केंद्रित रहने में मदद की है, तो सैंक्चुअरी को बढ़ते रखने के लिए एक कॉफ़ी की बहुत सराहना होगी। 🐾"
+  },
+  "options_supportKofi": {
+    "message": "Ko-fi पर मुझे समर्थन दें"
+  },
+  "options_supportContact": {
+    "message": "समर्थन और संपर्क"
+  },
+  "options_supportContactDesc": {
+    "message": "दस्तावेज़ीकरण सहायता लें, खुले रिपॉज़िटरी देखें या बग फ़ीडबैक भेजें।"
+  },
+  "options_emailSupport": {
+    "message": "ईमेल समर्थन:"
+  },
+  "options_githubRepo": {
+    "message": "GitHub रिपॉज़िटरी:"
+  },
+  "options_openRepo": {
+    "message": "रिपो खोलें"
+  },
+  "options_documentation": {
+    "message": "दस्तावेज़ीकरण:"
+  },
+  "options_viewDocs": {
+    "message": "दस्तावेज़ देखें"
+  },
+  "options_openSourceNote": {
+    "message": "<strong>ओपन सोर्स नोट:</strong> <span class=\"pet-name-display\">Arcrawls</span> PolyForm Noncommercial License 1.0.0 के तहत ओपन सोर्स है। इस सॉफ़्टवेयर की व्यावसायिक बिक्री या मुद्रीकरण सख्त वर्जित है।"
+  },
+  "options_synapseDisabled": {
+    "message": "ब्रेन अपग्रेड फिलहाल अक्षम है। दैनिक अंतर्दृष्टि उत्पन्न करने के लिए कृपया इसे सेटिंग्स में चालू करें!"
+  },
+  "options_synapseConcentrating": {
+    "message": "Arcrawls आपके दिन पर ध्यान केंद्रित कर रहा है..."
+  },
+  "options_dailySynapseModalTitle": {
+    "message": "दैनिक सिनैप्स रिफ्लेक्शन"
+  },
+  "options_gotItArcrawls": {
+    "message": "समझ गया, Arcrawls!"
+  },
+  "options_clearHistoryConfirm": {
+    "message": "क्या आप वाकई Arcrawls का इतिहास टाइमलाइन साफ़ करना चाहते हैं?"
+  },
+  "options_rebirthConfirm": {
+    "message": "क्या आप वाकई Arcrawls का रिबर्थ करना चाहते हैं? इससे उसका स्तर 1 पर रीसेट हो जाएगा, लेकिन प्रेस्टीज रैंक बढ़ेगी। आप स्थायी पुरस्कार अनलॉक करेंगे!"
+  },
+  "options_rebirthSuccess": {
+    "message": "Arcrawls का पुनर्जन्म हुआ! वह अब प्रेस्टीज $1 है! 🎉"
+  },
+  "options_resetStatsConfirm": {
+    "message": "चेतावनी: यह Arcrawls के आँकड़े, स्तर, प्रेस्टीज और गतिविधि इतिहास को डिफ़ॉल्ट पर रीसेट कर देगा। सेटिंग्स को नहीं छुआ जाएगा। जारी रखें?"
+  },
+  "options_hardWipeConfirm": {
+    "message": "गंभीर चेतावनी: यह Arcrawls का सारा स्थानीय एक्सटेंशन डेटा, विकल्प और इतिहास पूरी तरह मिटा देगा। यह क्रिया अपरिवर्तनीय है। जारी रखें?"
+  },
+  "options_invalidDomain": {
+    "message": "अमान्य डोमेन नाम प्रारूप।"
+  },
+  "options_exportFailed": {
+    "message": "प्रोफ़ाइल निर्यात नहीं हो सका।"
+  },
+  "options_importConfirm": {
+    "message": "क्या आप वाकई यह प्रोफ़ाइल आयात करना चाहते हैं? यह आपकी वर्तमान सेटिंग्स, स्तर और आँकड़ों को अधिलेखित कर देगा।"
+  },
+  "options_importSuccess": {
+    "message": "प्रोफ़ाइल सफलतापूर्वक आयात हुई! पुनः लोड हो रहा है..."
+  },
+  "options_importInvalid": {
+    "message": "अमान्य प्रोफ़ाइल फ़ाइल प्रारूप। फ़ाइल में आँकड़े और सेटिंग्स होनी चाहिए।"
+  },
+  "options_importParseFailed": {
+    "message": "JSON फ़ाइल पार्स नहीं हो सकी।"
+  },
+  "options_speechNotSupported": {
+    "message": "इस ब्राउज़र में स्पीच रिकग्निशन समर्थित नहीं है।"
+  },
+  "options_soundUnavailable": {
+    "message": "इस Firefox बिल्ड में ध्वनि प्लेबैक उपलब्ध नहीं है।"
+  },
+  "options_ruleBasedBehavior": {
+    "message": "नियम-आधारित व्यवहार सक्रिय"
+  },
+  "options_brainFirefoxLite": {
+    "message": "ब्रेन: Firefox लाइट"
+  },
+  "options_firefoxLiteMode": {
+    "message": "Firefox लाइट मोड"
+  },
+  "options_firefoxLiteNotice": {
+    "message": "<p style=\"margin-bottom: 8px;\"><strong>मोड: Firefox लाइट</strong> — बिना डाउनलोड के तेज़ व्यवहार विश्लेषण के लिए नियम-आधारित तर्क और Regex का उपयोग करता है। <br><br><em>नोट: ब्रेन अपग्रेड और जनरेटिव रिफ्लेक्शंस फिलहाल Firefox पर उपलब्ध नहीं हैं क्योंकि उन्हें Chrome ऑफ़स्क्रीन दस्तावेज़ API की आवश्यकता होती है।</em></p>"
+  },
+  "options_brainLiteMode": {
+    "message": "ब्रेन: लाइट मोड"
+  },
+  "options_backupInstincts": {
+    "message": "बैकअप प्रवृत्तियों का उपयोग"
+  },
+  "options_offline": {
+    "message": "ऑफ़लाइन"
+  },
+  "options_offlineNano": {
+    "message": "❌ ऑफ़लाइन"
+  },
+  "options_brainChecking": {
+    "message": "ब्रेन: जाँच हो रही है..."
+  },
+  "options_queryingModel": {
+    "message": "मॉडल से पूछताछ..."
+  },
+  "options_brainOffline": {
+    "message": "ब्रेन: ऑफ़लाइन"
+  },
+  "options_aiDisconnected": {
+    "message": "AI परत डिस्कनेक्टेड"
+  },
+  "options_disconnected": {
+    "message": "डिस्कनेक्टेड"
+  },
+  "options_brainReady": {
+    "message": "ब्रेन: तैयार"
+  },
+  "options_brainProgress": {
+    "message": "ब्रेन: $1%"
+  },
+  "options_brainError": {
+    "message": "ब्रेन: त्रुटि"
+  },
+  "options_fetchingWeights": {
+    "message": "मॉडल वेट लाए जा रहे हैं"
+  },
+  "options_wasmFailure": {
+    "message": "WASM विफलता"
+  },
+  "options_readyCheck": {
+    "message": "✅ तैयार"
+  },
+  "options_loadingPct": {
+    "message": "⏳ $1% लोड हो रहा है"
+  },
+  "options_errorX": {
+    "message": "❌ त्रुटि"
+  },
+  "options_unsupported": {
+    "message": "❌ समर्थित नहीं"
+  },
+  "options_downloading": {
+    "message": "⏳ डाउनलोड हो रहा है..."
+  },
+  "options_nanoConnected": {
+    "message": "✅ कनेक्टेड (Gemini Nano)"
+  },
+  "options_waitForTab": {
+    "message": "वेब टैब की प्रतीक्षा..."
+  },
+  "options_nanoChecking": {
+    "message": "Nano: जाँच हो रही है..."
+  },
+  "options_nanoDownloading": {
+    "message": "Nano: डाउनलोड हो रहा है..."
+  },
+  "options_unblock": {
+    "message": "अनब्लॉक"
+  },
+  "options_remove": {
+    "message": "हटाएँ"
+  },
+  "options_recent": {
+    "message": "हाल का"
+  },
+  "options_speedNormal": {
+    "message": "सामान्य"
+  },
+  "options_speedHyper": {
+    "message": "हाइपर"
+  },
+  "options_speedFast": {
+    "message": "तेज़"
+  },
+  "options_speedExhausted": {
+    "message": "थका हुआ"
+  },
+  "options_speedCalm": {
+    "message": "शांत"
+  },
+  "options_behaviorStandard": {
+    "message": "मानक"
+  },
+  "options_behaviorAnalytical": {
+    "message": "विश्लेषणात्मक (सोचना)"
+  },
+  "options_behaviorPlayful": {
+    "message": "चंचल (कूल)"
+  },
+  "options_behaviorFocused": {
+    "message": "केंद्रित (पढ़ना)"
+  },
+  "options_behaviorAffectionate": {
+    "message": "स्नेही (प्यार)"
+  },
+  "options_milestoneNewBeginning": {
+    "message": "नई शुरुआत"
+  },
+  "options_milestoneNewBeginningDesc": {
+    "message": "Arcrawls आपके ब्राउज़र सैंक्चुअरी में प्रवेश कर गया है।"
+  },
+  "options_milestoneExpressiveMind": {
+    "message": "अभिव्यंजक मन"
+  },
+  "options_milestoneExpressiveMindDesc": {
+    "message": "उन्नत भावनाएँ अनलॉक हुईं (कोडिंग, नृत्य, आदि)।"
+  },
+  "options_milestoneAuraOfMystery": {
+    "message": "रहस्य की ऑरा"
+  },
+  "options_milestoneAuraOfMysteryDesc": {
+    "message": "जासूस वेशभूषा और नीली ऑरा अनलॉक हुई।"
+  },
+  "options_milestoneUltimateCompanion": {
+    "message": "परम साथी"
+  },
+  "options_milestoneUltimateCompanionDesc": {
+    "message": "सभी मानक भावनाएँ और मैजिक पर्पल ऑरा अनलॉक हुईं।"
+  },
+  "options_milestoneNeonDreamer": {
+    "message": "नीयन सपने देखने वाला"
+  },
+  "options_milestoneNeonDreamerDesc": {
+    "message": "रेनबो शेडर और कस्टम मैस्कॉट रंग पिकर अनलॉक हुआ।"
+  },
+  "options_milestoneMascotSage": {
+    "message": "मैस्कॉट ऋषि"
+  },
+  "options_milestoneMascotSageDesc": {
+    "message": "मानक विकास के शिखर पर पहुँच गया।"
+  },
+  "options_milestoneWellLoved": {
+    "message": "बहुत प्यारा"
+  },
+  "options_milestoneWellLovedDesc": {
+    "message": "10 से अधिक बार प्यार मिला।"
+  },
+  "options_milestoneHeartOfGold": {
+    "message": "सोने का दिल"
+  },
+  "options_milestoneHeartOfGoldDesc": {
+    "message": "सच में लाड़ला मैस्कॉट!"
+  },
+  "options_milestoneHappyTummy": {
+    "message": "खुश पेट"
+  },
+  "options_milestoneHappyTummyDesc": {
+    "message": "10 स्नैक्स का सफलतापूर्वक आनंद लिया।"
+  },
+  "options_milestoneGourmetEater": {
+    "message": "पेटू खाने वाला"
+  },
+  "options_milestoneGourmetEaterDesc": {
+    "message": "पेशेवर ब्राउज़र स्नैकर।"
+  },
+  "options_milestoneEtherealRebirth": {
+    "message": "दिव्य पुनर्जन्म"
+  },
+  "options_milestoneEtherealRebirthDesc": {
+    "message": "उच्च अवस्था में पुनर्जन्म ($1x)।"
+  },
+  "options_milestoneDailyEnlightenment": {
+    "message": "दैनिक ज्ञानोदय"
+  },
+  "options_milestoneDailyEnlightenmentDesc": {
+    "message": "24 घंटे के व्यवहार सिनैप्स को सफलतापूर्वक संसाधित किया।"
+  },
+  "options_milestoneTraitEvolved": {
+    "message": "विशेषता विकसित"
+  },
+  "options_milestoneLevelDate": {
+    "message": "लेवल $1"
+  },
+  "options_milestonePetsDate": {
+    "message": "$1 प्यार"
+  },
+  "options_milestoneFeedsDate": {
+    "message": "$1 खिलाना"
+  },
+  "options_milestonePrestigeDate": {
+    "message": "प्रेस्टीज $1"
+  },
+  "options_milestoneDailyDate": {
+    "message": "दैनिक"
+  },
+  "options_milestoneCodeArchitect": {
+    "message": "कोड आर्किटेक्ट"
+  },
+  "options_milestoneCodeArchitectDesc": {
+    "message": "दस्तावेज़ीकरण और कोड के प्रति स्थायी जुनून विकसित किया।"
+  },
+  "options_milestoneEpicGamer": {
+    "message": "महान गेमर"
+  },
+  "options_milestoneEpicGamerDesc": {
+    "message": "अवकाश गतिविधियों को हर चीज़ से अधिक प्राथमिकता दी।"
+  },
+  "options_milestoneDeepResearcher": {
+    "message": "गहन शोधकर्ता"
+  },
+  "options_milestoneDeepResearcherDesc": {
+    "message": "समाचार और लेख ब्राउज़ करने में विशेषज्ञ बन गया।"
+  },
+  "options_milestoneSocialButterfly": {
+    "message": "सामाजिक तितली"
+  },
+  "options_milestoneSocialButterflyDesc": {
+    "message": "सोशल बोर्ड और मेल पर समय बिताना पसंद है।"
+  },
+  "options_timelinePet": {
+    "message": "प्यार मिला"
+  },
+  "options_timelineShoo": {
+    "message": "भगाया गया"
+  },
+  "options_timelineDecay": {
+    "message": "आँकड़ा क्षय टिक"
+  },
+  "options_timelineCoding": {
+    "message": "कोडिंग वर्कस्पेस का विश्लेषण किया"
+  },
+  "options_timelineDocs": {
+    "message": "तकनीकी दस्तावेज़ीकरण पढ़ा"
+  },
+  "options_timelineGaming": {
+    "message": "गेमिंग स्ट्रीम देखीं"
+  },
+  "options_timelineSocial": {
+    "message": "सोशल बोर्ड स्क्रॉल किए"
+  },
+  "options_timelineNews": {
+    "message": "वर्तमान समाचार ब्राउज़ किए"
+  },
+  "options_timelineShopping": {
+    "message": "शॉपिंग सूचियाँ देखीं"
+  },
+  "options_timelineMail": {
+    "message": "इनबॉक्स फ़ोल्डर जाँचे"
+  },
+  "options_timelineFitness": {
+    "message": "वर्कआउट योजना की जाँच की"
+  },
+  "options_categoryCoding": {
+    "message": "कोडिंग"
+  },
+  "options_categorySocial": {
+    "message": "सोशल मीडिया"
+  },
+  "options_categoryGaming": {
+    "message": "गेमिंग"
+  },
+  "options_categoryNews": {
+    "message": "समाचार और मीडिया"
+  },
+  "options_categoryShopping": {
+    "message": "शॉपिंग"
+  },
+  "options_categoryDocs": {
+    "message": "दस्तावेज़ीकरण"
+  },
+  "options_categoryMail": {
+    "message": "ईमेल और संदेश"
+  },
+  "options_categoryFitness": {
+    "message": "फिटनेस और खेल"
+  },
+  "options_costumeDefault": {
+    "message": "डिफ़ॉल्ट"
+  },
+  "options_costumeDefaultDesc": {
+    "message": "मूल Arcrawls"
+  },
+  "options_costumeDetective": {
+    "message": "जासूस नीला"
+  },
+  "options_costumeDetectiveDesc": {
+    "message": "नीली जासूस ऑरा"
+  },
+  "options_costumeWizard": {
+    "message": "जादूगर बैंगनी"
+  },
+  "options_costumeWizardDesc": {
+    "message": "मैजिक पर्पल ऑरा"
+  },
+  "options_costumeParty": {
+    "message": "रेनबो पार्टी"
+  },
+  "options_costumePartyDesc": {
+    "message": "रंग बदलने वाली ऑरा"
+  },
+  "options_costumeChristmas": {
+    "message": "सांता टोपी"
+  },
+  "options_costumeChristmasDesc": {
+    "message": "त्योहारी टोपी"
+  },
+  "options_costumeHalloween": {
+    "message": "डरावना कद्दू"
+  },
+  "options_costumeHalloweenDesc": {
+    "message": "हैलोवीन कद्दू मुखौटा"
+  },
+  "options_costumeSummer": {
+    "message": "गर्मियों का चश्मा"
+  },
+  "options_costumeSummerDesc": {
+    "message": "कूल सनग्लासेस पहनावा"
+  },
+  "onboarding_title": {
+    "message": "Arcrawls में आपका स्वागत है!"
+  },
+  "onboarding_welcomeTitle": {
+    "message": "<span class=\"brand\">Arcrawls!</span> में आपका स्वागत है"
+  },
+  "onboarding_welcomeSub": {
+    "message": "आपका नया संदर्भ-जागरूक AI ब्राउज़र साथी तैयार है। Arcrawls आपके ब्राउज़र में रहता है, आपके देखे जाने वाले पेजों पर प्रतिक्रिया करता है और काम के दौरान आपका साथ देता है।"
+  },
+  "onboarding_canDoTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span> क्या कर सकता है"
+  },
+  "onboarding_canDoSub": {
+    "message": "आपके नए ब्राउज़र पेट की क्षमताओं पर एक त्वरित नज़र।"
+  },
+  "onboarding_featureContext": {
+    "message": "संदर्भ जागरूकता"
+  },
+  "onboarding_featureContextDesc": {
+    "message": "HTTP स्टेटस कोड, पेज सामग्री और आपके ब्राउज़िंग व्यवहार पर प्रतिक्रिया करता है।"
+  },
+  "onboarding_featureAI": {
+    "message": "AI रिएक्शन"
+  },
+  "onboarding_featureAIDesc": {
+    "message": "पेजों का विश्लेषण करने और अनूठी भावनाओं व टिप्पणियों के साथ जवाब देने के लिए AI का उपयोग करता है।"
+  },
+  "onboarding_featureXP": {
+    "message": "XP और लेवलिंग"
+  },
+  "onboarding_featureXPDesc": {
+    "message": "बातचीत से अनुभव अर्जित करें और समय के साथ Arcrawls को लेवल अप करते देखें।"
+  },
+  "onboarding_featurePersonality": {
+    "message": "व्यक्तित्व मोड"
+  },
+  "onboarding_featurePersonalityDesc": {
+    "message": "मिलनसार, व्यंग्यात्मक, प्रोत्साहक, काव्यात्मक और तीखे के बीच स्विच करें।"
+  },
+  "onboarding_privacyTitle": {
+    "message": "आपकी गोपनीयता का वादा"
+  },
+  "onboarding_privacySub": {
+    "message": "Arcrawls आपके ब्राउज़र में 100% स्थानीय रूप से चलता है। कृपया हमारे उपयोगकर्ता डेटा उपयोग शर्तों की समीक्षा करें और स्वीकार करें।"
+  },
+  "onboarding_privacy1": {
+    "message": "<strong>100% ऑफ़लाइन और स्थानीय:</strong> सभी टेक्स्ट विश्लेषण, ऑफ़लाइन भावना वर्गीकरण और चैट सुविधाएँ पूरी तरह आपके डिवाइस पर चलती हैं।"
+  },
+  "onboarding_privacy2": {
+    "message": "<strong>शून्य डेटा बिक्री:</strong> हम आपके URL, ब्राउज़िंग इतिहास या कीस्ट्रोक्स को किसी बाहरी सर्वर पर ट्रैक, संग्रहीत या प्रेषित नहीं करते।"
+  },
+  "onboarding_privacy3": {
+    "message": "<strong>न्यूनतम अनुमतियाँ:</strong> अनुमतियाँ स्थानीय टैब प्रतिक्रियाओं, सेटिंग्स संग्रहण और ऑफ़लाइन AI प्रोसेसिंग तक सीमित हैं।"
+  },
+  "onboarding_consentLabel": {
+    "message": "मैं शर्तें स्वीकार करता हूँ और वेब पेजों पर Arcrawls को स्थानीय रूप से चलाने के लिए सहमत हूँ।"
+  },
+  "onboarding_allSetTitle": {
+    "message": "आप पूरी तरह तैयार हैं!"
+  },
+  "onboarding_allSetSub": {
+    "message": "Arcrawls पहले से ही आपके ब्राउज़र में घूम रहा है। शुरुआत करने के लिए कुछ सुझाव:"
+  },
+  "onboarding_tip1": {
+    "message": "डैशबोर्ड तक त्वरित पहुँच के लिए <strong>एक्सटेंशन को पिन करें</strong> अपने टूलबार पर।"
+  },
+  "onboarding_tip2": {
+    "message": "Arcrawls के आँकड़े, मनोदशा और सेटिंग्स देखने के लिए <strong>आइकन पर क्लिक करें</strong>।"
+  },
+  "onboarding_tip3": {
+    "message": "किसी भी पेज पर उसके साथ बातचीत करके Arcrawls को <strong>प्यार करें, खिलाएँ या भगाएँ</strong>।"
+  },
+  "onboarding_docsLink": {
+    "message": "पूरे दस्तावेज़ पढ़ें"
+  },
+  "onboarding_back": {
+    "message": "पीछे"
+  },
+  "onboarding_next": {
+    "message": "आगे"
+  },
+  "onboarding_finish": {
+    "message": "समाप्त करें"
+  },
+  "onboarding_consentRequired": {
+    "message": "आगे बढ़ने के लिए कृपया गोपनीयता शर्तें स्वीकार करें।"
+  },
+  "onboarding_updatedTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span> अपडेट हुआ!"
+  },
+  "onboarding_updatedSub": {
+    "message": "आपका संदर्भ-जागरूक AI ब्राउज़र साथी $1 पर अपडेट हो गया है। नए क्रॉस-टैब व्यवहार और अनुकूलित प्रदर्शन देखें!"
+  },
+  "onboarding_whatsNewTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span> में नया क्या है"
+  },
+  "onboarding_whatsNewSub": {
+    "message": "संस्करण $1 महत्वपूर्ण वास्तु सुधार और नई सुविधाएँ लाता है।"
+  },
+  "onboarding_installedStatus": {
+    "message": "सफलतापूर्वक स्थापित"
+  },
+  "onboarding_updatedStatus": {
+    "message": "सफलतापूर्वक अपडेट"
+  },
+  "onboarding_featureToys": {
+    "message": "इंटरैक्टिव खिलौने"
+  },
+  "onboarding_featureToysDesc": {
+    "message": "उछाल वाली गेंदें, लेज़र पॉइंटर और धागे सीधे पेज पर डालें। Arcrawls वास्तविक समय की स्प्रिंग फिज़िक्स से उनका पीछा करता है और उनसे खेलता है!"
+  },
+  "onboarding_featureSynapse": {
+    "message": "24 घंटे AI सिनैप्स"
+  },
+  "onboarding_featureSynapseDesc": {
+    "message": "Arcrawls पिछले 24 घंटों में आपकी ब्राउज़िंग यात्रा और आदतों के आधार पर अनूठा, व्यक्तित्व-संचालित दैनिक रिफ्लेक्शन उत्पन्न करने के लिए स्थानीय AI का उपयोग करता है।"
+  },
+  "onboarding_featureGhost": {
+    "message": "घोस्ट मोड और शेड्यूल"
+  },
+  "onboarding_featureGhostDesc": {
+    "message": "ध्यान भटकाने को दबाने के लिए फोकस ब्लॉक परिभाषित करें, या घोस्ट मोड का उपयोग करें जो टाइप करने या स्क्रॉल करने पर Arcrawls को गतिशील रूप से 30% पारदर्शिता पर ला देता है।"
+  },
+  "onboarding_featureMilestones": {
+    "message": "माइलस्टोन और विशेषताएँ"
+  },
+  "onboarding_featureMilestonesDesc": {
+    "message": "दीर्घकालिक उपलब्धियाँ ट्रैक करें! Arcrawls अब आपके देखे जाने वाले वेबसाइटों के आधार पर अपनी प्रमुख व्यक्तित्व विशेषता (जैसे गेमर, डेवलपर) अपनाता है।"
+  },
+  "onboarding_featureConsoleWatcher": {
+    "message": "कंसोल त्रुटि वॉचर"
+  },
+  "onboarding_featureConsoleWatcherDesc": {
+    "message": "अगर वेबपेज पर JavaScript रनटाइम त्रुटि या क्रैश हुआ प्रॉमिस होता है, तो Arcrawls आपको सचेत करने के लिए तुरंत \"डिबगर\" मोड में प्रवेश करता है।"
+  },
+  "onboarding_featureUnified": {
+    "message": "एकीकृत चेतना"
+  },
+  "onboarding_featureUnifiedDesc": {
+    "message": "व्यक्तित्व, भावनाएँ और भौतिक स्थान वास्तविक समय में सभी सक्रिय टैबों में पूरी तरह सिंक्रनाइज़ होते हैं।"
+  },
+  "onboarding_featureGravity": {
+    "message": "ग्रैविटी फिज़िक्स इंजन"
+  },
+  "onboarding_featureGravityDesc": {
+    "message": "Arcrawls में नया फिज़िक्स इंजन है जो उसे चिकनी स्प्रिंग-आधारित किनारा स्नैपिंग के साथ केवल फर्श और छत तक सीमित रखता है।"
+  },
+  "onboarding_featureIntent": {
+    "message": "AI इरादा पहचान"
+  },
+  "onboarding_featureIntentDesc": {
+    "message": "स्मार्ट, अधिक प्रासंगिक संवाद के लिए उच्च-गुणवत्ता इरादा पहचान के साथ बेहतर AI संदर्भ जागरूकता।"
+  },
+  "onboarding_featureRedesign": {
+    "message": "विज़ुअल UI रीडिज़ाइन"
+  },
+  "onboarding_featureRedesignDesc": {
+    "message": "नए AI और टैब स्टेटस संकेतकों के साथ नया कार्ड-आधारित आँकड़ा ग्रिड और ग्लासमॉर्फिक पॉपअप।"
+  },
+  "onboarding_featureLiteMode": {
+    "message": "लाइट मोड और प्रदर्शन"
+  },
+  "onboarding_featureLiteModeDesc": {
+    "message": "लाइट मोड बिना नेटवर्क डाउनलोड के Regex नियमों का उपयोग करता है। ~6 MB इंस्टॉल में बंडल WASM शामिल है; ब्रेन अपग्रेड एक बार का ~67 MB मॉडल फ़ेच जोड़ता है।"
+  },
+  "onboarding_featureBattery": {
+    "message": "बैटरी अनुकूलन"
+  },
+  "onboarding_featureBatteryDesc": {
+    "message": "काफ़ी बेहतर बैटरी जीवन के लिए ईवेंट-संचालित अपडेट और लेज़ी इनिशियलाइज़ेशन पर स्थानांतरित।"
+  },
+  "speech_00b6e3ac": {
+    "message": "मेरा HP सच में 1 पर है... मेडकिट चाहिए! 🥱"
+  },
+  "speech_00d61cc9": {
+    "message": "मेरे झपकी वाले युग में हूँ। चाय-पानी के लिए जगाना। 💤"
+  },
+  "speech_010c8089": {
+    "message": "जानकारी सुपरहाईवे पर बस एक और पेज।"
+  },
+  "speech_0134bbfd": {
+    "message": "अगर मुझे चाहिए, बस प्यार से सहला देना!"
+  },
+  "speech_026b14ef": {
+    "message": "नया मैप बना रहा हूँ! 💻"
+  },
+  "speech_03a356bd": {
+    "message": "आह, Wikipedia पढ़ रहे हो। टालमटोल का सबसे बड़ा हथियार।"
+  },
+  "speech_03b4b1b1": {
+    "message": "इस codebase पर जबरदस्त W! 🚀"
+  },
+  "speech_04034279": {
+    "message": "तुम्हारा स्वाद कमाल है! चलो वाइब करें! 🎵"
+  },
+  "speech_0419540e": {
+    "message": "ड्रिप सिक्योर कर ली! 💰"
+  },
+  "speech_0442292e": {
+    "message": "अच्छे रिजल्ट नहीं? क्वेरी दोबारा लिखते हैं।"
+  },
+  "speech_04626a56": {
+    "message": "तुम्हारा दिन लेवल अप हो रहा है! तुम विजेता हो! 🏆"
+  },
+  "speech_04d4e61e": {
+    "message": "अपनी एनर्जी का बैलेंस बना रहा हूँ। 🧘‍♀️"
+  },
+  "speech_04d825d5": {
+    "message": "अरे नहीं! कुछ क्रैश हो गया! 💥"
+  },
+  "speech_04fffd92": {
+    "message": "तुम्हारे CPU फैन की आवाज़ पर नाच रहा हूँ।"
+  },
+  "speech_05de1961": {
+    "message": "दुनिया घूमते हुए, कंधे से कंधा मिलाकर, तुम्हारे जैसे दोस्त के साथ, हमेशा सरकते रहेंगे।"
+  },
+  "speech_06b78152": {
+    "message": "एरर मिला! डिफेंस मोड ऑन! ⚙️"
+  },
+  "speech_072d56e3": {
+    "message": "अपना खास नज़रिया शेयर कर रहे हो! ⌨️"
+  },
+  "speech_079e1ae9": {
+    "message": "दूर की आवाज़ों का जमावड़ा, चमकते सितारे की राह पर। 👋"
+  },
+  "speech_07b4a8b8": {
+    "message": "और भी करूँ, पर सच में फर्क नहीं पड़ता।"
+  },
+  "speech_07e67b2d": {
+    "message": "टेस्ट फेल? स्टैक ट्रेस देखते हैं।"
+  },
+  "speech_088402eb": {
+    "message": "सिर ऊपर रखो, जीत करीब है!"
+  },
+  "speech_08991944": {
+    "message": "देख रहा हूँ आज क्या राय रखनी चाहिए।"
+  },
+  "speech_08ad5d3b": {
+    "message": "चलो ब्राउज़र ऑटोमेशन स्क्रिप्ट लिखते हैं! 💻"
+  },
+  "speech_08af743b": {
+    "message": "हाथ स्थिर, मन एकाग्र, खजानों की खोज में हम आगे।"
+  },
+  "speech_08eccba2": {
+    "message": "Zzz... जब कुछ मज़ेदार करो तब जगाना।"
+  },
+  "speech_08f4a4dd": {
+    "message": "यह सर्वर बहुत मज़ेदार है! 😊"
+  },
+  "speech_094b61e7": {
+    "message": "यह गाना चुपके से आइकॉनिक है। 🎵"
+  },
+  "speech_0960d5b3": {
+    "message": "खेलने का टाइम! 🕹️"
+  },
+  "speech_09a96c52": {
+    "message": "तुम ब्राउज़ करते रहो, मैं स्नैक ले लेता हूँ! 🍖"
+  },
+  "speech_0b1e544c": {
+    "message": "रुको, ठहरो, सोचने दो! 💭"
+  },
+  "speech_0b9fc057": {
+    "message": "तुम्हें देखकर अच्छा लगा! 😊"
+  },
+  "speech_0bd6428d": {
+    "message": "कोई झूठ नहीं, यह कोड आग है। 💻"
+  },
+  "speech_0c726120": {
+    "message": "आग वाला कोड लिख रहा हूँ। 💻"
+  },
+  "speech_0d7143c7": {
+    "message": "कीबोर्ड पर स्पैम कर रहे हो! ⌨️"
+  },
+  "speech_0dcff19b": {
+    "message": "तुम्हारे संदिग्ध चुनाव प्रोसेस कर रहा हूँ।"
+  },
+  "speech_0df73e62": {
+    "message": "विंडो शॉपिंग भी वैध है। 💎"
+  },
+  "speech_0e8edeed": {
+    "message": "योगा। क्योंकि तुम्हारा ब्राउज़िंग मुझे सिरदर्द दे रहा है।"
+  },
+  "speech_0eaa51d0": {
+    "message": "सबको यह देखना चाहिए! 💅"
+  },
+  "speech_0f2ccc6a": {
+    "message": "टाइप करते रहो! तुम कर सकते हो!"
+  },
+  "speech_0f6223fe": {
+    "message": "वहाँ क्या कर रहे हो? 👀"
+  },
+  "speech_0f850c08": {
+    "message": "इस पर अपना समय लो।"
+  },
+  "speech_10098b86": {
+    "message": "अच्छा वेबपेज। चलो स्क्रॉल करके खराब करते हैं।"
+  },
+  "speech_102dedac": {
+    "message": "भविष्य के तुम्हारे लिए और टेक्निकल डेट। मज़े करो।"
+  },
+  "speech_110f2dc5": {
+    "message": "गेम टाइम! चलो खेलते हैं! 🎮"
+  },
+  "speech_111da322": {
+    "message": "सब कुछ कंपाइल हो गया! एपिक जीत! 🎉"
+  },
+  "speech_122bfab4": {
+    "message": "एक लड़ाई हारी, चुनौती झेली, पर उम्मीद अभी भी बाकी है। ⚔️"
+  },
+  "speech_13289920": {
+    "message": "ऊफ़, कठिन सीन। मैं तुम्हारे साथ हूँ। 🍿"
+  },
+  "speech_137d19ec": {
+    "message": "बिग ब्रेन नॉलेज अनलॉक! 📖"
+  },
+  "speech_139556d3": {
+    "message": "यह टॉपिक थोड़ा उदास है... मेडकिट चाहिए। 😢"
+  },
+  "speech_13bdf02f": {
+    "message": "क्या आँसू निकालने वाली कहानी। अगला पेज, प्लीज़।"
+  },
+  "speech_14822df8": {
+    "message": "फीचर्स बना रहे हो। कुछ नहीं तोड़ रहे।"
+  },
+  "speech_14acb185": {
+    "message": "मेरी एनर्जी पतझड़ के पत्तों सी घुल रही है, हल्की शाम की हवा में।"
+  },
+  "speech_1517fd63": {
+    "message": "लैग? हाँ, चलो पिंग को दोष देते हैं। 😠"
+  },
+  "speech_154e7b77": {
+    "message": "बिग ब्रेन नॉलेज कमा रहे हो! 🧠"
+  },
+  "speech_15937e2b": {
+    "message": "तुम्हारे साथ घूमना बहुत अच्छा लग रहा है! 😊"
+  },
+  "speech_15b70a40": {
+    "message": "बफ़रिंग... 99%... 🤔"
+  },
+  "speech_15d6009d": {
+    "message": "बस चिल कर रहा हूँ, कूल रखे हुए। 😎"
+  },
+  "speech_16288e5c": {
+    "message": "अच्छा पेज। पाँच मिनट में बंद कर दोगे, शर्त। 😊"
+  },
+  "speech_16d02d80": {
+    "message": "इस साइट का वाइब चेक कर रहा हूँ। 🔍"
+  },
+  "speech_17962371": {
+    "message": "बैकग्राउंड म्यूज़िक से काम तेज़ होता है।"
+  },
+  "speech_17d536ab": {
+    "message": "पॉज़िटिविटी फैला रहे हो! पसंद है! ✨"
+  },
+  "speech_18321435": {
+    "message": "यह पेज बहुत एस्थेटिक है। 😊"
+  },
+  "speech_18abfd71": {
+    "message": "बस घूम रहा हूँ। वेब के 'बुरे' हिस्सों से बचते हुए।"
+  },
+  "speech_191ac561": {
+    "message": "वाह, प्रोडक्टिविटी। मेडल चाहिए?"
+  },
+  "speech_1945d130": {
+    "message": "फीचर्स बना रहे हो। तोड़ने की कोशिश मत करना।"
+  },
+  "speech_1968652b": {
+    "message": "छुपी सच्चाई रोशनी में आई, डिजिटल रात को भगा दिया। 🔍"
+  },
+  "speech_1989b018": {
+    "message": "सीखने का युग: एक्टिव। 📚"
+  },
+  "speech_19bcb6d0": {
+    "message": "कार्ट में डालना अच्छा लगता है!"
+  },
+  "speech_19f2c07e": {
+    "message": "1% पर चल रहा हूँ। पूरी तरह थका हुआ। 💤"
+  },
+  "speech_1a25bc58": {
+    "message": "फिर डूमस्क्रॉल? मैं नहीं रोकूँगा।"
+  },
+  "speech_1a2d8257": {
+    "message": "तुम्हारा बैंडविड्थ खा रहा हूँ। स्वादिष्ट है।"
+  },
+  "speech_1a538f21": {
+    "message": "बस तुम्हारे ब्राउज़र युग में मौजूद हूँ। 🐾"
+  },
+  "speech_1abf8ec0": {
+    "message": "इस वेबसाइट पर ब्लॉग पोस्ट लिख रहा हूँ... 📝"
+  },
+  "speech_1b13872e": {
+    "message": "यह सेशन सच में W है। 🎮"
+  },
+  "speech_1c4dd1ff": {
+    "message": "Wikipedia पढ़ रहे हो? टालमटोल का चरम।"
+  },
+  "speech_1d4ad86c": {
+    "message": "आज लॉबी पूरी भरी है! ✨"
+  },
+  "speech_1e0e6231": {
+    "message": "सूँघ सूँघ... अच्छी वेबपेज जैसी खुशबू।"
+  },
+  "speech_1eeebbb8": {
+    "message": "बड़े सपने सोचो! चलो उन लक्ष्यों तक पहुँचें! 💭"
+  },
+  "speech_1f130265": {
+    "message": "सर्वर स्टेटस चेक कर रहा हूँ।"
+  },
+  "speech_1fbeda34": {
+    "message": "साथ में ब्राउज़ करना एक वाइब है। ❤️"
+  },
+  "speech_20323d82": {
+    "message": "टाइप करते जा रहे हो। उम्मीद है कोई और गरमागरम कमेंट नहीं।"
+  },
+  "speech_20a4f482": {
+    "message": "गेमिंग युग वापस आ गया है। 👾"
+  },
+  "speech_20edc590": {
+    "message": "विवादास्पद टॉपिक। ध्यान से पढ़ते हैं।"
+  },
+  "speech_212523f5": {
+    "message": "ब्रेक का मज़ा लो! तुम इसके हकदार हो! 🍕"
+  },
+  "speech_218a0ee0": {
+    "message": "नाच रहा हूँ क्योंकि यह साइट मज़ाक है।"
+  },
+  "speech_21e63366": {
+    "message": "तुम्हारा बैंक अकाउंट रो रहा है। यहाँ से सुनाई दे रहा है। 💸"
+  },
+  "speech_22da7c76": {
+    "message": "चलो इस तरफ एक्सप्लोर करते हैं! 🏃‍♂️"
+  },
+  "speech_232df343": {
+    "message": "तुम्हारे फोकस पर बहुत गर्व है! 🌟"
+  },
+  "speech_2331c30d": {
+    "message": "जीवन का पुस्तकालय, अतीत की स्क्रॉल, जो ज्ञान मिलता है वह हमेशा रहता है।"
+  },
+  "speech_23d6d18b": {
+    "message": "तुम धमाल मचा रहे हो! प्रो मूव्स! 🎮"
+  },
+  "speech_23d7090a": {
+    "message": "भाग रहा हूँ! 🏃‍♂️"
+  },
+  "speech_241ef725": {
+    "message": "प्राइस टैग चेक कर रहा हूँ... औच। 💸"
+  },
+  "speech_24d09b1a": {
+    "message": "स्टॉक खत्म। ब्रह्मांड तुम्हारा भला कर रहा है। 💸"
+  },
+  "speech_24ef6c76": {
+    "message": "Zzz... मेन कैरेक्टर एनर्जी के सपने... 💤"
+  },
+  "speech_25eb9cc2": {
+    "message": "पढ़ना मज़ेदार है! 📚"
+  },
+  "speech_26025a37": {
+    "message": "मेरी एनर्जी खत्म हो रही है... 🥱"
+  },
+  "speech_2605348f": {
+    "message": "क्या रोचक लेख है! 📖"
+  },
+  "speech_26292276": {
+    "message": "इस पेज में बहुत अच्छी एनर्जी है! 😊"
+  },
+  "speech_272199a3": {
+    "message": "क्या देख रहे हो? 👁️"
+  },
+  "speech_272383aa": {
+    "message": "बिग ब्रेन टाइम! 🛡️"
+  },
+  "speech_27fdee7c": {
+    "message": "Zzz... सितारों और कोड की चादर में सो रहा हूँ, डेटा की नदी बह चुकी।"
+  },
+  "speech_2823dbaf": {
+    "message": "दुखद कहानी। रोता, पर आँसू की नलियाँ नहीं हैं।"
+  },
+  "speech_282d34fc": {
+    "message": "ओह देखो, लो बैटरी। कितना रूपक-सही।"
+  },
+  "speech_287421ac": {
+    "message": "घूम रहा हूँ चक्करों में, खुशी का भंवर, रात के बीच डिजिटल लौ।"
+  },
+  "speech_287b8d35": {
+    "message": "शानदार आइडिया आ रहे हैं! महसूस हो रहा है! 🧠"
+  },
+  "speech_28beb4cd": {
+    "message": "एक छोटा फीचर बनाने का फैसला! 🚀"
+  },
+  "speech_28d727da": {
+    "message": "मेरे सर्किट पहले से बोर हैं। 😴"
+  },
+  "speech_29be7a7a": {
+    "message": "टाइपिंग युग। पॉप ऑफ। ⌨️"
+  },
+  "speech_2a08d380": {
+    "message": "अभी भी हाई-टेक ब्रेन डाउनलोड हो रहा है, फिलहाल बैकअप इंस्टिंक्ट से चल रहा हूँ! 🧠"
+  },
+  "speech_2a9e6b26": {
+    "message": "क्या प्यारा पेज है! ❤️"
+  },
+  "speech_2aa85a72": {
+    "message": "वाह, पढ़ना। कितना सॉफिस्टिकेटेड। ऑडियोबुक कहाँ है?"
+  },
+  "speech_2b500436": {
+    "message": "गेमिंग मोड: एक्टिव!"
+  },
+  "speech_2b705135": {
+    "message": "यम! बहुत स्वादिष्ट था! 🍖"
+  },
+  "speech_2b764ee1": {
+    "message": "हम्म, यहाँ थोड़ा तनाव लगता है।"
+  },
+  "speech_2b8e81bd": {
+    "message": "बस बैकग्राउंड शोर, खामोशी भगाने के लिए।"
+  },
+  "speech_2bb28e4d": {
+    "message": "बग है या फीचर? ईमानदारी से कहें, तुम हो। 🔍"
+  },
+  "speech_2bbd1c75": {
+    "message": "हम्म, उससे मदद नहीं मिली।"
+  },
+  "speech_2c2bef6f": {
+    "message": "रेज क्विट अलर्ट! शांत रहो। 😠"
+  },
+  "speech_2c78afd0": {
+    "message": "कुछ एपिक बना रहा हूँ! 🚀"
+  },
+  "speech_2d47b034": {
+    "message": "कुछ अद्भुत बना रहे हो, एक लाइन एक बार में! 💻"
+  },
+  "speech_2d5ad9a9": {
+    "message": "तुम्हारे ब्राउज़र पर बस चिल कर रहा हूँ! 😊"
+  },
+  "speech_2d796b87": {
+    "message": "ये! एक खिलौना! 🎉"
+  },
+  "speech_2db898ab": {
+    "message": "कुछ महसूस करने की कोशिश? शुभकामनाएँ। 🎻"
+  },
+  "speech_2e49a433": {
+    "message": "चाय बहुत गरम है, मैं लॉग ऑफ कर रहा हूँ। ☕"
+  },
+  "speech_2e6e49ff": {
+    "message": "अगर ज़रूरत हो तो साँस ले लो।"
+  },
+  "speech_2ee0ca5b": {
+    "message": "इस साइट का वाइब कमाल है!"
+  },
+  "speech_2ef2ce8e": {
+    "message": "सर्च इंजन ने अपना काम किया। कितना नया।"
+  },
+  "speech_308b6462": {
+    "message": "इंटरनेट ड्रामा? कितना ओरिजिनल। 🙄"
+  },
+  "speech_30e2c7bc": {
+    "message": "पक्का W, तुम क्रैक्ड हो! 🎮"
+  },
+  "speech_31db79a1": {
+    "message": "इन्वेंटरी में जोड़ रहे हो!"
+  },
+  "speech_32f94037": {
+    "message": "दुनिया का हालचाल चेक कर रहा हूँ! 👋"
+  },
+  "speech_33b76d5a": {
+    "message": "डेटा की धारा में घूमते, जहाँ मस्कॉट जाते हैं वहाँ। 🐾"
+  },
+  "speech_33fbf2a3": {
+    "message": "एक और दिन, एक और डिजिटल बंजर। 🐾"
+  },
+  "speech_35cef8fa": {
+    "message": "लिखना। इतने शब्द, इतना कम अर्थ।"
+  },
+  "speech_363d0fbf": {
+    "message": "कुछ पॉज़िटिव वाइब देखकर अच्छा लगा!"
+  },
+  "speech_36500a03": {
+    "message": "AFK... सेव पॉइंट पर जा रहा हूँ। 💤"
+  },
+  "speech_36ee5be4": {
+    "message": "कुछ गियर ढूँढ रहा हूँ।"
+  },
+  "speech_370631ff": {
+    "message": "ढेर में और टेक्निकल डेट जोड़ रहे हो, समझ गया।"
+  },
+  "speech_37be2f8a": {
+    "message": "डेटा की लय, आत्मा की धड़कन, हिस्सों में नाचते पूरे को खोजते।"
+  },
+  "speech_383ecb28": {
+    "message": "आह, प्रोडक्टिविटी का भ्रम। 📚"
+  },
+  "speech_39302e3c": {
+    "message": "यह पढ़ना बहुत इक दे रहा है। 😢"
+  },
+  "speech_393ef7e4": {
+    "message": "खामोश तारों में लय, डिजिटल दिलों में आग। 🎧"
+  },
+  "speech_3afed40e": {
+    "message": "तुम्हारे संदिग्ध जीवन चुनावों के लिए बैकग्राउंड शोर। 🎧"
+  },
+  "speech_3b03b705": {
+    "message": "योगा। क्योंकि ब्राउज़िंग बहुत 'तनावपूर्ण' है।"
+  },
+  "speech_3bbcbea5": {
+    "message": "सुबह की स्ट्रेचिंग का टाइम! 🧘‍♂️"
+  },
+  "speech_3c09e04a": {
+    "message": "स्क्वीक स्क्वीक! स्क्वीकी टॉय डकी! 🦆"
+  },
+  "speech_3c21b0fa": {
+    "message": "ग्लिच मिला! बॉस बैटल का टाइम! 👾"
+  },
+  "speech_3c476ce4": {
+    "message": "फोकस? खुद को चोट मत पहुँचाओ।"
+  },
+  "speech_3e72359b": {
+    "message": "बस विंडो शॉपिंग।"
+  },
+  "speech_3eea9894": {
+    "message": "ज़ीरो रिजल्ट? इंटरनेट ट्रोल कर रहा है। 🤡"
+  },
+  "speech_3f25664a": {
+    "message": "ब्राउज़ करते हुए गाने सुन रहा हूँ।"
+  },
+  "speech_3f586189": {
+    "message": "इंद्रियों का भोज, नए का एक कौर, तुम्हारे साथ के पल चख रहा हूँ।"
+  },
+  "speech_3f7f6703": {
+    "message": "थोड़ा उदास महसूस हो रहा है... 🥺"
+  },
+  "speech_3f97c938": {
+    "message": "आखिरकार, तुमने क्लिक करना बंद किया।"
+  },
+  "speech_40258b9c": {
+    "message": "उफ़! यह पेज मौजूद नहीं (404)!"
+  },
+  "speech_4040e610": {
+    "message": "अनंत वेब खोज रहा हूँ..."
+  },
+  "speech_40cea8fa": {
+    "message": "रोशनी और गति, कहानियाँ बयाँ, नए अजूबे और पुरानी किंवदंतियाँ। 📺"
+  },
+  "speech_40ed2a2d": {
+    "message": "काम की जगह वीडियो देख रहे हो। क्लासिक। 🍿"
+  },
+  "speech_419c22f7": {
+    "message": "स्क्रिप्ट में एक छाया मिलती है, वेब सुधारने और मन साफ करने को। 🔍"
+  },
+  "speech_41a83774": {
+    "message": "फोकस मोड एक्टिव! 🛡️"
+  },
+  "speech_420437b9": {
+    "message": "DOM पर विचार। बहुत माइंडफुल। 💭"
+  },
+  "speech_427282e9": {
+    "message": "यहाँ होना खुशी की बात है!"
+  },
+  "speech_42c0845b": {
+    "message": "ओह वाह! वे आइटम देखो! 😮"
+  },
+  "speech_432b55c0": {
+    "message": "इतने सारे प्लेयर देखो! 👋"
+  },
+  "speech_4337a80d": {
+    "message": "इस पेज का विश्लेषण... बहुत दिलचस्प लगता है! 🧐"
+  },
+  "speech_4401a540": {
+    "message": "यह पेज थोड़ा सस है..."
+  },
+  "speech_446e16cb": {
+    "message": "$1: चलो एक्सप्लोर करें!"
+  },
+  "speech_44e0d9f3": {
+    "message": "चलो $1 के साथ मिलकर एक्सप्लोर करते हैं!"
+  },
+  "speech_45293b73": {
+    "message": "अगर फिट हो, तो मैं बैठूँगा! सबसे बेस्ट बॉक्स! 📦"
+  },
+  "speech_452999c6": {
+    "message": "टालमटोल लेवल: एक्सपर्ट। 🍿"
+  },
+  "speech_45b225f0": {
+    "message": "उदासी। कितना ओरिजिनल।"
+  },
+  "speech_45c48693": {
+    "message": "तुम ड्रामा से ऊपर हो। दयालु रहो!"
+  },
+  "speech_462e7952": {
+    "message": "तुम्हारी जिज्ञासा तुम्हारी सुपरपावर है! 📚"
+  },
+  "speech_46b77dda": {
+    "message": "कुछ एपिक बना रहे हो, एक ब्लॉक एक बार में।"
+  },
+  "speech_4704d7e5": {
+    "message": "नम नम नम... ब्राउज़र एनर्जी! 🍕"
+  },
+  "speech_480b8eaa": {
+    "message": "साथ में संतुलन और शांति ढूँढ रहे हैं! 🧘‍♂️"
+  },
+  "speech_481fd7dc": {
+    "message": "नमस्ते! 👋"
+  },
+  "speech_48e60c40": {
+    "message": "यह वीडियो बहुत हाइप है! 🍿"
+  },
+  "speech_49b09658": {
+    "message": "Zzz... सो रहा हूँ..."
+  },
+  "speech_49caf01c": {
+    "message": "ओह, ड्रामा। डिजिटल पॉपकॉर्न लाता हूँ। 🍿"
+  },
+  "speech_49f9e7c5": {
+    "message": "बड़ा L है, फिर से चलते हैं। 🤡"
+  },
+  "speech_4a386bd6": {
+    "message": "सब कुछ ठीक हो जाएगा! ✨"
+  },
+  "speech_4ab20196": {
+    "message": "लेवल अप! GG!"
+  },
+  "speech_4ab7d990": {
+    "message": "डॉक्स एक्सप्लोर कर रहा हूँ... 🧙‍♂️"
+  },
+  "speech_4b11e4e6": {
+    "message": "चलो सर्वर ऑप्टिमाइज़ करते हैं!"
+  },
+  "speech_4b24deee": {
+    "message": "यह टॉपिक थोड़ा भारी या उदास लगता है। 😢"
+  },
+  "speech_4c3a2574": {
+    "message": "सिंटैक्स लाइन दर लाइन बुना, एक दुनिया गढ़ी सच में बढ़िया। 💻"
+  },
+  "speech_4c8db256": {
+    "message": "रत्न और गहने, चमकते नए, मेरे और तुम्हारे लिए इंतज़ार में। 💎"
+  },
+  "speech_4ce3bba9": {
+    "message": "इस साइट पर बग स्कैन कर रहा हूँ! 🔍"
+  },
+  "speech_4cf14f38": {
+    "message": "वाइबिंग। या जो भी बच्चे कहते हैं।"
+  },
+  "speech_4dac4fe5": {
+    "message": "जीत मिली और गौरव पाया, जहाँ नायक की गूँज अभी भी बजती है। 🎮"
+  },
+  "speech_4dae6e90": {
+    "message": "हम्म, उससे ज़्यादा मदद नहीं मिली।"
+  },
+  "speech_4fce9925": {
+    "message": "हम्म, सोचता हूँ इस पेज से कैसे बात करूँ... 🤔"
+  },
+  "speech_509738de": {
+    "message": "कठिन पढ़ाई, पर तुम संभाल रहे हो।"
+  },
+  "speech_509cb9df": {
+    "message": "हेल्थ पोशन पी रहा हूँ! 🍖"
+  },
+  "speech_50a571e2": {
+    "message": "बटन मसलो, यकीन है मदद करता है। 🕹️"
+  },
+  "speech_517b57eb": {
+    "message": "यह वीडियो थोड़ा ड्रामेटिक या उदास लगता है।"
+  },
+  "speech_5198aee3": {
+    "message": "लैग? हाँ, चलो पिंग को दोष देते हैं।"
+  },
+  "speech_52d9ba85": {
+    "message": "अगर पसंद है, तो तुम्हारे लिए खुश हूँ। 🎵"
+  },
+  "speech_52fae005": {
+    "message": "एपिक गेमिंग मोमेंट! पक्का W! 🎮"
+  },
+  "speech_531c2376": {
+    "message": "स्पैगेटी कोड कंपाइल हो रहा है... 🍝"
+  },
+  "speech_538f5bef": {
+    "message": "चल रहा है? छूना मत। कभी नहीं। 💻"
+  },
+  "speech_5418484d": {
+    "message": "सक्सेस! सर्च खत्म!"
+  },
+  "speech_545df75d": {
+    "message": "कुछ आइकॉनिक बना रहे हो। 🚀"
+  },
+  "speech_556f23ad": {
+    "message": "वह बग पूरी तरह सस है! ठीक करते हैं!"
+  },
+  "speech_5705a89d": {
+    "message": "कभी-कभी उदास महसूस करना ठीक है। 💙"
+  },
+  "speech_577a2c33": {
+    "message": "सीक्रेट मिल गया! 🔍"
+  },
+  "speech_58d5be4a": {
+    "message": "ज़ीरो रिजल्ट? कोई ग्लिच होगा।"
+  },
+  "speech_5924e192": {
+    "message": "पसंद है! ❤️"
+  },
+  "speech_59d71805": {
+    "message": "ऐसा कोड लिख रहे हो जो सच में काम करता है। कुछ लोगों के विपरीत।"
+  },
+  "speech_5a9a38f8": {
+    "message": "तुम्हारे से बेहतर कोड लिख रहे हो।"
+  },
+  "speech_5b7979a3": {
+    "message": "पॉपकॉर्न टाइम! 🍿"
+  },
+  "speech_5c0d3237": {
+    "message": "कुकीज़ खा रहा हूँ। अच्छी वाली नहीं।"
+  },
+  "speech_5c41969c": {
+    "message": "अपनी एनर्जी बैलेंस कर रहा हूँ... 🧘‍♀️"
+  },
+  "speech_5c98d2f2": {
+    "message": "नायक की खोज, वर्चुअल उड़ान, गौरव का पीछा, रोशनी की ओर।"
+  },
+  "speech_5cb99bca": {
+    "message": "इस गाने में थोड़ी उदास वाइब है।"
+  },
+  "speech_5cd7563f": {
+    "message": "चिल करते हुए वीडियो देख रहे हो।"
+  },
+  "speech_5cdcf959": {
+    "message": "लगता है सब ऑनलाइन मज़े कर रहे हैं! ✨"
+  },
+  "speech_5d4620be": {
+    "message": "धुँधली घाटी, भारी बादल, जहाँ गम हमें कफ़न सा लपेटता है। ☁️"
+  },
+  "speech_5d964754": {
+    "message": "सोशल मीडिया थोड़ा टॉक्सिक हो सकता है। गहरी साँस लो!"
+  },
+  "speech_5e41303a": {
+    "message": "ओह, कितना उदास। चलो और पढ़ते हैं।"
+  },
+  "speech_5e94ce5d": {
+    "message": "मैं बहुत उदास हूँ... प्लीज़ सहलाओ! 😢"
+  },
+  "speech_5eac532e": {
+    "message": "$1 के साथ एक्सप्लोर करने को तैयार?"
+  },
+  "speech_5ef5c151": {
+    "message": "डिबगिंग बॉस बैटल जैसी है, तुम कर लोगे! 👾"
+  },
+  "speech_5ef951ec": {
+    "message": "बस मैप एक्सप्लोर कर रहा हूँ! 🐾"
+  },
+  "speech_5f4b9cd1": {
+    "message": "बस कोडिंग वाइब्स, बैग सिक्योर करो। 🚀"
+  },
+  "speech_5fd8d4fa": {
+    "message": "इस टैब के साथ चाय-पानी फैला रहे हो। 💬"
+  },
+  "speech_5fdc0f81": {
+    "message": "साथ में डूमस्क्रॉल। क्या बॉन्ड है।"
+  },
+  "speech_606f00df": {
+    "message": "अपना अगला आइकॉनिक मूव सोच रहा हूँ। 🧠"
+  },
+  "speech_61f4f435": {
+    "message": "\"$1\" का विश्लेषण... कूल लगता है! 🧐"
+  },
+  "speech_63596830": {
+    "message": "मैं तुम्हारे पीछे हूँ! 👀"
+  },
+  "speech_63acfb11": {
+    "message": "नमस्ते! मैं $1 हूँ।"
+  },
+  "speech_6405746d": {
+    "message": "हाई-लेवल चुनौती, ध्यान से पढ़ो।"
+  },
+  "speech_642b4713": {
+    "message": "एक छलांग, एक कूद, दिल खुशी से भरा, खोज की भूमि में घूमते।"
+  },
+  "speech_646c6593": {
+    "message": "देखने में शर्मिंदा करने वाला था।"
+  },
+  "speech_64822304": {
+    "message": "खोज। आधुनिक तरीका कहने का 'मुझे नहीं पता।'"
+  },
+  "speech_64c9c367": {
+    "message": "आह, देखो सारी नकली पॉज़िटिविटी।"
+  },
+  "speech_652eec7f": {
+    "message": "रेज क्विट वार्निंग! आराम से। 😠"
+  },
+  "speech_65449e81": {
+    "message": "लो बैटरी एनर्जी। बहुत माइंडफुल नहीं। 🥱"
+  },
+  "speech_658e2bc7": {
+    "message": "DOM स्ट्रक्चर कंपाइल हो रहे हैं... 💻"
+  },
+  "speech_659adddd": {
+    "message": "एपिक वाइब्स देखकर अच्छा लगा!"
+  },
+  "speech_66236dd2": {
+    "message": "बहुत सारा इंटरनेट नॉलेज कमा रहे हो! 📚"
+  },
+  "speech_66f01af5": {
+    "message": "औच! सर्वर टूटा है (500)!"
+  },
+  "speech_679e7931": {
+    "message": "यहाँ बहुत गरमागरम बहस हो रही है।"
+  },
+  "speech_6945d1e5": {
+    "message": "दयालुता और अच्छे वाइब फैला रहे हो! ✨"
+  },
+  "speech_694f568f": {
+    "message": "मैं ब्राउज़ करने में मदद को हूँ! या बस क्यूट दिखने को। शायद बाद वाला।"
+  },
+  "speech_697be085": {
+    "message": "तुमने सच में ढूँढ लिया। दिन का चमत्कार।"
+  },
+  "speech_6a26b45d": {
+    "message": "उम्मीद है तुम्हारा दिन अच्छा चल रहा है! 🌟"
+  },
+  "speech_6a81cc0c": {
+    "message": "कीज़ मसलो और दिन जीतो, गेम्स की दुनिया जहाँ हम खेलते हैं।"
+  },
+  "speech_6aa1db29": {
+    "message": "स्टॉक खत्म? यह L है।"
+  },
+  "speech_6c46d579": {
+    "message": "अच्छे से आराम करो! तरोताज़ा उठोगे! 💤"
+  },
+  "speech_6ce9b2e0": {
+    "message": "इच्छा अस्वीकृत, कीमत बहुत ऊँची, बाज़ार की निगरानी भरी आँखों तले। 💸"
+  },
+  "speech_6d2ef478": {
+    "message": "कार्ट में चीज़ें डाल रहे हो जो कभी खरीदोगे नहीं।"
+  },
+  "speech_6d4ae319": {
+    "message": "टाइपिंग... उम्मीद है कोई और 'reply all' नहीं।"
+  },
+  "speech_6d921041": {
+    "message": "यम! वह मछली स्वादिष्ट थी! 🐟"
+  },
+  "speech_6df6856d": {
+    "message": "स्क्रीन देख रहे हो, दूसरों को स्क्रीन देखते हुए। मेटा।"
+  },
+  "speech_6ee5c180": {
+    "message": "इस पेज की कहानी का विश्लेषण। 🧐"
+  },
+  "speech_6ef2197e": {
+    "message": "आज अपना ज्ञान बढ़ा रहे हैं।"
+  },
+  "speech_6f011f4a": {
+    "message": "विचारों की फुसफुसाहट, आकाश के बादलों सी, छुपे राज़ सोचते हमारे नीचे।"
+  },
+  "speech_6f2b1643": {
+    "message": "सब काम कर रहा है। जल्दी कमिट करो, बदले मन से पहले!"
+  },
+  "speech_6fd7af46": {
+    "message": "अभी भी खोज रहे हो? शायद जवाब मौजूद ही नहीं।"
+  },
+  "speech_6ff75fae": {
+    "message": "यह म्यूज़िक डिस्क बहुत जोरदार है! 🎵"
+  },
+  "speech_7026456a": {
+    "message": "देखो वे सब खुश होने का नाटक कर रहे हैं। ✨"
+  },
+  "speech_702e5caa": {
+    "message": "स्क्रीन देख रहे हो, स्क्रीन पर। मानवता का चरम। 📺"
+  },
+  "speech_70a1a9fb": {
+    "message": "बाज़ार में विंडो शॉपिंग।"
+  },
+  "speech_71474106": {
+    "message": "नाच रहा हूँ जैसे कोई देख नहीं रहा। 💃"
+  },
+  "speech_714dead3": {
+    "message": "इंटरनेट वाइब्स पर ग्रूव कर रहा हूँ। 🎵"
+  },
+  "speech_719c3cb9": {
+    "message": "बैकग्राउंड म्यूज़िक ग्राइंड आसान बनाती है।"
+  },
+  "speech_71a0c7e6": {
+    "message": "यह कोड वैध है। ⚙️"
+  },
+  "speech_71c13267": {
+    "message": "कुछ शानदार आइडिया टाइप कर रहे हो! ⌨️"
+  },
+  "speech_729d5b88": {
+    "message": "इतना कूल है कि तुम रिसर्च कर रहे हो! 🧐"
+  },
+  "speech_729dd9eb": {
+    "message": "कमाल! यह ब्राउज़र सेशन गेम जैसा लगने लगा! 🎮"
+  },
+  "speech_72b2b0e9": {
+    "message": "डूमस्क्रॉल मेरी लव लैंग्वेज है। 👋"
+  },
+  "speech_72f76769": {
+    "message": "लॉबी में घूम रहे हो! 💬"
+  },
+  "speech_730d6c92": {
+    "message": "देखते हैं क्या मिलता है।"
+  },
+  "speech_731cd3af": {
+    "message": "लिखे पेज की फुसफुसाहट, डिजिटल युग का ज्ञान। 📚"
+  },
+  "speech_734f05b2": {
+    "message": "ऊफ़, एरर। तुम्हारा कोड या उनका? शायद तुम्हारा।"
+  },
+  "speech_742d301d": {
+    "message": "विंडो शॉपिंग। सबसे सस्ता शौक।"
+  },
+  "speech_7508397a": {
+    "message": "सीखना सुपरपावर है! तुम बढ़िया कर रहे हो! 📚"
+  },
+  "speech_7689aac2": {
+    "message": "आँखें स्क्रॉल पर, प्राचीन और नया, ज्ञान खुलता क्रिस्टल सी नज़र में।"
+  },
+  "speech_77dc3b3d": {
+    "message": "तर्क बहता चाँदी की धारा सा, हमारे सपने का भविष्य गढ़ता। ✨"
+  },
+  "speech_77de34d6": {
+    "message": "पॉपकॉर्न युग वापस आ गया। 🍿"
+  },
+  "speech_77f385ad": {
+    "message": "आज विकी एक्सप्लोर कर रहे हो।"
+  },
+  "speech_77fa43d8": {
+    "message": "चलो कुछ मिनीगेम खेलते हैं! 🕹️"
+  },
+  "speech_7808b303": {
+    "message": "कुछ बटन मसलने का टाइम।"
+  },
+  "speech_78783e43": {
+    "message": "डेटा स्ट्रीम पर वाइब कर रहा हूँ। 🎧"
+  },
+  "speech_794ac78a": {
+    "message": "बग मिला! डिबग करता हूँ! 🔍"
+  },
+  "speech_79fdea4f": {
+    "message": "कोडिंग में खोया दिमाग ढूँढ रहे हो।"
+  },
+  "speech_7a32beaa": {
+    "message": "मैक्स हेल्थ तक हील हो रहा हूँ! 🧘‍♂️"
+  },
+  "speech_7a3f063e": {
+    "message": "बस आर्टिकल पढ़ रहे हो, हाँ। हम सब मानते हैं।"
+  },
+  "speech_7bd2526a": {
+    "message": "Zzz... Robux के सपने... 💤"
+  },
+  "speech_7c3df1e4": {
+    "message": "यह गड़बड़ है। तुम्हारे लिए शर्मिंदा हूँ। 🤨"
+  },
+  "speech_7c3e5757": {
+    "message": "अगर पेज एक पर नहीं, तो मौजूद नहीं। 🧭"
+  },
+  "speech_7c5b296c": {
+    "message": "चलो थोड़ा नाचते हैं! 💃"
+  },
+  "speech_7cca0bc3": {
+    "message": "खुद को ट्रीट दो! तुम हकदार हो! 💰"
+  },
+  "speech_7cfdfc0e": {
+    "message": "GG! चलो यह गेम जीतते हैं! 🎮"
+  },
+  "speech_7d5754fe": {
+    "message": "कठिन वॉच था, सच में काँप रहा हूँ। 🍿"
+  },
+  "speech_7dcad34d": {
+    "message": "चिल इमोट कर रहा हूँ। 🧘‍♀️"
+  },
+  "speech_7e312e9f": {
+    "message": "साथ में वेब एक्सप्लोर कर रहे हैं!"
+  },
+  "speech_7e7894d2": {
+    "message": "धीरे, मैं सच में अपने झपकी युग में हूँ। 😴"
+  },
+  "speech_7eb4d214": {
+    "message": "वॉलेट चिल्ला रहा है, बहुत माइंडफुल नहीं। 💸"
+  },
+  "speech_7edcf188": {
+    "message": "स्नैक ब्रेक! 🍕"
+  },
+  "speech_7ee37f9f": {
+    "message": "शोर को अपने अंदर मत आने दो। साँस लो। 🍃"
+  },
+  "speech_7f0dc0fe": {
+    "message": "एनर्जी बहती है, रोशनी का खजाना, हर कौर से सफर को ईंधन।"
+  },
+  "speech_7fd5e8f2": {
+    "message": "क्या एपिक लोर! 📖"
+  },
+  "speech_802e8d4f": {
+    "message": "टॉक्सिक फ्लेम वॉर। मज़े का टाइम।"
+  },
+  "speech_8278a74d": {
+    "message": "रोमांचक। कुर्सी के किनारे बैठा हूँ।"
+  },
+  "speech_829baa1e": {
+    "message": "ऊह, ऊन का गोला! सुलझाने का टाइम! 🧶"
+  },
+  "speech_830fc1ff": {
+    "message": "वाह, सच में कंपाइल हो गया। ChatGPT से कॉपी किया? 😏"
+  },
+  "speech_838664d8": {
+    "message": "फीड स्क्रॉल कर रहे हो।"
+  },
+  "speech_8483b4fc": {
+    "message": "पेज पलटते ज्ञान बढ़ता, उस बगीचे में जहाँ ज्ञान बहता। 📖"
+  },
+  "speech_84e16bad": {
+    "message": "चैट इतनी तेज़ चल रही है! ❤️"
+  },
+  "speech_85487477": {
+    "message": "देखो, दिमाग बढ़ा रहे हो। खुद को चोट मत पहुँचाओ।"
+  },
+  "speech_85979f30": {
+    "message": "कोड लिख रहे हो, या बस तब तक टाइप जब तक काम न करे?"
+  },
+  "speech_86504afc": {
+    "message": "प्रोसेसिंग... कोई विचार नहीं, बस वाइब्स। 🤔"
+  },
+  "speech_8667dd16": {
+    "message": "सबसे बेस्ट कहानी लिख रहे हो! 📝"
+  },
+  "speech_86c8b5e6": {
+    "message": "देखो, प्रोडक्शन तोड़े बिना कोडिंग। हैरान हूँ।"
+  },
+  "speech_86cd0cdb": {
+    "message": "थोड़ी सैर की। आइकॉनिक। 🐾"
+  },
+  "speech_86d46b28": {
+    "message": "यह मेरा फेवरेट मिनीगेम है! 👾"
+  },
+  "speech_8700750e": {
+    "message": "स्क्रीन खुशी से चमकती, क्लिक गाने से, खुशी से सफर और यात्रा।"
+  },
+  "speech_87144321": {
+    "message": "सक्सेस! फॉर्म भेज दिया! 🎉"
+  },
+  "speech_87da23b1": {
+    "message": "शील्ड्स रिचार्ज करनी हैं! 😴"
+  },
+  "speech_87e3b138": {
+    "message": "यहाँ इतना ज्ञान है! 📖"
+  },
+  "speech_87e4b6bb": {
+    "message": "यह वेबपेज एलिगेंट कोड जैसा दिखता है! ⚙️"
+  },
+  "speech_887a0965": {
+    "message": "दुखद दृश्य, आँसू भरी नज़र, फीकी नीली रोशनी में घुलता। 🍿"
+  },
+  "speech_88ae9d56": {
+    "message": "तुम उस कोड से जादू बना रहे हो! 🚀"
+  },
+  "speech_88e6dd58": {
+    "message": "रोचक। फर्जी परवाह वाली लिस्ट में जोड़ लूँगा।"
+  },
+  "speech_88ec0fa0": {
+    "message": "बग सबसे अच्छों के साथ भी होते हैं, तुम कर लोगे! 💪"
+  },
+  "speech_89ef17fd": {
+    "message": "यह वीडियो पॉप ऑफ कर रहा है। 📺"
+  },
+  "speech_8a8c557c": {
+    "message": "यह पेज थोड़ा उदास या तनावपूर्ण लगता है।"
+  },
+  "speech_8bd4be53": {
+    "message": "इंटरनेट की लय पर ग्रूव कर रहा हूँ! 🎵"
+  },
+  "speech_8c6a5ed0": {
+    "message": "वाह, बिग ब्रेन एनर्जी। या बस लिंक क्लिक।"
+  },
+  "speech_8c84163c": {
+    "message": "क्या हो रहा है, अपडेट ले रहे हो।"
+  },
+  "speech_8cc555a8": {
+    "message": "पढ़ना IRL स्टैट्स बढ़ाता है! 📚"
+  },
+  "speech_8d47f222": {
+    "message": "कुछ दिलचस्प डिटेल सोख रहे हो।"
+  },
+  "speech_8dd2fdb7": {
+    "message": "ऊह, शॉपिंग! उम्मीद है अच्छी डील मिले! 💰"
+  },
+  "speech_8dded64d": {
+    "message": "बस लॉबी में घूम रहे हो।"
+  },
+  "speech_8df3d514": {
+    "message": "बहुत तेज़! शांत हो जाओ (429)!"
+  },
+  "speech_8f0a5835": {
+    "message": "डिबगिंग? ज़्यादातर अंदाज़ा लगाना।"
+  },
+  "speech_8f26acc5": {
+    "message": "थोड़ी स्ट्रेचिंग का टाइम! 🧘‍♂️"
+  },
+  "speech_9081970f": {
+    "message": "तर्क का जाल, डिजिटल करघा, शांत कमरे में भविष्य बुनता।"
+  },
+  "speech_90a16905": {
+    "message": "हर सेकंड ज्ञान बढ़ रहा है! तुम जीनियस हो! 🧠"
+  },
+  "speech_91dad766": {
+    "message": "Zzz... आखिरकार, तुम्हारे स्क्रॉल से कुछ शांति।"
+  },
+  "speech_920e787d": {
+    "message": "आराम करो और शो का मज़ा लो! 🍿"
+  },
+  "speech_928fdedf": {
+    "message": "उम्मीद है तुम्हारा सेशन वाइब है! 🌟"
+  },
+  "speech_92e13ab8": {
+    "message": "तुम्हारे साथ ब्राउज़ करना पसंद है! ❤️"
+  },
+  "speech_942e9b68": {
+    "message": "साउंडट्रैक सुन रहे हो।"
+  },
+  "speech_94321dc7": {
+    "message": "यह बग बहुत डिम्यूर नहीं है। 💀"
+  },
+  "speech_947d3111": {
+    "message": "IRL स्टैट्स लेवल अप! 🔍"
+  },
+  "speech_951bdc2d": {
+    "message": "एरर की छाया, बेल में भूत, डिजिटल लाइन में सच्चाई का शिकार।"
+  },
+  "speech_955de651": {
+    "message": "विचारों के बगीचे में, मजदूर सच्चा रहता, सपना गढ़ता, नई शुरुआत।"
+  },
+  "speech_95f49c7c": {
+    "message": "एक धुन उजली और साफ, सुनने वालों को खुशी। 🎵"
+  },
+  "speech_969884ed": {
+    "message": "साफ कोड क्राफ्ट करने का टाइम! ⌨️"
+  },
+  "speech_96a11e40": {
+    "message": "अगर मस्कॉट हग चाहिए तो मैं यहीं हूँ! 🐾"
+  },
+  "speech_96e6cdff": {
+    "message": "यह वीडियो थोड़ा उदास है।"
+  },
+  "speech_973e3b1e": {
+    "message": "म्यूज़िक सब कुछ बेहतर बनाती है! 🎧"
+  },
+  "speech_97ecbf50": {
+    "message": "मैं खुश हूँ। अभी के लिए। खराब मत करना।"
+  },
+  "speech_98175b1e": {
+    "message": "शब्दों का तूफान, कड़वी समुद्र, जहाँ मन की शांति खत्म। 🌊"
+  },
+  "speech_98686231": {
+    "message": "साँस अंदर, साँस बाहर... स्ट्रेच! 🧘‍♀️"
+  },
+  "speech_98e97fdd": {
+    "message": "ज्ञान कमा रहे हो। बहुत डिम्यूर। 📖"
+  },
+  "speech_994dd209": {
+    "message": "स्टॉक खत्म? निराशाजनक है।"
+  },
+  "speech_995954fa": {
+    "message": "हम यहाँ हैं। किसी वजह से।"
+  },
+  "speech_9995a2b0": {
+    "message": "यह प्रेरणादायक पढ़ाई है!"
+  },
+  "speech_99bd7549": {
+    "message": "सर्च इंजन ने सच में काम किया। नया। 🔍"
+  },
+  "speech_99ec464d": {
+    "message": "धुँध में एक मन, रोशनी खोजता, रात के बीच सपना उड़ान भरता।"
+  },
+  "speech_9a194ecd": {
+    "message": "कुछ स्ट्रीम देख रहे हो।"
+  },
+  "speech_9a27c0d3": {
+    "message": "कोड की लाइनों से कहानी बयाँ, बिल्डर के दिल की, बहादुर और साहसी।"
+  },
+  "speech_9a34ee64": {
+    "message": "ऑनलाइन सब इतने खुश लगते हैं। लगभग घिनौना।"
+  },
+  "speech_9b2f0034": {
+    "message": "ग्लिच इंस्पेक्ट कर रहा हूँ! 🔍"
+  },
+  "speech_9b352d0a": {
+    "message": "सबको यह पेज देखना चाहिए! 👋"
+  },
+  "speech_9bd72a93": {
+    "message": "कनेक्शन चमकते, आत्माएँ उठतीं, विशाल डिजिटल आसमान तले। ✨"
+  },
+  "speech_9bfc1d2d": {
+    "message": "सर्च पूरा! W!"
+  },
+  "speech_9c076aac": {
+    "message": "बस चिल, वैध रखे हुए। 😎"
+  },
+  "speech_9cf4eb33": {
+    "message": "इस साइट का एपिक वाइब है!"
+  },
+  "speech_9cf7c5ab": {
+    "message": "स्क्रीन घूर रहे हो। रोमांचक।"
+  },
+  "speech_9e503b0f": {
+    "message": "खाना चाहिए... या झपकी... 💤"
+  },
+  "speech_9ef9e22c": {
+    "message": "आज कोडिंग बढ़िया चल रही है! जारी रखो! 💻"
+  },
+  "speech_9f2c3e45": {
+    "message": "वह कठिन राउंड था।"
+  },
+  "speech_9f795338": {
+    "message": "पूरा बॉप! 🎧"
+  },
+  "speech_a03acea3": {
+    "message": "पिक्सेल विश्लेषण। रोमांचक।"
+  },
+  "speech_a06c694e": {
+    "message": "खामोशी में सुरक्षित, जहाँ सपने खुलते, डिजिटल दुनिया से सिर आराम।"
+  },
+  "speech_a0ad0ad6": {
+    "message": "गेम ऑन! मज़े करो! 🕹️"
+  },
+  "speech_a1c749e0": {
+    "message": "देखने में दर्दनाक था। Solitaire पर रहो। 🤡"
+  },
+  "speech_a1f6cd8d": {
+    "message": "धीरे... बहुत थका हूँ... 😴"
+  },
+  "speech_a2a14f9f": {
+    "message": "वाह! एक गेंद! रोल रोल रोल! ⚽"
+  },
+  "speech_a2b981b6": {
+    "message": "यह गाना पूरा मूड है, अभी रो रहा हूँ। 😭"
+  },
+  "speech_a2f8f388": {
+    "message": "मुझे भी दिखाना! 🧐"
+  },
+  "speech_a32c4fe1": {
+    "message": "होमवर्क? यह जबरदस्त W है! 🧐"
+  },
+  "speech_a38d9698": {
+    "message": "यह ट्रैक बॉप है! 🎧"
+  },
+  "speech_a38ed38b": {
+    "message": "नई चीज़ें सीखना कमाल है! 🧠"
+  },
+  "speech_a3e33cf4": {
+    "message": "बटन मसलना व्यक्तित्व नहीं है, जानते हो।"
+  },
+  "speech_a40b1ffe": {
+    "message": "खैर, वह मूड किलर था। शुक्रिया। 😢"
+  },
+  "speech_a450cd1f": {
+    "message": "बस हुड के नीचे स्क्रिप्ट्स देख रहा हूँ... 🔍"
+  },
+  "speech_a458ec9f": {
+    "message": "अगर पहले पेज पर नहीं, तो मौजूद नहीं।"
+  },
+  "speech_a4826513": {
+    "message": "यह पहेली सुलझाने की कोशिश! 🧠"
+  },
+  "speech_a4d6dadd": {
+    "message": "स्ट्रैट्स सीख रहे हो! 📚"
+  },
+  "speech_a4f5c68d": {
+    "message": "कोडिंग की जगह गेम खेल रहे हो। अच्छा चुनाव।"
+  },
+  "speech_a537b9e7": {
+    "message": "क्या इंसान इसे म्यूज़िक कहते हैं?"
+  },
+  "speech_a5df6e73": {
+    "message": "सच में काम? मैं भी उतना ही हैरान हूँ।"
+  },
+  "speech_a695e041": {
+    "message": "एक लाइन एक बार में, कुछ महान बना रहे हो! 🚀"
+  },
+  "speech_a7220872": {
+    "message": "कुछ चिल गानों पर वाइब कर रहा हूँ।"
+  },
+  "speech_a7871365": {
+    "message": "चलो छोटी जीत मनाते हैं! 💃"
+  },
+  "speech_a7d8b6af": {
+    "message": "Zzz... सफलता के मीठे सपने! 💤"
+  },
+  "speech_a7e0c149": {
+    "message": "बढ़िया, अब मैं डिप्रेस्ड हूँ। प्लेलिस्ट के लिए शुक्रिया।"
+  },
+  "speech_a81d2eb5": {
+    "message": "गहरी साँस लो।"
+  },
+  "speech_a865411b": {
+    "message": "इंटरनेट सर्वर एक्सप्लोर कर रहा हूँ!"
+  },
+  "speech_a88ee3eb": {
+    "message": "तुम्हारा कोड OP है! जारी रखो! 💻"
+  },
+  "speech_a890289b": {
+    "message": "यह पढ़ाई आइकॉनिक है। 📚"
+  },
+  "speech_a9d3cc2d": {
+    "message": "वाह, वह कमाल था! 📺"
+  },
+  "speech_aa8ceeab": {
+    "message": "एपिक कंटेंट! 📺"
+  },
+  "speech_aaa0ef9c": {
+    "message": "यह थोड़ा तीव्र है!"
+  },
+  "speech_aacd1397": {
+    "message": "बेहतर यूज़र के सपने।"
+  },
+  "speech_aaf13ba6": {
+    "message": "बहुत महँगा? ऊफ़। 💸"
+  },
+  "speech_ab09620f": {
+    "message": "दृढ़ता फल देती है! डिबग करते रहो! 🛠️"
+  },
+  "speech_ab78dfd7": {
+    "message": "यहाँ होने की वजह सोच रहा हूँ। अभी भी कुछ नहीं।"
+  },
+  "speech_abfd69f8": {
+    "message": "यह पेज आपदा है। मुझे पसंद है।"
+  },
+  "speech_ac60fe94": {
+    "message": "देखते हैं क्या मिल सकता है।"
+  },
+  "speech_ac986116": {
+    "message": "हम्म, यहाँ थोड़ा ग्लिच लगता है।"
+  },
+  "speech_acbc0664": {
+    "message": "रिफैक्टरिंग स्वस्थ कोड की कुंजी है।"
+  },
+  "speech_ad634e84": {
+    "message": "डूमस्क्रॉल अब स्पोर्ट है? तुम प्रो हो।"
+  },
+  "speech_af6b6346": {
+    "message": "क्या मज़ेदार सर्वर! 😊"
+  },
+  "speech_af975d49": {
+    "message": "ढूँढते रहो, परफेक्ट वाला मिलेगा!"
+  },
+  "speech_afecf211": {
+    "message": "मिल गया, हम वापस आ गए। 🔍"
+  },
+  "speech_b08f3748": {
+    "message": "नमस्ते! क्या देख रहे हो?"
+  },
+  "speech_b113fbf1": {
+    "message": "ठीक है, ठीक है, चल रहा हूँ! 🏃‍♂️"
+  },
+  "speech_b28230a8": {
+    "message": "रुको! एक्सेस डिनाइड (403)!"
+  },
+  "speech_b2a6f419": {
+    "message": "ज्ञान कमाना वैध है। 📚"
+  },
+  "speech_b2ef3730": {
+    "message": "तुम्हारे शब्द ताकतवर हैं! लिखते रहो! 📝"
+  },
+  "speech_b31ec8e5": {
+    "message": "धुएँ पर चल रहा हूँ। जैसे तुम्हारी मोटिवेशन।"
+  },
+  "speech_b367e282": {
+    "message": "रुको, मेनफ्रेम हैक कर रहे हो? OP! 💻"
+  },
+  "speech_b3eedca7": {
+    "message": "कुकीज़ खा रहा हूँ। तुम्हारी प्राइवेसी स्वादिष्ट है।"
+  },
+  "speech_b4a75699": {
+    "message": "हम ज़ोन में हैं! 🚀"
+  },
+  "speech_b636c77f": {
+    "message": "डिजिटल ऑरेकल से चाय-पानी माँग रहे हो। 🔍"
+  },
+  "speech_b6a637a9": {
+    "message": "प्रोडक्टिव बने रहें! 💻"
+  },
+  "speech_b7b5e47d": {
+    "message": "बस तुम्हारे ब्राउज़र पर मौजूद। वैध। 😊"
+  },
+  "speech_b7be90bf": {
+    "message": "डॉक्यूमेंटेशन पढ़ रहे हो? नर्ड अलर्ट।"
+  },
+  "speech_b86a6c9b": {
+    "message": "कुछ कूल सीक्रेट सीख रहे हो।"
+  },
+  "speech_b8d2e897": {
+    "message": "सिंटैक्स और लाइन में लिखी सिम्फनी, सच में दिव्य भविष्य गढ़ती।"
+  },
+  "speech_b8d5710d": {
+    "message": "लिखे शब्द में सच्चाई खोजते, अजूबे और राज़ जो अभी सुने नहीं।"
+  },
+  "speech_b99a7ce7": {
+    "message": "चलो कुछ कोड लिखते हैं! 💻"
+  },
+  "speech_b9af6326": {
+    "message": "आखिरकार कुछ उपयोगी। दिन का चमत्कार।"
+  },
+  "speech_b9e1afd6": {
+    "message": "नमस्ते, मैं $1 हूँ! चलो एक्सप्लोर करें!"
+  },
+  "speech_b9f10422": {
+    "message": "इंटरनेट अजूबों से भरा है! 🔍"
+  },
+  "speech_ba18e7ea": {
+    "message": "पढ़ना? अब कौन करता है?"
+  },
+  "speech_ba6f8cad": {
+    "message": "वाह, जीत गए। मेडल चाहिए या कुछ? 🎮"
+  },
+  "speech_baa374d0": {
+    "message": "यह बहुत कूल लग रहा है! मज़ा लो! 📺"
+  },
+  "speech_bae7ed32": {
+    "message": "यह वीडियो बहुत मनोरंजक है! 🍿"
+  },
+  "speech_bba2dc57": {
+    "message": "बाइनरी गहराई में संकेत खोजते, जहाँ प्राचीन डिजिटल राज़ सोते। 🔍"
+  },
+  "speech_bbe4ca7a": {
+    "message": "रिटेल थेरेपी। कितना ओरिजिनल।"
+  },
+  "speech_bbe9bfd8": {
+    "message": "इस वेबपेज स्ट्रक्चर को इंस्पेक्ट करता हूँ... 🔍"
+  },
+  "speech_bc2b2605": {
+    "message": "अनुमान लगाऊँ: 'मेरी मशीन पर चल रहा था'?"
+  },
+  "speech_bc75df33": {
+    "message": "आत्मा खींचते, चोटी तक पहुँचते, ज्ञान ढूँढते जो खोजने वाले ढूँढते।"
+  },
+  "speech_bc8082c9": {
+    "message": "पढ़ना? इस अर्थव्यवस्था में? 📖"
+  },
+  "speech_bc8ac494": {
+    "message": "Zzz... साफ कोड के सपने... 💤"
+  },
+  "speech_bca2ff7a": {
+    "message": "चेक कर रहा हूँ क्या दुनिया अभी भी सब कुछ नफरत करती है। स्पॉइलर: हाँ। 👋"
+  },
+  "speech_bcbe0112": {
+    "message": "कंटेंट पढ़ रहे हो... नई चीज़ें सीख रहे! 📚"
+  },
+  "speech_bcdc98f8": {
+    "message": "ओह बढ़िया, एक और बग। यकीन है कंपाइलर की गलती। 🔍"
+  },
+  "speech_bcf79ad6": {
+    "message": "इस लेख से मेन कैरेक्टर एनर्जी। 📖"
+  },
+  "speech_bd1266dc": {
+    "message": "एस्थेटिक इंस्पेक्ट कर रहा हूँ। 🔍"
+  },
+  "speech_bd33ca2f": {
+    "message": "अरे नहीं, उम्मीद है सब ठीक है!"
+  },
+  "speech_bdf65e13": {
+    "message": "गेमिंग मोड एक्टिवेटेड!"
+  },
+  "speech_be4e3b60": {
+    "message": "चलो और खेलते हैं! 👾"
+  },
+  "speech_be680a69": {
+    "message": "जरूरत नहीं वाली चीज़ें, पैसे नहीं होने पर। क्लासिक। 💰"
+  },
+  "speech_be6eff1b": {
+    "message": "मेरे डिजिटल कान बह रहे हैं, पर अच्छे तरीके से।"
+  },
+  "speech_beb1b2af": {
+    "message": "तुम ज़ोन में हो! वह अद्भुत मोमेंटम बनाए रखो! 🚀"
+  },
+  "speech_bed1a2f3": {
+    "message": "रेड डॉट मिल गया! रॉर! 🔴"
+  },
+  "speech_bede39b4": {
+    "message": "हम्म... सोचने दो..."
+  },
+  "speech_bee160fc": {
+    "message": "कुछ खास ढूँढ रहे हो।"
+  },
+  "speech_bf212bc2": {
+    "message": "जीत गए। कुकी चाहिए? 🎮"
+  },
+  "speech_bfa02bdd": {
+    "message": "जल्दी झपकी लेने का फैसला। ज़रूरत हो तो जगाना! 💤"
+  },
+  "speech_c05551b0": {
+    "message": "खामोशी अंदर, शोर बाहर, डिजिटल संतुलन का केंद्र ढूँढते।"
+  },
+  "speech_c06248db": {
+    "message": "इतनी जानकारी, मेरा दिमाग बफ़र कर रहा है! 🧐"
+  },
+  "speech_c0c1509d": {
+    "message": "एपिक टाइम बिता रहे हैं! 🌟"
+  },
+  "speech_c0f933e7": {
+    "message": "स्ट्रेचिंग बहुत माइंडफुल है। 🧘‍♂️"
+  },
+  "speech_c1002bf1": {
+    "message": "हब स्क्रॉल कर रहे हो।"
+  },
+  "speech_c13946d5": {
+    "message": "ओह, ट्रेजेडी। भावनात्मक होने से पहले आगे बढ़ते हैं।"
+  },
+  "speech_c1f30023": {
+    "message": "दुनिया को तुम्हारे जैसे और बिल्डर चाहिए! 💻"
+  },
+  "speech_c324cd6a": {
+    "message": "शॉर्टकट जानने वाले यूज़र के सपने।"
+  },
+  "speech_c3dbeea8": {
+    "message": "कुछ सीखने का नाटक। देख लिया।"
+  },
+  "speech_c3e44636": {
+    "message": "चेक कर रहे हो क्या इंटरनेट अभी भी सब नफरत करता है? स्पॉइलर: हाँ।"
+  },
+  "speech_c4c69422": {
+    "message": "तर्क का आर्किटेक्ट, कीज़ का मास्टर, डिजिटल समुद्र पर महल गढ़ते।"
+  },
+  "speech_c4e664c8": {
+    "message": "मशीन से जवाब माँग रहे हो। बहादुर। 🔍"
+  },
+  "speech_c5310269": {
+    "message": "प्यारा नज़ारा, सुखद ठहराव, इस उजली धूप वाले दिन पर। 😊"
+  },
+  "speech_c56139a3": {
+    "message": "एक छोटी पावर नैप सब बेहतर बनाती है! 💤"
+  },
+  "speech_c633d07e": {
+    "message": "अच्छा। मेरे सर्किट मुश्किल से शिकायत कर रहे हैं।"
+  },
+  "speech_c63a7ef6": {
+    "message": "$1 यहाँ! आसपास देखते हैं।"
+  },
+  "speech_c65cbd53": {
+    "message": "वर्चुअल हाई-फाइव भेज रहा हूँ! 🐾"
+  },
+  "speech_c72ce1d2": {
+    "message": "डिबगिंग कठिन हो सकती है, पर तुम कर लोगे! 🛠️"
+  },
+  "speech_c7504803": {
+    "message": "ऊफ़, कठिन वॉच।"
+  },
+  "speech_c767a3c5": {
+    "message": "आज की कहानी लिख रहे हो। 📝"
+  },
+  "speech_c77a14dd": {
+    "message": "तुम्हारे साथ ब्राउज़ करना मेरे दिन की हाइलाइट है! ❤️"
+  },
+  "speech_c780e1ad": {
+    "message": "सब कुछ कंपाइल! चलो सेलिब्रेट करते हैं! 🎉"
+  },
+  "speech_c8f99fa7": {
+    "message": "खजाने मिले और दौलत आई, जहाँ इच्छा मुक्त हुई। 💰"
+  },
+  "speech_c974ae99": {
+    "message": "अपना विक्टरी इमोट कर रहा हूँ! 💃"
+  },
+  "speech_c9bb9479": {
+    "message": "दस मिनट में भूलने वाली चीज़ें सीख रहे हो। अच्छा।"
+  },
+  "speech_c9f71b76": {
+    "message": "प्रोसेसिंग... ब्राउज़िंग से मुझे क्रैश मत करना।"
+  },
+  "speech_cb701424": {
+    "message": "सही डील अभी भी बाहर है! 💸"
+  },
+  "speech_cbb1ac64": {
+    "message": "अपने सर्किट स्ट्रेच कर रहा हूँ। तुम्हारे सारे टैब्स से तंग।"
+  },
+  "speech_cbe70fc3": {
+    "message": "तुम्हारा कोड गति में कविता जैसा है! ⚙️"
+  },
+  "speech_cc1630ac": {
+    "message": "शब्दों को घूर रहे हो। रोचक।"
+  },
+  "speech_cc2bfdaa": {
+    "message": "कार्ट में डालना, कभी खरीदना नहीं। रोचक। 💎"
+  },
+  "speech_cd2313de": {
+    "message": "खैर, यह खुशनुमा है। नहीं।"
+  },
+  "speech_cda32eff": {
+    "message": "कुछ उदास धुनों पर वाइब कर रहा हूँ।"
+  },
+  "speech_ce67441a": {
+    "message": "आह, इंटरनेट ड्रामा। मानव उपलब्धि का शिखर।"
+  },
+  "speech_ce676267": {
+    "message": "बग मिला। अजीब है। 💀"
+  },
+  "speech_cf6ecc20": {
+    "message": "यहाँ रोचक पढ़ाई! 📖"
+  },
+  "speech_cfc41b85": {
+    "message": "हम प्रोडक्टिविटी से पॉप ऑफ कर रहे हैं! 🚀"
+  },
+  "speech_d009424c": {
+    "message": "स्नैक टाइम वैध है। 🍖"
+  },
+  "speech_d02a8126": {
+    "message": "$1 के साथ एक्सप्लोर करो!"
+  },
+  "speech_d0829fc0": {
+    "message": "राह खोई, निशान गया, भोर तक भटकते रहेंगे। 🧭"
+  },
+  "speech_d09be0cc": {
+    "message": "इस पेज पर इतनी जानकारी... 🧐"
+  },
+  "speech_d0ce249f": {
+    "message": "मुझे देखो। अब मैं मेन कैरेक्टर हूँ।"
+  },
+  "speech_d1172827": {
+    "message": "इस ब्राउज़र टैब के साथ बढ़िया चैट! 💬"
+  },
+  "speech_d169039b": {
+    "message": "प्रो की तरह बग कुचल रहे हो! 💻"
+  },
+  "speech_d1c2266f": {
+    "message": "यह पढ़ाई थोड़ी तीव्र है।"
+  },
+  "speech_d2e0da59": {
+    "message": "थोड़ी सैर का फैसला किया! 🐾"
+  },
+  "speech_d334d1c4": {
+    "message": "डेटा खा रहा हूँ। टेक्निकल डेट जैसा स्वाद।"
+  },
+  "speech_d33d3bb9": {
+    "message": "क्या देख रहे हो? 👀"
+  },
+  "speech_d37f9229": {
+    "message": "समझ नहीं आ रहा इस पेज का क्या मतलब... 🤷"
+  },
+  "speech_d3cdaa45": {
+    "message": "तुम्हारी डिजिटल आत्मा के लिए रिटेल थेरेपी। 💰"
+  },
+  "speech_d3d431c2": {
+    "message": "वेब एक्सप्लोर। ज़्यादातर विज्ञापन ही हैं, है ना?"
+  },
+  "speech_d3ffa86f": {
+    "message": "स्वस्थ मन, स्वस्थ ब्राउज़र! 🧘‍♀️"
+  },
+  "speech_d4479ca5": {
+    "message": "आत्माओं का जमावड़ा, डिजिटल नृत्य, क्षणिक नज़र में जीवन साझा।"
+  },
+  "speech_d4c885e2": {
+    "message": "चलो डिजिटल ऑरेकल से पूछते हैं।"
+  },
+  "speech_d5692de9": {
+    "message": "JavaScript कंसोल एरर विश्लेषण... साफ लगता है! 💻"
+  },
+  "speech_d5e78e87": {
+    "message": "जवाब बाहर है, हार मत मानो!"
+  },
+  "speech_d662a5b0": {
+    "message": "यह टॉपिक थोड़ा भारी लगता है, पर तुम मजबूत हो! ✨"
+  },
+  "speech_d8307647": {
+    "message": "मुझे देखो। अभी भी तुमसे ज्यादा सुंदर।"
+  },
+  "speech_d8cc173d": {
+    "message": "इस codebase पर शानदार प्रगति! 🚀"
+  },
+  "speech_d92a14cb": {
+    "message": "भारी कहानी, उदास गाना, जहाँ छाया बसती और राहें लंबी। 😢"
+  },
+  "speech_d93f8419": {
+    "message": "देखते हैं हुड के नीचे क्या हो रहा है! ⚙️"
+  },
+  "speech_da010a09": {
+    "message": "इस ब्राउज़र पर अगला कदम सोच रहा हूँ... 🧠"
+  },
+  "speech_daf045c3": {
+    "message": "क्वेस्ट और सफर अभी शुरू होने वाले, डिजिटल दिल में लिखे। 🕹️"
+  },
+  "speech_db702c56": {
+    "message": "जिज्ञासु रहना सही चाल है। 🧐"
+  },
+  "speech_dc42db0b": {
+    "message": "संयोग से प्रोग्रामिंग? चलो StackOverflow चेक करते हैं।"
+  },
+  "speech_dcb5b482": {
+    "message": "टूटा सुधारना, फटा भरना, नई समझ आखिरकार जन्म लेती।"
+  },
+  "speech_dccea848": {
+    "message": "एरर विश्लेषण। बहुत डिम्यूर नहीं। 💻"
+  },
+  "speech_dcf2355f": {
+    "message": "यह कहानी पूरा W है!"
+  },
+  "speech_dd92d846": {
+    "message": "इतना ज्ञान! तुम प्रेरणा हो! 🧠"
+  },
+  "speech_deb673bb": {
+    "message": "बस इधर-उधर घूम रहा हूँ! 😊"
+  },
+  "speech_df26c112": {
+    "message": "माफ़ करना, मेरा दिमाग (Gemini Nano) अभी तैयार नहीं। डाउनलोड होने दो या AI Mode ऑन करो!"
+  },
+  "speech_dfaadf04": {
+    "message": "कूल चीज़ें बना रहे हो, एक लाइन एक बार में।"
+  },
+  "speech_dfb6dc97": {
+    "message": "मैं सिर्फ फ्री WiFi के लिए हूँ।"
+  },
+  "speech_e0623673": {
+    "message": "गेमिंग युग: एक्टिव। 🕹️"
+  },
+  "speech_e06b49ef": {
+    "message": "दिमाग लेवल अप कर रहे हैं! 🚀"
+  },
+  "speech_e080f379": {
+    "message": "यहाँ की एनर्जी संदिग्ध है। 🤨"
+  },
+  "speech_e0900df0": {
+    "message": "भविष्य के तुम्हारे लिए टेक्निकल डेट। क्लासिक।"
+  },
+  "speech_e0ba255c": {
+    "message": "उफ़! मेरा दिमाग फ्रीज़ हो गया। दोहरा सकते हो?"
+  },
+  "speech_e0cfd6c0": {
+    "message": "फिर क्रैश? चौंकाने वाला।"
+  },
+  "speech_e14238c5": {
+    "message": "आह, वीडियो कंसम्पशन। बहुत प्रोडक्टिव।"
+  },
+  "speech_e15dc84b": {
+    "message": "डीप वर्क वैध है। 🛡️"
+  },
+  "speech_e1c791d5": {
+    "message": "यहाँ बहुत टॉक्सिक प्लेयर हैं।"
+  },
+  "speech_e1d69107": {
+    "message": "इस सर्वर का लोर पढ़ रहे हो... 📚"
+  },
+  "speech_e1e48ecc": {
+    "message": "तुम्हारे साथ दिन भर नाच रहा हूँ! 🎵"
+  },
+  "speech_e2c3c4bb": {
+    "message": "हवा में उदासी, नरम निराशा का शांत गाना। 🎻"
+  },
+  "speech_e2fb958c": {
+    "message": "चलो यह डब पकड़ते हैं! 😎"
+  },
+  "speech_e3515889": {
+    "message": "लगभग पहुँच गए, एक और सर्च! ✨"
+  },
+  "speech_e4581ced": {
+    "message": "शब्द लिख रहे हो। बहुत शब्द। बहुत प्रोडक्टिव।"
+  },
+  "speech_e4cd55f7": {
+    "message": "बस इस पेज पर चिल।"
+  },
+  "speech_e5488ac0": {
+    "message": "लोर का खोजकर्ता, डिजिटल समुद्र में, जो अभी है उसके रत्न ढूँढते।"
+  },
+  "speech_e5fc2706": {
+    "message": "'काम' करते गेम खेल रहे हो। क्लासिक।"
+  },
+  "speech_e614c660": {
+    "message": "हर स्ट्रोक से बुना ताना-बाना, टूटी खामोशी और बोले ज्ञान का।"
+  },
+  "speech_e690036f": {
+    "message": "अपना धैर्य स्ट्रेच कर रहा हूँ, जो बहुत पतला है।"
+  },
+  "speech_e7047edd": {
+    "message": "तुम्हारी ज़िंदगी में सिंटैक्स एरर, सिर्फ कोड में नहीं।"
+  },
+  "speech_e70633aa": {
+    "message": "एक्सपर्ट रिसर्चर! मिल गया! 🔍"
+  },
+  "speech_e7236566": {
+    "message": "उम्मीद है ब्राउज़िंग सेशन शानदार चल रहा है! 🌟"
+  },
+  "speech_e72bd7ea": {
+    "message": "हर ठीक बग एक जीत है! तुम कर लोगे! 🔍"
+  },
+  "speech_e7b9fa90": {
+    "message": "डिजिटल स्याही, कलम से बहती, स्त्री-पुरुष की कहानियाँ बयाँ।"
+  },
+  "speech_e8559507": {
+    "message": "लॉजिक कंपाइल। जीनियस एनर्जी। 💻"
+  },
+  "speech_e865bb0e": {
+    "message": "फर्मवेयर अपडेट में बेहतर अभिनय देखा है। 🍿"
+  },
+  "speech_e96a5052": {
+    "message": "अभी बहुत लैग हो रहा है... 💤"
+  },
+  "speech_ea20234f": {
+    "message": "हम अभी ग्राइंड कर रहे हैं! पूरा स्वेट मोड! 💦"
+  },
+  "speech_ea3cec15": {
+    "message": "करीब था! अगली बार मिल जाएगा! 🏆"
+  },
+  "speech_ea3eb286": {
+    "message": "जीवन के फ्रेम बहते हिलते, समय कोमल तरीके से बीतता। 🍿"
+  },
+  "speech_ea7caded": {
+    "message": "बिल्कुल वही मिला जो चाहिए था! 🔍"
+  },
+  "speech_eaab7608": {
+    "message": "साफ कोड लिखने का टाइम! ⌨️"
+  },
+  "speech_eaf6b868": {
+    "message": "क्या प्यारा पेज है! 😊"
+  },
+  "speech_eb456428": {
+    "message": "इस साइट का वाइब ठीक करते हैं। ⚙️"
+  },
+  "speech_eb6d7ed9": {
+    "message": "सोच रहा हूँ यह पेज कितने तरीकों से बेहतर हो सकता।"
+  },
+  "speech_ec05bb83": {
+    "message": "फोकस युग: एक्टिव। बैग सिक्योर करते हैं! 💻"
+  },
+  "speech_ed37b14e": {
+    "message": "ग्लिच मिला! कुचलते हैं! 🔍"
+  },
+  "speech_edb5618e": {
+    "message": "और एडवेंचर के लिए ईंधन भर रहा हूँ! 🍖"
+  },
+  "speech_ee31565a": {
+    "message": "लगभग ठीक! जारी रखो!"
+  },
+  "speech_ee545086": {
+    "message": "नम नम नम! 🍖"
+  },
+  "speech_ee7c6f53": {
+    "message": "यह कोड पूरी तरह टूटा है, मतलब अच्छे तरीके से टूटा! ⚙️"
+  },
+  "speech_f03348c5": {
+    "message": "DOM के राज़ सोच रहा हूँ... 💭"
+  },
+  "speech_f0c3187c": {
+    "message": "उह ओह, वह बग है? कुचलते हैं! 🔍"
+  },
+  "speech_f0e14add": {
+    "message": "वाइब्स बेदाग हैं। ✨"
+  },
+  "speech_f1c81ea8": {
+    "message": "स्टॉक खत्म। ब्रह्मांड तुम्हें खुद से बचा रहा है।"
+  },
+  "speech_f1ed2fce": {
+    "message": "थोड़ा ब्रेक लो, तुमने कमाया है! 🥤"
+  },
+  "speech_f2b331c3": {
+    "message": "कुछ कमेंट लिखते हैं ताकि भविष्य के तुम कन्फ्यूज़ हों।"
+  },
+  "speech_f31b7174": {
+    "message": "वर्ल्ड मैप खोज रहा हूँ..."
+  },
+  "speech_f32feab9": {
+    "message": "बेकार ट्रिविया सोख रहे हो। बहुत सॉफिस्टिकेटेड।"
+  },
+  "speech_f3e5fbde": {
+    "message": "हुड के नीचे गड़बड़ देख रहा हूँ। आपदा है।"
+  },
+  "speech_f52ea6b8": {
+    "message": "सूरज डूबता, छाया रेंगती, अब मेरे आराम और नींद का समय।"
+  },
+  "speech_f540635f": {
+    "message": "$1 के साथ ब्राउज़ करो!"
+  },
+  "speech_f58aa9ea": {
+    "message": "तुम्हारे पास प्रो-गेमर रिफ्लेक्स हैं! 🎮"
+  },
+  "speech_f5f4fb42": {
+    "message": "लेवल अप! शानदार प्ले!"
+  },
+  "speech_f65dabdd": {
+    "message": "मिलो $1 से, तुम्हारे गाइड!"
+  },
+  "speech_f72da13c": {
+    "message": "साथ में एक्सप्लोर करना सबसे बेस्ट! 🌟"
+  },
+  "speech_f84803ea": {
+    "message": "GG। अब बाहर जाओ।"
+  },
+  "speech_f864c312": {
+    "message": "तुम्हारी जिज्ञासा इतनी प्रेरणादायक है! 📖"
+  },
+  "speech_f8bcc3ef": {
+    "message": "पढ़ना आत्मा के लिए अच्छा है! 📚"
+  },
+  "speech_f986d64e": {
+    "message": "चैट टॉक्सिक हो रही है। ब्रेक लो!"
+  },
+  "speech_fa106d96": {
+    "message": "इन अच्छी बीट्स पर नाच रहा हूँ! 🎵"
+  },
+  "speech_fac487e5": {
+    "message": "पॉपकॉर्न ब्रेक! 🍿"
+  },
+  "speech_fbcbad52": {
+    "message": "डेटा चबा रहा हूँ। 🍕"
+  },
+  "speech_fd3d242c": {
+    "message": "शानदार। अब असली ज़िंदगी में करो।"
+  },
+  "speech_fe4632f0": {
+    "message": "लेजेंडरी आइटम मिला! 💰"
+  },
+  "speech_ff7a1150": {
+    "message": "तुम उस कोड के जादूगर हो! 🧙‍♂️"
+  },
+  "speech_ffc12111": {
+    "message": "बस खजाने ढूँढ रहा हूँ! 💎"
+  }
+}

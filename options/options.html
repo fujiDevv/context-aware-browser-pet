@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arcrawls Sanctuary - Dashboard & Analytics</title>
+  <title data-i18n="options_analyticsStats">Arcrawls Sanctuary - Dashboard & Analytics</title>
   <link rel="stylesheet" href="../src/ui/shared.css">
   <link rel="stylesheet" href="options.css">
   <link
@@ -20,37 +20,37 @@
         <img class="brand-icon" src="../assets/icons/logo128.png" alt="Arcrawls">
         <div class="brand-text">
           <h2><span class="pet-name-display">Arcrawls</span></h2>
-          <span>Sanctuary Dashboard</span>
+          <span data-i18n="options_sanctuaryDashboard">Sanctuary Dashboard</span>
         </div>
       </div>
 
       <nav class="sidebar-menu">
         <button class="menu-btn active" data-target="sanctuary">
-          <span class="menu-icon"></span>Sanctuary Playground
+          <span class="menu-icon"></span><span data-i18n="options_sanctuaryPlayground">Sanctuary Playground</span>
         </button>
         <button class="menu-btn" data-target="chat">
-          <span class="menu-icon"></span> <span>Chat with <span class="pet-name-display">Arcrawls</span></span>
+          <span class="menu-icon"></span> <span data-i18n-html="options_chatWith">Chat with <span class="pet-name-display">Arcrawls</span></span>
         </button>
         <button class="menu-btn" data-target="statistics">
-          <span class="menu-icon"></span> Analytics & Stats
+          <span class="menu-icon"></span> <span data-i18n="options_analyticsStats">Analytics & Stats</span>
         </button>
         <button class="menu-btn" data-target="logs">
-          <span class="menu-icon"></span> History Timeline
+          <span class="menu-icon"></span> <span data-i18n="options_historyTimeline">History Timeline</span>
         </button>
         <button class="menu-btn" data-target="settings-mascot">
-          <span class="menu-icon"></span> Mascot & Style
+          <span class="menu-icon"></span> <span data-i18n="options_mascotStyle">Mascot & Style</span>
         </button>
         <button class="menu-btn" data-target="settings-ai">
-          <span class="menu-icon"></span> AI & Scheduling
+          <span class="menu-icon"></span> <span data-i18n="options_aiScheduling">AI & Scheduling</span>
         </button>
         <button class="menu-btn" data-target="admin">
-          <span class="menu-icon"></span> Profile Admin
+          <span class="menu-icon"></span> <span data-i18n="options_profileAdmin">Profile Admin</span>
         </button>
       </nav>
 
       <div class="sidebar-footer">
-        <div id="version-display" class="version">Loading...</div>
-        <div class="copyright">© 2026 <span class="pet-name-display">Arcrawls</span> Companion</div>
+        <div id="version-display" class="version" data-i18n="shared_loading">Loading...</div>
+        <div class="copyright" data-i18n-html="options_copyright">© 2026 <span class="pet-name-display">Arcrawls</span> Companion</div>
       </div>
     </aside>
 
@@ -60,8 +60,8 @@
       <!-- PAGE: Sanctuary Playground -->
       <section id="page-sanctuary" class="page-pane active">
         <header class="page-header">
-          <h1>Mascot Sanctuary</h1>
-          <p>Observe <span class="pet-name-display">Arcrawls</span>'s real-time state, interact with him, and guide his
+          <h1 data-i18n="options_mascotSanctuary">Mascot Sanctuary</h1>
+          <p data-i18n-html="options_sanctuaryDesc">Observe <span class="pet-name-display">Arcrawls</span>'s real-time state, interact with him, and guide his
             habits.</p>
         </header>
 
@@ -82,10 +82,10 @@
             </div>
 
             <div class="playground-interactions">
-              <button id="btn-pet" class="interact-btn pet-btn">Pet <span
+              <button id="btn-pet" class="interact-btn pet-btn" data-i18n-html="options_petAction">Pet <span
                   class="pet-name-display">Arcrawls</span></button>
-              <button id="btn-feed" class="interact-btn feed-btn">Feed Snack</button>
-              <button id="btn-shoo" class="interact-btn shoo-btn">Shoo Away</button>
+              <button id="btn-feed" class="interact-btn feed-btn" data-i18n="options_feedSnack">Feed Snack</button>
+              <button id="btn-shoo" class="interact-btn shoo-btn" data-i18n="options_shooAway">Shoo Away</button>
             </div>
           </div>
 
@@ -97,15 +97,15 @@
                 <span class="badge badge-lvl">LVL <span id="pet-level">1</span></span>
                 <span class="badge badge-prestige hidden" id="prestige-badge">★ <span
                     id="prestige-level">0</span></span>
-                <span class="badge badge-mood" id="pet-mood">Happy</span>
-                <span class="badge badge-trait" id="pet-trait">Normal</span>
+                <span class="badge badge-mood" id="pet-mood" data-i18n="mood_happy">Happy</span>
+                <span class="badge badge-trait" id="pet-trait" data-i18n="trait_normal">Normal</span>
               </div>
             </div>
 
             <div class="xp-progress-container">
               <div class="xp-labels">
-                <span>Experience Points</span>
-                <span id="xp-text">0 / 150 XP</span>
+                <span data-i18n="options_experiencePoints">Experience Points</span>
+                <span id="xp-text" data-i18n="options_xpInitial">0 / 150 XP</span>
               </div>
               <div class="xp-bar-track">
                 <div id="bar-xp" class="xp-bar-fill"></div>
@@ -113,18 +113,18 @@
             </div>
 
             <div class="habits-card">
-              <h3>Learning Habits & Adaptation</h3>
+              <h3 data-i18n="options_learningHabits">Learning Habits & Adaptation</h3>
               <div class="habit-stats">
                 <div class="habit-row">
-                  <span class="label">Dominant Trait:</span>
+                  <span class="label" data-i18n="options_dominantTrait">Dominant Trait:</span>
                   <span class="val uppercase" id="lbl-habit-trait">Normal</span>
                 </div>
                 <div class="habit-row">
-                  <span class="label">Crawling Speed:</span>
+                  <span class="label" data-i18n="options_crawlingSpeed">Crawling Speed:</span>
                   <span class="val" id="lbl-habit-speed">1.00x (Normal)</span>
                 </div>
                 <div class="habit-row">
-                  <span class="label">Default Animation:</span>
+                  <span class="label" data-i18n="options_defaultAnimation">Default Animation:</span>
                   <span class="val" id="lbl-habit-behavior">Standard</span>
                 </div>
               </div>
@@ -136,8 +136,8 @@
                   <div class="status-indicator status-checking" id="ai-status-badge"></div>
                 </div>
                 <div class="indicator-text">
-                  <strong id="ai-status-text">BERT: Checking...</strong>
-                  <span id="ai-status-subtitle">DistilBERT Model Active</span>
+                  <strong id="ai-status-text" data-i18n="options_brainChecking">BERT: Checking...</strong>
+                  <span id="ai-status-subtitle" data-i18n="options_distilbertActive">DistilBERT Model Active</span>
                 </div>
               </div>
               <div class="indicator-row sync-row" id="sanc-nano-row">
@@ -145,8 +145,8 @@
                   <div class="status-indicator status-checking" id="sanc-nano-status-badge"></div>
                 </div>
                 <div class="indicator-text">
-                  <strong id="sanc-nano-status-text">Nano: Checking...</strong>
-                  <span id="sanc-nano-status-subtitle">Gemini Nano Active</span>
+                  <strong id="sanc-nano-status-text" data-i18n="options_nanoChecking">Nano: Checking...</strong>
+                  <span id="sanc-nano-status-subtitle" data-i18n="options_geminiNanoActive">Gemini Nano Active</span>
                 </div>
               </div>
               <div class="indicator-row sync-row">
@@ -154,8 +154,8 @@
                   <div class="status-icon">🌐</div>
                 </div>
                 <div class="indicator-text">
-                  <strong id="active-tabs-text">1 Tab Active</strong>
-                  <span>Cross-tab Synchronization</span>
+                  <strong id="active-tabs-text" data-i18n="popup_tabsActiveOne">1 Tab Active</strong>
+                  <span data-i18n="options_crossTabSync">Cross-tab Synchronization</span>
                 </div>
               </div>
             </div>
@@ -163,28 +163,28 @@
             <!-- 24-Hour AI Synapse Card -->
             <div class="habits-card synapse-card" id="synapse-card">
               <div class="synapse-header">
-                <h3>24-Hour AI Synapse</h3>
-                <span id="synapse-status-badge" class="badge badge-mood">Syncing</span>
+                <h3 data-i18n="options_aiSynapse">24-Hour AI Synapse</h3>
+                <span id="synapse-status-badge" class="badge badge-mood" data-i18n="options_syncing">Syncing</span>
               </div>
               <div class="synapse-body">
                 <div class="xp-progress-container" id="synapse-charging-container">
                   <div class="xp-labels">
-                    <span id="synapse-label">Gathering Memories...</span>
+                    <span id="synapse-label" data-i18n="options_gatheringMemories">Gathering Memories...</span>
                     <span id="synapse-pct">0%</span>
                   </div>
                   <div class="xp-bar-track">
                     <div id="bar-synapse" class="xp-bar-fill" style="background-color: var(--blue);"></div>
                   </div>
-                  <p class="section-subtitle" style="margin-top: 8px; font-size: 10px;"><span
+                  <p class="section-subtitle" style="margin-top: 8px; font-size: 10px;" data-i18n-html="options_observingHabits"><span
                       class="pet-name-display">Arcrawls</span> is observing your habits
                     to provide a daily reflection.</p>
                 </div>
 
                 <div id="synapse-ready-container" class="hidden">
-                  <p class="milestone-desc" id="synapse-preview-text" style="margin-bottom: 12px; font-style: italic;">
+                  <p class="milestone-desc" id="synapse-preview-text" style="margin-bottom: 12px; font-style: italic;" data-i18n="options_synapsePreviewPlaceholder">
                     "I've finished analyzing our day together..."</p>
                   <button id="btn-view-insight" class="btn btn-primary" style="width: 100%; gap: 8px;">
-                    <span>🧠</span> Read Daily Reflection
+                    <span>🧠</span> <span data-i18n="options_readDailyReflection">Read Daily Reflection</span>
                   </button>
                 </div>
               </div>
@@ -194,32 +194,32 @@
 
         <!-- Schedule Guide -->
         <section class="schedule-section">
-          <h2>Daily Routine & Schedule</h2>
+          <h2 data-i18n="options_dailyRoutine">Daily Routine & Schedule</h2>
           <div class="schedule-grid">
             <div class="schedule-item">
               <div class="time-block" id="ui-schedule-sleep">10 PM - 6 AM</div>
-              <h4>Sleeping</h4>
-              <p><span class="pet-name-display">Arcrawls</span> rests late at night. Energy restores completely during
+              <h4 data-i18n="options_scheduleSleep">Sleeping</h4>
+              <p data-i18n-html="options_scheduleSleepDesc"><span class="pet-name-display">Arcrawls</span> rests late at night. Energy restores completely during
                 this
                 time.</p>
             </div>
             <div class="schedule-item">
               <div class="time-block" id="ui-schedule-yoga">6 AM - 9 AM</div>
-              <h4>Morning Yoga</h4>
-              <p><span class="pet-name-display">Arcrawls</span> does yoga in the morning, boosting his baseline
+              <h4 data-i18n="options_morningYoga">Morning Yoga</h4>
+              <p data-i18n-html="options_morningYogaDesc"><span class="pet-name-display">Arcrawls</span> does yoga in the morning, boosting his baseline
                 Happiness.
               </p>
             </div>
             <div class="schedule-item">
               <div class="time-block">Idle &gt; 45s</div>
-              <h4>Random Play</h4>
-              <p><span class="pet-name-display">Arcrawls</span> wanders, skateboards, plays, or reads if you leave the
+              <h4 data-i18n="options_randomPlay">Random Play</h4>
+              <p data-i18n-html="options_randomPlayDesc"><span class="pet-name-display">Arcrawls</span> wanders, skateboards, plays, or reads if you leave the
                 cursor idle.</p>
             </div>
             <div class="schedule-item">
               <div class="time-block">Errors</div>
-              <h4>Debugger</h4>
-              <p><span class="pet-name-display">Arcrawls</span> spots javascript errors on your webpages and inspects
+              <h4 data-i18n="options_debugger">Debugger</h4>
+              <p data-i18n-html="options_debuggerDesc"><span class="pet-name-display">Arcrawls</span> spots javascript errors on your webpages and inspects
                 them.
               </p>
             </div>
@@ -228,31 +228,31 @@
 
         <!-- Seasonal Events -->
         <section class="schedule-section" style="margin-top: 28px;">
-          <h2>Seasonal Calendar Events</h2>
+          <h2 data-i18n="options_seasonalEvents">Seasonal Calendar Events</h2>
           <div class="schedule-grid">
             <div class="schedule-item">
               <div class="time-block"
                 style="background-color: rgba(234, 179, 8, 0.08); border-color: rgba(234, 179, 8, 0.25); color: var(--yellow);">
-                Summer</div>
+                <span data-i18n="options_summerSeason">Summer</span></div>
               <h4>June - August</h4>
-              <p><span class="pet-name-display">Arcrawls</span> wears sunglasses, enjoys ice cream, and surfs around the
+              <p data-i18n-html="options_summerDesc"><span class="pet-name-display">Arcrawls</span> wears sunglasses, enjoys ice cream, and surfs around the
                 screen.</p>
             </div>
             <div class="schedule-item">
               <div class="time-block"
                 style="background-color: rgba(236, 72, 153, 0.08); border-color: rgba(236, 72, 153, 0.25); color: var(--pink);">
-                Halloween</div>
+                <span data-i18n="options_halloweenSeason">Halloween</span></div>
               <h4>October</h4>
-              <p><span class="pet-name-display">Arcrawls</span> gets into the spooky spirit with custom Halloween
+              <p data-i18n-html="options_halloweenDesc"><span class="pet-name-display">Arcrawls</span> gets into the spooky spirit with custom Halloween
                 costumes
                 and pumpkin decorations.</p>
             </div>
             <div class="schedule-item">
               <div class="time-block"
                 style="background-color: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.25); color: var(--blue);">
-                Christmas</div>
+                <span data-i18n="options_christmasSeason">Christmas</span></div>
               <h4>December</h4>
-              <p><span class="pet-name-display">Arcrawls</span> celebrates the festive season with a Santa hat and
+              <p data-i18n-html="options_christmasDesc"><span class="pet-name-display">Arcrawls</span> celebrates the festive season with a Santa hat and
                 holiday-themed reactions.</p>
             </div>
           </div>
@@ -273,13 +273,13 @@
               <div class="chat-hero-logo">
                 <img id="chat-hero-pet-image" src="../assets/pets/arcrawls-happy.svg" alt="Arcrawls" />
               </div>
-              <h1>What can I help with?</h1>
+              <h1 data-i18n="options_whatCanIHelp">What can I help with?</h1>
               <div class="chat-starters">
-                <button class="chat-starter-btn">Tell
+                <button class="chat-starter-btn" data-i18n="options_starterFact">Tell
                   me a fun fact about web browsers</button>
-                <button class="chat-starter-btn">Explain
+                <button class="chat-starter-btn" data-i18n="options_starterContext">Explain
                   how context awareness works</button>
-                <button class="chat-starter-btn">How
+                <button class="chat-starter-btn" data-i18n="options_starterCustomize">How
                   can I customize my pet?</button>
               </div>
             </div>
@@ -288,7 +288,7 @@
 
             <div class="options-chat-input-container">
               <div class="chat-input-wrapper">
-                <button id="options-chat-mic" title="Voice Chat">
+                <button id="options-chat-mic" title="Voice Chat" data-i18n-title="options_voiceChat">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
@@ -296,7 +296,7 @@
                     <line x1="12" x2="12" y1="19" y2="22" />
                   </svg>
                 </button>
-                <input type="text" id="options-chat-input" placeholder="Message Arcrawls..." autocomplete="off">
+                <input type="text" id="options-chat-input" placeholder="Message Arcrawls..." autocomplete="off" data-i18n-placeholder="options_chatPlaceholder">
                 <button id="options-chat-send" disabled>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -313,23 +313,23 @@
       <!-- PAGE: Statistics -->
       <section id="page-statistics" class="page-pane">
         <header class="page-header">
-          <h1>Analytics & Statistics</h1>
-          <p>Analyze <span class="pet-name-display">Arcrawls</span>'s virtual statistics, browsing category breakdown,
+          <h1 data-i18n="options_analyticsStats">Analytics & Statistics</h1>
+          <p data-i18n-html="options_analyticsDesc">Analyze <span class="pet-name-display">Arcrawls</span>'s virtual statistics, browsing category breakdown,
             and
             progress meters.</p>
         </header>
 
         <!-- Lifetime Metrics at the top of stats -->
         <div class="analytics-card count-card" style="margin-bottom: 24px;">
-          <h2>Lifetime Metrics</h2>
+          <h2 data-i18n="options_lifetimeMetrics">Lifetime Metrics</h2>
           <div class="counter-grid">
             <div class="counter-box">
               <span class="count-num" id="val-total-pets">0</span>
-              <span class="count-label">Pets Received</span>
+              <span class="count-label" data-i18n="options_petsReceived">Pets Received</span>
             </div>
             <div class="counter-box">
               <span class="count-num" id="val-total-feeds">0</span>
-              <span class="count-label">Feeds Completed</span>
+              <span class="count-label" data-i18n="options_feedsCompleted">Feeds Completed</span>
             </div>
           </div>
         </div>
@@ -338,57 +338,57 @@
           <!-- Stat Gauge Cards -->
           <div class="gauge-card pink-glow">
             <div class="gauge-header">
-              <span class="gauge-name">Happiness</span>
+              <span class="gauge-name" data-i18n="stat_happiness">Happiness</span>
               <span class="gauge-val" id="txt-happiness">50%</span>
             </div>
             <div class="gauge-track">
               <div class="gauge-fill bg-pink" id="bar-happiness"></div>
             </div>
-            <p class="gauge-desc">Decays over time. Boosted by petting, feeding, and visiting positive websites.</p>
+            <p class="gauge-desc" data-i18n="stat_happinessDesc">Decays over time. Boosted by petting, feeding, and visiting positive websites.</p>
           </div>
 
           <div class="gauge-card yellow-glow">
             <div class="gauge-header">
-              <span class="gauge-name">Energy</span>
+              <span class="gauge-name" data-i18n="stat_energy">Energy</span>
               <span class="gauge-val" id="txt-energy">80%</span>
             </div>
             <div class="gauge-track">
               <div class="gauge-fill bg-yellow" id="bar-energy"></div>
             </div>
-            <p class="gauge-desc">Decays when crawling. Restored by feeding and overnight sleep.</p>
+            <p class="gauge-desc" data-i18n="stat_energyDesc">Decays when crawling. Restored by feeding and overnight sleep.</p>
           </div>
 
           <div class="gauge-card blue-glow">
             <div class="gauge-header">
-              <span class="gauge-name">Curiosity</span>
+              <span class="gauge-name" data-i18n="stat_curiosity">Curiosity</span>
               <span class="gauge-val" id="txt-curiosity">60%</span>
             </div>
             <div class="gauge-track">
               <div class="gauge-fill bg-blue" id="bar-curiosity"></div>
             </div>
-            <p class="gauge-desc">Gained by visiting new domains and reading articles.</p>
+            <p class="gauge-desc" data-i18n="stat_curiosityDesc">Gained by visiting new domains and reading articles.</p>
           </div>
 
           <div class="gauge-card green-glow">
             <div class="gauge-header">
-              <span class="gauge-name">Focus</span>
+              <span class="gauge-name" data-i18n="stat_focus">Focus</span>
               <span class="gauge-val" id="txt-focus">50%</span>
             </div>
             <div class="gauge-track">
               <div class="gauge-fill bg-green" id="bar-focus"></div>
             </div>
-            <p class="gauge-desc">Boosted by working/coding and negative coding sentiment (debugging sessions).</p>
+            <p class="gauge-desc" data-i18n="stat_focusDesc">Boosted by working/coding and negative coding sentiment (debugging sessions).</p>
           </div>
 
           <div class="gauge-card indigo-glow">
             <div class="gauge-header">
-              <span class="gauge-name">Leisure</span>
+              <span class="gauge-name" data-i18n="stat_leisure">Leisure</span>
               <span class="gauge-val" id="txt-leisure">50%</span>
             </div>
             <div class="gauge-track">
               <div class="gauge-fill bg-indigo" id="bar-leisure"></div>
             </div>
-            <p class="gauge-desc">Increases when streaming, gaming, or visiting social media domains.</p>
+            <p class="gauge-desc" data-i18n="stat_leisureDesc">Increases when streaming, gaming, or visiting social media domains.</p>
           </div>
         </div>
 
@@ -396,8 +396,8 @@
           style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
           <!-- Category Chart Card -->
           <div class="analytics-card chart-card">
-            <h2>Browsing Interest Distribution</h2>
-            <p class="section-subtitle">Real-time classification based on your tab navigation history:</p>
+            <h2 data-i18n="options_browsingInterests">Browsing Interest Distribution</h2>
+            <p class="section-subtitle" data-i18n="options_browsingInterestsSub">Real-time classification based on your tab navigation history:</p>
             <div id="categories-list" class="category-chart-list">
               <!-- Dynamically populated rows -->
             </div>
@@ -405,8 +405,8 @@
 
           <!-- Interests History Chart side by side -->
           <div class="analytics-card chart-card">
-            <h2>Interests History (Last 7 Days)</h2>
-            <p class="section-subtitle">Category breakdown over the last 7 days.</p>
+            <h2 data-i18n="options_interestsHistory">Interests History (Last 7 Days)</h2>
+            <p class="section-subtitle" data-i18n="options_interestsHistorySub">Category breakdown over the last 7 days.</p>
             <div id="interests-history-chart" class="fancy-history-list">
               <!-- Dynamically populated fancy tags -->
             </div>
@@ -414,8 +414,8 @@
 
           <!-- Mood Over Time Chart -->
           <div class="analytics-card chart-card" style="grid-column: 1 / -1;">
-            <h2>Mood Over Time</h2>
-            <p class="section-subtitle">Average daily Happiness and Energy.</p>
+            <h2 data-i18n="options_moodOverTime">Mood Over Time</h2>
+            <p class="section-subtitle" data-i18n="options_moodOverTimeSub">Average daily Happiness and Energy.</p>
             <div id="mood-history-chart"
               style="margin-top: 16px; display: flex; justify-content: center; width: 100%; min-height: 250px;">
             </div>
@@ -426,15 +426,15 @@
       <!-- PAGE: History Logs -->
       <section id="page-logs" class="page-pane">
         <header class="page-header">
-          <h1>History Logs</h1>
-          <p>Chronological timeline of <span class="pet-name-display">Arcrawls</span>'s recent mood swings, page
+          <h1 data-i18n="options_historyLogs">History Logs</h1>
+          <p data-i18n-html="options_historyLogsDesc">Chronological timeline of <span class="pet-name-display">Arcrawls</span>'s recent mood swings, page
             evaluations, and actions.</p>
         </header>
 
         <div class="logs-card">
           <div class="logs-filter-row">
-            <h2>Timeline Feed</h2>
-            <button class="btn btn-secondary btn-small" id="btn-clear-logs-ui">Clear Logs</button>
+            <h2 data-i18n="options_timelineFeed">Timeline Feed</h2>
+            <button class="btn btn-secondary btn-small" id="btn-clear-logs-ui" data-i18n="options_clearLogs">Clear Logs</button>
           </div>
           <div id="timeline-list" class="timeline-list">
             <!-- Timeline items populated dynamically -->
@@ -443,9 +443,9 @@
 
         <div class="logs-card" style="margin-top: 24px;">
           <div class="logs-filter-row">
-            <h2>Recent Milestones</h2>
+            <h2 data-i18n="options_recentMilestones">Recent Milestones</h2>
           </div>
-          <p class="section-subtitle">Significant growth markers and achievements earned by <span
+          <p class="section-subtitle" data-i18n-html="options_recentMilestonesDesc">Significant growth markers and achievements earned by <span
               class="pet-name-display">Arcrawls</span>.</p>
           <div id="milestones-list" class="milestones-grid">
             <!-- Milestones populated dynamically -->
@@ -456,8 +456,8 @@
       <!-- PAGE: Mascot & Style Settings -->
       <section id="page-settings-mascot" class="page-pane">
         <header class="page-header">
-          <h1>Mascot & Style</h1>
-          <p>Customize <span class="pet-name-display">Arcrawls</span>'s appearance, size, active animations, sound
+          <h1 data-i18n="options_mascotStyle">Mascot & Style</h1>
+          <p data-i18n-html="options_mascotStyleDesc">Customize <span class="pet-name-display">Arcrawls</span>'s appearance, size, active animations, sound
             effects,
             and wardrobe.</p>
         </header>
@@ -467,57 +467,57 @@
           <div class="settings-main-col">
             <!-- Main Settings Form -->
             <div class="settings-main-card">
-              <h2>Mascot Preferences</h2>
+              <h2 data-i18n="options_mascotPrefs">Mascot Preferences</h2>
 
               <div class="form-group">
-                <label for="pet-name-input">Mascot Name</label>
+                <label for="pet-name-input" data-i18n="options_mascotName">Mascot Name</label>
                 <input type="text" id="pet-name-input" class="form-control" placeholder="Arcrawls">
               </div>
 
               <div class="form-row">
                 <div class="form-group col">
-                  <label for="size-slider">Mascot Size (<span id="size-val">128px</span>)</label>
+                  <label for="size-slider" data-i18n-html="options_mascotSize">Mascot Size (<span id="size-val">128px</span>)</label>
                   <input type="range" id="size-slider" min="32" max="256" value="128" class="slider">
                 </div>
                 <div class="form-group col">
-                  <label for="speed-slider">Walking Speed (<span id="speed-val">1.0x</span>)</label>
+                  <label for="speed-slider" data-i18n-html="options_walkingSpeed">Walking Speed (<span id="speed-val">1.0x</span>)</label>
                   <input type="range" id="speed-slider" min="5" max="30" value="10" class="slider">
                 </div>
                 <div class="form-group col">
-                  <label for="flight-speed-slider">Rocket Speed (<span id="flight-speed-val">1.0x</span>)</label>
+                  <label for="flight-speed-slider" data-i18n-html="options_rocketSpeed">Rocket Speed (<span id="flight-speed-val">1.0x</span>)</label>
                   <input type="range" id="flight-speed-slider" min="5" max="50" value="10" class="slider">
                 </div>
               </div>
 
               <div class="form-group" id="custom-color-container">
-                <label for="pet-color-input">Custom Mascot Color (Unlocked at LVL 15)</label>
+                <label for="pet-color-input" data-i18n="options_customColor">Custom Mascot Color (Unlocked at LVL 15)</label>
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <input type="color" id="pet-color-input" class="form-control"
                     style="width: 60px; height: 40px; padding: 4px; cursor: pointer;" disabled>
                   <button id="btn-reset-color" class="btn btn-secondary btn-small" style="font-size: 11px;"
-                    disabled>Reset to Default</button>
+                    disabled data-i18n="options_resetToDefault">Reset to Default</button>
                 </div>
               </div>
 
               <div class="form-group" id="api-persona-container">
-                <label for="persona-select">Dialogue Persona</label>
+                <label for="persona-select" data-i18n="options_dialoguePersona">Dialogue Persona</label>
                 <select id="persona-select" class="form-control">
-                  <option value="default"><span class="pet-name-display">Arcrawls</span> (Default)</option>
-                  <option value="sarcastic">Sarcastic & Cynical</option>
-                  <option value="encouraging">Empathetic Coach</option>
-                  <option value="poetic">Whimsical Poet</option>
-                  <option value="snarky">Tech Bro Snark</option>
-                  <option value="genz">Gen Z Slang</option>
-                  <option value="kid">Kid / Gamified (High Energy)</option>
+                  <option value="default" data-i18n-html="options_personaDefault"><span class="pet-name-display">Arcrawls</span> (Default)</option>
+                  <option value="sarcastic" data-i18n="options_personaSarcastic">Sarcastic & Cynical</option>
+                  <option value="encouraging" data-i18n="options_personaEncouraging">Empathetic Coach</option>
+                  <option value="poetic" data-i18n="options_personaPoetic">Whimsical Poet</option>
+                  <option value="snarky" data-i18n="options_personaSnarky">Tech Bro Snark</option>
+                  <option value="genz" data-i18n="options_personaGenZ">Gen Z Slang</option>
+                  <option value="kid" data-i18n="options_personaKid">Kid / Gamified (High Energy)</option>
                 </select>
               </div>
 
               <div class="form-group" id="chat-voice-container">
-                <label for="chat-voice-select">Chat Voice (Text-to-Speech)</label>
+                <label for="chat-voice-select" data-i18n="options_chatVoice">Chat Voice (Text-to-Speech)</label>
                 <select id="chat-voice-select" class="form-control">
-                  <option value="">Default (Browser Choice)</option>
+                  <option value="" data-i18n="options_defaultBrowserChoice">Default (Browser Choice)</option>
                 </select>
-                <div class="hint-text" style="margin-top: 4px; font-size: 12px; color: var(--text-secondary);">
+                <div class="hint-text" style="margin-top: 4px; font-size: 12px; color: var(--text-secondary);" data-i18n-html="options_chatVoiceHint">
                   Select the voice <span class="pet-name-display">Arcrawls</span> uses to speak back to you.
                 </div>
               </div>
@@ -525,8 +525,8 @@
               <div class="toggle-group-row">
                 <div class="toggle-card">
                   <div class="toggle-info">
-                    <strong>Sound Effects</strong>
-                    <span>Allow audio feedback on events</span>
+                    <strong data-i18n="options_soundEffects">Sound Effects</strong>
+                    <span data-i18n="options_soundEffectsSub">Allow audio feedback on events</span>
                   </div>
                   <label class="switch">
                     <input type="checkbox" id="sound-toggle">
@@ -536,8 +536,8 @@
 
                 <div class="toggle-card">
                   <div class="toggle-info">
-                    <strong>Seasonal Outfits</strong>
-                    <span>Unlock Christmas/Halloween costumes</span>
+                    <strong data-i18n="options_seasonalOutfits">Seasonal Outfits</strong>
+                    <span data-i18n="options_seasonalOutfitsSub">Unlock Christmas/Halloween costumes</span>
                   </div>
                   <label class="switch">
                     <input type="checkbox" id="seasonal-toggle">
@@ -547,10 +547,10 @@
               </div>
 
               <div class="toggle-group-row" style="margin-top: 16px;">
-                <div class="toggle-card" title="Caps at 30fps, disables auras, stops tab syncing to save CPU">
+                <div class="toggle-card" title="Caps at 30fps, disables auras, stops tab syncing to save CPU" data-i18n-title="shared_perfModeHint">
                   <div class="toggle-info">
-                    <strong>Performance Mode</strong>
-                    <span>Reduce CPU & Memory footprint</span>
+                    <strong data-i18n="shared_perfMode">Performance Mode</strong>
+                    <span data-i18n="shared_perfModeSub">Reduce CPU & Memory footprint</span>
                   </div>
                   <label class="switch">
                     <input type="checkbox" id="performance-mode-toggle">
@@ -559,10 +559,10 @@
                 </div>
 
                 <div class="toggle-card"
-                  title="Fades Arcrawls out when you're typing or scrolling to reduce distraction">
+                  title="Fades Arcrawls out when you're typing or scrolling to reduce distraction" data-i18n-title="shared_ghostModeHint">
                   <div class="toggle-info">
-                    <strong>Ghost Mode</strong>
-                    <span>Fade out when active (Focus)</span>
+                    <strong data-i18n="shared_ghostMode">Ghost Mode</strong>
+                    <span data-i18n="shared_ghostModeSub">Fade out when active (Focus)</span>
                   </div>
                   <label class="switch">
                     <input type="checkbox" id="ghost-mode-toggle">
@@ -572,14 +572,14 @@
               </div>
 
               <div class="form-group hidden" id="volume-container">
-                <label for="volume-slider">SFX Volume (<span id="volume-val">80%</span>)</label>
+                <label for="volume-slider" data-i18n-html="options_sfxVolume">SFX Volume (<span id="volume-val">80%</span>)</label>
                 <input type="range" id="volume-slider" min="0" max="100" value="80" class="slider">
               </div>
             </div>
 
             <!-- Costume & Aura Wardrobe Card -->
             <div class="settings-wardrobe-card">
-              <h2>Costume & Aura Wardrobe</h2>
+              <h2 data-i18n="options_wardrobe">Costume & Aura Wardrobe</h2>
               <div class="wardrobe-grid" id="wardrobe-grid">
                 <!-- Cards will be populated dynamically by options.ts -->
               </div>
@@ -590,40 +590,40 @@
           <div class="settings-aside-col">
             <!-- Sound Board Preview Card -->
             <div class="settings-soundboard-card">
-              <h2>Sound Board Preview</h2>
-              <p class="section-subtitle">Test and preview <span class="pet-name-display">Arcrawls</span>'s custom retro
+              <h2 data-i18n="options_soundBoard">Sound Board Preview</h2>
+              <p class="section-subtitle" data-i18n-html="options_soundBoardDesc">Test and preview <span class="pet-name-display">Arcrawls</span>'s custom retro
                 sound effects:</p>
 
               <div class="soundboard-grid">
-                <button class="sound-play-btn" data-sound="greeting">Greeting</button>
-                <button class="sound-play-btn" data-sound="petting">Petting</button>
-                <button class="sound-play-btn" data-sound="feeding">Feeding</button>
-                <button class="sound-play-btn" data-sound="levelUp">Level Up</button>
-                <button class="sound-play-btn" data-sound="chat">Chat Message</button>
-                <button class="sound-play-btn" data-sound="thinking">Thinking</button>
-                <button class="sound-play-btn" data-sound="sleeping">Sleeping</button>
-                <button class="sound-play-btn" data-sound="sad">Crying</button>
-                <button class="sound-play-btn" data-sound="shoo">Shoo Run</button>
+                <button class="sound-play-btn" data-sound="greeting" data-i18n="options_soundGreeting">Greeting</button>
+                <button class="sound-play-btn" data-sound="petting" data-i18n="options_soundPetting">Petting</button>
+                <button class="sound-play-btn" data-sound="feeding" data-i18n="options_soundFeeding">Feeding</button>
+                <button class="sound-play-btn" data-sound="levelUp" data-i18n="options_soundLevelUp">Level Up</button>
+                <button class="sound-play-btn" data-sound="chat" data-i18n="options_soundChat">Chat Message</button>
+                <button class="sound-play-btn" data-sound="thinking" data-i18n="options_soundThinking">Thinking</button>
+                <button class="sound-play-btn" data-sound="sleeping" data-i18n="options_soundSleeping">Sleeping</button>
+                <button class="sound-play-btn" data-sound="sad" data-i18n="options_soundCrying">Crying</button>
+                <button class="sound-play-btn" data-sound="shoo" data-i18n="options_soundShoo">Shoo Run</button>
               </div>
             </div>
 
             <!-- Fun Mascot Facts Card -->
             <div class="settings-soundboard-card">
-              <h2>Did You Know? 🐾</h2>
-              <p class="section-subtitle">Interesting tidbits about your desktop companion:</p>
+              <h2 data-i18n="options_didYouKnow">Did You Know? 🐾</h2>
+              <p class="section-subtitle" data-i18n="options_didYouKnowDesc">Interesting tidbits about your desktop companion:</p>
               <ul
                 style="font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding-left: 16px; margin-top: 8px;">
-                <li><span class="pet-name-display">Arcrawls</span>'s mood fluctuates based on the websites you visit!
+                <li data-i18n-html="options_fact1"><span class="pet-name-display">Arcrawls</span>'s mood fluctuates based on the websites you visit!
                   Tech
                   blogs keep him focused, while social
                   media makes him playful.</li>
-                <li>At level 50, <span class="pet-name-display">Arcrawls</span> can undergo <strong>Prestige
+                <li data-i18n-html="options_fact2">At level 50, <span class="pet-name-display">Arcrawls</span> can undergo <strong>Prestige
                     Rebirth</strong>, unlocking faster baseline speeds
                   and new cosmetics.</li>
-                <li>Leaving your cursor idle for more than 45 seconds triggers <span
+                <li data-i18n-html="options_fact3">Leaving your cursor idle for more than 45 seconds triggers <span
                     class="pet-name-display">Arcrawls</span> to wander, skateboard, or read a
                   tiny book!</li>
-                <li><span class="pet-name-display">Arcrawls</span> gets cozy in the winter holidays and spooky in
+                <li data-i18n-html="options_fact4"><span class="pet-name-display">Arcrawls</span> gets cozy in the winter holidays and spooky in
                   October
                   with seasonal costumes automatically.
                 </li>
@@ -632,14 +632,14 @@
 
             <!-- Pro Tips Card -->
             <div class="settings-soundboard-card">
-              <h2>Pro Tips 💡</h2>
-              <p class="section-subtitle">Maximize your productivity:</p>
+              <h2 data-i18n="options_proTips">Pro Tips 💡</h2>
+              <p class="section-subtitle" data-i18n="options_proTipsDesc">Maximize your productivity:</p>
               <ul
                 style="font-size: 12px; line-height: 1.6; color: var(--text-secondary); padding-left: 16px; margin-top: 8px;">
-                <li>Use <strong>Focus Blocks</strong> in the Planner to pause <span
+                <li data-i18n-html="options_proTip1">Use <strong>Focus Blocks</strong> in the Planner to pause <span
                     class="pet-name-display">Arcrawls</span>'s random wanderings when you need
                   deep work.</li>
-                <li>Customize <strong>Domain Reactions</strong> to have <span class="pet-name-display">Arcrawls</span>
+                <li data-i18n-html="options_proTip2">Customize <strong>Domain Reactions</strong> to have <span class="pet-name-display">Arcrawls</span>
                   act
                   as a rubber duck debugger on sites
                   like StackOverflow!</li>
@@ -652,8 +652,8 @@
       <!-- PAGE: AI & Scheduling Settings -->
       <section id="page-settings-ai" class="page-pane">
         <header class="page-header">
-          <h1>AI & Scheduling</h1>
-          <p>Configure local AI evaluation, custom site blocklists, sleep/work calendars, and domain reaction rules.</p>
+          <h1 data-i18n="options_aiScheduling">AI & Scheduling</h1>
+          <p data-i18n="options_aiSchedulingDesc">Configure local AI evaluation, custom site blocklists, sleep/work calendars, and domain reaction rules.</p>
         </header>
 
         <div class="settings-grid">
@@ -661,13 +661,13 @@
           <div class="settings-main-col">
             <!-- Local AI Settings -->
             <div class="settings-main-card">
-              <h2>Mascot Intelligence (AI)</h2>
+              <h2 data-i18n="options_mascotIntelligence">Mascot Intelligence (AI)</h2>
 
               <div class="toggle-group-row" style="margin-top: 0;">
                 <div class="toggle-card" style="width: 100%;">
                   <div class="toggle-info">
-                    <strong>Brain Upgrade (Local AI)</strong>
-                    <span>Enable high-fidelity DistilBERT evaluation</span>
+                    <strong data-i18n="options_brainUpgrade">Brain Upgrade (Local AI)</strong>
+                    <span data-i18n="options_brainUpgradeSub">Enable high-fidelity DistilBERT evaluation</span>
                   </div>
                   <label class="switch">
                     <input type="checkbox" id="ai-toggle">
@@ -678,37 +678,37 @@
 
               <div class="form-group hidden" id="ai-tuning-container"
                 style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; width: 100%;">
-                <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 13px;">Brain Upgrade Tuning</h4>
+                <h4 style="margin-bottom: 12px; color: var(--text-color); font-size: 13px;" data-i18n="options_brainTuning">Brain Upgrade Tuning</h4>
 
                 <div class="form-group" style="margin-bottom: 16px;">
-                  <label for="ai-sensitivity-slider">Sentiment Sensitivity (<span
+                  <label for="ai-sensitivity-slider" data-i18n-html="options_sentimentSensitivity">Sentiment Sensitivity (<span
                       id="ai-sensitivity-val">50%</span>)</label>
                   <input type="range" id="ai-sensitivity-slider" min="0" max="100" value="50" class="slider">
-                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Adjusts how easily the Local AI
+                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" data-i18n="options_sentimentSensitivityHint">Adjusts how easily the Local AI
                     registers page sentiment.</p>
                 </div>
 
                 <div class="form-group">
-                  <label for="ai-frequency-slider">Observation Frequency (<span
+                  <label for="ai-frequency-slider" data-i18n-html="options_observationFrequency">Observation Frequency (<span
                       id="ai-frequency-val">60s</span>)</label>
                   <input type="range" id="ai-frequency-slider" min="15" max="600" step="15" value="60" class="slider">
-                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Controls how often <span
+                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" data-i18n-html="options_observationFrequencyHint">Controls how often <span
                       class="pet-name-display">Arcrawls</span> makes
                     deep observations.</p>
                 </div>
 
                 <div id="ai-connection-status"
                   style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px; font-size: 11px;">
-                  <h4 style="margin-bottom: 8px; color: var(--text-color); font-size: 11px; text-transform: uppercase;">
+                  <h4 style="margin-bottom: 8px; color: var(--text-color); font-size: 11px; text-transform: uppercase;" data-i18n="options_activeBrainModules">
                     Active Brain Modules</h4>
                   <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                    <span style="color: var(--text-secondary);">Emotion Classifier (BERT):</span>
-                    <strong id="status-bert" style="color: var(--text-muted);">Syncing...</strong>
+                    <span style="color: var(--text-secondary);" data-i18n="options_emotionClassifier">Emotion Classifier (BERT):</span>
+                    <strong id="status-bert" style="color: var(--text-muted);" data-i18n="options_syncing">Syncing...</strong>
                   </div>
                   <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-                    <span style="color: var(--text-secondary);">Generative Reflections (Nano):</span>
-                    <strong id="status-nano" style="color: var(--text-muted);">Syncing...</strong>
-                    <div style="width: 100%; margin-top: 4px; font-size: 10px; color: var(--text-muted);">
+                    <span style="color: var(--text-secondary);" data-i18n="options_generativeReflections">Generative Reflections (Nano):</span>
+                    <strong id="status-nano" style="color: var(--text-muted);" data-i18n="options_syncing">Syncing...</strong>
+                    <div style="width: 100%; margin-top: 4px; font-size: 10px; color: var(--text-muted);" data-i18n="options_nanoCheckHint">
                       Not working? Copy & paste this to check if Gemini Nano is enabled: <br>
                       <code
                         style="user-select: all; background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 4px; font-family: monospace; display: inline-block; margin-top: 4px;">chrome://flags/#prompt-api-for-gemini-nano</code>
@@ -718,93 +718,93 @@
               </div>
               <div id="ai-privacy-notice"
                 style="font-size: 11px; color: var(--text-muted); margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px; line-height: 1.5;">
-                <p style="margin-bottom: 8px;"><strong>Mode: Lite (Default)</strong> — ~6 MB store download (~22–25 MB on disk). Uses rule-based logic and Regex
+                <p style="margin-bottom: 8px;" data-i18n-html="options_liteModeNotice"><strong>Mode: Lite (Default)</strong> — ~6 MB store download (~22–25 MB on disk). Uses rule-based logic and Regex
                   for fast behavior analysis with no network downloads.</p>
-                <strong style="color: var(--text-color); display: block; margin-bottom: 4px;">Privacy & Resource
+                <strong style="color: var(--text-color); display: block; margin-bottom: 4px;" data-i18n="options_privacyNoticeTitle">Privacy & Resource
                   Notice (Brain Upgrade):</strong>
-                Enabling Brain Upgrade initializes the bundled ONNX asyncify runtime (~22 MB unpacked, already in the package) and downloads DistilBERT weights (~67 MB once) from Hugging Face into your browser's IndexedDB.
+                <span data-i18n-html="options_privacyNoticeBody">Enabling Brain Upgrade initializes the bundled ONNX asyncify runtime (~22 MB unpacked, already in the package) and downloads DistilBERT weights (~67 MB once) from Hugging Face into your browser's IndexedDB.
                 All page analysis is performed <strong>strictly on your device</strong>—your browsing data is processed
-                locally and is never sent to external servers.
+                locally and is never sent to external servers.</span>
               </div>
             </div>
 
             <!-- Domain Reaction Dictionary Card -->
             <div class="settings-reactions-card">
-              <h2>Domain Reaction Dictionary</h2>
-              <p class="section-subtitle">Map specific website domains to custom mascot behaviors, comments, and sound
+              <h2 data-i18n="options_reactionDictionary">Domain Reaction Dictionary</h2>
+              <p class="section-subtitle" data-i18n="options_reactionDictionaryDesc">Map specific website domains to custom mascot behaviors, comments, and sound
                 effects:</p>
 
               <!-- Add Rule Form -->
               <div class="reaction-form">
                 <div class="form-row">
                   <div class="form-group col">
-                    <label for="reaction-domain-input">Website Domain</label>
+                    <label for="reaction-domain-input" data-i18n="options_websiteDomain">Website Domain</label>
                     <input type="text" id="reaction-domain-input" class="form-control"
-                      placeholder="e.g. stackoverflow.com">
+                      placeholder="e.g. stackoverflow.com" data-i18n-placeholder="options_domainPlaceholder">
                   </div>
                   <div class="form-group col">
-                    <label for="reaction-emotion-select">Mascot Emotion</label>
+                    <label for="reaction-emotion-select" data-i18n="options_mascotEmotion">Mascot Emotion</label>
                     <select id="reaction-emotion-select" class="form-control">
-                      <option value="happy">Happy 😊</option>
-                      <option value="sad">Sad 😢</option>
-                      <option value="sleeping">Sleeping 💤</option>
-                      <option value="working-thinking">Thinking 🤔</option>
-                      <option value="reading">Reading 📖</option>
-                      <option value="eating">Eating 🍕</option>
-                      <option value="coding">Coding 💻</option>
-                      <option value="working-typing">Typing ⌨️</option>
-                      <option value="dancing">Dancing 💃</option>
-                      <option value="cool">Cool 😎</option>
-                      <option value="love">Love ❤️</option>
-                      <option value="celebrating">Celebrating 🎉</option>
-                      <option value="mindblown">Mindblown 🤯</option>
-                      <option value="ninja">Ninja 🥷</option>
-                      <option value="working-wizard">Wizard 🧙</option>
-                      <option value="astronaut">Astronaut 🧑‍🚀</option>
-                      <option value="working-debugger">Debugger 🔍</option>
-                      <option value="working-merging">Merging/Git 🔀</option>
-                      <option value="working-deploying">Deploying 🚀</option>
-                      <option value="working-firefighting">Firefighting 🚒</option>
-                      <option value="working-rubber-duck">Rubber Duck 🦆</option>
-                      <option value="working-building">Building 🏗️</option>
-                      <option value="working-sweeping">Sweeping 🧹</option>
-                      <option value="dizzy">Dizzy 💫</option>
-                      <option value="evil">Evil 😈</option>
-                      <option value="king">King 👑</option>
-                      <option value="music">Listening Music 🎧</option>
-                      <option value="dj">DJ 🎛️</option>
-                      <option value="magic">Magic 🪄</option>
-                      <option value="fishing">Fishing 🎣</option>
-                      <option value="bowling">Bowling 🎳</option>
-                      <option value="detective">Detective 🕵️</option>
-                      <option value="painting">Painting 🎨</option>
-                      <option value="photography">Photography 📷</option>
-                      <option value="working-juggling">Juggling 🤹</option>
+                      <option value="happy" data-i18n="reaction_happy">Happy 😊</option>
+                      <option value="sad" data-i18n="reaction_sad">Sad 😢</option>
+                      <option value="sleeping" data-i18n="reaction_sleeping">Sleeping 💤</option>
+                      <option value="working-thinking" data-i18n="reaction_thinking">Thinking 🤔</option>
+                      <option value="reading" data-i18n="reaction_reading">Reading 📖</option>
+                      <option value="eating" data-i18n="reaction_eating">Eating 🍕</option>
+                      <option value="coding" data-i18n="reaction_coding">Coding 💻</option>
+                      <option value="working-typing" data-i18n="reaction_typing">Typing ⌨️</option>
+                      <option value="dancing" data-i18n="reaction_dancing">Dancing 💃</option>
+                      <option value="cool" data-i18n="reaction_cool">Cool 😎</option>
+                      <option value="love" data-i18n="reaction_love">Love ❤️</option>
+                      <option value="celebrating" data-i18n="reaction_celebrating">Celebrating 🎉</option>
+                      <option value="mindblown" data-i18n="reaction_mindblown">Mindblown 🤯</option>
+                      <option value="ninja" data-i18n="reaction_ninja">Ninja 🥷</option>
+                      <option value="working-wizard" data-i18n="reaction_wizard">Wizard 🧙</option>
+                      <option value="astronaut" data-i18n="reaction_astronaut">Astronaut 🧑‍🚀</option>
+                      <option value="working-debugger" data-i18n="reaction_debugger">Debugger 🔍</option>
+                      <option value="working-merging" data-i18n="reaction_merging">Merging/Git 🔀</option>
+                      <option value="working-deploying" data-i18n="reaction_deploying">Deploying 🚀</option>
+                      <option value="working-firefighting" data-i18n="reaction_firefighting">Firefighting 🚒</option>
+                      <option value="working-rubber-duck" data-i18n="reaction_rubberDuck">Rubber Duck 🦆</option>
+                      <option value="working-building" data-i18n="reaction_building">Building 🏗️</option>
+                      <option value="working-sweeping" data-i18n="reaction_sweeping">Sweeping 🧹</option>
+                      <option value="dizzy" data-i18n="reaction_dizzy">Dizzy 💫</option>
+                      <option value="evil" data-i18n="reaction_evil">Evil 😈</option>
+                      <option value="king" data-i18n="reaction_king">King 👑</option>
+                      <option value="music" data-i18n="reaction_music">Listening Music 🎧</option>
+                      <option value="dj" data-i18n="reaction_dj">DJ 🎛️</option>
+                      <option value="magic" data-i18n="reaction_magic">Magic 🪄</option>
+                      <option value="fishing" data-i18n="reaction_fishing">Fishing 🎣</option>
+                      <option value="bowling" data-i18n="reaction_bowling">Bowling 🎳</option>
+                      <option value="detective" data-i18n="reaction_detective">Detective 🕵️</option>
+                      <option value="painting" data-i18n="reaction_painting">Painting 🎨</option>
+                      <option value="photography" data-i18n="reaction_photography">Photography 📷</option>
+                      <option value="working-juggling" data-i18n="reaction_juggling">Juggling 🤹</option>
                     </select>
                   </div>
                 </div>
                 <div class="form-row" style="margin-top: 8px;">
                   <div class="form-group col">
-                    <label for="reaction-dialogue-input">Speech Dialogue (Optional)</label>
+                    <label for="reaction-dialogue-input" data-i18n="options_speechDialogue">Speech Dialogue (Optional)</label>
                     <input type="text" id="reaction-dialogue-input" class="form-control"
-                      placeholder="e.g. Let's fix this bug! 🐛">
+                      placeholder="e.g. Let's fix this bug! 🐛" data-i18n-placeholder="options_speechDialoguePlaceholder">
                   </div>
                   <div class="form-group col">
-                    <label for="reaction-sound-select">Sound FX (Optional)</label>
+                    <label for="reaction-sound-select" data-i18n="options_soundFx">Sound FX (Optional)</label>
                     <select id="reaction-sound-select" class="form-control">
-                      <option value="none">None</option>
-                      <option value="greeting">Greeting</option>
-                      <option value="levelUp">Level Up</option>
-                      <option value="chat">Chat Message</option>
-                      <option value="petting">Petting</option>
-                      <option value="sad">Crying</option>
-                      <option value="sleeping">Sleeping</option>
-                      <option value="thinking">Thinking</option>
-                      <option value="feeding">Feeding</option>
+                      <option value="none" data-i18n="shared_none">None</option>
+                      <option value="greeting" data-i18n="options_soundGreeting">Greeting</option>
+                      <option value="levelUp" data-i18n="options_soundLevelUp">Level Up</option>
+                      <option value="chat" data-i18n="options_soundChat">Chat Message</option>
+                      <option value="petting" data-i18n="options_soundPetting">Petting</option>
+                      <option value="sad" data-i18n="options_soundCrying">Crying</option>
+                      <option value="sleeping" data-i18n="options_soundSleeping">Sleeping</option>
+                      <option value="thinking" data-i18n="options_soundThinking">Thinking</option>
+                      <option value="feeding" data-i18n="options_soundFeeding">Feeding</option>
                     </select>
                   </div>
                 </div>
-                <button class="btn btn-primary" id="btn-add-reaction" style="margin-top: 12px; width: 100%;">Add
+                <button class="btn btn-primary" id="btn-add-reaction" style="margin-top: 12px; width: 100%;" data-i18n="options_addReactionRule">Add
                   Reaction Rule</button>
               </div>
 
@@ -813,11 +813,11 @@
                 <table class="reactions-table">
                   <thead>
                     <tr>
-                      <th>Domain</th>
-                      <th>Emotion</th>
-                      <th>Dialogue</th>
-                      <th>Sound</th>
-                      <th style="width: 60px; text-align: right;">Action</th>
+                      <th data-i18n="options_tableDomain">Domain</th>
+                      <th data-i18n="options_tableEmotion">Emotion</th>
+                      <th data-i18n="options_tableDialogue">Dialogue</th>
+                      <th data-i18n="options_tableSound">Sound</th>
+                      <th style="width: 60px; text-align: right;" data-i18n="options_tableAction">Action</th>
                     </tr>
                   </thead>
                   <tbody id="reactions-tbody">
@@ -825,7 +825,7 @@
                   </tbody>
                 </table>
                 <div class="empty-blocklist" id="empty-reactions-msg"
-                  style="display: none; padding: 12px; text-align: center;">
+                  style="display: none; padding: 12px; text-align: center;" data-i18n="options_noReactions">
                   No custom domain reactions set.
                 </div>
               </div>
@@ -836,32 +836,32 @@
           <div class="settings-aside-col">
             <!-- Blocklist Settings -->
             <div class="settings-blocklist-card">
-              <h2>Site Blocklist (Do Not Spawn)</h2>
-              <p class="section-subtitle">Prevent <span class="pet-name-display">Arcrawls</span> from spawning on these
+              <h2 data-i18n="options_siteBlocklist">Site Blocklist (Do Not Spawn)</h2>
+              <p class="section-subtitle" data-i18n-html="options_siteBlocklistDesc">Prevent <span class="pet-name-display">Arcrawls</span> from spawning on these
                 domain names:</p>
 
               <div class="blocklist-add-row">
-                <input type="text" id="input-block-domain" class="form-control" placeholder="e.g. github.com">
-                <button class="btn btn-primary" id="btn-add-block">Block</button>
+                <input type="text" id="input-block-domain" class="form-control" placeholder="e.g. github.com" data-i18n-placeholder="options_domainPlaceholder">
+                <button class="btn btn-primary" id="btn-add-block" data-i18n="options_block">Block</button>
               </div>
 
               <div class="blocklist-list-container">
                 <div class="blocklist-search-wrapper">
                   <input type="text" id="input-search-blocklist" class="form-control blocklist-search"
-                    placeholder="Search blocklist...">
+                    placeholder="Search blocklist..." data-i18n-placeholder="options_searchBlocklist">
                 </div>
                 <table class="blocklist-table">
                   <thead>
                     <tr>
-                      <th>Domain Name</th>
-                      <th style="width: 80px; text-align: right;">Action</th>
+                      <th data-i18n="options_domainName">Domain Name</th>
+                      <th style="width: 80px; text-align: right;" data-i18n="options_tableAction">Action</th>
                     </tr>
                   </thead>
                   <tbody id="blocklist-tbody">
                     <!-- Blocklist entries populated dynamically -->
                   </tbody>
                 </table>
-                <div class="empty-blocklist" id="empty-blocklist-msg" style="display: none;">
+                <div class="empty-blocklist" id="empty-blocklist-msg" style="display: none;" data-i18n="options_noBlocked">
                   No domains blocked yet.
                 </div>
               </div>
@@ -869,21 +869,21 @@
 
             <!-- Schedule & Focus Planner Card -->
             <div class="settings-planner-card">
-              <h2>Schedule & Focus Planner</h2>
-              <p class="section-subtitle">Define <span class="pet-name-display">Arcrawls</span>'s daily routines and
+              <h2 data-i18n="options_schedulePlanner">Schedule & Focus Planner</h2>
+              <p class="section-subtitle" data-i18n-html="options_schedulePlannerDesc">Define <span class="pet-name-display">Arcrawls</span>'s daily routines and
                 configure focus blocks:</p>
 
               <div class="planner-section">
-                <h3>💤 Sleep & Wake Routine</h3>
+                <h3 data-i18n="options_sleepWakeRoutine">💤 Sleep & Wake Routine</h3>
                 <div class="planner-row">
                   <div class="planner-field">
-                    <label for="sleep-start-select">Sleep Start</label>
+                    <label for="sleep-start-select" data-i18n="options_sleepStart">Sleep Start</label>
                     <select id="sleep-start-select" class="form-control planner-select">
                       <!-- Populated dynamically -->
                     </select>
                   </div>
                   <div class="planner-field">
-                    <label for="sleep-end-select">Wake Time</label>
+                    <label for="sleep-end-select" data-i18n="options_wakeTime">Wake Time</label>
                     <select id="sleep-end-select" class="form-control planner-select">
                       <!-- Populated dynamically -->
                     </select>
@@ -892,16 +892,16 @@
               </div>
 
               <div class="planner-section">
-                <h3>💼 Active Work Hours</h3>
+                <h3 data-i18n="options_activeWorkHours">💼 Active Work Hours</h3>
                 <div class="planner-row">
                   <div class="planner-field">
-                    <label for="work-start-select">Work Start</label>
+                    <label for="work-start-select" data-i18n="options_workStart">Work Start</label>
                     <select id="work-start-select" class="form-control planner-select">
                       <!-- Populated dynamically -->
                     </select>
                   </div>
                   <div class="planner-field">
-                    <label for="work-end-select">Work End</label>
+                    <label for="work-end-select" data-i18n="options_workEnd">Work End</label>
                     <select id="work-end-select" class="form-control planner-select">
                       <!-- Populated dynamically -->
                     </select>
@@ -910,11 +910,11 @@
               </div>
 
               <div class="planner-section">
-                <h3>🎯 Focus Blocks</h3>
+                <h3 data-i18n="options_focusBlocks">🎯 Focus Blocks</h3>
                 <div class="focus-control-row">
                   <div class="focus-info">
-                    <strong>Focus Mode Active</strong>
-                    <span class="section-subtitle">Make <span class="pet-name-display">Arcrawls</span> study quietly &
+                    <strong data-i18n="options_focusModeActive">Focus Mode Active</strong>
+                    <span class="section-subtitle" data-i18n-html="options_focusModeSub">Make <span class="pet-name-display">Arcrawls</span> study quietly &
                       stop
                       wandering</span>
                   </div>
@@ -926,13 +926,13 @@
 
                 <div class="planner-row" style="margin-top: 10px;">
                   <div class="planner-field">
-                    <label for="focus-start-select">Focus Start</label>
+                    <label for="focus-start-select" data-i18n="options_focusStart">Focus Start</label>
                     <select id="focus-start-select" class="form-control planner-select">
                       <!-- Populated dynamically -->
                     </select>
                   </div>
                   <div class="planner-field">
-                    <label for="focus-end-select">Focus End</label>
+                    <label for="focus-end-select" data-i18n="options_focusEnd">Focus End</label>
                     <select id="focus-end-select" class="form-control planner-select">
                       <!-- Populated dynamically -->
                     </select>
@@ -944,8 +944,8 @@
               <div class="planner-section" style="padding-top: 14px;">
                 <div class="focus-control-row">
                   <div class="focus-info">
-                    <strong>Daily Schedule Rules</strong>
-                    <span class="section-subtitle">Enable sleep, wake, and work active states</span>
+                    <strong data-i18n="options_dailyScheduleRules">Daily Schedule Rules</strong>
+                    <span class="section-subtitle" data-i18n="options_dailyScheduleRulesSub">Enable sleep, wake, and work active states</span>
                   </div>
                   <label class="switch">
                     <input type="checkbox" id="schedule-toggle">
@@ -961,53 +961,53 @@
       <!-- PAGE: Admin & Rebirth -->
       <section id="page-admin" class="page-pane">
         <header class="page-header">
-          <h1>Profile Admin</h1>
-          <p>Perform backup operations, restore statistics, trigger rebirth, or wipe settings.</p>
+          <h1 data-i18n="options_profileAdmin">Profile Admin</h1>
+          <p data-i18n="options_profileAdminDesc">Perform backup operations, restore statistics, trigger rebirth, or wipe settings.</p>
         </header>
 
         <div class="admin-grid">
           <!-- Prestige Rebirth Box -->
           <div class="admin-card prestige-admin-card" id="prestige-card">
-            <h2>Prestige Rebirth Sanctuary</h2>
-            <p><span class="pet-name-display">Arcrawls</span> has grown extremely wise (Level 50+). Resetting his levels
+            <h2 data-i18n="options_prestigeRebirth">Prestige Rebirth Sanctuary</h2>
+            <p data-i18n-html="options_prestigeRebirthDesc"><span class="pet-name-display">Arcrawls</span> has grown extremely wise (Level 50+). Resetting his levels
               unlocks higher speed multipliers,
               permanent visual icons, and advanced capabilities.</p>
             <div class="prestige-status-row">
-              <span>Current Prestige Rank:</span>
+              <span data-i18n="options_currentPrestigeRank">Current Prestige Rank:</span>
               <strong id="lbl-admin-prestige">0</strong>
             </div>
-            <button id="btn-prestige" class="btn btn-gold" disabled>Rebirth <span
+            <button id="btn-prestige" class="btn btn-gold" disabled data-i18n-html="options_rebirthButton">Rebirth <span
                 class="pet-name-display">Arcrawls</span>
               (Requires LVL 50)</button>
           </div>
 
           <!-- Backup & Restore Box -->
           <div class="admin-card">
-            <h2>Profile Backups</h2>
-            <p>Export your settings, levels, and interest analytics to a file, or restore them onto another device.</p>
+            <h2 data-i18n="options_profileBackups">Profile Backups</h2>
+            <p data-i18n="options_profileBackupsDesc">Export your settings, levels, and interest analytics to a file, or restore them onto another device.</p>
 
             <div class="backup-actions">
-              <button id="btn-export" class="btn btn-secondary">Export Profile (.json)</button>
-              <button id="btn-import" class="btn btn-secondary">Import Profile (.json)</button>
+              <button id="btn-export" class="btn btn-secondary" data-i18n="options_exportProfile">Export Profile (.json)</button>
+              <button id="btn-import" class="btn btn-secondary" data-i18n="options_importProfile">Import Profile (.json)</button>
               <input type="file" id="file-import" accept=".json" style="display: none;">
             </div>
           </div>
 
           <!-- Destructive Wipes -->
           <div class="admin-card destructive-card">
-            <h2>Factory Reset Options</h2>
-            <p>These actions are irreversible. Make backups before executing resets.</p>
+            <h2 data-i18n="options_factoryReset">Factory Reset Options</h2>
+            <p data-i18n="options_factoryResetDesc">These actions are irreversible. Make backups before executing resets.</p>
 
             <div class="destructive-actions">
-              <button id="btn-reset-stats" class="btn btn-danger">Reset Stats & Level Only</button>
-              <button id="btn-hard-reset" class="btn btn-danger-dark">Hard Wipe All Storage</button>
+              <button id="btn-reset-stats" class="btn btn-danger" data-i18n="options_resetStats">Reset Stats & Level Only</button>
+              <button id="btn-hard-reset" class="btn btn-danger-dark" data-i18n="options_hardWipe">Hard Wipe All Storage</button>
             </div>
           </div>
 
           <!-- Community Support Box -->
           <div class="admin-card">
-            <h2>Fuel the Sanctuary</h2>
-            <p><span class="pet-name-display">Arcrawls</span> is a passion project built for fun and vibes! If he has
+            <h2 data-i18n="options_fuelSanctuary">Fuel the Sanctuary</h2>
+            <p data-i18n-html="options_fuelSanctuaryDesc"><span class="pet-name-display">Arcrawls</span> is a passion project built for fun and vibes! If he has
               brightened your day or helped you stay
               focused, a coffee would be deeply appreciated to help keep the Sanctuary growing. 🐾</p>
             <div id="kofi-button-container"
@@ -1016,38 +1016,38 @@
                 style="display: flex; align-items: center; gap: 10px; background: #C75D3F; color: white; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 13px; box-shadow: 0 4px 12px rgba(199, 93, 63, 0.2); transition: all 0.2s ease;">
                 <img src="https://storage.ko-fi.com/cdn/cup-border.png"
                   style="height: 18px; filter: brightness(0) invert(1);" alt="Ko-fi" />
-                Support me on Ko-fi
+                <span data-i18n="options_supportKofi">Support me on Ko-fi</span>
               </a>
             </div>
           </div>
 
           <!-- Support & Help Box -->
           <div class="admin-card">
-            <h2>Support & Contact</h2>
-            <p>Get documentation help, check open repositories, or send bug feedback.</p>
+            <h2 data-i18n="options_supportContact">Support & Contact</h2>
+            <p data-i18n="options_supportContactDesc">Get documentation help, check open repositories, or send bug feedback.</p>
             <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; margin-top: 8px;">
               <div
                 style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
-                <span style="color: var(--text-secondary); font-weight: 500;">Email Support:</span>
+                <span style="color: var(--text-secondary); font-weight: 500;" data-i18n="options_emailSupport">Email Support:</span>
                 <a href="mailto:fujidevv@duck.com"
                   style="color: var(--accent); text-decoration: none; font-weight: 600;"
                   target="_blank">fujidevv@duck.com</a>
               </div>
               <div
                 style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
-                <span style="color: var(--text-secondary); font-weight: 500;">GitHub Repository:</span>
+                <span style="color: var(--text-secondary); font-weight: 500;" data-i18n="options_githubRepo">GitHub Repository:</span>
                 <a href="https://github.com/fujiDevv/context-aware-browser-pet"
-                  style="color: var(--accent); text-decoration: none; font-weight: 600;" target="_blank">Open Repo</a>
+                  style="color: var(--accent); text-decoration: none; font-weight: 600;" target="_blank"><span data-i18n="options_openRepo">Open Repo</span></a>
               </div>
               <div style="display: flex; justify-content: space-between; padding-bottom: 2px;">
-                <span style="color: var(--text-secondary); font-weight: 500;">Documentation:</span>
+                <span style="color: var(--text-secondary); font-weight: 500;" data-i18n="options_documentation">Documentation:</span>
                 <a href="https://arcrawls.com/docs"
-                  style="color: var(--accent); text-decoration: none; font-weight: 600;" target="_blank">View Docs</a>
+                  style="color: var(--accent); text-decoration: none; font-weight: 600;" target="_blank"><span data-i18n="options_viewDocs">View Docs</span></a>
               </div>
             </div>
           </div>
 
-          <p style="font-size: 11px; color: var(--text-muted); margin-top: 12px; font-style: italic;">
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 12px; font-style: italic;" data-i18n-html="options_openSourceNote">
             <strong>Open Source Note:</strong> <span class="pet-name-display">Arcrawls</span> is open source under the
             PolyForm Noncommercial License 1.0.0.
             Commercial sales or monetization of this software is strictly prohibited.

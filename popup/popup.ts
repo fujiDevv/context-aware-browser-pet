@@ -2,6 +2,9 @@ import { PetStats, PetSettings } from '../src/shared/types';
 import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../src/ui/shared-ui';
 import { STORAGE_KEYS } from '../src/shared/constants';
 import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/shared/platform';
+import { t, getMoodName, getTraitName, localizePage } from '../src/shared/i18n';
+
+localizePage();
 
 const supportsLocalAiRuntime = supportsOffscreenDocuments();
 const isFirefoxBuild = isFirefoxRuntime();
@@ -35,7 +38,7 @@ async function init(): Promise<void> {
     extensionApi.tabs.query({}).then((tabs) => {
       const count = tabs.length;
       if (activeTabsText) {
-        activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
+        activeTabsText.textContent = count === 1 ? t('popup_tabsActiveOne') : t('popup_tabsActiveMany', String(count));
       }
     }).catch((e) => {
       console.warn('[Arcrawls Popup] tabs.query status error:', e);
@@ -45,8 +48,8 @@ async function init(): Promise<void> {
     if (!supportsLocalAiRuntime) {
       if (aiStatusBadge && aiStatusText) {
         aiStatusBadge.className = 'ai-status-badge status-checking';
-        aiStatusText.textContent = isFirefoxBuild ? 'Firefox Lite' : 'Lite Mode';
-        aiStatusBadge.title = 'Rule-based evaluation active';
+        aiStatusText.textContent = t(isFirefoxBuild ? 'popup_firefoxLite' : 'popup_liteMode');
+        aiStatusBadge.title = t('popup_ruleBasedTitle');
       }
 
       const nanoBadge = document.getElementById('nano-status-badge');
@@ -64,13 +67,13 @@ async function init(): Promise<void> {
       if (!settings.aiMode) {
         if (aiStatusBadge && aiStatusText) {
           aiStatusBadge.className = 'ai-status-badge status-unsupported';
-          aiStatusText.textContent = 'Brain: Lite';
+          aiStatusText.textContent = t('popup_brainLite');
         }
         const nanoBadge = document.getElementById('nano-status-badge');
         const nanoText = document.getElementById('nano-status-text');
         if (nanoBadge && nanoText) {
           nanoBadge.className = 'ai-status-badge status-unsupported';
-          nanoText.textContent = 'Nano: Offline';
+          nanoText.textContent = t('popup_nanoOffline');
         }
         return;
       }
@@ -80,27 +83,27 @@ async function init(): Promise<void> {
 
         if (!response || !response.success) {
           aiStatusBadge.className = 'ai-status-badge status-unsupported';
-          aiStatusText.textContent = 'BERT: Offline';
+          aiStatusText.textContent = t('popup_bertOffline');
         } else {
           const { state, progress } = response;
           if (state === 'ready') {
             aiStatusBadge.className = 'ai-status-badge status-ready';
-            aiStatusText.textContent = 'BERT: Ready';
+            aiStatusText.textContent = t('popup_bertReady');
           } else if (state === 'loading') {
             aiStatusBadge.className = 'ai-status-badge status-downloading';
-            aiStatusText.textContent = `BERT: ${progress}%`;
+            aiStatusText.textContent = t('popup_bertProgress', String(progress));
           } else if (state === 'error') {
             aiStatusBadge.className = 'ai-status-badge status-unsupported';
-            aiStatusText.textContent = 'BERT: Error';
+            aiStatusText.textContent = t('popup_bertError');
           } else {
             aiStatusBadge.className = 'ai-status-badge status-checking';
-            aiStatusText.textContent = 'BERT: Checking';
+            aiStatusText.textContent = t('popup_bertChecking');
           }
         }
       }).catch(() => {
         if (aiStatusBadge && aiStatusText) {
           aiStatusBadge.className = 'ai-status-badge status-unsupported';
-          aiStatusText.textContent = 'BERT: Offline';
+          aiStatusText.textContent = t('popup_bertOffline');
         }
       });
 
@@ -114,16 +117,16 @@ async function init(): Promise<void> {
         const applyAvailability = (avail: string | undefined) => {
           if (!avail || avail === 'no' || avail === 'unavailable') {
             nanoBadge.className = 'ai-status-badge status-unsupported';
-            nanoText.textContent = 'Nano: Unsupported';
+            nanoText.textContent = t('popup_nanoUnsupported');
           } else if (avail === 'after-download' || avail === 'downloadable' || avail === 'downloading') {
             nanoBadge.className = 'ai-status-badge status-downloading';
-            nanoText.textContent = 'Nano: Downloading';
+            nanoText.textContent = t('popup_nanoDownloading');
           } else if (avail === 'readily' || avail === 'available') {
             nanoBadge.className = 'ai-status-badge status-ready';
-            nanoText.textContent = 'Nano: Ready';
+            nanoText.textContent = t('popup_nanoReady');
           } else {
             nanoBadge.className = 'ai-status-badge status-checking';
-            nanoText.textContent = 'Nano: Waiting';
+            nanoText.textContent = t('popup_nanoWaiting');
           }
         };
 
@@ -480,7 +483,7 @@ async function init(): Promise<void> {
           const url = new URL(tab.url);
           currentHostname = url.hostname;
           if (currentHostname) {
-            siteSubtitle.textContent = `Disable Arcrawls on ${currentHostname}`;
+            siteSubtitle.textContent = t('popup_disableOnSite', currentHostname);
             siteHideToggle.checked = blockedDomains.includes(currentHostname);
             siteHideToggle.disabled = false;
           } else {
@@ -614,7 +617,7 @@ async function init(): Promise<void> {
 
     btn.setAttribute('disabled', 'true');
     const originalText = btn.textContent;
-    btn.textContent = 'Wait...';
+    btn.textContent = t('shared_waiting');
     
     setTimeout(() => {
       btn.removeAttribute('disabled');
@@ -637,7 +640,7 @@ async function init(): Promise<void> {
     const traitBadge = document.getElementById('pet-trait') as HTMLElement;
     const traitText = document.getElementById('trait-text') as HTMLElement;
     if (traitBadge && traitText) {
-      traitText.textContent = trait;
+      traitText.textContent = getTraitName(trait, trait);
       traitBadge.className = `badge badge-trait trait-${trait}`;
     }
 
@@ -655,7 +658,7 @@ async function init(): Promise<void> {
 
     statsEl.level.textContent = String(stats.level);
     const xpNeeded = Math.floor(Math.pow(stats.level, 1.5) * 150);
-    statsEl.xpText.textContent = `${Math.round(stats.xp)} / ${xpNeeded} XP`;
+    statsEl.xpText.textContent = t('popup_xpProgress', [String(Math.round(stats.xp)), String(xpNeeded)]);
     statsEl.xpBar.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
 
     const roundedHappiness = Math.round(stats.happiness);
@@ -687,7 +690,7 @@ async function init(): Promise<void> {
 
     const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
     moodEmojiEl.textContent = meta.emoji;
-    moodTextEl.textContent = meta.name;
+    moodTextEl.textContent = getMoodName(mood, meta.name);
 
     if (statsEl && statsEl.preview) {
       const svgName = getResolvedCostumeName(mood, costume);

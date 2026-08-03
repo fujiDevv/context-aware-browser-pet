@@ -161,6 +161,14 @@ export const extensionApi = {
       return toPromise<chrome.alarms.Alarm | undefined>(getExtensionRoot()?.alarms, 'get', [name]);
     }
   },
+  i18n: {
+    getMessage(messageName: string, substitutions?: string | string[]): string {
+      return getExtensionRoot()?.i18n?.getMessage(messageName, substitutions) ?? '';
+    },
+    getUILanguage(): string {
+      return getExtensionRoot()?.i18n?.getUILanguage() ?? 'en';
+    }
+  },
   webRequest: {
     get onCompleted() {
       return getExtensionRoot()?.webRequest?.onCompleted;

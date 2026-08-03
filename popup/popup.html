@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browser Pet Controller</title>
+  <title data-i18n="popup_title">Browser Pet Controller</title>
   <link rel="stylesheet" href="../src/ui/shared.css">
   <link rel="stylesheet" href="popup.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,34 +17,34 @@
 
       <div class="avatar-hero-container">
         <div class="avatar-glow"></div>
-        <img id="pet-preview" src="../assets/pets/arcrawls-happy.svg" alt="Pet Preview">
+        <img id="pet-preview" src="../assets/pets/arcrawls-happy.svg" alt="Pet Preview" data-i18n-alt="popup_petPreviewAlt">
       </div>
 
       <div class="header-title-section">
         <h1 id="pet-name">Arcrawls</h1>
         <div class="badge-group">
           <div class="badge badge-lvl">
-            <span class="level-label">LVL</span>
+            <span class="level-label" data-i18n="shared_lvl">LVL</span>
             <span id="pet-level" class="level-num">1</span>
           </div>
-          <div id="prestige-badge" class="badge badge-prestige hidden" title="Prestige Rank">
+          <div id="prestige-badge" class="badge badge-prestige hidden" title="Prestige Rank" data-i18n-title="popup_prestigeRankTitle">
             <span class="prestige-star">★</span>
             <span id="prestige-level" class="prestige-level-num">0</span>
           </div>
           <div class="badge badge-mood" id="pet-mood">
             <span id="mood-emoji"></span>
-            <span id="mood-text">Happy</span>
+            <span id="mood-text" data-i18n="mood_happy">Happy</span>
           </div>
           <div id="pet-trait" class="badge badge-trait">
-            <span id="trait-text">Normal</span>
+            <span id="trait-text" data-i18n="trait_normal">Normal</span>
           </div>
         </div>
       </div>
 
       <div class="xp-section">
         <div class="xp-header">
-          <span>Experience</span>
-          <span id="xp-text">0 / 100 XP</span>
+          <span data-i18n="popup_experience">Experience</span>
+          <span id="xp-text" data-i18n="popup_xpInitial">0 / 100 XP</span>
         </div>
         <div class="progress-track xp-track">
           <div id="bar-xp" class="progress-fill xp-fill" style="width: 0%"></div>
@@ -55,29 +55,29 @@
     <div class="dashboard-content">
       <div class="tab-pane active">
       <div class="header-top">
-        <div id="ai-status-badge" class="ai-status-badge status-checking" title="Emotion Classifier (DistilBERT)">
+        <div id="ai-status-badge" class="ai-status-badge status-checking" title="Emotion Classifier (DistilBERT)" data-i18n-title="popup_aiEmotionTitle">
           <span class="status-dot"></span>
-          <span id="ai-status-text">BERT: Checking</span>
+          <span id="ai-status-text" data-i18n="popup_bertChecking">BERT: Checking</span>
         </div>
         <div id="nano-status-badge" class="ai-status-badge status-checking"
-          title="Generative Reflections (Gemini Nano)">
+          title="Generative Reflections (Gemini Nano)" data-i18n-title="popup_aiNanoTitle">
           <span class="status-dot"></span>
-          <span id="nano-status-text">Nano: Checking</span>
+          <span id="nano-status-text" data-i18n="popup_nanoChecking">Nano: Checking</span>
         </div>
-        <div class="presence-badge" title="Local context observation active (100% on-device)">
+        <div class="presence-badge" title="Local context observation active (100% on-device)" data-i18n-title="popup_presenceTitle">
           <span class="presence-icon">⚡</span>
-          <span id="active-tabs-text">1 Tab Active</span>
+          <span id="active-tabs-text" data-i18n="popup_tabsActiveOne">1 Tab Active</span>
         </div>
       </div>
 
         <!-- Mascot Stats Grid -->
         <section class="stats-section">
-          <h2>Mascot Stats</h2>
+          <h2 data-i18n="popup_mascotStats">Mascot Stats</h2>
           <div class="stats-grid">
-            <div class="stat-card stat-happiness" title="Boosted by petting and fun sites. Decays 4%/hr.">
-              <img src="../assets/pets/arcrawls-love.svg" class="stat-icon" alt="Happiness">
+            <div class="stat-card stat-happiness" title="Boosted by petting and fun sites. Decays 4%/hr." data-i18n-title="stat_happinessHint">
+              <img src="../assets/pets/arcrawls-love.svg" class="stat-icon" alt="Happiness" data-i18n-alt="stat_happiness">
               <div class="stat-meta">
-                <span class="stat-label">Happiness</span>
+                <span class="stat-label" data-i18n="stat_happiness">Happiness</span>
                 <span id="txt-happiness" class="stat-num">50%</span>
               </div>
               <div class="stat-progress">
@@ -85,10 +85,10 @@
               </div>
             </div>
 
-            <div class="stat-card stat-energy" title="Restored by feeding and sleep. Decays 6.8%/hr.">
-              <img src="../assets/pets/arcrawls-battery-low.svg" class="stat-icon" alt="Energy">
+            <div class="stat-card stat-energy" title="Restored by feeding and sleep. Decays 6.8%/hr." data-i18n-title="stat_energyHint">
+              <img src="../assets/pets/arcrawls-battery-low.svg" class="stat-icon" alt="Energy" data-i18n-alt="stat_energy">
               <div class="stat-meta">
-                <span class="stat-label">Energy</span>
+                <span class="stat-label" data-i18n="stat_energy">Energy</span>
                 <span id="txt-energy" class="stat-num">80%</span>
               </div>
               <div class="stat-progress">
@@ -96,10 +96,10 @@
               </div>
             </div>
 
-            <div class="stat-card stat-curiosity" title="Gained by visiting new domains. Decays 1.8%/hr.">
-              <img src="../assets/pets/arcrawls-mindblown.svg" class="stat-icon" alt="Curiosity">
+            <div class="stat-card stat-curiosity" title="Gained by visiting new domains. Decays 1.8%/hr." data-i18n-title="stat_curiosityHint">
+              <img src="../assets/pets/arcrawls-mindblown.svg" class="stat-icon" alt="Curiosity" data-i18n-alt="stat_curiosity">
               <div class="stat-meta">
-                <span class="stat-label">Curiosity</span>
+                <span class="stat-label" data-i18n="stat_curiosity">Curiosity</span>
                 <span id="txt-curiosity" class="stat-num">60%</span>
               </div>
               <div class="stat-progress">
@@ -107,10 +107,10 @@
               </div>
             </div>
 
-            <div class="stat-card stat-focus" title="Boosted by work and coding. Decays 5.4%/hr.">
-              <img src="../assets/pets/arcrawls-coding.svg" class="stat-icon" alt="Focus">
+            <div class="stat-card stat-focus" title="Boosted by work and coding. Decays 5.4%/hr." data-i18n-title="stat_focusHint">
+              <img src="../assets/pets/arcrawls-coding.svg" class="stat-icon" alt="Focus" data-i18n-alt="stat_focus">
               <div class="stat-meta">
-                <span class="stat-label">Focus</span>
+                <span class="stat-label" data-i18n="stat_focus">Focus</span>
                 <span id="txt-focus" class="stat-num">50%</span>
               </div>
               <div class="stat-progress">
@@ -118,10 +118,10 @@
               </div>
             </div>
 
-            <div class="stat-card stat-leisure" title="Increases when gaming or streaming. Decays 5.4%/hr.">
-              <img src="../assets/pets/arcrawls-cool.svg" class="stat-icon" alt="Leisure">
+            <div class="stat-card stat-leisure" title="Increases when gaming or streaming. Decays 5.4%/hr." data-i18n-title="stat_leisureHint">
+              <img src="../assets/pets/arcrawls-cool.svg" class="stat-icon" alt="Leisure" data-i18n-alt="stat_leisure">
               <div class="stat-meta">
-                <span class="stat-label">Leisure</span>
+                <span class="stat-label" data-i18n="stat_leisure">Leisure</span>
                 <span id="txt-leisure" class="stat-num">50%</span>
               </div>
               <div class="stat-progress">
@@ -133,51 +133,51 @@
 
         <!-- Actions -->
         <section class="actions-section">
-          <button id="btn-pet" class="action-btn pet-btn">Pet</button>
-          <button id="btn-feed" class="action-btn feed-btn">Feed</button>
-          <button id="btn-shoo" class="action-btn shoo-btn">Shoo</button>
+          <button id="btn-pet" class="action-btn pet-btn" data-i18n="action_pet">Pet</button>
+          <button id="btn-feed" class="action-btn feed-btn" data-i18n="action_feed">Feed</button>
+          <button id="btn-shoo" class="action-btn shoo-btn" data-i18n="action_shoo">Shoo</button>
         </section>
 
         <!-- Interactive Toys -->
         <section class="toys-section">
-          <h2>Interactive Toys</h2>
+          <h2 data-i18n="popup_interactiveToys">Interactive Toys</h2>
           <div class="toys-container">
             <div class="toy-item" draggable="true" id="toy-ball" data-toy="ball">
               <span class="toy-emoji">⚽</span>
-              <span class="toy-label">Ball</span>
+              <span class="toy-label" data-i18n="toy_ball">Ball</span>
             </div>
             <div class="toy-item" draggable="true" id="toy-fish" data-toy="fish">
               <span class="toy-emoji">🐟</span>
-              <span class="toy-label">Fish</span>
+              <span class="toy-label" data-i18n="toy_fish">Fish</span>
             </div>
             <div class="toy-item" draggable="true" id="toy-laser" data-toy="laser">
               <span class="toy-emoji">🔴</span>
-              <span class="toy-label">Laser</span>
+              <span class="toy-label" data-i18n="toy_laser">Laser</span>
             </div>
             <div class="toy-item" draggable="true" id="toy-yarn" data-toy="yarn">
               <span class="toy-emoji">🧶</span>
-              <span class="toy-label">Yarn</span>
+              <span class="toy-label" data-i18n="toy_yarn">Yarn</span>
             </div>
             <div class="toy-item" draggable="true" id="toy-duck" data-toy="duck">
               <span class="toy-emoji">🦆</span>
-              <span class="toy-label">Duck</span>
+              <span class="toy-label" data-i18n="toy_duck">Duck</span>
             </div>
             <div class="toy-item" draggable="true" id="toy-box" data-toy="box">
               <span class="toy-emoji">📦</span>
-              <span class="toy-label">Box</span>
+              <span class="toy-label" data-i18n="toy_box">Box</span>
             </div>
           </div>
-          <p class="toy-help">Drag a toy onto the webpage to play!</p>
+          <p class="toy-help" data-i18n="popup_toyHelp">Drag a toy onto the webpage to play!</p>
         </section>
 
         <!-- Visibility Control -->
         <section class="settings-section visibility-section" style="margin-top: -4px;">
-          <h2>Visibility</h2>
+          <h2 data-i18n="popup_visibility">Visibility</h2>
 
           <div class="setting-row toggle-row">
             <div class="setting-desc">
-              <span class="setting-title">Hide on this Tab</span>
-              <span class="setting-subtitle">Temporarily hide Arcrawls on this tab</span>
+              <span class="setting-title" data-i18n="popup_hideOnTab">Hide on this Tab</span>
+              <span class="setting-subtitle" data-i18n="popup_hideOnTabSub">Temporarily hide Arcrawls on this tab</span>
             </div>
             <label class="switch">
               <input type="checkbox" id="tab-hide-toggle" disabled>
@@ -187,8 +187,8 @@
 
           <div class="setting-row toggle-row">
             <div class="setting-desc">
-              <span class="setting-title">Hide on this Site</span>
-              <span class="setting-subtitle" id="site-visibility-subtitle">Disable Arcrawls on this domain</span>
+              <span class="setting-title" data-i18n="popup_hideOnSite">Hide on this Site</span>
+              <span class="setting-subtitle" id="site-visibility-subtitle" data-i18n="popup_hideOnSiteSub">Disable Arcrawls on this domain</span>
             </div>
             <label class="switch">
               <input type="checkbox" id="site-hide-toggle" disabled>
@@ -196,10 +196,10 @@
             </label>
           </div>
 
-          <div class="setting-row toggle-row" title="Caps at 30fps, disables auras, stops tab syncing to save CPU">
+          <div class="setting-row toggle-row" title="Caps at 30fps, disables auras, stops tab syncing to save CPU" data-i18n-title="shared_perfModeHint">
             <div class="setting-desc">
-              <span class="setting-title">Performance Mode</span>
-              <span class="setting-subtitle">Reduce CPU & Memory footprint</span>
+              <span class="setting-title" data-i18n="shared_perfMode">Performance Mode</span>
+              <span class="setting-subtitle" data-i18n="shared_perfModeSub">Reduce CPU & Memory footprint</span>
             </div>
             <label class="switch">
               <input type="checkbox" id="performance-mode-toggle">
@@ -207,10 +207,10 @@
             </label>
           </div>
 
-          <div class="setting-row toggle-row" title="Fades Arcrawls out when you're typing or scrolling to reduce distraction">
+          <div class="setting-row toggle-row" title="Fades Arcrawls out when you're typing or scrolling to reduce distraction" data-i18n-title="shared_ghostModeHint">
             <div class="setting-desc">
-              <span class="setting-title">Ghost Mode</span>
-              <span class="setting-subtitle">Fade out when active (Focus)</span>
+              <span class="setting-title" data-i18n="shared_ghostMode">Ghost Mode</span>
+              <span class="setting-subtitle" data-i18n="shared_ghostModeSub">Fade out when active (Focus)</span>
             </div>
             <label class="switch">
               <input type="checkbox" id="ghost-mode-toggle">
@@ -223,11 +223,11 @@
     </div>
     <footer class="popup-footer">
       <div class="footer-actions" style="display: flex; gap: 8px; width: 100%;">
-        <button id="btn-open-dashboard" class="dashboard-link-btn" style="flex: 1;">Open Dashboard</button>
+        <button id="btn-open-dashboard" class="dashboard-link-btn" style="flex: 1;" data-i18n="popup_openDashboard">Open Dashboard</button>
         <button id="btn-donate" class="dashboard-link-btn"
-          style="flex: 1; background: var(--pet-core-color, #C75D3F); color: white;" title="Donate">Donate</button>
+          style="flex: 1; background: var(--pet-core-color, #C75D3F); color: white;" title="Donate" data-i18n-title="shared_donate" data-i18n="shared_donate">Donate</button>
       </div>
-      <div id="version-display" class="version-display">Loading...</div>
+      <div id="version-display" class="version-display" data-i18n="shared_loading">Loading...</div>
     </footer>
   </div>
   <script type="module" src="popup.ts"></script>

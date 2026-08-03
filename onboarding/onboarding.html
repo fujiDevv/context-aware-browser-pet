@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Arcrawls!</title>
+  <title data-i18n="onboarding_title">Welcome to Arcrawls!</title>
   <link rel="stylesheet" href="../src/ui/shared.css">
   <link rel="stylesheet" href="onboarding.css">
   <link rel="icon" type="image/png" href="../assets/icons/logo48.png">
@@ -21,10 +21,10 @@
           <div class="mascot-hero">
             <img src="../assets/pets/arcrawls-waving.svg" alt="Arcrawls waving hello">
           </div>
-          <h1 class="step-title">
+          <h1 class="step-title" data-i18n-html="onboarding_welcomeTitle">
             Welcome to <span class="brand">Arcrawls!</span>
           </h1>
-          <p class="step-subtitle">
+          <p class="step-subtitle" data-i18n="onboarding_welcomeSub">
             Your new context-aware AI browser companion is ready to go.
             Arcrawls lives in your browser, reacts to the pages you visit,
             and keeps you company while you work.
@@ -36,38 +36,38 @@
         </div>
 
         <div class="step" id="step-2">
-          <h1 class="step-title">What <span class="brand">Arcrawls</span> Can Do</h1>
-          <p class="step-subtitle">
+          <h1 class="step-title" data-i18n-html="onboarding_canDoTitle">What <span class="brand">Arcrawls</span> Can Do</h1>
+          <p class="step-subtitle" data-i18n="onboarding_canDoSub">
             Here's a quick look at your new browser pet's abilities.
           </p>
           <div class="features-grid">
             <div class="feature-card">
               <div class="feature-icon">
-                <img src="../assets/pets/arcrawls-working-thinking.svg" alt="Context Awareness">
+                <img src="../assets/pets/arcrawls-working-thinking.svg" alt="Context Awareness" data-i18n-alt="onboarding_featureContext">
               </div>
-              <h3>Context Awareness</h3>
-              <p>Reacts to HTTP status codes, page content, and your browsing behavior.</p>
+              <h3 data-i18n="onboarding_featureContext">Context Awareness</h3>
+              <p data-i18n="onboarding_featureContextDesc">Reacts to HTTP status codes, page content, and your browsing behavior.</p>
             </div>
             <div class="feature-card">
               <div class="feature-icon">
-                <img src="../assets/pets/arcrawls-coding.svg" alt="AI Reactions">
+                <img src="../assets/pets/arcrawls-coding.svg" alt="AI Reactions" data-i18n-alt="onboarding_featureAI">
               </div>
-              <h3>AI Reactions</h3>
-              <p>Uses AI to analyze pages and respond with unique emotions and comments.</p>
+              <h3 data-i18n="onboarding_featureAI">AI Reactions</h3>
+              <p data-i18n="onboarding_featureAIDesc">Uses AI to analyze pages and respond with unique emotions and comments.</p>
             </div>
             <div class="feature-card">
               <div class="feature-icon">
-                <img src="../assets/pets/arcrawls-celebrating.svg" alt="XP & Leveling">
+                <img src="../assets/pets/arcrawls-celebrating.svg" alt="XP & Leveling" data-i18n-alt="onboarding_featureXP">
               </div>
-              <h3>XP & Leveling</h3>
-              <p>Earn experience through interactions and watch Arcrawls level up over time.</p>
+              <h3 data-i18n="onboarding_featureXP">XP & Leveling</h3>
+              <p data-i18n="onboarding_featureXPDesc">Earn experience through interactions and watch Arcrawls level up over time.</p>
             </div>
             <div class="feature-card">
               <div class="feature-icon">
-                <img src="../assets/pets/arcrawls-cool.svg" alt="Personality Modes">
+                <img src="../assets/pets/arcrawls-cool.svg" alt="Personality Modes" data-i18n-alt="onboarding_featurePersonality">
               </div>
-              <h3>Personality Modes</h3>
-              <p>Switch between Friendly, Sarcastic, Encouraging, Poetic, and Snarky.</p>
+              <h3 data-i18n="onboarding_featurePersonality">Personality Modes</h3>
+              <p data-i18n="onboarding_featurePersonalityDesc">Switch between Friendly, Sarcastic, Encouraging, Poetic, and Snarky.</p>
             </div>
           </div>
         </div>
@@ -76,28 +76,28 @@
           <div class="privacy-hero">
             <img src="../assets/pets/arcrawls-reading.svg" alt="Arcrawls reading privacy details" style="width: 110px; height: 110px; margin-bottom: 20px;">
           </div>
-          <h1 class="step-title">Your Privacy Promise</h1>
-          <p class="step-subtitle">
+          <h1 class="step-title" data-i18n="onboarding_privacyTitle">Your Privacy Promise</h1>
+          <p class="step-subtitle" data-i18n="onboarding_privacySub">
             Arcrawls runs 100% locally in your browser. Please review and accept our user data usage terms.
           </p>
           <div class="privacy-box">
             <div class="privacy-item">
               <span class="privacy-bullet">✓</span>
-              <span class="privacy-text"><strong>100% Offline & Local:</strong> All text parsing, offline sentiment classification, and chat features run fully on your device.</span>
+              <span class="privacy-text" data-i18n-html="onboarding_privacy1"><strong>100% Offline & Local:</strong> All text parsing, offline sentiment classification, and chat features run fully on your device.</span>
             </div>
             <div class="privacy-item">
               <span class="privacy-bullet">✓</span>
-              <span class="privacy-text"><strong>Zero Data Selling:</strong> We do not track, store, or transmit your URLs, browsing history, or keystrokes to any external servers.</span>
+              <span class="privacy-text" data-i18n-html="onboarding_privacy2"><strong>Zero Data Selling:</strong> We do not track, store, or transmit your URLs, browsing history, or keystrokes to any external servers.</span>
             </div>
             <div class="privacy-item">
               <span class="privacy-bullet">✓</span>
-              <span class="privacy-text"><strong>Narrowest Permissions:</strong> Permissions are restricted to local tab reactions, settings storage, and offline AI processing.</span>
+              <span class="privacy-text" data-i18n-html="onboarding_privacy3"><strong>Narrowest Permissions:</strong> Permissions are restricted to local tab reactions, settings storage, and offline AI processing.</span>
             </div>
           </div>
           <div class="consent-form">
             <label class="consent-checkbox-label">
               <input type="checkbox" id="consent-checkbox" />
-              <span class="consent-label-text">I accept the terms and agree to run Arcrawls locally on web pages.</span>
+              <span class="consent-label-text" data-i18n="onboarding_consentLabel">I accept the terms and agree to run Arcrawls locally on web pages.</span>
             </label>
           </div>
         </div>
@@ -106,24 +106,24 @@
           <div class="cta-mascot">
             <img src="../assets/pets/arcrawls-happy.svg" alt="Arcrawls celebrating">
           </div>
-          <h1 class="step-title">You're All Set!</h1>
-          <p class="step-subtitle">
+          <h1 class="step-title" data-i18n="onboarding_allSetTitle">You're All Set!</h1>
+          <p class="step-subtitle" data-i18n="onboarding_allSetSub">
             Arcrawls is already roaming around your browser. Here are a few tips to get started:
           </p>
           <div class="tip-cards">
             <div class="tip-card">
               <span class="tip-number">1</span>
-              <span class="tip-text"><strong>Pin the extension</strong> to your toolbar for quick access to the
+              <span class="tip-text" data-i18n-html="onboarding_tip1"><strong>Pin the extension</strong> to your toolbar for quick access to the
                 dashboard.</span>
             </div>
             <div class="tip-card">
               <span class="tip-number">2</span>
-              <span class="tip-text"><strong>Click the icon</strong> to view Arcrawls's stats, mood, and
+              <span class="tip-text" data-i18n-html="onboarding_tip2"><strong>Click the icon</strong> to view Arcrawls's stats, mood, and
                 settings.</span>
             </div>
             <div class="tip-card">
               <span class="tip-number">3</span>
-              <span class="tip-text"><strong>Pet, feed, or shoo</strong> Arcrawls by interacting with him on any
+              <span class="tip-text" data-i18n-html="onboarding_tip3"><strong>Pet, feed, or shoo</strong> Arcrawls by interacting with him on any
                 page.</span>
             </div>
           </div>
@@ -133,7 +133,7 @@
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
             </svg>
-            Read the Full Docs
+            <span data-i18n="onboarding_docsLink">Read the Full Docs</span>
           </a>
         </div>
 
@@ -141,7 +141,7 @@
 
       <div class="nav-controls">
         <button class="nav-btn hidden" id="btn-back">
-          <span class="arrow">←</span> Back
+          <span class="arrow">←</span> <span data-i18n="onboarding_back">Back</span>
         </button>
         <div class="step-dots" id="step-dots">
           <button class="step-dot active" data-step="0"></button>
@@ -150,7 +150,7 @@
           <button class="step-dot" data-step="3"></button>
         </div>
         <button class="nav-btn primary" id="btn-next">
-          Next <span class="arrow">→</span>
+          <span data-i18n="onboarding_next">Next</span> <span class="arrow">→</span>
         </button>
       </div>
 

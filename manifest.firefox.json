@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Arcrawls: The Context-Aware Browser Pet",
-  "version": "2.0.13",
-  "description": "Context-aware browser pet with spring physics, 140+ animations, and optional 100% local AI. Zero cloud browsing data.",
+  "default_locale": "en",
+  "name": "__MSG_extName__",
+  "version": "2.1.0",
+  "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
     "webNavigation",
@@ -30,6 +31,7 @@
   ],
   "action": {
     "default_popup": "popup/popup.html",
+    "default_title": "__MSG_actionTitle__",
     "default_icon": {
       "16": "assets/icons/logo16.png",
       "48": "assets/icons/logo48.png",

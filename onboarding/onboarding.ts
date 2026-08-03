@@ -1,4 +1,7 @@
 import { extensionApi } from '../src/shared/platform';
+import { t, localizePage } from '../src/shared/i18n';
+
+localizePage();
 
 (function () {
   'use strict';
@@ -26,7 +29,7 @@ import { extensionApi } from '../src/shared/platform';
 
     // Block moving past Step 3 (index 2) if consent is not accepted
     if (index > 2 && consentCheckbox && !consentCheckbox.checked) {
-      alert("Please accept the privacy terms to proceed.");
+      alert(t('onboarding_consentRequired'));
       return;
     }
 
@@ -53,9 +56,9 @@ import { extensionApi } from '../src/shared/platform';
     }
 
     if (currentStep === TOTAL_STEPS - 1) {
-      btnNext.innerHTML = 'Finish <span class="arrow">✓</span>';
+      btnNext.innerHTML = `${t('onboarding_finish')} <span class="arrow">✓</span>`;
     } else {
-      btnNext.innerHTML = 'Next <span class="arrow">→</span>';
+      btnNext.innerHTML = `${t('onboarding_next')} <span class="arrow">→</span>`;
     }
   }
 
@@ -117,73 +120,73 @@ import { extensionApi } from '../src/shared/platform';
   const reason = params.get('reason') || 'install';
 
   interface Feature {
-    title: string;
-    description: string;
+    titleKey: string;
+    descKey: string;
     icon: string;
   }
 
   const VERSION_FEATURES: Record<string, Feature[]> = {
     '1.2.7': [
       {
-        title: 'Interactive Toys',
-        description: 'Drop bouncy balls, laser pointers, and yarn directly onto the page. Arcrawls chases and plays with them using real-time spring physics!',
+        titleKey: 'onboarding_featureToys',
+        descKey: 'onboarding_featureToysDesc',
         icon: '../assets/pets/arcrawls-celebrating.svg'
       },
       {
-        title: '24-Hour AI Synapse',
-        description: 'Arcrawls uses local AI to generate a unique, persona-driven daily reflection based on your browsing journey and habits over the last 24 hours.',
+        titleKey: 'onboarding_featureSynapse',
+        descKey: 'onboarding_featureSynapseDesc',
         icon: '../assets/pets/arcrawls-mindblown.svg'
       },
       {
-        title: 'Ghost Mode & Schedules',
-        description: 'Define Focus Blocks to suppress distractions, or use Ghost Mode which dynamically drops Arcrawls to 30% opacity when you type or scroll.',
+        titleKey: 'onboarding_featureGhost',
+        descKey: 'onboarding_featureGhostDesc',
         icon: '../assets/pets/arcrawls-ninja.svg'
       },
       {
-        title: 'Milestones & Traits',
-        description: 'Track long-term achievements! Arcrawls now adapts his dominant personality trait (e.g. Gamer, Developer) based on the websites you visit.',
+        titleKey: 'onboarding_featureMilestones',
+        descKey: 'onboarding_featureMilestonesDesc',
         icon: '../assets/pets/arcrawls-working-building.svg'
       },
       {
-        title: 'Console Error Watcher',
-        description: 'If a JavaScript runtime error or crashed promise occurs on the webpage, Arcrawls immediately enters "debugger" mode to alert you.',
+        titleKey: 'onboarding_featureConsoleWatcher',
+        descKey: 'onboarding_featureConsoleWatcherDesc',
         icon: '../assets/pets/arcrawls-working-debugger.svg'
       },
       {
-        title: 'Unified Consciousness',
-        description: 'Personality, emotions, and physical location are flawlessly synchronized across all active tabs in real-time.',
+        titleKey: 'onboarding_featureUnified',
+        descKey: 'onboarding_featureUnifiedDesc',
         icon: '../assets/pets/arcrawls-cool.svg'
       }
     ],
     '1.1.0': [
       {
-        title: 'Gravity Physics Engine',
-        description: 'Arcrawls features a new physics engine restricting him exclusively to the floor and ceiling with smooth spring-based edge snapping.',
+        titleKey: 'onboarding_featureGravity',
+        descKey: 'onboarding_featureGravityDesc',
         icon: '../assets/pets/arcrawls-climbing.svg'
       },
       {
-        title: 'AI Intent Detection',
-        description: 'Enhanced AI context awareness with high-fidelity intent detection for smarter, more relevant dialogue.',
+        titleKey: 'onboarding_featureIntent',
+        descKey: 'onboarding_featureIntentDesc',
         icon: '../assets/pets/arcrawls-mindblown.svg'
       },
       {
-        title: 'Unified Consciousness',
-        description: 'Personality, emotions, and movement are now synchronized across all same-origin tabs in real-time.',
+        titleKey: 'onboarding_featureUnified',
+        descKey: 'onboarding_featureUnifiedDesc',
         icon: '../assets/pets/arcrawls-happy.svg'
       },
       {
-        title: 'Visual UI Redesign',
-        description: 'Redesigned card-based stats grid and glassmorphic popup with new AI and tab status indicators.',
+        titleKey: 'onboarding_featureRedesign',
+        descKey: 'onboarding_featureRedesignDesc',
         icon: '../assets/pets/arcrawls-working-building.svg'
       },
       {
-        title: 'Lite Mode & Performance',
-        description: 'Lite Mode uses Regex rules with no network downloads. The ~6 MB install includes bundled WASM; Brain Upgrade adds a one-time ~67 MB model fetch.',
+        titleKey: 'onboarding_featureLiteMode',
+        descKey: 'onboarding_featureLiteModeDesc',
         icon: '../assets/pets/arcrawls-cool.svg'
       },
       {
-        title: 'Battery Optimization',
-        description: 'Shifted to event-driven updates and lazy initialization for significantly better battery life.',
+        titleKey: 'onboarding_featureBattery',
+        descKey: 'onboarding_featureBatteryDesc',
         icon: '../assets/pets/arcrawls-charging.svg'
       }
     ]
@@ -192,20 +195,20 @@ import { extensionApi } from '../src/shared/platform';
   if (reason === 'update') {
     const step1Title = document.querySelector('#step-1 .step-title') as HTMLElement | null;
     if (step1Title) {
-      step1Title.innerHTML = `<span class="brand">Arcrawls</span> Updated!`;
+      step1Title.innerHTML = t('onboarding_updatedTitle');
     }
     const step1Subtitle = document.querySelector('#step-1 .step-subtitle') as HTMLElement | null;
     if (step1Subtitle) {
-      step1Subtitle.textContent = `Your context-aware AI browser companion has been updated to ${version}. Explore the new cross-tab behaviors and optimized performance!`;
+      step1Subtitle.textContent = t('onboarding_updatedSub', version);
     }
 
     const step2Title = document.querySelector('#step-2 .step-title') as HTMLElement | null;
     if (step2Title) {
-      step2Title.innerHTML = `What's New in <span class="brand">Arcrawls</span>`;
+      step2Title.innerHTML = t('onboarding_whatsNewTitle');
     }
     const step2Subtitle = document.querySelector('#step-2 .step-subtitle') as HTMLElement | null;
     if (step2Subtitle) {
-      step2Subtitle.textContent = `Version ${version} brings significant architectural improvements and new features.`;
+      step2Subtitle.textContent = t('onboarding_whatsNewSub', version);
     }
 
     const featuresGrid = document.querySelector('.features-grid') as HTMLElement | null;
@@ -215,10 +218,10 @@ import { extensionApi } from '../src/shared/platform';
       featuresGrid.innerHTML = features.map(f => `
         <div class="feature-card">
           <div class="feature-icon">
-            <img src="${f.icon}" alt="${f.title}">
+            <img src="${f.icon}" alt="${escapeHtml(t(f.titleKey))}">
           </div>
-          <h3>${f.title}</h3>
-          <p>${f.description}</p>
+          <h3>${escapeHtml(t(f.titleKey))}</h3>
+          <p>${escapeHtml(t(f.descKey))}</p>
         </div>
       `).join('');
     }
@@ -236,7 +239,7 @@ import { extensionApi } from '../src/shared/platform';
   if (version) {
     const badge = document.querySelector('.version-badge') as HTMLElement | null;
     if (badge) {
-      const statusText = reason === 'update' ? 'Successfully Updated' : 'Successfully Installed';
+      const statusText = reason === 'update' ? t('onboarding_updatedStatus') : t('onboarding_installedStatus');
       badge.innerHTML = `<span class="dot"></span> ${escapeHtml(version)} — ${statusText}`;
     }
   }

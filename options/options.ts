@@ -5,6 +5,9 @@ import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName, parseMarkd
 import { getDailyInsight, getAiChatResponse } from '../src/core/ai';
 import { MovementEngine } from '../src/core/movement';
 import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/shared/platform';
+import { t, getMoodName, getTraitName, localizePage } from '../src/shared/i18n';
+
+localizePage();
 
 let personality: PersonalitySystem;
 let playgroundMovement: MovementEngine;
@@ -251,7 +254,7 @@ async function init() {
   const manifest = extensionApi.runtime.getManifest();
   if (versionEl && manifest) {
     const runtimeMode = supportsLocalAiRuntime ? 'Local AI' : 'Lite';
-    versionEl.textContent = `Version ${manifest.version} (${runtimeMode})`;
+    versionEl.textContent = t('options_versionFormat', [manifest.version, runtimeMode]);
   }
 
   // Polling for real-time indicators
@@ -375,7 +378,7 @@ async function init() {
       const playBtn = document.createElement('button');
       playBtn.className = 'arcrawls-control-btn';
       playBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
-      playBtn.title = 'Play voice';
+      playBtn.title = t('options_playVoice');
       playBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         const soundEnabled = soundToggle.checked;
@@ -410,7 +413,7 @@ async function init() {
       const copyBtn = document.createElement('button');
       copyBtn.className = 'arcrawls-control-btn';
       copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
-      copyBtn.title = 'Copy Response';
+      copyBtn.title = t('options_copyResponse');
       copyBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
         try {
@@ -423,7 +426,7 @@ async function init() {
       const redoBtn = document.createElement('button');
       redoBtn.className = 'arcrawls-control-btn';
       redoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
-      redoBtn.title = 'Redo';
+      redoBtn.title = t('options_redo');
       redoBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const allMsgs = Array.from(chatMessages.children);
@@ -584,7 +587,7 @@ async function init() {
     recognition.onstart = () => {
       isListening = true;
       chatMic.classList.add('listening-pulse');
-      chatInput.placeholder = "Listening...";
+      chatInput.placeholder = t('options_listening');
     };
 
     recognition.onresult = (event: any) => {
@@ -615,13 +618,13 @@ async function init() {
   const stopListening = () => {
     isListening = false;
     chatMic?.classList.remove('listening-pulse');
-    if (chatInput) chatInput.placeholder = "Type a message...";
+    if (chatInput) chatInput.placeholder = t('options_typeMessage');
     if (recognition) recognition.stop();
   };
 
   chatMic?.addEventListener('click', () => {
     if (!recognition) {
-      alert("Speech recognition is not supported in this browser.");
+      alert(t('options_speechNotSupported'));
       return;
     }
     if (isListening) {
@@ -739,7 +742,7 @@ async function init() {
 
   // Rebirth Prestige
   btnPrestige.addEventListener('click', async () => {
-    const confirmed = confirm("Are you sure you want to rebirth Arcrawls? This resets his level to 1, but increases his prestige rank. You'll unlock permanent rewards!");
+    const confirmed = confirm(t('options_rebirthConfirm'));
     if (!confirmed) return;
 
     if (personality.stats.level >= 50) {
@@ -748,7 +751,7 @@ async function init() {
       personality.stats.xp = 0;
       await personality._save();
       updateUIStats(personality.stats);
-      alert(`Arcrawls has reborn! He is now Prestige ${personality.stats.prestige}! 🎉`);
+      alert(t('options_rebirthSuccess', String(personality.stats.prestige)));
     }
   });
 
@@ -762,7 +765,7 @@ async function init() {
   soundPlayButtons.forEach(btn => {
     btn.disabled = !supportsLocalAiRuntime;
     if (!supportsLocalAiRuntime) {
-      btn.title = 'Sound playback is unavailable in this Firefox build.';
+      btn.title = t('options_soundUnavailable');
     }
     btn.addEventListener('click', () => {
       if (!supportsLocalAiRuntime) return;
@@ -776,7 +779,7 @@ async function init() {
 
   // Resets
   btnResetStats.addEventListener('click', async () => {
-    const confirmed = confirm("WARNING: This will reset Arcrawls's stats, level, prestige, and activity history to defaults. Settings will not be touched. Continue?");
+    const confirmed = confirm(t('options_resetStatsConfirm'));
     if (!confirmed) return;
 
     await extensionApi.storage.local.remove(STORAGE_KEYS.STATS);
@@ -784,7 +787,7 @@ async function init() {
   });
 
   btnHardReset.addEventListener('click', async () => {
-    const confirmed = confirm("CRITICAL WARNING: This will completely wipe all local extension data, options, and history for Arcrawls. This action is irreversible. Continue?");
+    const confirmed = confirm(t('options_hardWipeConfirm'));
     if (!confirmed) return;
 
     await extensionApi.storage.local.clear();
@@ -805,11 +808,11 @@ async function init() {
     modal.innerHTML = `
       <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 32px; max-width: 450px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
         <div style="font-size: 40px; margin-bottom: 16px;">🧠</div>
-        <h2 style="font-size: 20px; margin-bottom: 12px; font-weight: 700;">Daily Synapse Reflection</h2>
+        <h2 style="font-size: 20px; margin-bottom: 12px; font-weight: 700;">${t('options_dailySynapseModalTitle')}</h2>
         <p style="font-size: 15px; line-height: 1.6; color: var(--text-primary); font-style: italic; margin-bottom: 24px;">
           "${escapeHtml(personality.stats.aiInsight.content)}"
         </p>
-        <button id="close-insight-modal" class="btn btn-primary" style="width: 100%;">Got it, Arcrawls!</button>
+        <button id="close-insight-modal" class="btn btn-primary" style="width: 100%;">${t('options_gotItArcrawls')}</button>
       </div>
     `;
     document.body.appendChild(modal);
@@ -828,7 +831,7 @@ async function init() {
   const btnClearLogs = document.getElementById('btn-clear-logs-ui');
   if (btnClearLogs) {
     btnClearLogs.addEventListener('click', async () => {
-      const confirmed = confirm("Are you sure you want to clear Arcrawls's history timeline?");
+      const confirmed = confirm(t('options_clearHistoryConfirm'));
       if (!confirmed) return;
 
       const data = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.STATS);
@@ -882,16 +885,16 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
 
   // Disable buttons and set to waiting cooldown
   let countdown = 3;
-  if (btnPet) { btnPet.disabled = true; btnPet.textContent = `Wait ${countdown}s...`; }
-  if (btnFeed) { btnFeed.disabled = true; btnFeed.textContent = `Wait ${countdown}s...`; }
-  if (btnShoo) { btnShoo.disabled = true; btnShoo.textContent = `Wait ${countdown}s...`; }
+  if (btnPet) { btnPet.disabled = true; btnPet.textContent = t('shared_waitSeconds', String(countdown)); }
+  if (btnFeed) { btnFeed.disabled = true; btnFeed.textContent = t('shared_waitSeconds', String(countdown)); }
+  if (btnShoo) { btnShoo.disabled = true; btnShoo.textContent = t('shared_waitSeconds', String(countdown)); }
 
   const interval = setInterval(() => {
     countdown--;
     if (countdown > 0) {
-      if (btnPet) btnPet.textContent = `Wait ${countdown}s...`;
-      if (btnFeed) btnFeed.textContent = `Wait ${countdown}s...`;
-      if (btnShoo) btnShoo.textContent = `Wait ${countdown}s...`;
+      if (btnPet) btnPet.textContent = t('shared_waitSeconds', String(countdown));
+      if (btnFeed) btnFeed.textContent = t('shared_waitSeconds', String(countdown));
+      if (btnShoo) btnShoo.textContent = t('shared_waitSeconds', String(countdown));
     } else {
       clearInterval(interval);
     }
@@ -935,15 +938,15 @@ async function triggerPetAction(action: string, temporaryMood: string, soundName
     // Restore buttons after 3 seconds
     if (btnPet) {
       btnPet.disabled = false;
-      btnPet.textContent = 'Pet Arcrawls';
+      btnPet.textContent = t('options_petActionPlain');
     }
     if (btnFeed) {
       btnFeed.disabled = false;
-      btnFeed.textContent = 'Feed Snack';
+      btnFeed.textContent = t('options_feedSnack');
     }
     if (btnShoo) {
       btnShoo.disabled = false;
-      btnShoo.textContent = 'Shoo Away';
+      btnShoo.textContent = t('options_shooAway');
     }
   }, 3000);
 }
@@ -981,7 +984,7 @@ async function playPreviewSound(type: string, volume: number): Promise<void> {
 function updateUIMood(mood: string): void {
   currentMoodState = mood;
   const meta = EMOTIONS_METADATA[mood] || { name: mood, emoji: '😊' };
-  if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${meta.name}`;
+  if (petMoodBadge) petMoodBadge.textContent = `${meta.emoji} ${getMoodName(mood, meta.name)}`;
   const svgName = getResolvedCostumeName(mood, activeCostume);
 
   // Apply custom color if set
@@ -1030,7 +1033,7 @@ function updateUIStats(stats: PetStats | undefined): void {
   // Level & XP
   if (petLevelEl) petLevelEl.textContent = String(stats.level);
   const xpNeeded = Math.floor(Math.pow(stats.level, 1.5) * 150);
-  if (xpText) xpText.textContent = `${stats.xp} / ${xpNeeded} XP`;
+  if (xpText) xpText.textContent = t('popup_xpProgress', [String(stats.xp), String(xpNeeded)]);
   if (barXp) barXp.style.width = `${Math.min(100, (stats.xp / xpNeeded) * 100)}%`;
 
   // Color Picker unlock check
@@ -1066,10 +1069,10 @@ function updateUIStats(stats: PetStats | undefined): void {
   // Dominant trait
   const trait = getDominantTrait(stats);
   if (petTraitBadge) {
-    petTraitBadge.textContent = trait.toUpperCase();
+    petTraitBadge.textContent = getTraitName(trait, trait).toUpperCase();
     petTraitBadge.className = `badge badge-trait trait-${trait}`;
   }
-  lblHabitTrait.textContent = trait;
+  lblHabitTrait.textContent = getTraitName(trait, trait);
 
   // Calculations for speed
   const baseSpeed = 1.0;
@@ -1081,13 +1084,13 @@ function updateUIStats(stats: PetStats | undefined): void {
     traitFactor = 0.85 / (1 + (stats.prestige || 0) * 0.1);
   }
   const speedMod = baseSpeed * energyFactor * traitFactor;
-  let speedDesc = 'Normal';
-  if (speedMod > 1.2) speedDesc = 'Hyper';
-  else if (speedMod > 1.05) speedDesc = 'Fast';
-  else if (speedMod < 0.6) speedDesc = 'Exhausted';
-  else if (speedMod < 0.9) speedDesc = 'Calm';
+  let speedDescKey = 'options_speedNormal';
+  if (speedMod > 1.2) speedDescKey = 'options_speedHyper';
+  else if (speedMod > 1.05) speedDescKey = 'options_speedFast';
+  else if (speedMod < 0.6) speedDescKey = 'options_speedExhausted';
+  else if (speedMod < 0.9) speedDescKey = 'options_speedCalm';
 
-  lblHabitSpeed.textContent = `${speedMod.toFixed(2)}x (${speedDesc})`;
+  lblHabitSpeed.textContent = `${speedMod.toFixed(2)}x (${t(speedDescKey)})`;
 
   if (playgroundMovement) {
     playgroundMovement.updateSettings({
@@ -1096,12 +1099,12 @@ function updateUIStats(stats: PetStats | undefined): void {
   }
 
   // Default behaviors
-  let behaviorDesc = 'Standard';
-  if (trait === 'developer') behaviorDesc = 'Analytical (Thinking)';
-  else if (trait === 'gamer') behaviorDesc = 'Playful (Cool)';
-  else if (trait === 'scholar') behaviorDesc = 'Focused (Reading)';
-  else if (trait === 'socialite') behaviorDesc = 'Affectionate (Love)';
-  lblHabitBehavior.textContent = behaviorDesc;
+  let behaviorDescKey = 'options_behaviorStandard';
+  if (trait === 'developer') behaviorDescKey = 'options_behaviorAnalytical';
+  else if (trait === 'gamer') behaviorDescKey = 'options_behaviorPlayful';
+  else if (trait === 'scholar') behaviorDescKey = 'options_behaviorFocused';
+  else if (trait === 'socialite') behaviorDescKey = 'options_behaviorAffectionate';
+  lblHabitBehavior.textContent = t(behaviorDescKey);
 
   // Update core gauges
   const roundedHappiness = Math.round(stats.happiness);
@@ -1159,14 +1162,14 @@ async function updateSynapseUI(stats: PetStats) {
     synapseReadyContainer.classList.add('hidden');
     synapsePct.textContent = `${progress}%`;
     barSynapse.style.width = `${progress}%`;
-    synapseLabel.textContent = `Gathering Memories...`;
-    synapseStatusBadge.textContent = 'Syncing';
+    synapseLabel.textContent = t('options_gatheringMemories');
+    synapseStatusBadge.textContent = t('options_syncing');
     synapseStatusBadge.className = 'badge badge-mood';
   } else {
     // Synapse is ready!
     synapseChargingContainer.classList.add('hidden');
     synapseReadyContainer.classList.remove('hidden');
-    synapseStatusBadge.textContent = 'Ready';
+    synapseStatusBadge.textContent = t('options_ready');
     synapseStatusBadge.className = 'badge badge-lvl';
 
     // If there's no content or it's been more than 24 hours since the last one, generate it
@@ -1178,12 +1181,12 @@ async function updateSynapseUI(stats: PetStats) {
 
       if (!settings.aiMode) {
         if (synapsePreviewText) {
-          synapsePreviewText.textContent = "Brain Upgrade is currently disabled. Please toggle it on in the Settings to generate daily insights!";
+          synapsePreviewText.textContent = t('options_synapseDisabled');
         }
         return;
       }
 
-      if (synapsePreviewText) synapsePreviewText.textContent = "Arcrawls is concentrating on your day...";
+      if (synapsePreviewText) synapsePreviewText.textContent = t('options_synapseConcentrating');
 
       const insight = await getDailyInsight(stats, persona);
 
@@ -1208,43 +1211,43 @@ function renderMilestones(stats: PetStats) {
   const milestones = [];
 
   // Level Milestones
-  if (stats.level >= 1) milestones.push({ title: 'New Beginning', desc: 'Arcrawls has entered your browser sanctuary.', icon: '🐾', date: 'Level 1' });
-  if (stats.level >= 3) milestones.push({ title: 'Expressive Mind', desc: 'Unlocked Advanced Emotions (Coding, Dancing, etc).', icon: '🧠', date: 'Level 3' });
-  if (stats.level >= 5) milestones.push({ title: 'Aura of Mystery', desc: 'Unlocked Detective Costume & Blue Aura.', icon: '🕵️', date: 'Level 5' });
-  if (stats.level >= 10) milestones.push({ title: 'Ultimate Companion', desc: 'All standard emotions and Magic Purple Aura unlocked.', icon: '✨', date: 'Level 10' });
-  if (stats.level >= 15) milestones.push({ title: 'Neon Dreamer', desc: 'Unlocked the Rainbow Shader and Custom Mascot Color Picker.', icon: '🌈', date: 'Level 15' });
-  if (stats.level >= 50) milestones.push({ title: 'Mascot Sage', desc: 'Reached the peak of standard growth.', icon: '🎓', date: 'Level 50' });
+  if (stats.level >= 1) milestones.push({ title: t('options_milestoneNewBeginning'), desc: t('options_milestoneNewBeginningDesc'), icon: '🐾', date: t('options_milestoneLevelDate', '1') });
+  if (stats.level >= 3) milestones.push({ title: t('options_milestoneExpressiveMind'), desc: t('options_milestoneExpressiveMindDesc'), icon: '🧠', date: t('options_milestoneLevelDate', '3') });
+  if (stats.level >= 5) milestones.push({ title: t('options_milestoneAuraOfMystery'), desc: t('options_milestoneAuraOfMysteryDesc'), icon: '🕵️', date: t('options_milestoneLevelDate', '5') });
+  if (stats.level >= 10) milestones.push({ title: t('options_milestoneUltimateCompanion'), desc: t('options_milestoneUltimateCompanionDesc'), icon: '✨', date: t('options_milestoneLevelDate', '10') });
+  if (stats.level >= 15) milestones.push({ title: t('options_milestoneNeonDreamer'), desc: t('options_milestoneNeonDreamerDesc'), icon: '🌈', date: t('options_milestoneLevelDate', '15') });
+  if (stats.level >= 50) milestones.push({ title: t('options_milestoneMascotSage'), desc: t('options_milestoneMascotSageDesc'), icon: '🎓', date: t('options_milestoneLevelDate', '50') });
 
   // Interaction Milestones
-  if (stats.totalPets >= 10) milestones.push({ title: 'Well Loved', desc: 'Received more than 10 head pats.', icon: '❤️', date: `${stats.totalPets} Pets` });
-  if (stats.totalPets >= 100) milestones.push({ title: 'Heart of Gold', desc: 'A truly pampered mascot!', icon: '💖', date: `${stats.totalPets} Pets` });
-  if (stats.totalFeeds >= 10) milestones.push({ title: 'Happy Tummy', desc: 'Successfully enjoyed 10 snacks.', icon: '🍕', date: `${stats.totalFeeds} Feeds` });
-  if (stats.totalFeeds >= 100) milestones.push({ title: 'Gourmet Eater', desc: 'A professional browser snacker.', icon: '🍗', date: `${stats.totalFeeds} Feeds` });
+  if (stats.totalPets >= 10) milestones.push({ title: t('options_milestoneWellLoved'), desc: t('options_milestoneWellLovedDesc'), icon: '❤️', date: t('options_milestonePetsDate', String(stats.totalPets)) });
+  if (stats.totalPets >= 100) milestones.push({ title: t('options_milestoneHeartOfGold'), desc: t('options_milestoneHeartOfGoldDesc'), icon: '💖', date: t('options_milestonePetsDate', String(stats.totalPets)) });
+  if (stats.totalFeeds >= 10) milestones.push({ title: t('options_milestoneHappyTummy'), desc: t('options_milestoneHappyTummyDesc'), icon: '🍕', date: t('options_milestoneFeedsDate', String(stats.totalFeeds)) });
+  if (stats.totalFeeds >= 100) milestones.push({ title: t('options_milestoneGourmetEater'), desc: t('options_milestoneGourmetEaterDesc'), icon: '🍗', date: t('options_milestoneFeedsDate', String(stats.totalFeeds)) });
 
   // Prestige Milestones
   if (stats.prestige && stats.prestige > 0) {
-    milestones.push({ title: 'Ethereal Rebirth', desc: `Reborn into a higher state of being (${stats.prestige}x).`, icon: '🌟', date: `Prestige ${stats.prestige}` });
+    milestones.push({ title: t('options_milestoneEtherealRebirth'), desc: t('options_milestoneEtherealRebirthDesc', String(stats.prestige)), icon: '🌟', date: t('options_milestonePrestigeDate', String(stats.prestige)) });
   }
 
   // AI Milestones
   if (stats.aiInsight?.content) {
-    milestones.push({ title: 'Daily Enlightenment', desc: 'Successfully processed a 24-hour behavioral synapse.', icon: '🧠', date: 'Daily' });
+    milestones.push({ title: t('options_milestoneDailyEnlightenment'), desc: t('options_milestoneDailyEnlightenmentDesc'), icon: '🧠', date: t('options_milestoneDailyDate') });
   }
 
   // Trait Milestones
   const trait = getDominantTrait(stats);
   if (trait !== 'normal') {
     const traitMeta = {
-      developer: { title: 'Code Architect', desc: 'Developed a permanent passion for documentation and code.', icon: '💻' },
-      gamer: { title: 'Epic Gamer', desc: 'Preferred leisure activities over everything else.', icon: '🎮' },
-      scholar: { title: 'Deep Researcher', desc: 'Became an expert in browsing news and articles.', icon: '📖' },
-      socialite: { title: 'Social Butterfly', desc: 'Loves spending time on social boards and mail.', icon: '💬' }
+      developer: { title: t('options_milestoneCodeArchitect'), desc: t('options_milestoneCodeArchitectDesc'), icon: '💻' },
+      gamer: { title: t('options_milestoneEpicGamer'), desc: t('options_milestoneEpicGamerDesc'), icon: '🎮' },
+      scholar: { title: t('options_milestoneDeepResearcher'), desc: t('options_milestoneDeepResearcherDesc'), icon: '📖' },
+      socialite: { title: t('options_milestoneSocialButterfly'), desc: t('options_milestoneSocialButterflyDesc'), icon: '💬' }
     }[trait];
-    if (traitMeta) milestones.push({ ...traitMeta, date: 'Trait Evolved' });
+    if (traitMeta) milestones.push({ ...traitMeta, date: t('options_milestoneTraitEvolved') });
   }
 
   if (milestones.length === 0) {
-    milestonesList.innerHTML = `<p class="empty-blocklist">No milestones reached yet. Keep interacting to unlock achievements!</p>`;
+    milestonesList.innerHTML = `<p class="empty-blocklist">${escapeHtml(t('options_noMilestones'))}</p>`;
     return;
   }
 
@@ -1269,15 +1272,15 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
   categoriesList.innerHTML = '';
 
   const CATEGORY_METADATA: Record<string, { name: string; colorClass: string }> = {
-    code: { name: 'Coding', colorClass: 'fill-blue' },
-    coding: { name: 'Coding', colorClass: 'fill-blue' },
-    social: { name: 'Social Media', colorClass: 'fill-pink' },
-    gaming: { name: 'Gaming', colorClass: 'fill-yellow' },
-    news: { name: 'News & Media', colorClass: 'fill-green' },
-    shopping: { name: 'Shopping', colorClass: 'fill-indigo' },
-    docs: { name: 'Documentation', colorClass: 'fill-blue' },
-    mail: { name: 'Email & Messages', colorClass: 'fill-green' },
-    fitness: { name: 'Fitness & Sports', colorClass: 'fill-pink' }
+    code: { name: t('options_categoryCoding'), colorClass: 'fill-blue' },
+    coding: { name: t('options_categoryCoding'), colorClass: 'fill-blue' },
+    social: { name: t('options_categorySocial'), colorClass: 'fill-pink' },
+    gaming: { name: t('options_categoryGaming'), colorClass: 'fill-yellow' },
+    news: { name: t('options_categoryNews'), colorClass: 'fill-green' },
+    shopping: { name: t('options_categoryShopping'), colorClass: 'fill-indigo' },
+    docs: { name: t('options_categoryDocs'), colorClass: 'fill-blue' },
+    mail: { name: t('options_categoryMail'), colorClass: 'fill-green' },
+    fitness: { name: t('options_categoryFitness'), colorClass: 'fill-pink' }
   };
 
   // Merge counts into normalized keys
@@ -1293,7 +1296,7 @@ function renderCategoriesChart(counts: Record<string, number> | undefined) {
   const total = Object.values(mergedCounts).reduce((a, b) => a + b, 0);
 
   if (total === 0) {
-    categoriesList.innerHTML = `<p class="empty-blocklist">No categories evaluated yet. Arcrawls will learn as you browse!</p>`;
+    categoriesList.innerHTML = `<p class="empty-blocklist">${escapeHtml(t('options_noCategories'))}</p>`;
     return;
   }
 
@@ -1328,29 +1331,29 @@ function renderTimeline(history: MoodHistoryItem[] | undefined) {
   const list = history || [];
 
   const TIMELINE_METADATA: Record<string, { label: string; icon: string }> = {
-    pet: { label: 'Petting received', icon: '👋' },
-    feed: { label: 'Feasting on snack', icon: '🍖' },
-    shoo: { label: 'Shooed away', icon: '💨' },
-    decay: { label: 'Stat decay tick', icon: '⏳' },
-    category_code: { label: 'Analyzed Coding workspace', icon: '💻' },
-    category_docs: { label: 'Read Technical documentation', icon: '📖' },
-    category_gaming: { label: 'Watched gaming streams', icon: '🎮' },
-    category_social: { label: 'Scrolled social boards', icon: '❤️' },
-    category_news: { label: 'Browsed current news', icon: '📰' },
-    category_shopping: { label: 'Looked at shopping lists', icon: '🛍️' },
-    category_mail: { label: 'Checked inbox folders', icon: '✉️' },
-    category_fitness: { label: 'Examined workout plan', icon: '🧘' }
+    pet: { label: t('options_timelinePet'), icon: '👋' },
+    feed: { label: t('options_timelineFeed'), icon: '🍖' },
+    shoo: { label: t('options_timelineShoo'), icon: '💨' },
+    decay: { label: t('options_timelineDecay'), icon: '⏳' },
+    category_code: { label: t('options_timelineCoding'), icon: '💻' },
+    category_docs: { label: t('options_timelineDocs'), icon: '📖' },
+    category_gaming: { label: t('options_timelineGaming'), icon: '🎮' },
+    category_social: { label: t('options_timelineSocial'), icon: '❤️' },
+    category_news: { label: t('options_timelineNews'), icon: '📰' },
+    category_shopping: { label: t('options_timelineShopping'), icon: '🛍️' },
+    category_mail: { label: t('options_timelineMail'), icon: '✉️' },
+    category_fitness: { label: t('options_timelineFitness'), icon: '🧘' }
   };
 
   if (list.length === 0) {
-    timelineList.innerHTML = `<p class="empty-blocklist">No timeline entries yet. Spend some time browsing with Arcrawls!</p>`;
+    timelineList.innerHTML = `<p class="empty-blocklist">${escapeHtml(t('options_noTimeline'))}</p>`;
     return;
   }
 
   list.slice().reverse().forEach((item: MoodHistoryItem) => {
     const meta = TIMELINE_METADATA[item.action] || { label: item.action, icon: '🐾' };
 
-    let timeStr = 'Recent';
+    let timeStr = t('options_recent');
     try {
       const date = new Date(item.time);
       if (!isNaN(date.getTime())) {
@@ -1561,10 +1564,10 @@ function updateLocalAiStatus() {
 
   if (!supportsLocalAiRuntime) {
     if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-checking';
-    if (aiStatusText) aiStatusText.textContent = isFirefoxBuild ? 'Brain: Firefox Lite' : 'Brain: Lite Mode';
-    if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Rule-based behavior active';
+    if (aiStatusText) aiStatusText.textContent = t(isFirefoxBuild ? 'options_brainFirefoxLite' : 'options_brainLiteMode');
+    if (aiStatusSubtitle) aiStatusSubtitle.textContent = t('options_ruleBasedBehavior');
     if (statusBert) {
-      statusBert.textContent = 'Firefox Lite Mode';
+      statusBert.textContent = t('options_firefoxLiteMode');
       statusBert.style.color = 'var(--text-muted)';
     }
 
@@ -1573,7 +1576,7 @@ function updateLocalAiStatus() {
 
     const notice = document.getElementById('ai-privacy-notice');
     if (notice) {
-      notice.innerHTML = `<p style="margin-bottom: 8px;"><strong>Mode: Firefox Lite</strong> — Uses rule-based logic and Regex for fast, zero-download behavior analysis. <br><br><em>Note: Brain Upgrade and Generative Reflections are currently not available on Firefox as they require Chrome offscreen document APIs.</em></p>`;
+      notice.innerHTML = t('options_firefoxLiteNotice');
     }
 
     return;
@@ -1581,54 +1584,54 @@ function updateLocalAiStatus() {
 
   if (!isEnabled) {
     if (aiStatusBadge) aiStatusBadge.className = 'status-indicator status-unsupported';
-    if (aiStatusText) aiStatusText.textContent = 'Brain: Lite Mode';
-    if (aiStatusSubtitle) aiStatusSubtitle.textContent = 'Using backup instincts';
+    if (aiStatusText) aiStatusText.textContent = t('options_brainLiteMode');
+    if (aiStatusSubtitle) aiStatusSubtitle.textContent = t('options_backupInstincts');
     if (statusBert) {
-      statusBert.textContent = 'Offline';
+      statusBert.textContent = t('options_offline');
       statusBert.style.color = '#ef4444';
     }
     if (statusNano) {
-      statusNano.textContent = '❌ Offline';
+      statusNano.textContent = t('options_offlineNano');
       statusNano.style.color = '#ef4444';
     }
     if (sancNanoBadge) sancNanoBadge.className = 'status-indicator status-unsupported';
-    if (sancNanoText) sancNanoText.textContent = 'Nano: Offline';
+    if (sancNanoText) sancNanoText.textContent = t('popup_nanoOffline');
     return;
   }
 
   const applyBrainStatus = (response: { success: boolean; state: string; progress: number } | undefined) => {
-    let text = 'Brain: Checking...';
-    let subtitle = 'Querying model...';
+    let text = t('options_brainChecking');
+    let subtitle = t('options_queryingModel');
     let className = 'status-indicator status-checking';
-    let bertLabel = 'Syncing...';
+    let bertLabel = t('options_syncing');
     let bertColor = 'var(--text-muted)';
 
     if (!response || !response.success) {
-      text = 'Brain: Offline';
-      subtitle = 'AI Layer Disconnected';
+      text = t('options_brainOffline');
+      subtitle = t('options_aiDisconnected');
       className = 'status-indicator status-unsupported';
-      bertLabel = 'Disconnected';
+      bertLabel = t('options_disconnected');
       bertColor = '#ef4444';
     } else {
       const s = response.state;
       const p = response.progress;
       if (s === 'ready') {
-        text = 'Brain: Ready';
-        subtitle = 'DistilBERT Model Active';
+        text = t('options_brainReady');
+        subtitle = t('options_distilbertActive');
         className = 'status-indicator status-ready';
-        bertLabel = '✅ Ready';
+        bertLabel = t('options_readyCheck');
         bertColor = 'var(--green)';
       } else if (s === 'loading') {
-        text = `Brain: ${p}%`;
-        subtitle = 'Fetching model weights';
+        text = t('options_brainProgress', String(p));
+        subtitle = t('options_fetchingWeights');
         className = 'status-indicator status-downloading';
-        bertLabel = `⏳ ${p}% Loading`;
+        bertLabel = t('options_loadingPct', String(p));
         bertColor = 'var(--yellow)';
       } else if (s === 'error') {
-        text = 'Brain: Error';
-        subtitle = 'WASM Failure';
+        text = t('options_brainError');
+        subtitle = t('options_wasmFailure');
         className = 'status-indicator status-unsupported';
-        bertLabel = '❌ Error';
+        bertLabel = t('options_errorX');
         bertColor = '#ef4444';
       }
     }
@@ -1644,7 +1647,7 @@ function updateLocalAiStatus() {
 
   const applyNanoStatus = (nanoResponse: { success: boolean; availability: string } | undefined) => {
     let sancClass = 'status-indicator status-checking';
-    let sancText = 'Nano: Checking...';
+    let sancText = t('options_nanoChecking');
 
     if (!statusNano) return;
 
@@ -1652,24 +1655,24 @@ function updateLocalAiStatus() {
 
     const applyAvailability = (avail: string | undefined) => {
       if (!avail || avail === 'no' || avail === 'unavailable') {
-        statusNano.textContent = '❌ Unsupported';
+        statusNano.textContent = t('options_unsupported');
         statusNano.style.color = '#ef4444';
         sancClass = 'status-indicator status-unsupported';
-        sancText = 'Nano: Offline';
+        sancText = t('popup_nanoOffline');
       } else if (avail === 'after-download' || avail === 'downloadable' || avail === 'downloading') {
-        statusNano.textContent = '⏳ Downloading...';
+        statusNano.textContent = t('options_downloading');
         statusNano.style.color = 'var(--yellow)';
         sancClass = 'status-indicator status-downloading';
-        sancText = 'Nano: Downloading...';
+        sancText = t('options_nanoDownloading');
       } else if (avail === 'readily' || avail === 'available') {
-        statusNano.textContent = '✅ Connected (Gemini Nano)';
+        statusNano.textContent = t('options_nanoConnected');
         statusNano.style.color = 'var(--green)';
         sancClass = 'status-indicator status-ready';
-        sancText = 'Nano: Ready';
+        sancText = t('popup_nanoReady');
       } else {
-        statusNano.textContent = 'Wait for web tab...';
+        statusNano.textContent = t('options_waitForTab');
         statusNano.style.color = 'var(--text-muted)';
-        sancText = 'Wait for web tab...';
+        sancText = t('options_waitForTab');
       }
 
       if (sancNanoBadge) sancNanoBadge.className = sancClass;
@@ -1707,7 +1710,7 @@ function updatePresence() {
   extensionApi.tabs.query({}).then((tabs) => {
     if (activeTabsText) {
       const count = tabs.length;
-      activeTabsText.textContent = `${count} Tab${count === 1 ? '' : 's'} Active`;
+      activeTabsText.textContent = count === 1 ? t('popup_tabsActiveOne') : t('popup_tabsActiveMany', String(count));
     }
   }).catch((e) => { console.warn('[Arcrawls Options] Failed to query active tabs:', e); });
 }
@@ -1736,7 +1739,7 @@ function renderBlocklist() {
     const btnDelete = document.createElement('button');
     btnDelete.className = 'btn btn-secondary btn-small';
     btnDelete.style.color = '#ef4444';
-    btnDelete.textContent = 'Unblock';
+    btnDelete.textContent = t('options_unblock');
     btnDelete.addEventListener('click', () => removeBlockedDomain(domain));
 
     tdAction.appendChild(btnDelete);
@@ -1760,7 +1763,7 @@ function addBlockedDomain() {
       inputBlockDomain.value = '';
     }
   } catch (err) {
-    alert("Invalid domain name formatting.");
+    alert(t('options_invalidDomain'));
   }
 }
 
@@ -1790,7 +1793,7 @@ function renderDomainReactions() {
     const tdEmotion = document.createElement('td');
     const badge = document.createElement('span');
     badge.className = 'badge';
-    badge.textContent = EMOTIONS_METADATA[reaction.emotion]?.name || reaction.emotion;
+    badge.textContent = getMoodName(reaction.emotion, EMOTIONS_METADATA[reaction.emotion]?.name || reaction.emotion);
     tdEmotion.appendChild(badge);
 
     const tdDialogue = document.createElement('td');
@@ -1804,7 +1807,7 @@ function renderDomainReactions() {
     const btnDelete = document.createElement('button');
     btnDelete.className = 'btn btn-secondary btn-small';
     btnDelete.style.color = '#ef4444';
-    btnDelete.textContent = 'Remove';
+    btnDelete.textContent = t('options_remove');
     btnDelete.addEventListener('click', () => removeDomainReaction(index));
     tdBtns.appendChild(btnDelete);
 
@@ -1851,7 +1854,7 @@ function addDomainReaction() {
       selectReactionSound.value = 'none';
     }
   } catch (err) {
-    alert("Invalid domain name formatting.");
+    alert(t('options_invalidDomain'));
   }
 }
 
@@ -1882,7 +1885,7 @@ function exportProfile() {
     URL.revokeObjectURL(url);
   }).catch((err) => {
     console.warn('[Arcrawls Options] Failed to export profile:', err);
-    alert('Could not export profile.');
+    alert(t('options_exportFailed'));
   });
 }
 
@@ -1896,7 +1899,7 @@ function importProfile(e: Event) {
     try {
       const imported = JSON.parse(event.target?.result as string);
       if (imported.stats && imported.settings) {
-        const confirmed = confirm("Are you sure you want to import this profile? This will overwrite your current settings, levels, and statistics.");
+        const confirmed = confirm(t('options_importConfirm'));
         if (!confirmed) return;
 
         await extensionApi.storage.local.set({
@@ -1904,26 +1907,26 @@ function importProfile(e: Event) {
           [STORAGE_KEYS.SETTINGS]: imported.settings
         });
 
-        alert("Profile imported successfully! Reloading...");
+        alert(t('options_importSuccess'));
         window.location.reload();
       } else {
-        alert("Invalid profile file format. The file must contain stats and settings.");
+        alert(t('options_importInvalid'));
       }
     } catch (err) {
-      alert("Failed to parse JSON file.");
+      alert(t('options_importParseFailed'));
     }
   };
   reader.readAsText(file);
 }
 
 const COSTUMES_METADATA = [
-  { id: 'none', name: 'Default', desc: 'Original Arcrawls', unlockLevel: 0, seasonal: false, image: 'happy' },
-  { id: 'detective', name: 'Detective Blue', desc: 'Blue Detective Aura', unlockLevel: 5, seasonal: false, image: 'detective' },
-  { id: 'wizard', name: 'Wizard Purple', desc: 'Magic Purple Aura', unlockLevel: 10, seasonal: false, image: 'magic' },
-  { id: 'party', name: 'Rainbow Party', desc: 'Color Shift Aura', unlockLevel: 15, seasonal: false, image: 'rainbow' },
-  { id: 'christmas', name: 'Santa Hat', desc: 'Holiday festive hat', unlockLevel: 0, seasonal: true, image: 'christmas' },
-  { id: 'halloween', name: 'Spooky Pumpkin', desc: 'Halloween pumpkin mask', unlockLevel: 0, seasonal: true, image: 'halloween' },
-  { id: 'summer', name: 'Summer Shades', desc: 'Cool sunglasses outfit', unlockLevel: 0, seasonal: true, image: 'summer' }
+  { id: 'none', name: t('options_costumeDefault'), desc: t('options_costumeDefaultDesc'), unlockLevel: 0, seasonal: false, image: 'happy' },
+  { id: 'detective', name: t('options_costumeDetective'), desc: t('options_costumeDetectiveDesc'), unlockLevel: 5, seasonal: false, image: 'detective' },
+  { id: 'wizard', name: t('options_costumeWizard'), desc: t('options_costumeWizardDesc'), unlockLevel: 10, seasonal: false, image: 'magic' },
+  { id: 'party', name: t('options_costumeParty'), desc: t('options_costumePartyDesc'), unlockLevel: 15, seasonal: false, image: 'rainbow' },
+  { id: 'christmas', name: t('options_costumeChristmas'), desc: t('options_costumeChristmasDesc'), unlockLevel: 0, seasonal: true, image: 'christmas' },
+  { id: 'halloween', name: t('options_costumeHalloween'), desc: t('options_costumeHalloweenDesc'), unlockLevel: 0, seasonal: true, image: 'halloween' },
+  { id: 'summer', name: t('options_costumeSummer'), desc: t('options_costumeSummerDesc'), unlockLevel: 0, seasonal: true, image: 'summer' }
 ];
 
 function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string, seasonalEnabled: boolean = true) {
@@ -1944,14 +1947,14 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string, se
 
     let badgeHtml = '';
     if (!isUnlocked) {
-      badgeHtml = `<span class="badge locked">LVL ${item.unlockLevel}</span>`;
+      badgeHtml = `<span class="badge locked">${t('shared_lvlValue', String(item.unlockLevel))}</span>`;
     } else if (item.seasonal) {
-      badgeHtml = `<span class="badge seasonal">${seasonalEnabled ? 'Seasonal' : 'Seasonal (Disabled)'}</span>`;
+      badgeHtml = `<span class="badge seasonal">${seasonalEnabled ? t('shared_seasonal') : t('shared_seasonalDisabled')}</span>`;
     } else if (isWearing) {
-      badgeHtml = `<span class="badge wearing-badge">Active</span>`;
+      badgeHtml = `<span class="badge wearing-badge">${t('shared_active')}</span>`;
     }
 
-    const btnText = isWearing ? 'Wearing' : (isSeasonalDisabled ? 'Disabled' : (isUnlocked ? 'Wear' : 'Locked'));
+    const btnText = isWearing ? t('shared_wearing') : (isSeasonalDisabled ? t('shared_disabled') : (isUnlocked ? t('shared_wear') : t('shared_locked')));
     const btnDisabled = !isUnlocked || isSeasonalDisabled;
 
     card.innerHTML = `
@@ -2016,7 +2019,7 @@ function populateHourSelects() {
     if (id.startsWith('focus-')) {
       const opt = document.createElement('option');
       opt.value = '';
-      opt.textContent = 'Disabled';
+      opt.textContent = t('shared_disabled');
       select.appendChild(opt);
     }
 
@@ -2049,7 +2052,7 @@ function renderAnalyticsCharts(stats: PetStats) {
     const maxVal = entries.length ? entries[0][1] : 0;
 
     if (entries.length === 0) {
-      historyChartContainer.innerHTML = '<div class="empty-msg" style="color: var(--text-muted); padding: 12px 0;">No history data found for the last 7 days.</div>';
+      historyChartContainer.innerHTML = `<div class="empty-msg" style="color: var(--text-muted); padding: 12px 0;">${t('options_noHistory')}</div>`;
     } else {
       entries.forEach(([category, count]) => {
         const pct = Math.round((count / maxVal) * 100);
@@ -2096,7 +2099,7 @@ function renderAnalyticsCharts(stats: PetStats) {
   if (moodChartContainer) {
     const dailyMoods = stats.dailyMoodHistory || [];
     if (dailyMoods.length < 2) {
-      moodChartContainer.innerHTML = '<div class="empty-msg" style="align-self: center; color: var(--text-muted);">Not enough daily data to chart. Check back tomorrow!</div>';
+      moodChartContainer.innerHTML = `<div class="empty-msg" style="align-self: center; color: var(--text-muted);">${t('options_noMoodData')}</div>`;
       return;
     }
 
@@ -2176,7 +2179,7 @@ function populateVoices() {
   if (voices.length === 0) return;
 
   const currentValue = chatVoiceSelect.value;
-  chatVoiceSelect.innerHTML = '<option value="">Default (Browser Choice)</option>';
+  chatVoiceSelect.innerHTML = `<option value="">${t('options_defaultBrowserChoice')}</option>`;
 
   voices.forEach(voice => {
     const option = document.createElement('option');

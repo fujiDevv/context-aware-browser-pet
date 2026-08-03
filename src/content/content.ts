@@ -12,6 +12,7 @@ import { getDominantTrait, detectPageCategory } from '../core/rules';
 import { getResolvedCostumeName } from '../ui/shared-ui';
 import { isFocusActive, isSleeping } from '../core/schedule';
 import { extensionApi, getRuntimeUrl } from '../shared/platform';
+import { speech } from '../shared/speech-i18n';
 
 const BRIDGE_TOKEN = Math.random().toString(36).substring(2) + Date.now().toString(36);
 setBridgeToken(BRIDGE_TOKEN);
@@ -322,16 +323,16 @@ function handleIdleBehavior(): void {
             isTemporarilyInteracting = false;
             loadPet(emotion.current);
           });
-          showBubbleWithSound("Let's go explore this side! 🏃‍♂️");
+          showBubbleWithSound(speech("Let's go explore this side! 🏃‍♂️"));
         },
         () => {
           movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-          showBubbleWithSound("I'm following you! 👀");
+          showBubbleWithSound(speech("I'm following you! 👀"));
         },
         () => {
           const pageTitle = document.title || 'this page';
           const truncatedTitle = pageTitle.length > 25 ? pageTitle.substring(0, 22) + '...' : pageTitle;
-          showBubbleWithSound(`Analyzing "${truncatedTitle}"... looks cool! 🧐`);
+          showBubbleWithSound(speech(`Analyzing "$1"... looks cool! 🧐`, truncatedTitle));
           loadPet('working-thinking');
           isTemporarilyInteracting = true;
           setTimeout(() => {
@@ -346,7 +347,7 @@ function handleIdleBehavior(): void {
   } else {
     if (context.idleSeconds >= 10 && context.idleSeconds < 45 && Math.random() < 0.3) {
       movement.chaseCursor(context.mouseX - currentSettings.size / 2);
-      const dialogs = ["Whatcha doing over there? 👀", "Let me see! 🧐", "Watchu looking at? 👁️"];
+      const dialogs = [speech("Whatcha doing over there? 👀"), speech("Let me see! 🧐"), speech("Watchu looking at? 👁️")];
       showBubbleWithSound(dialogs[Math.floor(Math.random() * dialogs.length)]);
     } else if (context.idleSeconds >= 45) {
       updateEmotion(); // Let engine pick deep idle (skateboard, sleeping, etc)
@@ -399,7 +400,7 @@ function ensureInitialized(): void {
     },
     onPetDoubleClick: (e) => {
       e.stopPropagation();
-      triggerInteraction('feed', 'celebrating', 2500, "Yum! That was delicious! 🍖");
+      triggerInteraction('feed', 'celebrating', 2500, speech("Yum! That was delicious! 🍖"));
     },
     onPetContextMenu: (e) => {
       handleShoo(e);
@@ -528,10 +529,10 @@ function ensureInitialized(): void {
             setTimeout(() => {
               if (isOrphaned) return;
               const greetings = [
-                "Hi there! Whatcha lookin' at?",
-                "I'm here to help you browse! Or just look cute. Probably the latter.",
-                "Sniff sniff... smells like a good webpage.",
-                "If you need me, just give me a pet!"
+                speech("Hi there! Whatcha lookin' at?"),
+                speech("I'm here to help you browse! Or just look cute. Probably the latter."),
+                speech("Sniff sniff... smells like a good webpage."),
+                speech("If you need me, just give me a pet!")
               ];
               const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
               view.addChatMessage('arcrawls', randomGreeting);
@@ -541,7 +542,7 @@ function ensureInitialized(): void {
           }
         }
       } else {
-        view.addChatMessage('arcrawls', "Oops! My brain froze. Could you repeat that?");
+        view.addChatMessage('arcrawls', speech("Oops! My brain froze. Could you repeat that?"));
       }
     } catch (e) {
       console.error(`[${currentSettings.name || "Arcrawls"} Chat] Error:`, e);
@@ -594,7 +595,7 @@ function ensureInitialized(): void {
       } else {
         if (textNode) textNode.textContent = originalText;
         if (controlsRow) controlsRow.style.display = 'flex';
-        view.addChatMessage('arcrawls', "Oops! My brain froze. Could you repeat that?");
+        view.addChatMessage('arcrawls', speech("Oops! My brain froze. Could you repeat that?"));
       }
     } catch (e) {
       console.error(`[${currentSettings.name || "Arcrawls"} Chat] Error:`, e);
@@ -938,20 +939,20 @@ async function triggerContextDialogue(mood: string): Promise<void> {
 
     if (stats.energy < 30 && Math.random() < 0.5) {
       const options = personaDialogs.lowEnergy || PERSONA_AUTONOMOUS_DIALOGUES.default.lowEnergy;
-      showBubbleWithSound(options[Math.floor(Math.random() * options.length)]);
+      showBubbleWithSound(speech(options[Math.floor(Math.random() * options.length)]));
       return;
     }
 
     if (stats.focus > 80 && Math.random() < 0.4) {
       const options = personaDialogs.highFocus || PERSONA_AUTONOMOUS_DIALOGUES.default.highFocus;
-      showBubbleWithSound(options[Math.floor(Math.random() * options.length)]);
+      showBubbleWithSound(speech(options[Math.floor(Math.random() * options.length)]));
       return;
     }
 
     if (mood === 'working-thinking' || mood === 'happy' || mood === 'love' || mood === 'cool' || mood === 'reading') {
       const traitOptions = personaDialogs[trait] || PERSONA_AUTONOMOUS_DIALOGUES.default[trait];
       if (traitOptions) {
-        showBubbleWithSound(traitOptions[Math.floor(Math.random() * traitOptions.length)]);
+        showBubbleWithSound(speech(traitOptions[Math.floor(Math.random() * traitOptions.length)]));
         return;
       }
     }
@@ -960,34 +961,34 @@ async function triggerContextDialogue(mood: string): Promise<void> {
   if (!scheduleEnabled) {
     const options = personaDialogs[mood];
     if (options) {
-      showBubbleWithSound(options[Math.floor(Math.random() * options.length)]);
+      showBubbleWithSound(speech(options[Math.floor(Math.random() * options.length)]));
       return;
     }
   }
 
   const dialogs: Record<string, string> = {
-    '404': "Whoops! This page doesn't exist (404)!",
-    '500': "Ouch! The server is broken (500)!",
-    '403': "Stop! Access denied (403)!",
-    '429': "Too fast! Calm down (429)!",
-    'sleeping': "Zzz... sleeping...",
-    'working-thinking': "Hmm... let me think...",
-    'coding': "Let's write some code! 💻",
-    'working-typing': "Keep typing! You've got this!",
-    'celebrating': "Success! Form sent! 🎉",
-    'love': "What a lovely page! ❤️",
-    'gaming': "Game time! Let's play! 🎮",
-    'mindblown': "Oh wow! Look at those items! 😮",
-    'working-wizard': "Exploring the docs... 🧙‍♂️",
-    'working-debugger': Math.random() < 0.5 ? "Oh no! Something crashed! 💥" : "Found a bug! Let me debug! 🔍",
-    'crying': "I'm so sad... please pet me! 😢",
-    'sad': "Feeling a bit down... 🥺",
-    'reading': Math.random() < 0.5 ? "Reading is fun! 📚" : "So much knowledge here! 📖",
-    'yoga': Math.random() < 0.5 ? "Time for some morning stretches! 🧘‍♂️" : "Inhale, exhale... stretch! 🧘‍♀️",
-    'happy': Math.random() < 0.5 ? "Just wandering around! 😊" : "Hope you're having a good day! 🌟",
-    'waving': "Hello there! 👋",
-    'shrug': "Not sure what to make of this page... 🤷",
-    'smile': "Nice to see you! 😊"
+    '404': speech("Whoops! This page doesn't exist (404)!"),
+    '500': speech("Ouch! The server is broken (500)!"),
+    '403': speech("Stop! Access denied (403)!"),
+    '429': speech("Too fast! Calm down (429)!"),
+    'sleeping': speech("Zzz... sleeping..."),
+    'working-thinking': speech("Hmm... let me think..."),
+    'coding': speech("Let's write some code! 💻"),
+    'working-typing': speech("Keep typing! You've got this!"),
+    'celebrating': speech("Success! Form sent! 🎉"),
+    'love': speech("What a lovely page! ❤️"),
+    'gaming': speech("Game time! Let's play! 🎮"),
+    'mindblown': speech("Oh wow! Look at those items! 😮"),
+    'working-wizard': speech("Exploring the docs... 🧙‍♂️"),
+    'working-debugger': Math.random() < 0.5 ? speech("Oh no! Something crashed! 💥") : speech("Found a bug! Let me debug! 🔍"),
+    'crying': speech("I'm so sad... please pet me! 😢"),
+    'sad': speech("Feeling a bit down... 🥺"),
+    'reading': Math.random() < 0.5 ? speech("Reading is fun! 📚") : speech("So much knowledge here! 📖"),
+    'yoga': Math.random() < 0.5 ? speech("Time for some morning stretches! 🧘‍♂️") : speech("Inhale, exhale... stretch! 🧘‍♀️"),
+    'happy': Math.random() < 0.5 ? speech("Just wandering around! 😊") : speech("Hope you're having a good day! 🌟"),
+    'waving': speech("Hello there! 👋"),
+    'shrug': speech("Not sure what to make of this page... 🤷"),
+    'smile': speech("Nice to see you! 😊")
   };
 
   if (dialogs[mood]) {
@@ -1022,7 +1023,7 @@ function handleShoo(e: MouseEvent) {
     loadPet(emotion.current);
   });
 
-  showBubbleWithSound("Okay, okay, moving! 🏃‍♂️");
+  showBubbleWithSound(speech("Okay, okay, moving! 🏃‍♂️"));
   playSound('shoo');
 }
 
@@ -1110,15 +1111,15 @@ function playWithToy(toyType: string, toyEl: HTMLElement): void {
   ], { duration: 0.35 }).then(() => toyEl.remove());
 
   const dialogs: Record<string, string> = {
-    ball: `Wow! A ball! Roll roll roll! ⚽`,
-    fish: `Yum! That fish was delicious! 🐟`,
-    laser: `Got the red dot! Rawr! 🔴`,
-    yarn: `Ooh, a ball of yarn! Unraveling time! 🧶`,
-    duck: `Squeak squeak! Squeaky toy ducky! 🦆`,
-    box: `If it fits, I sits! Best box ever! 📦`
+    ball: speech(`Wow! A ball! Roll roll roll! ⚽`),
+    fish: speech(`Yum! That fish was delicious! 🐟`),
+    laser: speech(`Got the red dot! Rawr! 🔴`),
+    yarn: speech(`Ooh, a ball of yarn! Unraveling time! 🧶`),
+    duck: speech(`Squeak squeak! Squeaky toy ducky! 🦆`),
+    box: speech(`If it fits, I sits! Best box ever! 📦`)
   };
 
-  showBubbleWithSound(dialogs[toyType] || "Yay, a toy! 🎉");
+  showBubbleWithSound(dialogs[toyType] || speech("Yay, a toy! 🎉"));
 
   const playMood = toyType === 'fish' ? 'celebrating' : 'dancing';
   loadPet(playMood);
@@ -1303,9 +1304,9 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
   }
 
   if (message.type === 'pet') {
-    if (isInitialized) triggerInteraction('pet', 'love', 2000, "Love it! ❤️");
+    if (isInitialized) triggerInteraction('pet', 'love', 2000, speech("Love it! ❤️"));
   } else if (message.type === 'feed') {
-    if (isInitialized) triggerInteraction('feed', 'celebrating', 2500, "Nom nom nom! 🍖");
+    if (isInitialized) triggerInteraction('feed', 'celebrating', 2500, speech("Nom nom nom! 🍖"));
   } else if (message.type === 'shoo') {
     if (isInitialized) {
       try {
@@ -1324,7 +1325,7 @@ function handleRuntimeMessage(message: PetMessage, sender: chrome.runtime.Messag
         loadPet(emotion.current);
       });
 
-      showBubbleWithSound("Running away! 🏃‍♂️");
+      showBubbleWithSound(speech("Running away! 🏃‍♂️"));
       playSound('shoo');
     }
   }
@@ -1513,15 +1514,15 @@ async function actuallyInit(): Promise<void> {
           if (!sessionStorage.getItem('arcrawls-has-greeted')) {
             const petName = currentSettings.name || 'Arcrawls';
             const greetings = [
-              `Hi, I'm ${petName}! Let's explore!`,
-              `Meet ${petName}, your guide!`,
-              `${petName} here! Let's look around.`,
-              `Let's explore together with ${petName}!`,
-              `Browse with ${petName}!`,
-              `Ready to explore with ${petName}?`,
-              `Explore with ${petName}!`,
-              `Hi! I'm ${petName}.`,
-              `${petName}: Let's explore!`
+              speech("Hi, I'm $1! Let's explore!", petName),
+              speech("Meet $1, your guide!", petName),
+              speech("$1 here! Let's look around.", petName),
+              speech("Let's explore together with $1!", petName),
+              speech("Browse with $1!", petName),
+              speech("Ready to explore with $1?", petName),
+              speech("Explore with $1!", petName),
+              speech("Hi! I'm $1.", petName),
+              speech("$1: Let's explore!", petName)
             ];
             const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
             view.showBubble(randomGreeting);
@@ -1534,7 +1535,7 @@ async function actuallyInit(): Promise<void> {
                 if (status === 'after-download') {
                   setTimeout(() => {
                     if (isOrphaned) return;
-                    view.showBubble("I'm still downloading my high-tech brain, using my backup instincts for now! 🧠", 5000);
+                    view.showBubble(speech("I'm still downloading my high-tech brain, using my backup instincts for now! 🧠"), 5000);
                   }, 4000);
                 }
               });

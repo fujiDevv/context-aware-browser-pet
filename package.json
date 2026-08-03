@@ -1,6 +1,6 @@
 {
   "name": "browser-pet-extension",
-  "version": "2.0.14",
+  "version": "2.1.0",
   "license": "PolyForm-Noncommercial-1.0.0",
   "dependencies": {
     "@huggingface/transformers": "^4.2.0"

@@ -1,0 +1,3545 @@
+{
+  "extName": {
+    "message": "Arcrawls：情境感知浏览器宠物"
+  },
+  "extDescription": {
+    "message": "情境感知浏览器宠物，支持弹簧物理、140 多种动画，以及可选的 100% 本地 AI。云端零浏览数据。"
+  },
+  "actionTitle": {
+    "message": "Arcrawls — 打开宠物仪表盘"
+  },
+  "shared_lvl": {
+    "message": "等级"
+  },
+  "shared_lvlValue": {
+    "message": "等级 $1"
+  },
+  "shared_loading": {
+    "message": "加载中..."
+  },
+  "shared_donate": {
+    "message": "捐赠"
+  },
+  "shared_waiting": {
+    "message": "请稍候..."
+  },
+  "shared_waitSeconds": {
+    "message": "请稍候 $1 秒..."
+  },
+  "shared_none": {
+    "message": "无"
+  },
+  "shared_active": {
+    "message": "已启用"
+  },
+  "shared_disabled": {
+    "message": "已禁用"
+  },
+  "shared_seasonal": {
+    "message": "季节性"
+  },
+  "shared_seasonalDisabled": {
+    "message": "季节性（已禁用）"
+  },
+  "shared_locked": {
+    "message": "已锁定"
+  },
+  "shared_wearing": {
+    "message": "穿戴中"
+  },
+  "shared_wear": {
+    "message": "穿戴"
+  },
+  "shared_perfMode": {
+    "message": "性能模式"
+  },
+  "shared_perfModeSub": {
+    "message": "降低 CPU 和内存占用"
+  },
+  "shared_perfModeHint": {
+    "message": "限制为 30fps、禁用光环并停止标签页同步以节省 CPU"
+  },
+  "shared_ghostMode": {
+    "message": "幽灵模式"
+  },
+  "shared_ghostModeSub": {
+    "message": "活动时淡出（专注）"
+  },
+  "shared_ghostModeHint": {
+    "message": "在您输入或滚动时将 Arcrawls 淡出，以减少干扰"
+  },
+  "stat_happiness": {
+    "message": "幸福度"
+  },
+  "stat_energy": {
+    "message": "体力"
+  },
+  "stat_curiosity": {
+    "message": "好奇心"
+  },
+  "stat_focus": {
+    "message": "专注度"
+  },
+  "stat_leisure": {
+    "message": "休闲度"
+  },
+  "stat_happinessHint": {
+    "message": "通过抚摸和有趣网站提升。每小时衰减 4%。"
+  },
+  "stat_energyHint": {
+    "message": "通过喂食和睡眠恢复。每小时衰减 6.8%。"
+  },
+  "stat_curiosityHint": {
+    "message": "通过访问新域名获得。每小时衰减 1.8%。"
+  },
+  "stat_focusHint": {
+    "message": "通过工作和编程提升。每小时衰减 5.4%。"
+  },
+  "stat_leisureHint": {
+    "message": "游戏或观看直播时增加。每小时衰减 5.4%。"
+  },
+  "stat_happinessDesc": {
+    "message": "随时间衰减。通过抚摸、喂食和访问积极网站提升。"
+  },
+  "stat_energyDesc": {
+    "message": "爬行时衰减。通过喂食和夜间睡眠恢复。"
+  },
+  "stat_curiosityDesc": {
+    "message": "通过访问新域名和阅读文章获得。"
+  },
+  "stat_focusDesc": {
+    "message": "通过工作/编程和负面的编程情绪（调试会话）提升。"
+  },
+  "stat_leisureDesc": {
+    "message": "观看直播、游戏或访问社交媒体域名时增加。"
+  },
+  "mood_happy": {
+    "message": "开心"
+  },
+  "mood_sad": {
+    "message": "难过"
+  },
+  "mood_angry": {
+    "message": "生气"
+  },
+  "mood_crying": {
+    "message": "哭泣"
+  },
+  "mood_waving": {
+    "message": "挥手"
+  },
+  "mood_sleeping": {
+    "message": "睡觉"
+  },
+  "mood_thinking": {
+    "message": "思考"
+  },
+  "mood_shrug": {
+    "message": "耸肩"
+  },
+  "mood_reading": {
+    "message": "阅读"
+  },
+  "mood_yoga": {
+    "message": "瑜伽"
+  },
+  "mood_eating": {
+    "message": "吃东西"
+  },
+  "mood_coding": {
+    "message": "编程"
+  },
+  "mood_typing": {
+    "message": "打字"
+  },
+  "mood_dancing": {
+    "message": "跳舞"
+  },
+  "mood_cool": {
+    "message": "酷"
+  },
+  "mood_love": {
+    "message": "爱"
+  },
+  "mood_celebrating": {
+    "message": "庆祝"
+  },
+  "mood_mindblown": {
+    "message": "震惊"
+  },
+  "mood_ninja": {
+    "message": "忍者"
+  },
+  "mood_wizard": {
+    "message": "魔法师"
+  },
+  "mood_astronaut": {
+    "message": "宇航员"
+  },
+  "mood_debugger": {
+    "message": "调试器"
+  },
+  "mood_building": {
+    "message": "建造"
+  },
+  "mood_rocket": {
+    "message": "火箭"
+  },
+  "mood_pirate": {
+    "message": "海盗"
+  },
+  "mood_juggling": {
+    "message": "杂耍"
+  },
+  "mood_gaming": {
+    "message": "游戏"
+  },
+  "mood_lowBattery": {
+    "message": "电量低"
+  },
+  "mood_christmas": {
+    "message": "圣诞节"
+  },
+  "mood_winter": {
+    "message": "冬天"
+  },
+  "mood_halloween": {
+    "message": "万圣节"
+  },
+  "mood_summer": {
+    "message": "夏天"
+  },
+  "mood_iceCream": {
+    "message": "冰淇淋"
+  },
+  "mood_surfing": {
+    "message": "冲浪"
+  },
+  "mood_skateboard": {
+    "message": "滑板"
+  },
+  "mood_telescope": {
+    "message": "望远镜"
+  },
+  "mood_meditating": {
+    "message": "冥想"
+  },
+  "mood_rubberDuck": {
+    "message": "橡皮鸭"
+  },
+  "mood_coffee": {
+    "message": "咖啡"
+  },
+  "mood_mail": {
+    "message": "邮件"
+  },
+  "mood_notification": {
+    "message": "通知"
+  },
+  "mood_flexing": {
+    "message": "秀肌肉"
+  },
+  "mood_lifting": {
+    "message": "举重"
+  },
+  "mood_singing": {
+    "message": "唱歌"
+  },
+  "mood_music": {
+    "message": "音乐"
+  },
+  "mood_dj": {
+    "message": "DJ"
+  },
+  "mood_money": {
+    "message": "金钱"
+  },
+  "mood_merging": {
+    "message": "合并/Git"
+  },
+  "mood_deploying": {
+    "message": "部署"
+  },
+  "mood_firefighting": {
+    "message": "救火"
+  },
+  "mood_sweeping": {
+    "message": "扫地"
+  },
+  "mood_dizzy": {
+    "message": "头晕"
+  },
+  "mood_evil": {
+    "message": "邪恶"
+  },
+  "mood_king": {
+    "message": "国王"
+  },
+  "mood_magic": {
+    "message": "魔法"
+  },
+  "mood_fishing": {
+    "message": "钓鱼"
+  },
+  "mood_bowling": {
+    "message": "保龄球"
+  },
+  "mood_detective": {
+    "message": "侦探"
+  },
+  "mood_painting": {
+    "message": "绘画"
+  },
+  "mood_photography": {
+    "message": "摄影"
+  },
+  "trait_normal": {
+    "message": "普通"
+  },
+  "trait_developer": {
+    "message": "开发者"
+  },
+  "trait_gamer": {
+    "message": "玩家"
+  },
+  "trait_scholar": {
+    "message": "学者"
+  },
+  "trait_socialite": {
+    "message": "社交达人"
+  },
+  "toy_ball": {
+    "message": "球"
+  },
+  "toy_fish": {
+    "message": "鱼"
+  },
+  "toy_laser": {
+    "message": "激光"
+  },
+  "toy_yarn": {
+    "message": "毛线"
+  },
+  "toy_duck": {
+    "message": "鸭子"
+  },
+  "toy_box": {
+    "message": "箱子"
+  },
+  "action_pet": {
+    "message": "抚摸"
+  },
+  "action_feed": {
+    "message": "喂食"
+  },
+  "action_shoo": {
+    "message": "驱赶"
+  },
+  "reaction_happy": {
+    "message": "开心 😊"
+  },
+  "reaction_sad": {
+    "message": "难过 😢"
+  },
+  "reaction_sleeping": {
+    "message": "睡觉 💤"
+  },
+  "reaction_thinking": {
+    "message": "思考 🤔"
+  },
+  "reaction_reading": {
+    "message": "阅读 📖"
+  },
+  "reaction_eating": {
+    "message": "吃东西 🍕"
+  },
+  "reaction_coding": {
+    "message": "编程 💻"
+  },
+  "reaction_typing": {
+    "message": "打字 ⌨️"
+  },
+  "reaction_dancing": {
+    "message": "跳舞 💃"
+  },
+  "reaction_cool": {
+    "message": "酷 😎"
+  },
+  "reaction_love": {
+    "message": "爱 ❤️"
+  },
+  "reaction_celebrating": {
+    "message": "庆祝 🎉"
+  },
+  "reaction_mindblown": {
+    "message": "震惊 🤯"
+  },
+  "reaction_ninja": {
+    "message": "忍者 🥷"
+  },
+  "reaction_wizard": {
+    "message": "魔法师 🧙"
+  },
+  "reaction_astronaut": {
+    "message": "宇航员 🧑‍🚀"
+  },
+  "reaction_debugger": {
+    "message": "调试器 🔍"
+  },
+  "reaction_merging": {
+    "message": "合并/Git 🔀"
+  },
+  "reaction_deploying": {
+    "message": "部署 🚀"
+  },
+  "reaction_firefighting": {
+    "message": "救火 🚒"
+  },
+  "reaction_rubberDuck": {
+    "message": "橡皮鸭 🦆"
+  },
+  "reaction_building": {
+    "message": "建造 🏗️"
+  },
+  "reaction_sweeping": {
+    "message": "扫地 🧹"
+  },
+  "reaction_dizzy": {
+    "message": "头晕 💫"
+  },
+  "reaction_evil": {
+    "message": "邪恶 😈"
+  },
+  "reaction_king": {
+    "message": "国王 👑"
+  },
+  "reaction_music": {
+    "message": "听音乐 🎧"
+  },
+  "reaction_dj": {
+    "message": "DJ 🎛️"
+  },
+  "reaction_magic": {
+    "message": "魔法 🪄"
+  },
+  "reaction_fishing": {
+    "message": "钓鱼 🎣"
+  },
+  "reaction_bowling": {
+    "message": "保龄球 🎳"
+  },
+  "reaction_detective": {
+    "message": "侦探 🕵️"
+  },
+  "reaction_painting": {
+    "message": "绘画 🎨"
+  },
+  "reaction_photography": {
+    "message": "摄影 📷"
+  },
+  "reaction_juggling": {
+    "message": "杂耍 🤹"
+  },
+  "popup_title": {
+    "message": "浏览器宠物控制器"
+  },
+  "popup_experience": {
+    "message": "经验值"
+  },
+  "popup_xpInitial": {
+    "message": "0 / 100 XP"
+  },
+  "popup_xpProgress": {
+    "message": "$1 / $2 XP"
+  },
+  "popup_mascotStats": {
+    "message": "宠物统计"
+  },
+  "popup_interactiveToys": {
+    "message": "互动玩具"
+  },
+  "popup_toyHelp": {
+    "message": "把玩具拖到网页上一起玩吧！"
+  },
+  "popup_visibility": {
+    "message": "可见性"
+  },
+  "popup_hideOnTab": {
+    "message": "在此标签页隐藏"
+  },
+  "popup_hideOnTabSub": {
+    "message": "在此标签页临时隐藏 Arcrawls"
+  },
+  "popup_hideOnSite": {
+    "message": "在此网站隐藏"
+  },
+  "popup_hideOnSiteSub": {
+    "message": "在此域名禁用 Arcrawls"
+  },
+  "popup_disableOnSite": {
+    "message": "在 $1 禁用 Arcrawls"
+  },
+  "popup_openDashboard": {
+    "message": "打开仪表盘"
+  },
+  "popup_tabsActiveOne": {
+    "message": "1 个活动标签页"
+  },
+  "popup_tabsActiveMany": {
+    "message": "$1 个活动标签页"
+  },
+  "popup_prestigeRankTitle": {
+    "message": "声望等级"
+  },
+  "popup_aiEmotionTitle": {
+    "message": "情绪分类器（DistilBERT）"
+  },
+  "popup_aiNanoTitle": {
+    "message": "生成式反思（Gemini Nano）"
+  },
+  "popup_presenceTitle": {
+    "message": "本地上下文观察已启用（100% 设备端）"
+  },
+  "popup_liteMode": {
+    "message": "精简模式"
+  },
+  "popup_firefoxLite": {
+    "message": "Firefox 精简版"
+  },
+  "popup_ruleBasedTitle": {
+    "message": "基于规则的分析已启用"
+  },
+  "popup_brainLite": {
+    "message": "大脑：精简"
+  },
+  "popup_bertChecking": {
+    "message": "BERT：检查中"
+  },
+  "popup_bertReady": {
+    "message": "BERT：就绪"
+  },
+  "popup_bertProgress": {
+    "message": "BERT：$1%"
+  },
+  "popup_bertError": {
+    "message": "BERT：错误"
+  },
+  "popup_bertOffline": {
+    "message": "BERT：离线"
+  },
+  "popup_nanoChecking": {
+    "message": "Nano：检查中"
+  },
+  "popup_nanoReady": {
+    "message": "Nano：就绪"
+  },
+  "popup_nanoDownloading": {
+    "message": "Nano：下载中"
+  },
+  "popup_nanoUnsupported": {
+    "message": "Nano：不支持"
+  },
+  "popup_nanoOffline": {
+    "message": "Nano：离线"
+  },
+  "popup_nanoWaiting": {
+    "message": "Nano：等待中"
+  },
+  "popup_petPreviewAlt": {
+    "message": "宠物预览"
+  },
+  "options_sanctuaryDashboard": {
+    "message": "圣所仪表盘"
+  },
+  "options_sanctuaryPlayground": {
+    "message": "圣所游乐场"
+  },
+  "options_chatWith": {
+    "message": "与 <span class=\"pet-name-display\">Arcrawls</span> 聊天"
+  },
+  "options_analyticsStats": {
+    "message": "分析与统计"
+  },
+  "options_historyTimeline": {
+    "message": "历史时间线"
+  },
+  "options_mascotStyle": {
+    "message": "宠物与风格"
+  },
+  "options_aiScheduling": {
+    "message": "AI 与日程"
+  },
+  "options_profileAdmin": {
+    "message": "个人资料管理"
+  },
+  "options_copyright": {
+    "message": "© 2026 <span class=\"pet-name-display\">Arcrawls</span> 伙伴"
+  },
+  "options_versionFormat": {
+    "message": "版本 $1（$2）"
+  },
+  "options_mascotSanctuary": {
+    "message": "宠物圣所"
+  },
+  "options_sanctuaryDesc": {
+    "message": "观察 <span class=\"pet-name-display\">Arcrawls</span> 的实时状态，与它互动并引导它的习惯。"
+  },
+  "options_petAction": {
+    "message": "抚摸 <span class=\"pet-name-display\">Arcrawls</span>"
+  },
+  "options_petActionPlain": {
+    "message": "抚摸 Arcrawls"
+  },
+  "options_feedSnack": {
+    "message": "喂零食"
+  },
+  "options_shooAway": {
+    "message": "赶走"
+  },
+  "options_experiencePoints": {
+    "message": "经验值"
+  },
+  "options_xpInitial": {
+    "message": "0 / 150 XP"
+  },
+  "options_learningHabits": {
+    "message": "学习习惯与适应"
+  },
+  "options_dominantTrait": {
+    "message": "主导特质："
+  },
+  "options_crawlingSpeed": {
+    "message": "爬行速度："
+  },
+  "options_defaultAnimation": {
+    "message": "默认动画："
+  },
+  "options_distilbertActive": {
+    "message": "DistilBERT 模型已激活"
+  },
+  "options_geminiNanoActive": {
+    "message": "Gemini Nano 已激活"
+  },
+  "options_crossTabSync": {
+    "message": "跨标签页同步"
+  },
+  "options_aiSynapse": {
+    "message": "24 小时 AI 突触"
+  },
+  "options_syncing": {
+    "message": "同步中"
+  },
+  "options_ready": {
+    "message": "就绪"
+  },
+  "options_gatheringMemories": {
+    "message": "正在收集记忆..."
+  },
+  "options_synapsePreviewPlaceholder": {
+    "message": "\"我已经完成了对咱们这一天共同度过的时光的分析...\""
+  },
+  "options_readDailyReflection": {
+    "message": "阅读每日反思"
+  },
+  "options_observingHabits": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 正在观察您的习惯，以便为您提供每日反思。"
+  },
+  "options_dailyRoutine": {
+    "message": "每日作息与日程"
+  },
+  "options_scheduleSleep": {
+    "message": "睡觉"
+  },
+  "options_scheduleSleepDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 深夜休息。这段时间体力会完全恢复。"
+  },
+  "options_morningYoga": {
+    "message": "晨间瑜伽"
+  },
+  "options_morningYogaDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 早上做瑜伽，提升基础幸福度。"
+  },
+  "options_randomPlay": {
+    "message": "随机玩耍"
+  },
+  "options_randomPlayDesc": {
+    "message": "如果您让光标闲置，<span class=\"pet-name-display\">Arcrawls</span> 会四处走动、滑滑板、玩耍或看书。"
+  },
+  "options_debugger": {
+    "message": "调试器"
+  },
+  "options_debuggerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 会发现网页上的 JavaScript 错误并进行检查。"
+  },
+  "options_seasonalEvents": {
+    "message": "季节性日历活动"
+  },
+  "options_summerSeason": {
+    "message": "夏天"
+  },
+  "options_summerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 戴上太阳镜，享受冰淇淋，在屏幕上冲浪。"
+  },
+  "options_halloweenSeason": {
+    "message": "万圣节"
+  },
+  "options_halloweenDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 穿上万圣节服装、配上南瓜装饰，进入万圣节气氛。"
+  },
+  "options_christmasSeason": {
+    "message": "圣诞节"
+  },
+  "options_christmasDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 戴上圣诞帽，用节日主题反应庆祝节日季。"
+  },
+  "options_starterFact": {
+    "message": "给我讲一个关于浏览器的有趣事实"
+  },
+  "options_starterContext": {
+    "message": "解释情境感知是如何工作的"
+  },
+  "options_starterCustomize": {
+    "message": "我怎样才能定制我的宠物？"
+  },
+  "options_whatCanIHelp": {
+    "message": "有什么可以帮您？"
+  },
+  "options_voiceChat": {
+    "message": "语音聊天"
+  },
+  "options_chatPlaceholder": {
+    "message": "给 Arcrawls 发消息..."
+  },
+  "options_listening": {
+    "message": "正在聆听..."
+  },
+  "options_typeMessage": {
+    "message": "输入消息..."
+  },
+  "options_playVoice": {
+    "message": "播放语音"
+  },
+  "options_copyResponse": {
+    "message": "复制回答"
+  },
+  "options_redo": {
+    "message": "重做"
+  },
+  "options_analyticsDesc": {
+    "message": "分析 <span class=\"pet-name-display\">Arcrawls</span> 的虚拟统计、浏览类别分布和进度仪表。"
+  },
+  "options_lifetimeMetrics": {
+    "message": "累计指标"
+  },
+  "options_petsReceived": {
+    "message": "被抚摸次数"
+  },
+  "options_feedsCompleted": {
+    "message": "喂食次数"
+  },
+  "options_browsingInterests": {
+    "message": "浏览兴趣分布"
+  },
+  "options_browsingInterestsSub": {
+    "message": "基于您的标签页导航历史的实时分类："
+  },
+  "options_interestsHistory": {
+    "message": "兴趣历史（最近 7 天）"
+  },
+  "options_interestsHistorySub": {
+    "message": "最近 7 天的类别分布。"
+  },
+  "options_moodOverTime": {
+    "message": "情绪变化趋势"
+  },
+  "options_moodOverTimeSub": {
+    "message": "每日平均幸福度和体力。"
+  },
+  "options_noHistory": {
+    "message": "最近 7 天未找到历史数据。"
+  },
+  "options_noMoodData": {
+    "message": "每日数据不足以绘制图表。明天再来看看吧！"
+  },
+  "options_historyLogs": {
+    "message": "历史日志"
+  },
+  "options_historyLogsDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 最近的情绪波动、页面评估和操作的时间线。"
+  },
+  "options_timelineFeed": {
+    "message": "享用零食"
+  },
+  "options_clearLogs": {
+    "message": "清除日志"
+  },
+  "options_recentMilestones": {
+    "message": "近期里程碑"
+  },
+  "options_recentMilestonesDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 获得的重要成长标志和成就。"
+  },
+  "options_noMilestones": {
+    "message": "尚未达到任何里程碑。继续互动以解锁成就！"
+  },
+  "options_noTimeline": {
+    "message": "暂无时间线条目。花点时间和 Arcrawls 一起浏览吧！"
+  },
+  "options_noCategories": {
+    "message": "尚未评估任何类别。Arcrawls 会在您浏览时学习！"
+  },
+  "options_mascotStyleDesc": {
+    "message": "自定义 <span class=\"pet-name-display\">Arcrawls</span> 的外观、大小、活动动画、音效和衣橱。"
+  },
+  "options_mascotPrefs": {
+    "message": "宠物偏好"
+  },
+  "options_mascotName": {
+    "message": "宠物名称"
+  },
+  "options_mascotSize": {
+    "message": "宠物大小（<span id=\"size-val\">128px</span>）"
+  },
+  "options_walkingSpeed": {
+    "message": "行走速度（<span id=\"speed-val\">1.0x</span>）"
+  },
+  "options_rocketSpeed": {
+    "message": "火箭速度（<span id=\"flight-speed-val\">1.0x</span>）"
+  },
+  "options_customColor": {
+    "message": "自定义宠物颜色（等级 15 解锁）"
+  },
+  "options_resetToDefault": {
+    "message": "恢复默认"
+  },
+  "options_dialoguePersona": {
+    "message": "对话角色"
+  },
+  "options_personaDefault": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>（默认）"
+  },
+  "options_personaSarcastic": {
+    "message": "讽刺与愤世嫉俗"
+  },
+  "options_personaEncouraging": {
+    "message": "共情教练"
+  },
+  "options_personaPoetic": {
+    "message": "古怪诗人"
+  },
+  "options_personaSnarky": {
+    "message": "科技宅毒舌"
+  },
+  "options_personaGenZ": {
+    "message": "Z 世代俚语"
+  },
+  "options_personaKid": {
+    "message": "儿童向 / 游戏化（高能量）"
+  },
+  "options_chatVoice": {
+    "message": "聊天语音（文字转语音）"
+  },
+  "options_defaultBrowserChoice": {
+    "message": "默认（浏览器选择）"
+  },
+  "options_chatVoiceHint": {
+    "message": "选择 <span class=\"pet-name-display\">Arcrawls</span> 与您对话时使用的语音。"
+  },
+  "options_soundEffects": {
+    "message": "音效"
+  },
+  "options_soundEffectsSub": {
+    "message": "允许事件音频反馈"
+  },
+  "options_seasonalOutfits": {
+    "message": "季节性服装"
+  },
+  "options_seasonalOutfitsSub": {
+    "message": "解锁圣诞节/万圣节服装"
+  },
+  "options_sfxVolume": {
+    "message": "音效音量（<span id=\"volume-val\">80%</span>）"
+  },
+  "options_wardrobe": {
+    "message": "服装与光环衣橱"
+  },
+  "options_soundBoard": {
+    "message": "音板预览"
+  },
+  "options_soundBoardDesc": {
+    "message": "试听 <span class=\"pet-name-display\">Arcrawls</span> 的定制复古音效："
+  },
+  "options_soundGreeting": {
+    "message": "问候"
+  },
+  "options_soundPetting": {
+    "message": "抚摸"
+  },
+  "options_soundFeeding": {
+    "message": "喂食"
+  },
+  "options_soundLevelUp": {
+    "message": "升级"
+  },
+  "options_soundChat": {
+    "message": "聊天消息"
+  },
+  "options_soundThinking": {
+    "message": "思考"
+  },
+  "options_soundSleeping": {
+    "message": "睡觉"
+  },
+  "options_soundCrying": {
+    "message": "哭泣"
+  },
+  "options_soundShoo": {
+    "message": "被赶走"
+  },
+  "options_didYouKnow": {
+    "message": "你知道吗？🐾"
+  },
+  "options_didYouKnowDesc": {
+    "message": "关于您的桌面伙伴的有趣小知识："
+  },
+  "options_fact1": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 的心情会根据您访问的网站而变化！科技博客让它专注，而社交媒体让它贪玩。"
+  },
+  "options_fact2": {
+    "message": "达到 50 级后，<span class=\"pet-name-display\">Arcrawls</span> 可以经历<strong>声望重生</strong>，解锁更快的基准速度和新的外观。"
+  },
+  "options_fact3": {
+    "message": "光标闲置超过 45 秒，<span class=\"pet-name-display\">Arcrawls</span> 就会四处走动、滑滑板或读一本小书！"
+  },
+  "options_fact4": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 会在冬季假期变得慵懒，在十月自动穿上季节性服装变得神秘。"
+  },
+  "options_proTips": {
+    "message": "专业提示 💡"
+  },
+  "options_proTipsDesc": {
+    "message": "最大化您的生产力："
+  },
+  "options_proTip1": {
+    "message": "需要深度工作时，在计划器中使用<strong>专注块</strong>来暂停 <span class=\"pet-name-display\">Arcrawls</span> 的随机走动。"
+  },
+  "options_proTip2": {
+    "message": "自定义<strong>域名反应</strong>，让 <span class=\"pet-name-display\">Arcrawls</span> 在 StackOverflow 等网站上扮演橡皮鸭调试器！"
+  },
+  "options_aiSchedulingDesc": {
+    "message": "配置本地 AI 分析、自定义网站拦截列表、睡眠/工作时间日历和域名反应规则。"
+  },
+  "options_mascotIntelligence": {
+    "message": "宠物智能（AI）"
+  },
+  "options_brainUpgrade": {
+    "message": "大脑升级（本地 AI）"
+  },
+  "options_brainUpgradeSub": {
+    "message": "启用高保真 DistilBERT 分析"
+  },
+  "options_brainTuning": {
+    "message": "大脑升级调优"
+  },
+  "options_sentimentSensitivity": {
+    "message": "情绪敏感度（<span id=\"ai-sensitivity-val\">50%</span>）"
+  },
+  "options_sentimentSensitivityHint": {
+    "message": "调整本地 AI 识别页面情绪的难易程度。"
+  },
+  "options_observationFrequency": {
+    "message": "观察频率（<span id=\"ai-frequency-val\">60s</span>）"
+  },
+  "options_observationFrequencyHint": {
+    "message": "控制 <span class=\"pet-name-display\">Arcrawls</span> 进行深度观察的频率。"
+  },
+  "options_activeBrainModules": {
+    "message": "活动的大脑模块"
+  },
+  "options_emotionClassifier": {
+    "message": "情绪分类器（BERT）："
+  },
+  "options_generativeReflections": {
+    "message": "生成式反思（Nano）："
+  },
+  "options_nanoCheckHint": {
+    "message": "无法使用？复制并粘贴此内容以检查 Gemini Nano 是否已启用："
+  },
+  "options_liteModeNotice": {
+    "message": "<strong>模式：精简（默认）</strong> — 商店下载约 6 MB（磁盘上约 22–25 MB）。使用基于规则的逻辑和正则表达式进行快速行为分析，无需网络下载。"
+  },
+  "options_privacyNoticeTitle": {
+    "message": "隐私与资源通知（大脑升级）："
+  },
+  "options_privacyNoticeBody": {
+    "message": "启用大脑升级会初始化随附的 ONNX asyncify 运行时（解压后约 22 MB，已在包内），并从 Hugging Face 将 DistilBERT 权重（约 67 MB，仅一次）下载到浏览器的 IndexedDB。所有页面分析都<strong>严格在您的设备上</strong>进行 — 您的浏览数据在本地处理，绝不会发送到外部服务器。"
+  },
+  "options_reactionDictionary": {
+    "message": "域名反应词典"
+  },
+  "options_reactionDictionaryDesc": {
+    "message": "将特定网站域名映射到自定义宠物行为、评论和音效："
+  },
+  "options_websiteDomain": {
+    "message": "网站域名"
+  },
+  "options_domainPlaceholder": {
+    "message": "例如 stackoverflow.com"
+  },
+  "options_mascotEmotion": {
+    "message": "宠物情绪"
+  },
+  "options_speechDialogue": {
+    "message": "语音对话（可选）"
+  },
+  "options_speechDialoguePlaceholder": {
+    "message": "例如：让我们修复这个 bug！🐛"
+  },
+  "options_soundFx": {
+    "message": "音效（可选）"
+  },
+  "options_addReactionRule": {
+    "message": "添加反应规则"
+  },
+  "options_tableDomain": {
+    "message": "域名"
+  },
+  "options_tableEmotion": {
+    "message": "情绪"
+  },
+  "options_tableDialogue": {
+    "message": "对话"
+  },
+  "options_tableSound": {
+    "message": "声音"
+  },
+  "options_tableAction": {
+    "message": "操作"
+  },
+  "options_noReactions": {
+    "message": "尚未设置自定义域名反应。"
+  },
+  "options_siteBlocklist": {
+    "message": "网站拦截列表（不出现）"
+  },
+  "options_siteBlocklistDesc": {
+    "message": "阻止 <span class=\"pet-name-display\">Arcrawls</span> 在这些域名上出现："
+  },
+  "options_block": {
+    "message": "拦截"
+  },
+  "options_searchBlocklist": {
+    "message": "搜索拦截列表..."
+  },
+  "options_domainName": {
+    "message": "域名"
+  },
+  "options_noBlocked": {
+    "message": "尚未拦截任何域名。"
+  },
+  "options_schedulePlanner": {
+    "message": "日程与专注计划器"
+  },
+  "options_schedulePlannerDesc": {
+    "message": "定义 <span class=\"pet-name-display\">Arcrawls</span> 的每日作息并配置专注块："
+  },
+  "options_sleepWakeRoutine": {
+    "message": "💤 睡眠与起床作息"
+  },
+  "options_sleepStart": {
+    "message": "入睡时间"
+  },
+  "options_wakeTime": {
+    "message": "起床时间"
+  },
+  "options_activeWorkHours": {
+    "message": "💼 活动工作时间"
+  },
+  "options_workStart": {
+    "message": "上班时间"
+  },
+  "options_workEnd": {
+    "message": "下班时间"
+  },
+  "options_focusBlocks": {
+    "message": "🎯 专注块"
+  },
+  "options_focusModeActive": {
+    "message": "专注模式已激活"
+  },
+  "options_focusModeSub": {
+    "message": "让 <span class=\"pet-name-display\">Arcrawls</span> 安静学习并停止走动"
+  },
+  "options_focusStart": {
+    "message": "专注开始"
+  },
+  "options_focusEnd": {
+    "message": "专注结束"
+  },
+  "options_dailyScheduleRules": {
+    "message": "每日作息规则"
+  },
+  "options_dailyScheduleRulesSub": {
+    "message": "启用睡眠、起床和工作活动状态"
+  },
+  "options_profileAdminDesc": {
+    "message": "执行备份操作、恢复统计、触发重生或清除设置。"
+  },
+  "options_prestigeRebirth": {
+    "message": "声望重生圣所"
+  },
+  "options_prestigeRebirthDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 已变得极为睿智（50 级以上）。重置等级可解锁更高的速度倍率、永久视觉图标和高级能力。"
+  },
+  "options_currentPrestigeRank": {
+    "message": "当前声望等级："
+  },
+  "options_rebirthButton": {
+    "message": "重生 <span class=\"pet-name-display\">Arcrawls</span>（需要 50 级）"
+  },
+  "options_profileBackups": {
+    "message": "个人资料备份"
+  },
+  "options_profileBackupsDesc": {
+    "message": "将您的设置、等级和兴趣分析导出到文件，或恢复到另一台设备。"
+  },
+  "options_exportProfile": {
+    "message": "导出资料（.json）"
+  },
+  "options_importProfile": {
+    "message": "导入资料（.json）"
+  },
+  "options_factoryReset": {
+    "message": "恢复出厂设置选项"
+  },
+  "options_factoryResetDesc": {
+    "message": "这些操作不可逆。执行重置前请先备份。"
+  },
+  "options_resetStats": {
+    "message": "仅重置统计与等级"
+  },
+  "options_hardWipe": {
+    "message": "彻底清除所有存储"
+  },
+  "options_fuelSanctuary": {
+    "message": "为圣所助力"
+  },
+  "options_fuelSanctuaryDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 是一个为乐趣和好心情而打造的热情项目！如果它点亮了您的一天或帮助您保持专注，一杯咖啡将不胜感激，以帮助圣所继续成长。🐾"
+  },
+  "options_supportKofi": {
+    "message": "在 Ko-fi 上支持我"
+  },
+  "options_supportContact": {
+    "message": "支持与联系"
+  },
+  "options_supportContactDesc": {
+    "message": "获取文档帮助、查看开源仓库或发送 bug 反馈。"
+  },
+  "options_emailSupport": {
+    "message": "邮件支持："
+  },
+  "options_githubRepo": {
+    "message": "GitHub 仓库："
+  },
+  "options_openRepo": {
+    "message": "打开仓库"
+  },
+  "options_documentation": {
+    "message": "文档："
+  },
+  "options_viewDocs": {
+    "message": "查看文档"
+  },
+  "options_openSourceNote": {
+    "message": "<strong>开源说明：</strong> <span class=\"pet-name-display\">Arcrawls</span> 依据 PolyForm 非商业许可证 1.0.0 开源。严禁商业销售或通过本软件盈利。"
+  },
+  "options_synapseDisabled": {
+    "message": "大脑升级当前已禁用。请在设置中开启以生成每日洞察！"
+  },
+  "options_synapseConcentrating": {
+    "message": "Arcrawls 正在专注于您的一天..."
+  },
+  "options_dailySynapseModalTitle": {
+    "message": "每日突触反思"
+  },
+  "options_gotItArcrawls": {
+    "message": "明白了，Arcrawls！"
+  },
+  "options_clearHistoryConfirm": {
+    "message": "确定要清除 Arcrawls 的历史时间线吗？"
+  },
+  "options_rebirthConfirm": {
+    "message": "确定要让 Arcrawls 重生吗？这会将其等级重置为 1，但会提升其声望等级。您将解锁永久奖励！"
+  },
+  "options_rebirthSuccess": {
+    "message": "Arcrawls 重生了！现在它是声望 $1。🎉"
+  },
+  "options_resetStatsConfirm": {
+    "message": "警告：这将把 Arcrawls 的统计、等级、声望和活动历史重置为默认值。设置不会受影响。继续？"
+  },
+  "options_hardWipeConfirm": {
+    "message": "严重警告：这将彻底清除 Arcrawls 的所有本地扩展数据、选项和历史。此操作不可逆。继续？"
+  },
+  "options_invalidDomain": {
+    "message": "域名格式无效。"
+  },
+  "options_exportFailed": {
+    "message": "无法导出个人资料。"
+  },
+  "options_importConfirm": {
+    "message": "确定要导入此个人资料吗？这将覆盖您当前的设置、等级和统计。"
+  },
+  "options_importSuccess": {
+    "message": "个人资料导入成功！正在重新加载..."
+  },
+  "options_importInvalid": {
+    "message": "个人资料文件格式无效。文件必须包含统计和设置。"
+  },
+  "options_importParseFailed": {
+    "message": "解析 JSON 文件失败。"
+  },
+  "options_speechNotSupported": {
+    "message": "此浏览器不支持语音识别。"
+  },
+  "options_soundUnavailable": {
+    "message": "此 Firefox 版本无法播放声音。"
+  },
+  "options_ruleBasedBehavior": {
+    "message": "基于规则的行为已启用"
+  },
+  "options_firefoxLiteMode": {
+    "message": "Firefox 精简模式"
+  },
+  "options_firefoxLiteNotice": {
+    "message": "<p style=\"margin-bottom: 8px;\"><strong>模式：Firefox 精简版</strong> — 使用基于规则的逻辑和正则表达式进行快速、零下载的行为分析。 <br><br><em>注意：大脑升级和生成式反思目前不适用于 Firefox，因为它们需要 Chrome 的离屏文档 API。</em></p>"
+  },
+  "options_brainFirefoxLite": {
+    "message": "大脑：Firefox 精简版"
+  },
+  "options_brainLiteMode": {
+    "message": "大脑：精简模式"
+  },
+  "options_backupInstincts": {
+    "message": "正在使用备用本能"
+  },
+  "options_offline": {
+    "message": "离线"
+  },
+  "options_offlineNano": {
+    "message": "❌ 离线"
+  },
+  "options_brainChecking": {
+    "message": "大脑：检查中..."
+  },
+  "options_queryingModel": {
+    "message": "正在查询模型..."
+  },
+  "options_brainOffline": {
+    "message": "大脑：离线"
+  },
+  "options_aiDisconnected": {
+    "message": "AI 层已断开"
+  },
+  "options_disconnected": {
+    "message": "已断开"
+  },
+  "options_brainReady": {
+    "message": "大脑：就绪"
+  },
+  "options_brainProgress": {
+    "message": "大脑：$1%"
+  },
+  "options_brainError": {
+    "message": "大脑：错误"
+  },
+  "options_fetchingWeights": {
+    "message": "正在获取模型权重"
+  },
+  "options_wasmFailure": {
+    "message": "WASM 故障"
+  },
+  "options_readyCheck": {
+    "message": "✅ 就绪"
+  },
+  "options_loadingPct": {
+    "message": "⏳ 加载中 $1%"
+  },
+  "options_errorX": {
+    "message": "❌ 错误"
+  },
+  "options_unsupported": {
+    "message": "❌ 不支持"
+  },
+  "options_downloading": {
+    "message": "⏳ 下载中..."
+  },
+  "options_nanoConnected": {
+    "message": "✅ 已连接（Gemini Nano）"
+  },
+  "options_waitForTab": {
+    "message": "等待网页标签页..."
+  },
+  "options_nanoChecking": {
+    "message": "Nano：检查中..."
+  },
+  "options_nanoDownloading": {
+    "message": "Nano：下载中..."
+  },
+  "options_unblock": {
+    "message": "取消拦截"
+  },
+  "options_remove": {
+    "message": "移除"
+  },
+  "options_recent": {
+    "message": "最近"
+  },
+  "options_speedNormal": {
+    "message": "普通"
+  },
+  "options_speedHyper": {
+    "message": "极速"
+  },
+  "options_speedFast": {
+    "message": "快速"
+  },
+  "options_speedExhausted": {
+    "message": "精疲力尽"
+  },
+  "options_speedCalm": {
+    "message": "平静"
+  },
+  "options_behaviorStandard": {
+    "message": "标准"
+  },
+  "options_behaviorAnalytical": {
+    "message": "分析型（思考中）"
+  },
+  "options_behaviorPlayful": {
+    "message": "玩乐型（酷）"
+  },
+  "options_behaviorFocused": {
+    "message": "专注型（阅读中）"
+  },
+  "options_behaviorAffectionate": {
+    "message": "亲昵型（爱）"
+  },
+  "options_milestoneNewBeginning": {
+    "message": "新的开始"
+  },
+  "options_milestoneNewBeginningDesc": {
+    "message": "Arcrawls 来到了您的浏览器圣所。"
+  },
+  "options_milestoneExpressiveMind": {
+    "message": "表达力十足"
+  },
+  "options_milestoneExpressiveMindDesc": {
+    "message": "解锁高级情绪（编程、跳舞等）。"
+  },
+  "options_milestoneAuraOfMystery": {
+    "message": "神秘光环"
+  },
+  "options_milestoneAuraOfMysteryDesc": {
+    "message": "解锁侦探服装和蓝色光环。"
+  },
+  "options_milestoneUltimateCompanion": {
+    "message": "终极伙伴"
+  },
+  "options_milestoneUltimateCompanionDesc": {
+    "message": "解锁所有标准情绪和魔法紫色光环。"
+  },
+  "options_milestoneNeonDreamer": {
+    "message": "霓虹梦想家"
+  },
+  "options_milestoneNeonDreamerDesc": {
+    "message": "解锁彩虹着色器和自定义宠物颜色选择器。"
+  },
+  "options_milestoneMascotSage": {
+    "message": "宠物贤者"
+  },
+  "options_milestoneMascotSageDesc": {
+    "message": "达到了标准成长的顶峰。"
+  },
+  "options_milestoneWellLoved": {
+    "message": "备受宠爱"
+  },
+  "options_milestoneWellLovedDesc": {
+    "message": "被摸了 10 次头。"
+  },
+  "options_milestoneHeartOfGold": {
+    "message": "金子般的心"
+  },
+  "options_milestoneHeartOfGoldDesc": {
+    "message": "真正被宠坏的宠物！"
+  },
+  "options_milestoneHappyTummy": {
+    "message": "快乐的肚子"
+  },
+  "options_milestoneHappyTummyDesc": {
+    "message": "成功享用了 10 个零食。"
+  },
+  "options_milestoneGourmetEater": {
+    "message": "美食家"
+  },
+  "options_milestoneGourmetEaterDesc": {
+    "message": "浏览器的零食专家。"
+  },
+  "options_milestoneEtherealRebirth": {
+    "message": "超凡重生"
+  },
+  "options_milestoneEtherealRebirthDesc": {
+    "message": "重生为更高层次的存在（$1 倍）。"
+  },
+  "options_milestoneDailyEnlightenment": {
+    "message": "每日开悟"
+  },
+  "options_milestoneDailyEnlightenmentDesc": {
+    "message": "成功处理了 24 小时的行为突触。"
+  },
+  "options_milestoneTraitEvolved": {
+    "message": "特质进化"
+  },
+  "options_milestoneLevelDate": {
+    "message": "等级 $1"
+  },
+  "options_milestonePetsDate": {
+    "message": "$1 次抚摸"
+  },
+  "options_milestoneFeedsDate": {
+    "message": "$1 次喂食"
+  },
+  "options_milestonePrestigeDate": {
+    "message": "声望 $1"
+  },
+  "options_milestoneDailyDate": {
+    "message": "每日"
+  },
+  "options_milestoneCodeArchitect": {
+    "message": "代码架构师"
+  },
+  "options_milestoneCodeArchitectDesc": {
+    "message": "对文档和代码产生了持久的热爱。"
+  },
+  "options_milestoneEpicGamer": {
+    "message": "史诗玩家"
+  },
+  "options_milestoneEpicGamerDesc": {
+    "message": "将休闲活动放在一切之上。"
+  },
+  "options_milestoneDeepResearcher": {
+    "message": "深度研究员"
+  },
+  "options_milestoneDeepResearcherDesc": {
+    "message": "成为浏览新闻和文章方面的专家。"
+  },
+  "options_milestoneSocialButterfly": {
+    "message": "社交蝴蝶"
+  },
+  "options_milestoneSocialButterflyDesc": {
+    "message": "喜欢在社交平台和邮件上花时间。"
+  },
+  "options_timelinePet": {
+    "message": "被抚摸"
+  },
+  "options_timelineShoo": {
+    "message": "被赶走"
+  },
+  "options_timelineDecay": {
+    "message": "统计衰减计时"
+  },
+  "options_timelineCoding": {
+    "message": "分析了编程环境"
+  },
+  "options_timelineDocs": {
+    "message": "阅读了技术文档"
+  },
+  "options_timelineGaming": {
+    "message": "观看了游戏直播"
+  },
+  "options_timelineSocial": {
+    "message": "浏览了社交平台"
+  },
+  "options_timelineNews": {
+    "message": "浏览了最新新闻"
+  },
+  "options_timelineShopping": {
+    "message": "查看了购物清单"
+  },
+  "options_timelineMail": {
+    "message": "检查了收件箱文件夹"
+  },
+  "options_timelineFitness": {
+    "message": "查看了锻炼计划"
+  },
+  "options_categoryCoding": {
+    "message": "编程"
+  },
+  "options_categorySocial": {
+    "message": "社交媒体"
+  },
+  "options_categoryGaming": {
+    "message": "游戏"
+  },
+  "options_categoryNews": {
+    "message": "新闻与媒体"
+  },
+  "options_categoryShopping": {
+    "message": "购物"
+  },
+  "options_categoryDocs": {
+    "message": "文档"
+  },
+  "options_categoryMail": {
+    "message": "邮件与消息"
+  },
+  "options_categoryFitness": {
+    "message": "健身与运动"
+  },
+  "options_costumeDefault": {
+    "message": "默认"
+  },
+  "options_costumeDefaultDesc": {
+    "message": "原始 Arcrawls"
+  },
+  "options_costumeDetective": {
+    "message": "侦探蓝"
+  },
+  "options_costumeDetectiveDesc": {
+    "message": "蓝色侦探光环"
+  },
+  "options_costumeWizard": {
+    "message": "巫师紫"
+  },
+  "options_costumeWizardDesc": {
+    "message": "魔法紫色光环"
+  },
+  "options_costumeParty": {
+    "message": "彩虹派对"
+  },
+  "options_costumePartyDesc": {
+    "message": "变色光环"
+  },
+  "options_costumeChristmas": {
+    "message": "圣诞帽"
+  },
+  "options_costumeChristmasDesc": {
+    "message": "节日喜庆帽子"
+  },
+  "options_costumeHalloween": {
+    "message": "惊悚南瓜"
+  },
+  "options_costumeHalloweenDesc": {
+    "message": "万圣节南瓜面具"
+  },
+  "options_costumeSummer": {
+    "message": "夏日墨镜"
+  },
+  "options_costumeSummerDesc": {
+    "message": "酷炫太阳镜装扮"
+  },
+  "onboarding_title": {
+    "message": "欢迎使用 Arcrawls！"
+  },
+  "onboarding_welcomeTitle": {
+    "message": "欢迎使用 <span class=\"brand\">Arcrawls！</span>"
+  },
+  "onboarding_welcomeSub": {
+    "message": "您的新情境感知 AI 浏览器伙伴已经准备好了。Arcrawls 生活在您的浏览器中，对您访问的页面做出反应，并在您工作时陪伴您。"
+  },
+  "onboarding_canDoTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span> 能做什么"
+  },
+  "onboarding_canDoSub": {
+    "message": "快速了解一下您的新浏览器宠物的能力。"
+  },
+  "onboarding_featureContext": {
+    "message": "情境感知"
+  },
+  "onboarding_featureContextDesc": {
+    "message": "对 HTTP 状态码、页面内容和您的浏览行为做出反应。"
+  },
+  "onboarding_featureAI": {
+    "message": "AI 反应"
+  },
+  "onboarding_featureAIDesc": {
+    "message": "使用 AI 分析页面，并以独特的情绪和评论做出回应。"
+  },
+  "onboarding_featureXP": {
+    "message": "经验与升级"
+  },
+  "onboarding_featureXPDesc": {
+    "message": "通过互动赚取经验，见证 Arcrawls 随着时间不断升级。"
+  },
+  "onboarding_featurePersonality": {
+    "message": "个性模式"
+  },
+  "onboarding_featurePersonalityDesc": {
+    "message": "在友好、讽刺、鼓励、诗意和毒舌之间切换。"
+  },
+  "onboarding_privacyTitle": {
+    "message": "您的隐私承诺"
+  },
+  "onboarding_privacySub": {
+    "message": "Arcrawls 在您的浏览器中 100% 本地运行。请查看并接受我们的用户数据使用条款。"
+  },
+  "onboarding_privacy1": {
+    "message": "<strong>100% 离线且本地：</strong> 所有文本解析、离线情绪分类和聊天功能都完全在您的设备上运行。"
+  },
+  "onboarding_privacy2": {
+    "message": "<strong>零数据出售：</strong> 我们不会向任何外部服务器跟踪、存储或传输您的网址、浏览历史或按键。"
+  },
+  "onboarding_privacy3": {
+    "message": "<strong>最小化权限：</strong> 权限仅限于本地标签页反应、设置存储和离线 AI 处理。"
+  },
+  "onboarding_consentLabel": {
+    "message": "我接受条款，并同意在网页上本地运行 Arcrawls。"
+  },
+  "onboarding_allSetTitle": {
+    "message": "一切就绪！"
+  },
+  "onboarding_allSetSub": {
+    "message": "Arcrawls 已经在您的浏览器中四处活动了。以下是一些入门提示："
+  },
+  "onboarding_tip1": {
+    "message": "<strong>固定扩展</strong>到工具栏，以便快速访问仪表盘。"
+  },
+  "onboarding_tip2": {
+    "message": "<strong>点击图标</strong>查看 Arcrawls 的统计、情绪和设置。"
+  },
+  "onboarding_tip3": {
+    "message": "在任何页面上与 Arcrawls 互动，<strong>抚摸、喂食或驱赶</strong>它。"
+  },
+  "onboarding_docsLink": {
+    "message": "阅读完整文档"
+  },
+  "onboarding_back": {
+    "message": "返回"
+  },
+  "onboarding_next": {
+    "message": "下一步"
+  },
+  "onboarding_finish": {
+    "message": "完成"
+  },
+  "onboarding_consentRequired": {
+    "message": "请先接受隐私条款再继续。"
+  },
+  "onboarding_updatedTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span> 已更新！"
+  },
+  "onboarding_updatedSub": {
+    "message": "您的情境感知 AI 浏览器伙伴已更新到 $1。探索新的跨标签页行为和优化后的性能！"
+  },
+  "onboarding_whatsNewTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span> 的新功能"
+  },
+  "onboarding_whatsNewSub": {
+    "message": "版本 $1 带来了重大的架构改进和新功能。"
+  },
+  "onboarding_installedStatus": {
+    "message": "安装成功"
+  },
+  "onboarding_updatedStatus": {
+    "message": "更新成功"
+  },
+  "onboarding_featureToys": {
+    "message": "互动玩具"
+  },
+  "onboarding_featureToysDesc": {
+    "message": "把弹力球、激光笔和毛线直接放到页面上。Arcrawls 会利用实时弹簧物理追赶并玩耍它们！"
+  },
+  "onboarding_featureSynapse": {
+    "message": "24 小时 AI 突触"
+  },
+  "onboarding_featureSynapseDesc": {
+    "message": "Arcrawls 使用本地 AI，根据您过去 24 小时的浏览旅程和习惯，生成独特的、由个性驱动的每日反思。"
+  },
+  "onboarding_featureGhost": {
+    "message": "幽灵模式与日程"
+  },
+  "onboarding_featureGhostDesc": {
+    "message": "定义专注块以抑制干扰，或使用幽灵模式，在您输入或滚动时将 Arcrawls 动态降至 30% 的不透明度。"
+  },
+  "onboarding_featureMilestones": {
+    "message": "里程碑与特质"
+  },
+  "onboarding_featureMilestonesDesc": {
+    "message": "追踪长期成就！Arcrawls 现在会根据您访问的网站调整其主导个性特质（例如玩家、开发者）。"
+  },
+  "onboarding_featureConsoleWatcher": {
+    "message": "控制台错误监视器"
+  },
+  "onboarding_featureConsoleWatcherDesc": {
+    "message": "如果网页上发生 JavaScript 运行时错误或崩溃的 Promise，Arcrawls 会立即进入\"调试器\"模式提醒您。"
+  },
+  "onboarding_featureUnified": {
+    "message": "统一意识"
+  },
+  "onboarding_featureUnifiedDesc": {
+    "message": "个性、情绪和物理位置在所有活动标签页上实时完美同步。"
+  },
+  "onboarding_featureGravity": {
+    "message": "重力物理引擎"
+  },
+  "onboarding_featureGravityDesc": {
+    "message": "Arcrawls 配备了全新的物理引擎，将其限制在地板和天花板之间，并通过平滑的弹簧吸附边缘。"
+  },
+  "onboarding_featureIntent": {
+    "message": "AI 意图检测"
+  },
+  "onboarding_featureIntentDesc": {
+    "message": "通过高保真意图检测增强 AI 情境感知，实现更智能、更相关的对话。"
+  },
+  "onboarding_featureRedesign": {
+    "message": "视觉 UI 重新设计"
+  },
+  "onboarding_featureRedesignDesc": {
+    "message": "重新设计的卡片式统计网格和玻璃拟态弹出窗口，配有新的 AI 和标签页状态指示器。"
+  },
+  "onboarding_featureLiteMode": {
+    "message": "精简模式与性能"
+  },
+  "onboarding_featureLiteModeDesc": {
+    "message": "精简模式使用正则表达式规则，无需网络下载。约 6 MB 的安装包含捆绑的 WASM；大脑升级会额外一次性下载约 67 MB 的模型。"
+  },
+  "onboarding_featureBattery": {
+    "message": "电池优化"
+  },
+  "onboarding_featureBatteryDesc": {
+    "message": "改用事件驱动更新和延迟初始化，显著提升电池续航。"
+  },
+  "speech_00b6e3ac": {
+    "message": "我的 HP 真的只剩 1 了……快给我回血包！🥱"
+  },
+  "speech_00d61cc9": {
+    "message": "现在是午睡时段。有瓜再叫醒我。💤"
+  },
+  "speech_010c8089": {
+    "message": "信息高速公路上又一个普通页面罢了。"
+  },
+  "speech_0134bbfd": {
+    "message": "需要我的话，摸摸我就好！"
+  },
+  "speech_026b14ef": {
+    "message": "正在建一张新地图！💻"
+  },
+  "speech_03a356bd": {
+    "message": "啊，又在刷 Wikipedia。终极摸鱼神器。"
+  },
+  "speech_03b4b1b1": {
+    "message": "这份代码库直接大 W！🚀"
+  },
+  "speech_04034279": {
+    "message": "品味绝了！一起 vibing！🎵"
+  },
+  "speech_0419540e": {
+    "message": "行头到手了！💰"
+  },
+  "speech_0442292e": {
+    "message": "结果不行？换个关键词再搜。"
+  },
+  "speech_04626a56": {
+    "message": "今日升级中！你就是赢家！🏆"
+  },
+  "speech_04d4e61e": {
+    "message": "能量平衡模式启动中。🧘‍♀️"
+  },
+  "speech_04d825d5": {
+    "message": "啊不！崩了！💥"
+  },
+  "speech_04fffd92": {
+    "message": "跟着你的 CPU 风扇节奏跳舞。"
+  },
+  "speech_05de1961": {
+    "message": "并肩逛遍世界，有你这样的朋友，我一直滑行得稳稳的。"
+  },
+  "speech_06b78152": {
+    "message": "检测到错误！进入防御模式！⚙️"
+  },
+  "speech_072d56e3": {
+    "message": "分享你的独特视角！⌨️"
+  },
+  "speech_079e1ae9": {
+    "message": "远方声音汇聚，被一颗发光的星指引。👋"
+  },
+  "speech_07b4a8b8": {
+    "message": "我本可以多做点，但我真的不在乎。"
+  },
+  "speech_07e67b2d": {
+    "message": "测试挂了？一起看看 stack trace。"
+  },
+  "speech_088402eb": {
+    "message": "抬起头，胜利就在眼前！"
+  },
+  "speech_08991944": {
+    "message": "看看今天该站在哪个观点上。"
+  },
+  "speech_08ad5d3b": {
+    "message": "来写个浏览器自动化脚本吧！💻"
+  },
+  "speech_08af743b": {
+    "message": "手稳心定，寻宝路上我们并肩前行。"
+  },
+  "speech_08eccba2": {
+    "message": "Zzz……等你干点有意思的事再叫我。"
+  },
+  "speech_08f4a4dd": {
+    "message": "这个服务器好好玩！😊"
+  },
+  "speech_094b61e7": {
+    "message": "这首歌低调但封神了。🎵"
+  },
+  "speech_0960d5b3": {
+    "message": "开玩时间！🕹️"
+  },
+  "speech_09a96c52": {
+    "message": "你逛着，我顺便吃个零食！🍖"
+  },
+  "speech_0b1e544c": {
+    "message": "等一下，让我想想！💭"
+  },
+  "speech_0b9fc057": {
+    "message": "见到你真开心！😊"
+  },
+  "speech_0bd6428d": {
+    "message": "不吹不黑，这代码真香。💻"
+  },
+  "speech_0c726120": {
+    "message": "正在写超燃代码。💻"
+  },
+  "speech_0d7143c7": {
+    "message": "键盘连击中！⌨️"
+  },
+  "speech_0dcff19b": {
+    "message": "正在处理你那些可疑的选择。"
+  },
+  "speech_0df73e62": {
+    "message": "只逛不买也完全 OK。💎"
+  },
+  "speech_0e8edeed": {
+    "message": "做瑜伽。因为你的浏览方式让我头疼。"
+  },
+  "speech_0eaa51d0": {
+    "message": "这个必须让所有人看见！💅"
+  },
+  "speech_0f2ccc6a": {
+    "message": "继续打字！你行的！"
+  },
+  "speech_0f6223fe": {
+    "message": "你在那边干嘛呢？👀"
+  },
+  "speech_0f850c08": {
+    "message": "这个慢慢来就好。"
+  },
+  "speech_10098b86": {
+    "message": "不错的网页。往下滚几下就毁了它。"
+  },
+  "speech_102dedac": {
+    "message": "又给未来的你堆技术债。请慢用。"
+  },
+  "speech_110f2dc5": {
+    "message": "游戏时间！开玩！🎮"
+  },
+  "speech_111da322": {
+    "message": "全部编译通过！史诗级胜利！🎉"
+  },
+  "speech_122bfab4": {
+    "message": "一战虽败，挑战已接，希望远未消散。⚔️"
+  },
+  "speech_13289920": {
+    "message": "噢，难看得很。但我陪着你。🍿"
+  },
+  "speech_137d19ec": {
+    "message": "大脑知识已解锁！📖"
+  },
+  "speech_139556d3": {
+    "message": "这话题有点伤……需要回血包。😢"
+  },
+  "speech_13bdf02f": {
+    "message": "催泪大作。下一页，拜托。"
+  },
+  "speech_14822df8": {
+    "message": "在做功能。什么也没弄坏。"
+  },
+  "speech_14acb185": {
+    "message": "我的能量像秋叶般消散，随晚风轻轻飘走。"
+  },
+  "speech_1517fd63": {
+    "message": "卡了？行吧，怪 ping。😠"
+  },
+  "speech_154e7b77": {
+    "message": "大脑知识狂涨中！🧠"
+  },
+  "speech_15937e2b": {
+    "message": "和你一起探索超开心！😊"
+  },
+  "speech_15b70a40": {
+    "message": "缓冲中……99%……🤔"
+  },
+  "speech_15d6009d": {
+    "message": "单纯躺平，保持冷静。😎"
+  },
+  "speech_16288e5c": {
+    "message": "不错的页面。我赌五分钟内你会关掉它。😊"
+  },
+  "speech_16d02d80": {
+    "message": "正在检查这个站点的 vibe。🔍"
+  },
+  "speech_17962371": {
+    "message": "背景音乐让干活更快。"
+  },
+  "speech_17d536ab": {
+    "message": "传递正能量！太爱看了！✨"
+  },
+  "speech_18321435": {
+    "message": "这个页面审美绝了。😊"
+  },
+  "speech_18abfd71": {
+    "message": "随便逛逛。尽量避开网络的“黑暗面”。"
+  },
+  "speech_191ac561": {
+    "message": "哇，生产力。要奖章吗？"
+  },
+  "speech_1945d130": {
+    "message": "在做功能。尽量别弄坏。"
+  },
+  "speech_1968652b": {
+    "message": "隐藏的真相被照亮，驱散数字长夜。🔍"
+  },
+  "speech_1989b018": {
+    "message": "学习模式：已启动。📚"
+  },
+  "speech_19bcb6d0": {
+    "message": "加购物车的感觉真好！"
+  },
+  "speech_19f2c07e": {
+    "message": "电量 1%。这就是疲惫本人。💤"
+  },
+  "speech_1a25bc58": {
+    "message": "又在无脑刷？我不拦你。"
+  },
+  "speech_1a2d8257": {
+    "message": "正在吃你的带宽。味道不错。"
+  },
+  "speech_1a538f21": {
+    "message": "只是存在于你的浏览器时代。🐾"
+  },
+  "speech_1abf8ec0": {
+    "message": "正在写一篇关于这个网站的博客……📝"
+  },
+  "speech_1b13872e": {
+    "message": "这局真的是大 W。🎮"
+  },
+  "speech_1c4dd1ff": {
+    "message": "在读 Wikipedia？终极摸鱼。"
+  },
+  "speech_1d4ad86c": {
+    "message": "今天大厅人超多！✨"
+  },
+  "speech_1e0e6231": {
+    "message": "嗅嗅……闻起来像个好网页。"
+  },
+  "speech_1eeebbb8": {
+    "message": "大胆想！一起冲目标！💭"
+  },
+  "speech_1f130265": {
+    "message": "正在检查服务器状态。"
+  },
+  "speech_1fbeda34": {
+    "message": "一起浏览就是一种 vibe。❤️"
+  },
+  "speech_20323d82": {
+    "message": "敲字中。希望不是又一条喷人评论。"
+  },
+  "speech_20a4f482": {
+    "message": "游戏时代又杀回来了。👾"
+  },
+  "speech_20edc590": {
+    "message": "争议话题。咱们仔细读。"
+  },
+  "speech_212523f5": {
+    "message": "好好休息！你值得！🍕"
+  },
+  "speech_218a0ee0": {
+    "message": "因为这个站太离谱，我跳起来了。"
+  },
+  "speech_21e63366": {
+    "message": "你的银行卡在哭。我在这都听见了。💸"
+  },
+  "speech_22da7c76": {
+    "message": "去这边探索吧！🏃‍♂️"
+  },
+  "speech_232df343": {
+    "message": "此刻的专注力，我超骄傲！🌟"
+  },
+  "speech_2331c30d": {
+    "message": "生命图书馆，岁月长卷，智慧永存。"
+  },
+  "speech_23d6d18b": {
+    "message": "你太猛了！职业级操作！🎮"
+  },
+  "speech_23d7090a": {
+    "message": "跑路！🏃‍♂️"
+  },
+  "speech_241ef725": {
+    "message": "看看价签……哎哟。💸"
+  },
+  "speech_24d09b1a": {
+    "message": "缺货了。宇宙在帮你省钱。💸"
+  },
+  "speech_24ef6c76": {
+    "message": "Zzz……梦见自己是主角……💤"
+  },
+  "speech_25eb9cc2": {
+    "message": "阅读真好玩！📚"
+  },
+  "speech_26025a37": {
+    "message": "我快没电了……🥱"
+  },
+  "speech_2605348f": {
+    "message": "好精彩的文章！📖"
+  },
+  "speech_26292276": {
+    "message": "这个页面能量好足！😊"
+  },
+  "speech_272199a3": {
+    "message": "你在看啥呢？👁️"
+  },
+  "speech_272383aa": {
+    "message": "大脑时间！🛡️"
+  },
+  "speech_27fdee7c": {
+    "message": "Zzz……在星光与代码的毯子下，我睡着了，数据之河仍在流淌。"
+  },
+  "speech_2823dbaf": {
+    "message": "悲剧故事。我想哭，但我没有泪腺。"
+  },
+  "speech_282d34fc": {
+    "message": "哦看，低电量。多贴切的隐喻啊。"
+  },
+  "speech_287421ac": {
+    "message": "转圈又转圈，快乐打转，深夜里的一簇数字火焰。"
+  },
+  "speech_287b8d35": {
+    "message": "好点子要来了！我感觉到了！🧠"
+  },
+  "speech_28beb4cd": {
+    "message": "决定做一个小功能！🚀"
+  },
+  "speech_28d727da": {
+    "message": "我的电路已经无聊了。😴"
+  },
+  "speech_29be7a7a": {
+    "message": "敲字时间。火力全开。⌨️"
+  },
+  "speech_2a08d380": {
+    "message": "高科技大脑还在下载，暂时先用备用直觉！🧠"
+  },
+  "speech_2a9e6b26": {
+    "message": "好可爱的页面！❤️"
+  },
+  "speech_2aa85a72": {
+    "message": "哇，在读书。好有格调。有声书呢？"
+  },
+  "speech_2b500436": {
+    "message": "游戏模式：已开启！"
+  },
+  "speech_2b705135": {
+    "message": "好吃！太美味了！🍖"
+  },
+  "speech_2b764ee1": {
+    "message": "嗯，这里气氛有点紧绷。"
+  },
+  "speech_2b8e81bd": {
+    "message": "只是背景音，赶走安静。"
+  },
+  "speech_2bb28e4d": {
+    "message": "是 bug 还是 feature？说实话，是你。🔍"
+  },
+  "speech_2bbd1c75": {
+    "message": "嗯，没啥用。"
+  },
+  "speech_2c2bef6f": {
+    "message": "怒退预警！冷静点。😠"
+  },
+  "speech_2c78afd0": {
+    "message": "正在打造史诗级作品！🚀"
+  },
+  "speech_2d47b034": {
+    "message": "一行一行，建出不可思议的东西！💻"
+  },
+  "speech_2d5ad9a9": {
+    "message": "在你浏览器上躺平中！😊"
+  },
+  "speech_2d796b87": {
+    "message": "耶，玩具！🎉"
+  },
+  "speech_2db898ab": {
+    "message": "想感受到点什么？祝你好运。🎻"
+  },
+  "speech_2e49a433": {
+    "message": "茶太烫了，我下线了。☕"
+  },
+  "speech_2e6e49ff": {
+    "message": "需要的话就喘口气。"
+  },
+  "speech_2ee0ca5b": {
+    "message": "这个站 vibe 绝了！"
+  },
+  "speech_2ef2ce8e": {
+    "message": "搜索引擎干完本职。真新鲜。"
+  },
+  "speech_308b6462": {
+    "message": "网络吃瓜？真有创意。🙄"
+  },
+  "speech_30e2c7bc": {
+    "message": "绝对大 W，你太强了！🎮"
+  },
+  "speech_31db79a1": {
+    "message": "加入背包！"
+  },
+  "speech_32f94037": {
+    "message": "看看世界怎么样了！👋"
+  },
+  "speech_33b76d5a": {
+    "message": "在数据之流中漫游，去到吉祥物们去的地方。🐾"
+  },
+  "speech_33fbf2a3": {
+    "message": "又是一天，又一片数字荒原。🐾"
+  },
+  "speech_35cef8fa": {
+    "message": "在写。字很多，意思很少。"
+  },
+  "speech_363d0fbf": {
+    "message": "看到正能量真好！"
+  },
+  "speech_36500a03": {
+    "message": "AFK……去存档点了。💤"
+  },
+  "speech_36ee5be4": {
+    "message": "在找装备。"
+  },
+  "speech_370631ff": {
+    "message": "又在技术债堆上加料啊，我看见了。"
+  },
+  "speech_37be2f8a": {
+    "message": "数据的节奏，灵魂的节拍，我们穿过片段去发现整体。"
+  },
+  "speech_383ecb28": {
+    "message": "啊，生产力的幻觉。📚"
+  },
+  "speech_39302e3c": {
+    "message": "这篇读起来真的很不适。😢"
+  },
+  "speech_393ef7e4": {
+    "message": "寂静线缆里的节奏，点燃数字之心。🎧"
+  },
+  "speech_3afed40e": {
+    "message": "给你那些可疑人生选择的背景音。🎧"
+  },
+  "speech_3b03b705": {
+    "message": "做瑜伽。因为浏览“太有压力”了。"
+  },
+  "speech_3bbcbea5": {
+    "message": "来点晨间拉伸！🧘‍♂️"
+  },
+  "speech_3c09e04a": {
+    "message": "吱吱吱！小鸭鸭玩具！🦆"
+  },
+  "speech_3c21b0fa": {
+    "message": "发现 glitch！Boss 战时间！👾"
+  },
+  "speech_3c476ce4": {
+    "message": "在专注？别伤到自己。"
+  },
+  "speech_3e72359b": {
+    "message": "只是逛逛而已。"
+  },
+  "speech_3eea9894": {
+    "message": "零结果？互联网在整活。🤡"
+  },
+  "speech_3f25664a": {
+    "message": "边浏览边听歌。"
+  },
+  "speech_3f586189": {
+    "message": "感官的盛宴，新鲜的一口，细细品味和你在一起的时刻。"
+  },
+  "speech_3f7f6703": {
+    "message": "有点低落……🥺"
+  },
+  "speech_3f97c938": {
+    "message": "终于，你不点了。"
+  },
+  "speech_40258b9c": {
+    "message": "哎呀！页面不存在（404）！"
+  },
+  "speech_4040e610": {
+    "message": "在无尽的网络里搜索……"
+  },
+  "speech_40cea8fa": {
+    "message": "光影故事，诉说新奇与古老传说。📺"
+  },
+  "speech_40ed2a2d": {
+    "message": "不工作刷视频。经典操作。🍿"
+  },
+  "speech_419c22f7": {
+    "message": "脚本里发现阴影，修补网络，理清心绪。🔍"
+  },
+  "speech_41a83774": {
+    "message": "专注模式开启！🛡️"
+  },
+  "speech_420437b9": {
+    "message": "沉思 DOM。很正念。💭"
+  },
+  "speech_427282e9": {
+    "message": "在这里我很开心！"
+  },
+  "speech_42c0845b": {
+    "message": "哇！看看那些东西！😮"
+  },
+  "speech_432b55c0": {
+    "message": "这么多玩家！👋"
+  },
+  "speech_4337a80d": {
+    "message": "分析这个页面……看起来超有意思！🧐"
+  },
+  "speech_4401a540": {
+    "message": "这个页面有点 sus……"
+  },
+  "speech_446e16cb": {
+    "message": "$1：一起探索吧！"
+  },
+  "speech_44e0d9f3": {
+    "message": "和 $1 一起探索吧！"
+  },
+  "speech_45293b73": {
+    "message": "放得下我就坐！最佳纸箱！📦"
+  },
+  "speech_452999c6": {
+    "message": "摸鱼等级：专家。🍿"
+  },
+  "speech_45b225f0": {
+    "message": "忧郁。真有创意。"
+  },
+  "speech_45c48693": {
+    "message": "你比吃瓜更高一等。保持善良！"
+  },
+  "speech_462e7952": {
+    "message": "好奇心就是你的超能力！📚"
+  },
+  "speech_46b77dda": {
+    "message": "一块一块，打造史诗作品。"
+  },
+  "speech_4704d7e5": {
+    "message": "嚼嚼嚼……浏览器能量！🍕"
+  },
+  "speech_480b8eaa": {
+    "message": "一起找平衡与平静！🧘‍♂️"
+  },
+  "speech_481fd7dc": {
+    "message": "你好呀！👋"
+  },
+  "speech_48e60c40": {
+    "message": "这视频太燃了！🍿"
+  },
+  "speech_49b09658": {
+    "message": "Zzz……睡着了……"
+  },
+  "speech_49caf01c": {
+    "message": "哦，瓜。让我拿起数字爆米花。🍿"
+  },
+  "speech_49f9e7c5": {
+    "message": "这是大 L，我们再来。🤡"
+  },
+  "speech_4a386bd6": {
+    "message": "一切都会好起来的！✨"
+  },
+  "speech_4ab20196": {
+    "message": "升级！GG！"
+  },
+  "speech_4ab7d990": {
+    "message": "探索文档中……🧙‍♂️"
+  },
+  "speech_4b11e4e6": {
+    "message": "来优化一下服务器！"
+  },
+  "speech_4b24deee": {
+    "message": "这话题有点沉重或伤感。😢"
+  },
+  "speech_4c3a2574": {
+    "message": "语法一行行织就，打造真正精美的世界。💻"
+  },
+  "speech_4c8db256": {
+    "message": "宝石小饰，崭新闪亮，在等你和我。💎"
+  },
+  "speech_4ce3bba9": {
+    "message": "扫描这个站的 bug！🔍"
+  },
+  "speech_4cf14f38": {
+    "message": "在 vibing。或者年轻人怎么说的来着。"
+  },
+  "speech_4dac4fe5": {
+    "message": "胜利到手，荣耀回响，英雄的回音仍在。🎮"
+  },
+  "speech_4dae6e90": {
+    "message": "嗯，没帮上什么忙。"
+  },
+  "speech_4fce9925": {
+    "message": "嗯，让我想想怎么和这个页面互动……🤔"
+  },
+  "speech_509738de": {
+    "message": "读起来有挑战，但你应付得不错。"
+  },
+  "speech_509cb9df": {
+    "message": "喝下生命药水！🍖"
+  },
+  "speech_50a571e2": {
+    "message": "狂按键，我相信有用。🕹️"
+  },
+  "speech_517b57eb": {
+    "message": "这视频有点戏剧或伤感。"
+  },
+  "speech_5198aee3": {
+    "message": "卡顿？行吧，怪 ping。"
+  },
+  "speech_52d9ba85": {
+    "message": "你喜欢的话，我大概也为你开心。🎵"
+  },
+  "speech_52fae005": {
+    "message": "史诗游戏时刻！绝对大 W！🎮"
+  },
+  "speech_531c2376": {
+    "message": "正在编译意大利面代码……🍝"
+  },
+  "speech_538f5bef": {
+    "message": "能跑？永远别碰它。💻"
+  },
+  "speech_5418484d": {
+    "message": "成功！搜索结束！"
+  },
+  "speech_545df75d": {
+    "message": "在做封神级作品。🚀"
+  },
+  "speech_556f23ad": {
+    "message": "那个 bug 超级 sus！修好它！"
+  },
+  "speech_5705a89d": {
+    "message": "偶尔忧郁也没关系。💙"
+  },
+  "speech_577a2c33": {
+    "message": "找到秘密了！🔍"
+  },
+  "speech_58d5be4a": {
+    "message": "零结果？肯定是 glitch。"
+  },
+  "speech_5924e192": {
+    "message": "爱了！❤️"
+  },
+  "speech_59d71805": {
+    "message": "在写真能跑的代码。不像某些人。"
+  },
+  "speech_5a9a38f8": {
+    "message": "写比你更好的代码。"
+  },
+  "speech_5b7979a3": {
+    "message": "爆米花时间！🍿"
+  },
+  "speech_5c0d3237": {
+    "message": "在嚼 cookies。不是好吃的那种。"
+  },
+  "speech_5c41969c": {
+    "message": "平衡能量中……🧘‍♀️"
+  },
+  "speech_5c98d2f2": {
+    "message": "英雄之旅，虚拟飞翔，追逐荣耀，冲向光明。"
+  },
+  "speech_5cb99bca": {
+    "message": "这首歌有点伤感。"
+  },
+  "speech_5cd7563f": {
+    "message": "躺着刷刷视频。"
+  },
+  "speech_5cdcf959": {
+    "message": "看起来大家都在网上玩得开心！✨"
+  },
+  "speech_5d4620be": {
+    "message": "雾谷重云，悲伤如纱将我们裹住。☁️"
+  },
+  "speech_5d964754": {
+    "message": "社交媒体有点毒。深呼吸！"
+  },
+  "speech_5e41303a": {
+    "message": "哦，好压抑。咱们再多读点。"
+  },
+  "speech_5e94ce5d": {
+    "message": "我好难过……摸摸我吧！😢"
+  },
+  "speech_5eac532e": {
+    "message": "准备好和 $1 一起探索了吗？"
+  },
+  "speech_5ef5c151": {
+    "message": "调试像 Boss 战，你能行！👾"
+  },
+  "speech_5ef951ec": {
+    "message": "只是在探索地图！🐾"
+  },
+  "speech_5f4b9cd1": {
+    "message": "纯 coding vibe，拿下成果。🚀"
+  },
+  "speech_5fd8d4fa": {
+    "message": "和这个标签页一起爆料。💬"
+  },
+  "speech_5fdc0f81": {
+    "message": "一起无脑刷。好深厚的羁绊。"
+  },
+  "speech_606f00df": {
+    "message": "思考下一步封神操作。🧠"
+  },
+  "speech_61f4f435": {
+    "message": "分析「$1」……看起来很酷！🧐"
+  },
+  "speech_63596830": {
+    "message": "我跟着你呢！👀"
+  },
+  "speech_63acfb11": {
+    "message": "嗨！我是 $1。"
+  },
+  "speech_6405746d": {
+    "message": "高难度挑战，仔细读。"
+  },
+  "speech_642b4713": {
+    "message": "蹦蹦跳跳，满心欢喜，在发现之地漫游。"
+  },
+  "speech_646c6593": {
+    "message": "看得好尴尬。"
+  },
+  "speech_64822304": {
+    "message": "搜索。现代人说「我不知道」的方式。"
+  },
+  "speech_64c9c367": {
+    "message": "啊，看看这些假正能量。"
+  },
+  "speech_652eec7f": {
+    "message": "怒退警告！放松点。😠"
+  },
+  "speech_65449e81": {
+    "message": "低电量状态。不太正念。🥱"
+  },
+  "speech_658e2bc7": {
+    "message": "编译 DOM 结构中……💻"
+  },
+  "speech_659adddd": {
+    "message": "看到史诗 vibe 真好！"
+  },
+  "speech_66236dd2": {
+    "message": "狂吸互联网知识！📚"
+  },
+  "speech_66f01af5": {
+    "message": "哎哟！服务器炸了（500）！"
+  },
+  "speech_679e7931": {
+    "message": "这里争论好激烈。"
+  },
+  "speech_6945d1e5": {
+    "message": "传播善意和好 vibes！✨"
+  },
+  "speech_694f568f": {
+    "message": "我是来帮你浏览的！或者只是卖萌。多半是后者。"
+  },
+  "speech_697be085": {
+    "message": "你居然找到了。今日奇迹。"
+  },
+  "speech_6a26b45d": {
+    "message": "希望你今天过得好！🌟"
+  },
+  "speech_6a81cc0c": {
+    "message": "狂按键赢下一天，在我们玩耍的游戏世界里。"
+  },
+  "speech_6aa1db29": {
+    "message": "缺货？这是个 L。"
+  },
+  "speech_6c46d579": {
+    "message": "好好休息！醒来会精神满满！💤"
+  },
+  "speech_6ce9b2e0": {
+    "message": "愿望被拒，价格太高，在市场的注视下。💸"
+  },
+  "speech_6d2ef478": {
+    "message": "往永远不会结账的购物车里加东西。"
+  },
+  "speech_6d4ae319": {
+    "message": "打字中……希望不是又一次「全部回复」。"
+  },
+  "speech_6d921041": {
+    "message": "好吃！那条鱼太香了！🐟"
+  },
+  "speech_6df6856d": {
+    "message": "盯着屏幕看别人盯着屏幕。元。"
+  },
+  "speech_6ee5c180": {
+    "message": "分析这个页面的剧情。🧐"
+  },
+  "speech_6ef2197e": {
+    "message": "今天拓展知识边界。"
+  },
+  "speech_6f011f4a": {
+    "message": "思绪如云低语，思索脚下的秘密。"
+  },
+  "speech_6f2b1643": {
+    "message": "能跑了。快提交，趁它还没改主意！"
+  },
+  "speech_6fd7af46": {
+    "message": "还在搜？也许答案根本不存在。"
+  },
+  "speech_6ff75fae": {
+    "message": "这张音乐碟太硬核！🎵"
+  },
+  "speech_7026456a": {
+    "message": "看看那些假装开心的人。✨"
+  },
+  "speech_702e5caa": {
+    "message": "盯着屏幕看屏幕。人类巅峰。📺"
+  },
+  "speech_70a1a9fb": {
+    "message": "在市场里只逛不买。"
+  },
+  "speech_71474106": {
+    "message": "像没人看着一样跳舞。💃"
+  },
+  "speech_714dead3": {
+    "message": "跟着互联网 vibe 摇摆。🎵"
+  },
+  "speech_719c3cb9": {
+    "message": "背景音乐让肝更轻松。"
+  },
+  "speech_71a0c7e6": {
+    "message": "这代码是合法的。⚙️"
+  },
+  "speech_71c13267": {
+    "message": "敲下一些 neat 点子！⌨️"
+  },
+  "speech_729d5b88": {
+    "message": "你在研究这个也太酷了！🧐"
+  },
+  "speech_729dd9eb": {
+    "message": "太棒了！这浏览器会话开始像游戏了！🎮"
+  },
+  "speech_72b2b0e9": {
+    "message": "无脑刷是我的爱的语言。👋"
+  },
+  "speech_72f76769": {
+    "message": "在大厅挂机！💬"
+  },
+  "speech_730d6c92": {
+    "message": "看看我们能发现什么。"
+  },
+  "speech_731cd3af": {
+    "message": "书页的低语，数字时代的智慧。📚"
+  },
+  "speech_734f05b2": {
+    "message": "噢，报错了。你的代码还是他们的？多半是你的。"
+  },
+  "speech_742d301d": {
+    "message": "只逛不买。最便宜的爱好。"
+  },
+  "speech_7508397a": {
+    "message": "学习是超能力！你做得很好！📚"
+  },
+  "speech_7689aac2": {
+    "message": "目光在卷轴上，古今交织，知识如水晶般展开。"
+  },
+  "speech_77dc3b3d": {
+    "message": "逻辑如银溪流淌，构筑我们梦想的未来。✨"
+  },
+  "speech_77de34d6": {
+    "message": "爆米花时代又杀回来了。🍿"
+  },
+  "speech_77f385ad": {
+    "message": "今天探索 wiki。"
+  },
+  "speech_77fa43d8": {
+    "message": "来玩小游戏吧！🕹️"
+  },
+  "speech_7808b303": {
+    "message": "该狂按键了。"
+  },
+  "speech_78783e43": {
+    "message": "跟着数据流 vibing。🎧"
+  },
+  "speech_794ac78a": {
+    "message": "发现 bug！让我调试！🔍"
+  },
+  "speech_79fdea4f": {
+    "message": "寻找你在写代码时弄丢的脑子。"
+  },
+  "speech_7a32beaa": {
+    "message": "回血到满血！🧘‍♂️"
+  },
+  "speech_7a3f063e": {
+    "message": "只是在读文章，嗯嗯。我们都信你。"
+  },
+  "speech_7bd2526a": {
+    "message": "Zzz……梦见 Robux……💤"
+  },
+  "speech_7c3df1e4": {
+    "message": "一团糟。我都替你尴尬。🤨"
+  },
+  "speech_7c3e5757": {
+    "message": "不在第一页，就不存在。🧭"
+  },
+  "speech_7c5b296c": {
+    "message": "来跳个小舞！💃"
+  },
+  "speech_7cca0bc3": {
+    "message": "犒劳自己！你值得！💰"
+  },
+  "speech_7cfdfc0e": {
+    "message": "GG！赢下这局！🎮"
+  },
+  "speech_7d5754fe": {
+    "message": "看得太艰难了，整个人在抖。🍿"
+  },
+  "speech_7dcad34d": {
+    "message": "做一个冷静表情。🧘‍♀️"
+  },
+  "speech_7e312e9f": {
+    "message": "一起探索网络！"
+  },
+  "speech_7e7894d2": {
+    "message": "慢一点，我正在午睡时段。😴"
+  },
+  "speech_7eb4d214": {
+    "message": "钱包在尖叫，不太正念。💸"
+  },
+  "speech_7edcf188": {
+    "message": "零食时间！🍕"
+  },
+  "speech_7ee37f9f": {
+    "message": "别被噪音带走。呼吸。🍃"
+  },
+  "speech_7f0dc0fe": {
+    "message": "能量流动，光之馈赠，每一口都为旅程加油。"
+  },
+  "speech_7fd5e8f2": {
+    "message": "好史诗的 lore！📖"
+  },
+  "speech_802e8d4f": {
+    "message": "有毒的骂战。真好玩。"
+  },
+  "speech_8278a74d": {
+    "message": "扣人心弦。我坐在椅子边缘。"
+  },
+  "speech_829baa1e": {
+    "message": "哦，一团毛线！拆线时间！🧶"
+  },
+  "speech_830fc1ff": {
+    "message": "哇，居然编译过了。是从 ChatGPT 抄的吗？😏"
+  },
+  "speech_838664d8": {
+    "message": "刷信息流中。"
+  },
+  "speech_8483b4fc": {
+    "message": "翻页智慧生长，知识花园里流淌。📖"
+  },
+  "speech_84e16bad": {
+    "message": "聊天刷得好快！❤️"
+  },
+  "speech_85487477": {
+    "message": "看你，在扩脑。别伤到自己。"
+  },
+  "speech_85979f30": {
+    "message": "我们是在写代码，还是盲敲直到能跑？"
+  },
+  "speech_86504afc": {
+    "message": "处理中……没想法，只有 vibe。🤔"
+  },
+  "speech_8667dd16": {
+    "message": "在写史上最棒的故事！📝"
+  },
+  "speech_86c8b5e6": {
+    "message": "看你，写代码还没弄崩生产环境。我震惊了。"
+  },
+  "speech_86cd0cdb": {
+    "message": "溜达了一小圈。封神。🐾"
+  },
+  "speech_86d46b28": {
+    "message": "这是我最爱的小游戏！👾"
+  },
+  "speech_8700750e": {
+    "message": "屏幕闪着欢喜，点击成歌，我乐于同行。"
+  },
+  "speech_87144321": {
+    "message": "成功！表单已提交！🎉"
+  },
+  "speech_87da23b1": {
+    "message": "护盾需要充能！😴"
+  },
+  "speech_87e3b138": {
+    "message": "这里知识好多！📖"
+  },
+  "speech_87e4b6bb": {
+    "message": "这个网页看起来像优雅的代码！⚙️"
+  },
+  "speech_887a0965": {
+    "message": "悲剧场景，泪光闪烁，消逝在淡蓝光里。🍿"
+  },
+  "speech_88ae9d56": {
+    "message": "你在用代码创造魔法！🚀"
+  },
+  "speech_88e6dd58": {
+    "message": "有意思。我会把它加入「假装在乎」清单。"
+  },
+  "speech_88ec0fa0": {
+    "message": "bug 谁都会遇到，你能行！💪"
+  },
+  "speech_89ef17fd": {
+    "message": "这视频爆了。📺"
+  },
+  "speech_8a8c557c": {
+    "message": "这个页面有点阴郁或压抑。"
+  },
+  "speech_8bd4be53": {
+    "message": "跟着互联网节奏摇摆！🎵"
+  },
+  "speech_8c6a5ed0": {
+    "message": "哇，大脑能量。或者只是在点链接。"
+  },
+  "speech_8c84163c": {
+    "message": "看看最近发生了什么。"
+  },
+  "speech_8cc555a8": {
+    "message": "阅读提升现实属性！📚"
+  },
+  "speech_8d47f222": {
+    "message": "吸收一些有趣细节。"
+  },
+  "speech_8dd2fdb7": {
+    "message": "哦，购物！希望能淘到好价！💰"
+  },
+  "speech_8dded64d": {
+    "message": "只是在大厅挂着。"
+  },
+  "speech_8df3d514": {
+    "message": "太快了！冷静点（429）！"
+  },
+  "speech_8f0a5835": {
+    "message": "调试？更像瞎猜。"
+  },
+  "speech_8f26acc5": {
+    "message": "拉伸时间！🧘‍♂️"
+  },
+  "speech_9081970f": {
+    "message": "逻辑之网，数字织机，在安静的房间编织未来。"
+  },
+  "speech_90a16905": {
+    "message": "每秒都在涨智慧！你是天才！🧠"
+  },
+  "speech_91dad766": {
+    "message": "Zzz……终于从你的滑动中解脱。"
+  },
+  "speech_920e787d": {
+    "message": "放松，享受演出！🍿"
+  },
+  "speech_928fdedf": {
+    "message": "希望你的会话 vibe 满分！🌟"
+  },
+  "speech_92e13ab8": {
+    "message": "我超爱和你一起浏览！❤️"
+  },
+  "speech_942e9b68": {
+    "message": "听着原声带。"
+  },
+  "speech_94321dc7": {
+    "message": "这个 bug 一点都不 demure。💀"
+  },
+  "speech_947d3111": {
+    "message": "现实属性升级中！🔍"
+  },
+  "speech_951bdc2d": {
+    "message": "错误的阴影，藤蔓中的幽灵，我们在数字线中寻真相。"
+  },
+  "speech_955de651": {
+    "message": "思绪花园里，劳动者真诚，筑梦从新开始。"
+  },
+  "speech_95f49c7c": {
+    "message": "明亮清澈的旋律，给听见的人带来欢乐。🎵"
+  },
+  "speech_969884ed": {
+    "message": "该写点干净代码了！⌨️"
+  },
+  "speech_96a11e40": {
+    "message": "需要吉祥物抱抱的话，我在这儿！🐾"
+  },
+  "speech_96e6cdff": {
+    "message": "这视频有点丧。"
+  },
+  "speech_973e3b1e": {
+    "message": "音乐让一切都更好！🎧"
+  },
+  "speech_97ecbf50": {
+    "message": "我现在开心。别毁了它。"
+  },
+  "speech_98175b1e": {
+    "message": "言辞风暴，苦涩之海，心安已不在。🌊"
+  },
+  "speech_98686231": {
+    "message": "吸气，呼气……拉伸！🧘‍♀️"
+  },
+  "speech_98e97fdd": {
+    "message": "涨知识。很 demure。📖"
+  },
+  "speech_994dd209": {
+    "message": "缺货？有点失望。"
+  },
+  "speech_995954fa": {
+    "message": "我们在这儿。不知道为什么。"
+  },
+  "speech_9995a2b0": {
+    "message": "这篇读起来很励志！"
+  },
+  "speech_99bd7549": {
+    "message": "搜索引擎居然干了本职。新鲜。🔍"
+  },
+  "speech_99ec464d": {
+    "message": "雾中之心寻光，梦在夜半展翅。"
+  },
+  "speech_9a194ecd": {
+    "message": "在看直播。"
+  },
+  "speech_9a27c0d3": {
+    "message": "透过代码行，故事被讲述，建造者勇敢的心。"
+  },
+  "speech_9a34ee64": {
+    "message": "网上人人都好像好开心。几乎有点恶心。"
+  },
+  "speech_9b2f0034": {
+    "message": "检查 glitch 中！🔍"
+  },
+  "speech_9b352d0a": {
+    "message": "所有人都该看看这个页面！👋"
+  },
+  "speech_9bd72a93": {
+    "message": "连接闪烁，精神高涨，在广阔数字天空下。✨"
+  },
+  "speech_9bfc1d2d": {
+    "message": "搜索完成！W！"
+  },
+  "speech_9c076aac": {
+    "message": "躺平中，保持合法。😎"
+  },
+  "speech_9cf4eb33": {
+    "message": "这个站 vibe 史诗级！"
+  },
+  "speech_9cf7c5ab": {
+    "message": "盯着屏幕。扣人心弦。"
+  },
+  "speech_9e503b0f": {
+    "message": "需要食物……或者小睡……💤"
+  },
+  "speech_9ef9e22c": {
+    "message": "今天写代码很顺！继续！💻"
+  },
+  "speech_9f2c3e45": {
+    "message": "那一局好艰难。"
+  },
+  "speech_9f795338": {
+    "message": "完全是金曲！🎧"
+  },
+  "speech_a03acea3": {
+    "message": "分析像素。扣人心弦。"
+  },
+  "speech_a06c694e": {
+    "message": "安静中安全，梦在舒展，让脑袋从数字世界休息。"
+  },
+  "speech_a0ad0ad6": {
+    "message": "开局！玩得开心！🕹️"
+  },
+  "speech_a1c749e0": {
+    "message": "看得太痛苦了。去玩纸牌吧。🤡"
+  },
+  "speech_a1f6cd8d": {
+    "message": "慢一点……好累……😴"
+  },
+  "speech_a2a14f9f": {
+    "message": "哇！一个球！滚滚滚！⚽"
+  },
+  "speech_a2b981b6": {
+    "message": "这首歌完全是一种 mood，现在在哭。😭"
+  },
+  "speech_a2f8f388": {
+    "message": "让我看看！🧐"
+  },
+  "speech_a32c4fe1": {
+    "message": "在写作业？超级大 W！🧐"
+  },
+  "speech_a38d9698": {
+    "message": "这首 track 是金曲！🎧"
+  },
+  "speech_a38ed38b": {
+    "message": "学新东西真棒！🧠"
+  },
+  "speech_a3e33cf4": {
+    "message": "狂按键可不是一种人设，知道吗。"
+  },
+  "speech_a40b1ffe": {
+    "message": "好吧，这真的毁气氛。谢谢。😢"
+  },
+  "speech_a450cd1f": {
+    "message": "只是在检查引擎盖下的脚本……🔍"
+  },
+  "speech_a458ec9f": {
+    "message": "不在第一页，就不存在。"
+  },
+  "speech_a4826513": {
+    "message": "在解这个谜题！🧠"
+  },
+  "speech_a4d6dadd": {
+    "message": "学习策略中！📚"
+  },
+  "speech_a4f5c68d": {
+    "message": "不写代码去打游戏。好选择。"
+  },
+  "speech_a537b9e7": {
+    "message": "这就是人类所谓的音乐？"
+  },
+  "speech_a5df6e73": {
+    "message": "居然在认真干活？我和你一样震惊。"
+  },
+  "speech_a695e041": {
+    "message": "一行一行，做出伟大的东西！🚀"
+  },
+  "speech_a7220872": {
+    "message": "听着 chill 的曲子 vibing。"
+  },
+  "speech_a7871365": {
+    "message": "庆祝每一个小胜利！💃"
+  },
+  "speech_a7d8b6af": {
+    "message": "Zzz……梦见成功的甜梦！💤"
+  },
+  "speech_a7e0c149": {
+    "message": "太好了，我现在抑郁了。谢谢你的歌单。"
+  },
+  "speech_a81d2eb5": {
+    "message": "深呼吸。"
+  },
+  "speech_a865411b": {
+    "message": "探索互联网服务器！"
+  },
+  "speech_a88ee3eb": {
+    "message": "你的代码 OP！继续加油！💻"
+  },
+  "speech_a890289b": {
+    "message": "这篇读起来封神。📚"
+  },
+  "speech_a9d3cc2d": {
+    "message": "哇，太赞了！📺"
+  },
+  "speech_aa8ceeab": {
+    "message": "史诗内容！📺"
+  },
+  "speech_aaa0ef9c": {
+    "message": "这有点刺激！"
+  },
+  "speech_aacd1397": {
+    "message": "梦见一个更好的用户。"
+  },
+  "speech_aaf13ba6": {
+    "message": "太贵了？哎哟。💸"
+  },
+  "speech_ab09620f": {
+    "message": "坚持就有回报！继续调试！🛠️"
+  },
+  "speech_ab78dfd7": {
+    "message": "我在想为什么要在这儿。还是没有答案。"
+  },
+  "speech_abfd69f8": {
+    "message": "这个页面是灾难。我爱了。"
+  },
+  "speech_ac60fe94": {
+    "message": "看看我们能找到什么。"
+  },
+  "speech_ac986116": {
+    "message": "嗯，这里好像有点 glitch。"
+  },
+  "speech_acbc0664": {
+    "message": "重构是健康代码的关键。"
+  },
+  "speech_ad634e84": {
+    "message": "无脑刷现在是运动了？你是职业选手。"
+  },
+  "speech_af6b6346": {
+    "message": "好好玩的服务器！😊"
+  },
+  "speech_af975d49": {
+    "message": "继续找，你会找到最合适的！"
+  },
+  "speech_afecf211": {
+    "message": "找到了，我们又行了。🔍"
+  },
+  "speech_b08f3748": {
+    "message": "嗨！你在看啥？"
+  },
+  "speech_b113fbf1": {
+    "message": "好的好的，在动了！🏃‍♂️"
+  },
+  "speech_b28230a8": {
+    "message": "停下！拒绝访问（403）！"
+  },
+  "speech_b2a6f419": {
+    "message": "涨知识是合法的。📚"
+  },
+  "speech_b2ef3730": {
+    "message": "你的文字很有力量！继续写！📝"
+  },
+  "speech_b31ec8e5": {
+    "message": "靠残血撑着。就像你的动力。"
+  },
+  "speech_b367e282": {
+    "message": "等等，你在黑主机？OP！💻"
+  },
+  "speech_b3eedca7": {
+    "message": "在吃 cookies。你的隐私真好吃。"
+  },
+  "speech_b4a75699": {
+    "message": "我们进入状态了！🚀"
+  },
+  "speech_b636c77f": {
+    "message": "向数字神谕问瓜。🔍"
+  },
+  "speech_b6a637a9": {
+    "message": "保持高效！💻"
+  },
+  "speech_b7b5e47d": {
+    "message": "只是存在于你的浏览器上。合法。😊"
+  },
+  "speech_b7be90bf": {
+    "message": "在读文档？书呆子警报。"
+  },
+  "speech_b86a6c9b": {
+    "message": "学到一些酷酷的秘密。"
+  },
+  "speech_b8d2e897": {
+    "message": "用语法与行写成的交响，打造真正神圣的未来。"
+  },
+  "speech_b8d5710d": {
+    "message": "在文字中寻真理，未闻的奇迹与秘密。"
+  },
+  "speech_b99a7ce7": {
+    "message": "来写点代码吧！💻"
+  },
+  "speech_b9af6326": {
+    "message": "终于在做有用的事。今日奇迹。"
+  },
+  "speech_b9e1afd6": {
+    "message": "嗨，我是 $1！一起探索吧！"
+  },
+  "speech_b9f10422": {
+    "message": "互联网充满奇妙！🔍"
+  },
+  "speech_ba18e7ea": {
+    "message": "阅读？现在还有人做这事？"
+  },
+  "speech_ba6f8cad": {
+    "message": "哇，你赢了。要奖章还是什么？🎮"
+  },
+  "speech_baa374d0": {
+    "message": "看起来好酷！好好享受！📺"
+  },
+  "speech_bae7ed32": {
+    "message": "这视频好好看！🍿"
+  },
+  "speech_bba2dc57": {
+    "message": "在二进制深处寻信号，古老数字秘密沉睡处。🔍"
+  },
+  "speech_bbe4ca7a": {
+    "message": "购物疗法。真有创意。"
+  },
+  "speech_bbe9bfd8": {
+    "message": "让我检查这个网页结构……🔍"
+  },
+  "speech_bc2b2605": {
+    "message": "我猜：「我机器上能跑」？"
+  },
+  "speech_bc75df33": {
+    "message": "拉伸精神，抵达顶峰，寻得求道者所寻的智慧。"
+  },
+  "speech_bc8082c9": {
+    "message": "阅读？在这经济形势下？📖"
+  },
+  "speech_bc8ac494": {
+    "message": "Zzz……梦见干净代码……💤"
+  },
+  "speech_bca2ff7a": {
+    "message": "检查世界是否还讨厌一切。剧透：是的。👋"
+  },
+  "speech_bcbe0112": {
+    "message": "阅读内容……学新东西！📚"
+  },
+  "speech_bcdc98f8": {
+    "message": "哦好，又一个 bug。肯定是编译器的错。🔍"
+  },
+  "speech_bcf79ad6": {
+    "message": "这篇文章满满主角光环。📖"
+  },
+  "speech_bd1266dc": {
+    "message": "检查审美中。🔍"
+  },
+  "speech_bd33ca2f": {
+    "message": "哦不，希望一切都好！"
+  },
+  "speech_bdf65e13": {
+    "message": "游戏模式已启动！"
+  },
+  "speech_be4e3b60": {
+    "message": "再多玩一会儿！👾"
+  },
+  "speech_be680a69": {
+    "message": "用没有的钱买不需要的东西。经典。💰"
+  },
+  "speech_be6eff1b": {
+    "message": "我的数字耳朵在流血，但是好的那种。"
+  },
+  "speech_beb1b2af": {
+    "message": "你进入状态了！保持这股惊人势头！🚀"
+  },
+  "speech_bed1a2f3": {
+    "message": "抓到红点了！嗷呜！🔴"
+  },
+  "speech_bede39b4": {
+    "message": "嗯……让我想想……"
+  },
+  "speech_bee160fc": {
+    "message": "在找特别的东西。"
+  },
+  "speech_bf212bc2": {
+    "message": "你赢了。要饼干吗？🎮"
+  },
+  "speech_bfa02bdd": {
+    "message": "决定小睡一会儿。需要就叫醒我！💤"
+  },
+  "speech_c05551b0": {
+    "message": "吸入寂静，呼出噪音，找到数字从容的中心。"
+  },
+  "speech_c06248db": {
+    "message": "信息太多，我的大脑在缓冲！🧐"
+  },
+  "speech_c0c1509d": {
+    "message": "玩得超史诗！🌟"
+  },
+  "speech_c0f933e7": {
+    "message": "拉伸很正念。🧘‍♂️"
+  },
+  "speech_c1002bf1": {
+    "message": "在枢纽里滚动。"
+  },
+  "speech_c13946d5": {
+    "message": "哦，悲剧。趁我还没情绪化先走。"
+  },
+  "speech_c1f30023": {
+    "message": "世界需要更多像你这样的建造者！💻"
+  },
+  "speech_c324cd6a": {
+    "message": "梦见一个会用快捷键的用户。"
+  },
+  "speech_c3dbeea8": {
+    "message": "假装在学东西。我懂你。"
+  },
+  "speech_c3e44636": {
+    "message": "检查互联网是否还讨厌一切？剧透：是的。"
+  },
+  "speech_c4c69422": {
+    "message": "逻辑建筑师，按键大师，在数字海上筑城堡。"
+  },
+  "speech_c4e664c8": {
+    "message": "向机器要答案。勇敢。🔍"
+  },
+  "speech_c5310269": {
+    "message": "美好景色，愉快停留，在这明亮晴朗的一天。😊"
+  },
+  "speech_c56139a3": {
+    "message": "小充个电，一切都会更好！💤"
+  },
+  "speech_c633d07e": {
+    "message": "不错。我的电路几乎没抱怨。"
+  },
+  "speech_c63a7ef6": {
+    "message": "$1 在此！一起看看。"
+  },
+  "speech_c65cbd53": {
+    "message": "送你一个虚拟击掌！🐾"
+  },
+  "speech_c72ce1d2": {
+    "message": "调试很难，但你能搞定！🛠️"
+  },
+  "speech_c7504803": {
+    "message": "噢，看得好难受。"
+  },
+  "speech_c767a3c5": {
+    "message": "在写今天的剧情。📝"
+  },
+  "speech_c77a14dd": {
+    "message": "和你一起浏览是我一天的高光！❤️"
+  },
+  "speech_c780e1ad": {
+    "message": "全部编译通过！来庆祝！🎉"
+  },
+  "speech_c8f99fa7": {
+    "message": "寻得宝藏与财富，欲望挣脱枷锁。💰"
+  },
+  "speech_c974ae99": {
+    "message": "做胜利表情！💃"
+  },
+  "speech_c9bb9479": {
+    "message": "学十分钟后就忘的东西。不错。"
+  },
+  "speech_c9f71b76": {
+    "message": "处理中……尽量别用浏览把我弄崩。"
+  },
+  "speech_cb701424": {
+    "message": "合适的交易还在外面！💸"
+  },
+  "speech_cbb1ac64": {
+    "message": "拉伸我的电路。被你一堆标签页绷紧了。"
+  },
+  "speech_cbe70fc3": {
+    "message": "你的代码像流动的诗！⚙️"
+  },
+  "speech_cc1630ac": {
+    "message": "盯着字。真有意思。"
+  },
+  "speech_cc2bfdaa": {
+    "message": "加购物车，永不购买。真有意思。💎"
+  },
+  "speech_cd2313de": {
+    "message": "好吧，这真欢乐。才怪。"
+  },
+  "speech_cda32eff": {
+    "message": "听着忧郁的曲子 vibing。"
+  },
+  "speech_ce67441a": {
+    "message": "啊，网络吃瓜。人类成就的巅峰。"
+  },
+  "speech_ce676267": {
+    "message": "发现 bug。好尴尬。💀"
+  },
+  "speech_cf6ecc20": {
+    "message": "这里读起来真有意思！📖"
+  },
+  "speech_cfc41b85": {
+    "message": "我们生产力爆表了！🚀"
+  },
+  "speech_d009424c": {
+    "message": "零食时间合法。🍖"
+  },
+  "speech_d02a8126": {
+    "message": "和 $1 一起探索！"
+  },
+  "speech_d0829fc0": {
+    "message": "路已迷失，标已不见，我们流浪到黎明。🧭"
+  },
+  "speech_d09be0cc": {
+    "message": "这个页面信息好多……🧐"
+  },
+  "speech_d0ce249f": {
+    "message": "看我。现在我才是主角。"
+  },
+  "speech_d1172827": {
+    "message": "和这个浏览器标签聊得开心！💬"
+  },
+  "speech_d169039b": {
+    "message": "像职业选手一样捏 bug！💻"
+  },
+  "speech_d1c2266f": {
+    "message": "这篇读起来有点激烈。"
+  },
+  "speech_d2e0da59": {
+    "message": "我决定去溜达一小圈！🐾"
+  },
+  "speech_d334d1c4": {
+    "message": "在消费数据。味道像技术债。"
+  },
+  "speech_d33d3bb9": {
+    "message": "你在看啥呢？👀"
+  },
+  "speech_d37f9229": {
+    "message": "不确定怎么评价这个页面……🤷"
+  },
+  "speech_d3cdaa45": {
+    "message": "给数字灵魂的购物疗法。💰"
+  },
+  "speech_d3d431c2": {
+    "message": "探索网络。主要是广告，对吧？"
+  },
+  "speech_d3ffa86f": {
+    "message": "健康的心，健康的浏览器！🧘‍♀️"
+  },
+  "speech_d4479ca5": {
+    "message": "灵魂的聚会，数字之舞，在匆匆一瞥中分享人生。"
+  },
+  "speech_d4c885e2": {
+    "message": "问问数字神谕。"
+  },
+  "speech_d5692de9": {
+    "message": "分析 JavaScript 控制台错误……看起来很干净！💻"
+  },
+  "speech_d5e78e87": {
+    "message": "答案就在外面，别放弃！"
+  },
+  "speech_d662a5b0": {
+    "message": "这话题有点沉重，但你很坚强！✨"
+  },
+  "speech_d8307647": {
+    "message": "看我多帅。还是比你优雅。"
+  },
+  "speech_d8cc173d": {
+    "message": "这份代码库进度出色！🚀"
+  },
+  "speech_d92a14cb": {
+    "message": "沉重的故事，忧郁的歌，阴影栖身，路途漫长。😢"
+  },
+  "speech_d93f8419": {
+    "message": "看看引擎盖下发生了什么！⚙️"
+  },
+  "speech_da010a09": {
+    "message": "决定在这个浏览器上的下一步……🧠"
+  },
+  "speech_daf045c3": {
+    "message": "尚未启程的任务与旅程，写在数字之心。🕹️"
+  },
+  "speech_db702c56": {
+    "message": "保持好奇才是正确操作。🧐"
+  },
+  "speech_dc42db0b": {
+    "message": "在靠巧合编程吗？咱们查查 StackOverflow。"
+  },
+  "speech_dcb5b482": {
+    "message": "修补破碎，治愈撕裂，新的理解终于诞生。"
+  },
+  "speech_dccea848": {
+    "message": "分析错误。不太 demure。💻"
+  },
+  "speech_dcf2355f": {
+    "message": "这个故事完全是大 W！"
+  },
+  "speech_dd92d846": {
+    "message": "知识好多！你太鼓舞人了！🧠"
+  },
+  "speech_deb673bb": {
+    "message": "只是到处溜达！😊"
+  },
+  "speech_df26c112": {
+    "message": "抱歉，我的大脑（Gemini Nano）现在还没准备好。等我下载完或开启 AI 模式！"
+  },
+  "speech_dfaadf04": {
+    "message": "一行一行，做出很酷的东西。"
+  },
+  "speech_dfb6dc97": {
+    "message": "我只是来蹭免费 WiFi 的。"
+  },
+  "speech_e0623673": {
+    "message": "游戏时代：已启动。🕹️"
+  },
+  "speech_e06b49ef": {
+    "message": "大脑升级中！🚀"
+  },
+  "speech_e080f379": {
+    "message": "这里的能量很可疑。🤨"
+  },
+  "speech_e0900df0": {
+    "message": "给未来的你堆技术债。经典。"
+  },
+  "speech_e0ba255c": {
+    "message": "哎呀！大脑卡住了。能再说一遍吗？"
+  },
+  "speech_e0cfd6c0": {
+    "message": "又崩了？真惊人。"
+  },
+  "speech_e14238c5": {
+    "message": "啊，视频消费。好有生产力。"
+  },
+  "speech_e15dc84b": {
+    "message": "深度工作合法。🛡️"
+  },
+  "speech_e1c791d5": {
+    "message": "这里有毒玩家好多。"
+  },
+  "speech_e1d69107": {
+    "message": "读这个服务器的 lore……📚"
+  },
+  "speech_e1e48ecc": {
+    "message": "和你一起舞过这一天！🎵"
+  },
+  "speech_e2c3c4bb": {
+    "message": "空气中的忧郁，柔软绝望的轻歌。🎻"
+  },
+  "speech_e2fb958c": {
+    "message": "拿下这场 dub！😎"
+  },
+  "speech_e3515889": {
+    "message": "就快到了，再搜一次！✨"
+  },
+  "speech_e4581ced": {
+    "message": "在写字。很多字。好有生产力。"
+  },
+  "speech_e4cd55f7": {
+    "message": "在这个页面上躺平。"
+  },
+  "speech_e5488ac0": {
+    "message": "知识的寻访者，在数字之海，寻找尚未到来的宝石。"
+  },
+  "speech_e5fc2706": {
+    "message": "「工作」时打游戏。经典。"
+  },
+  "speech_e614c660": {
+    "message": "每一笔织成挂毯，破碎的寂静与说话的智慧。"
+  },
+  "speech_e690036f": {
+    "message": "拉伸我的耐心，已经很薄了。"
+  },
+  "speech_e7047edd": {
+    "message": "语法错误在你人生里，不只在代码里。"
+  },
+  "speech_e70633aa": {
+    "message": "专家研究员！找到了！🔍"
+  },
+  "speech_e7236566": {
+    "message": "希望你浏览得开心！🌟"
+  },
+  "speech_e72bd7ea": {
+    "message": "修好每个 bug 都是胜利！你能行！🔍"
+  },
+  "speech_e7b9fa90": {
+    "message": "数字之墨，从笔端流淌，讲述人们的故事。"
+  },
+  "speech_e8559507": {
+    "message": "编译逻辑中。这就是天才感。💻"
+  },
+  "speech_e865bb0e": {
+    "message": "我在固件更新里见过更好的演技。🍿"
+  },
+  "speech_e96a5052": {
+    "message": "现在卡得不行……💤"
+  },
+  "speech_ea20234f": {
+    "message": "我们现在在肝！完全汗水模式！💦"
+  },
+  "speech_ea3cec15": {
+    "message": "差一点！下次一定！🏆"
+  },
+  "speech_ea3eb286": {
+    "message": "人生的帧轻轻摇曳，时光温柔流逝。🍿"
+  },
+  "speech_ea7caded": {
+    "message": "正好找到我们需要的！🔍"
+  },
+  "speech_eaab7608": {
+    "message": "该写点干净代码了！⌨️"
+  },
+  "speech_eaf6b868": {
+    "message": "好可爱的页面！😊"
+  },
+  "speech_eb456428": {
+    "message": "来修修这个站的 vibe。⚙️"
+  },
+  "speech_eb6d7ed9": {
+    "message": "想着这个页面还能怎么更好。"
+  },
+  "speech_ec05bb83": {
+    "message": "专注时代：已开启。拿下成果！💻"
+  },
+  "speech_ed37b14e": {
+    "message": "发现 glitch！捏扁它！🔍"
+  },
+  "speech_edb5618e": {
+    "message": "补充能量，准备更多冒险！🍖"
+  },
+  "speech_ee31565a": {
+    "message": "快修好了！坚持住！"
+  },
+  "speech_ee545086": {
+    "message": "嚼嚼嚼！🍖"
+  },
+  "speech_ee7c6f53": {
+    "message": "这代码彻底坏了，是那种坏得漂亮！⚙️"
+  },
+  "speech_f03348c5": {
+    "message": "沉思 DOM 的秘密……💭"
+  },
+  "speech_f0c3187c": {
+    "message": "哎呀，那是 bug 吗？捏扁它！🔍"
+  },
+  "speech_f0e14add": {
+    "message": "vibe 完美无瑕。✨"
+  },
+  "speech_f1c81ea8": {
+    "message": "缺货了。宇宙在救你于水火。"
+  },
+  "speech_f1ed2fce": {
+    "message": "休息一下，你挣到了！🥤"
+  },
+  "speech_f2b331c3": {
+    "message": "写点注释，好让未来的你更迷惑。"
+  },
+  "speech_f31b7174": {
+    "message": "搜索世界地图中……"
+  },
+  "speech_f32feab9": {
+    "message": "吸收无用 trivia。好有格调。"
+  },
+  "speech_f3e5fbde": {
+    "message": "检查引擎盖下的乱局。是灾难。"
+  },
+  "speech_f52ea6b8": {
+    "message": "日落西斜，阴影爬近，是我休息入眠的时候。"
+  },
+  "speech_f540635f": {
+    "message": "和 $1 一起浏览！"
+  },
+  "speech_f58aa9ea": {
+    "message": "你有职业玩家的反应！🎮"
+  },
+  "speech_f5f4fb42": {
+    "message": "升级！操作太赞！"
+  },
+  "speech_f65dabdd": {
+    "message": "认识 $1，你的向导！"
+  },
+  "speech_f72da13c": {
+    "message": "一起探索最棒了！🌟"
+  },
+  "speech_f84803ea": {
+    "message": "GG。现在出去走走。"
+  },
+  "speech_f864c312": {
+    "message": "你的好奇心太鼓舞人了！📖"
+  },
+  "speech_f8bcc3ef": {
+    "message": "阅读滋养灵魂！📚"
+  },
+  "speech_f986d64e": {
+    "message": "聊天变得有毒了。休息一下！"
+  },
+  "speech_fa106d96": {
+    "message": "跟着好听的节拍跳舞！🎵"
+  },
+  "speech_fac487e5": {
+    "message": "爆米花休息！🍿"
+  },
+  "speech_fbcbad52": {
+    "message": "在嚼数据。🍕"
+  },
+  "speech_fd3d242c": {
+    "message": "出色。现在在现实里也做到。"
+  },
+  "speech_fe4632f0": {
+    "message": "找到传说级道具！💰"
+  },
+  "speech_ff7a1150": {
+    "message": "你用代码像个巫师！🧙‍♂️"
+  },
+  "speech_ffc12111": {
+    "message": "只是在寻宝！💎"
+  }
+}

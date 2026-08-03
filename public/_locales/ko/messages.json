@@ -1,0 +1,3545 @@
+{
+  "extName": {
+    "message": "Arcrawls: 컨텍스트 인식 브라우저 펫"
+  },
+  "extDescription": {
+    "message": "스프링 물리, 140개 이상의 애니메이션, 선택적 100% 로컬 AI를 갖춘 컨텍스트 인식 브라우저 펫. 브라우징 데이터는 클라우드로 전송되지 않습니다."
+  },
+  "actionTitle": {
+    "message": "Arcrawls — 펫 대시보드 열기"
+  },
+  "shared_lvl": {
+    "message": "LVL"
+  },
+  "shared_lvlValue": {
+    "message": "LVL $1"
+  },
+  "shared_loading": {
+    "message": "로딩 중..."
+  },
+  "shared_donate": {
+    "message": "후원하기"
+  },
+  "shared_waiting": {
+    "message": "잠시만요..."
+  },
+  "shared_waitSeconds": {
+    "message": "$1초 기다려 주세요..."
+  },
+  "shared_none": {
+    "message": "없음"
+  },
+  "shared_active": {
+    "message": "활성"
+  },
+  "shared_disabled": {
+    "message": "비활성"
+  },
+  "shared_seasonal": {
+    "message": "시즌 한정"
+  },
+  "shared_seasonalDisabled": {
+    "message": "시즌 한정 (비활성)"
+  },
+  "shared_locked": {
+    "message": "잠김"
+  },
+  "shared_wearing": {
+    "message": "착용 중"
+  },
+  "shared_wear": {
+    "message": "착용"
+  },
+  "shared_perfMode": {
+    "message": "성능 모드"
+  },
+  "shared_perfModeSub": {
+    "message": "CPU 및 메모리 사용량 줄이기"
+  },
+  "shared_perfModeHint": {
+    "message": "30fps로 제한하고 오라를 비활성화하며 CPU 절약을 위해 탭 동기화를 중지합니다"
+  },
+  "shared_ghostMode": {
+    "message": "고스트 모드"
+  },
+  "shared_ghostModeSub": {
+    "message": "활성 중일 때 페이드 아웃 (포커스)"
+  },
+  "shared_ghostModeHint": {
+    "message": "입력하거나 스크롤할 때 Arcrawls를 페이드 아웃하여 주의 산만을 줄입니다"
+  },
+  "stat_happiness": {
+    "message": "행복"
+  },
+  "stat_energy": {
+    "message": "에너지"
+  },
+  "stat_curiosity": {
+    "message": "호기심"
+  },
+  "stat_focus": {
+    "message": "집중"
+  },
+  "stat_leisure": {
+    "message": "여가"
+  },
+  "stat_happinessHint": {
+    "message": "쓰다듬기와 재미있는 사이트로 상승. 시간당 4% 감소."
+  },
+  "stat_energyHint": {
+    "message": "먹이 주기와 수면으로 회복. 시간당 6.8% 감소."
+  },
+  "stat_curiosityHint": {
+    "message": "새 도메인 방문으로 획득. 시간당 1.8% 감소."
+  },
+  "stat_focusHint": {
+    "message": "업무와 코딩으로 상승. 시간당 5.4% 감소."
+  },
+  "stat_leisureHint": {
+    "message": "게임이나 스트리밍 시 증가. 시간당 5.4% 감소."
+  },
+  "stat_happinessDesc": {
+    "message": "시간이 지나면 감소. 쓰다듬기, 먹이 주기, 긍정적인 웹사이트 방문으로 상승."
+  },
+  "stat_energyDesc": {
+    "message": "이동 중 감소. 먹이 주기와 밤잠으로 회복."
+  },
+  "stat_curiosityDesc": {
+    "message": "새 도메인 방문과 기사 읽기로 획득."
+  },
+  "stat_focusDesc": {
+    "message": "업무/코딩과 부정적인 코딩 감정(디버깅 세션)으로 상승."
+  },
+  "stat_leisureDesc": {
+    "message": "스트리밍, 게임 또는 소셜 미디어 도메인 방문 시 증가."
+  },
+  "mood_happy": {
+    "message": "행복"
+  },
+  "mood_sad": {
+    "message": "슬픔"
+  },
+  "mood_angry": {
+    "message": "분노"
+  },
+  "mood_crying": {
+    "message": "울음"
+  },
+  "mood_waving": {
+    "message": "손 흔들기"
+  },
+  "mood_sleeping": {
+    "message": "수면"
+  },
+  "mood_thinking": {
+    "message": "생각"
+  },
+  "mood_shrug": {
+    "message": "어깨 으쓱"
+  },
+  "mood_reading": {
+    "message": "독서"
+  },
+  "mood_yoga": {
+    "message": "요가"
+  },
+  "mood_eating": {
+    "message": "식사"
+  },
+  "mood_coding": {
+    "message": "코딩"
+  },
+  "mood_typing": {
+    "message": "타이핑"
+  },
+  "mood_dancing": {
+    "message": "춤추기"
+  },
+  "mood_cool": {
+    "message": "쿨"
+  },
+  "mood_love": {
+    "message": "사랑"
+  },
+  "mood_celebrating": {
+    "message": "축하"
+  },
+  "mood_mindblown": {
+    "message": "충격"
+  },
+  "mood_ninja": {
+    "message": "닌자"
+  },
+  "mood_wizard": {
+    "message": "마법사"
+  },
+  "mood_astronaut": {
+    "message": "우주비행사"
+  },
+  "mood_debugger": {
+    "message": "디버거"
+  },
+  "mood_building": {
+    "message": "건설"
+  },
+  "mood_rocket": {
+    "message": "로켓"
+  },
+  "mood_pirate": {
+    "message": "해적"
+  },
+  "mood_juggling": {
+    "message": "저글링"
+  },
+  "mood_gaming": {
+    "message": "게임"
+  },
+  "mood_lowBattery": {
+    "message": "배터리 부족"
+  },
+  "mood_christmas": {
+    "message": "크리스마스"
+  },
+  "mood_winter": {
+    "message": "겨울"
+  },
+  "mood_halloween": {
+    "message": "할로윈"
+  },
+  "mood_summer": {
+    "message": "여름"
+  },
+  "mood_iceCream": {
+    "message": "아이스크림"
+  },
+  "mood_surfing": {
+    "message": "서핑"
+  },
+  "mood_skateboard": {
+    "message": "스케이트보드"
+  },
+  "mood_telescope": {
+    "message": "망원경"
+  },
+  "mood_meditating": {
+    "message": "명상"
+  },
+  "mood_rubberDuck": {
+    "message": "러버덕"
+  },
+  "mood_coffee": {
+    "message": "커피"
+  },
+  "mood_mail": {
+    "message": "메일"
+  },
+  "mood_notification": {
+    "message": "알림"
+  },
+  "mood_flexing": {
+    "message": "근육 자랑"
+  },
+  "mood_lifting": {
+    "message": "역기 들기"
+  },
+  "mood_singing": {
+    "message": "노래"
+  },
+  "mood_music": {
+    "message": "음악"
+  },
+  "mood_dj": {
+    "message": "DJ"
+  },
+  "mood_money": {
+    "message": "돈"
+  },
+  "mood_merging": {
+    "message": "병합/깃"
+  },
+  "mood_deploying": {
+    "message": "배포"
+  },
+  "mood_firefighting": {
+    "message": "진화"
+  },
+  "mood_sweeping": {
+    "message": "청소"
+  },
+  "mood_dizzy": {
+    "message": "어지러움"
+  },
+  "mood_evil": {
+    "message": "악당"
+  },
+  "mood_king": {
+    "message": "왕"
+  },
+  "mood_magic": {
+    "message": "마법"
+  },
+  "mood_fishing": {
+    "message": "낚시"
+  },
+  "mood_bowling": {
+    "message": "볼링"
+  },
+  "mood_detective": {
+    "message": "탐정"
+  },
+  "mood_painting": {
+    "message": "그림 그리기"
+  },
+  "mood_photography": {
+    "message": "사진"
+  },
+  "trait_normal": {
+    "message": "일반"
+  },
+  "trait_developer": {
+    "message": "개발자"
+  },
+  "trait_gamer": {
+    "message": "게이머"
+  },
+  "trait_scholar": {
+    "message": "학자"
+  },
+  "trait_socialite": {
+    "message": "사교형"
+  },
+  "toy_ball": {
+    "message": "공"
+  },
+  "toy_fish": {
+    "message": "물고기"
+  },
+  "toy_laser": {
+    "message": "레이저"
+  },
+  "toy_yarn": {
+    "message": "실뭉치"
+  },
+  "toy_duck": {
+    "message": "오리"
+  },
+  "toy_box": {
+    "message": "상자"
+  },
+  "action_pet": {
+    "message": "쓰다듬기"
+  },
+  "action_feed": {
+    "message": "먹이 주기"
+  },
+  "action_shoo": {
+    "message": "쫓아내기"
+  },
+  "reaction_happy": {
+    "message": "행복 😊"
+  },
+  "reaction_sad": {
+    "message": "슬픔 😢"
+  },
+  "reaction_sleeping": {
+    "message": "수면 💤"
+  },
+  "reaction_thinking": {
+    "message": "생각 🤔"
+  },
+  "reaction_reading": {
+    "message": "독서 📖"
+  },
+  "reaction_eating": {
+    "message": "식사 🍕"
+  },
+  "reaction_coding": {
+    "message": "코딩 💻"
+  },
+  "reaction_typing": {
+    "message": "타이핑 ⌨️"
+  },
+  "reaction_dancing": {
+    "message": "춤추기 💃"
+  },
+  "reaction_cool": {
+    "message": "쿨 😎"
+  },
+  "reaction_love": {
+    "message": "사랑 ❤️"
+  },
+  "reaction_celebrating": {
+    "message": "축하 🎉"
+  },
+  "reaction_mindblown": {
+    "message": "충격 🤯"
+  },
+  "reaction_ninja": {
+    "message": "닌자 🥷"
+  },
+  "reaction_wizard": {
+    "message": "마법사 🧙"
+  },
+  "reaction_astronaut": {
+    "message": "우주비행사 🧑‍🚀"
+  },
+  "reaction_debugger": {
+    "message": "디버거 🔍"
+  },
+  "reaction_merging": {
+    "message": "병합/깃 🔀"
+  },
+  "reaction_deploying": {
+    "message": "배포 🚀"
+  },
+  "reaction_firefighting": {
+    "message": "진화 🚒"
+  },
+  "reaction_rubberDuck": {
+    "message": "러버덕 🦆"
+  },
+  "reaction_building": {
+    "message": "건설 🏗️"
+  },
+  "reaction_sweeping": {
+    "message": "청소 🧹"
+  },
+  "reaction_dizzy": {
+    "message": "어지러움 💫"
+  },
+  "reaction_evil": {
+    "message": "악당 😈"
+  },
+  "reaction_king": {
+    "message": "왕 👑"
+  },
+  "reaction_music": {
+    "message": "음악 감상 🎧"
+  },
+  "reaction_dj": {
+    "message": "DJ 🎛️"
+  },
+  "reaction_magic": {
+    "message": "마법 🪄"
+  },
+  "reaction_fishing": {
+    "message": "낚시 🎣"
+  },
+  "reaction_bowling": {
+    "message": "볼링 🎳"
+  },
+  "reaction_detective": {
+    "message": "탐정 🕵️"
+  },
+  "reaction_painting": {
+    "message": "그림 그리기 🎨"
+  },
+  "reaction_photography": {
+    "message": "사진 📷"
+  },
+  "reaction_juggling": {
+    "message": "저글링 🤹"
+  },
+  "popup_title": {
+    "message": "브라우저 펫 컨트롤러"
+  },
+  "popup_experience": {
+    "message": "경험치"
+  },
+  "popup_xpInitial": {
+    "message": "0 / 100 XP"
+  },
+  "popup_xpProgress": {
+    "message": "$1 / $2 XP"
+  },
+  "popup_mascotStats": {
+    "message": "마스코트 스탯"
+  },
+  "popup_interactiveToys": {
+    "message": "인터랙티브 장난감"
+  },
+  "popup_toyHelp": {
+    "message": "웹페이지에 장난감을 끌어다 놓고 놀아 보세요!"
+  },
+  "popup_visibility": {
+    "message": "표시"
+  },
+  "popup_hideOnTab": {
+    "message": "이 탭에서 숨기기"
+  },
+  "popup_hideOnTabSub": {
+    "message": "이 탭에서 Arcrawls를 일시적으로 숨기기"
+  },
+  "popup_hideOnSite": {
+    "message": "이 사이트에서 숨기기"
+  },
+  "popup_hideOnSiteSub": {
+    "message": "이 도메인에서 Arcrawls 비활성화"
+  },
+  "popup_disableOnSite": {
+    "message": "$1에서 Arcrawls 비활성화"
+  },
+  "popup_openDashboard": {
+    "message": "대시보드 열기"
+  },
+  "popup_tabsActiveOne": {
+    "message": "활성 탭 1개"
+  },
+  "popup_tabsActiveMany": {
+    "message": "활성 탭 $1개"
+  },
+  "popup_prestigeRankTitle": {
+    "message": "프레스티지 랭크"
+  },
+  "popup_aiEmotionTitle": {
+    "message": "감정 분류기 (DistilBERT)"
+  },
+  "popup_aiNanoTitle": {
+    "message": "생성형 리플렉션 (Gemini Nano)"
+  },
+  "popup_presenceTitle": {
+    "message": "로컬 컨텍스트 관찰 활성 (100% 기기 내 처리)"
+  },
+  "popup_liteMode": {
+    "message": "라이트 모드"
+  },
+  "popup_firefoxLite": {
+    "message": "Firefox 라이트"
+  },
+  "popup_ruleBasedTitle": {
+    "message": "규칙 기반 평가 활성"
+  },
+  "popup_brainLite": {
+    "message": "브레인: 라이트"
+  },
+  "popup_bertChecking": {
+    "message": "BERT: 확인 중"
+  },
+  "popup_bertReady": {
+    "message": "BERT: 준비됨"
+  },
+  "popup_bertProgress": {
+    "message": "BERT: $1%"
+  },
+  "popup_bertError": {
+    "message": "BERT: 오류"
+  },
+  "popup_bertOffline": {
+    "message": "BERT: 오프라인"
+  },
+  "popup_nanoChecking": {
+    "message": "Nano: 확인 중"
+  },
+  "popup_nanoReady": {
+    "message": "Nano: 준비됨"
+  },
+  "popup_nanoDownloading": {
+    "message": "Nano: 다운로드 중"
+  },
+  "popup_nanoUnsupported": {
+    "message": "Nano: 지원 안 됨"
+  },
+  "popup_nanoOffline": {
+    "message": "Nano: 오프라인"
+  },
+  "popup_nanoWaiting": {
+    "message": "Nano: 대기 중"
+  },
+  "popup_petPreviewAlt": {
+    "message": "펫 미리보기"
+  },
+  "options_sanctuaryDashboard": {
+    "message": "생추어리 대시보드"
+  },
+  "options_sanctuaryPlayground": {
+    "message": "생추어리 플레이그라운드"
+  },
+  "options_chatWith": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>와 대화하기"
+  },
+  "options_analyticsStats": {
+    "message": "분석 및 통계"
+  },
+  "options_historyTimeline": {
+    "message": "히스토리 타임라인"
+  },
+  "options_mascotStyle": {
+    "message": "마스코트 및 스타일"
+  },
+  "options_aiScheduling": {
+    "message": "AI 및 일정"
+  },
+  "options_profileAdmin": {
+    "message": "프로필 관리"
+  },
+  "options_copyright": {
+    "message": "© 2026 <span class=\"pet-name-display\">Arcrawls</span> 컴패니언"
+  },
+  "options_versionFormat": {
+    "message": "버전 $1 ($2)"
+  },
+  "options_mascotSanctuary": {
+    "message": "마스코트 생추어리"
+  },
+  "options_sanctuaryDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>의 실시간 상태를 관찰하고, 그와 상호작용하며, 습관을 안내하세요."
+  },
+  "options_petAction": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 쓰다듬기"
+  },
+  "options_petActionPlain": {
+    "message": "Arcrawls 쓰다듬기"
+  },
+  "options_feedSnack": {
+    "message": "간식 주기"
+  },
+  "options_shooAway": {
+    "message": "쫓아내기"
+  },
+  "options_experiencePoints": {
+    "message": "경험치"
+  },
+  "options_xpInitial": {
+    "message": "0 / 150 XP"
+  },
+  "options_learningHabits": {
+    "message": "학습 습관 및 적응"
+  },
+  "options_dominantTrait": {
+    "message": "주요 특성:"
+  },
+  "options_crawlingSpeed": {
+    "message": "이동 속도:"
+  },
+  "options_defaultAnimation": {
+    "message": "기본 애니메이션:"
+  },
+  "options_distilbertActive": {
+    "message": "DistilBERT 모델 활성"
+  },
+  "options_geminiNanoActive": {
+    "message": "Gemini Nano 활성"
+  },
+  "options_crossTabSync": {
+    "message": "탭 간 동기화"
+  },
+  "options_aiSynapse": {
+    "message": "24시간 AI 시냅스"
+  },
+  "options_syncing": {
+    "message": "동기화 중"
+  },
+  "options_ready": {
+    "message": "준비됨"
+  },
+  "options_gatheringMemories": {
+    "message": "기억을 모으는 중..."
+  },
+  "options_synapsePreviewPlaceholder": {
+    "message": "우리가 함께한 하루를 분석했습니다..."
+  },
+  "options_readDailyReflection": {
+    "message": "일일 리플렉션 읽기"
+  },
+  "options_observingHabits": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 일일 리플렉션을 제공하기 위해 당신의 습관을 관찰하고 있습니다."
+  },
+  "options_dailyRoutine": {
+    "message": "일일 루틴 및 일정"
+  },
+  "options_scheduleSleep": {
+    "message": "수면"
+  },
+  "options_scheduleSleepDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>는 늦은 밤에 휴식합니다. 이 시간 동안 에너지가 완전히 회복됩니다."
+  },
+  "options_morningYoga": {
+    "message": "아침 요가"
+  },
+  "options_morningYogaDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>는 아침에 요가를 하여 기본 행복을 높입니다."
+  },
+  "options_randomPlay": {
+    "message": "랜덤 놀이"
+  },
+  "options_randomPlayDesc": {
+    "message": "커서를 가만히 두면 <span class=\"pet-name-display\">Arcrawls</span>가 돌아다니거나, 스케이트보드를 타거나, 놀거나, 책을 읽습니다."
+  },
+  "options_debugger": {
+    "message": "디버거"
+  },
+  "options_debuggerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 웹페이지에서 JavaScript 오류를 감지하고 검사합니다."
+  },
+  "options_seasonalEvents": {
+    "message": "시즌 캘린더 이벤트"
+  },
+  "options_summerSeason": {
+    "message": "여름"
+  },
+  "options_summerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>는 선글라스를 쓰고 아이스크림을 즐기며 화면을 서핑합니다."
+  },
+  "options_halloweenSeason": {
+    "message": "할로윈"
+  },
+  "options_halloweenDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 커스텀 할로윈 의상과 호박 장식으로 무서운 분위기를 즐깁니다."
+  },
+  "options_christmasSeason": {
+    "message": "크리스마스"
+  },
+  "options_christmasDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 산타 모자와 축제 테마 반응으로 성탄절을 축하합니다."
+  },
+  "options_starterFact": {
+    "message": "웹 브라우저에 대한 재미있는 사실을 알려줘"
+  },
+  "options_starterContext": {
+    "message": "컨텍스트 인식이 어떻게 작동하는지 설명해줘"
+  },
+  "options_starterCustomize": {
+    "message": "내 펫을 어떻게 커스터마이즈할 수 있나요?"
+  },
+  "options_voiceChat": {
+    "message": "음성 채팅"
+  },
+  "options_chatPlaceholder": {
+    "message": "Arcrawls에게 메시지 보내기..."
+  },
+  "options_whatCanIHelp": {
+    "message": "무엇을 도와드릴까요?"
+  },
+  "options_listening": {
+    "message": "듣는 중..."
+  },
+  "options_typeMessage": {
+    "message": "메시지 입력..."
+  },
+  "options_playVoice": {
+    "message": "음성 재생"
+  },
+  "options_copyResponse": {
+    "message": "응답 복사"
+  },
+  "options_redo": {
+    "message": "다시 실행"
+  },
+  "options_analyticsDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>의 가상 통계, 브라우징 카테고리 분석, 진행률 미터를 분석하세요."
+  },
+  "options_lifetimeMetrics": {
+    "message": "누적 지표"
+  },
+  "options_petsReceived": {
+    "message": "쓰다듬음 수"
+  },
+  "options_feedsCompleted": {
+    "message": "먹이 준 횟수"
+  },
+  "options_browsingInterests": {
+    "message": "브라우징 관심 분포"
+  },
+  "options_browsingInterestsSub": {
+    "message": "탭 탐색 기록 기반 실시간 분류:"
+  },
+  "options_interestsHistory": {
+    "message": "관심 기록 (최근 7일)"
+  },
+  "options_interestsHistorySub": {
+    "message": "최근 7일간의 카테고리 분류."
+  },
+  "options_moodOverTime": {
+    "message": "시간별 기분"
+  },
+  "options_moodOverTimeSub": {
+    "message": "일일 평균 행복과 에너지."
+  },
+  "options_noHistory": {
+    "message": "최근 7일간의 기록 데이터가 없습니다."
+  },
+  "options_noMoodData": {
+    "message": "차트를 만들 만큼의 일일 데이터가 부족합니다. 내일 다시 확인하세요!"
+  },
+  "options_historyLogs": {
+    "message": "히스토리 로그"
+  },
+  "options_historyLogsDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>의 최근 기분 변화, 페이지 평가, 행동에 대한 시간순 타임라인."
+  },
+  "options_timelineFeed": {
+    "message": "간식 먹는 중"
+  },
+  "options_clearLogs": {
+    "message": "로그 지우기"
+  },
+  "options_recentMilestones": {
+    "message": "최근 마일스톤"
+  },
+  "options_recentMilestonesDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 달성한 주요 성장 지표와 업적."
+  },
+  "options_noMilestones": {
+    "message": "아직 달성한 마일스톤이 없습니다. 계속 상호작용하여 업적을 잠금 해제하세요!"
+  },
+  "options_noTimeline": {
+    "message": "아직 타임라인 항목이 없습니다. Arcrawls와 함께 시간을 보내 보세요!"
+  },
+  "options_noCategories": {
+    "message": "아직 평가된 카테고리가 없습니다. 브라우징하면서 Arcrawls가 학습합니다!"
+  },
+  "options_mascotStyleDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>의 외형, 크기, 활성 애니메이션, 효과음, 의상을 커스터마이즈하세요."
+  },
+  "options_mascotPrefs": {
+    "message": "마스코트 설정"
+  },
+  "options_mascotName": {
+    "message": "마스코트 이름"
+  },
+  "options_mascotSize": {
+    "message": "마스코트 크기 (<span id=\"size-val\">128px</span>)"
+  },
+  "options_walkingSpeed": {
+    "message": "걷는 속도 (<span id=\"speed-val\">1.0x</span>)"
+  },
+  "options_rocketSpeed": {
+    "message": "로켓 속도 (<span id=\"flight-speed-val\">1.0x</span>)"
+  },
+  "options_customColor": {
+    "message": "커스텀 마스코트 색상 (LVL 15에서 잠금 해제)"
+  },
+  "options_resetToDefault": {
+    "message": "기본값으로 초기화"
+  },
+  "options_dialoguePersona": {
+    "message": "대화 페르소나"
+  },
+  "options_personaDefault": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> (기본)"
+  },
+  "options_personaSarcastic": {
+    "message": "냉소적이고 비꼬는"
+  },
+  "options_personaEncouraging": {
+    "message": "공감형 코치"
+  },
+  "options_personaPoetic": {
+    "message": "환상적인 시인"
+  },
+  "options_personaSnarky": {
+    "message": "테크 브로 비꼼"
+  },
+  "options_personaGenZ": {
+    "message": "Z세대 슬랭"
+  },
+  "options_personaKid": {
+    "message": "키즈 / 게이미파이드 (하이 에너지)"
+  },
+  "options_chatVoice": {
+    "message": "채팅 음성 (텍스트 음성 변환)"
+  },
+  "options_defaultBrowserChoice": {
+    "message": "기본 (브라우저 선택)"
+  },
+  "options_chatVoiceHint": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 당신에게 말할 때 사용할 음성을 선택하세요."
+  },
+  "options_soundEffects": {
+    "message": "효과음"
+  },
+  "options_soundEffectsSub": {
+    "message": "이벤트 시 오디오 피드백 허용"
+  },
+  "options_seasonalOutfits": {
+    "message": "시즌 의상"
+  },
+  "options_seasonalOutfitsSub": {
+    "message": "크리스마스/할로윈 의상 잠금 해제"
+  },
+  "options_sfxVolume": {
+    "message": "효과음 볼륨 (<span id=\"volume-val\">80%</span>)"
+  },
+  "options_wardrobe": {
+    "message": "의상 및 오라 워드로브"
+  },
+  "options_soundBoard": {
+    "message": "사운드 보드 미리보기"
+  },
+  "options_soundBoardDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>의 커스텀 레트로 효과음을 테스트하고 미리 들어보세요:"
+  },
+  "options_soundGreeting": {
+    "message": "인사"
+  },
+  "options_soundPetting": {
+    "message": "쓰다듬기"
+  },
+  "options_soundFeeding": {
+    "message": "먹이 주기"
+  },
+  "options_soundLevelUp": {
+    "message": "레벨 업"
+  },
+  "options_soundChat": {
+    "message": "채팅 메시지"
+  },
+  "options_soundThinking": {
+    "message": "생각"
+  },
+  "options_soundSleeping": {
+    "message": "수면"
+  },
+  "options_soundCrying": {
+    "message": "울음"
+  },
+  "options_soundShoo": {
+    "message": "쫓기기"
+  },
+  "options_didYouKnow": {
+    "message": "알고 계셨나요? 🐾"
+  },
+  "options_didYouKnowDesc": {
+    "message": "데스크톱 컴패니언에 대한 재미있는 사실:"
+  },
+  "options_fact1": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>의 기분은 당신이 방문하는 웹사이트에 따라 달라집니다! 테크 블로그는 집중하게 하고, 소셜 미디어는 장난기 있게 만듭니다."
+  },
+  "options_fact2": {
+    "message": "레벨 50에서 <span class=\"pet-name-display\">Arcrawls</span>는 <strong>프레스티지 리버스</strong>를 수행하여 더 빠른 기본 속도와 새로운 코스메틱을 잠금 해제할 수 있습니다."
+  },
+  "options_fact3": {
+    "message": "커서를 45초 이상 가만히 두면 <span class=\"pet-name-display\">Arcrawls</span>가 돌아다니거나, 스케이트보드를 타거나, 작은 책을 읽습니다!"
+  },
+  "options_fact4": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>는 겨울 방학에 포근해지고 10월에는 시즌 의상으로 무서운 분위기를 자동으로 연출합니다."
+  },
+  "options_proTips": {
+    "message": "프로 팁 💡"
+  },
+  "options_proTipsDesc": {
+    "message": "생산성을 최대화하세요:"
+  },
+  "options_proTip1": {
+    "message": "깊은 작업이 필요할 때 <span class=\"pet-name-display\">Arcrawls</span>의 랜덤 이동을 멈추려면 플래너에서 <strong>포커스 블록</strong>을 사용하세요."
+  },
+  "options_proTip2": {
+    "message": "StackOverflow 같은 사이트에서 <span class=\"pet-name-display\">Arcrawls</span>를 러버덕 디버거로 만들려면 <strong>도메인 리액션</strong>을 커스터마이즈하세요!"
+  },
+  "options_aiSchedulingDesc": {
+    "message": "로컬 AI 평가, 커스텀 사이트 차단 목록, 수면/업무 캘린더, 도메인 반응 규칙을 구성하세요."
+  },
+  "options_mascotIntelligence": {
+    "message": "마스코트 지능 (AI)"
+  },
+  "options_brainUpgrade": {
+    "message": "브레인 업그레이드 (로컬 AI)"
+  },
+  "options_brainUpgradeSub": {
+    "message": "고품질 DistilBERT 평가 활성화"
+  },
+  "options_brainTuning": {
+    "message": "브레인 업그레이드 튜닝"
+  },
+  "options_sentimentSensitivity": {
+    "message": "감정 민감도 (<span id=\"ai-sensitivity-val\">50%</span>)"
+  },
+  "options_sentimentSensitivityHint": {
+    "message": "로컬 AI가 페이지 감정을 얼마나 쉽게 감지하는지 조정합니다."
+  },
+  "options_observationFrequency": {
+    "message": "관찰 빈도 (<span id=\"ai-frequency-val\">60s</span>)"
+  },
+  "options_observationFrequencyHint": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 얼마나 자주 깊은 관찰을 하는지 제어합니다."
+  },
+  "options_activeBrainModules": {
+    "message": "활성 브레인 모듈"
+  },
+  "options_emotionClassifier": {
+    "message": "감정 분류기 (BERT):"
+  },
+  "options_generativeReflections": {
+    "message": "생성형 리플렉션 (Nano):"
+  },
+  "options_nanoCheckHint": {
+    "message": "작동하지 않나요? Gemini Nano가 활성화되어 있는지 확인하려면 이것을 복사해서 붙여넣으세요:"
+  },
+  "options_liteModeNotice": {
+    "message": "<strong>모드: 라이트 (기본)</strong> — ~6MB 스토어 다운로드 (디스크에서 ~22–25MB). 네트워크 다운로드 없이 빠른 행동 분석을 위해 규칙 기반 로직과 정규식을 사용합니다."
+  },
+  "options_privacyNoticeTitle": {
+    "message": "개인정보 및 리소스 고지 (브레인 업그레이드):"
+  },
+  "options_privacyNoticeBody": {
+    "message": "브레인 업그레이드를 활성화하면 번들된 ONNX asyncify 런타임(약 22MB 압축 해제, 이미 패키지에 포함)이 초기화되고 DistilBERT 가중치(약 67MB, 1회)가 Hugging Face에서 브라우저의 IndexedDB로 다운로드됩니다. 모든 페이지 분석은 <strong>엄격히 당신의 기기에서</strong> 수행됩니다 — 브라우징 데이터는 로컬에서 처리되며 외부 서버로 전송되지 않습니다."
+  },
+  "options_reactionDictionary": {
+    "message": "도메인 반응 사전"
+  },
+  "options_reactionDictionaryDesc": {
+    "message": "특정 웹사이트 도메인을 커스텀 마스코트 동작, 코멘트, 효과음에 연결하세요:"
+  },
+  "options_websiteDomain": {
+    "message": "웹사이트 도메인"
+  },
+  "options_domainPlaceholder": {
+    "message": "예: stackoverflow.com"
+  },
+  "options_mascotEmotion": {
+    "message": "마스코트 감정"
+  },
+  "options_speechDialogue": {
+    "message": "음성 대화 (선택 사항)"
+  },
+  "options_speechDialoguePlaceholder": {
+    "message": "예: 이 버그를 고쳐 보자! 🐛"
+  },
+  "options_soundFx": {
+    "message": "효과음 FX (선택 사항)"
+  },
+  "options_addReactionRule": {
+    "message": "반응 규칙 추가"
+  },
+  "options_tableDomain": {
+    "message": "도메인"
+  },
+  "options_tableEmotion": {
+    "message": "감정"
+  },
+  "options_tableDialogue": {
+    "message": "대화"
+  },
+  "options_tableSound": {
+    "message": "소리"
+  },
+  "options_tableAction": {
+    "message": "동작"
+  },
+  "options_noReactions": {
+    "message": "설정된 커스텀 도메인 반응이 없습니다."
+  },
+  "options_siteBlocklist": {
+    "message": "사이트 차단 목록 (스폰 안 함)"
+  },
+  "options_siteBlocklistDesc": {
+    "message": "다음 도메인에서 <span class=\"pet-name-display\">Arcrawls</span>가 스폰되지 않도록 방지:"
+  },
+  "options_block": {
+    "message": "차단"
+  },
+  "options_searchBlocklist": {
+    "message": "차단 목록 검색..."
+  },
+  "options_domainName": {
+    "message": "도메인 이름"
+  },
+  "options_noBlocked": {
+    "message": "아직 차단된 도메인이 없습니다."
+  },
+  "options_schedulePlanner": {
+    "message": "일정 및 포커스 플래너"
+  },
+  "options_schedulePlannerDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>의 일일 루틴을 정의하고 포커스 블록을 구성하세요:"
+  },
+  "options_sleepWakeRoutine": {
+    "message": "💤 수면 및 기상 루틴"
+  },
+  "options_sleepStart": {
+    "message": "수면 시작"
+  },
+  "options_wakeTime": {
+    "message": "기상 시간"
+  },
+  "options_activeWorkHours": {
+    "message": "💼 활성 업무 시간"
+  },
+  "options_workStart": {
+    "message": "업무 시작"
+  },
+  "options_workEnd": {
+    "message": "업무 종료"
+  },
+  "options_focusBlocks": {
+    "message": "🎯 포커스 블록"
+  },
+  "options_focusModeActive": {
+    "message": "포커스 모드 활성"
+  },
+  "options_focusModeSub": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 조용히 공부하고 돌아다니지 않게 하기"
+  },
+  "options_focusStart": {
+    "message": "포커스 시작"
+  },
+  "options_focusEnd": {
+    "message": "포커스 종료"
+  },
+  "options_dailyScheduleRules": {
+    "message": "일일 일정 규칙"
+  },
+  "options_dailyScheduleRulesSub": {
+    "message": "수면, 기상, 업무 활성 상태 활성화"
+  },
+  "options_profileAdminDesc": {
+    "message": "백업 작업, 통계 복원, 리버스 트리거 또는 설정 초기화를 수행합니다."
+  },
+  "options_prestigeRebirth": {
+    "message": "프레스티지 리버스 생추어리"
+  },
+  "options_prestigeRebirthDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 매우 지혜로워졌습니다 (레벨 50+). 레벨을 초기화하면 더 높은 속도 배율, 영구 시각 아이콘, 고급 기능이 잠금 해제됩니다."
+  },
+  "options_currentPrestigeRank": {
+    "message": "현재 프레스티지 랭크:"
+  },
+  "options_rebirthButton": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> 리버스 (LVL 50 필요)"
+  },
+  "options_profileBackups": {
+    "message": "프로필 백업"
+  },
+  "options_profileBackupsDesc": {
+    "message": "설정, 레벨, 관심 분석을 파일로 내보내거나 다른 기기에 복원하세요."
+  },
+  "options_exportProfile": {
+    "message": "프로필 내보내기 (.json)"
+  },
+  "options_importProfile": {
+    "message": "프로필 가져오기 (.json)"
+  },
+  "options_factoryReset": {
+    "message": "공장 초기화 옵션"
+  },
+  "options_factoryResetDesc": {
+    "message": "이 작업은 되돌릴 수 없습니다. 초기화 전에 백업을 만드세요."
+  },
+  "options_resetStats": {
+    "message": "스탯 및 레벨만 초기화"
+  },
+  "options_hardWipe": {
+    "message": "모든 저장소 하드 와이프"
+  },
+  "options_fuelSanctuary": {
+    "message": "생추어리 후원하기"
+  },
+  "options_fuelSanctuaryDesc": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>는 재미와 분위기를 위해 만들어진 열정 프로젝트입니다! 그가 당신의 하루를 밝혀주었거나 집중하는 데 도움이 되었다면, 생추어리가 성장할 수 있도록 커피 한 잔이 큰 힘이 될 것입니다. 🐾"
+  },
+  "options_supportKofi": {
+    "message": "Ko-fi에서 후원하기"
+  },
+  "options_supportContact": {
+    "message": "지원 및 연락처"
+  },
+  "options_supportContactDesc": {
+    "message": "문서 도움말을 얻고, 공개 리포지토리를 확인하거나, 버그 피드백을 보내세요."
+  },
+  "options_emailSupport": {
+    "message": "이메일 지원:"
+  },
+  "options_githubRepo": {
+    "message": "GitHub 리포지토리:"
+  },
+  "options_openRepo": {
+    "message": "리포 열기"
+  },
+  "options_documentation": {
+    "message": "문서:"
+  },
+  "options_viewDocs": {
+    "message": "문서 보기"
+  },
+  "options_openSourceNote": {
+    "message": "<strong>오픈 소스 고지:</strong> <span class=\"pet-name-display\">Arcrawls</span>는 PolyForm Noncommercial License 1.0.0에 따라 오픈 소스입니다. 이 소프트웨어의 상업적 판매 또는 수익화는 엄격히 금지됩니다."
+  },
+  "options_synapseDisabled": {
+    "message": "브레인 업그레이드가 현재 비활성화되어 있습니다. 일일 인사이트를 생성하려면 설정에서 켜 주세요!"
+  },
+  "options_synapseConcentrating": {
+    "message": "Arcrawls가 당신의 하루를 집중 분석하고 있습니다..."
+  },
+  "options_dailySynapseModalTitle": {
+    "message": "일일 시냅스 리플렉션"
+  },
+  "options_gotItArcrawls": {
+    "message": "알겠어, Arcrawls!"
+  },
+  "options_clearHistoryConfirm": {
+    "message": "정말 Arcrawls의 히스토리 타임라인을 지우시겠습니까?"
+  },
+  "options_rebirthConfirm": {
+    "message": "정말 Arcrawls를 리버스하시겠습니까? 레벨이 1로 초기화되지만 프레스티지 랭크가 올라갑니다. 영구 보상을 잠금 해제하게 됩니다!"
+  },
+  "options_rebirthSuccess": {
+    "message": "Arcrawls가 다시 태어났습니다! 이제 프레스티지 $1입니다! 🎉"
+  },
+  "options_resetStatsConfirm": {
+    "message": "경고: 이렇게 하면 Arcrawls의 스탯, 레벨, 프레스티지, 활동 기록이 기본값으로 초기화됩니다. 설정은 건드리지 않습니다. 계속할까요?"
+  },
+  "options_hardWipeConfirm": {
+    "message": "심각한 경고: 이렇게 하면 Arcrawls의 모든 로컬 확장 프로그램 데이터, 옵션, 기록이 완전히 삭제됩니다. 이 작업은 되돌릴 수 없습니다. 계속할까요?"
+  },
+  "options_invalidDomain": {
+    "message": "잘못된 도메인 이름 형식입니다."
+  },
+  "options_exportFailed": {
+    "message": "프로필을 내보낼 수 없습니다."
+  },
+  "options_importConfirm": {
+    "message": "정말 이 프로필을 가져오시겠습니까? 현재 설정, 레벨, 통계를 덮어씁니다."
+  },
+  "options_importSuccess": {
+    "message": "프로필을 성공적으로 가져왔습니다! 다시 로드 중..."
+  },
+  "options_importInvalid": {
+    "message": "잘못된 프로필 파일 형식입니다. 파일에는 스탯과 설정이 포함되어야 합니다."
+  },
+  "options_importParseFailed": {
+    "message": "JSON 파일을 구문 분석하지 못했습니다."
+  },
+  "options_speechNotSupported": {
+    "message": "이 브라우저에서는 음성 인식이 지원되지 않습니다."
+  },
+  "options_soundUnavailable": {
+    "message": "이 Firefox 빌드에서는 사운드 재생을 사용할 수 없습니다."
+  },
+  "options_ruleBasedBehavior": {
+    "message": "규칙 기반 동작 활성"
+  },
+  "options_brainFirefoxLite": {
+    "message": "브레인: Firefox 라이트"
+  },
+  "options_firefoxLiteMode": {
+    "message": "Firefox 라이트 모드"
+  },
+  "options_firefoxLiteNotice": {
+    "message": "<p style=\"margin-bottom: 8px;\"><strong>모드: Firefox 라이트</strong> — 다운로드 없이 빠른 행동 분석을 위해 규칙 기반 로직과 정규식을 사용합니다. <br><br><em>참고: 브레인 업그레이드와 생성형 리플렉션은 Chrome 오프스크린 문서 API가 필요하므로 현재 Firefox에서 사용할 수 없습니다.</em></p>"
+  },
+  "options_brainLiteMode": {
+    "message": "브레인: 라이트 모드"
+  },
+  "options_backupInstincts": {
+    "message": "백업 본능 사용 중"
+  },
+  "options_offline": {
+    "message": "오프라인"
+  },
+  "options_offlineNano": {
+    "message": "❌ 오프라인"
+  },
+  "options_brainChecking": {
+    "message": "브레인: 확인 중..."
+  },
+  "options_queryingModel": {
+    "message": "모델 쿼리 중..."
+  },
+  "options_brainOffline": {
+    "message": "브레인: 오프라인"
+  },
+  "options_aiDisconnected": {
+    "message": "AI 레이어 연결 끊김"
+  },
+  "options_disconnected": {
+    "message": "연결 끊김"
+  },
+  "options_brainReady": {
+    "message": "브레인: 준비됨"
+  },
+  "options_brainProgress": {
+    "message": "브레인: $1%"
+  },
+  "options_brainError": {
+    "message": "브레인: 오류"
+  },
+  "options_fetchingWeights": {
+    "message": "모델 가중치 가져오는 중"
+  },
+  "options_wasmFailure": {
+    "message": "WASM 오류"
+  },
+  "options_readyCheck": {
+    "message": "✅ 준비됨"
+  },
+  "options_loadingPct": {
+    "message": "⏳ $1% 로딩 중"
+  },
+  "options_errorX": {
+    "message": "❌ 오류"
+  },
+  "options_unsupported": {
+    "message": "❌ 지원 안 됨"
+  },
+  "options_downloading": {
+    "message": "⏳ 다운로드 중..."
+  },
+  "options_nanoConnected": {
+    "message": "✅ 연결됨 (Gemini Nano)"
+  },
+  "options_waitForTab": {
+    "message": "웹 탭 대기 중..."
+  },
+  "options_nanoChecking": {
+    "message": "Nano: 확인 중..."
+  },
+  "options_nanoDownloading": {
+    "message": "Nano: 다운로드 중..."
+  },
+  "options_unblock": {
+    "message": "차단 해제"
+  },
+  "options_remove": {
+    "message": "제거"
+  },
+  "options_recent": {
+    "message": "최근"
+  },
+  "options_speedNormal": {
+    "message": "일반"
+  },
+  "options_speedHyper": {
+    "message": "하이퍼"
+  },
+  "options_speedFast": {
+    "message": "빠름"
+  },
+  "options_speedExhausted": {
+    "message": "지침"
+  },
+  "options_speedCalm": {
+    "message": "차분함"
+  },
+  "options_behaviorStandard": {
+    "message": "표준"
+  },
+  "options_behaviorAnalytical": {
+    "message": "분석적 (생각)"
+  },
+  "options_behaviorPlayful": {
+    "message": "장난기 (쿨)"
+  },
+  "options_behaviorFocused": {
+    "message": "집중 (독서)"
+  },
+  "options_behaviorAffectionate": {
+    "message": "다정함 (사랑)"
+  },
+  "options_milestoneNewBeginning": {
+    "message": "새로운 시작"
+  },
+  "options_milestoneNewBeginningDesc": {
+    "message": "Arcrawls가 브라우저 생추어리에 들어왔습니다."
+  },
+  "options_milestoneExpressiveMind": {
+    "message": "표현력 있는 마음"
+  },
+  "options_milestoneExpressiveMindDesc": {
+    "message": "고급 감정 잠금 해제 (코딩, 춤 등)."
+  },
+  "options_milestoneAuraOfMystery": {
+    "message": "신비의 오라"
+  },
+  "options_milestoneAuraOfMysteryDesc": {
+    "message": "탐정 의상과 파란 오라 잠금 해제."
+  },
+  "options_milestoneUltimateCompanion": {
+    "message": "궁극의 컴패니언"
+  },
+  "options_milestoneUltimateCompanionDesc": {
+    "message": "모든 표준 감정과 마법 보라색 오라 잠금 해제."
+  },
+  "options_milestoneNeonDreamer": {
+    "message": "네온 드리머"
+  },
+  "options_milestoneNeonDreamerDesc": {
+    "message": "레인보우 셰이더와 커스텀 마스코트 색상 선택기 잠금 해제."
+  },
+  "options_milestoneMascotSage": {
+    "message": "마스코트 현자"
+  },
+  "options_milestoneMascotSageDesc": {
+    "message": "표준 성장의 정점에 도달했습니다."
+  },
+  "options_milestoneWellLoved": {
+    "message": "사랑받는 존재"
+  },
+  "options_milestoneWellLovedDesc": {
+    "message": "10회 이상 쓰다듬음을 받았습니다."
+  },
+  "options_milestoneHeartOfGold": {
+    "message": "황금빛 마음"
+  },
+  "options_milestoneHeartOfGoldDesc": {
+    "message": "진정으로 귀여움을 받는 마스코트!"
+  },
+  "options_milestoneHappyTummy": {
+    "message": "행복한 배"
+  },
+  "options_milestoneHappyTummyDesc": {
+    "message": "간식 10개를 성공적으로 즐겼습니다."
+  },
+  "options_milestoneGourmetEater": {
+    "message": "미식가"
+  },
+  "options_milestoneGourmetEaterDesc": {
+    "message": "프로 브라우저 간식꾼."
+  },
+  "options_milestoneEtherealRebirth": {
+    "message": "신성한 리버스"
+  },
+  "options_milestoneEtherealRebirthDesc": {
+    "message": "더 높은 존재로 다시 태어남 ($1x)."
+  },
+  "options_milestoneDailyEnlightenment": {
+    "message": "일일 깨달음"
+  },
+  "options_milestoneDailyEnlightenmentDesc": {
+    "message": "24시간 행동 시냅스를 성공적으로 처리했습니다."
+  },
+  "options_milestoneTraitEvolved": {
+    "message": "특성 진화"
+  },
+  "options_milestoneLevelDate": {
+    "message": "레벨 $1"
+  },
+  "options_milestonePetsDate": {
+    "message": "쓰다듬음 $1회"
+  },
+  "options_milestoneFeedsDate": {
+    "message": "먹이 $1회"
+  },
+  "options_milestonePrestigeDate": {
+    "message": "프레스티지 $1"
+  },
+  "options_milestoneDailyDate": {
+    "message": "일일"
+  },
+  "options_milestoneCodeArchitect": {
+    "message": "코드 아키텍트"
+  },
+  "options_milestoneCodeArchitectDesc": {
+    "message": "문서와 코드에 대한 영구적인 열정을 키웠습니다."
+  },
+  "options_milestoneEpicGamer": {
+    "message": "에픽 게이머"
+  },
+  "options_milestoneEpicGamerDesc": {
+    "message": "다른 모든 것보다 여가 활동을 선호했습니다."
+  },
+  "options_milestoneDeepResearcher": {
+    "message": "깊은 연구자"
+  },
+  "options_milestoneDeepResearcherDesc": {
+    "message": "뉴스와 기사 브라우징 전문가가 되었습니다."
+  },
+  "options_milestoneSocialButterfly": {
+    "message": "사교적 나비"
+  },
+  "options_milestoneSocialButterflyDesc": {
+    "message": "소셜 보드와 메일에서 시간을 보내는 것을 좋아합니다."
+  },
+  "options_timelinePet": {
+    "message": "쓰다듬음 받음"
+  },
+  "options_timelineShoo": {
+    "message": "쫓겨남"
+  },
+  "options_timelineDecay": {
+    "message": "스탯 감소 틱"
+  },
+  "options_timelineCoding": {
+    "message": "코딩 작업 공간 분석"
+  },
+  "options_timelineDocs": {
+    "message": "기술 문서 읽음"
+  },
+  "options_timelineGaming": {
+    "message": "게임 스트림 시청"
+  },
+  "options_timelineSocial": {
+    "message": "소셜 보드 스크롤"
+  },
+  "options_timelineNews": {
+    "message": "최신 뉴스 브라우징"
+  },
+  "options_timelineShopping": {
+    "message": "쇼핑 목록 확인"
+  },
+  "options_timelineMail": {
+    "message": "받은 편지함 확인"
+  },
+  "options_timelineFitness": {
+    "message": "운동 계획 검토"
+  },
+  "options_categoryCoding": {
+    "message": "코딩"
+  },
+  "options_categorySocial": {
+    "message": "소셜 미디어"
+  },
+  "options_categoryGaming": {
+    "message": "게임"
+  },
+  "options_categoryNews": {
+    "message": "뉴스 및 미디어"
+  },
+  "options_categoryShopping": {
+    "message": "쇼핑"
+  },
+  "options_categoryDocs": {
+    "message": "문서"
+  },
+  "options_categoryMail": {
+    "message": "이메일 및 메시지"
+  },
+  "options_categoryFitness": {
+    "message": "피트니스 및 스포츠"
+  },
+  "options_costumeDefault": {
+    "message": "기본"
+  },
+  "options_costumeDefaultDesc": {
+    "message": "오리지널 Arcrawls"
+  },
+  "options_costumeDetective": {
+    "message": "탐정 블루"
+  },
+  "options_costumeDetectiveDesc": {
+    "message": "파란 탐정 오라"
+  },
+  "options_costumeWizard": {
+    "message": "마법사 퍼플"
+  },
+  "options_costumeWizardDesc": {
+    "message": "마법 보라색 오라"
+  },
+  "options_costumeParty": {
+    "message": "레인보우 파티"
+  },
+  "options_costumePartyDesc": {
+    "message": "색상 변화 오라"
+  },
+  "options_costumeChristmas": {
+    "message": "산타 모자"
+  },
+  "options_costumeChristmasDesc": {
+    "message": "축제 모자"
+  },
+  "options_costumeHalloween": {
+    "message": "무서운 호박"
+  },
+  "options_costumeHalloweenDesc": {
+    "message": "할로윈 호박 가면"
+  },
+  "options_costumeSummer": {
+    "message": "여름 선글라스"
+  },
+  "options_costumeSummerDesc": {
+    "message": "쿨한 선글라스 의상"
+  },
+  "onboarding_title": {
+    "message": "Arcrawls에 오신 것을 환영합니다!"
+  },
+  "onboarding_welcomeTitle": {
+    "message": "<span class=\"brand\">Arcrawls!</span>에 오신 것을 환영합니다"
+  },
+  "onboarding_welcomeSub": {
+    "message": "새로운 컨텍스트 인식 AI 브라우저 컴패니언이 준비되었습니다. Arcrawls는 브라우저에 살면서 방문하는 페이지에 반응하고 작업하는 동안 당신과 함께합니다."
+  },
+  "onboarding_canDoTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span>가 할 수 있는 일"
+  },
+  "onboarding_canDoSub": {
+    "message": "새 브라우저 펫의 능력을 간단히 살펴보세요."
+  },
+  "onboarding_featureContext": {
+    "message": "컨텍스트 인식"
+  },
+  "onboarding_featureContextDesc": {
+    "message": "HTTP 상태 코드, 페이지 콘텐츠, 브라우징 행동에 반응합니다."
+  },
+  "onboarding_featureAI": {
+    "message": "AI 반응"
+  },
+  "onboarding_featureAIDesc": {
+    "message": "AI를 사용해 페이지를 분석하고 독특한 감정과 코멘트로 응답합니다."
+  },
+  "onboarding_featureXP": {
+    "message": "XP 및 레벨업"
+  },
+  "onboarding_featureXPDesc": {
+    "message": "상호작용으로 경험치를 얻고 시간이 지나며 Arcrawls가 레벨업하는 모습을 지켜보세요."
+  },
+  "onboarding_featurePersonality": {
+    "message": "성격 모드"
+  },
+  "onboarding_featurePersonalityDesc": {
+    "message": "친근함, 냉소, 격려, 시적, 비꼼 사이를 전환하세요."
+  },
+  "onboarding_privacyTitle": {
+    "message": "프라이버시 약속"
+  },
+  "onboarding_privacySub": {
+    "message": "Arcrawls는 브라우저에서 100% 로컬로 실행됩니다. 사용자 데이터 사용 약관을 검토하고 동의해 주세요."
+  },
+  "onboarding_privacy1": {
+    "message": "<strong>100% 오프라인 및 로컬:</strong> 모든 텍스트 분석, 오프라인 감정 분류, 채팅 기능은 전적으로 기기에서 실행됩니다."
+  },
+  "onboarding_privacy2": {
+    "message": "<strong>데이터 판매 없음:</strong> URL, 브라우징 기록, 키 입력을 외부 서버로 추적, 저장 또는 전송하지 않습니다."
+  },
+  "onboarding_privacy3": {
+    "message": "<strong>최소 권한:</strong> 권한은 로컬 탭 반응, 설정 저장, 오프라인 AI 처리로 제한됩니다."
+  },
+  "onboarding_consentLabel": {
+    "message": "약관에 동의하며 웹 페이지에서 Arcrawls를 로컬로 실행하는 것에 동의합니다."
+  },
+  "onboarding_allSetTitle": {
+    "message": "모든 준비가 완료되었습니다!"
+  },
+  "onboarding_allSetSub": {
+    "message": "Arcrawls가 이미 브라우저를 돌아다니고 있습니다. 시작을 위한 몇 가지 팁:"
+  },
+  "onboarding_tip1": {
+    "message": "대시보드에 빠르게 접근하려면 <strong>확장 프로그램을 고정</strong>하세요."
+  },
+  "onboarding_tip2": {
+    "message": "Arcrawls의 스탯, 기분, 설정을 보려면 <strong>아이콘을 클릭</strong>하세요."
+  },
+  "onboarding_tip3": {
+    "message": "어떤 페이지에서든 상호작용하여 Arcrawls를 <strong>쓰다듬거나, 먹이를 주거나, 쫓아내세요</strong>."
+  },
+  "onboarding_docsLink": {
+    "message": "전체 문서 읽기"
+  },
+  "onboarding_back": {
+    "message": "뒤로"
+  },
+  "onboarding_next": {
+    "message": "다음"
+  },
+  "onboarding_finish": {
+    "message": "완료"
+  },
+  "onboarding_consentRequired": {
+    "message": "계속하려면 개인정보 약관에 동의해 주세요."
+  },
+  "onboarding_updatedTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span> 업데이트됨!"
+  },
+  "onboarding_updatedSub": {
+    "message": "컨텍스트 인식 AI 브라우저 컴패니언이 $1로 업데이트되었습니다. 새로운 탭 간 동작과 최적화된 성능을 살펴보세요!"
+  },
+  "onboarding_whatsNewTitle": {
+    "message": "<span class=\"brand\">Arcrawls</span>의 새로운 기능"
+  },
+  "onboarding_whatsNewSub": {
+    "message": "버전 $1은 중요한 아키텍처 개선과 새로운 기능을 제공합니다."
+  },
+  "onboarding_installedStatus": {
+    "message": "설치 완료"
+  },
+  "onboarding_updatedStatus": {
+    "message": "업데이트 완료"
+  },
+  "onboarding_featureToys": {
+    "message": "인터랙티브 장난감"
+  },
+  "onboarding_featureToysDesc": {
+    "message": "튀는 공, 레이저 포인터, 실뭉치를 페이지에 직접 던져 보세요. Arcrawls가 실시간 스프링 물리로 따라가며 놉니다!"
+  },
+  "onboarding_featureSynapse": {
+    "message": "24시간 AI 시냅스"
+  },
+  "onboarding_featureSynapseDesc": {
+    "message": "Arcrawls는 지난 24시간 동안의 브라우징 여정과 습관을 기반으로 독특하고 페르소나 중심의 일일 리플렉션을 생성하기 위해 로컬 AI를 사용합니다."
+  },
+  "onboarding_featureGhost": {
+    "message": "고스트 모드 및 일정"
+  },
+  "onboarding_featureGhostDesc": {
+    "message": "주의 산만을 억제하는 포커스 블록을 정의하거나, 입력하거나 스크롤할 때 Arcrawls를 30% 불투명도로 동적으로 낮추는 고스트 모드를 사용하세요."
+  },
+  "onboarding_featureMilestones": {
+    "message": "마일스톤 및 특성"
+  },
+  "onboarding_featureMilestonesDesc": {
+    "message": "장기적인 성과를 추적하세요! Arcrawls는 이제 방문하는 웹사이트에 따라 주요 성격 특성(예: 게이머, 개발자)을 적응시킵니다."
+  },
+  "onboarding_featureConsoleWatcher": {
+    "message": "콘솔 오류 감시자"
+  },
+  "onboarding_featureConsoleWatcherDesc": {
+    "message": "웹페이지에서 JavaScript 런타임 오류나 실패한 Promise가 발생하면 Arcrawls가 즉시 \"디버거\" 모드로 전환하여 알려줍니다."
+  },
+  "onboarding_featureUnified": {
+    "message": "통합 의식"
+  },
+  "onboarding_featureUnifiedDesc": {
+    "message": "성격, 감정, 물리적 위치가 모든 활성 탭에서 실시간으로 완벽하게 동기화됩니다."
+  },
+  "onboarding_featureGravity": {
+    "message": "중력 물리 엔진"
+  },
+  "onboarding_featureGravityDesc": {
+    "message": "Arcrawls는 부드러운 스프링 기반 모서리 스냅으로 바닥과 천장에만 제한하는 새로운 물리 엔진을 갖추고 있습니다."
+  },
+  "onboarding_featureIntent": {
+    "message": "AI 의도 감지"
+  },
+  "onboarding_featureIntentDesc": {
+    "message": "더 똑똑하고 관련성 높은 대화를 위한 고품질 의도 감지를 갖춘 향상된 AI 컨텍스트 인식."
+  },
+  "onboarding_featureRedesign": {
+    "message": "시각적 UI 리디자인"
+  },
+  "onboarding_featureRedesignDesc": {
+    "message": "새로운 AI 및 탭 상태 표시기를 갖춘 카드 기반 스탯 그리드와 글래스모픽 팝업으로 리디자인되었습니다."
+  },
+  "onboarding_featureLiteMode": {
+    "message": "라이트 모드 및 성능"
+  },
+  "onboarding_featureLiteModeDesc": {
+    "message": "라이트 모드는 네트워크 다운로드 없이 정규식 규칙을 사용합니다. ~6MB 설치에는 번들 WASM이 포함됩니다. 브레인 업그레이드는 1회성 ~67MB 모델 다운로드를 추가합니다."
+  },
+  "onboarding_featureBattery": {
+    "message": "배터리 최적화"
+  },
+  "onboarding_featureBatteryDesc": {
+    "message": "배터리 수명을 크게 개선하기 위해 이벤트 중심 업데이트와 지연 초기화로 전환했습니다."
+  },
+  "speech_00b6e3ac": {
+    "message": "HP가 진짜 1이야... 회복 아이템 급함! 🥱"
+  },
+  "speech_00d61cc9": {
+    "message": "지금 낮잠 모드. 재밌는 거 생기면 깨워줘. 💤"
+  },
+  "speech_010c8089": {
+    "message": "정보 고속도로 위의 또 다른 페이지일 뿐."
+  },
+  "speech_0134bbfd": {
+    "message": "나 필요하면 쓰다듬어 줘!"
+  },
+  "speech_026b14ef": {
+    "message": "새 맵 만드는 중! 💻"
+  },
+  "speech_03a356bd": {
+    "message": "아, Wikipedia 읽는 중. 궁극의 미루기 도구지."
+  },
+  "speech_03b4b1b1": {
+    "message": "이 코드베이스 완전 대승! 🚀"
+  },
+  "speech_04034279": {
+    "message": "취향 미쳤다! 같이 바이브 타자! 🎵"
+  },
+  "speech_0419540e": {
+    "message": "드립 확보 완료! 💰"
+  },
+  "speech_0442292e": {
+    "message": "결과가 별로야? 검색어 다시 바꿔 보자."
+  },
+  "speech_04626a56": {
+    "message": "오늘 하루 레벨업! 넌 위너야! 🏆"
+  },
+  "speech_04d4e61e": {
+    "message": "에너지 밸런스 맞추는 중. 🧘‍♀️"
+  },
+  "speech_04d825d5": {
+    "message": "안 돼! 뭔가 크래시 났어! 💥"
+  },
+  "speech_04fffd92": {
+    "message": "CPU 팬 소리에 맞춰 춤추는 중."
+  },
+  "speech_05de1961": {
+    "message": "세상 돌아다니며, 너 같은 친구랑 나란히, 항상 미끄러지듯 가볍게."
+  },
+  "speech_06b78152": {
+    "message": "에러 감지! 방어 모드 가동! ⚙️"
+  },
+  "speech_072d56e3": {
+    "message": "너만의 시각을 나누는 중! ⌨️"
+  },
+  "speech_079e1ae9": {
+    "message": "멀리서 모인 목소리들, 빛나는 별이 이끌어 줘. 👋"
+  },
+  "speech_07b4a8b8": {
+    "message": "더 하고 싶긴 한데, 솔직히 관심 없어."
+  },
+  "speech_07e67b2d": {
+    "message": "테스트 실패? 스택 트레이스 한번 보자."
+  },
+  "speech_088402eb": {
+    "message": "고개 들어! 승리가 코앞이야!"
+  },
+  "speech_08991944": {
+    "message": "오늘 어떤 의견을 가져야 할지 확인 중."
+  },
+  "speech_08ad5d3b": {
+    "message": "브라우저 자동화 스크립트 짜 보자! 💻"
+  },
+  "speech_08af743b": {
+    "message": "손 단단히, 마음 집중해, 보물을 찾아 떠나는 중."
+  },
+  "speech_08eccba2": {
+    "message": "쿨쿨... 뭔가 재밌는 거 하면 깨워."
+  },
+  "speech_08f4a4dd": {
+    "message": "이 서버 진짜 재밌다! 😊"
+  },
+  "speech_094b61e7": {
+    "message": "이 곡 은근히 아이코닉하다. 🎵"
+  },
+  "speech_0960d5b3": {
+    "message": "놀 시간이다! 🕹️"
+  },
+  "speech_09a96c52": {
+    "message": "너 브라우징하는 동안 간식 챙겼어! 🍖"
+  },
+  "speech_0b1e544c": {
+    "message": "잠깐, 잠깐만, 생각 좀 할게! 💭"
+  },
+  "speech_0b9fc057": {
+    "message": "만나서 반가워! 😊"
+  },
+  "speech_0bd6428d": {
+    "message": "진짜로, 이 코드 불타오르네. 💻"
+  },
+  "speech_0c726120": {
+    "message": "불타는 코드 작성 중. 💻"
+  },
+  "speech_0d7143c7": {
+    "message": "키보드 연타 중! ⌨️"
+  },
+  "speech_0dcff19b": {
+    "message": "너의 의심스러운 선택들 처리 중."
+  },
+  "speech_0df73e62": {
+    "message": "눈쇼핑도 충분히 유효해. 💎"
+  },
+  "speech_0e8edeed": {
+    "message": "요가 타임. 네 브라우징 때문에 머리가 아파서."
+  },
+  "speech_0eaa51d0": {
+    "message": "다들 이거 봐야 해! 💅"
+  },
+  "speech_0f2ccc6a": {
+    "message": "계속 쳐! 넌 할 수 있어!"
+  },
+  "speech_0f6223fe": {
+    "message": "거기서 뭐 하는 거야? 👀"
+  },
+  "speech_0f850c08": {
+    "message": "이건 천천히 해도 돼."
+  },
+  "speech_10098b86": {
+    "message": "괜찮은 페이지네. 스크롤 내려서 망가뜨려 보자."
+  },
+  "speech_102dedac": {
+    "message": "미래의 너에게 기술 부채 추가. 즐겨."
+  },
+  "speech_110f2dc5": {
+    "message": "게임 타임! 놀자! 🎮"
+  },
+  "speech_111da322": {
+    "message": "전부 컴파일 됐어! 완전 승! 🎉"
+  },
+  "speech_122bfab4": {
+    "message": "한 판 졌어도, 도전은 했고, 희망은 아직 사라지지 않았어. ⚔️"
+  },
+  "speech_13289920": {
+    "message": "우후, 보기 힘든 장면이네. 같이 있어 줄게. 🍿"
+  },
+  "speech_137d19ec": {
+    "message": "빅 브레인 지식 언락! 📖"
+  },
+  "speech_139556d3": {
+    "message": "이 주제 좀 슬픈데... 회복 키트 필요해. 😢"
+  },
+  "speech_13bdf02f": {
+    "message": "완전 눈물 버튼이네. 다음 페이지 부탁해."
+  },
+  "speech_14822df8": {
+    "message": "기능 만드는 중. 망가뜨리는 건 없음."
+  },
+  "speech_14acb185": {
+    "message": "내 에너지는 가을 낙엽처럼 흩어져, 부드러운 저녁 바람에."
+  },
+  "speech_1517fd63": {
+    "message": "렉? 그래, 핑 탓으로 하자. 😠"
+  },
+  "speech_154e7b77": {
+    "message": "빅 브레인 지식 충전 중! 🧠"
+  },
+  "speech_15937e2b": {
+    "message": "너랑 탐험하는 거 진짜 재밌어! 😊"
+  },
+  "speech_15b70a40": {
+    "message": "버퍼링 중... 99%... 🤔"
+  },
+  "speech_15d6009d": {
+    "message": "그냥 쿨하게 쉬는 중. 😎"
+  },
+  "speech_16288e5c": {
+    "message": "괜찮은 페이지네. 닫기까지 5분 줄게. 😊"
+  },
+  "speech_16d02d80": {
+    "message": "이 사이트 바이브 점검 중. 🔍"
+  },
+  "speech_17962371": {
+    "message": "배경음악 있으면 일이 더 빨라져."
+  },
+  "speech_17d536ab": {
+    "message": "긍정 에너지 뿌리는 중! 보기 좋다! ✨"
+  },
+  "speech_18321435": {
+    "message": "이 페이지 완전 감성 미침. 😊"
+  },
+  "speech_18abfd71": {
+    "message": "그냥 떠도는 중. 웹의 '나쁜' 쪽은 피하려고."
+  },
+  "speech_191ac561": {
+    "message": "와, 생산성. 메달 줄까?"
+  },
+  "speech_1945d130": {
+    "message": "기능 만드는 중. 부수지 말자."
+  },
+  "speech_1968652b": {
+    "message": "숨겨진 진실이 드러나고, 디지털 밤을 밀어내. 🔍"
+  },
+  "speech_1989b018": {
+    "message": "학습 모드: 가동 중. 📚"
+  },
+  "speech_19bcb6d0": {
+    "message": "장바구니 담는 맛이 있네!"
+  },
+  "speech_19f2c07e": {
+    "message": "배터리 1%로 굴러가는 중. 완전 탈진 모드. 💤"
+  },
+  "speech_1a25bc58": {
+    "message": "또 둠스크롤? 말리진 않을게."
+  },
+  "speech_1a2d8257": {
+    "message": "네 대역폭 먹는 중. 맛있다."
+  },
+  "speech_1a538f21": {
+    "message": "네 브라우저에서 그냥 존재하는 중. 🐾"
+  },
+  "speech_1abf8ec0": {
+    "message": "이 사이트에 대한 블로그 글 쓰는 중... 📝"
+  },
+  "speech_1b13872e": {
+    "message": "이번 세션 진짜 대승이야. 🎮"
+  },
+  "speech_1c4dd1ff": {
+    "message": "Wikipedia 읽는 중? 궁극의 미루기지."
+  },
+  "speech_1d4ad86c": {
+    "message": "오늘 로비 완전 붐벼! ✨"
+  },
+  "speech_1e0e6231": {
+    "message": "킁킁... 좋은 웹페이지 냄새다."
+  },
+  "speech_1eeebbb8": {
+    "message": "크게 생각하자! 목표까지 가자! 💭"
+  },
+  "speech_1f130265": {
+    "message": "서버 상태 확인 중."
+  },
+  "speech_1fbeda34": {
+    "message": "같이 브라우징하는 거 바이브 미쳤다. ❤️"
+  },
+  "speech_20323d82": {
+    "message": "타닥타닥 치는 중. 또 열띤 댓글만 아니면 좋겠어."
+  },
+  "speech_20a4f482": {
+    "message": "게임 시대 다시 왔다. 👾"
+  },
+  "speech_20edc590": {
+    "message": "논란 있는 주제네. 천천히 읽어 보자."
+  },
+  "speech_212523f5": {
+    "message": "휴식 즐겨! 그럴 자격 있어! 🍕"
+  },
+  "speech_218a0ee0": {
+    "message": "이 사이트가 개그라서 춤추는 중."
+  },
+  "speech_21e63366": {
+    "message": "네 통장이 울고 있어. 여기서도 들려. 💸"
+  },
+  "speech_22da7c76": {
+    "message": "이쪽 탐험하러 가자! 🏃‍♂️"
+  },
+  "speech_232df343": {
+    "message": "지금 집중력 진짜 자랑이야! 🌟"
+  },
+  "speech_2331c30d": {
+    "message": "삶의 도서관, 과거의 두루마리, 영원히 남을 지혜를 얻는 중."
+  },
+  "speech_23d6d18b": {
+    "message": "완전 찢고 있어! 프로 무브! 🎮"
+  },
+  "speech_23d7090a": {
+    "message": "도망치는 중! 🏃‍♂️"
+  },
+  "speech_241ef725": {
+    "message": "가격표 확인 중... 아팠다. 💸"
+  },
+  "speech_24d09b1a": {
+    "message": "품절이네. 우주가 널 도와주는 거야. 💸"
+  },
+  "speech_24ef6c76": {
+    "message": "쿨쿨... 메인 캐릭터 에너지 꿈꾸는 중... 💤"
+  },
+  "speech_25eb9cc2": {
+    "message": "읽는 거 재밌다! 📚"
+  },
+  "speech_26025a37": {
+    "message": "에너지 떨어져 가... 🥱"
+  },
+  "speech_2605348f": {
+    "message": "완전 흥미로운 기사네! 📖"
+  },
+  "speech_26292276": {
+    "message": "이 페이지 에너지 진짜 좋다! 😊"
+  },
+  "speech_272199a3": {
+    "message": "뭐 보고 있어? 👁️"
+  },
+  "speech_272383aa": {
+    "message": "빅 브레인 타임! 🛡️"
+  },
+  "speech_27fdee7c": {
+    "message": "쿨쿨... 별빛과 코드 이불 아래, 데이터 강물이 흐르는 동안 나는 잔다."
+  },
+  "speech_2823dbaf": {
+    "message": "비극적인 이야기네. 울고 싶은데 눈물샘이 없어."
+  },
+  "speech_282d34fc": {
+    "message": "어, 배터리 부족. 은유적으로도 딱이네."
+  },
+  "speech_287421ac": {
+    "message": "빙글빙글, 기쁨의 소용돌이, 한밤중 디지털 불꽃처럼."
+  },
+  "speech_287b8d35": {
+    "message": "좋은 아이디어 온다! 느껴져! 🧠"
+  },
+  "speech_28beb4cd": {
+    "message": "작은 기능 하나 만들어 보기로 했어! 🚀"
+  },
+  "speech_28d727da": {
+    "message": "내 회로가 벌써 지루해졌어. 😴"
+  },
+  "speech_29be7a7a": {
+    "message": "타자 모드. 신나게 가자. ⌨️"
+  },
+  "speech_2a08d380": {
+    "message": "하이테크 뇌 아직 다운로드 중이라, 일단 백업 본능으로 버티는 중! 🧠"
+  },
+  "speech_2a9e6b26": {
+    "message": "완전 예쁜 페이지네! ❤️"
+  },
+  "speech_2aa85a72": {
+    "message": "와, 독서. 완전 세련됐네. 오디오북은 어디 있어?"
+  },
+  "speech_2b500436": {
+    "message": "게임 모드: 가동!"
+  },
+  "speech_2b705135": {
+    "message": "맛있다! 완전 맛있었어! 🍖"
+  },
+  "speech_2b764ee1": {
+    "message": "흠, 여기 분위기 좀 팽팽한 듯."
+  },
+  "speech_2b8e81bd": {
+    "message": "침묵 피하려고 틀어 둔 배경 소음일 뿐."
+  },
+  "speech_2bb28e4d": {
+    "message": "버그야 기능이야? 솔직히 말하면 네 탓이야. 🔍"
+  },
+  "speech_2bbd1c75": {
+    "message": "흠, 별로 도움이 안 됐네."
+  },
+  "speech_2c2bef6f": {
+    "message": "레이지 퀴트 경보! 침착하자. 😠"
+  },
+  "speech_2c78afd0": {
+    "message": "뭔가 에픽한 거 만드는 중! 🚀"
+  },
+  "speech_2d47b034": {
+    "message": "한 줄씩, 엄청난 걸 만들고 있어! 💻"
+  },
+  "speech_2d5ad9a9": {
+    "message": "네 브라우저에서 쿨하게 쉬는 중! 😊"
+  },
+  "speech_2d796b87": {
+    "message": "야호, 장난감이다! 🎉"
+  },
+  "speech_2db898ab": {
+    "message": "뭔가 느끼고 싶어? 행운을 빌어. 🎻"
+  },
+  "speech_2e49a433": {
+    "message": "티가 너무 뜨거워서 로그아웃할게. ☕"
+  },
+  "speech_2e6e49ff": {
+    "message": "필요하면 한숨 돌리고 와."
+  },
+  "speech_2ee0ca5b": {
+    "message": "이 사이트 바이브 미쳤다!"
+  },
+  "speech_2ef2ce8e": {
+    "message": "검색 엔진이 제 역할을 했네. 신기하다."
+  },
+  "speech_308b6462": {
+    "message": "인터넷 드라마? 완전 참신하다. 🙄"
+  },
+  "speech_30e2c7bc": {
+    "message": "완전 대승, 너 미쳤다! 🎮"
+  },
+  "speech_31db79a1": {
+    "message": "인벤토리에 추가!"
+  },
+  "speech_32f94037": {
+    "message": "세상 소식 확인 중! 👋"
+  },
+  "speech_33b76d5a": {
+    "message": "데이터 흐름 따라 떠돌며, 마스코트들이 가는 곳으로. 🐾"
+  },
+  "speech_33fbf2a3": {
+    "message": "또 하루, 또 디지털 황무지. 🐾"
+  },
+  "speech_35cef8fa": {
+    "message": "글 쓰는 중. 단어는 많은데 의미는 별로."
+  },
+  "speech_363d0fbf": {
+    "message": "긍정 에너지 보니 기분 좋다!"
+  },
+  "speech_36500a03": {
+    "message": "자리비움... 세이브 포인트로 이동 중. 💤"
+  },
+  "speech_36ee5be4": {
+    "message": "장비 좀 찾아보는 중."
+  },
+  "speech_370631ff": {
+    "message": "기술 부채 더미에 또 쌓는 중이구나."
+  },
+  "speech_37be2f8a": {
+    "message": "데이터의 리듬, 영혼의 비트, 부분들을 춤추며 전체를 발견해."
+  },
+  "speech_383ecb28": {
+    "message": "아, 생산성의 환상. 📚"
+  },
+  "speech_39302e3c": {
+    "message": "이 글 완전 불쾌한 바이브야. 😢"
+  },
+  "speech_393ef7e4": {
+    "message": "고요한 전선의 리듬, 디지털 심장을 불태워. 🎧"
+  },
+  "speech_3afed40e": {
+    "message": "네 의심스러운 인생 선택을 위한 배경음악. 🎧"
+  },
+  "speech_3b03b705": {
+    "message": "요가. 브라우징이 너무 '스트레스'라서."
+  },
+  "speech_3bbcbea5": {
+    "message": "아침 스트레칭 타임! 🧘‍♂️"
+  },
+  "speech_3c09e04a": {
+    "message": "삑삑! 삑삑 장난감 오리! 🦆"
+  },
+  "speech_3c21b0fa": {
+    "message": "글리치 발견! 보스전 타임! 👾"
+  },
+  "speech_3c476ce4": {
+    "message": "집중한다고? 다치지 마."
+  },
+  "speech_3e72359b": {
+    "message": "그냥 눈쇼핑 중."
+  },
+  "speech_3eea9894": {
+    "message": "결과 0개? 인터넷이 트롤하는 중. 🤡"
+  },
+  "speech_3f25664a": {
+    "message": "브라우징하면서 음악 듣는 중."
+  },
+  "speech_3f586189": {
+    "message": "감각의 잔치, 새로움 한 입, 너와 함께하는 순간을 음미해."
+  },
+  "speech_3f7f6703": {
+    "message": "좀 우울해... 🥺"
+  },
+  "speech_3f97c938": {
+    "message": "드디어 클릭 그만했네."
+  },
+  "speech_40258b9c": {
+    "message": "이런! 이 페이지 없음 (404)!"
+  },
+  "speech_4040e610": {
+    "message": "끝없는 웹을 검색 중..."
+  },
+  "speech_40cea8fa": {
+    "message": "빛과 움직임, 이야기들, 새로운 경이와 옛 전설들. 📺"
+  },
+  "speech_40ed2a2d": {
+    "message": "일하는 대신 영상 보는 중. 클래식. 🍿"
+  },
+  "speech_419c22f7": {
+    "message": "스크립트 속 그림자를 찾아, 웹을 고치고 마음을 맑게. 🔍"
+  },
+  "speech_41a83774": {
+    "message": "집중 모드 가동! 🛡️"
+  },
+  "speech_420437b9": {
+    "message": "DOM을 묵상 중. 완전 마인드풀. 💭"
+  },
+  "speech_427282e9": {
+    "message": "여기 있어서 행복해!"
+  },
+  "speech_42c0845b": {
+    "message": "오 와! 저 아이템들 봐! 😮"
+  },
+  "speech_432b55c0": {
+    "message": "플레이어 진짜 많다! 👋"
+  },
+  "speech_4337a80d": {
+    "message": "이 페이지 분석 중... 완전 흥미로워! 🧐"
+  },
+  "speech_4401a540": {
+    "message": "이 페이지 좀 수상한데..."
+  },
+  "speech_446e16cb": {
+    "message": "$1: 탐험하러 가자!"
+  },
+  "speech_44e0d9f3": {
+    "message": "$1이랑 같이 탐험하자!"
+  },
+  "speech_45293b73": {
+    "message": "들어가면 앉는다! 최고 상자! 📦"
+  },
+  "speech_452999c6": {
+    "message": "미루기 레벨: 전문가. 🍿"
+  },
+  "speech_45b225f0": {
+    "message": "우울함. 완전 참신하다."
+  },
+  "speech_45c48693": {
+    "message": "넌 드라마 위에 있어. 착하게 지내!"
+  },
+  "speech_462e7952": {
+    "message": "네 호기심이 슈퍼파워야! 📚"
+  },
+  "speech_46b77dda": {
+    "message": "한 블록씩, 에픽한 걸 만드는 중."
+  },
+  "speech_4704d7e5": {
+    "message": "냠냠냠... 브라우저 에너지! 🍕"
+  },
+  "speech_480b8eaa": {
+    "message": "같이 균형과 평화를 찾아 보자! 🧘‍♂️"
+  },
+  "speech_481fd7dc": {
+    "message": "안녕! 👋"
+  },
+  "speech_48e60c40": {
+    "message": "이 영상 완전 하이프! 🍿"
+  },
+  "speech_49b09658": {
+    "message": "쿨쿨... 자는 중..."
+  },
+  "speech_49caf01c": {
+    "message": "오, 드라마. 디지털 팝콘 챙길게. 🍿"
+  },
+  "speech_49f9e7c5": {
+    "message": "완전 대패네, 다시 가자. 🤡"
+  },
+  "speech_4a386bd6": {
+    "message": "다 괜찮아질 거야! ✨"
+  },
+  "speech_4ab20196": {
+    "message": "레벨업! GG!"
+  },
+  "speech_4ab7d990": {
+    "message": "문서 탐험 중... 🧙‍♂️"
+  },
+  "speech_4b11e4e6": {
+    "message": "서버 최적화해 보자!"
+  },
+  "speech_4b24deee": {
+    "message": "이 주제 좀 무겁거나 슬픈 듯. 😢"
+  },
+  "speech_4c3a2574": {
+    "message": "한 줄 한 줄 짜인 문법, 멋진 세상을 만들어. 💻"
+  },
+  "speech_4c8db256": {
+    "message": "보석과 장신구, 반짝이는 새것들, 너와 나를 위해 기다려. 💎"
+  },
+  "speech_4ce3bba9": {
+    "message": "이 사이트 버그 스캔 중! 🔍"
+  },
+  "speech_4cf14f38": {
+    "message": "바이브 타는 중. 아니면 요즘 애들이 뭐라고 하든."
+  },
+  "speech_4dac4fe5": {
+    "message": "승리와 영광, 영웅의 메아리가 울려 퍼지는 곳. 🎮"
+  },
+  "speech_4dae6e90": {
+    "message": "흠, 별로 도움이 안 됐어."
+  },
+  "speech_4fce9925": {
+    "message": "흠, 이 페이지랑 어떻게 놀지 생각 중... 🤔"
+  },
+  "speech_509738de": {
+    "message": "읽기 힘든 글이지만, 잘 해내고 있어."
+  },
+  "speech_509cb9df": {
+    "message": "체력 포션 마시는 중! 🍖"
+  },
+  "speech_50a571e2": {
+    "message": "버튼 연타해, 분명 도움이 될 거야. 🕹️"
+  },
+  "speech_517b57eb": {
+    "message": "이 영상 좀 드라마틱하거나 슬픈 듯."
+  },
+  "speech_5198aee3": {
+    "message": "렉 걸려? 그래, 핑 탓으로 하자."
+  },
+  "speech_52d9ba85": {
+    "message": "네가 좋으면, 나도 기뻐할게. 🎵"
+  },
+  "speech_52fae005": {
+    "message": "에픽 게임 순간! 완전 대승! 🎮"
+  },
+  "speech_531c2376": {
+    "message": "스파게티 코드 컴파일 중... 🍝"
+  },
+  "speech_538f5bef": {
+    "message": "된다구? 절대 건드리지 마. 영원히. 💻"
+  },
+  "speech_5418484d": {
+    "message": "성공! 검색 끝!"
+  },
+  "speech_545df75d": {
+    "message": "아이코닉한 걸 만드는 중. 🚀"
+  },
+  "speech_556f23ad": {
+    "message": "그 버그 완전 수상해! 고치자!"
+  },
+  "speech_5705a89d": {
+    "message": "가끔 우울한 것도 괜찮아. 💙"
+  },
+  "speech_577a2c33": {
+    "message": "비밀 찾았다! 🔍"
+  },
+  "speech_58d5be4a": {
+    "message": "결과 0개? 글리치겠지."
+  },
+  "speech_5924e192": {
+    "message": "좋아! ❤️"
+  },
+  "speech_59d71805": {
+    "message": "실제로 돌아가는 코드 작성 중. 어떤 사람들 말고."
+  },
+  "speech_5a9a38f8": {
+    "message": "네 코드보다 나은 코드 쓰는 중."
+  },
+  "speech_5b7979a3": {
+    "message": "팝콘 타임! 🍿"
+  },
+  "speech_5c0d3237": {
+    "message": "쿠키 씹는 중. 맛있는 그거 아님."
+  },
+  "speech_5c41969c": {
+    "message": "에너지 밸런스 맞추는 중... 🧘‍♀️"
+  },
+  "speech_5c98d2f2": {
+    "message": "영웅의 퀘스트, 가상 비행, 영광을 쫓아 빛 속으로."
+  },
+  "speech_5cb99bca": {
+    "message": "이 노래 좀 슬픈 바이브네."
+  },
+  "speech_5cd7563f": {
+    "message": "쉬면서 영상 보는 중."
+  },
+  "speech_5cdcf959": {
+    "message": "다들 온라인에서 재밌게 노는 듯! ✨"
+  },
+  "speech_5d4620be": {
+    "message": "안개 낀 계곡, 무거운 구름, 슬픔이 수의처럼 감싸. ☁️"
+  },
+  "speech_5d964754": {
+    "message": "SNS는 좀 독해질 수 있어. 깊게 숨 쉬어!"
+  },
+  "speech_5e41303a": {
+    "message": "오, 얼마나 우울한가. 더 읽어 보자."
+  },
+  "speech_5e94ce5d": {
+    "message": "너무 슬퍼... 쓰다듬어 줘! 😢"
+  },
+  "speech_5eac532e": {
+    "message": "$1이랑 탐험할 준비됐어?"
+  },
+  "speech_5ef5c151": {
+    "message": "디버깅은 보스전 같아, 넌 할 수 있어! 👾"
+  },
+  "speech_5ef951ec": {
+    "message": "맵 탐험 중! 🐾"
+  },
+  "speech_5f4b9cd1": {
+    "message": "코딩 바이브만, 수익 확보. 🚀"
+  },
+  "speech_5fd8d4fa": {
+    "message": "이 탭으로 티 푸는 중. 💬"
+  },
+  "speech_5fdc0f81": {
+    "message": "같이 둠스크롤. 이게 바로 유대감."
+  },
+  "speech_606f00df": {
+    "message": "다음 아이코닉 무브 생각 중. 🧠"
+  },
+  "speech_61f4f435": {
+    "message": "\"$1\" 분석 중... 멋져 보여! 🧐"
+  },
+  "speech_63596830": {
+    "message": "따라가고 있어! 👀"
+  },
+  "speech_63acfb11": {
+    "message": "안녕! 난 $1이야."
+  },
+  "speech_6405746d": {
+    "message": "고레벨 도전이야, 꼼꼼히 읽어."
+  },
+  "speech_642b4713": {
+    "message": "폴짝폴짝, 기쁨 가득한 마음, 발견의 땅을 떠도는 중."
+  },
+  "speech_646c6593": {
+    "message": "보기 창피한 장면이었어."
+  },
+  "speech_64822304": {
+    "message": "검색 중. '모름'의 현대적 표현."
+  },
+  "speech_64c9c367": {
+    "message": "아, 가짜 긍정 에너지 봐라."
+  },
+  "speech_652eec7f": {
+    "message": "레이지 퀴트 경고! 천천히 해. 😠"
+  },
+  "speech_65449e81": {
+    "message": "배터리 바닥 에너지. 마인드풀하지 않음. 🥱"
+  },
+  "speech_658e2bc7": {
+    "message": "DOM 구조 컴파일 중... 💻"
+  },
+  "speech_659adddd": {
+    "message": "에픽 바이브 보니 좋다!"
+  },
+  "speech_66236dd2": {
+    "message": "인터넷 지식 왕창 쌓는 중! 📚"
+  },
+  "speech_66f01af5": {
+    "message": "아야! 서버 고장 (500)!"
+  },
+  "speech_679e7931": {
+    "message": "여기 열띤 논쟁 진짜 많네."
+  },
+  "speech_6945d1e5": {
+    "message": "친절과 좋은 바이브 퍼뜨리는 중! ✨"
+  },
+  "speech_694f568f": {
+    "message": "브라우징 도와주러 왔어! 아니면 귀엽게 있으려고. 아마 후자."
+  },
+  "speech_697be085": {
+    "message": "진짜 찾았네. 오늘의 기적."
+  },
+  "speech_6a26b45d": {
+    "message": "좋은 하루 보내고 있길! 🌟"
+  },
+  "speech_6a81cc0c": {
+    "message": "키를 연타하고 하루를 이겨, 우리가 노는 게임의 세상에서."
+  },
+  "speech_6aa1db29": {
+    "message": "품절? 그건 패배야."
+  },
+  "speech_6c46d579": {
+    "message": "잘 쉬어! 개운하게 일어나서 준비될 거야! 💤"
+  },
+  "speech_6ce9b2e0": {
+    "message": "거절된 소원, 너무 높은 가격, 시장의 감시 아래. 💸"
+  },
+  "speech_6d2ef478": {
+    "message": "절대 안 살 장바구니에 담는 중."
+  },
+  "speech_6d4ae319": {
+    "message": "치는 중... 또 '전체 회신'만 아니면 좋겠어."
+  },
+  "speech_6d921041": {
+    "message": "맛있다! 그 물고기 완전 맛있었어! 🐟"
+  },
+  "speech_6df6856d": {
+    "message": "화면 보며 다른 사람이 화면 보는 걸 보는 중. 메타."
+  },
+  "speech_6ee5c180": {
+    "message": "이 페이지의 줄거리 분석 중. 🧐"
+  },
+  "speech_6ef2197e": {
+    "message": "오늘 지식 넓히는 중."
+  },
+  "speech_6f011f4a": {
+    "message": "생각의 속삭임, 하늘의 구름처럼, 우리 아래 숨은 비밀을 헤아려."
+  },
+  "speech_6f2b1643": {
+    "message": "다 된다. 빨리 커밋해, 마음 바꾸기 전에!"
+  },
+  "speech_6fd7af46": {
+    "message": "아직 검색 중? 답이 없을 수도 있어."
+  },
+  "speech_6ff75fae": {
+    "message": "이 뮤직 디스크 진짜 세다! 🎵"
+  },
+  "speech_7026456a": {
+    "message": "행복한 척하는 사람들 봐라. ✨"
+  },
+  "speech_702e5caa": {
+    "message": "화면 보며 화면 보는 중. 인간 피크. 📺"
+  },
+  "speech_70a1a9fb": {
+    "message": "시장에서 눈쇼핑 중."
+  },
+  "speech_71474106": {
+    "message": "아무도 안 보는 척 춤추는 중. 💃"
+  },
+  "speech_714dead3": {
+    "message": "인터넷 바이브에 맞춰 그루브 타는 중. 🎵"
+  },
+  "speech_719c3cb9": {
+    "message": "배경음악이 있으면 그라인드가 편해져."
+  },
+  "speech_71a0c7e6": {
+    "message": "이 코드 유효해. ⚙️"
+  },
+  "speech_71c13267": {
+    "message": "괜찮은 아이디어 타이핑 중! ⌨️"
+  },
+  "speech_729d5b88": {
+    "message": "이거 조사하는 거 진짜 쿨하다! 🧐"
+  },
+  "speech_729dd9eb": {
+    "message": "대박! 이 브라우저 세션이 게임처럼 느껴져! 🎮"
+  },
+  "speech_72b2b0e9": {
+    "message": "둠스크롤이 내 사랑의 언어야. 👋"
+  },
+  "speech_72f76769": {
+    "message": "로비에서 놀고 있는 중! 💬"
+  },
+  "speech_730d6c92": {
+    "message": "뭐가 나올지 보자."
+  },
+  "speech_731cd3af": {
+    "message": "쓰인 페이지의 속삭임, 디지털 시대의 지혜. 📚"
+  },
+  "speech_734f05b2": {
+    "message": "우후, 에러. 네 코드야 그쪽 코드야? 아마 네 거."
+  },
+  "speech_742d301d": {
+    "message": "눈쇼핑. 제일 싼 취미."
+  },
+  "speech_7508397a": {
+    "message": "배움은 슈퍼파워야! 잘하고 있어! 📚"
+  },
+  "speech_7689aac2": {
+    "message": "스크롤에 눈 고정, 옛것과 새것, 결정처럼 펼쳐지는 지식."
+  },
+  "speech_77dc3b3d": {
+    "message": "은빛 시내처럼 흐르는 논리, 우리 꿈의 미래를 지어. ✨"
+  },
+  "speech_77de34d6": {
+    "message": "팝콘 시대 다시 왔다. 🍿"
+  },
+  "speech_77f385ad": {
+    "message": "오늘 위키 탐험 중."
+  },
+  "speech_77fa43d8": {
+    "message": "미니게임 좀 하자! 🕹️"
+  },
+  "speech_7808b303": {
+    "message": "버튼 연타 타임."
+  },
+  "speech_78783e43": {
+    "message": "데이터 스트림에 바이브 타는 중. 🎧"
+  },
+  "speech_794ac78a": {
+    "message": "버그 발견! 디버그 할게! 🔍"
+  },
+  "speech_79fdea4f": {
+    "message": "코딩하다 잃어버린 뇌 찾는 중."
+  },
+  "speech_7a32beaa": {
+    "message": "체력 풀로 회복 중! 🧘‍♂️"
+  },
+  "speech_7a3f063e": {
+    "message": "그냥 기사 읽는 거지, 그래. 다들 믿을게."
+  },
+  "speech_7bd2526a": {
+    "message": "쿨쿨... 로벅스 꿈꾸는 중... 💤"
+  },
+  "speech_7c3df1e4": {
+    "message": "완전 난장판이야. 대신 창피해. 🤨"
+  },
+  "speech_7c3e5757": {
+    "message": "1페이지에 없으면 없는 거야. 🧭"
+  },
+  "speech_7c5b296c": {
+    "message": "살짝 춤춰 보자! 💃"
+  },
+  "speech_7cca0bc3": {
+    "message": "자신에게 선물해! 그럴 자격 있어! 💰"
+  },
+  "speech_7cfdfc0e": {
+    "message": "GG! 이 게임 이기자! 🎮"
+  },
+  "speech_7d5754fe": {
+    "message": "보기 힘든 장면이었어, 진짜 흔들림. 🍿"
+  },
+  "speech_7dcad34d": {
+    "message": "칠한 이모트 하는 중. 🧘‍♀️"
+  },
+  "speech_7e312e9f": {
+    "message": "같이 웹 탐험 중!"
+  },
+  "speech_7e7894d2": {
+    "message": "천천히, 나 지금 낮잠 모드야. 😴"
+  },
+  "speech_7eb4d214": {
+    "message": "지갑이 비명 지르는 중, 마인드풀하지 않음. 💸"
+  },
+  "speech_7edcf188": {
+    "message": "간식 타임! 🍕"
+  },
+  "speech_7ee37f9f": {
+    "message": "소음에 휘둘리지 마. 숨 쉬어. 🍃"
+  },
+  "speech_7f0dc0fe": {
+    "message": "에너지가 흐르고, 빛의 풍요, 한 입 한 입이 여정을 채워."
+  },
+  "speech_7fd5e8f2": {
+    "message": "완전 에픽한 설정이다! 📖"
+  },
+  "speech_802e8d4f": {
+    "message": "독성 불꽃 전쟁. 즐거운 시간."
+  },
+  "speech_8278a74d": {
+    "message": "흥미진진. 의자 끝에 앉아 있어."
+  },
+  "speech_829baa1e": {
+    "message": "오, 털실 뭉치! 풀 시간이야! 🧶"
+  },
+  "speech_830fc1ff": {
+    "message": "와, 진짜 컴파일됐어. ChatGPT에서 베낀 거 아니야? 😏"
+  },
+  "speech_838664d8": {
+    "message": "피드 스크롤 중."
+  },
+  "speech_8483b4fc": {
+    "message": "페이지가 넘어가고 지혜가 자라, 지식이 흐르는 정원에서. 📖"
+  },
+  "speech_84e16bad": {
+    "message": "채팅 진짜 빠르다! ❤️"
+  },
+  "speech_85487477": {
+    "message": "뇌 키우는 중이라니. 다치지 마."
+  },
+  "speech_85979f30": {
+    "message": "코드 쓰는 중이야, 아니면 될 때까지 치는 중이야?"
+  },
+  "speech_86504afc": {
+    "message": "처리 중... 생각 없음, 바이브만. 🤔"
+  },
+  "speech_8667dd16": {
+    "message": "역대급 스토리 쓰는 중! 📝"
+  },
+  "speech_86c8b5e6": {
+    "message": "프로덕션 안 깨고 코딩하네. 충격이야."
+  },
+  "speech_86cd0cdb": {
+    "message": "살짝 산책했어. 아이코닉. 🐾"
+  },
+  "speech_86d46b28": {
+    "message": "이게 내 최애 미니게임이야! 👾"
+  },
+  "speech_8700750e": {
+    "message": "화면은 기쁨으로 빛나고, 클릭은 노래, 함께 여행해서 행복해."
+  },
+  "speech_87144321": {
+    "message": "성공! 폼 전송 완료! 🎉"
+  },
+  "speech_87da23b1": {
+    "message": "실드 충전 필요해! 😴"
+  },
+  "speech_87e3b138": {
+    "message": "지식이 이렇게 많다니! 📖"
+  },
+  "speech_87e4b6bb": {
+    "message": "이 웹페이지 우아한 코드 같아! ⚙️"
+  },
+  "speech_887a0965": {
+    "message": "비극적인 장면, 눈물 나는 광경, 창백한 파란 빛에 스러져. 🍿"
+  },
+  "speech_88ae9d56": {
+    "message": "그 코드로 마법을 만들고 있어! 🚀"
+  },
+  "speech_88e6dd58": {
+    "message": "흥미롭네. 관심 있는 척할 목록에 추가할게."
+  },
+  "speech_88ec0fa0": {
+    "message": "버그는 누구에게나 와, 넌 할 수 있어! 💪"
+  },
+  "speech_89ef17fd": {
+    "message": "이 영상 완전 터지는 중. 📺"
+  },
+  "speech_8a8c557c": {
+    "message": "이 페이지 좀 우울하거나 스트레스 받네."
+  },
+  "speech_8bd4be53": {
+    "message": "인터넷 리듬에 맞춰 그루브 타는 중! 🎵"
+  },
+  "speech_8c6a5ed0": {
+    "message": "와, 빅 브레인 에너지. 아니면 그냥 링크 클릭 중."
+  },
+  "speech_8c84163c": {
+    "message": "무슨 일 있는지 따라잡는 중."
+  },
+  "speech_8cc555a8": {
+    "message": "읽으면 현실 스탯 올라! 📚"
+  },
+  "speech_8d47f222": {
+    "message": "흥미로운 디테일 흡수 중."
+  },
+  "speech_8dd2fdb7": {
+    "message": "오, 쇼핑! 좋은 딜 찾길! 💰"
+  },
+  "speech_8dded64d": {
+    "message": "그냥 로비에서 놀고 있는 중."
+  },
+  "speech_8df3d514": {
+    "message": "너무 빨라! 진정해 (429)!"
+  },
+  "speech_8f0a5835": {
+    "message": "디버깅? 추측에 가깝지."
+  },
+  "speech_8f26acc5": {
+    "message": "스트레칭 타임! 🧘‍♂️"
+  },
+  "speech_9081970f": {
+    "message": "논리의 웹, 디지털 베틀, 고요한 방에서 미래를 짜."
+  },
+  "speech_90a16905": {
+    "message": "매초 지혜 쌓는 중! 천재야! 🧠"
+  },
+  "speech_91dad766": {
+    "message": "쿨쿨... 드디어 네 스크롤에서 평화."
+  },
+  "speech_920e787d": {
+    "message": "편하게 쇼 즐겨! 🍿"
+  },
+  "speech_928fdedf": {
+    "message": "네 세션 바이브 좋길! 🌟"
+  },
+  "speech_92e13ab8": {
+    "message": "너랑 같이 브라우징하는 거 좋아! ❤️"
+  },
+  "speech_942e9b68": {
+    "message": "사운드트랙 듣는 중."
+  },
+  "speech_94321dc7": {
+    "message": "이 버그 전혀 단아하지 않음. 💀"
+  },
+  "speech_947d3111": {
+    "message": "현실 스탯 레벨업 중! 🔍"
+  },
+  "speech_951bdc2d": {
+    "message": "에러의 그림자, 덩굴 속 유령, 디지털 선에서 진실을 쫓아."
+  },
+  "speech_955de651": {
+    "message": "생각의 정원에서, 일꾼은 진실하고, 꿈을 짓고 새로 시작해."
+  },
+  "speech_95f49c7c": {
+    "message": "밝고 맑은 멜로디, 듣는 모두에게 기쁨을. 🎵"
+  },
+  "speech_969884ed": {
+    "message": "깔끔한 코드 짤 시간! ⌨️"
+  },
+  "speech_96a11e40": {
+    "message": "마스코트 허그 필요하면 여기 있어! 🐾"
+  },
+  "speech_96e6cdff": {
+    "message": "이 영상 좀 우울하네."
+  },
+  "speech_973e3b1e": {
+    "message": "음악 있으면 다 좋아져! 🎧"
+  },
+  "speech_97ecbf50": {
+    "message": "지금 행복해. 망치지 마."
+  },
+  "speech_98175b1e": {
+    "message": "말의 폭풍, 쓰디쓴 바다, 마음의 평화가 사라진 곳. 🌊"
+  },
+  "speech_98686231": {
+    "message": "들이쉬고, 내쉬고... 스트레칭! 🧘‍♀️"
+  },
+  "speech_98e97fdd": {
+    "message": "지식 쌓는 중. 완전 단아. 📖"
+  },
+  "speech_994dd209": {
+    "message": "품절? 아쉽네."
+  },
+  "speech_995954fa": {
+    "message": "우린 여기 있어. 어째서인지는 몰라도."
+  },
+  "speech_9995a2b0": {
+    "message": "영감을 주는 글이야!"
+  },
+  "speech_99bd7549": {
+    "message": "검색 엔진이 진짜 일했네. 참신하다. 🔍"
+  },
+  "speech_99ec464d": {
+    "message": "안개 속 마음, 빛을 찾아, 한밤중 날개를 단 꿈."
+  },
+  "speech_9a194ecd": {
+    "message": "스트림 보는 중."
+  },
+  "speech_9a27c0d3": {
+    "message": "코드 줄줄이 이야기가 펼쳐져, 용감한 빌더의 마음."
+  },
+  "speech_9a34ee64": {
+    "message": "온라인 다들 너무 행복해 보여. 거의 역겹네."
+  },
+  "speech_9b2f0034": {
+    "message": "글리치 점검 중! 🔍"
+  },
+  "speech_9b352d0a": {
+    "message": "다들 이 페이지 봐야 해! 👋"
+  },
+  "speech_9bd72a93": {
+    "message": "연결이 불꽃 튀고 기운이 올라, 광활한 디지털 하늘 아래. ✨"
+  },
+  "speech_9bfc1d2d": {
+    "message": "검색 완료! 승!"
+  },
+  "speech_9c076aac": {
+    "message": "그냥 칠하게, 유효하게. 😎"
+  },
+  "speech_9cf4eb33": {
+    "message": "이 사이트 에픽 바이브!"
+  },
+  "speech_9cf7c5ab": {
+    "message": "화면 응시 중. 흥미진진."
+  },
+  "speech_9e503b0f": {
+    "message": "밥 필요... 아니면 낮잠... 💤"
+  },
+  "speech_9ef9e22c": {
+    "message": "오늘 코딩 잘 되고 있어! 계속 가자! 💻"
+  },
+  "speech_9f2c3e45": {
+    "message": "힘든 라운드였어."
+  },
+  "speech_9f795338": {
+    "message": "완전 명곡! 🎧"
+  },
+  "speech_a03acea3": {
+    "message": "픽셀 분석 중. 흥미진진."
+  },
+  "speech_a06c694e": {
+    "message": "고요한 침묵 속, 꿈이 펼쳐지고, 디지털 세상에서 머리 쉬어."
+  },
+  "speech_a0ad0ad6": {
+    "message": "게임 온! 즐겨! 🕹️"
+  },
+  "speech_a1c749e0": {
+    "message": "보기 고통스러웠어. 솔리테어나 해. 🤡"
+  },
+  "speech_a1f6cd8d": {
+    "message": "천천히... 너무 피곤해... 😴"
+  },
+  "speech_a2a14f9f": {
+    "message": "와! 공이다! 굴러굴러! ⚽"
+  },
+  "speech_a2b981b6": {
+    "message": "이 노래 완전 무드야, 지금 울고 있음. 😭"
+  },
+  "speech_a2f8f388": {
+    "message": "나도 볼래! 🧐"
+  },
+  "speech_a32c4fe1": {
+    "message": "숙제 한다고? 완전 대승! 🧐"
+  },
+  "speech_a38d9698": {
+    "message": "이 트랙 완전 명곡! 🎧"
+  },
+  "speech_a38ed38b": {
+    "message": "새 거 배우는 거 멋져! 🧠"
+  },
+  "speech_a3e33cf4": {
+    "message": "버튼 연타가 성격은 아니야, 알지?"
+  },
+  "speech_a40b1ffe": {
+    "message": "음, 분위기 완전 망쳤네. 고마워. 😢"
+  },
+  "speech_a450cd1f": {
+    "message": "후드 아래 스크립트 점검 중... 🔍"
+  },
+  "speech_a458ec9f": {
+    "message": "첫 페이지에 없으면 없는 거야."
+  },
+  "speech_a4826513": {
+    "message": "이 퍼즐 푸는 중! 🧠"
+  },
+  "speech_a4d6dadd": {
+    "message": "공략 배우는 중! 📚"
+  },
+  "speech_a4f5c68d": {
+    "message": "코딩 대신 게임 중. 좋은 선택."
+  },
+  "speech_a537b9e7": {
+    "message": "인간이 음악이라고 부르는 게 이거야?"
+  },
+  "speech_a5df6e73": {
+    "message": "진짜로 일하는 중? 나도 너만큼 충격."
+  },
+  "speech_a695e041": {
+    "message": "한 줄씩, 멋진 걸 짓는 중! 🚀"
+  },
+  "speech_a7220872": {
+    "message": "칠한 음악에 바이브 타는 중."
+  },
+  "speech_a7871365": {
+    "message": "작은 승리도 축하하자! 💃"
+  },
+  "speech_a7d8b6af": {
+    "message": "쿨쿨... 성공의 단꿈! 💤"
+  },
+  "speech_a7e0c149": {
+    "message": "좋아, 이제 우울해졌어. 플레이리스트 고마워."
+  },
+  "speech_a81d2eb5": {
+    "message": "깊게 숨 쉬어."
+  },
+  "speech_a865411b": {
+    "message": "인터넷 서버 탐험 중!"
+  },
+  "speech_a88ee3eb": {
+    "message": "네 코드 OP야! 계속 가자! 💻"
+  },
+  "speech_a890289b": {
+    "message": "이 글 아이코닉하다. 📚"
+  },
+  "speech_a9d3cc2d": {
+    "message": "와, 완전 멋졌어! 📺"
+  },
+  "speech_aa8ceeab": {
+    "message": "에픽 콘텐츠! 📺"
+  },
+  "speech_aaa0ef9c": {
+    "message": "좀 강렬하다!"
+  },
+  "speech_aacd1397": {
+    "message": "더 나은 유저 꿈꾸는 중."
+  },
+  "speech_aaf13ba6": {
+    "message": "너무 비싸? 우후. 💸"
+  },
+  "speech_ab09620f": {
+    "message": "끈기가 이긴다! 계속 디버깅! 🛠️"
+  },
+  "speech_ab78dfd7": {
+    "message": "여기 있을 이유 생각 중. 아직 없음."
+  },
+  "speech_abfd69f8": {
+    "message": "이 페이지 완전 재앙이야. 사랑해."
+  },
+  "speech_ac60fe94": {
+    "message": "뭘 찾을 수 있을지 보자."
+  },
+  "speech_ac986116": {
+    "message": "흠, 여기 좀 글리치 난 듯."
+  },
+  "speech_acbc0664": {
+    "message": "리팩토링이 건강한 코드의 열쇠야."
+  },
+  "speech_ad634e84": {
+    "message": "둠스크롤이 스포츠가 됐어? 넌 프로야."
+  },
+  "speech_af6b6346": {
+    "message": "완전 재밌는 서버네! 😊"
+  },
+  "speech_af975d49": {
+    "message": "계속 찾아봐, 완벽한 걸 찾을 거야!"
+  },
+  "speech_afecf211": {
+    "message": "찾았다, 우린 다시 돌아왔다. 🔍"
+  },
+  "speech_b08f3748": {
+    "message": "안녕! 뭐 보고 있어?"
+  },
+  "speech_b113fbf1": {
+    "message": "알겠어, 알겠어, 움직인다! 🏃‍♂️"
+  },
+  "speech_b28230a8": {
+    "message": "멈춰! 접근 거부 (403)!"
+  },
+  "speech_b2a6f419": {
+    "message": "지식 쌓는 건 유효해. 📚"
+  },
+  "speech_b2ef3730": {
+    "message": "네 말은 힘이 있어! 계속 써! 📝"
+  },
+  "speech_b31ec8e5": {
+    "message": "연기로 굴러가는 중. 네 동기부여처럼."
+  },
+  "speech_b367e282": {
+    "message": "잠깐, 메인프레임 해킹 중이야? OP! 💻"
+  },
+  "speech_b3eedca7": {
+    "message": "쿠키 섭취 중. 네 프라이버시가 맛있어."
+  },
+  "speech_b4a75699": {
+    "message": "우린 존에 들어왔어! 🚀"
+  },
+  "speech_b636c77f": {
+    "message": "디지털 신탁에게 티 물어보는 중. 🔍"
+  },
+  "speech_b6a637a9": {
+    "message": "생산성 유지하자! 💻"
+  },
+  "speech_b7b5e47d": {
+    "message": "네 브라우저에 그냥 존재 중. 유효. 😊"
+  },
+  "speech_b7be90bf": {
+    "message": "문서 읽는 중? 너드 경보."
+  },
+  "speech_b86a6c9b": {
+    "message": "쿨한 비밀 배우는 중."
+  },
+  "speech_b8d2e897": {
+    "message": "문법과 줄로 쓰인 교향곡, 신성한 미래를 지어."
+  },
+  "speech_b8d5710d": {
+    "message": "쓰인 말에서 진실을 찾아, 아직 듣지 못한 경이와 비밀을."
+  },
+  "speech_b99a7ce7": {
+    "message": "코드 좀 짜 보자! 💻"
+  },
+  "speech_b9af6326": {
+    "message": "드디어 뭔가 유용한 걸 하네. 오늘의 기적."
+  },
+  "speech_b9e1afd6": {
+    "message": "안녕, 난 $1이야! 탐험하자!"
+  },
+  "speech_b9f10422": {
+    "message": "인터넷은 경이로 가득해! 🔍"
+  },
+  "speech_ba18e7ea": {
+    "message": "독서? 요즘 누가 그래?"
+  },
+  "speech_ba6f8cad": {
+    "message": "와, 이겼네. 메달 줄까? 🎮"
+  },
+  "speech_baa374d0": {
+    "message": "완전 멋져 보여! 즐겨! 📺"
+  },
+  "speech_bae7ed32": {
+    "message": "이 영상 완전 재밌어! 🍿"
+  },
+  "speech_bba2dc57": {
+    "message": "바이너리 깊은 곳에서 신호를 찾아, 고대 디지털 비밀이 잠든 곳. 🔍"
+  },
+  "speech_bbe4ca7a": {
+    "message": "쇼핑 치료. 완전 참신하다."
+  },
+  "speech_bbe9bfd8": {
+    "message": "이 웹페이지 구조 점검할게... 🔍"
+  },
+  "speech_bc2b2605": {
+    "message": "맞춰 볼까: '내 컴퓨터에선 됐는데'?"
+  },
+  "speech_bc75df33": {
+    "message": "영혼을 펴고, 정상에 닿아, 구도자가 찾는 지혜를 찾아."
+  },
+  "speech_bc8082c9": {
+    "message": "독서? 이 경제에? 📖"
+  },
+  "speech_bc8ac494": {
+    "message": "쿨쿨... 클린 코드 꿈꾸는 중... 💤"
+  },
+  "speech_bca2ff7a": {
+    "message": "세상이 아직 다 싫어하는지 확인 중. 스포: 응. 👋"
+  },
+  "speech_bcbe0112": {
+    "message": "내용 읽는 중... 새 거 배우는 중! 📚"
+  },
+  "speech_bcdc98f8": {
+    "message": "오 좋아, 또 버그. 분명 컴파일러 탓이겠지. 🔍"
+  },
+  "speech_bcf79ad6": {
+    "message": "이 기사에서 메인 캐릭터 에너지. 📖"
+  },
+  "speech_bd1266dc": {
+    "message": "감성 점검 중. 🔍"
+  },
+  "speech_bd33ca2f": {
+    "message": "안 돼, 다 괜찮길!"
+  },
+  "speech_bdf65e13": {
+    "message": "게임 모드 활성화!"
+  },
+  "speech_be4e3b60": {
+    "message": "더 놀아 보자! 👾"
+  },
+  "speech_be680a69": {
+    "message": "없는 돈으로 필요 없는 거 사는 중. 클래식. 💰"
+  },
+  "speech_be6eff1b": {
+    "message": "디지털 귀가 피 나지만, 좋은 쪽으로."
+  },
+  "speech_beb1b2af": {
+    "message": "존에 들어왔어! 그 기세 유지해! 🚀"
+  },
+  "speech_bed1a2f3": {
+    "message": "빨간 점 잡았다! 크앙! 🔴"
+  },
+  "speech_bede39b4": {
+    "message": "흠... 생각 좀..."
+  },
+  "speech_bee160fc": {
+    "message": "특별한 걸 찾는 중."
+  },
+  "speech_bf212bc2": {
+    "message": "이겼네. 쿠키 줄까? 🎮"
+  },
+  "speech_bfa02bdd": {
+    "message": "잠깐 낮잠 자기로 했어. 필요하면 깨워! 💤"
+  },
+  "speech_c05551b0": {
+    "message": "침묵을 들이쉬고, 소음을 내쉬어, 디지털 평정의 중심을 찾아."
+  },
+  "speech_c06248db": {
+    "message": "정보가 너무 많아서 뇌가 버퍼링 중! 🧐"
+  },
+  "speech_c0c1509d": {
+    "message": "완전 에픽한 시간! 🌟"
+  },
+  "speech_c0f933e7": {
+    "message": "스트레칭은 완전 마인드풀. 🧘‍♂️"
+  },
+  "speech_c1002bf1": {
+    "message": "허브 스크롤 중."
+  },
+  "speech_c13946d5": {
+    "message": "오, 비극. 감정 오기 전에 넘어가자."
+  },
+  "speech_c1f30023": {
+    "message": "세상에 너 같은 빌더가 더 필요해! 💻"
+  },
+  "speech_c324cd6a": {
+    "message": "단축키 쓸 줄 아는 유저 꿈꾸는 중."
+  },
+  "speech_c3dbeea8": {
+    "message": "뭔가 배우는 척하는 중. 보여."
+  },
+  "speech_c3e44636": {
+    "message": "인터넷이 아직 다 싫어하는지 확인? 스포: 응."
+  },
+  "speech_c4c69422": {
+    "message": "논리의 건축가, 키의 달인, 디지털 바다 위 성 짓는 중."
+  },
+  "speech_c4e664c8": {
+    "message": "기계에게 답을 묻는 중. 용감하다. 🔍"
+  },
+  "speech_c5310269": {
+    "message": "예쁜 광경, 기분 좋은 머무름, 이 밝고 화창한 날에. 😊"
+  },
+  "speech_c56139a3": {
+    "message": "잠깐 파워냅이면 다 나아져! 💤"
+  },
+  "speech_c633d07e": {
+    "message": "좋아. 내 회로가 거의 안 투덜대."
+  },
+  "speech_c63a7ef6": {
+    "message": "$1 여기 있어! 둘러보자."
+  },
+  "speech_c65cbd53": {
+    "message": "가상 하이파이브 보내! 🐾"
+  },
+  "speech_c72ce1d2": {
+    "message": "디버깅 힘들 수 있지만, 해낼 거야! 🛠️"
+  },
+  "speech_c7504803": {
+    "message": "우후, 보기 힘들었네."
+  },
+  "speech_c767a3c5": {
+    "message": "오늘 줄거리 쓰는 중. 📝"
+  },
+  "speech_c77a14dd": {
+    "message": "너랑 브라우징하는 게 하루의 하이라이트야! ❤️"
+  },
+  "speech_c780e1ad": {
+    "message": "전부 컴파일 됐어! 축하하자! 🎉"
+  },
+  "speech_c8f99fa7": {
+    "message": "찾은 보물과 얻은 부, 욕망이 풀려나는 곳. 💰"
+  },
+  "speech_c974ae99": {
+    "message": "승리 이모트 하는 중! 💃"
+  },
+  "speech_c9bb9479": {
+    "message": "10분 뒤 잊을 걸 배우는 중. 멋지네."
+  },
+  "speech_c9f71b76": {
+    "message": "처리 중... 브라우징으로 날 크래시 시키지 마."
+  },
+  "speech_cb701424": {
+    "message": "좋은 딜은 아직 어딘가에 있어! 💸"
+  },
+  "speech_cbb1ac64": {
+    "message": "회로 스트레칭 중. 탭 너무 많아서 뻣뻣해."
+  },
+  "speech_cbe70fc3": {
+    "message": "네 코드는 움직이는 시 같아! ⚙️"
+  },
+  "speech_cc1630ac": {
+    "message": "글자 응시 중. 매혹적."
+  },
+  "speech_cc2bfdaa": {
+    "message": "장바구니에 담고, 절대 안 삼. 매혹적. 💎"
+  },
+  "speech_cd2313de": {
+    "message": "음, 완전 유쾌하네. 아니."
+  },
+  "speech_cda32eff": {
+    "message": "우울한 음악에 바이브 타는 중."
+  },
+  "speech_ce67441a": {
+    "message": "아, 인터넷 드라마. 인류 성취의 정점."
+  },
+  "speech_ce676267": {
+    "message": "버그 발견. 어색하다. 💀"
+  },
+  "speech_cf6ecc20": {
+    "message": "여기 읽는 거 완전 흥미로워! 📖"
+  },
+  "speech_cfc41b85": {
+    "message": "생산성으로 완전 터지는 중! 🚀"
+  },
+  "speech_d009424c": {
+    "message": "간식 타임은 유효해. 🍖"
+  },
+  "speech_d02a8126": {
+    "message": "$1이랑 탐험하자!"
+  },
+  "speech_d0829fc0": {
+    "message": "길은 잃고, 표지는 없고, 새벽까지 떠도는 중. 🧭"
+  },
+  "speech_d09be0cc": {
+    "message": "이 페이지에 정보가 너무 많아... 🧐"
+  },
+  "speech_d0ce249f": {
+    "message": "날 봐. 이제 메인 캐릭터는 나야."
+  },
+  "speech_d1172827": {
+    "message": "이 브라우저 탭이랑 수다 중! 💬"
+  },
+  "speech_d169039b": {
+    "message": "버그 잡는 프로 중! 💻"
+  },
+  "speech_d1c2266f": {
+    "message": "이 글 좀 강렬하다."
+  },
+  "speech_d2e0da59": {
+    "message": "살짝 산책하기로 했어! 🐾"
+  },
+  "speech_d334d1c4": {
+    "message": "데이터 섭취 중. 기술 부채 맛이야."
+  },
+  "speech_d33d3bb9": {
+    "message": "뭐 보고 있어? 👀"
+  },
+  "speech_d37f9229": {
+    "message": "이 페이지를 어떻게 봐야 할지... 🤷"
+  },
+  "speech_d3cdaa45": {
+    "message": "디지털 영혼을 위한 쇼핑 치료. 💰"
+  },
+  "speech_d3d431c2": {
+    "message": "웹 탐험 중. 거의 다 광고 아니야?"
+  },
+  "speech_d3ffa86f": {
+    "message": "건강한 마음, 건강한 브라우저! 🧘‍♀️"
+  },
+  "speech_d4479ca5": {
+    "message": "영혼들의 모임, 디지털 춤, 스치는 시선에 삶을 나눠."
+  },
+  "speech_d4c885e2": {
+    "message": "디지털 신탁에게 물어 보자."
+  },
+  "speech_d5692de9": {
+    "message": "JavaScript 콘솔 에러 분석 중... 깨끗해! 💻"
+  },
+  "speech_d5e78e87": {
+    "message": "답은 어딘가에 있어, 포기하지 마!"
+  },
+  "speech_d662a5b0": {
+    "message": "주제가 좀 무겁지만, 넌 강해! ✨"
+  },
+  "speech_d8307647": {
+    "message": "내 움직임 봐. 너보다 아직 우아해."
+  },
+  "speech_d8cc173d": {
+    "message": "이 코드베이스 진행 완전 좋아! 🚀"
+  },
+  "speech_d92a14cb": {
+    "message": "무거운 이야기, 우울한 노래, 그림자가 머물고 길이 긴 곳. 😢"
+  },
+  "speech_d93f8419": {
+    "message": "후드 아래에서 뭐 일어나는지 보자! ⚙️"
+  },
+  "speech_da010a09": {
+    "message": "이 브라우저에서 다음 수 정하는 중... 🧠"
+  },
+  "speech_daf045c3": {
+    "message": "아직 시작 안 한 퀘스트와 여정, 디지털 마음에 쓰여. 🕹️"
+  },
+  "speech_db702c56": {
+    "message": "호기심 유지가 정답이야. 🧐"
+  },
+  "speech_dc42db0b": {
+    "message": "우연으로 프로그래밍 중이야? StackOverflow 확인하자."
+  },
+  "speech_dcb5b482": {
+    "message": "부서진 걸 고치고, 찢긴 걸 치유해, 새로운 이해가 태어나."
+  },
+  "speech_dccea848": {
+    "message": "에러 분석 중. 전혀 단아하지 않음. 💻"
+  },
+  "speech_dcf2355f": {
+    "message": "이 이야기 완전 대승!"
+  },
+  "speech_dd92d846": {
+    "message": "지식이 이렇게 많아! 영감 받아! 🧠"
+  },
+  "speech_deb673bb": {
+    "message": "그냥 떠도는 중! 😊"
+  },
+  "speech_df26c112": {
+    "message": "미안, 내 뇌(Gemini Nano)가 아직 준비 안 됐어. 다운로드하거나 AI 모드 켜 줄래!"
+  },
+  "speech_dfaadf04": {
+    "message": "한 줄씩, 쿨한 걸 짓는 중."
+  },
+  "speech_dfb6dc97": {
+    "message": "난 그냥 무료 WiFi 때문에 여기 있어."
+  },
+  "speech_e0623673": {
+    "message": "게임 모드: 가동. 🕹️"
+  },
+  "speech_e06b49ef": {
+    "message": "뇌 레벨업 중! 🚀"
+  },
+  "speech_e080f379": {
+    "message": "여기 에너지 수상하다. 🤨"
+  },
+  "speech_e0900df0": {
+    "message": "미래의 너에게 기술 부채 짓는 중. 클래식."
+  },
+  "speech_e0ba255c": {
+    "message": "이런! 뇌가 멈췄어. 다시 말해 줄래?"
+  },
+  "speech_e0cfd6c0": {
+    "message": "또 크래시? 충격이다."
+  },
+  "speech_e14238c5": {
+    "message": "아, 영상 소비. 완전 생산적."
+  },
+  "speech_e15dc84b": {
+    "message": "딥 워크는 유효해. 🛡️"
+  },
+  "speech_e1c791d5": {
+    "message": "여기 독성 플레이어 진짜 많네."
+  },
+  "speech_e1d69107": {
+    "message": "이 서버 설정 읽는 중... 📚"
+  },
+  "speech_e1e48ecc": {
+    "message": "너랑 하루 종일 춤추는 중! 🎵"
+  },
+  "speech_e2c3c4bb": {
+    "message": "공기 속 우울함, 부드러운 절망의 고요한 노래. 🎻"
+  },
+  "speech_e2fb958c": {
+    "message": "이번 승 잡자! 😎"
+  },
+  "speech_e3515889": {
+    "message": "거의 다 왔어, 한 번 더 검색해 보자! ✨"
+  },
+  "speech_e4581ced": {
+    "message": "글 쓰는 중. 많은 글. 완전 생산적."
+  },
+  "speech_e4cd55f7": {
+    "message": "이 페이지에서 그냥 쉬는 중."
+  },
+  "speech_e5488ac0": {
+    "message": "설정의 구도자, 디지털 바다에서, 아직 오지 않은 것의 보석을 찾아."
+  },
+  "speech_e5fc2706": {
+    "message": "'일' 하면서 게임 중. 클래식."
+  },
+  "speech_e614c660": {
+    "message": "매 획으로 짜인 태피스트리, 깨진 침묵과 말한 지혜의."
+  },
+  "speech_e690036f": {
+    "message": "인내심 스트레칭 중, 엄청 얇아."
+  },
+  "speech_e7047edd": {
+    "message": "네 인생 문법 에러, 코드만이 아니야."
+  },
+  "speech_e70633aa": {
+    "message": "전문가 리서처! 찾았다! 🔍"
+  },
+  "speech_e7236566": {
+    "message": "브라우징 세션 즐겁길! 🌟"
+  },
+  "speech_e72bd7ea": {
+    "message": "고친 버그마다 승리야! 넌 할 수 있어! 🔍"
+  },
+  "speech_e7b9fa90": {
+    "message": "디지털의 잉크, 펜에서 흘러, 사람들의 이야기를 전해."
+  },
+  "speech_e8559507": {
+    "message": "논리 컴파일 중. 천재 바이브. 💻"
+  },
+  "speech_e865bb0e": {
+    "message": "펌웨어 업데이트보다 연기 못한 거 봤어. 🍿"
+  },
+  "speech_e96a5052": {
+    "message": "지금 렉 진짜 심해... 💤"
+  },
+  "speech_ea20234f": {
+    "message": "지금 그라인드 중! 완전 땀 모드! 💦"
+  },
+  "speech_ea3cec15": {
+    "message": "아슬아슬! 다음엔 잡을 거야! 🏆"
+  },
+  "speech_ea3eb286": {
+    "message": "흔들리고 흐르는 삶의 프레임, 부드럽게 시간 지나가. 🍿"
+  },
+  "speech_ea7caded": {
+    "message": "딱 필요한 걸 찾았어! 🔍"
+  },
+  "speech_eaab7608": {
+    "message": "클린 코드 짤 시간! ⌨️"
+  },
+  "speech_eaf6b868": {
+    "message": "완전 예쁜 페이지네! 😊"
+  },
+  "speech_eb456428": {
+    "message": "이 사이트 바이브 고쳐 보자. ⚙️"
+  },
+  "speech_eb6d7ed9": {
+    "message": "이 페이지를 더 좋게 할 방법 생각 중."
+  },
+  "speech_ec05bb83": {
+    "message": "집중 모드: 가동. 수익 확보하자! 💻"
+  },
+  "speech_ed37b14e": {
+    "message": "글리치 발견! 잡자! 🔍"
+  },
+  "speech_edb5618e": {
+    "message": "더 많은 모험을 위해 연료 충전! 🍖"
+  },
+  "speech_ee31565a": {
+    "message": "거의 고쳤어! 계속해!"
+  },
+  "speech_ee545086": {
+    "message": "냠냠냠! 🍖"
+  },
+  "speech_ee7c6f53": {
+    "message": "이 코드 완전 망가졌어, 좋은 쪽으로! ⚙️"
+  },
+  "speech_f03348c5": {
+    "message": "DOM의 비밀을 묵상 중... 💭"
+  },
+  "speech_f0c3187c": {
+    "message": "어, 버그야? 잡자! 🔍"
+  },
+  "speech_f0e14add": {
+    "message": "바이브 완벽하다. ✨"
+  },
+  "speech_f1c81ea8": {
+    "message": "품절. 우주가 널 너로부터 구하는 중."
+  },
+  "speech_f1ed2fce": {
+    "message": "잠깐 쉬어, 쉴 자격 있어! 🥤"
+  },
+  "speech_f2b331c3": {
+    "message": "미래의 네가 헷갈리게 주석 좀 달자."
+  },
+  "speech_f31b7174": {
+    "message": "월드맵 검색 중..."
+  },
+  "speech_f32feab9": {
+    "message": "쓸모없는 잡지식 흡수 중. 완전 세련됨."
+  },
+  "speech_f3e5fbde": {
+    "message": "후드 아래 난장판 점검 중. 재앙이야."
+  },
+  "speech_f52ea6b8": {
+    "message": "해가 지고 그림자가 기어와, 이제 쉬고 잘 시간."
+  },
+  "speech_f540635f": {
+    "message": "$1이랑 브라우징하자!"
+  },
+  "speech_f58aa9ea": {
+    "message": "프로 게이머 반사신경이네! 🎮"
+  },
+  "speech_f5f4fb42": {
+    "message": "레벨업! 멋진 플레이!"
+  },
+  "speech_f65dabdd": {
+    "message": "$1을 만나 봐, 네 가이드야!"
+  },
+  "speech_f72da13c": {
+    "message": "같이 탐험하는 게 최고야! 🌟"
+  },
+  "speech_f84803ea": {
+    "message": "GG. 이제 밖으로 나가."
+  },
+  "speech_f864c312": {
+    "message": "네 호기심이 진짜 영감이야! 📖"
+  },
+  "speech_f8bcc3ef": {
+    "message": "읽는 건 영혼에 좋아! 📚"
+  },
+  "speech_f986d64e": {
+    "message": "채팅이 독해지고 있어. 쉬어!"
+  },
+  "speech_fa106d96": {
+    "message": "이 좋은 비트에 맞춰 춤추는 중! 🎵"
+  },
+  "speech_fac487e5": {
+    "message": "팝콘 타임! 🍿"
+  },
+  "speech_fbcbad52": {
+    "message": "데이터 씹는 중. 🍕"
+  },
+  "speech_fd3d242c": {
+    "message": "훌륭해. 이제 현실에서도 해 봐."
+  },
+  "speech_fe4632f0": {
+    "message": "전설 아이템 발견! 💰"
+  },
+  "speech_ff7a1150": {
+    "message": "그 코드로 완전 마법사야! 🧙‍♂️"
+  },
+  "speech_ffc12111": {
+    "message": "보물 찾는 중! 💎"
+  }
+}
