@@ -149,6 +149,20 @@ function refreshLocalizedUI(): void {
 
   updatePresence();
 
+  // Toggle titles that are set from JS (not only data-i18n-title).
+  if (soundToggle) {
+    soundToggle.title = supportsLocalAiRuntime ? '' : t('options_soundUnavailable');
+  }
+  if (aiToggle) {
+    aiToggle.title = supportsLocalAiRuntime ? '' : tOr('options_localAiUnavailable', 'Local AI requires Chrome offscreen documents.');
+  }
+
+  // Chat placeholder (may have been overwritten by speech recognition).
+  const chatInput = document.getElementById('chat-input') as HTMLInputElement | null;
+  if (chatInput && !chatInput.disabled) {
+    chatInput.placeholder = t('options_typeMessage');
+  }
+
   if (personality) {
     updateUIStats(personality.stats);
     updateUIMood(currentMoodState);
@@ -1617,7 +1631,7 @@ function applySettings(settings: PetSettings | undefined) {
   const sound = supportsLocalAiRuntime && (activeSettings.soundEnabled ?? true);
   soundToggle.checked = sound;
   soundToggle.disabled = !supportsLocalAiRuntime;
-  soundToggle.title = supportsLocalAiRuntime ? '' : 'Sound playback requires Chrome offscreen documents.';
+  soundToggle.title = supportsLocalAiRuntime ? '' : t('options_soundUnavailable');
   if (sound) {
     volumeContainer.classList.remove('hidden');
   } else {
@@ -1634,7 +1648,7 @@ function applySettings(settings: PetSettings | undefined) {
 
   aiToggle.checked = supportsLocalAiRuntime && (activeSettings.aiMode ?? false);
   aiToggle.disabled = !supportsLocalAiRuntime;
-  aiToggle.title = supportsLocalAiRuntime ? '' : 'Local AI requires Chrome offscreen documents.';
+  aiToggle.title = supportsLocalAiRuntime ? '' : tOr('options_localAiUnavailable', 'Local AI requires Chrome offscreen documents.');
   if (aiToggle.checked) {
     aiTuningContainer.classList.remove('hidden');
   } else {

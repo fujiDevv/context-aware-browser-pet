@@ -3583,5 +3583,8 @@
   },
   "options_runtimeLite": {
     "message": "लाइट"
+  },
+  "options_localAiUnavailable": {
+    "message": "लोकल AI के लिए Chrome ऑफ़स्क्रीन दस्तावेज़ आवश्यक हैं।"
   }
 }

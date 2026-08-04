@@ -3583,5 +3583,8 @@
   },
   "options_runtimeLite": {
     "message": "Lite"
+  },
+  "options_localAiUnavailable": {
+    "message": "로컬 AI는 Chrome 오프스크린 문서가 필요합니다."
   }
 }

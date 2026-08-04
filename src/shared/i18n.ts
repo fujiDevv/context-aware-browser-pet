@@ -86,18 +86,20 @@ export function localizePage(): void {
     // keep default
   }
 
-  const apply = (selector: string, setter: (el: HTMLElement, msg: string) => void): void => {
-    document.querySelectorAll<HTMLElement>(selector).forEach((el) => {
-      const key = el.getAttribute(selector.slice(1));
+  const apply = (attr: string, setter: (el: HTMLElement, msg: string) => void): void => {
+    document.querySelectorAll<HTMLElement>(`[${attr}]`).forEach((el) => {
+      const key = el.getAttribute(attr);
       if (!key) return;
       const msg = t(key);
       if (msg) setter(el, msg);
     });
   };
 
-  apply('[data-i18n]', (el, msg) => { el.textContent = msg; });
-  apply('[data-i18n-html]', (el, msg) => { el.innerHTML = msg; });
-  apply('[data-i18n-placeholder]', (el, msg) => { el.setAttribute('placeholder', msg); });
-  apply('[data-i18n-title]', (el, msg) => { el.setAttribute('title', msg); });
-  apply('[data-i18n-alt]', (el, msg) => { el.setAttribute('alt', msg); });
+  // NOTE: pass the attribute name (not a CSS selector). Using selector.slice(1)
+  // previously produced "data-i18n]" and silently skipped every element.
+  apply('data-i18n', (el, msg) => { el.textContent = msg; });
+  apply('data-i18n-html', (el, msg) => { el.innerHTML = msg; });
+  apply('data-i18n-placeholder', (el, msg) => { el.setAttribute('placeholder', msg); });
+  apply('data-i18n-title', (el, msg) => { el.setAttribute('title', msg); });
+  apply('data-i18n-alt', (el, msg) => { el.setAttribute('alt', msg); });
 }

@@ -158,7 +158,7 @@ async function init(): Promise<void> {
         const nanoText = document.getElementById('nano-status-text');
         if (nanoBadge && nanoText) {
           nanoBadge.className = 'ai-status-badge status-unsupported';
-          nanoText.textContent = 'Nano: Unsupported';
+          nanoText.textContent = t('popup_nanoUnsupported');
         }
       });
   };
@@ -581,10 +581,35 @@ async function init(): Promise<void> {
 
     if (changes[STORAGE_KEYS.SETTINGS]) {
       const newSettings = changes[STORAGE_KEYS.SETTINGS].newValue;
+      const oldSettings = changes[STORAGE_KEYS.SETTINGS].oldValue;
+      const languageChanged =
+        (oldSettings?.language ?? 'auto') !== (newSettings?.language ?? 'auto');
+
       if (newSettings?.name) {
         (document.getElementById('pet-name') as HTMLElement).textContent = newSettings.name;
       }
       currentCostume = newSettings?.costume;
+
+      const refreshPopupLocale = async () => {
+        if (languageChanged) {
+          await applyForcedLocale(newSettings?.language).catch(() => {});
+          localizePage();
+          // Re-apply dynamic strings that overwrite data-i18n nodes.
+          if (currentHostname && siteSubtitle) {
+            siteSubtitle.textContent = t('popup_disableOnSite', currentHostname);
+          }
+          await updateStatusIndicators();
+          extensionApi.storage.local.get<Record<string, any>>([STORAGE_KEYS.STATS, STORAGE_KEYS.MOOD])
+            .then((res) => {
+              updateUIStats(newStats || res[STORAGE_KEYS.STATS]);
+              updateUIMood(res[STORAGE_KEYS.MOOD] || 'happy', currentCostume, customColor);
+            })
+            .catch((e) => {
+              console.warn('[Arcrawls Popup] Failed to refresh UI after language change:', e);
+            });
+        }
+      };
+      void refreshPopupLocale();
       
       // Re-evaluate color on settings change
       extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.STATS).then((res) => {
@@ -626,12 +651,13 @@ async function init(): Promise<void> {
     sendToActiveTab(type);
 
     btn.setAttribute('disabled', 'true');
-    const originalText = btn.textContent;
+    const labelKey = btn.getAttribute('data-i18n');
     btn.textContent = t('shared_waiting');
     
     setTimeout(() => {
       btn.removeAttribute('disabled');
-      btn.textContent = originalText;
+      // Restore localized label (not a stale pre-language-switch string).
+      if (labelKey) btn.textContent = t(labelKey);
     }, 3000);
   };
 

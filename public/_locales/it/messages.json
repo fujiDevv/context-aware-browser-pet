@@ -3583,5 +3583,8 @@
   },
   "options_runtimeLite": {
     "message": "Lite"
+  },
+  "options_localAiUnavailable": {
+    "message": "L'IA locale richiede i documenti offscreen di Chrome."
   }
 }

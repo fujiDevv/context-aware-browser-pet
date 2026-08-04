@@ -3583,5 +3583,8 @@
   },
   "options_runtimeLite": {
     "message": "精简版"
+  },
+  "options_localAiUnavailable": {
+    "message": "本地 AI 需要 Chrome 离屏文档支持。"
   }
 }

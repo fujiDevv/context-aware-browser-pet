@@ -3583,5 +3583,8 @@
   },
   "options_runtimeLite": {
     "message": "Lite"
+  },
+  "options_localAiUnavailable": {
+    "message": "ローカルAIにはChromeのオフスクリーンドキュメントが必要です。"
   }
 }
