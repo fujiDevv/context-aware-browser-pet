@@ -3541,5 +3541,47 @@
   },
   "speech_ffc12111": {
     "message": "보물 찾는 중! 💎"
+  },
+  "options_interfaceLanguage": {
+    "message": "인터페이스 언어",
+    "description": "Label for the forced interface language selector"
+  },
+  "options_languageAuto": {
+    "message": "자동 (브라우저 언어)",
+    "description": "Option meaning: follow the browser UI language"
+  },
+  "options_languageHint": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span>가 UI와 말풍선에 사용할 언어를 선택하세요.",
+    "description": "Hint under the language selector"
+  },
+  "options_customColorUnlocked": {
+    "message": "커스텀 마스코트 색상"
+  },
+  "options_idleOver45s": {
+    "message": "방치 > 45초"
+  },
+  "options_errorsBlock": {
+    "message": "오류"
+  },
+  "options_monthsJuneAugust": {
+    "message": "6월 - 8월"
+  },
+  "options_monthOctober": {
+    "message": "10월"
+  },
+  "options_monthDecember": {
+    "message": "12월"
+  },
+  "options_am": {
+    "message": "오전"
+  },
+  "options_pm": {
+    "message": "오후"
+  },
+  "options_runtimeLocalAi": {
+    "message": "로컬 AI"
+  },
+  "options_runtimeLite": {
+    "message": "Lite"
   }
 }

@@ -3541,5 +3541,47 @@
   },
   "speech_ffc12111": {
     "message": "बस खजाने ढूँढ रहा हूँ! 💎"
+  },
+  "options_interfaceLanguage": {
+    "message": "इंटरफ़ेस भाषा",
+    "description": "Label for the forced interface language selector"
+  },
+  "options_languageAuto": {
+    "message": "स्वचालित (ब्राउज़र भाषा)",
+    "description": "Option meaning: follow the browser UI language"
+  },
+  "options_languageHint": {
+    "message": "वह भाषा चुनें जो <span class=\"pet-name-display\">Arcrawls</span> अपने UI और बुलबुलों के लिए उपयोग करता है।",
+    "description": "Hint under the language selector"
+  },
+  "options_customColorUnlocked": {
+    "message": "कस्टम मस्कट रंग"
+  },
+  "options_idleOver45s": {
+    "message": "निष्क्रिय > 45से"
+  },
+  "options_errorsBlock": {
+    "message": "त्रुटियाँ"
+  },
+  "options_monthsJuneAugust": {
+    "message": "जून - अगस्त"
+  },
+  "options_monthOctober": {
+    "message": "अक्टूबर"
+  },
+  "options_monthDecember": {
+    "message": "दिसंबर"
+  },
+  "options_am": {
+    "message": "पूर्वाह्न"
+  },
+  "options_pm": {
+    "message": "अपराह्न"
+  },
+  "options_runtimeLocalAi": {
+    "message": "लोकल AI"
+  },
+  "options_runtimeLite": {
+    "message": "लाइट"
   }
 }

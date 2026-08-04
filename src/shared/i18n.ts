@@ -1,14 +1,33 @@
 import { extensionApi } from './platform';
+import { getEffectiveUILanguage, getForcedCatalog } from './locale';
 
 /**
  * Localized string helpers built on chrome.i18n / browser.i18n.
  *
  * Message keys live in `_locales/<lang>/messages.json` and use underscores
  * (dots are not permitted in Chrome i18n message key names).
+ *
+ * When the user forces a language (see `src/shared/locale.ts`), lookups are
+ * served from that locale's catalog first; otherwise `chrome.i18n` (the
+ * browser UI language) is used.
  */
+
+/** Applies `$N` substitutions to a plain message string (forced-catalog path). */
+function applySubstitutions(message: string, substitutions?: string | string[]): string {
+  if (!substitutions) return message;
+  const subs = Array.isArray(substitutions) ? substitutions : [substitutions];
+  return message.replace(/\$(\d)/g, (match, index: string) => subs[Number(index) - 1] ?? match);
+}
 
 /** Returns the localized message for `key`, or '' if missing. */
 export function t(key: string, substitutions?: string | string[]): string {
+  const forcedCatalog = getForcedCatalog();
+  if (forcedCatalog) {
+    const forced = forcedCatalog[key];
+    if (forced !== undefined) {
+      return applySubstitutions(forced, substitutions);
+    }
+  }
   try {
     return extensionApi.i18n.getMessage(key, substitutions) || '';
   } catch {
@@ -61,7 +80,7 @@ export function getTraitName(trait: string, fallback: string): string {
  */
 export function localizePage(): void {
   try {
-    const uiLang = extensionApi.i18n.getUILanguage();
+    const uiLang = getEffectiveUILanguage();
     if (uiLang) document.documentElement.lang = uiLang;
   } catch {
     // keep default

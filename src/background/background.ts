@@ -2,6 +2,7 @@ import { SharedPetState, OriginPetState } from '../shared/types';
 import { STORAGE_KEYS } from '../shared/constants';
 import { PersonalitySystem } from '../core/personality';
 import { extensionApi, supportsOffscreenDocuments, isFirefoxRuntime } from '../shared/platform';
+import { fetchLocaleCatalog } from '../shared/locale';
 
 let sharedPetState: SharedPetState = {
   x: 200,
@@ -164,6 +165,23 @@ let lastSyncTime = 0;
 let syncTimeout: ReturnType<typeof setTimeout> | null = null;
 
 extensionApi.runtime.onMessage?.addListener((message, sender, sendResponse) => {
+  if (message.type === 'get-locale-catalog') {
+    // Content scripts cannot fetch _locales/*, so the background serves the
+    // flattened catalog for the requested locale (or null for 'auto').
+    const locale: string | undefined = message.locale;
+    if (!locale || locale === 'auto') {
+      sendResponse({ catalog: null });
+      return false;
+    }
+    fetchLocaleCatalog(locale)
+      .then((catalog) => sendResponse({ catalog }))
+      .catch((err) => {
+        console.warn('[Arcrawls Background] Failed to load locale catalog:', err);
+        sendResponse({ catalog: null });
+      });
+    return true;
+  }
+
   if (message.type === 'record-site-visit') {
     backgroundPersonality.recordSiteVisit(message.category, message.sentiment).catch(e => {
       console.warn('[Arcrawls Background] Failed to record site visit:', e);

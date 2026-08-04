@@ -3544,5 +3544,47 @@
   },
   "speech_ffc12111": {
     "message": "Just looking for treasures! 💎"
+  },
+  "options_interfaceLanguage": {
+    "message": "Interface Language",
+    "description": "Label for the forced interface language selector"
+  },
+  "options_languageAuto": {
+    "message": "Auto (Browser Language)",
+    "description": "Option meaning: follow the browser UI language"
+  },
+  "options_languageHint": {
+    "message": "Choose the language <span class=\"pet-name-display\">Arcrawls</span> uses for its UI and speech bubbles.",
+    "description": "Hint under the language selector"
+  },
+  "options_customColorUnlocked": {
+    "message": "Custom Mascot Color"
+  },
+  "options_idleOver45s": {
+    "message": "Idle > 45s"
+  },
+  "options_errorsBlock": {
+    "message": "Errors"
+  },
+  "options_monthsJuneAugust": {
+    "message": "June - August"
+  },
+  "options_monthOctober": {
+    "message": "October"
+  },
+  "options_monthDecember": {
+    "message": "December"
+  },
+  "options_am": {
+    "message": "AM"
+  },
+  "options_pm": {
+    "message": "PM"
+  },
+  "options_runtimeLocalAi": {
+    "message": "Local AI"
+  },
+  "options_runtimeLite": {
+    "message": "Lite"
   }
 }

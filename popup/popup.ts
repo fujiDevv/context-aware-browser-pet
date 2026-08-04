@@ -3,6 +3,7 @@ import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName } from '../
 import { STORAGE_KEYS } from '../src/shared/constants';
 import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/shared/platform';
 import { t, getMoodName, getTraitName, localizePage } from '../src/shared/i18n';
+import { applyForcedLocale } from '../src/shared/locale';
 
 localizePage();
 
@@ -10,6 +11,15 @@ const supportsLocalAiRuntime = supportsOffscreenDocuments();
 const isFirefoxBuild = isFirefoxRuntime();
 
 async function init(): Promise<void> {
+  // Apply any forced interface language before rendering.
+  try {
+    const saved = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
+    await applyForcedLocale(saved[STORAGE_KEYS.SETTINGS]?.language);
+    localizePage();
+  } catch (e) {
+    console.warn('[Arcrawls Popup] Failed to apply forced locale:', e);
+  }
+
   let blockedDomains: string[] = [];
 
   const statsEl = {

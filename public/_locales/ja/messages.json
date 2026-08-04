@@ -3541,5 +3541,47 @@
   },
   "speech_ffc12111": {
     "message": "ただ宝物を探してるだけ！💎"
+  },
+  "options_interfaceLanguage": {
+    "message": "表示言語",
+    "description": "Label for the forced interface language selector"
+  },
+  "options_languageAuto": {
+    "message": "自動（ブラウザーの言語）",
+    "description": "Option meaning: follow the browser UI language"
+  },
+  "options_languageHint": {
+    "message": "<span class=\"pet-name-display\">Arcrawls</span> がUIと吹き出しで使う言語を選択します。",
+    "description": "Hint under the language selector"
+  },
+  "options_customColorUnlocked": {
+    "message": "マスコットのカスタムカラー"
+  },
+  "options_idleOver45s": {
+    "message": "放置 > 45秒"
+  },
+  "options_errorsBlock": {
+    "message": "エラー"
+  },
+  "options_monthsJuneAugust": {
+    "message": "6月〜8月"
+  },
+  "options_monthOctober": {
+    "message": "10月"
+  },
+  "options_monthDecember": {
+    "message": "12月"
+  },
+  "options_am": {
+    "message": "午前"
+  },
+  "options_pm": {
+    "message": "午後"
+  },
+  "options_runtimeLocalAi": {
+    "message": "ローカルAI"
+  },
+  "options_runtimeLite": {
+    "message": "Lite"
   }
 }

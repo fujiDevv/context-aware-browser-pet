@@ -73,6 +73,8 @@ export interface PetSettings {
   flightSpeed?: number;
   customColor?: string;
   chatVoice?: string;
+  /** Forced UI/speech language code (e.g. 'es', 'zh_CN') or 'auto' for browser language. */
+  language?: string;
   performanceMode?: boolean;
   ghostMode?: boolean;
 }

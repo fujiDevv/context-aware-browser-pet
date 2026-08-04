@@ -5,7 +5,9 @@ import { EMOTIONS_METADATA, getDominantTrait, getResolvedCostumeName, parseMarkd
 import { getDailyInsight, getAiChatResponse } from '../src/core/ai';
 import { MovementEngine } from '../src/core/movement';
 import { extensionApi, getRuntimeUrl, isFirefoxRuntime, supportsOffscreenDocuments } from '../src/shared/platform';
-import { t, getMoodName, getTraitName, localizePage } from '../src/shared/i18n';
+import { t, tOr, getMoodName, getTraitName, localizePage } from '../src/shared/i18n';
+import { applyForcedLocale, SUPPORTED_LOCALES, AUTO_LOCALE } from '../src/shared/locale';
+import { speech } from '../src/shared/speech-i18n';
 
 localizePage();
 
@@ -32,6 +34,130 @@ function updatePetNameDisplays(name: string) {
   document.querySelectorAll('.pet-name-display').forEach(el => {
     el.textContent = safeName;
   });
+}
+
+/**
+ * `localizePage()` rewrites `data-i18n-html` labels and recreates nested spans
+ * like `#size-val`. Re-query those nodes and restore the live slider values so
+ * updates keep targeting the elements currently in the document.
+ */
+function rebindLiveValueElements(): void {
+  sizeVal = document.getElementById('size-val') as HTMLElement;
+  speedVal = document.getElementById('speed-val') as HTMLElement;
+  flightSpeedVal = document.getElementById('flight-speed-val') as HTMLElement;
+  volumeVal = document.getElementById('volume-val') as HTMLElement;
+  aiSensitivityVal = document.getElementById('ai-sensitivity-val') as HTMLElement;
+  aiFrequencyVal = document.getElementById('ai-frequency-val') as HTMLElement;
+
+  if (sizeVal && sizeSlider) sizeVal.textContent = `${sizeSlider.value}px`;
+  if (speedVal && speedSlider) {
+    speedVal.textContent = `${(Number(speedSlider.value) / 10).toFixed(1)}x`;
+  }
+  if (flightSpeedVal && flightSpeedSlider) {
+    flightSpeedVal.textContent = `${(Number(flightSpeedSlider.value) / 10).toFixed(1)}x`;
+  }
+  if (volumeVal && volumeSlider) volumeVal.textContent = `${volumeSlider.value}%`;
+  if (aiSensitivityVal && aiSensitivitySlider) {
+    aiSensitivityVal.textContent = `${aiSensitivitySlider.value}%`;
+  }
+  if (aiFrequencyVal && aiFrequencySlider) {
+    aiFrequencyVal.textContent = `${aiFrequencySlider.value}s`;
+  }
+}
+
+/** Format a 0–23 hour using localized AM/PM labels. */
+function formatHourLocalized(h: number): string {
+  const ampm = h >= 12 ? t('options_pm') : t('options_am');
+  const displayHour = h % 12 === 0 ? 12 : h % 12;
+  return `${displayHour} ${ampm}`;
+}
+
+/** Update the schedule-guide time blocks from the planner selects. */
+function updateScheduleGuideTimes(): void {
+  const uiScheduleSleep = document.getElementById('ui-schedule-sleep');
+  const uiScheduleYoga = document.getElementById('ui-schedule-yoga');
+  const sleepStart = Number(sleepStartSelect?.value ?? 22);
+  const sleepEnd = Number(sleepEndSelect?.value ?? 6);
+  const workStart = Number(workStartSelect?.value ?? 9);
+  if (uiScheduleSleep) {
+    uiScheduleSleep.textContent = `${formatHourLocalized(sleepStart)} - ${formatHourLocalized(sleepEnd)}`;
+  }
+  if (uiScheduleYoga) {
+    uiScheduleYoga.textContent = `${formatHourLocalized(sleepEnd)} - ${formatHourLocalized(workStart)}`;
+  }
+}
+
+/**
+ * Re-apply all locale-dependent UI after the forced language catalog changes.
+ * Static `data-i18n*` markup is handled by `localizePage()`; everything built
+ * or overwritten in JS must be rebuilt here.
+ */
+function refreshLocalizedUI(): void {
+  const languageValue = languageSelect?.value || AUTO_LOCALE;
+  const chatVoiceValue = chatVoiceSelect?.value || '';
+
+  localizePage();
+  rebindLiveValueElements();
+  updatePetNameDisplays(nameInput?.value?.trim() || 'Arcrawls');
+
+  // Preserve planner hour selections while rebuilding localized AM/PM labels.
+  const hourValues = {
+    sleepStart: sleepStartSelect?.value,
+    sleepEnd: sleepEndSelect?.value,
+    workStart: workStartSelect?.value,
+    workEnd: workEndSelect?.value,
+    focusStart: focusStartSelect?.value,
+    focusEnd: focusEndSelect?.value,
+  };
+  populateHourSelects();
+  if (sleepStartSelect && hourValues.sleepStart) sleepStartSelect.value = hourValues.sleepStart;
+  if (sleepEndSelect && hourValues.sleepEnd) sleepEndSelect.value = hourValues.sleepEnd;
+  if (workStartSelect && hourValues.workStart) workStartSelect.value = hourValues.workStart;
+  if (workEndSelect && hourValues.workEnd) workEndSelect.value = hourValues.workEnd;
+  if (focusStartSelect) focusStartSelect.value = hourValues.focusStart ?? '';
+  if (focusEndSelect) focusEndSelect.value = hourValues.focusEnd ?? '';
+  updateScheduleGuideTimes();
+
+  populateLanguages();
+  if (languageSelect) languageSelect.value = languageValue;
+
+  populateVoices();
+  if (chatVoiceSelect && chatVoiceValue) chatVoiceSelect.value = chatVoiceValue;
+
+  // Action buttons: only restore when not mid-cooldown countdown.
+  const btnPet = document.getElementById('btn-pet') as HTMLButtonElement | null;
+  const btnFeed = document.getElementById('btn-feed') as HTMLButtonElement | null;
+  const btnShoo = document.getElementById('btn-shoo') as HTMLButtonElement | null;
+  if (btnPet && !btnPet.disabled) btnPet.innerHTML = t('options_petAction');
+  if (btnFeed && !btnFeed.disabled) btnFeed.textContent = t('options_feedSnack');
+  if (btnShoo && !btnShoo.disabled) btnShoo.textContent = t('options_shooAway');
+
+  const versionEl = document.getElementById('version-string');
+  if (versionEl) {
+    try {
+      const manifest = extensionApi.runtime.getManifest();
+      const version = manifest?.version ?? '';
+      // Match init(): Chrome full build shows "Local AI", otherwise "Lite"/Firefox Lite.
+      const runtimeMode = isFirefoxBuild
+        ? t('popup_firefoxLite')
+        : (supportsLocalAiRuntime ? tOr('options_runtimeLocalAi', 'Local AI') : tOr('options_runtimeLite', 'Lite'));
+      versionEl.textContent = t('options_versionFormat', [version, runtimeMode]);
+    } catch {
+      // ignore
+    }
+  }
+
+  updatePresence();
+
+  if (personality) {
+    updateUIStats(personality.stats);
+    updateUIMood(currentMoodState);
+    updateLocalAiStatus();
+    updateSynapseUI(personality.stats);
+    renderBlocklist();
+    renderDomainReactions();
+    renderWardrobe(personality.stats, activeCostume, seasonalToggle?.checked ?? true);
+  }
 }
 
 // Elements
@@ -91,13 +217,16 @@ const milestonesList = document.getElementById('milestones-list') as HTMLElement
 // Inputs
 const nameInput = document.getElementById('pet-name-input') as HTMLInputElement;
 const sizeSlider = document.getElementById('size-slider') as HTMLInputElement;
-const sizeVal = document.getElementById('size-val') as HTMLElement;
+// Live value spans are recreated by localizePage() when data-i18n-html rewrites their
+// parent labels — keep these rebindable so slider handlers never write to detached nodes.
+let sizeVal = document.getElementById('size-val') as HTMLElement;
 const speedSlider = document.getElementById('speed-slider') as HTMLInputElement;
-const speedVal = document.getElementById('speed-val') as HTMLElement;
+let speedVal = document.getElementById('speed-val') as HTMLElement;
 const flightSpeedSlider = document.getElementById('flight-speed-slider') as HTMLInputElement;
-const flightSpeedVal = document.getElementById('flight-speed-val') as HTMLElement;
+let flightSpeedVal = document.getElementById('flight-speed-val') as HTMLElement;
 const personaSelect = document.getElementById('persona-select') as HTMLSelectElement;
 const chatVoiceSelect = document.getElementById('chat-voice-select') as HTMLSelectElement;
+const languageSelect = document.getElementById('language-select') as HTMLSelectElement;
 const soundToggle = document.getElementById('sound-toggle') as HTMLInputElement;
 const aiToggle = document.getElementById('ai-toggle') as HTMLInputElement;
 const scheduleToggle = document.getElementById('schedule-toggle') as HTMLInputElement;
@@ -106,7 +235,7 @@ const performanceModeToggle = document.getElementById('performance-mode-toggle')
 const ghostModeToggle = document.getElementById('ghost-mode-toggle') as HTMLInputElement;
 const volumeContainer = document.getElementById('volume-container') as HTMLElement;
 const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
-const volumeVal = document.getElementById('volume-val') as HTMLElement;
+let volumeVal = document.getElementById('volume-val') as HTMLElement;
 
 // Color Picker Elements
 const petColorInput = document.getElementById('pet-color-input') as HTMLInputElement;
@@ -115,9 +244,9 @@ const btnResetColor = document.getElementById('btn-reset-color') as HTMLButtonEl
 // AI Tuning
 const aiTuningContainer = document.getElementById('ai-tuning-container') as HTMLElement;
 const aiSensitivitySlider = document.getElementById('ai-sensitivity-slider') as HTMLInputElement;
-const aiSensitivityVal = document.getElementById('ai-sensitivity-val') as HTMLElement;
+let aiSensitivityVal = document.getElementById('ai-sensitivity-val') as HTMLElement;
 const aiFrequencySlider = document.getElementById('ai-frequency-slider') as HTMLInputElement;
-const aiFrequencyVal = document.getElementById('ai-frequency-val') as HTMLElement;
+let aiFrequencyVal = document.getElementById('ai-frequency-val') as HTMLElement;
 
 // AI Status Elements
 const statusBert = document.getElementById('status-bert') as HTMLElement;
@@ -212,6 +341,12 @@ async function init() {
   blockedDomains = storageData[STORAGE_KEYS.SETTINGS]?.blockedDomains || [];
   domainReactions = storageData[STORAGE_KEYS.SETTINGS]?.domainReactions || [];
 
+  // Apply any forced interface language before localizing/rendering.
+  await applyForcedLocale(storageData[STORAGE_KEYS.SETTINGS]?.language);
+  localizePage();
+  rebindLiveValueElements();
+  updatePetNameDisplays(storageData[STORAGE_KEYS.SETTINGS]?.name || 'Arcrawls');
+
   populateHourSelects();
   applySettings(storageData[STORAGE_KEYS.SETTINGS]);
 
@@ -253,7 +388,9 @@ async function init() {
   const versionEl = document.getElementById('version-display');
   const manifest = extensionApi.runtime.getManifest();
   if (versionEl && manifest) {
-    const runtimeMode = supportsLocalAiRuntime ? 'Local AI' : 'Lite';
+    const runtimeMode = supportsLocalAiRuntime
+      ? tOr('options_runtimeLocalAi', 'Local AI')
+      : tOr('options_runtimeLite', 'Lite');
     versionEl.textContent = t('options_versionFormat', [manifest.version, runtimeMode]);
   }
 
@@ -273,17 +410,17 @@ async function init() {
 
   btnPet?.addEventListener('click', () => {
     if (btnPet.hasAttribute('disabled')) return;
-    triggerPetAction('pet', 'love', 'petting', 'Purrrr... ❤️');
+    triggerPetAction('pet', 'love', 'petting', speech('Purrrr... ❤️'));
   });
 
   btnFeed?.addEventListener('click', () => {
     if (btnFeed.hasAttribute('disabled')) return;
-    triggerPetAction('feed', 'eating', 'feeding', 'Munch munch! 🍕');
+    triggerPetAction('feed', 'eating', 'feeding', speech('Munch munch! 🍕'));
   });
 
   btnShoo?.addEventListener('click', () => {
     if (btnShoo.hasAttribute('disabled')) return;
-    triggerPetAction('shoo', 'cool', 'shoo', 'Shoo! 🏃‍♂️');
+    triggerPetAction('shoo', 'cool', 'shoo', speech('Shoo! 🏃‍♂️'));
   });
 
   // Chat Panel Logic
@@ -674,11 +811,21 @@ async function init() {
   personaSelect.addEventListener('change', saveSettings);
   chatVoiceSelect.addEventListener('change', saveSettings);
 
+  languageSelect.addEventListener('change', async () => {
+    await saveSettings();
+    await applyForcedLocale(languageSelect.value);
+    refreshLocalizedUI();
+  });
+
   // Planner change listeners
-  sleepStartSelect.addEventListener('change', saveSettings);
-  sleepEndSelect.addEventListener('change', saveSettings);
-  workStartSelect.addEventListener('change', saveSettings);
-  workEndSelect.addEventListener('change', saveSettings);
+  const onPlannerChange = () => {
+    saveSettings();
+    updateScheduleGuideTimes();
+  };
+  sleepStartSelect.addEventListener('change', onPlannerChange);
+  sleepEndSelect.addEventListener('change', onPlannerChange);
+  workStartSelect.addEventListener('change', onPlannerChange);
+  workEndSelect.addEventListener('change', onPlannerChange);
   focusActiveToggle.addEventListener('change', saveSettings);
   focusStartSelect.addEventListener('change', saveSettings);
   focusEndSelect.addEventListener('change', saveSettings);
@@ -1042,7 +1189,9 @@ function updateUIStats(stats: PetStats | undefined): void {
     petColorInput.disabled = !colorUnlocked;
     const label = document.querySelector('label[for="pet-color-input"]');
     if (label) {
-      label.textContent = colorUnlocked ? 'Custom Mascot Color' : 'Custom Mascot Color (Unlocked at LVL 15)';
+      label.textContent = colorUnlocked
+        ? t('options_customColorUnlocked')
+        : t('options_customColor');
     }
   }
   if (btnResetColor) btnResetColor.disabled = !colorUnlocked;
@@ -1419,13 +1568,7 @@ function applySettings(settings: PetSettings | undefined) {
 
   activeCostume = activeSettings.costume || 'none';
 
-  // Apply dynamic times to the Schedule Guide
-  const formatHour = (h: number) => {
-    const ampm = h >= 12 ? 'PM' : 'AM';
-    const displayHour = h % 12 === 0 ? 12 : h % 12;
-    return `${displayHour} ${ampm}`;
-  };
-
+  // Apply dynamic times to the Schedule Guide (localized AM/PM)
   const uiScheduleSleep = document.getElementById('ui-schedule-sleep');
   const uiScheduleYoga = document.getElementById('ui-schedule-yoga');
   const sleepStart = activeSettings.sleepStartHour ?? 22;
@@ -1433,11 +1576,11 @@ function applySettings(settings: PetSettings | undefined) {
   const workStart = activeSettings.workStartHour ?? 9;
 
   if (uiScheduleSleep) {
-    uiScheduleSleep.textContent = `${formatHour(sleepStart)} - ${formatHour(sleepEnd)}`;
+    uiScheduleSleep.textContent = `${formatHourLocalized(sleepStart)} - ${formatHourLocalized(sleepEnd)}`;
   }
   if (uiScheduleYoga) {
     // Yoga is typically the hour after waking up until work starts (or just a 1-3 hr block)
-    uiScheduleYoga.textContent = `${formatHour(sleepEnd)} - ${formatHour(workStart)}`;
+    uiScheduleYoga.textContent = `${formatHourLocalized(sleepEnd)} - ${formatHourLocalized(workStart)}`;
   }
 
   // Apply costume glows to the preview image in the sanctuary stage
@@ -1468,6 +1611,8 @@ function applySettings(settings: PetSettings | undefined) {
   } else {
     chatVoiceSelect.value = '';
   }
+
+  languageSelect.value = activeSettings.language || AUTO_LOCALE;
 
   const sound = supportsLocalAiRuntime && (activeSettings.soundEnabled ?? true);
   soundToggle.checked = sound;
@@ -1523,8 +1668,8 @@ function applySettings(settings: PetSettings | undefined) {
   renderWardrobe(personality?.stats, activeCostume, seasonalToggle.checked);
 }
 
-function saveSettings() {
-  extensionApi.storage.local.set({
+function saveSettings(): Promise<void> {
+  return extensionApi.storage.local.set({
     [STORAGE_KEYS.SETTINGS]: {
       size: Number(sizeSlider.value),
       speed: Number(speedSlider.value) / 10,
@@ -1553,7 +1698,8 @@ function saveSettings() {
       domainReactions: domainReactions,
       sentimentSensitivity: Number(aiSensitivitySlider.value),
       commentFrequency: Number(aiFrequencySlider.value),
-      customColor: petColorInput.value
+      customColor: petColorInput.value,
+      language: languageSelect.value
     }
   });
 }
@@ -1919,15 +2065,18 @@ function importProfile(e: Event) {
   reader.readAsText(file);
 }
 
-const COSTUMES_METADATA = [
-  { id: 'none', name: t('options_costumeDefault'), desc: t('options_costumeDefaultDesc'), unlockLevel: 0, seasonal: false, image: 'happy' },
-  { id: 'detective', name: t('options_costumeDetective'), desc: t('options_costumeDetectiveDesc'), unlockLevel: 5, seasonal: false, image: 'detective' },
-  { id: 'wizard', name: t('options_costumeWizard'), desc: t('options_costumeWizardDesc'), unlockLevel: 10, seasonal: false, image: 'magic' },
-  { id: 'party', name: t('options_costumeParty'), desc: t('options_costumePartyDesc'), unlockLevel: 15, seasonal: false, image: 'rainbow' },
-  { id: 'christmas', name: t('options_costumeChristmas'), desc: t('options_costumeChristmasDesc'), unlockLevel: 0, seasonal: true, image: 'christmas' },
-  { id: 'halloween', name: t('options_costumeHalloween'), desc: t('options_costumeHalloweenDesc'), unlockLevel: 0, seasonal: true, image: 'halloween' },
-  { id: 'summer', name: t('options_costumeSummer'), desc: t('options_costumeSummerDesc'), unlockLevel: 0, seasonal: true, image: 'summer' }
-];
+/** Costume metadata — resolved at render time so names follow the forced locale. */
+function getCostumesMetadata() {
+  return [
+    { id: 'none', name: t('options_costumeDefault'), desc: t('options_costumeDefaultDesc'), unlockLevel: 0, seasonal: false, image: 'happy' },
+    { id: 'detective', name: t('options_costumeDetective'), desc: t('options_costumeDetectiveDesc'), unlockLevel: 5, seasonal: false, image: 'detective' },
+    { id: 'wizard', name: t('options_costumeWizard'), desc: t('options_costumeWizardDesc'), unlockLevel: 10, seasonal: false, image: 'magic' },
+    { id: 'party', name: t('options_costumeParty'), desc: t('options_costumePartyDesc'), unlockLevel: 15, seasonal: false, image: 'rainbow' },
+    { id: 'christmas', name: t('options_costumeChristmas'), desc: t('options_costumeChristmasDesc'), unlockLevel: 0, seasonal: true, image: 'christmas' },
+    { id: 'halloween', name: t('options_costumeHalloween'), desc: t('options_costumeHalloweenDesc'), unlockLevel: 0, seasonal: true, image: 'halloween' },
+    { id: 'summer', name: t('options_costumeSummer'), desc: t('options_costumeSummerDesc'), unlockLevel: 0, seasonal: true, image: 'summer' }
+  ];
+}
 
 function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string, seasonalEnabled: boolean = true) {
   const wardrobeGrid = document.getElementById('wardrobe-grid') as HTMLElement;
@@ -1937,7 +2086,7 @@ function renderWardrobe(stats: PetStats | undefined, activeCostumeId: string, se
   const level = stats?.level || 1;
   const hasPrestige = stats?.prestige && stats.prestige > 0;
 
-  COSTUMES_METADATA.forEach(item => {
+  getCostumesMetadata().forEach(item => {
     const isUnlocked = level >= item.unlockLevel || !!hasPrestige;
     const isWearing = activeCostumeId === item.id;
     const isSeasonalDisabled = item.seasonal && !seasonalEnabled;
@@ -2024,11 +2173,9 @@ function populateHourSelects() {
     }
 
     for (let h = 0; h < 24; h++) {
-      const ampm = h >= 12 ? 'PM' : 'AM';
-      const displayHour = h % 12 === 0 ? 12 : h % 12;
       const opt = document.createElement('option');
       opt.value = String(h);
-      opt.textContent = `${displayHour} ${ampm}`;
+      opt.textContent = formatHourLocalized(h);
       select.appendChild(opt);
     }
   });
@@ -2159,15 +2306,15 @@ function renderAnalyticsCharts(stats: PetStats) {
         <!-- Legend -->
         <rect x="${width - padding - 85}" y="5" width="80" height="85" rx="4" fill="var(--bg-card)" opacity="0.8" />
         <circle cx="${width - padding - 75}" cy="15" r="4" fill="var(--pink)" />
-        <text x="${width - padding - 65}" y="19" fill="var(--text-color)" font-size="10">Happiness</text>
+        <text x="${width - padding - 65}" y="19" fill="var(--text-color)" font-size="10">${escapeHtml(t('stat_happiness'))}</text>
         <circle cx="${width - padding - 75}" cy="31" r="4" fill="var(--yellow)" />
-        <text x="${width - padding - 65}" y="35" fill="var(--text-color)" font-size="10">Energy</text>
+        <text x="${width - padding - 65}" y="35" fill="var(--text-color)" font-size="10">${escapeHtml(t('stat_energy'))}</text>
         <circle cx="${width - padding - 75}" cy="47" r="4" fill="var(--blue)" />
-        <text x="${width - padding - 65}" y="51" fill="var(--text-color)" font-size="10">Curiosity</text>
+        <text x="${width - padding - 65}" y="51" fill="var(--text-color)" font-size="10">${escapeHtml(t('stat_curiosity'))}</text>
         <circle cx="${width - padding - 75}" cy="63" r="4" fill="var(--green)" />
-        <text x="${width - padding - 65}" y="67" fill="var(--text-color)" font-size="10">Focus</text>
+        <text x="${width - padding - 65}" y="67" fill="var(--text-color)" font-size="10">${escapeHtml(t('stat_focus'))}</text>
         <circle cx="${width - padding - 75}" cy="79" r="4" fill="var(--indigo)" />
-        <text x="${width - padding - 65}" y="83" fill="var(--text-color)" font-size="10">Leisure</text>
+        <text x="${width - padding - 65}" y="83" fill="var(--text-color)" font-size="10">${escapeHtml(t('stat_leisure'))}</text>
       </svg>
     `;
   }
@@ -2193,9 +2340,28 @@ function populateVoices() {
   }
 }
 
+function populateLanguages() {
+  const currentValue = languageSelect.value;
+  // Keep the "Auto (Browser Language)" option as the first entry.
+  languageSelect.innerHTML = `<option value="${AUTO_LOCALE}" data-i18n="options_languageAuto">${t('options_languageAuto')}</option>`;
+
+  SUPPORTED_LOCALES.forEach((locale) => {
+    const option = document.createElement('option');
+    option.value = locale.code;
+    option.textContent = locale.nativeName;
+    languageSelect.appendChild(option);
+  });
+
+  if (currentValue) {
+    languageSelect.value = currentValue;
+  }
+}
+
 if ('speechSynthesis' in window) {
   populateVoices();
   window.speechSynthesis.onvoiceschanged = populateVoices;
 }
+
+populateLanguages();
 
 document.addEventListener('DOMContentLoaded', init);

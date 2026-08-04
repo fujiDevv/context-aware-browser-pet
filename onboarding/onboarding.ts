@@ -1,7 +1,15 @@
 import { extensionApi } from '../src/shared/platform';
 import { t, localizePage } from '../src/shared/i18n';
+import { applyForcedLocale } from '../src/shared/locale';
+import { STORAGE_KEYS } from '../src/shared/constants';
 
 localizePage();
+
+// Apply any forced interface language before the onboarding flow starts.
+extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then(async (data) => {
+  await applyForcedLocale(data[STORAGE_KEYS.SETTINGS]?.language);
+  localizePage();
+}).catch(() => {});
 
 (function () {
   'use strict';

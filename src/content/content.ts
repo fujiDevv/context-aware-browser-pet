@@ -13,6 +13,7 @@ import { getResolvedCostumeName } from '../ui/shared-ui';
 import { isFocusActive, isSleeping } from '../core/schedule';
 import { extensionApi, getRuntimeUrl } from '../shared/platform';
 import { speech } from '../shared/speech-i18n';
+import { applyForcedLocaleViaMessage } from '../shared/locale';
 
 const BRIDGE_TOKEN = Math.random().toString(36).substring(2) + Date.now().toString(36);
 setBridgeToken(BRIDGE_TOKEN);
@@ -1180,6 +1181,8 @@ async function loadAndApplySettings(): Promise<void> {
     const saved = await extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS);
     if (saved[STORAGE_KEYS.SETTINGS]) {
       currentSettings = { ...currentSettings, ...saved[STORAGE_KEYS.SETTINGS] };
+      // Content scripts cannot fetch _locales/* directly; ask the background for the catalog.
+      await applyForcedLocaleViaMessage(currentSettings.language).catch(() => {});
       if (isInitialized) {
         personality.disabledEmotions = currentSettings.disabledEmotions || [];
         movement.updateSettings({
@@ -1210,7 +1213,11 @@ function handleStorageChanged(changes: Record<string, StorageChange>) {
   if (changes[STORAGE_KEYS.SETTINGS]) {
     const newSettings = changes[STORAGE_KEYS.SETTINGS].newValue;
     if (newSettings) {
+      const languageChanged = (changes[STORAGE_KEYS.SETTINGS].oldValue?.language ?? 'auto') !== (newSettings.language ?? 'auto');
       currentSettings = { ...currentSettings, ...newSettings };
+      if (languageChanged) {
+        applyForcedLocaleViaMessage(currentSettings.language).catch(() => {});
+      }
       if (isInitialized) {
         personality.disabledEmotions = currentSettings.disabledEmotions || [];
         movement.updateSettings({

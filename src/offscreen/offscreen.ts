@@ -3,6 +3,8 @@ import { pipeline, env } from '@huggingface/transformers';
 import { detectPageCategory, mapActivityToEmotion, AI_COMMENTS } from '../core/rules';
 import { extensionApi, getRuntimeUrl } from '../shared/platform';
 import { speech } from '../shared/speech-i18n';
+import { applyForcedLocale } from '../shared/locale';
+import { STORAGE_KEYS } from '../shared/constants';
 
 // Configure ONNX Runtime to load WASM binaries locally from the extension.
 // Must point at the asyncify variant — Chrome offscreen docs are not cross-origin isolated.
@@ -26,6 +28,11 @@ interface TextClassificationResult {
 }
 
 type ClassifierPipeline = (text: string) => Promise<TextClassificationResult[]>;
+
+// Apply any forced interface language so localized AI comments match the user's choice.
+extensionApi.storage.local.get<Record<string, any>>(STORAGE_KEYS.SETTINGS).then(async (data) => {
+  await applyForcedLocale(data[STORAGE_KEYS.SETTINGS]?.language);
+}).catch(() => {});
 
 let classifier: ClassifierPipeline | null = null;
 let modelLoadingState: 'idle' | 'loading' | 'ready' | 'error' = 'idle';

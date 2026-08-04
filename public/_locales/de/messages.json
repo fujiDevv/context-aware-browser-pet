@@ -3541,5 +3541,47 @@
   },
   "speech_ffc12111": {
     "message": "Ich suche nur nach Schätzen! 💎"
+  },
+  "options_interfaceLanguage": {
+    "message": "Sprache der Oberfläche",
+    "description": "Label for the forced interface language selector"
+  },
+  "options_languageAuto": {
+    "message": "Automatisch (Browsersprache)",
+    "description": "Option meaning: follow the browser UI language"
+  },
+  "options_languageHint": {
+    "message": "Wähle die Sprache, die <span class=\"pet-name-display\">Arcrawls</span> für die Oberfläche und Sprechblasen verwendet.",
+    "description": "Hint under the language selector"
+  },
+  "options_customColorUnlocked": {
+    "message": "Benutzerdefinierte Maskottchenfarbe"
+  },
+  "options_idleOver45s": {
+    "message": "Inaktiv > 45s"
+  },
+  "options_errorsBlock": {
+    "message": "Fehler"
+  },
+  "options_monthsJuneAugust": {
+    "message": "Juni - August"
+  },
+  "options_monthOctober": {
+    "message": "Oktober"
+  },
+  "options_monthDecember": {
+    "message": "Dezember"
+  },
+  "options_am": {
+    "message": "AM"
+  },
+  "options_pm": {
+    "message": "PM"
+  },
+  "options_runtimeLocalAi": {
+    "message": "Lokale KI"
+  },
+  "options_runtimeLite": {
+    "message": "Lite"
   }
 }

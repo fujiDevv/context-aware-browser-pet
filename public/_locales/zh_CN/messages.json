@@ -3541,5 +3541,47 @@
   },
   "speech_ffc12111": {
     "message": "只是在寻宝！💎"
+  },
+  "options_interfaceLanguage": {
+    "message": "界面语言",
+    "description": "Label for the forced interface language selector"
+  },
+  "options_languageAuto": {
+    "message": "自动（浏览器语言）",
+    "description": "Option meaning: follow the browser UI language"
+  },
+  "options_languageHint": {
+    "message": "选择 <span class=\"pet-name-display\">Arcrawls</span> 在界面和气泡中使用的语言。",
+    "description": "Hint under the language selector"
+  },
+  "options_customColorUnlocked": {
+    "message": "自定义吉祥物颜色"
+  },
+  "options_idleOver45s": {
+    "message": "空闲 > 45秒"
+  },
+  "options_errorsBlock": {
+    "message": "错误"
+  },
+  "options_monthsJuneAugust": {
+    "message": "六月 - 八月"
+  },
+  "options_monthOctober": {
+    "message": "十月"
+  },
+  "options_monthDecember": {
+    "message": "十二月"
+  },
+  "options_am": {
+    "message": "上午"
+  },
+  "options_pm": {
+    "message": "下午"
+  },
+  "options_runtimeLocalAi": {
+    "message": "本地 AI"
+  },
+  "options_runtimeLite": {
+    "message": "精简版"
   }
 }

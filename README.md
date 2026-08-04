@@ -106,6 +106,26 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   ---
 
+  ## 🌍 Localization
+
+Arcrawls ships with full interface and pet-speech localization in **10 languages**:
+
+  | Code | Language | | Code | Language |
+  |------|----------|-|------|----------|
+  | `en` | English | | `ja` | 日本語 (Japanese) |
+  | `es` | Español (Spanish) | | `zh_CN` | 中文（简体） (Simplified Chinese) |
+  | `fr` | Français (French) | | `ko` | 한국어 (Korean) |
+  | `de` | Deutsch (German) | | `hi` | हिन्दी (Hindi) |
+  | `it` | Italiano (Italian) | | `pt_BR` | Português (Brasil) |
+
+  **How it works**:
+  - By default, Arcrawls follows your **browser's UI language** (`chrome.i18n`).
+  - Open the **Sanctuary → Mascot & Style** page and use the **Interface Language** dropdown to force a specific language — the dashboard, popup, onboarding, the pet's speech bubbles, and AI reaction comments all switch instantly.
+  - Each locale lives in `public/_locales/<code>/messages.json`. UI strings use named keys (e.g. `options_*`), while the pet's dialogue uses hash-derived keys (`speech_<fnv1a32>`), authored in English in code and extracted by `scripts/gen-speech-keys.mjs`.
+  - To add a new language: create `public/_locales/<code>/messages.json` with the full key set (copy from `en` as a starting point), add it to `SUPPORTED_LOCALES` in `src/shared/locale.ts`, then run `node scripts/gen-speech-keys.mjs` and `node scripts/merge-speech.mjs <code>` to sync the `speech_*` keys.
+
+  ---
+
   ## License & Noncommercial Usage
 
 This project is open-source under the **[PolyForm Noncommercial License 1.0.0](LICENSE)**.
