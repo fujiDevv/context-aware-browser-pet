@@ -40,6 +40,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
   * **Mascot Milestones**: Track significant growth markers, interaction records, and trait evolutions in a dedicated achievement dashboard.
   * **24-Hour AI Synapse**: Get daily generative reflections on your browsing habits synthesized by Gemini Nano (Brain Upgrade required).
   * **Comprehensive Dashboard**: Track 7-day interest analytics, manage work/sleep schedules, and customize domain-specific reactions.
+  * **10 Languages**: Full UI and speech-bubble localization for English, Spanish, French, German, Italian, Brazilian Portuguese, Japanese, Simplified Chinese, Korean, and Hindi. Follows the browser language by default, or force one in **Options → Interface Language**.
 
   ### Install Size
 
@@ -106,7 +107,7 @@ An open-source, interactive, context-aware browser mascot pet companion extensio
 
   ---
 
-  ## 🌍 Localization
+  ## Localization
 
 Arcrawls ships with full interface and pet-speech localization in **10 languages**:
 
