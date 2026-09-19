@@ -12,7 +12,7 @@
     "@types/node": "^26.0.1",
     "sirv-cli": "^3.0.0",
     "typescript": "^5.4.5",
-    "vitest": "^4.1.9"
+    "vitest": "^5.0.1"
   },
   "description": "Context-aware browser pet extension using arcrawls-pet SVGs.",
   "scripts": {
